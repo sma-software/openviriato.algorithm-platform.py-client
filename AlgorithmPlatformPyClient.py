@@ -33,21 +33,28 @@ class AlgorithmicPlatformInterface:
     def retrieve_url_to_port(self):
         return self.__url_to_port
 
-    # classic hello world example
     def notify_user(self, message_level_1, message_level_2):
-        # not to sure about the str part!
-        body = dict(messageLevel1=str(message_level_1), messageLevel2=str(message_level_2))
+        # bullet proof, check for strings to be sent:
+        assert isinstance(message_level_1, str), "message_level_1 is not a str : {}".format(message_level_1)
+        assert isinstance(message_level_2, str), "message_level_2 is not a str : {}".format(message_level_2)
+        # assemble the dict
+        body = dict(messageLevel1=message_level_1, messageLevel2=message_level_2)
         resp = requests.post(self.__url_to_port + "notifications", json=body)
         self.__check_status(resp)
 
-    # classic hello world example
-    def show_status_message(self, short_message, long_message = None):
-            # not to sure about the str part!
-            body = dict(shortMessage=str(short_message), longMessage =str(long_message))
-            resp = requests.post(self.__url_to_port + "status-message", json=body)
-            self.__check_status(resp)
+    def show_status_message(self, short_message, long_message=None):
+        # bullet proof, check for strings to be sent:
+        assert isinstance(short_message, str), "short_message is not a str : {}".format(short_message)
+        if long_message is not None:
+            assert isinstance(long_message, str), "long_message is not a str : {}".format(long_message)
+        # not to sure about the str part!
+        body = dict(shortMessage=short_message, longMessage=long_message)
+        resp = requests.post(self.__url_to_port + "status-message", json=body)
+        self.__check_status(resp)
 
 
+# this class is only ment as a debug/etc, not for productive use!
+class AlgorithmicPlatformInterfaceEnhanced(AlgorithmicPlatformInterface):
 
     def some_action(self):
         print('nothing to do here, i am a spaceholder')
@@ -55,14 +62,14 @@ class AlgorithmicPlatformInterface:
     def do_request(self, request_str, request_type, request_body=None, params_dict=None):
         rest_str = self.__url_to_port + request_str
         if request_type == 'GET':
-            resp = requests.get(rest_str, params=params_dict)
+            api_response = requests.get(rest_str, params=params_dict)
         elif request_type == 'POST':
-            resp = requests.post(rest_str, json=request_body)
+            api_response = requests.post(rest_str, json=request_body)
         elif request_type == 'PUT':
-            resp = requests.put(rest_str, json=request_body)
+            api_response = requests.put(rest_str, json=request_body)
         else:
             print('undefined request type, must be GET, POST, PUT')
             raise
         # if there is any error, we raise it here
-        resp.raise_for_status()
-        return resp
+        api_response.raise_for_status()
+        return api_response

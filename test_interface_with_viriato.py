@@ -1,20 +1,44 @@
-import requests
+'''
+A test script that requires an REST-API of the VIRIATO-Algorithm Platform
+'''
+
 import AlgorithmPlatformPyClient as interface_module
 
-def main():
-    # create an interface with the url
-    url_str = 'http://localhost:8080/'
+
+def test_object_initialisiation(url_str='http://localhost:8080/'):
+    # test for the object creation:
+    # fails on purpose:
+    try:
+        url_nr = 952022
+        interface_to_viriato = interface_module.AlgorithmicPlatformInterface(url_nr)
+        # if we made it here, there is something wrong
+        print('was able to insert int as url')
+        return []
+    except(AssertionError):
+        print('failed corretly to insert int as url')
+    # create an interface with the url as str
     interface_to_viriato = interface_module.AlgorithmicPlatformInterface(url_str)
-    test_str = 'parameters/train'
-    # do it
-    interface_to_viriato.verbosity = 1
+    return interface_to_viriato
+
+
+def main():
+    interface_to_viriato = test_object_initialisiation();
+    interface_to_viriato.verbosity = 1  # increase verbosity
+
+    # try to retrieve the url:
     print(interface_to_viriato.retrieve_url_to_port())
-    response = interface_to_viriato.do_request(test_str, 'GET')
-    print(response.json())
-    interface_to_viriato.notify_user('hi','it works')
-    interface_to_viriato.show_status_message('hi','it works')
+
+    # test user notifications:
+    interface_to_viriato.notify_user('hi', 'it works')
+    interface_to_viriato.show_status_message('hi', 'it works')
     for i in range(99):
         interface_to_viriato.show_status_message(i)
+
+    # this is a depreciated call!
+    test_str = 'parameters/train'
+    response = interface_to_viriato.do_request(test_str, 'GET')
+    print(response.json())
+
 
 if __name__ == '__main__':
     main()

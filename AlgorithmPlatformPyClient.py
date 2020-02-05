@@ -13,11 +13,15 @@ import requests
 
 class AlgorithmicPlatformInterface:
     __url_to_port: str
+    verbosity: int = 1
 
     def __init__(self, url_to_port):
+        """
+        :type url_to_port: str
+        """
         # to avoid side effects, it is a protected attribute, instantiate a new object if you want to change it
+        assert isinstance(url_to_port, str), "id is not a str : {}".format(url_to_port)
         self.__url_to_port = url_to_port
-        self.verbosity = 0
 
     # helper (private) to check if there is an error --> exception is here
     def __check_status(self, api_return):

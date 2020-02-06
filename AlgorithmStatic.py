@@ -17,14 +17,13 @@ def check_if_request_successful(api_return: requests.Response):
     """
     not all HTTPError Messages are completely indicative, depends on how the API is configured
     we therefore display the returned json in an additional error if it is a HTTPError
-    This method is mostly static, could be a function as well.
     :param api_return: the raw objected returned by the api-request
     """
     try:
         api_return.raise_for_status()
     except requests.HTTPError:
         # if there is an error, the algorithm platform supplies us with more information (hopefully)
-        rest_feedback = (api_return.json())
+        rest_feedback = api_return.json()
         raise AlgorithmPlatformError(rest_feedback['statusCode'], rest_feedback['message'])
     # note that the connection will remain open
 

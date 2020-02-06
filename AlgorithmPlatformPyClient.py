@@ -46,7 +46,7 @@ class AlgorithmicPlatformInterface:
         """
         return self.__base_url
 
-    def notify_user(self, message_level_1: str, message_level_2: str):
+    def notify_user(self, message_level_1: str, message_level_2: str) -> None:
         """
         Allows to notify the user on the other side of the api
         :param message_level_1: str
@@ -59,7 +59,7 @@ class AlgorithmicPlatformInterface:
         api_response = self.__session.post(complete_url, json=body)
         AlgorithmStatic.check_if_request_successful(api_response)
 
-    def show_status_message(self, short_message: str, long_message=None):
+    def show_status_message(self, short_message: str, long_message=None) -> None:
         """
         Notify the user of VIRIATO with information on the status bar
         :param short_message: str
@@ -138,10 +138,10 @@ class AlgorithmicPlatformInterfaceDebug(AlgorithmicPlatformInterface):
     Interface to the algorithmic platform of VIRIATO. A wrapper around the REST-API.
     """
 
-    def some_action(self):
+    def some_action(self) -> None:
         print('nothing to see here, i am a placeholder')
 
-    def do_request(self, request_str, request_type, request_body=None, params_dict=None):
+    def do_request(self, request_str, request_type, request_body=None, params_dict=None) -> requests.Response:
         rest_str = self.__base_url + request_str
         if request_type == 'GET':
             api_response = requests.get(rest_str, params=params_dict)

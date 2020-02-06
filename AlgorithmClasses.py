@@ -8,10 +8,6 @@ class hasID():
         assert isinstance(node_id, int), 'node_id is not an int: {0}'.format(node_id)
         self.__ID = node_id
 
-    def set_id(self, node_id: int):
-        assert isinstance(node_id, int), 'node_id is not an int: {0}'.format(node_id)
-        self.__ID = node_id
-
     def get_id(self):
         return self.__ID
 
@@ -26,10 +22,6 @@ class hasCode():
         assert isinstance(code_string, str), 'code is not an str: {0}'.format(code_string)
         self.Code = code_string
 
-    def set_code(self, code_string: str):
-        assert isinstance(code_string, str), 'node_id is not an str: {0}'.format(code_string)
-        self.Code = code_string
-
     def get_code(self):
         return self.Code
 
@@ -41,10 +33,6 @@ class hasDebugString():
 
     def __init__(self, debug_string: str = ''):
         assert isinstance(debug_string, str), 'code is not an str: {0}'.format(debug_string)
-        self.DebugString = debug_string
-
-    def set_debug_string(self, debug_string: str):
-        assert isinstance(debug_string, str), 'node_id is not an str: {0}'.format(debug_string)
         self.DebugString = debug_string
 
     def get_debug_string(self):

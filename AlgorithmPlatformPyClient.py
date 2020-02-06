@@ -9,7 +9,7 @@ __version__ = '0.0.1'
 __author__ = 'Florian Fuchs'
 
 import requests
-
+import AlgorithmObjects
 
 
 class AlgorithmicPlatformInterface:
@@ -100,7 +100,7 @@ class AlgorithmicPlatformInterface:
         self.__check_if_request_successful(api_response)
         return api_response.json()
 
-    def get_node(self, node_id: int) -> AlgorithmNode:
+    def get_node(self, node_id: int) -> AlgorithmObjects.AlgorithmNode:
         """
         Returns an IAlgorithm​Node dict for the given node_id
         :param node_id: int
@@ -114,12 +114,12 @@ class AlgorithmicPlatformInterface:
         self.__check_if_request_successful(api_response)
         return api_response.json()
 
-    def get_directed_section_tracks(self, first_node_id, second_node_id):
+    def get_directed_section_tracks(self, first_node_id: int, second_node_id: int) -> tuple:
         """
         get all tracks in direction of the section between the two nodes. Direction given by order of the nodes
         :param first_node_id: int
         :param second_node_id: int
-        :return: list, containing all tracks, empty if no tracks exist
+        :return: tuple, containing all tracks, empty if no tracks exist
         """
         # bullet proofing
         assert isinstance(first_node_id, int), 'first_node_id is not an int: {0}'.format(first_node_id)
@@ -131,13 +131,13 @@ class AlgorithmicPlatformInterface:
         self.__check_if_request_successful(api_response)
         return api_response.json()
 
-    def get_parallel_section_tracks(self, section_track_id):
+    def get_parallel_section_tracks(self, section_track_id: int) -> tuple:
         """
         Returns a list of all section tracks starting and ending at the same nodes as the section track with id
         section_track_id independent of the traffic-ability.
         The track with id section_track_id is included in the result.
         :param section_track_id: int
-        :return: list
+        :return: tuple
         """
         assert isinstance(section_track_id, int), 'section_track_id is not an int: {0}'.format(section_track_id)
         # assemble and request
@@ -164,48 +164,6 @@ class hasID():
 
     def get_id(self):
         return self.__ID
-
-
-class hasCode():
-    """
-
-    """
-    Code: str
-
-    def __init__(self, code_string: str):
-        assert isinstance(code_string, str), 'code is not an str: {0}'.format(code_string)
-        self.Code = code_string
-
-    def set_code(self, code_string: str):
-        assert isinstance(code_string, str), 'node_id is not an str: {0}'.format(code_string)
-        self.Code = code_string
-
-    def get_code(self):
-        return self.Code
-
-
-class hasDebugString():
-    """
-    """
-    DebugString: str
-
-    def __init__(self, debug_string: str = ''):
-        assert isinstance(debug_string, str), 'code is not an str: {0}'.format(debug_string)
-        self.DebugString = debug_string
-
-    def set_debug_string(self, debug_string: str):
-        assert isinstance(debug_string, str), 'node_id is not an str: {0}'.format(debug_string)
-        self.DebugString = debug_string
-
-    def get_debug_string(self):
-        return self.DebugString
-
-
-class AlgorithmNode(hasID, hasCode, hasDebugString):
-    def __init__(self, node_id, code_string, debug_string):
-        hasID.__init__(self, node_id)
-        hasCode.__init__(self, code_string)
-        hasDebugString.__init__(self, debug_string)
 
 
 class AlgorithmicPlatformInterfaceDebug(AlgorithmicPlatformInterface):

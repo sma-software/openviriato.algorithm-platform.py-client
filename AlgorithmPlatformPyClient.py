@@ -36,10 +36,10 @@ class AlgorithmicPlatformInterface:
         return self.__url_to_port
 
     # helper (private) to check if there is an error --> exception is here
-    def __check_status(self, api_return):
+    def __check_if_request_successful(self, api_return):
         """
-        not all HTTPError are completely indicative, we therefore display the returned json in an additional error if it
-        is a HTTPError
+        not all HTTPError Messages are completely indicative, depends on how the API is configured
+        we therefore display the returned json in an additional error if it is a HTTPError
         :param api_return: the raw objected returned by the api-request
         :return: 0 if ok
         """
@@ -69,7 +69,7 @@ class AlgorithmicPlatformInterface:
         body = dict(messageLevel1=message_level_1, messageLevel2=message_level_2)
         resp = requests.post('{0}notifications'.format(self.__url_to_port), json=body,
                              headers=self.__connection_behaviour)
-        self.__check_status(resp)
+        self.__check_if_request_successful(resp)
         return 0
 
     def show_status_message(self, short_message, long_message=None):
@@ -87,15 +87,44 @@ class AlgorithmicPlatformInterface:
         body = dict(shortMessage=short_message, longMessage=long_message)
         resp = requests.post('{0}status-message'.format(self.__url_to_port), json=body,
                              headers=self.__connection_behaviour)
-        self.__check_status(resp)
+        self.__check_if_request_successful(resp)
         return 0
+
+    def get_neighbor_nodes(self, node_id):
+        """
+        Returns a list of all neighbor nodes of the given node x with nodeID == node_id, that is, all nodes y such
+        that there exists at least one section track directly from x to y.
+        :param node_id: int
+        :return: list, containing all tracks
+        """
+        # bullet proofing
+        assert isinstance(node_id, int), 'node_id is not an int: {0}'.format(node_id)
+        # assemble and request
+        api_response = requests.get('{0}neighbor-nodes/{1}'.format(self.__url_to_port, node_id),
+                                    headers=self.__connection_behaviour)
+        self.__check_if_request_successful(api_response)
+        return api_response.json()
+
+    def get_node(self, node_id):
+        """
+        Returns an IAlgorithm​Node dict for the given node_id
+        :param node_id: int
+        :return: dict,
+        """
+        # bullet proofing
+        assert isinstance(node_id, int), 'node_id is not an int: {0}'.format(node_id)
+        # assemble and request
+        api_response = requests.get('{0}nodes/{1}'.format(self.__url_to_port, node_id),
+                                    headers=self.__connection_behaviour)
+        self.__check_if_request_successful(api_response)
+        return api_response.json()
 
     def get_directed_section_tracks(self, first_node_id, second_node_id):
         """
         get all tracks in direction of the section between the two nodes. Direction given by order of the nodes
         :param first_node_id: int
         :param second_node_id: int
-        :return: dict, containing all tracks, empty if no tracks exist
+        :return: list, containing all tracks, empty if no tracks exist
         """
         # bullet proofing
         assert isinstance(first_node_id, int), 'first_node_id is not an int: {0}'.format(first_node_id)
@@ -103,8 +132,8 @@ class AlgorithmicPlatformInterface:
         # assemble and request
         api_response = requests.get('{0}section-tracks-between/{1}/{2}'.format(self.__url_to_port,
                                                                                first_node_id, second_node_id),
-                                                                        headers=self.__connection_behaviour)
-        self.__check_status(api_response)
+                                    headers=self.__connection_behaviour)
+        self.__check_if_request_successful(api_response)
         return api_response.json()
 
 
@@ -117,7 +146,7 @@ def __void_get_directed_section_tracks(self, first_node_id, second_node_id):
     get_request_parameters = dict(firstNodeID=first_node_id, secondNodeID=second_node_id)
     api_response = requests.get('{0}assignable-station-tracks-on-train-path-node?'.format(self.__url_to_port),
                                 params=get_request_parameters)
-    self.__check_status(api_response)
+    self.__check_if_request_successful(api_response)
     # return has to be formatted! raw for now
 
 

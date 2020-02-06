@@ -4,6 +4,7 @@ A test script that requires an REST-API of the VIRIATO-Algorithm Platform
 
 import AlgorithmPlatformPyClient as interface_module
 import AlgorithmClasses
+import AlgorithmStatic
 
 
 def test_object_initialisation(url_str='http://localhost:8080'):
@@ -53,7 +54,7 @@ def test_get_directed_section_tracks(interface_to_viriato) -> int:
             try:
                 track_info = interface_to_viriato.get_directed_section_tracks(i, j)
                 # print(track_info)
-            except interface_module.AlgorithmPlatformError:
+            except AlgorithmStatic.AlgorithmPlatformError:
                 i
                 # print('at least one of the nodes does not exist')
     print('test_get_directed_section_tracks complete')
@@ -72,7 +73,7 @@ def test_get_node_and_get_neighbor_nodes(interface_to_viriato) -> int:
             node_list = interface_to_viriato.get_neighbor_nodes(i)
             # print(node_dict)
             # print(node_list)
-        except interface_module.AlgorithmPlatformError:
+        except AlgorithmStatic.AlgorithmPlatformError:
             i
     print('test_get_node_and_get_neighbor_nodes complete')
 
@@ -88,7 +89,7 @@ def test_get_parallel_section_tracks(interface_to_viriato) -> int:
         try:
             track_list = interface_to_viriato.get_parallel_section_tracks(i)
             # print(track_list)
-        except interface_module.AlgorithmPlatformError:
+        except AlgorithmStatic.AlgorithmPlatformError:
             i
     print('test_get_parallel_section_tracks complete')
 
@@ -112,7 +113,6 @@ def main():
 
     test_object_initialisation()
 
-
     with interface_module.AlgorithmicPlatformInterface(url_str) as interface_to_viriato:
         # try to retrieve the url:
         print(interface_to_viriato.get_url_to_port())
@@ -124,7 +124,6 @@ def main():
         test_get_node_and_get_neighbor_nodes(interface_to_viriato)
         test_get_directed_section_tracks(interface_to_viriato)
         test_algorithm_node_object()
-
 
 
 if __name__ == '__main__':

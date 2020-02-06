@@ -21,7 +21,7 @@ def test_object_initialisation(url_str='http://localhost:8080/'):
         return interface_to_viriato
 
 
-def test_user_notifications(interface_to_viriato):
+def test_user_notifications(interface_to_viriato) -> int:
     # test user notifications:
     interface_to_viriato.notify_user('hi', 'it works')
     print('notify user test complete')
@@ -52,15 +52,13 @@ def test_get_directed_section_tracks(interface_to_viriato) -> int:
                 continue
             try:
                 track_info = interface_to_viriato.get_directed_section_tracks(i, j)
-                if len(track_info) > 0:
-                    print(track_info)
+                print(track_info)
             except interface_module.AlgorithmPlatformError:
-                i
-                # print('at least one of the nodes does not exist')
+                print('at least one of the nodes does not exist')
 
     return 0
 
-#
+
 def main():
     interface_to_viriato = test_object_initialisation()
     interface_to_viriato.verbosity = 0  # increase verbosity

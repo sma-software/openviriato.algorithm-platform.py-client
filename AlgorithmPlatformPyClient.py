@@ -105,12 +105,7 @@ class AlgorithmicPlatformInterface:
                                                                                first_node_id, second_node_id),
                                                                         headers=self.__connection_behaviour)
         self.__check_status(api_response)
-        # if no connection, return an empty value, else get value of json
-        complete_json = api_response.json()
-        if isinstance(complete_json, dict):
-            return complete_json['Value']
-        else:
-            return dict()
+        return api_response.json()
 
 
 def __void_get_directed_section_tracks(self, first_node_id, second_node_id):

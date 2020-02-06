@@ -57,7 +57,6 @@ def test_get_directed_section_tracks(interface_to_viriato) -> int:
             except interface_module.AlgorithmPlatformError:
                 i
                 # print('at least one of the nodes does not exist')
-
     return 0
 
 
@@ -68,12 +67,28 @@ def test_get_node_and_get_neighbor_nodes(interface_to_viriato) -> int:
     :type interface_to_viriato: interface_module.AlgorithmicPlatformInterface
     """
     # lets test the get_node:
-    for i in range(1, 100):
+    for i in range(1, 50):
         try:
             node_dict = interface_to_viriato.get_node(i)
             node_list = interface_to_viriato.get_neighbor_nodes(i)
-            print(node_dict)
-            print(node_list)
+            # print(node_dict)
+            # print(node_list)
+        except interface_module.AlgorithmPlatformError:
+            i
+    return 0
+
+
+def test_get_parallel_section_tracks(interface_to_viriato) -> int:
+    """
+    :return: 0 if passed
+    :rtype: int
+    :type interface_to_viriato: interface_module.AlgorithmicPlatformInterface
+    """
+    # lets test the get_node:
+    for i in range(1, 1000):
+        try:
+            track_list = interface_to_viriato.get_parallel_section_tracks(i)
+            # print(track_list)
         except interface_module.AlgorithmPlatformError:
             i
 
@@ -88,18 +103,15 @@ def main():
     print(interface_to_viriato.retrieve_url_to_port())
     print('url retrieve test complete')
 
-    node_dict = interface_to_viriato.get_node(1)
-    print(node_dict)
-    nodes_list = interface_to_viriato.get_neighbor_nodes(1)
-    print(nodes_list)
-    # section_list = interface_to_viriato.get_parallel_section_tracks(1)
-    # print(section_list)
-
-    check_int = test_get_node_and_get_neighbor_nodes(interface_to_viriato)
+    check_int = test_user_notifications(interface_to_viriato)
     if check_int != 0:
         raise
 
-    check_int = test_user_notifications(interface_to_viriato)
+    check_int = test_get_parallel_section_tracks(interface_to_viriato)
+    if check_int != 0:
+        raise
+
+    check_int = test_get_node_and_get_neighbor_nodes(interface_to_viriato)
     if check_int != 0:
         raise
 

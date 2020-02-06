@@ -45,25 +45,25 @@ def test_get_directed_section_tracks(interface_to_viriato) -> int:
     :rtype: int
     :type interface_to_viriato: interface_module.AlgorithmicPlatformInterface
     """
-    api_return = interface_to_viriato.get_directed_section_tracks(161, 348)
-    if isinstance(api_return, dict):
-        print(api_return)
-
     # lets test the robustness:
-    for i in range(20, 100):
-        for j in range(20, 100):
+    for i in range(1, 1000):
+        for j in range(1, 1000):
             if i == j:
                 continue
-            api_return = interface_to_viriato.get_directed_section_tracks(i, j)
-            if isinstance(api_return, dict):
-                print(api_return)
+            try:
+                track_info = interface_to_viriato.get_directed_section_tracks(i, j)
+                if len(track_info) > 0:
+                    print(track_info)
+            except interface_module.AlgorithmPlatformError:
+                i
+                # print('at least one of the nodes does not exist')
 
     return 0
 
 #
 def main():
     interface_to_viriato = test_object_initialisation()
-    interface_to_viriato.verbosity = 1  # increase verbosity
+    interface_to_viriato.verbosity = 0  # increase verbosity
 
     # try to retrieve the url:
     print(interface_to_viriato.retrieve_url_to_port())

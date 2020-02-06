@@ -23,30 +23,22 @@ class AlgorithmicPlatformInterface:
     def __init__(self, base_url: str):
         """
         to avoid side effects, it the url "protected" attribute, instantiate a new object if you want to change it
-        :type url_to_port: str
+        :type base_url: str
         """
         AlgorithmStatic.verify_parameter_is_str(base_url, 'base_url', '__init__')
         self.__base_url = base_url
         self.__session = requests.Session()
-        print('init')
 
     def __enter__(self, base_url: str = 11):
-        # to be used in with context
-        return self
+        return self         # to be used in with context
 
     def __exit__(self, exc_type, exc_val, exc_tb):
-        # try to close the connection here
-        self.__session.close()
-        print('destructor-like exit ')
-        # always close session when destruct
-
-    # def __del__(self):
+        self.__session.close()         # close the connection here
 
     def __assemble_url_and_request(self, request: str) -> str:
         return '{0}/{1}'.format(self.__base_url, request)
 
-    # this is just if the user wants to see the url
-    def get_url_to_port(self) -> str:
+    def get_base_url(self) -> str:
         """
         A getter to retrieve the url to the API
         :return: str
@@ -61,7 +53,6 @@ class AlgorithmicPlatformInterface:
         """
         AlgorithmStatic.verify_parameter_is_str(message_level_1, 'message_level_1', 'notify_user')
         AlgorithmStatic.verify_parameter_is_str(message_level_2, 'message_level_2', 'notify_user')
-        # assemble the dict
         body = dict(messageLevel1=message_level_1, messageLevel2=message_level_2)
         complete_url = self.__assemble_url_and_request('notifications')
         api_response = self.__session.post(complete_url, json=body)

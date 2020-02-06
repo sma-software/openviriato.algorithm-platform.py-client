@@ -115,7 +115,7 @@ def main():
 
     with interface_module.AlgorithmicPlatformInterface(url_str) as interface_to_viriato:
         # try to retrieve the url:
-        print(interface_to_viriato.get_url_to_port())
+        print(interface_to_viriato.get_base_url())
         print('url retrieve test complete')
         test_user_notifications(interface_to_viriato)
 

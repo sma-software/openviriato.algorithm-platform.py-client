@@ -41,6 +41,6 @@ class AlgorithmPlatformError(Error):
         message -- explanation of the error
     """
 
-    def __init__(self, expression, message):
+    def __init__(self, expression: str, message: str):
         self.expression = 'HTTPError {0}'.format(expression)
         self.message = message

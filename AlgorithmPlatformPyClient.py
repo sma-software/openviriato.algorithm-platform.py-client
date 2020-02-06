@@ -16,6 +16,7 @@ class AlgorithmicPlatformInterface:
     Interface to the algorithmic platform of VIRIATO. A wrapper around the REST-API.
     """
     __url_to_port: str
+    __connection_behaviour: dict(Connection='close')
     verbosity: int = 1
 
     def __init__(self, url_to_port):
@@ -66,7 +67,8 @@ class AlgorithmicPlatformInterface:
         assert isinstance(message_level_2, str), 'message_level_2 is not a str : {0}'.format(message_level_2)
         # assemble the dict
         body = dict(messageLevel1=message_level_1, messageLevel2=message_level_2)
-        resp = requests.post('{0}notifications'.format(self.__url_to_port), json=body)
+        resp = requests.post('{0}notifications'.format(self.__url_to_port), json=body,
+                             headers=self.__connection_behaviour)
         self.__check_status(resp)
         return 0
 
@@ -83,7 +85,8 @@ class AlgorithmicPlatformInterface:
             assert isinstance(long_message, str), 'long_message is not a str : {0}'.format(long_message)
         # not to sure about the str part!
         body = dict(shortMessage=short_message, longMessage=long_message)
-        resp = requests.post('{0}status-message'.format(self.__url_to_port), json=body)
+        resp = requests.post('{0}status-message'.format(self.__url_to_port), json=body,
+                             headers=self.__connection_behaviour)
         self.__check_status(resp)
         return 0
 
@@ -99,7 +102,8 @@ class AlgorithmicPlatformInterface:
         assert isinstance(second_node_id, int), 'second_node_id is not an int: {0}'.format(second_node_id)
         # assemble and request
         api_response = requests.get('{0}section-tracks-between/{1}/{2}'.format(self.__url_to_port, first_node_id,
-                                                                               second_node_id))
+                                                                               second_node_id),
+                                    headers=self.__connection_behaviour)
         self.__check_status(api_response)
         # if no connection, return an empty value, else get value of json
         complete_json = api_response.json()

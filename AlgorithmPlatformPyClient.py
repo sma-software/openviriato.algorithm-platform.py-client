@@ -21,11 +21,29 @@ class AlgorithmicPlatformInterface:
 
     def __init__(self, url_to_port):
         """
+        to avoid side effects, it the url "protected" attribute, instantiate a new object if you want to change it
         :type url_to_port: str
         """
-        # to avoid side effects, it is a protected attribute, instantiate a new object if you want to change it
         assert isinstance(url_to_port, str), 'id is not a str : {0}'.format(url_to_port)
         self.__url_to_port = url_to_port
+
+    def __check_if_request_successful(self, api_return) -> int:
+        """
+        not all HTTPError Messages are completely indicative, depends on how the API is configured
+        we therefore display the returned json in an additional error if it is a HTTPError
+        This method is mostly static, could be a function as well.
+        :param api_return: the raw objected returned by the api-request
+        :return: 0 if ok
+        """
+        try:
+            api_return.raise_for_status()
+        except requests.HTTPError:
+            # if there is an error, the algorithm platform supplies us with more information (hopefully)
+            rest_feedback = (api_return.json())
+            raise AlgorithmPlatformError(rest_feedback['statusCode'], rest_feedback['message'])
+        if self.verbosity > 0:
+            print(api_return.url)
+        return 0
 
     # this is just if the user wants to see the url
     def retrieve_url_to_port(self):
@@ -34,26 +52,6 @@ class AlgorithmicPlatformInterface:
         :return: str
         """
         return self.__url_to_port
-
-    # helper (private) to check if there is an error --> exception is here
-    def __check_if_request_successful(self, api_return) -> int:
-        """
-        not all HTTPError Messages are completely indicative, depends on how the API is configured
-        we therefore display the returned json in an additional error if it is a HTTPError
-        :param api_return: the raw objected returned by the api-request
-        :return: 0 if ok
-        """
-        #
-        try:
-            api_return.raise_for_status()
-        except requests.HTTPError:
-            # if there is an error, the algorithm platform supplies us with more information (hopefully)
-            rest_feedback = (api_return.json())
-            raise AlgorithmPlatformError(rest_feedback['statusCode'], rest_feedback['message'])
-
-        if self.verbosity > 0:
-            print(api_return.url)
-        return 0
 
     def notify_user(self, message_level_1, message_level_2):
         """
@@ -151,7 +149,6 @@ class AlgorithmicPlatformInterface:
                                     headers=self.__connection_behaviour)
         self.__check_if_request_successful(api_response)
         return api_response.json()
-
 
 
 def __void_get_directed_section_tracks(self, first_node_id, second_node_id):

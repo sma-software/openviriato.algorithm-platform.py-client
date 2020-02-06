@@ -17,17 +17,17 @@ def test_object_initialisation(url_str='http://localhost:8080/'):
         return []
     except AssertionError:
         print('failed to insert int as url')
-        # create an interface with the url as str
-        interface_to_viriato = interface_module.AlgorithmicPlatformInterface(url_str)
-        return interface_to_viriato
+    # create an interface with the url as str
+    interface_to_viriato = interface_module.AlgorithmicPlatformInterface(url_str)
+    print('test_object_initialisation complete')
+    return interface_to_viriato
 
 
 def test_user_notifications(interface_to_viriato) -> int:
     # test user notifications:
     interface_to_viriato.notify_user('hi', 'it works')
-    print('notify user test complete')
     try:
-        for i in range(99):
+        for i in range(5):
             interface_to_viriato.show_status_message(i)
         print('was able to insert int as show_status_message')
         return 1
@@ -36,7 +36,7 @@ def test_user_notifications(interface_to_viriato) -> int:
         # create an interface with the url as str
         interface_to_viriato.show_status_message('Foo', 'bar')
         interface_to_viriato.show_status_message('Foo bar')
-    print('show_status_message test complete')
+    print('test_user_notifications complete')
     return 0
 
 
@@ -57,6 +57,7 @@ def test_get_directed_section_tracks(interface_to_viriato) -> int:
             except interface_module.AlgorithmPlatformError:
                 i
                 # print('at least one of the nodes does not exist')
+    print('test_get_directed_section_tracks complete')
     return 0
 
 
@@ -67,7 +68,7 @@ def test_get_node_and_get_neighbor_nodes(interface_to_viriato) -> int:
     :type interface_to_viriato: interface_module.AlgorithmicPlatformInterface
     """
     # lets test the get_node:
-    for i in range(1, 50):
+    for i in range(1, 100):
         try:
             node_dict = interface_to_viriato.get_node(i)
             node_list = interface_to_viriato.get_neighbor_nodes(i)
@@ -75,6 +76,7 @@ def test_get_node_and_get_neighbor_nodes(interface_to_viriato) -> int:
             # print(node_list)
         except interface_module.AlgorithmPlatformError:
             i
+    print('test_get_node_and_get_neighbor_nodes complete')
     return 0
 
 
@@ -85,17 +87,21 @@ def test_get_parallel_section_tracks(interface_to_viriato) -> int:
     :type interface_to_viriato: interface_module.AlgorithmicPlatformInterface
     """
     # lets test the get_node:
-    for i in range(1, 1000):
+    for i in range(250, 501):
         try:
             track_list = interface_to_viriato.get_parallel_section_tracks(i)
             # print(track_list)
         except interface_module.AlgorithmPlatformError:
             i
-
+    print('test_get_parallel_section_tracks complete')
     return 0
 
 
 def main():
+    """
+    gathers all tests to check if the client is working as intended. Requires an active Algorithm Platform API
+    :return: int 0
+    """
     interface_to_viriato = test_object_initialisation()
     interface_to_viriato.verbosity = 0  # increase verbosity
 

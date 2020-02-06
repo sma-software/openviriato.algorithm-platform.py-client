@@ -19,6 +19,7 @@ class AlgorithmicPlatformInterface:
     __base_url: str
     __connection_behaviour: dict = dict(Connection='close')
     verbosity: int = 1
+    __session: requests.Session()
 
     def __init__(self, url_to_port: str):
         """
@@ -27,6 +28,12 @@ class AlgorithmicPlatformInterface:
         """
         assert isinstance(url_to_port, str), 'id is not a str : {0}'.format(url_to_port)
         self.__base_url = url_to_port
+        self.__session = requests.Session()
+
+    def __del__(self):
+        print('unused destructor')
+        # always close session when destruct
+
 
     def __check_if_request_successful(self, api_return):
         """
@@ -39,7 +46,7 @@ class AlgorithmicPlatformInterface:
             api_return.raise_for_status()
         except requests.HTTPError:
             # try to close the connection here
-            api_return.close()
+            self.__session.close()
             # if there is an error, the algorithm platform supplies us with more information (hopefully)
             rest_feedback = (api_return.json())
             raise AlgorithmPlatformError(rest_feedback['statusCode'], rest_feedback['message'])
@@ -49,7 +56,8 @@ class AlgorithmicPlatformInterface:
     def __assemble_url_and_request(self, request: str) -> str:
         return '{0}/{1}'.format(self.__base_url, request)
 
-
+    # def __verify_input(self, obj_type: str):
+         # return '{0}/{1}'.format(self.__base_url, request)
 
     # this is just if the user wants to see the url
     def get_url_to_port(self) -> str:
@@ -65,14 +73,16 @@ class AlgorithmicPlatformInterface:
         :param message_level_1: str
         :param message_level_2: str
         """
+        #####
         # bullet proof, check for strings to be sent:
         assert isinstance(message_level_1, str), 'message_level_1 is not a str : {0}'.format(message_level_1)
         assert isinstance(message_level_2, str), 'message_level_2 is not a str : {0}'.format(message_level_2)
+        ######
         # assemble the dict
         body = dict(messageLevel1=message_level_1, messageLevel2=message_level_2)
-        with requests.post('{0}/notifications'.format(self.__base_url), json=body,
-                           headers=self.__connection_behaviour) as resp:
-            self.__check_if_request_successful(resp)
+        complete_url = self.__assemble_url_and_request('notifications')
+        api_response = self.__session.post(complete_url, json=body)
+        self.__check_if_request_successful(api_response)
 
     def show_status_message(self, short_message: str, long_message=None):
         """
@@ -86,9 +96,9 @@ class AlgorithmicPlatformInterface:
             assert isinstance(long_message, str), 'long_message is not a str : {0}'.format(long_message)
         # not to sure about the str part!
         body = dict(shortMessage=short_message, longMessage=long_message)
-        resp = requests.post('{0}status-message'.format(self.__base_url), json=body,
-                             headers=self.__connection_behaviour)
-        self.__check_if_request_successful(resp)
+        complete_url = self.__assemble_url_and_request('status-message')
+        api_response = self.__session.post(complete_url, json=body)
+        self.__check_if_request_successful(api_response)
 
     def get_neighbor_nodes(self, node_id: int) -> tuple:
         """

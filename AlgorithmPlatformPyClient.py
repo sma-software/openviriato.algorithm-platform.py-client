@@ -15,19 +15,19 @@ class AlgorithmicPlatformInterface:
     """
     Interface to the algorithmic platform of VIRIATO. A wrapper around the REST-API.
     """
-    __url_to_port: str
+    __base_url: str
     __connection_behaviour: dict = dict(Connection='close')
     verbosity: int = 1
 
-    def __init__(self, url_to_port):
+    def __init__(self, url_to_port:str):
         """
         to avoid side effects, it the url "protected" attribute, instantiate a new object if you want to change it
         :type url_to_port: str
         """
         assert isinstance(url_to_port, str), 'id is not a str : {0}'.format(url_to_port)
-        self.__url_to_port = url_to_port
+        self.__base_url = url_to_port
 
-    def __check_if_request_successful(self, api_return) -> int:
+    def __check_if_request_successful(self, api_return):
         """
         not all HTTPError Messages are completely indicative, depends on how the API is configured
         we therefore display the returned json in an additional error if it is a HTTPError
@@ -38,12 +38,13 @@ class AlgorithmicPlatformInterface:
         try:
             api_return.raise_for_status()
         except requests.HTTPError:
+            # try to close the connection here
+            api_return.close()
             # if there is an error, the algorithm platform supplies us with more information (hopefully)
             rest_feedback = (api_return.json())
             raise AlgorithmPlatformError(rest_feedback['statusCode'], rest_feedback['message'])
         if self.verbosity > 0:
             print(api_return.url)
-        return 0
 
     # this is just if the user wants to see the url
     def get_url_to_port(self):
@@ -51,24 +52,22 @@ class AlgorithmicPlatformInterface:
         A getter to retrieve the url to the API
         :return: str
         """
-        return self.__url_to_port
+        return self.__base_url
 
-    def notify_user(self, message_level_1, message_level_2):
+    def notify_user(self, message_level_1: str, message_level_2: str):
         """
         Allows to notify the user on the other side of the api
         :param message_level_1: str
         :param message_level_2: str
-        :return: int 0 if successful
         """
         # bullet proof, check for strings to be sent:
         assert isinstance(message_level_1, str), 'message_level_1 is not a str : {0}'.format(message_level_1)
         assert isinstance(message_level_2, str), 'message_level_2 is not a str : {0}'.format(message_level_2)
         # assemble the dict
         body = dict(messageLevel1=message_level_1, messageLevel2=message_level_2)
-        resp = requests.post('{0}notifications'.format(self.__url_to_port), json=body,
-                             headers=self.__connection_behaviour)
-        self.__check_if_request_successful(resp)
-        return 0
+        with requests.post('{0}/notifications'.format(self.__base_url), json=body,
+                           headers=self.__connection_behaviour) as resp:
+            self.__check_if_request_successful(resp)
 
     def show_status_message(self, short_message, long_message=None):
         """
@@ -83,7 +82,7 @@ class AlgorithmicPlatformInterface:
             assert isinstance(long_message, str), 'long_message is not a str : {0}'.format(long_message)
         # not to sure about the str part!
         body = dict(shortMessage=short_message, longMessage=long_message)
-        resp = requests.post('{0}status-message'.format(self.__url_to_port), json=body,
+        resp = requests.post('{0}status-message'.format(self.__base_url), json=body,
                              headers=self.__connection_behaviour)
         self.__check_if_request_successful(resp)
         return 0
@@ -98,7 +97,7 @@ class AlgorithmicPlatformInterface:
         # bullet proofing
         assert isinstance(node_id, int), 'node_id is not an int: {0}'.format(node_id)
         # assemble and request
-        api_response = requests.get('{0}neighbor-nodes/{1}'.format(self.__url_to_port, node_id),
+        api_response = requests.get('{0}neighbor-nodes/{1}'.format(self.__base_url, node_id),
                                     headers=self.__connection_behaviour)
         self.__check_if_request_successful(api_response)
         return api_response.json()
@@ -112,7 +111,7 @@ class AlgorithmicPlatformInterface:
         # bullet proofing
         assert isinstance(node_id, int), 'node_id is not an int: {0}'.format(node_id)
         # assemble and request
-        api_response = requests.get('{0}nodes/{1}'.format(self.__url_to_port, node_id),
+        api_response = requests.get('{0}nodes/{1}'.format(self.__base_url, node_id),
                                     headers=self.__connection_behaviour)
         self.__check_if_request_successful(api_response)
         return api_response.json()
@@ -128,7 +127,7 @@ class AlgorithmicPlatformInterface:
         assert isinstance(first_node_id, int), 'first_node_id is not an int: {0}'.format(first_node_id)
         assert isinstance(second_node_id, int), 'second_node_id is not an int: {0}'.format(second_node_id)
         # assemble and request
-        api_response = requests.get('{0}section-tracks-between/{1}/{2}'.format(self.__url_to_port,
+        api_response = requests.get('{0}section-tracks-between/{1}/{2}'.format(self.__base_url,
                                                                                first_node_id, second_node_id),
                                     headers=self.__connection_behaviour)
         self.__check_if_request_successful(api_response)
@@ -144,7 +143,7 @@ class AlgorithmicPlatformInterface:
         """
         assert isinstance(section_track_id, int), 'section_track_id is not an int: {0}'.format(section_track_id)
         # assemble and request
-        api_response = requests.get('{0}section-tracks-parallel-to/{1}'.format(self.__url_to_port,
+        api_response = requests.get('{0}section-tracks-parallel-to/{1}'.format(self.__base_url,
                                                                                section_track_id),
                                     headers=self.__connection_behaviour)
         self.__check_if_request_successful(api_response)
@@ -155,45 +154,60 @@ class hasID():
     """
         items in SMA​Algorithm​PlatformAlgorithm​Interface.​AIDM  which     have    an    ID.
     """
-    ID:int
-    def __init__(self, node_id:int):
+    __ID: int
+
+    def __init__(self, node_id: int):
         assert isinstance(node_id, int), 'node_id is not an int: {0}'.format(node_id)
-        self.ID = node_id
-    def set_id(self, node_id:int):
+        self.__ID = node_id
+
+    def set_id(self, node_id: int):
         assert isinstance(node_id, int), 'node_id is not an int: {0}'.format(node_id)
-        self.ID = node_id
+        self.__ID = node_id
+
     def get_id(self):
-        return self.ID
+        return self.__ID
+
 
 class hasCode():
     """
 
     """
-    Code:str
-    def __init__(self, code_string:str):
+    Code: str
+
+    def __init__(self, code_string: str):
         assert isinstance(code_string, str), 'code is not an str: {0}'.format(code_string)
         self.Code = code_string
-    def set_code(self, code_string:str):
+
+    def set_code(self, code_string: str):
         assert isinstance(code_string, str), 'node_id is not an str: {0}'.format(code_string)
         self.Code = code_string
+
     def get_code(self):
         return self.Code
+
 
 class hasDebugString():
     """
     """
     DebugString: str
-    def __init__(self, debug_string: str):
+
+    def __init__(self, debug_string: str = ''):
         assert isinstance(debug_string, str), 'code is not an str: {0}'.format(debug_string)
         self.DebugString = debug_string
+
     def set_debug_string(self, debug_string: str):
         assert isinstance(debug_string, str), 'node_id is not an str: {0}'.format(debug_string)
         self.DebugString = debug_string
+
     def get_debug_string(self):
         return self.DebugString
 
 
-class AlgorithmNode
+class AlgorithmNode(hasID, hasCode, hasDebugString):
+    def __init__(self, node_id, code_string, debug_string):
+        hasID.__init__(self, node_id)
+        hasCode.__init__(self, code_string)
+        hasDebugString.__init__(self, debug_string)
 
 
 class AlgorithmicPlatformInterfaceDebug(AlgorithmicPlatformInterface):
@@ -206,7 +220,7 @@ class AlgorithmicPlatformInterfaceDebug(AlgorithmicPlatformInterface):
         print('nothing to see here, i am a spaceholder')
 
     def do_request(self, request_str, request_type, request_body=None, params_dict=None):
-        rest_str = self.__url_to_port + request_str
+        rest_str = self.__base_url + request_str
         if request_type == 'GET':
             api_response = requests.get(rest_str, params=params_dict)
         elif request_type == 'POST':

@@ -46,8 +46,8 @@ def test_get_directed_section_tracks(interface_to_viriato) -> int:
     :type interface_to_viriato: interface_module.AlgorithmicPlatformInterface
     """
     # lets test the robustness:
-    for i in range(1, 1000):
-        for j in range(1, 1000):
+    for i in range(1, 50):
+        for j in range(1, 50):
             if i == j:
                 continue
             try:

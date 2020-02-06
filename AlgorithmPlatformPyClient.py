@@ -16,7 +16,7 @@ class AlgorithmicPlatformInterface:
     Interface to the algorithmic platform of VIRIATO. A wrapper around the REST-API.
     """
     __url_to_port: str
-    __connection_behaviour: dict(Connection='close')
+    __connection_behaviour: dict = dict(Connection='close')
     verbosity: int = 1
 
     def __init__(self, url_to_port):
@@ -101,9 +101,9 @@ class AlgorithmicPlatformInterface:
         assert isinstance(first_node_id, int), 'first_node_id is not an int: {0}'.format(first_node_id)
         assert isinstance(second_node_id, int), 'second_node_id is not an int: {0}'.format(second_node_id)
         # assemble and request
-        api_response = requests.get('{0}section-tracks-between/{1}/{2}'.format(self.__url_to_port, first_node_id,
-                                                                               second_node_id),
-                                    headers=self.__connection_behaviour)
+        api_response = requests.get('{0}section-tracks-between/{1}/{2}'.format(self.__url_to_port,
+                                                                               first_node_id, second_node_id),
+                                                                        headers=self.__connection_behaviour)
         self.__check_status(api_response)
         # if no connection, return an empty value, else get value of json
         complete_json = api_response.json()

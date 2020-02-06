@@ -125,10 +125,6 @@ def main():
     if check_int != 0:
         raise
 
-    # this is a depreciated call!
-    # test_str = 'parameters/train'
-    # response = interface_to_viriato.do_request(test_str, 'GET')
-    # print(response.json())
     return 0
 
 

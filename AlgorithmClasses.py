@@ -1,15 +1,15 @@
 class hasID():
     """
-        items in SMA​Algorithm​PlatformAlgorithm​Interface.​AIDM  which     have    an    ID.
+        items in SMA​Algorithm​PlatformAlgorithm​Interface​AIDM  which have an ID.
     """
-    __ID: int
+    ID: int
 
     def __init__(self, node_id: int):
         assert isinstance(node_id, int), 'node_id is not an int: {0}'.format(node_id)
-        self.__ID = node_id
+        self.ID = node_id
 
     def get_id(self):
-        return self.__ID
+        return self.ID
 
 
 class hasCode():
@@ -19,7 +19,7 @@ class hasCode():
     Code: str
 
     def __init__(self, code_string: str):
-        assert isinstance(code_string, str), 'code is not an str: {0}'.format(code_string)
+        assert isinstance(code_string, str), 'code_string is not an str: {0}'.format(code_string)
         self.Code = code_string
 
     def get_code(self):
@@ -28,11 +28,12 @@ class hasCode():
 
 class hasDebugString():
     """
+
     """
     DebugString: str
 
     def __init__(self, debug_string: str = ''):
-        assert isinstance(debug_string, str), 'code is not an str: {0}'.format(debug_string)
+        assert isinstance(debug_string, str), 'debug_string is not an str: {0}'.format(debug_string)
         self.DebugString = debug_string
 
     def get_debug_string(self):

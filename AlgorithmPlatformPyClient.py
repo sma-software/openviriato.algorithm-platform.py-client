@@ -17,21 +17,28 @@ class AlgorithmicPlatformInterface:
     Interface to the algorithmic platform of VIRIATO. A wrapper around the REST-API.
     """
     __base_url: str
-    __connection_behaviour: dict = dict(Connection='close')
-    verbosity: int = 1
     __session: requests.Session()
 
-    def __init__(self, url_to_port: str):
+    def __init__(self, base_url: str):
         """
         to avoid side effects, it the url "protected" attribute, instantiate a new object if you want to change it
         :type url_to_port: str
         """
-        assert isinstance(url_to_port, str), 'id is not a str : {0}'.format(url_to_port)
-        self.__base_url = url_to_port
+        self.__verify_parameter_is_str(base_url, 'base_url', '__init__')
+        self.__base_url = base_url
         self.__session = requests.Session()
+        print('init')
+        # .__init_interface(base_url)
 
-    def __del__(self):
-        print('unused destructor')
+    def __enter__(self, base_url: str = 11):
+        # to be used in with context
+        return self
+
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        # try to close the connection here
+        self.__session.close()
+        print('destructor-like exit ')
         # always close session when destruct
 
     def __check_if_request_successful(self, api_return: requests.Response):
@@ -44,13 +51,10 @@ class AlgorithmicPlatformInterface:
         try:
             api_return.raise_for_status()
         except requests.HTTPError:
-            # try to close the connection here
-            self.__session.close()
+
             # if there is an error, the algorithm platform supplies us with more information (hopefully)
             rest_feedback = (api_return.json())
             raise AlgorithmPlatformError(rest_feedback['statusCode'], rest_feedback['message'])
-        if self.verbosity > 0:
-            print(api_return.url)
 
     def __assemble_url_and_request(self, request: str) -> str:
         return '{0}/{1}'.format(self.__base_url, request)

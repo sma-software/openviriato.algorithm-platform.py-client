@@ -3,9 +3,10 @@ A test script that requires an REST-API of the VIRIATO-Algorithm Platform
 '''
 
 import AlgorithmPlatformPyClient as interface_module
+import AlgorithmClasses
 
 
-def test_object_initialisation(url_str='http://localhost:8080/'):
+def test_object_initialisation(url_str='http://localhost:8080'):
     # test for the object creation:
     # fails on purpose:
     try:
@@ -36,7 +37,6 @@ def test_user_notifications(interface_to_viriato) -> int:
         interface_to_viriato.show_status_message('Foo', 'bar')
         interface_to_viriato.show_status_message('Foo bar')
     print('test_user_notifications complete')
-    return 0
 
 
 def test_get_directed_section_tracks(interface_to_viriato) -> int:
@@ -57,7 +57,6 @@ def test_get_directed_section_tracks(interface_to_viriato) -> int:
                 i
                 # print('at least one of the nodes does not exist')
     print('test_get_directed_section_tracks complete')
-    return 0
 
 
 def test_get_node_and_get_neighbor_nodes(interface_to_viriato) -> int:
@@ -76,7 +75,6 @@ def test_get_node_and_get_neighbor_nodes(interface_to_viriato) -> int:
         except interface_module.AlgorithmPlatformError:
             i
     print('test_get_node_and_get_neighbor_nodes complete')
-    return 0
 
 
 def test_get_parallel_section_tracks(interface_to_viriato) -> int:
@@ -93,63 +91,40 @@ def test_get_parallel_section_tracks(interface_to_viriato) -> int:
         except interface_module.AlgorithmPlatformError:
             i
     print('test_get_parallel_section_tracks complete')
-    return 0
 
 
 def test_algorithm_node_object():
-    test_node = interface_module.AlgorithmNode(node_id=1, code_string='someTestNodeID', debug_string='')
-    try:
-        test_node.set_id('323')
-    except AssertionError:
-        print('id is robust')
-    try:
-        test_node.set_code(12)
-    except AssertionError:
-        print('code is robust')
-    try:
-        test_node.set_debug_string(2.5)
-    except AssertionError:
-        print("debug string is robust")
-
-    return 0
+    test_node = AlgorithmClasses.AlgorithmNode(node_id=1, code_string='someTestNodeID', debug_string='')
+    print(test_node.get_id())
+    print(test_node.get_code())
+    print(test_node.get_debug_string())
 
 
 def main():
+    url_str = 'http://localhost:8080'
     """
     gathers all tests to check if the client is working as intended. Requires an active Algorithm Platform API
     :return: int 0
     """
 
+    interface_to_viriato: interface_module.AlgorithmicPlatformInterface
+    test = 1
 
-    interface_to_viriato = test_object_initialisation()
-    interface_to_viriato.verbosity = 0  # increase verbosity
+    test_object_initialisation()
 
 
-    # try to retrieve the url:
-    print(interface_to_viriato.get_url_to_port())
-    print('url retrieve test complete')
+    with interface_module.AlgorithmicPlatformInterface(url_str) as interface_to_viriato:
+        # try to retrieve the url:
+        print(interface_to_viriato.get_url_to_port())
+        print('url retrieve test complete')
+        test_user_notifications(interface_to_viriato)
 
-    check_int = test_user_notifications(interface_to_viriato)
-    if check_int != 0:
-        raise
+    with test_object_initialisation() as interface_to_viriato:
+        test_get_parallel_section_tracks(interface_to_viriato)
+        test_get_node_and_get_neighbor_nodes(interface_to_viriato)
+        test_get_directed_section_tracks(interface_to_viriato)
+        test_algorithm_node_object()
 
-    check_int = test_get_parallel_section_tracks(interface_to_viriato)
-    if check_int != 0:
-        raise
-
-    check_int = test_get_node_and_get_neighbor_nodes(interface_to_viriato)
-    if check_int != 0:
-        raise
-
-    check_int = test_get_directed_section_tracks(interface_to_viriato)
-    if check_int != 0:
-        raise
-
-    check_int = test_algorithm_node_object()
-    if check_int != 0:
-        raise
-
-    return 0
 
 
 if __name__ == '__main__':

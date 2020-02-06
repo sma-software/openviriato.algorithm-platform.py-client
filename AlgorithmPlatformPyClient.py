@@ -36,7 +36,7 @@ class AlgorithmicPlatformInterface:
         return self.__url_to_port
 
     # helper (private) to check if there is an error --> exception is here
-    def __check_if_request_successful(self, api_return):
+    def __check_if_request_successful(self, api_return) -> int:
         """
         not all HTTPError Messages are completely indicative, depends on how the API is configured
         we therefore display the returned json in an additional error if it is a HTTPError
@@ -135,6 +135,23 @@ class AlgorithmicPlatformInterface:
                                     headers=self.__connection_behaviour)
         self.__check_if_request_successful(api_response)
         return api_response.json()
+
+    def get_parallel_section_tracks(self, section_track_id):
+        """
+        Returns a list of all section tracks starting and ending at the same nodes as the section track with id
+        section_track_id independent of the traffic-ability.
+        The track with id section_track_id is included in the result.
+        :param section_track_id: int
+        :return: list
+        """
+        assert isinstance(section_track_id, int), 'section_track_id is not an int: {0}'.format(section_track_id)
+        # assemble and request
+        api_response = requests.get('{0}section-tracks-parallel-to/{1}'.format(self.__url_to_port,
+                                                                               section_track_id),
+                                    headers=self.__connection_behaviour)
+        self.__check_if_request_successful(api_response)
+        return api_response.json()
+
 
 
 def __void_get_directed_section_tracks(self, first_node_id, second_node_id):

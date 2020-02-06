@@ -52,9 +52,10 @@ def test_get_directed_section_tracks(interface_to_viriato) -> int:
                 continue
             try:
                 track_info = interface_to_viriato.get_directed_section_tracks(i, j)
-                print(track_info)
+                # print(track_info)
             except interface_module.AlgorithmPlatformError:
-                print('at least one of the nodes does not exist')
+                i
+                # print('at least one of the nodes does not exist')
 
     return 0
 
@@ -65,7 +66,14 @@ def main():
 
     # try to retrieve the url:
     print(interface_to_viriato.retrieve_url_to_port())
-    print('url retrive test complete')
+    print('url retrieve test complete')
+
+    node_dict = interface_to_viriato.get_node(1)
+    print(node_dict)
+    nodes_list = interface_to_viriato.get_neighbor_nodes(1)
+    print(nodes_list)
+    section_list = interface_to_viriato.get_parallel_section_tracks(1)
+    print(section_list)
 
     check_int = test_user_notifications(interface_to_viriato)
     if check_int != 0:
@@ -74,6 +82,7 @@ def main():
     check_int = test_get_directed_section_tracks(interface_to_viriato)
     if check_int != 0:
         raise
+
 
     # this is a depreciated call!
     # test_str = 'parameters/train'

@@ -45,7 +45,8 @@ class AlgorithmicPlatformInterface:
     def show_status_message(self, short_message, long_message=None):
         # bullet proof, check for strings to be sent:
         assert isinstance(short_message, str), "short_message is not a str : {}".format(short_message)
-        assert isinstance(long_message, (None, str)), "long_message is not a str : {}".format(long_message)
+        if not (long_message is None):
+            assert isinstance(long_message, str), "long_message is not a str : {}".format(long_message)
         # not to sure about the str part!
         body = dict(shortMessage=short_message, longMessage=long_message)
         resp = requests.post(self.__url_to_port + "status-message", json=body)
@@ -53,9 +54,10 @@ class AlgorithmicPlatformInterface:
 
     def get_directed_section_tracks(self, first_node_id, second_node_id):
         # bullet proofing
-        assert isinstance(first_node_id, int), "first_node_id is not an int: {}" .format(first_node_id)
-        assert isinstance(second_node_id, int), "second_node_id is not an int: {}" .format(second_node_id)
+        assert isinstance(first_node_id, int), "first_node_id is not an int: {}".format(first_node_id)
+        assert isinstance(second_node_id, int), "second_node_id is not an int: {}".format(second_node_id)
         # insert method later pls, check assertion first
+
 
 # this class is only ment as a debug/etc, not for productive use!
 class AlgorithmicPlatformInterfaceEnhanced(AlgorithmicPlatformInterface):

@@ -96,9 +96,9 @@ def test_get_parallel_section_tracks(interface_to_viriato) -> int:
 
 def test_algorithm_node_object():
     test_node = AlgorithmClasses.AlgorithmNode(node_id=1, code_string='someTestNodeID', debug_string='')
-    print(test_node.get_id())
-    print(test_node.get_code())
-    print(test_node.get_debug_string())
+    print(test_node.ID)
+    print(test_node.DebugString)
+    print(test_node.Code)
 
 
 def main():

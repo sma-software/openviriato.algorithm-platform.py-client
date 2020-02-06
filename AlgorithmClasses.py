@@ -1,43 +1,51 @@
+import AlgorithmStatic
+
 class hasID():
     """
         items in SMA​Algorithm​PlatformAlgorithm​Interface​AIDM  which have an ID.
     """
-    ID: int
+    __ID: int
 
     def __init__(self, node_id: int):
-        assert isinstance(node_id, int), 'node_id is not an int: {0}'.format(node_id)
-        self.ID = node_id
+        AlgorithmStatic.verify_parameter_is_int(node_id, 'node_id', '__init()__')
+        self.__ID = node_id
 
-    def get_id(self):
-        return self.ID
+    @property # getter for ID
+    def ID(self):
+        return self.__ID
 
 
 class hasCode():
     """
 
     """
-    Code: str
+    __Code: str
 
     def __init__(self, code_string: str):
-        assert isinstance(code_string, str), 'code_string is not an str: {0}'.format(code_string)
-        self.Code = code_string
+        AlgorithmStatic.verify_parameter_is_str(code_string, 'code_string', '__init()__')
+        self.__Code = code_string
 
-    def get_code(self):
-        return self.Code
+    @property # getter for Code
+    def Code(self):
+        return self.__Code
+
 
 
 class hasDebugString():
     """
 
     """
-    DebugString: str
+    __DebugString: str
 
-    def __init__(self, debug_string: str = ''):
-        assert isinstance(debug_string, str), 'debug_string is not an str: {0}'.format(debug_string)
-        self.DebugString = debug_string
+    def __init__(self, debug_string: str = None):
+        if debug_string is not None:
+            AlgorithmStatic.verify_parameter_is_str(debug_string, 'debug_string', '__init()__')
+        self.__DebugString = debug_string
 
-    def get_debug_string(self):
-        return self.DebugString
+    @property  # getter for Code
+    def DebugString(self):
+        return self.__DebugString
+
 
 
 class AlgorithmNode(hasID, hasCode, hasDebugString):

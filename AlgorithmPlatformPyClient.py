@@ -29,7 +29,7 @@ class AlgorithmicPlatformInterface:
         self.__base_url = base_url
         self.__session = requests.Session()
 
-    def __enter__(self, base_url: str = 11):
+    def __enter__(self):
         return self         # to be used in with context
 
     def __exit__(self, exc_type, exc_val, exc_tb):

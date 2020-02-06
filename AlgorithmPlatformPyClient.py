@@ -34,7 +34,6 @@ class AlgorithmicPlatformInterface:
         print('unused destructor')
         # always close session when destruct
 
-
     def __check_if_request_successful(self, api_return):
         """
         not all HTTPError Messages are completely indicative, depends on how the API is configured
@@ -56,8 +55,21 @@ class AlgorithmicPlatformInterface:
     def __assemble_url_and_request(self, request: str) -> str:
         return '{0}/{1}'.format(self.__base_url, request)
 
-    # def __verify_input(self, obj_type: str):
-         # return '{0}/{1}'.format(self.__base_url, request)
+    def __verify_input(self, received_object: object, required_object: object, object_name: str, method_name: str):
+        assert isinstance(received_object, required_object), \
+            "in method {0}, \n the parameter {0} is required to be of type {1} \n " \
+            "but it was a instead: {2}".format(method_name, object_name, required_object.__name__,
+                                               received_object.__class__)
+
+    def __verify_parameter_is_str(self, received_object: object, object_name: str, method_name: str):
+        assert isinstance(received_object, str), \
+            "in method {0}, \n the parameter {0} is required to be of type str \n " \
+            "but it was a instead: {2}".format(method_name, object_name, received_object.__class__)
+
+    def __verify_parameter_is_int(self, received_object: object, object_name: str, method_name: str):
+        assert isinstance(received_object, int), \
+            "in method {0}, \n the parameter {0} is required to be of type int \n " \
+            "but it was a instead: {2}".format(method_name, object_name, received_object.__class__)
 
     # this is just if the user wants to see the url
     def get_url_to_port(self) -> str:
@@ -73,11 +85,8 @@ class AlgorithmicPlatformInterface:
         :param message_level_1: str
         :param message_level_2: str
         """
-        #####
-        # bullet proof, check for strings to be sent:
-        assert isinstance(message_level_1, str), 'message_level_1 is not a str : {0}'.format(message_level_1)
-        assert isinstance(message_level_2, str), 'message_level_2 is not a str : {0}'.format(message_level_2)
-        ######
+        self.__verify_parameter_is_str(message_level_1, 'message_level_1', 'notify_user')
+        self.__verify_parameter_is_str(message_level_2, 'message_level_2', 'notify_user')
         # assemble the dict
         body = dict(messageLevel1=message_level_1, messageLevel2=message_level_2)
         complete_url = self.__assemble_url_and_request('notifications')
@@ -90,11 +99,9 @@ class AlgorithmicPlatformInterface:
         :param short_message: str
         :param long_message: str, None if not required
         """
-        # bullet proof, check for strings to be sent:
-        assert isinstance(short_message, str), 'short_message is not a str : {0}'.format(short_message)
+        self.__verify_parameter_is_str(short_message, 'short_message', 'show_status_message')
         if not (long_message is None):
-            assert isinstance(long_message, str), 'long_message is not a str : {0}'.format(long_message)
-        # not to sure about the str part!
+            self.__verify_parameter_is_str(short_message, 'long_message', 'show_status_message')
         body = dict(shortMessage=short_message, longMessage=long_message)
         complete_url = self.__assemble_url_and_request('status-message')
         api_response = self.__session.post(complete_url, json=body)

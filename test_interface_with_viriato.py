@@ -106,7 +106,7 @@ def main():
     interface_to_viriato.verbosity = 0  # increase verbosity
 
     # try to retrieve the url:
-    print(interface_to_viriato.retrieve_url_to_port())
+    print(interface_to_viriato.get_url_to_port())
     print('url retrieve test complete')
 
     check_int = test_user_notifications(interface_to_viriato)

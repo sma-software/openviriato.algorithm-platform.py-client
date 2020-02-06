@@ -46,7 +46,7 @@ class AlgorithmicPlatformInterface:
         return 0
 
     # this is just if the user wants to see the url
-    def retrieve_url_to_port(self):
+    def get_url_to_port(self):
         """
         A getter to retrieve the url to the API
         :return: str
@@ -150,18 +150,6 @@ class AlgorithmicPlatformInterface:
         self.__check_if_request_successful(api_response)
         return api_response.json()
 
-
-def __void_get_directed_section_tracks(self, first_node_id, second_node_id):
-    """"""
-    # bullet proofing
-    assert isinstance(first_node_id, int), 'first_node_id is not an int: {0}'.format(first_node_id)
-    assert isinstance(second_node_id, int), 'second_node_id is not an int: {0}'.format(second_node_id)
-    # assemble parameters
-    get_request_parameters = dict(firstNodeID=first_node_id, secondNodeID=second_node_id)
-    api_response = requests.get('{0}assignable-station-tracks-on-train-path-node?'.format(self.__url_to_port),
-                                params=get_request_parameters)
-    self.__check_if_request_successful(api_response)
-    # return has to be formatted! raw for now
 
 
 class AlgorithmicPlatformInterfaceDebug(AlgorithmicPlatformInterface):

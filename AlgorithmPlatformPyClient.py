@@ -56,11 +56,12 @@ class AlgorithmicPlatformInterface:
         # bullet proofing
         assert isinstance(first_node_id, int), 'first_node_id is not an int: {0}'.format(first_node_id)
         assert isinstance(second_node_id, int), 'second_node_id is not an int: {0}'.format(second_node_id)
-        # insert method later pls, check assertion first
-        get_request_str = 'assignable-station-tracks-on-train-path-node?'
+        # assemble parameters
         get_request_parameters = dict(firstNodeID=first_node_id, secondNodeID=second_node_id)
         api_response = requests.get('{0}assignable-station-tracks-on-train-path-node?'.format(self.__url_to_port),
                                     json=get_request_parameters)
+        self.__check_status(api_response)
+        return api_response
 
 
 

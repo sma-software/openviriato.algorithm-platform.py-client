@@ -164,13 +164,14 @@ def __void_get_directed_section_tracks(self, first_node_id, second_node_id):
     # return has to be formatted! raw for now
 
 
-class AlgorithmicPlatformInterfaceEnhanced(AlgorithmicPlatformInterface):
+class AlgorithmicPlatformInterfaceDebug(AlgorithmicPlatformInterface):
     """
-    Interface to the algorithmic platform of VIRIATO. A wrapper around the REST-API. this class is only meant as a debug/etc, not for productive use!
+    this class is only meant as a debug/etc, not for productive use!
+    Interface to the algorithmic platform of VIRIATO. A wrapper around the REST-API.
     """
 
     def some_action(self):
-        print('nothing to do here, i am a spaceholder')
+        print('nothing to see here, i am a spaceholder')
 
     def do_request(self, request_str, request_type, request_body=None, params_dict=None):
         rest_str = self.__url_to_port + request_str

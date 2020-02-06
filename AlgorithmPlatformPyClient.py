@@ -148,24 +148,6 @@ class AlgorithmicPlatformInterface:
         return api_response.json()
 
 
-class hasID():
-    """
-        items in SMA​Algorithm​PlatformAlgorithm​Interface.​AIDM  which     have    an    ID.
-    """
-    __ID: int
-
-    def __init__(self, node_id: int):
-        assert isinstance(node_id, int), 'node_id is not an int: {0}'.format(node_id)
-        self.__ID = node_id
-
-    def set_id(self, node_id: int):
-        assert isinstance(node_id, int), 'node_id is not an int: {0}'.format(node_id)
-        self.__ID = node_id
-
-    def get_id(self):
-        return self.__ID
-
-
 class AlgorithmicPlatformInterfaceDebug(AlgorithmicPlatformInterface):
     """
     this class is only meant as a debug/etc, not for productive use!

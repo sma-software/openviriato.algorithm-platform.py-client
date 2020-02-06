@@ -11,6 +11,7 @@ __author__ = 'Florian Fuchs'
 import requests
 
 
+
 class AlgorithmicPlatformInterface:
     """
     Interface to the algorithmic platform of VIRIATO. A wrapper around the REST-API.
@@ -19,7 +20,7 @@ class AlgorithmicPlatformInterface:
     __connection_behaviour: dict = dict(Connection='close')
     verbosity: int = 1
 
-    def __init__(self, url_to_port:str):
+    def __init__(self, url_to_port: str):
         """
         to avoid side effects, it the url "protected" attribute, instantiate a new object if you want to change it
         :type url_to_port: str
@@ -33,7 +34,6 @@ class AlgorithmicPlatformInterface:
         we therefore display the returned json in an additional error if it is a HTTPError
         This method is mostly static, could be a function as well.
         :param api_return: the raw objected returned by the api-request
-        :return: 0 if ok
         """
         try:
             api_return.raise_for_status()
@@ -47,7 +47,7 @@ class AlgorithmicPlatformInterface:
             print(api_return.url)
 
     # this is just if the user wants to see the url
-    def get_url_to_port(self):
+    def get_url_to_port(self) -> str:
         """
         A getter to retrieve the url to the API
         :return: str
@@ -69,12 +69,11 @@ class AlgorithmicPlatformInterface:
                            headers=self.__connection_behaviour) as resp:
             self.__check_if_request_successful(resp)
 
-    def show_status_message(self, short_message, long_message=None):
+    def show_status_message(self, short_message: str, long_message=None):
         """
         Notify the user of VIRIATO with information on the status bar
         :param short_message: str
         :param long_message: str, None if not required
-        :return: int 0 if successful
         """
         # bullet proof, check for strings to be sent:
         assert isinstance(short_message, str), 'short_message is not a str : {0}'.format(short_message)
@@ -85,9 +84,8 @@ class AlgorithmicPlatformInterface:
         resp = requests.post('{0}status-message'.format(self.__base_url), json=body,
                              headers=self.__connection_behaviour)
         self.__check_if_request_successful(resp)
-        return 0
 
-    def get_neighbor_nodes(self, node_id):
+    def get_neighbor_nodes(self, node_id: int) -> tuple:
         """
         Returns a list of all neighbor nodes of the given node x with nodeID == node_id, that is, all nodes y such
         that there exists at least one section track directly from x to y.
@@ -102,7 +100,7 @@ class AlgorithmicPlatformInterface:
         self.__check_if_request_successful(api_response)
         return api_response.json()
 
-    def get_node(self, node_id):
+    def get_node(self, node_id: int) -> AlgorithmNode:
         """
         Returns an IAlgorithm​Node dict for the given node_id
         :param node_id: int

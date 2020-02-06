@@ -52,6 +52,11 @@ class AlgorithmicPlatformInterface:
         resp = requests.post(self.__url_to_port + "status-message", json=body)
         self.__check_status(resp)
 
+    def get_directed_section_tracks(self, first_node_id, second_node_id):
+        # bullet proofing
+        assert isinstance(first_node_id, (float, int))
+        assert isinstance(second_node_id, (float, int))
+        # insert method later pls, check assertion first
 
 # this class is only ment as a debug/etc, not for productive use!
 class AlgorithmicPlatformInterfaceEnhanced(AlgorithmicPlatformInterface):

@@ -39,18 +39,34 @@ def test_user_notifications(interface_to_viriato):
     return 0
 
 
+def test_get_directed_section_tracks(interface_to_viriato):
+    # lets test the robustness:
+    for i in range(1, 100):
+        for j in range(1, 100):
+            if i == j:
+                continue
+            api_return = interface_to_viriato.get_directed_section_tracks(i, j)
+            if isinstance(api_return, dict):
+                print(api_return)
+
+    return 0
+
+
 def main():
     interface_to_viriato = test_object_initialisiation()
-    interface_to_viriato.verbosity = 0  # increase verbosity
+    interface_to_viriato.verbosity = 1  # increase verbosity
 
     # try to retrieve the url:
-    print(interface_to_viriato.retrieve_url_to_port())
+    print(interface_to_viriato.retrieve_url_to_port)
     print('url retrive test complete')
 
     check_int = test_user_notifications(interface_to_viriato)
     if check_int != 0:
         raise
 
+    check_int = test_get_directed_section_tracks(interface_to_viriato)
+    if check_int != 0:
+        raise
     # this is a depreciated call!
     # test_str = 'parameters/train'
     # response = interface_to_viriato.do_request(test_str, 'GET')

@@ -56,13 +56,27 @@ class AlgorithmicPlatformInterface:
         # bullet proofing
         assert isinstance(first_node_id, int), 'first_node_id is not an int: {0}'.format(first_node_id)
         assert isinstance(second_node_id, int), 'second_node_id is not an int: {0}'.format(second_node_id)
+        # assemble and request
+        api_response = requests.get('{0}section-tracks-between/{1}/{2}'.format(self.__url_to_port, first_node_id,
+                                                                               second_node_id))
+        self.__check_status(api_response)
+        # if no connection, return an empty value, else get value of json
+        complete_json = api_response.json()
+        if isinstance(complete_json, dict):
+            return api_response['Value']
+        else:
+            return []
+
+    def __void_get_directed_section_tracks(self, first_node_id, second_node_id):
+        # bullet proofing
+        assert isinstance(first_node_id, int), 'first_node_id is not an int: {0}'.format(first_node_id)
+        assert isinstance(second_node_id, int), 'second_node_id is not an int: {0}'.format(second_node_id)
         # assemble parameters
         get_request_parameters = dict(firstNodeID=first_node_id, secondNodeID=second_node_id)
         api_response = requests.get('{0}assignable-station-tracks-on-train-path-node?'.format(self.__url_to_port),
-                                    json=get_request_parameters)
+                                    params=get_request_parameters)
         self.__check_status(api_response)
-        return api_response
-
+        # return has to be formated! raw for now
 
 
 # this class is only ment as a debug/etc, not for productive use!

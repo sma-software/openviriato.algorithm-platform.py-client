@@ -34,7 +34,7 @@ class AlgorithmicPlatformInterface:
         print('unused destructor')
         # always close session when destruct
 
-    def __check_if_request_successful(self, api_return):
+    def __check_if_request_successful(self, api_return: requests.Response):
         """
         not all HTTPError Messages are completely indicative, depends on how the API is configured
         we therefore display the returned json in an additional error if it is a HTTPError
@@ -114,11 +114,10 @@ class AlgorithmicPlatformInterface:
         :param node_id: int
         :return: list, containing all tracks
         """
-        # bullet proofing
-        assert isinstance(node_id, int), 'node_id is not an int: {0}'.format(node_id)
-        # assemble and request
-        api_response = requests.get('{0}neighbor-nodes/{1}'.format(self.__base_url, node_id),
-                                    headers=self.__connection_behaviour)
+        self.__verify_parameter_is_int(node_id, 'node_id', 'get_neighbor_nodes')
+        url_tail = 'neighbor-nodes/{0}'.format(node_id)
+        complete_url = self.__assemble_url_and_request(url_tail)
+        api_response = self.__session.get(complete_url)
         self.__check_if_request_successful(api_response)
         return api_response.json()
 
@@ -128,11 +127,10 @@ class AlgorithmicPlatformInterface:
         :param node_id: int
         :return: dict,
         """
-        # bullet proofing
-        assert isinstance(node_id, int), 'node_id is not an int: {0}'.format(node_id)
-        # assemble and request
-        api_response = requests.get('{0}nodes/{1}'.format(self.__base_url, node_id),
-                                    headers=self.__connection_behaviour)
+        self.__verify_parameter_is_int(node_id, 'node_id', 'get_node')
+        url_tail = 'nodes/{0}'.format(node_id)
+        complete_url = self.__assemble_url_and_request(url_tail)
+        api_response = self.__session.get(complete_url)
         self.__check_if_request_successful(api_response)
         return api_response.json()
 
@@ -143,13 +141,12 @@ class AlgorithmicPlatformInterface:
         :param second_node_id: int
         :return: tuple, containing all tracks, empty if no tracks exist
         """
-        # bullet proofing
-        assert isinstance(first_node_id, int), 'first_node_id is not an int: {0}'.format(first_node_id)
-        assert isinstance(second_node_id, int), 'second_node_id is not an int: {0}'.format(second_node_id)
+        self.__verify_parameter_is_int(first_node_id, 'first_node_id', 'get_directed_section_tracks')
+        self.__verify_parameter_is_int(second_node_id, 'second_node_id', 'get_directed_section_tracks')
         # assemble and request
-        api_response = requests.get('{0}section-tracks-between/{1}/{2}'.format(self.__base_url,
-                                                                               first_node_id, second_node_id),
-                                    headers=self.__connection_behaviour)
+        url_tail = 'section-tracks-between/{0}/{1}'.format(first_node_id, second_node_id)
+        complete_url = self.__assemble_url_and_request(url_tail)
+        api_response = self.__session.get(complete_url)
         self.__check_if_request_successful(api_response)
         return api_response.json()
 
@@ -161,11 +158,10 @@ class AlgorithmicPlatformInterface:
         :param section_track_id: int
         :return: tuple
         """
-        assert isinstance(section_track_id, int), 'section_track_id is not an int: {0}'.format(section_track_id)
-        # assemble and request
-        api_response = requests.get('{0}section-tracks-parallel-to/{1}'.format(self.__base_url,
-                                                                               section_track_id),
-                                    headers=self.__connection_behaviour)
+        self.__verify_parameter_is_int(section_track_id, 'section_track_id', 'get_parallel_section_tracks')
+        url_tail = 'section-tracks-parallel-to/{0}'.format(section_track_id)
+        complete_url = self.__assemble_url_and_request(url_tail)
+        api_response = self.__session.get(complete_url)
         self.__check_if_request_successful(api_response)
         return api_response.json()
 

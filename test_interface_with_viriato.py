@@ -3,7 +3,7 @@ A test script that requires an REST-API of the VIRIATO-Algorithm Platform
 '''
 
 import AlgorithmPlatformPyClient as interface_module
-
+import requests
 
 def test_object_initialisation(url_str='http://localhost:8080/'):
     # test for the object creation:
@@ -39,7 +39,7 @@ def test_user_notifications(interface_to_viriato):
     return 0
 
 
-def test_get_directed_section_tracks(interface_to_viriato: ) -> int:
+def test_get_directed_section_tracks(interface_to_viriato) -> int:
     """
     :return: 0 if passed
     :rtype: int
@@ -76,6 +76,7 @@ def main():
     check_int = test_get_directed_section_tracks(interface_to_viriato)
     if check_int != 0:
         raise
+
     # this is a depreciated call!
     # test_str = 'parameters/train'
     # response = interface_to_viriato.do_request(test_str, 'GET')

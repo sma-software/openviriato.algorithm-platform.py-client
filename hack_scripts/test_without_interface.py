@@ -18,7 +18,10 @@ def f_do_request(host_str, request_str, request_type, request_body=None, params_
         print('undefined request type, must be GET, POST, PUT')
         raise
     # if there is any error, we raise it here
-    rest_response.raise_for_status()
+    try:
+        rest_response.raise_for_status()
+    finally:
+        print(rest_response.text)
     return rest_response
 
 def main():
@@ -31,6 +34,7 @@ def main():
     response = f_do_request(hostStr, getStr, 'GET')
     # for now, print it
     print(response.json())
+
     # %% Do another GET, with params this time:
     getStr = 'assignable-station-tracks-on-train-path-node?'
     paramDict = {'TrainPathNodeID': 6066}
@@ -38,6 +42,11 @@ def main():
     print(response.json())
     paramDict['TrainPathNodeID'] = 1167
     response = f_do_request(hostStr, getStr, 'GET', params_dict=paramDict)
+    print(response.json())
+
+    # %% Do another GET, with no params this time:
+    getStr = 'section-tracks-between/1/25'
+    response = f_do_request(hostStr, getStr, 'GET')
     print(response.json())
 
     # %% Do a POST request to test the API

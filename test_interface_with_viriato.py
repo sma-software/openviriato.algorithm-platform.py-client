@@ -3,7 +3,6 @@ A test script that requires an REST-API of the VIRIATO-Algorithm Platform
 '''
 
 import AlgorithmPlatformPyClient as interface_module
-import requests
 
 
 def test_object_initialisation(url_str='http://localhost:8080/'):
@@ -97,13 +96,34 @@ def test_get_parallel_section_tracks(interface_to_viriato) -> int:
     return 0
 
 
+def test_algorithm_node_object():
+    test_node = interface_module.AlgorithmNode(node_id=1, code_string='someTestNodeID', debug_string='')
+    try:
+        test_node.set_id('323')
+    except AssertionError:
+        print('id is robust')
+    try:
+        test_node.set_code(12)
+    except AssertionError:
+        print('code is robust')
+    try:
+        test_node.set_debug_string(2.5)
+    except AssertionError:
+        print("debug string is robust")
+
+    return 0
+
+
 def main():
     """
     gathers all tests to check if the client is working as intended. Requires an active Algorithm Platform API
     :return: int 0
     """
+
+
     interface_to_viriato = test_object_initialisation()
     interface_to_viriato.verbosity = 0  # increase verbosity
+
 
     # try to retrieve the url:
     print(interface_to_viriato.get_url_to_port())
@@ -122,6 +142,10 @@ def main():
         raise
 
     check_int = test_get_directed_section_tracks(interface_to_viriato)
+    if check_int != 0:
+        raise
+
+    check_int = test_algorithm_node_object()
     if check_int != 0:
         raise
 

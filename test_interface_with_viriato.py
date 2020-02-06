@@ -1,6 +1,6 @@
-'''
+"""
 A test script that requires an REST-API of the VIRIATO-Algorithm Platform
-'''
+"""
 
 import AlgorithmPlatformPyClient as interface_module
 import AlgorithmClasses
@@ -115,7 +115,7 @@ def main():
 
     with interface_module.AlgorithmicPlatformInterface(url_str) as interface_to_viriato:
         # try to retrieve the url:
-        print(interface_to_viriato.get_base_url())
+        print(interface_to_viriato.base_url)
         print('url retrieve test complete')
         test_user_notifications(interface_to_viriato)
 

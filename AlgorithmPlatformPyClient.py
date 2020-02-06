@@ -38,7 +38,8 @@ class AlgorithmicPlatformInterface:
     def __assemble_url_and_request(self, request: str) -> str:
         return '{0}/{1}'.format(self.__base_url, request)
 
-    def get_base_url(self) -> str:
+    @property
+    def base_url(self) -> str:
         """
         A getter to retrieve the url to the API
         :return: str

@@ -5,6 +5,7 @@ Disclaimer: it is not meant to be published,
 
 import requests
 
+
 # for some general function as a helper
 def f_do_request(host_str, request_str, request_type, request_body=None, params_dict=None):
     rest_str = host_str + request_str
@@ -23,6 +24,7 @@ def f_do_request(host_str, request_str, request_type, request_body=None, params_
     finally:
         print(rest_response.text)
     return rest_response
+
 
 def main():
     # %% Do a GET request to test the API
@@ -57,6 +59,7 @@ def main():
     postStr = 'assign-station-track'
     response = f_do_request(hostStr, postStr, 'POST', request_body=body)
     print(response.json())
+
 
 if __name__ == '__main__':
     main()

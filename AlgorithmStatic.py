@@ -1,5 +1,6 @@
 import requests
 
+
 def verify_parameter_is_str(received_object: object, object_name: str, method_name: str):
     assert isinstance(received_object, str), \
         "in method {0}, \n the parameter {0} is required to be of type str \n " \

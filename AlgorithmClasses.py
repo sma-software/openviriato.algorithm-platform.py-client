@@ -1,6 +1,7 @@
 import AlgorithmStatic
 
-class hasID():
+
+class hasID:
     """
         items in SMA​Algorithm​PlatformAlgorithm​Interface​AIDM  which have an ID.
     """
@@ -10,12 +11,12 @@ class hasID():
         AlgorithmStatic.verify_parameter_is_int(node_id, 'node_id', '__init()__')
         self.__ID = node_id
 
-    @property # getter for ID
+    @property  # getter for ID
     def ID(self):
         return self.__ID
 
 
-class hasCode():
+class hasCode:
     """
 
     """
@@ -25,13 +26,12 @@ class hasCode():
         AlgorithmStatic.verify_parameter_is_str(code_string, 'code_string', '__init()__')
         self.__Code = code_string
 
-    @property # getter for Code
+    @property  # getter for Code
     def Code(self):
         return self.__Code
 
 
-
-class hasDebugString():
+class hasDebugString:
     """
 
     """
@@ -45,7 +45,6 @@ class hasDebugString():
     @property  # getter for Code
     def DebugString(self):
         return self.__DebugString
-
 
 
 class AlgorithmNode(hasID, hasCode, hasDebugString):

@@ -2,11 +2,13 @@ import requests
 import unittest
 from unittest import mock
 
+
 # This is the class we want to test
 class MyGreatClass:
     def fetch_json(self, url):
         response = requests.get(url)
         return response.json()
+
 
 # This method will be used by the mock to replace requests.get
 def mocked_requests_get(*args, **kwargs):
@@ -24,6 +26,7 @@ def mocked_requests_get(*args, **kwargs):
         return MockResponse({"key2": "value2"}, 200)
 
     return MockResponse(None, 404)
+
 
 # Our test case class
 class MyGreatClassTestCase(unittest.TestCase):
@@ -47,6 +50,7 @@ class MyGreatClassTestCase(unittest.TestCase):
             self.assertIn(mock.call('http://someotherurl.com/anothertest.json'), mock_get.call_args_list)
 
             self.assertEqual(len(mock_get.call_args_list), 3)
+
 
 if __name__ == '__main__':
     unittest.main()

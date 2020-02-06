@@ -9,7 +9,7 @@ __version__ = '0.0.1'
 __author__ = 'Florian Fuchs'
 
 import requests
-import AlgorithmObjects
+import AlgorithmClasses
 
 
 class AlgorithmicPlatformInterface:
@@ -45,6 +45,11 @@ class AlgorithmicPlatformInterface:
             raise AlgorithmPlatformError(rest_feedback['statusCode'], rest_feedback['message'])
         if self.verbosity > 0:
             print(api_return.url)
+
+    def __assemble_url_and_request(self, request: str) -> str:
+        return '{0}/{1}'.format(self.__base_url, request)
+
+
 
     # this is just if the user wants to see the url
     def get_url_to_port(self) -> str:
@@ -100,7 +105,7 @@ class AlgorithmicPlatformInterface:
         self.__check_if_request_successful(api_response)
         return api_response.json()
 
-    def get_node(self, node_id: int) -> AlgorithmObjects.AlgorithmNode:
+    def get_node(self, node_id: int) -> AlgorithmClasses.AlgorithmNode:
         """
         Returns an IAlgorithm​Node dict for the given node_id
         :param node_id: int
@@ -155,7 +160,7 @@ class AlgorithmicPlatformInterfaceDebug(AlgorithmicPlatformInterface):
     """
 
     def some_action(self):
-        print('nothing to see here, i am a spaceholder')
+        print('nothing to see here, i am a placeholder')
 
     def do_request(self, request_str, request_type, request_body=None, params_dict=None):
         rest_str = self.__base_url + request_str

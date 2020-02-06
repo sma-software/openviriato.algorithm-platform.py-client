@@ -12,6 +12,9 @@ import requests
 
 
 class AlgorithmicPlatformInterface:
+    """
+    Interface to the algorithmic platform of VIRIATO. A wrapper around the REST-API.
+    """
     __url_to_port: str
     verbosity: int = 1
 
@@ -119,8 +122,10 @@ def __void_get_directed_section_tracks(self, first_node_id, second_node_id):
     # return has to be formatted! raw for now
 
 
-# this class is only meant as a debug/etc, not for productive use!
 class AlgorithmicPlatformInterfaceEnhanced(AlgorithmicPlatformInterface):
+    """
+    Interface to the algorithmic platform of VIRIATO. A wrapper around the REST-API. this class is only meant as a debug/etc, not for productive use!
+    """
 
     def some_action(self):
         print('nothing to do here, i am a spaceholder')

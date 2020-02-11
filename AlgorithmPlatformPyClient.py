@@ -20,11 +20,25 @@ def initialise_algorithm_node_from_dict(Node_as_dict: dict) -> AlgorithmClasses.
                                           debug_string=Node_as_dict['DebugString'])
 
 
-def initialise_algorithm_node_list(list_of_nodes_as_dict: list) -> tuple:
+def initialise_algorithm_node_list(list_of_nodes_as_dict: list) -> list:
     node_list = list()
     for Node_as_dict in list_of_nodes_as_dict:
         node_list.append(initialise_algorithm_node_from_dict(Node_as_dict))
     return node_list
+
+
+def initialise_algorithm_section_track_from_dict(section_track_as_dict: dict) -> AlgorithmClasses.AlgorithmSectionTrack:
+    return AlgorithmClasses.AlgorithmSectionTrack(section_id=section_track_as_dict['ID'],
+                                                  section_code=section_track_as_dict['Code'],
+                                                  debug_string=section_track_as_dict['DebugString'],
+                                                  section_weight=section_track_as_dict['Weight'])
+
+
+def initialise_algorithm_section_track_list(list_of_sections_dict: list) -> list:
+    section_track_list = list()
+    for section_as_dict in list_of_sections_dict:
+        section_track_list.append(initialise_algorithm_section_track_from_dict(section_as_dict))
+    return section_track_list
 
 
 class AlgorithmicPlatformInterface:
@@ -98,7 +112,6 @@ class AlgorithmicPlatformInterface:
         AlgorithmStatic.check_if_request_successful(api_response)
         return initialise_algorithm_node_list(api_response.json())
 
-
     def get_node(self, node_id: int) -> AlgorithmClasses.AlgorithmNode:
         """
         Returns an IAlgorithm​Node dict for the given node_id
@@ -126,8 +139,10 @@ class AlgorithmicPlatformInterface:
         complete_url = self.__merge_base_url_with_request(url_tail)
         api_response = self.__currentSession.get(complete_url)
         AlgorithmStatic.check_if_request_successful(api_response)
+        initialise_algorithm_section_track_list(api_response.json())
         print(api_response.json())
-        raise NotImplementedError
+        if len(api_response.json()) > 0:
+            raise NotImplementedError
         return api_response.json()
 
     def get_parallel_section_tracks(self, section_track_id: int) -> tuple:

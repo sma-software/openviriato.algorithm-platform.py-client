@@ -57,5 +57,25 @@ class AlgorithmNode(hasID, hasCode, hasDebugString):
         self.__NodeTracks = node_tracks
 
     @property  # getter for NodeTracks
-    def NodeTracks(self):
+    def NodeTracks(self) -> list:
         return self.__NodeTracks
+
+
+class AlgorithmSectionTrack(hasID, hasCode, hasDebugString):
+    __Weight: int
+    __SectionCode: str
+
+    def __init__(self, section_id: int, code_string: str, debug_string: str, section_weight: int, section_code: str):
+        hasID.__init__(self, section_id)
+        hasCode.__init__(self, code_string)
+        hasDebugString.__init__(self, debug_string)
+        self.__Weight = section_weight
+        self.__SectionCode = section_code
+
+    @property  # getter for Weight
+    def Weight(self) -> int:
+        return self.__Weight
+
+    @property  # getter for SectionCode
+    def SectionCode(self) -> str:
+        return self.__SectionCode

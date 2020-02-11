@@ -40,7 +40,7 @@ def test_user_notifications(interface_to_viriato) -> int:
     print('test_user_notifications complete')
 
 
-def test_get_directed_section_tracks(interface_to_viriato) -> int:
+def test_get_directed_section_tracks(interface_to_viriato):
     """
     :return: 0 if passed
     :rtype: int
@@ -60,7 +60,7 @@ def test_get_directed_section_tracks(interface_to_viriato) -> int:
     print('test_get_directed_section_tracks complete')
 
 
-def test_get_node_and_get_neighbor_nodes(interface_to_viriato) -> int:
+def test_get_node_and_get_neighbor_nodes(interface_to_viriato):
     """
     :return: 0 if passed
     :rtype: int
@@ -69,16 +69,14 @@ def test_get_node_and_get_neighbor_nodes(interface_to_viriato) -> int:
     # lets test the get_node:
     for i in range(1, 100):
         try:
-            node_dict = interface_to_viriato.get_node(i)
+            node_obj = interface_to_viriato.get_node(i)
             node_list = interface_to_viriato.get_neighbor_nodes(i)
-            # print(node_dict)
-            # print(node_list)
         except AlgorithmStatic.AlgorithmPlatformError:
             i
     print('test_get_node_and_get_neighbor_nodes complete')
 
 
-def test_get_parallel_section_tracks(interface_to_viriato) -> int:
+def test_get_parallel_section_tracks(interface_to_viriato):
     """
     :return: 0 if passed
     :rtype: int
@@ -90,7 +88,7 @@ def test_get_parallel_section_tracks(interface_to_viriato) -> int:
             track_list = interface_to_viriato.get_parallel_section_tracks(i)
             # print(track_list)
         except AlgorithmStatic.AlgorithmPlatformError:
-            i
+            print()
     print('test_get_parallel_section_tracks complete')
 
 

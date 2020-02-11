@@ -50,10 +50,12 @@ class hasDebugString:
 class AlgorithmNode(hasID, hasCode, hasDebugString):
     __NodeTracks: []
 
-    def __init__(self, node_id: int, code_string: str, debug_string: str, node_tracks: list):
+    def __init__(self, node_id: int, code_string: str, debug_string: str, node_tracks: list = None):
         hasID.__init__(self, node_id)
         hasCode.__init__(self, code_string)
         hasDebugString.__init__(self, debug_string)
+        if node_tracks is None:
+            node_tracks = []
         self.__NodeTracks = node_tracks
 
     @property  # getter for NodeTracks

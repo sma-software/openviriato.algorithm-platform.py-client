@@ -93,7 +93,7 @@ def test_get_parallel_section_tracks(interface_to_viriato):
 
 
 def test_algorithm_node_object():
-    test_node = AlgorithmClasses.AlgorithmNode(node_id=1, code_string='someTestNodeID', debug_string='')
+    test_node = AlgorithmClasses.AlgorithmNode(node_id=1, code_string='someTestNodeID', debug_string='', node_tracks=[])
     print(test_node.ID)
     print(test_node.DebugString)
     print(test_node.Code)

@@ -29,7 +29,8 @@ def initialise_algorithm_node_list(list_of_nodes_as_dict: list) -> list:
 
 def initialise_algorithm_section_track_from_dict(section_track_as_dict: dict) -> AlgorithmClasses.AlgorithmSectionTrack:
     return AlgorithmClasses.AlgorithmSectionTrack(section_id=section_track_as_dict['ID'],
-                                                  section_code=section_track_as_dict['Code'],
+                                                  code_string=section_track_as_dict['Code'],
+                                                  section_code=section_track_as_dict['SectionCode'],
                                                   debug_string=section_track_as_dict['DebugString'],
                                                   section_weight=section_track_as_dict['Weight'])
 
@@ -139,11 +140,7 @@ class AlgorithmicPlatformInterface:
         complete_url = self.__merge_base_url_with_request(url_tail)
         api_response = self.__currentSession.get(complete_url)
         AlgorithmStatic.check_if_request_successful(api_response)
-        initialise_algorithm_section_track_list(api_response.json())
-        print(api_response.json())
-        if len(api_response.json()) > 0:
-            raise NotImplementedError
-        return api_response.json()
+        return initialise_algorithm_section_track_list(api_response.json())
 
     def get_parallel_section_tracks(self, section_track_id: int) -> tuple:
         """

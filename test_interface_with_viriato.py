@@ -7,7 +7,7 @@ import AlgorithmClasses
 import AlgorithmStatic
 
 
-def test_object_initialisation(url_str='http://localhost:8080'):
+def test_object_initialisation(url_str='http://localhost:8080') -> None:
     # test for the object creation:
     # fails on purpose:
     try:
@@ -15,7 +15,7 @@ def test_object_initialisation(url_str='http://localhost:8080'):
         interface_to_viriato = interface_module.AlgorithmicPlatformInterface(url_nr)
         # if we made it here, there is something wrong
         print('was able to insert int as url')
-        return []
+        raise NotImplementedError
     except AssertionError:
         print('failed to insert int as url')
     # create an interface with the url as str
@@ -24,14 +24,14 @@ def test_object_initialisation(url_str='http://localhost:8080'):
     return interface_to_viriato
 
 
-def test_user_notifications(interface_to_viriato) -> int:
+def test_user_notifications(interface_to_viriato) -> None:
     # test user notifications:
     interface_to_viriato.notify_user('hi', 'it works')
     try:
         for i in range(5):
             interface_to_viriato.show_status_message(i)
         print('was able to insert int as show_status_message')
-        return 1
+        raise NotImplementedError
     except AssertionError:
         print('failed correctly to insert int as show_status_message')
         # create an interface with the url as str
@@ -40,7 +40,7 @@ def test_user_notifications(interface_to_viriato) -> int:
     print('test_user_notifications complete')
 
 
-def test_get_directed_section_tracks(interface_to_viriato):
+def test_get_directed_section_tracks(interface_to_viriato) -> None:
     """
     :return: 0 if passed
     :rtype: int
@@ -52,11 +52,15 @@ def test_get_directed_section_tracks(interface_to_viriato):
             if i == j:
                 continue
             try:
-                track_info = interface_to_viriato.get_directed_section_tracks(i, j)
-                # print(track_info)
+                directed_section_tracks = interface_to_viriato.get_directed_section_tracks(i, j)
+                if len(directed_section_tracks) > 0:
+                    print(directed_section_tracks)
+                    for idx in range(len(directed_section_tracks)):
+                        print(directed_section_tracks[idx].ID)
             except AlgorithmStatic.AlgorithmPlatformError:
                 i
                 # print('at least one of the nodes does not exist')
+
     print('test_get_directed_section_tracks complete')
 
 
@@ -82,13 +86,15 @@ def test_get_parallel_section_tracks(interface_to_viriato):
     :rtype: int
     :type interface_to_viriato: interface_module.AlgorithmicPlatformInterface
     """
-    # lets test the get_node:
-    for i in range(250, 501):
+    for i in range(1, 1000):
         try:
             track_list = interface_to_viriato.get_parallel_section_tracks(i)
-            # print(track_list)
+            if len(track_list) > 0:
+                print(track_list)
+                for idx in range(len(track_list)):
+                    print(track_list[idx].ID)
         except AlgorithmStatic.AlgorithmPlatformError:
-            print()
+            i
     print('test_get_parallel_section_tracks complete')
 
 

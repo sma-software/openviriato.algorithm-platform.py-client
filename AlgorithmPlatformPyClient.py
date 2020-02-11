@@ -13,18 +13,15 @@ import AlgorithmClasses
 import AlgorithmStatic
 
 
-def initialise_algorithm_node_from_dict(Node_as_dict: dict) -> AlgorithmClasses.AlgorithmNode:
-    return AlgorithmClasses.AlgorithmNode(node_id=Node_as_dict['ID'],
-                                          code_string=Node_as_dict['Code'],
-                                          node_tracks=Node_as_dict['NodeTracks'],
-                                          debug_string=Node_as_dict['DebugString'])
+def initialise_algorithm_node_from_dict(node_as_dict: dict) -> AlgorithmClasses.AlgorithmNode:
+    return AlgorithmClasses.AlgorithmNode(node_id=node_as_dict['ID'],
+                                          code_string=node_as_dict['Code'],
+                                          node_tracks=node_as_dict['NodeTracks'],
+                                          debug_string=node_as_dict['DebugString'])
 
 
 def initialise_algorithm_node_list(list_of_nodes_as_dict: list) -> list:
-    node_list = list()
-    for Node_as_dict in list_of_nodes_as_dict:
-        node_list.append(initialise_algorithm_node_from_dict(Node_as_dict))
-    return node_list
+    return [initialise_algorithm_node_from_dict(node_as_dict) for node_as_dict in list_of_nodes_as_dict]
 
 
 def initialise_algorithm_section_track_from_dict(section_track_as_dict: dict) -> AlgorithmClasses.AlgorithmSectionTrack:
@@ -36,10 +33,7 @@ def initialise_algorithm_section_track_from_dict(section_track_as_dict: dict) ->
 
 
 def initialise_algorithm_section_track_list(list_of_sections_dict: list) -> list:
-    section_track_list = list()
-    for section_as_dict in list_of_sections_dict:
-        section_track_list.append(initialise_algorithm_section_track_from_dict(section_as_dict))
-    return section_track_list
+    return [initialise_algorithm_section_track_from_dict(section_as_dict) for section_as_dict in list_of_sections_dict]
 
 
 class AlgorithmicPlatformInterface:
@@ -99,7 +93,7 @@ class AlgorithmicPlatformInterface:
         api_response = self.__currentSession.post(complete_url, json=request_body)
         AlgorithmStatic.check_if_request_successful(api_response)
 
-    def get_neighbor_nodes(self, node_id: int) -> tuple:
+    def get_neighbor_nodes(self, node_id: int) -> list:
         """
         Returns a list of all neighbor nodes of the given node x with nodeID == node_id, that is, all nodes y such
         that there exists at least one section track directly from x to y.
@@ -126,7 +120,7 @@ class AlgorithmicPlatformInterface:
         AlgorithmStatic.check_if_request_successful(api_response)
         return initialise_algorithm_node_from_dict(api_response.json())
 
-    def get_directed_section_tracks(self, first_node_id: int, second_node_id: int) -> tuple:
+    def get_directed_section_tracks(self, first_node_id: int, second_node_id: int) -> list:
         """
         get all tracks in direction of the section between the two nodes. Direction given by order of the nodes
         :param first_node_id: int
@@ -142,7 +136,7 @@ class AlgorithmicPlatformInterface:
         AlgorithmStatic.check_if_request_successful(api_response)
         return initialise_algorithm_section_track_list(api_response.json())
 
-    def get_parallel_section_tracks(self, section_track_id: int) -> tuple:
+    def get_parallel_section_tracks(self, section_track_id: int) -> list:
         """
         Returns a list of all section tracks starting and ending at the same nodes as the section track with id
         section_track_id independent of the traffic-ability.
@@ -155,9 +149,16 @@ class AlgorithmicPlatformInterface:
         complete_url = self.__merge_base_url_with_request(url_tail)
         api_response = self.__currentSession.get(complete_url)
         AlgorithmStatic.check_if_request_successful(api_response)
-        print(api_response.json())
-        raise NotImplementedError
-        return api_response.json()
+        return initialise_algorithm_section_track_list(api_response.json())
+
+    def GetTrainClassification(self, train_id: int) -> NotImplementedError:
+        NotImplementedError
+
+    def GetTrainClassifications(self, train_id: int) -> NotImplementedError:
+        NotImplementedError
+
+    def get_trains(self, time_window: AlgorithmClasses.AlgorithmTimeWindow) -> NotImplementedError:
+        NotImplementedError
 
 
 class AlgorithmicPlatformInterfaceDebug(AlgorithmicPlatformInterface):

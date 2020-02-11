@@ -1,4 +1,8 @@
 import AlgorithmStatic
+import datetime
+
+def assert_nonegative_weight(weight: int):
+    assert not (weight < 0), 'only non-negative values for weights permitted'
 
 
 class hasID:
@@ -68,6 +72,7 @@ class AlgorithmSectionTrack(hasID, hasCode, hasDebugString):
     __SectionCode: str
 
     def __init__(self, section_id: int, code_string: str, debug_string: str, section_weight: int, section_code: str):
+        assert_nonegative_weight(section_weight)
         hasID.__init__(self, section_id)
         hasCode.__init__(self, code_string)
         hasDebugString.__init__(self, debug_string)
@@ -81,3 +86,8 @@ class AlgorithmSectionTrack(hasID, hasCode, hasDebugString):
     @property  # getter for SectionCode
     def SectionCode(self) -> str:
         return self.__SectionCode
+
+
+class AlgorithmTimeWindow:
+    __FromTime : datetime.datetime
+    __ToTime: datetime.datetime

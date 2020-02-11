@@ -13,13 +13,27 @@ import AlgorithmClasses
 import AlgorithmStatic
 
 
+def initialise_algorithm_node_from_dict(Node_as_dict: dict) -> AlgorithmClasses.AlgorithmNode:
+    return AlgorithmClasses.AlgorithmNode(node_id=Node_as_dict['ID'],
+                                          code_string=Node_as_dict['Code'],
+                                          node_tracks=Node_as_dict['NodeTracks'],
+                                          debug_string=Node_as_dict['DebugString'])
+
+
+def initialise_algorithm_node_list(list_of_nodes_as_dict: list) -> tuple:
+    node_list = list()
+    for Node_as_dict in list_of_nodes_as_dict:
+        node_list.append(initialise_algorithm_node_from_dict(Node_as_dict))
+    return node_list
+
+
 class AlgorithmicPlatformInterface:
     """
     Interface to the algorithmic platform of VIRIATO. A wrapper around the REST-API.
     Supports and is intended to be used in with statements
     """
     __base_url: str
-    __session: requests.Session()
+    __currentSession: requests.Session()
 
     def __init__(self, base_url: str):
         """
@@ -28,23 +42,19 @@ class AlgorithmicPlatformInterface:
         """
         AlgorithmStatic.assert_parameter_is_str(base_url, 'base_url', '__init__')
         self.__base_url = base_url
-        self.__session = requests.Session()
+        self.__currentSession = requests.Session()
 
     def __enter__(self):
-        return self         # to be used in with context
+        return self  # to be used in with context
 
     def __exit__(self, exc_type, exc_val, exc_tb):
-        self.__session.close()         # close the connection here
+        self.__currentSession.close()  # close the connection here
 
     def __merge_base_url_with_request(self, request: str) -> str:
         return '{0}/{1}'.format(self.__base_url, request)
 
     @property
     def base_url(self) -> str:
-        """
-        A getter to retrieve the url to the API
-        :return: str
-        """
         return self.__base_url
 
     def notify_user(self, message_level_1: str, message_level_2: str) -> None:
@@ -55,9 +65,9 @@ class AlgorithmicPlatformInterface:
         """
         AlgorithmStatic.assert_parameter_is_str(message_level_1, 'message_level_1', 'notify_user')
         AlgorithmStatic.assert_parameter_is_str(message_level_2, 'message_level_2', 'notify_user')
-        body = dict(messageLevel1=message_level_1, messageLevel2=message_level_2)
+        request_body = dict(messageLevel1=message_level_1, messageLevel2=message_level_2)
         complete_url = self.__merge_base_url_with_request('notifications')
-        api_response = self.__session.post(complete_url, json=body)
+        api_response = self.__currentSession.post(complete_url, json=request_body)
         AlgorithmStatic.check_if_request_successful(api_response)
 
     def show_status_message(self, short_message: str, long_message=None) -> None:
@@ -69,9 +79,9 @@ class AlgorithmicPlatformInterface:
         AlgorithmStatic.assert_parameter_is_str(short_message, 'short_message', 'show_status_message')
         if not (long_message is None):
             AlgorithmStatic.assert_parameter_is_str(short_message, 'long_message', 'show_status_message')
-        body = dict(shortMessage=short_message, longMessage=long_message)
+        request_body = dict(shortMessage=short_message, longMessage=long_message)
         complete_url = self.__merge_base_url_with_request('status-message')
-        api_response = self.__session.post(complete_url, json=body)
+        api_response = self.__currentSession.post(complete_url, json=request_body)
         AlgorithmStatic.check_if_request_successful(api_response)
 
     def get_neighbor_nodes(self, node_id: int) -> tuple:
@@ -84,9 +94,10 @@ class AlgorithmicPlatformInterface:
         AlgorithmStatic.assert_parameter_is_int(node_id, 'node_id', 'get_neighbor_nodes')
         url_tail = 'neighbor-nodes/{0}'.format(node_id)
         complete_url = self.__merge_base_url_with_request(url_tail)
-        api_response = self.__session.get(complete_url)
+        api_response = self.__currentSession.get(complete_url)
         AlgorithmStatic.check_if_request_successful(api_response)
-        return api_response.json()
+        return initialise_algorithm_node_list(api_response.json())
+
 
     def get_node(self, node_id: int) -> AlgorithmClasses.AlgorithmNode:
         """
@@ -97,9 +108,9 @@ class AlgorithmicPlatformInterface:
         AlgorithmStatic.assert_parameter_is_int(node_id, 'node_id', 'get_node')
         url_tail = 'nodes/{0}'.format(node_id)
         complete_url = self.__merge_base_url_with_request(url_tail)
-        api_response = self.__session.get(complete_url)
+        api_response = self.__currentSession.get(complete_url)
         AlgorithmStatic.check_if_request_successful(api_response)
-        return api_response.json()
+        return initialise_algorithm_node_from_dict(api_response.json())
 
     def get_directed_section_tracks(self, first_node_id: int, second_node_id: int) -> tuple:
         """
@@ -113,8 +124,10 @@ class AlgorithmicPlatformInterface:
         # assemble and request
         url_tail = 'section-tracks-between/{0}/{1}'.format(first_node_id, second_node_id)
         complete_url = self.__merge_base_url_with_request(url_tail)
-        api_response = self.__session.get(complete_url)
+        api_response = self.__currentSession.get(complete_url)
         AlgorithmStatic.check_if_request_successful(api_response)
+        print(api_response.json())
+        raise NotImplementedError
         return api_response.json()
 
     def get_parallel_section_tracks(self, section_track_id: int) -> tuple:
@@ -128,8 +141,10 @@ class AlgorithmicPlatformInterface:
         AlgorithmStatic.assert_parameter_is_int(section_track_id, 'section_track_id', 'get_parallel_section_tracks')
         url_tail = 'section-tracks-parallel-to/{0}'.format(section_track_id)
         complete_url = self.__merge_base_url_with_request(url_tail)
-        api_response = self.__session.get(complete_url)
+        api_response = self.__currentSession.get(complete_url)
         AlgorithmStatic.check_if_request_successful(api_response)
+        print(api_response.json())
+        raise NotImplementedError
         return api_response.json()
 
 
@@ -156,5 +171,3 @@ class AlgorithmicPlatformInterfaceDebug(AlgorithmicPlatformInterface):
         # if there is any error, we raise it here
         api_response.raise_for_status()
         return api_response
-
-

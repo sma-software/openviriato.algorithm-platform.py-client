@@ -37,7 +37,7 @@ class hasDebugString:
     """
     __DebugString: str
 
-    def __init__(self, debug_string: str = None) -> str:
+    def __init__(self, debug_string: str = None):
         if debug_string is not None:
             AlgorithmStatic.assert_parameter_is_str(debug_string, 'debug_string', '__init()__')
         self.__DebugString = debug_string
@@ -48,7 +48,14 @@ class hasDebugString:
 
 
 class AlgorithmNode(hasID, hasCode, hasDebugString):
-    def __init__(self, node_id, code_string, debug_string):
+    __NodeTracks: []
+
+    def __init__(self, node_id: int, code_string: str, debug_string: str, node_tracks: list):
         hasID.__init__(self, node_id)
         hasCode.__init__(self, code_string)
         hasDebugString.__init__(self, debug_string)
+        self.__NodeTracks = node_tracks
+
+    @property  # getter for NodeTracks
+    def NodeTracks(self):
+        return self.__NodeTracks

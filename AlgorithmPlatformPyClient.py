@@ -74,7 +74,7 @@ class AlgorithmicPlatformInterface:
         """
         AlgorithmStatic.assert_parameter_is_str(message_level_1, 'message_level_1', 'notify_user')
         AlgorithmStatic.assert_parameter_is_str(message_level_2, 'message_level_2', 'notify_user')
-        request_body = dict(messageLevel1=message_level_1, messageLevel2=message_level_2)
+        request_body = {'messageLevel1': message_level_1, 'messageLevel2': message_level_2}
         complete_url = self.__merge_base_url_with_request('notifications')
         api_response = self.__currentSession.post(complete_url, json=request_body)
         AlgorithmStatic.check_if_request_successful(api_response)
@@ -88,7 +88,7 @@ class AlgorithmicPlatformInterface:
         AlgorithmStatic.assert_parameter_is_str(short_message, 'short_message', 'show_status_message')
         if not (long_message is None):
             AlgorithmStatic.assert_parameter_is_str(short_message, 'long_message', 'show_status_message')
-        request_body = dict(shortMessage=short_message, longMessage=long_message)
+        request_body = {'shortMessage': short_message, 'longMessage': long_message}
         complete_url = self.__merge_base_url_with_request('status-message')
         api_response = self.__currentSession.post(complete_url, json=request_body)
         AlgorithmStatic.check_if_request_successful(api_response)
@@ -151,14 +151,50 @@ class AlgorithmicPlatformInterface:
         AlgorithmStatic.check_if_request_successful(api_response)
         return initialise_algorithm_section_track_list(api_response.json())
 
-    def GetTrainClassification(self, train_id: int) -> NotImplementedError:
-        NotImplementedError
+    def get_train_classification(self, train_id: int) -> NotImplementedError:
+        raise NotImplementedError
 
-    def GetTrainClassifications(self, train_id: int) -> NotImplementedError:
-        NotImplementedError
+    def get_train_classifications(self, train_id_list: list) -> list:
+        return [self.get_train_classification(train_id) for train_id in train_id_list]
 
+    # train methods
     def get_trains(self, time_window: AlgorithmClasses.AlgorithmTimeWindow) -> NotImplementedError:
-        NotImplementedError
+        raise NotImplementedError
+
+    def get_trains_driving_any_node(self, time_window: AlgorithmClasses.AlgorithmTimeWindow, node_list: list) -> \
+            NotImplementedError:
+        raise NotImplementedError
+
+    def get_trains_cut_to_time_range(self, time_window: AlgorithmClasses.AlgorithmTimeWindow) -> NotImplementedError:
+        raise NotImplementedError
+
+    def get_trains_cut_to_time_range_driving_any_node(self, time_window: AlgorithmClasses.AlgorithmTimeWindow,
+                                                      node_list: list) -> NotImplementedError:
+        raise NotImplementedError
+
+    def cancel_train_from(self, train_path_node_id: int) -> None: # AlgorithmClasses.AlgorithmTrain:
+        # Cancel an existing Algorithm​Train partially and return the resulting Algorithm​Train.
+        AlgorithmStatic.assert_parameter_is_int(train_path_node_id, 'train_path_node_od', 'cancel_train_from')
+        complete_url = self.__merge_base_url_with_request('cancel-train-from')
+        post_request_body = {'trainPathNodeID': train_path_node_id}
+        print(post_request_body)
+        api_response = self.__currentSession.post(complete_url, json=post_request_body)
+        AlgorithmStatic.check_if_request_successful(api_response)
+
+    def cancel_train_to(self, train_path_node_id: int) -> None: # AlgorithmClasses.AlgorithmTrain:
+        # Cancel an existing Algorithm​Train partially and return the resulting Algorithm​Train.
+        AlgorithmStatic.assert_parameter_is_int(train_path_node_id, 'train_path_node_od', 'cancel_train_to')
+        complete_url = self.__merge_base_url_with_request('cancel-train-to')
+        post_request_body = {'trainPathNodeID': train_path_node_id}
+        print(post_request_body)
+        api_response = self.__currentSession.post(complete_url, json=post_request_body)
+        AlgorithmStatic.check_if_request_successful(api_response)
+
+
+
+
+    def get_vehicle_type(self, vehicle_type_id: int) -> NotImplementedError:
+        raise NotImplementedError
 
 
 class AlgorithmicPlatformInterfaceDebug(AlgorithmicPlatformInterface):

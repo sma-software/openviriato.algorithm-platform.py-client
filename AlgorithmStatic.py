@@ -1,5 +1,5 @@
 import requests
-
+import json
 
 def assert_parameter_is_str(received_object: str, object_name: str, method_name: str) -> None:
     assert isinstance(received_object, str), \
@@ -24,7 +24,11 @@ def check_if_request_successful(api_return: requests.Response) -> None:
         api_return.raise_for_status()
     except requests.HTTPError:
         # if there is an error, the algorithm platform supplies us with more information (hopefully)
-        rest_feedback = api_return.json()
+        try:
+            rest_feedback = api_return.json()
+        except json.decoder.JSONDecodeError:
+            # there was no information/json, back to the previous error
+            api_return.raise_for_status()
         raise AlgorithmPlatformError(rest_feedback['statusCode'], rest_feedback['message'])
 
 

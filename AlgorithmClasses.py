@@ -6,6 +6,10 @@ def assert_non_negative_weight(weight: int):
     assert not (weight < 0), 'only non-negative values for weights permitted'
 
 
+def parse_to_datetime(datetime_rawstr: str) -> datetime.datetime:
+    return datetime.datetime.strptime(datetime_rawstr, '%Y-%m-%dT%H:%M:%S')
+
+
 class hasID:
     """
         items in SMA​Algorithm​PlatformAlgorithm​Interface​AIDM  which have an ID.
@@ -87,6 +91,34 @@ class AlgorithmSectionTrack(hasID, hasCode, hasDebugString):
     @property  # getter for SectionCode
     def SectionCode(self) -> str:
         return self.__SectionCode
+
+class AlgorithmTrainPathNode(hasID):
+    raise NotImplementedError
+    __ArrivalTime: datetime.datetime
+    __DepartureTime: datetime.datetime
+
+    def __init__(self, node_id: int, arrival_time: datetime.datetime, departure_time: datetime.datetime):
+        hasID.__init__(self, node_id)
+        self.__ArrivalTime = arrival_time
+        self.__DepartureTime = departure_time
+        self.__FormationID = int
+        self.__MinimumRunTime = int
+        self.__MinimumStopTime = int
+        self.__NodeID = int
+        self.__NodeTrackID = int
+        self.__SectionTrackID = int
+        self.__SequeunceNumber = int
+        self.__StopStatus = None
+
+
+
+class AlgorithmTrain(hasID, hasDebugString):
+
+    def __init__(self, id: int, debug_string: str, train_path_nodes: list):
+        hasID.__init__(self, id)
+        hasDebugString.__init__(self, debug_string)
+
+
 
 
 class AlgorithmTimeWindow:

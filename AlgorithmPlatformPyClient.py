@@ -179,6 +179,7 @@ class AlgorithmicPlatformInterface:
         post_request_body = {'trainPathNodeID': train_path_node_id}
         print(post_request_body)
         api_response = self.__currentSession.post(complete_url, json=post_request_body)
+        print(api_response.json())
         AlgorithmStatic.check_if_request_successful(api_response)
 
     def cancel_train_to(self, train_path_node_id: int) -> None: # AlgorithmClasses.AlgorithmTrain:
@@ -188,6 +189,7 @@ class AlgorithmicPlatformInterface:
         post_request_body = {'trainPathNodeID': train_path_node_id}
         print(post_request_body)
         api_response = self.__currentSession.post(complete_url, json=post_request_body)
+        print(api_response.json())
         AlgorithmStatic.check_if_request_successful(api_response)
 
 

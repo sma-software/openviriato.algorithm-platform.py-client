@@ -16,6 +16,7 @@ import AlgorithmStatic
 class AlgorithmicPlatformInterface:
     """
     Interface to the algorithmic platform of VIRIATO. A wrapper around the REST-API.
+    Supports and is intended to be used in with statements
     """
     __base_url: str
     __session: requests.Session()
@@ -25,7 +26,7 @@ class AlgorithmicPlatformInterface:
         to avoid side effects, it the url "protected" attribute, instantiate a new object if you want to change it
         :type base_url: str
         """
-        AlgorithmStatic.verify_parameter_is_str(base_url, 'base_url', '__init__')
+        AlgorithmStatic.assert_parameter_is_str(base_url, 'base_url', '__init__')
         self.__base_url = base_url
         self.__session = requests.Session()
 
@@ -35,7 +36,7 @@ class AlgorithmicPlatformInterface:
     def __exit__(self, exc_type, exc_val, exc_tb):
         self.__session.close()         # close the connection here
 
-    def __assemble_url_and_request(self, request: str) -> str:
+    def __merge_base_url_with_request(self, request: str) -> str:
         return '{0}/{1}'.format(self.__base_url, request)
 
     @property
@@ -52,10 +53,10 @@ class AlgorithmicPlatformInterface:
         :param message_level_1: str
         :param message_level_2: str
         """
-        AlgorithmStatic.verify_parameter_is_str(message_level_1, 'message_level_1', 'notify_user')
-        AlgorithmStatic.verify_parameter_is_str(message_level_2, 'message_level_2', 'notify_user')
+        AlgorithmStatic.assert_parameter_is_str(message_level_1, 'message_level_1', 'notify_user')
+        AlgorithmStatic.assert_parameter_is_str(message_level_2, 'message_level_2', 'notify_user')
         body = dict(messageLevel1=message_level_1, messageLevel2=message_level_2)
-        complete_url = self.__assemble_url_and_request('notifications')
+        complete_url = self.__merge_base_url_with_request('notifications')
         api_response = self.__session.post(complete_url, json=body)
         AlgorithmStatic.check_if_request_successful(api_response)
 
@@ -65,11 +66,11 @@ class AlgorithmicPlatformInterface:
         :param short_message: str
         :param long_message: str, None if not required
         """
-        AlgorithmStatic.verify_parameter_is_str(short_message, 'short_message', 'show_status_message')
+        AlgorithmStatic.assert_parameter_is_str(short_message, 'short_message', 'show_status_message')
         if not (long_message is None):
-            AlgorithmStatic.verify_parameter_is_str(short_message, 'long_message', 'show_status_message')
+            AlgorithmStatic.assert_parameter_is_str(short_message, 'long_message', 'show_status_message')
         body = dict(shortMessage=short_message, longMessage=long_message)
-        complete_url = self.__assemble_url_and_request('status-message')
+        complete_url = self.__merge_base_url_with_request('status-message')
         api_response = self.__session.post(complete_url, json=body)
         AlgorithmStatic.check_if_request_successful(api_response)
 
@@ -80,9 +81,9 @@ class AlgorithmicPlatformInterface:
         :param node_id: int
         :return: list, containing all tracks
         """
-        AlgorithmStatic.verify_parameter_is_int(node_id, 'node_id', 'get_neighbor_nodes')
+        AlgorithmStatic.assert_parameter_is_int(node_id, 'node_id', 'get_neighbor_nodes')
         url_tail = 'neighbor-nodes/{0}'.format(node_id)
-        complete_url = self.__assemble_url_and_request(url_tail)
+        complete_url = self.__merge_base_url_with_request(url_tail)
         api_response = self.__session.get(complete_url)
         AlgorithmStatic.check_if_request_successful(api_response)
         return api_response.json()
@@ -93,9 +94,9 @@ class AlgorithmicPlatformInterface:
         :param node_id: int
         :return: dict,
         """
-        AlgorithmStatic.verify_parameter_is_int(node_id, 'node_id', 'get_node')
+        AlgorithmStatic.assert_parameter_is_int(node_id, 'node_id', 'get_node')
         url_tail = 'nodes/{0}'.format(node_id)
-        complete_url = self.__assemble_url_and_request(url_tail)
+        complete_url = self.__merge_base_url_with_request(url_tail)
         api_response = self.__session.get(complete_url)
         AlgorithmStatic.check_if_request_successful(api_response)
         return api_response.json()
@@ -107,11 +108,11 @@ class AlgorithmicPlatformInterface:
         :param second_node_id: int
         :return: tuple, containing all tracks, empty if no tracks exist
         """
-        AlgorithmStatic.verify_parameter_is_int(first_node_id, 'first_node_id', 'get_directed_section_tracks')
-        AlgorithmStatic.verify_parameter_is_int(second_node_id, 'second_node_id', 'get_directed_section_tracks')
+        AlgorithmStatic.assert_parameter_is_int(first_node_id, 'first_node_id', 'get_directed_section_tracks')
+        AlgorithmStatic.assert_parameter_is_int(second_node_id, 'second_node_id', 'get_directed_section_tracks')
         # assemble and request
         url_tail = 'section-tracks-between/{0}/{1}'.format(first_node_id, second_node_id)
-        complete_url = self.__assemble_url_and_request(url_tail)
+        complete_url = self.__merge_base_url_with_request(url_tail)
         api_response = self.__session.get(complete_url)
         AlgorithmStatic.check_if_request_successful(api_response)
         return api_response.json()
@@ -124,9 +125,9 @@ class AlgorithmicPlatformInterface:
         :param section_track_id: int
         :return: tuple
         """
-        AlgorithmStatic.verify_parameter_is_int(section_track_id, 'section_track_id', 'get_parallel_section_tracks')
+        AlgorithmStatic.assert_parameter_is_int(section_track_id, 'section_track_id', 'get_parallel_section_tracks')
         url_tail = 'section-tracks-parallel-to/{0}'.format(section_track_id)
-        complete_url = self.__assemble_url_and_request(url_tail)
+        complete_url = self.__merge_base_url_with_request(url_tail)
         api_response = self.__session.get(complete_url)
         AlgorithmStatic.check_if_request_successful(api_response)
         return api_response.json()

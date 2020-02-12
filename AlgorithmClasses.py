@@ -1,7 +1,8 @@
-import AlgorithmStatic
+import AlgorithmVerifyAssertions
 import datetime
 from enum import Enum
 
+# rename to AIDM Classes,
 
 def assert_non_negative_weight(weight: int):
     assert not (weight < 0), 'only non-negative values for weights permitted'
@@ -30,7 +31,7 @@ class hasID:
     __ID: int
 
     def __init__(self, element_id: int):
-        AlgorithmStatic.assert_parameter_is_int(element_id, 'element_id', '__init()__')
+        AlgorithmVerifyAssertions.assert_parameter_is_int(element_id, 'element_id', '__init()__')
         self.__ID = element_id
 
     @property
@@ -42,7 +43,7 @@ class hasCode:
     __Code: str
 
     def __init__(self, code_string: str):
-        AlgorithmStatic.assert_parameter_is_str(code_string, 'code_string', '__init()__')
+        AlgorithmVerifyAssertions.assert_parameter_is_str(code_string, 'code_string', '__init()__')
         self.__Code = code_string
 
     @property
@@ -55,7 +56,7 @@ class hasDebugString:
 
     def __init__(self, debug_string: str = None):
         if debug_string is not None:
-            AlgorithmStatic.assert_parameter_is_str(debug_string, 'debug_string', '__init()__')
+            AlgorithmVerifyAssertions.assert_parameter_is_str(debug_string, 'debug_string', '__init()__')
         self.__DebugString = debug_string
 
     @property
@@ -87,9 +88,9 @@ class AlgorithmSectionTrack(hasID, hasCode, hasDebugString):
         hasID.__init__(self, section_id)
         hasCode.__init__(self, code_string)
         hasDebugString.__init__(self, debug_string)
-        AlgorithmStatic.assert_parameter_is_int(section_weight, 'section_weight', '__init__')
-        assert_non_negative_weight(section_weight)
-        AlgorithmStatic.assert_parameter_is_str(section_code, 'section_code', '__init__')
+        AlgorithmVerifyAssertions.assert_parameter_is_int(section_weight, 'section_weight', '__init__')
+        # assert_non_negative_weight(section_weight) --> is too much
+        AlgorithmVerifyAssertions.assert_parameter_is_str(section_code, 'section_code', '__init__')
         self.__Weight = section_weight
         self.__SectionCode = section_code
 
@@ -134,7 +135,7 @@ class AlgorithmTimeWindow:
         return self.__ToTime
 
 
-class AlgorithmGenericTimeNode:
+class AlgorithmGenericTimeNode: # this is a bad idea, for maintenance in future.
     # no assertions so far!
     __ArrivalTime = datetime.datetime
     __DepartureTime: datetime.datetime
@@ -173,7 +174,7 @@ class UpdateTrainTimesNode(AlgorithmGenericTimeNode):
     def __init__(self, arrival_time: datetime.datetime, departure_time: datetime.datetime, train_path_node_id: int,
                  minimum_run_time: str = None, minimum_stop_time: str = None, stop_status: str = None):
         super().__init__(arrival_time, departure_time, minimum_run_time, minimum_stop_time)
-        AlgorithmStatic.assert_parameter_is_int(train_path_node_id, 'train_path_node_id', '__init__')
+        AlgorithmVerifyAssertions.assert_parameter_is_int(train_path_node_id, 'train_path_node_id', '__init__')
         if not(stop_status is None):
             assert_stop_status(stop_status)
         self.__TrainPathNodeID = train_path_node_id

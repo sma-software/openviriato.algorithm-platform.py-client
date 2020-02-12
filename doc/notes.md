@@ -18,7 +18,6 @@ All Methods according to Documentation of REST-API
 * Trains
 * Assignable Station Tracks
 
-
 ##### Not Implemented
 * Separation Times
 * Headway Times
@@ -28,11 +27,11 @@ All Methods according to Documentation of REST-API
 * Parameters
 * Possessions
 
-
 ###### Questions:
 > resolved - what to return, when there is no return? return an empty list, None ...
 * Generate Objects from JSON, ok? is it sufficient to just check the content?
-
+* Update Train Time: Perform update node by node --> 
+in the example of the API it seems to be that way? --> Updates with list are possible and required!
 
 ###### Firs Review Feedback:
 
@@ -47,3 +46,8 @@ string assembly with request url outside --> not at every call
 some inspiration
 https://stackoverflow.com/questions/6578986/how-to-convert-json-data-into-a-python-object
 
+###### Second Review
+
+No need to check what comes from the platform, no assertions required
+Remove assertions which check data from AlgoPlat!
+Split Data in

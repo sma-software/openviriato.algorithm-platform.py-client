@@ -16,6 +16,7 @@ import json
 
 class JSONObject:
     def __init__(self, json_as_dict):
+        Warning('returning API response as an Object, no check for consistency yet')
         vars(self).update(json_as_dict)
 
 
@@ -63,7 +64,7 @@ class AlgorithmicPlatformInterface:
         return self  # to be used in with context
 
     def __exit__(self, exc_type, exc_val, exc_tb):
-        self.__currentSession.close()  # close the connection here
+        self.__currentSession.close()
 
     def __merge_base_url_with_request(self, request: str) -> str:
         return '{0}/{1}'.format(self.__base_url, request)
@@ -155,7 +156,6 @@ class AlgorithmicPlatformInterface:
         """
         AlgorithmStatic.assert_parameter_is_int(first_node_id, 'first_node_id', 'get_directed_section_tracks')
         AlgorithmStatic.assert_parameter_is_int(second_node_id, 'second_node_id', 'get_directed_section_tracks')
-        # assemble and request
         url_tail = 'section-tracks-between/{0}/{1}'.format(first_node_id, second_node_id)
         api_response = self.__do_get_request(url_tail)
         return initialise_algorithm_section_track_list(api_response.json())
@@ -173,11 +173,14 @@ class AlgorithmicPlatformInterface:
         api_response = self.__do_get_request(url_tail)
         return initialise_algorithm_section_track_list(api_response.json())
 
-    def get_train_classification(self, train_id: int) -> NotImplementedError:
-        raise NotImplementedError
+    def get_train_classification(self, train_id: int) -> dict:
+        AlgorithmStatic.assert_parameter_is_int(train_id, 'train_id', 'get_train_classification')
+        api_response = self.__do_get_request('train-classification/{0}'.format(train_id))
+        raise api_response.json()
 
-    def get_train_classifications(self, train_id_list: list) -> list:
-        return [self.get_train_classification(train_id) for train_id in train_id_list]
+    def get_train_classifications(self) -> dict:
+        api_response = self.__do_get_request('train-classifications')
+        return api_response.json()
 
     # train methods
     def get_trains(self, time_window: AlgorithmClasses.AlgorithmTimeWindow) -> NotImplementedError:
@@ -194,44 +197,43 @@ class AlgorithmicPlatformInterface:
                                                       node_list: list) -> NotImplementedError:
         raise NotImplementedError
 
-    def cancel_train_from(self, train_path_node_id: int) -> None:  # AlgorithmClasses.AlgorithmTrain:
+    def cancel_train_from(self, train_path_node_id: int) -> JSONObject:  # AlgorithmClasses.AlgorithmTrain:
         # Cancel an existing Algorithm​Train partially and return the resulting Algorithm​Train.
         AlgorithmStatic.assert_parameter_is_int(train_path_node_id, 'train_path_node_od', 'cancel_train_from')
         post_request_body = {'trainPathNodeID': train_path_node_id}
         api_response = self.__do_post_request('cancel-train-from', request_body=post_request_body)
         return json.loads(api_response.content, object_hook=JSONObject)
 
-    def cancel_train_to(self, train_path_node_id: int) -> None:  # AlgorithmClasses.AlgorithmTrain:
+    def cancel_train_to(self, train_path_node_id: int) -> JSONObject:  # AlgorithmClasses.AlgorithmTrain:
         # Cancel an existing Algorithm​Train partially and return the resulting Algorithm​Train.
         AlgorithmStatic.assert_parameter_is_int(train_path_node_id, 'train_path_node_od', 'cancel_train_to')
         post_request_body = {'trainPathNodeID': train_path_node_id}
         api_response = self.__do_post_request('cancel-train-to', request_body=post_request_body)
         return json.loads(api_response.content, object_hook=JSONObject)
 
+    def clone_train(self, train_id: int) -> JSONObject:  # AlgorithmClasses.AlgorithmTrain:
+        # Cancel an existing Algorithm​Train partially and return the resulting Algorithm​Train.
+        AlgorithmStatic.assert_parameter_is_int(train_id, 'train_id', 'clone_train')
+        post_request_body = {'TrainID': train_id}
+        api_response = self.__do_post_request('clone-train', request_body=post_request_body)
+        return json.loads(api_response.content, object_hook=JSONObject)
+
+    def reroute_train(self, route: int) -> JSONObject:  # AlgorithmClasses.AlgorithmTrain:
+        raise NotImplementedError
+        # Cancel an existing Algorithm​Train partially and return the resulting Algorithm​Train.
+        assert ()
+
+    def set_station_track(self, train_path_node_id: int, section_track_id: int) -> JSONObject:  # AlgorithmClasses.AlgorithmTrain:
+        AlgorithmStatic.assert_parameter_is_int(train_path_node_id, 'train_path_node_id', 'set_station_track')
+        AlgorithmStatic.assert_parameter_is_int(section_track_id, 'section_track_id', 'set_station_track')
+        post_request_body = {'trainPathNodeID': train_path_node_id, 'sectionTrackID': section_track_id}
+        api_response = self.__do_post_request('set-section-track', request_body=post_request_body)
+        return json.loads(api_response.content, object_hook=JSONObject)
+
+    def update_train_times(self, train_id: int, update_train_times_node: list) -> JSONObject:  # AlgorithmClasses.AlgorithmTrain:
+
+
+
+
     def get_vehicle_type(self, vehicle_type_id: int) -> NotImplementedError:
         raise NotImplementedError
-
-
-class AlgorithmicPlatformInterfaceDebug(AlgorithmicPlatformInterface):
-    """
-    this class is only meant as a debug/etc, not for productive use!
-    Interface to the algorithmic platform of VIRIATO. A wrapper around the REST-API.
-    """
-
-    def some_action(self) -> None:
-        print('nothing to see here, i am a placeholder')
-
-    def do_request(self, request_str, request_type, request_body=None, params_dict=None) -> requests.Response:
-        rest_str = self.__base_url + request_str
-        if request_type == 'GET':
-            api_response = requests.get(rest_str, params=params_dict)
-        elif request_type == 'POST':
-            api_response = requests.post(rest_str, json=request_body)
-        elif request_type == 'PUT':
-            api_response = requests.put(rest_str, json=request_body)
-        else:
-            print('undefined request type, must be GET, POST, PUT')
-            raise
-        # if there is any error, we raise it here
-        api_response.raise_for_status()
-        return api_response

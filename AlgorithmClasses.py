@@ -92,13 +92,54 @@ class AlgorithmSectionTrack(hasID, hasCode, hasDebugString):
     def SectionCode(self) -> str:
         return self.__SectionCode
 
-class AlgorithmTrainPathNode(hasID):
+
+class AlgorithmTimeNode:
+    __ArrivalTime = datetime.datetime
+    __DepartureTime: datetime.datetime
+    __MinimumRunTime: str
+    __MinimumStopTime: str
+
+    def __init__(self, arrival_time: datetime.datetime, departure_time: datetime.datetime,
+                 minimum_run_time: str = None, minimum_stop_time: str = None):
+        self.__ArrivalTime = arrival_time
+        self.__DepartureTime = departure_time
+        self.__MinimumRunTime = minimum_run_time
+        self.__MinimumStopTime = minimum_stop_time
+
+    @property
+    def ArrivalTime(self):
+        return self.__ArrivalTime
+
+    @property
+    def DepartureTime(self):
+        return self.__DepartureTime
+
+    @property
+    def MinimumRunTime(self):
+        return self.__MinimumRunTime
+
+    @property
+    def MinimumStopTime(self):
+        return self.__MinimumStopTime
+
+
+
+
+
+class UpdateTrainTimesNode(AlgorithmTimeNode):
+    def __init__(self, arrival_time: datetime.datetime, departure_time: datetime.datetime, minimum_run_time: str = None,
+                 minimum_stop_time: str = None, ):
+        super().__init__(arrival_time, departure_time, minimum_run_time, minimum_stop_time)
+
+
+class AlgorithmTrainPathNode(hasID, AlgorithmTimeNode):
     # raise NotImplementedError
     __ArrivalTime: datetime.datetime
     __DepartureTime: datetime.datetime
 
     def __init__(self, node_id: int, arrival_time: datetime.datetime, departure_time: datetime.datetime):
         hasID.__init__(self, node_id)
+        AlgorithmTimeNode.__init__(self, arrival_time, departure_time, minimum_run_time, minimum_stop_time)
         self.__ArrivalTime = arrival_time
         self.__DepartureTime = departure_time
         self.__FormationID = int
@@ -107,7 +148,7 @@ class AlgorithmTrainPathNode(hasID):
         self.__NodeID = int
         self.__NodeTrackID = int
         self.__SectionTrackID = int
-        self.__SequeunceNumber = int
+        self.__SequenceNumber = int
         self.__StopStatus = None
 
 

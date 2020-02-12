@@ -124,6 +124,7 @@ def main():
         print(interface_to_viriato.base_url)
         print('url retrieve test complete')
         test_user_notifications(interface_to_viriato)
+        print(interface_to_viriato.get_train_classifications())
 
     with test_object_initialisation() as interface_to_viriato:
         test_get_parallel_section_tracks(interface_to_viriato)
@@ -132,14 +133,14 @@ def main():
         test_algorithm_node_object()
 
     with interface_module.AlgorithmicPlatformInterface(url_str) as interface_to_viriato:
-        for i in range(2):
+        for i in range(50):
             try:
                 interface_to_viriato.cancel_train_to(train_path_node_id=i)
-                NotImplementedError
             except AlgorithmStatic.AlgorithmPlatformError:
                 i
-        interface_to_viriato.cancel_train_from(train_path_node_id=7726)
-        print()
+        obj = interface_to_viriato.cancel_train_from(train_path_node_id=7726)
+        print(obj.TrainPathNodes[0].StopStatus)
+        print(obj)
 
 
 if __name__ == '__main__':

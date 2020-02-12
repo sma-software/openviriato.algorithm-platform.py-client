@@ -7,11 +7,10 @@ __all__ = ['AlgorithmicPlatformInterface']
 __version__ = '0.0.1'
 __author__ = 'Florian Fuchs'
 
-import requests
-import json
 import AlgorithmClasses
-import AlgorithmVerifyAssertions
+import AlgorithmTypeCheck
 import AlgorithmInterfaceCommunicationLayer
+import AlgorithmInterfaceBaseClass
 
 
 def initialise_algorithm_node_from_dict(node_as_dict: dict) -> AlgorithmClasses.AlgorithmNode:
@@ -69,54 +68,12 @@ class AlgorithmTrain(GenericObjectFromJson):
             self.TrainPathNodes[i] = TrainPathNode(self.TrainPathNodes[i])
 
 
-class CommunicationLayer:
-    __base_url: str
-    __currentSession: requests.Session()
-
-    def __init__(self, base_url: str):
-        AlgorithmVerifyAssertions.assert_parameter_is_str(base_url, 'base_url', '__init__')
-        self.__base_url = base_url
-        self.__currentSession = requests.Session()
-
-    def __merge_base_url_with_request(self, request: str) -> str:
-        return '{0}/{1}'.format(self.__base_url, request)
-
-    def __do_get_request(self, request_call: str, request_param: dict = None) -> requests.Response:
-        if request_param is None:
-            request_param = {}
-        complete_url = self.__merge_base_url_with_request(request_call)
-        api_response = self.__currentSession.get(complete_url, params=request_param)
-        AlgorithmVerifyAssertions.check_if_request_successful(api_response)
-        return api_response
-
-    def __do_post_request(self, request_call: str, request_body: dict = None) -> requests.Response:
-        if request_body is None:
-            request_body = {}
-        complete_url = self.__merge_base_url_with_request(request_call)
-        api_response = self.__currentSession.post(complete_url, json=request_body)
-        AlgorithmVerifyAssertions.check_if_request_successful(api_response)
-        return api_response
-
-    def __do_put_request(self, request_call: str, request_body: dict = None) -> requests.Response:
-        if request_body is None:
-            request_body = {}
-        complete_url = self.__merge_base_url_with_request(request_call)
-        api_response = self.__currentSession.put(complete_url, json=request_body)
-        AlgorithmVerifyAssertions.check_if_request_successful(api_response)
-        return api_response
-
-    # end own layer
-
-
 class AlgorithmicPlatformInterface:
-    """
-    Interface to the algorithmic platform of VIRIATO. A wrapper around the REST-API.
-    Supports and is intended to be used in with statements
-    """
-    __communicationLayer: CommunicationLayer
+    __communication_layer: AlgorithmInterfaceCommunicationLayer.CommunicationLayer
 
     def __init__(self, base_url: str):
         self.__communication_layer = AlgorithmInterfaceCommunicationLayer.CommunicationLayer(base_url)
+        print()
 
     def __enter__(self):
         return self  # to be used in with statement
@@ -128,19 +85,16 @@ class AlgorithmicPlatformInterface:
     def base_url(self) -> str:
         return self.__communication_layer.base_url
 
-
-class RestInterface:
-
     def notify_user(self, message_level_1: str, message_level_2: str) -> None:
         """
         Allows to notify the user on the other side of the api
         :param message_level_1: str
         :param message_level_2: str
         """
-        AlgorithmVerifyAssertions.assert_parameter_is_str(message_level_1, 'message_level_1', 'notify_user')
-        AlgorithmVerifyAssertions.assert_parameter_is_str(message_level_2, 'message_level_2', 'notify_user')
+        AlgorithmTypeCheck.assert_parameter_is_str(message_level_1, 'message_level_1', 'notify_user')
+        AlgorithmTypeCheck.assert_parameter_is_str(message_level_2, 'message_level_2', 'notify_user')
         request_body = {'messageLevel1': message_level_1, 'messageLevel2': message_level_2}
-        self.__do_post_request('notifications', request_body)
+        self.__communication_layer.do_post_request('notifications', request_body)
 
     def show_status_message(self, short_message: str, long_message=None) -> None:
         """
@@ -148,11 +102,11 @@ class RestInterface:
         :param short_message: str
         :param long_message: str, None if not required
         """
-        AlgorithmVerifyAssertions.assert_parameter_is_str(short_message, 'short_message', 'show_status_message')
+        AlgorithmTypeCheck.assert_parameter_is_str(short_message, 'short_message', 'show_status_message')
         if not (long_message is None):
-            AlgorithmVerifyAssertions.assert_parameter_is_str(short_message, 'long_message', 'show_status_message')
+            AlgorithmTypeCheck.assert_parameter_is_str(short_message, 'long_message', 'show_status_message')
         request_body = {'shortMessage': short_message, 'longMessage': long_message}
-        self.__do_post_request('status-message', request_body)
+        self.__communication_layer.do_post_request('status-message', request_body)
 
     def get_neighbor_nodes(self, node_id: int) -> list:
         """
@@ -161,9 +115,8 @@ class RestInterface:
         :param node_id: int
         :return: list, containing all tracks
         """
-        AlgorithmVerifyAssertions.assert_parameter_is_int(node_id, 'node_id', 'get_neighbor_nodes')
-        url_tail = 'neighbor-nodes/{0}'.format(node_id)
-        api_response = self.__do_get_request(url_tail)
+        AlgorithmTypeCheck.assert_parameter_is_int(node_id, 'node_id', 'get_neighbor_nodes')
+        api_response = self.__communication_layer.do_get_request('neighbor-nodes/{0}'.format(node_id))
         return initialise_algorithm_node_list(api_response.json())
 
     def get_node(self, node_id: int) -> AlgorithmClasses.AlgorithmNode:
@@ -172,9 +125,8 @@ class RestInterface:
         :param node_id: int
         :return: dict,
         """
-        AlgorithmVerifyAssertions.assert_parameter_is_int(node_id, 'node_id', 'get_node')
-        url_tail = 'nodes/{0}'.format(node_id)
-        api_response = self.__do_get_request(url_tail)
+        AlgorithmTypeCheck.assert_parameter_is_int(node_id, 'node_id', 'get_node')
+        api_response = self.__communication_layer.do_get_request('nodes/{0}'.format(node_id))
         return initialise_algorithm_node_from_dict(api_response.json())
 
     def get_directed_section_tracks(self, first_node_id: int, second_node_id: int) -> list:
@@ -184,10 +136,10 @@ class RestInterface:
         :param second_node_id: int
         :return: tuple, containing all tracks, empty if no tracks exist
         """
-        AlgorithmVerifyAssertions.assert_parameter_is_int(first_node_id, 'first_node_id', 'get_directed_section_tracks')
-        AlgorithmVerifyAssertions.assert_parameter_is_int(second_node_id, 'second_node_id', 'get_directed_section_tracks')
+        AlgorithmTypeCheck.assert_parameter_is_int(first_node_id, 'first_node_id', 'get_directed_section_tracks')
+        AlgorithmTypeCheck.assert_parameter_is_int(second_node_id, 'second_node_id', 'get_directed_section_tracks')
         url_tail = 'section-tracks-between/{0}/{1}'.format(first_node_id, second_node_id)
-        api_response = self.__do_get_request(url_tail)
+        api_response = self.__communication_layer.do_get_request(url_tail)
         return initialise_algorithm_section_track_list(api_response.json())
 
     def get_parallel_section_tracks(self, section_track_id: int) -> list:
@@ -198,66 +150,63 @@ class RestInterface:
         :param section_track_id: int
         :return: tuple
         """
-        AlgorithmVerifyAssertions.assert_parameter_is_int(section_track_id, 'section_track_id', 'get_parallel_section_tracks')
-        url_tail = 'section-tracks-parallel-to/{0}'.format(section_track_id)
-        api_response = self.__do_get_request(url_tail)
+        AlgorithmTypeCheck.assert_parameter_is_int(section_track_id, 'section_track_id', 'get_parallel_section_tracks')
+        api_response = self.__communication_layer.do_get_request(
+            'section-tracks-parallel-to/{0}'.format(section_track_id))
         return initialise_algorithm_section_track_list(api_response.json())
 
     def get_train_classification(self, train_id: int) -> dict:
-        AlgorithmVerifyAssertions.assert_parameter_is_int(train_id, 'train_id', 'get_train_classification')
-        api_response = self.__do_get_request('train-classification/{0}'.format(train_id))
-        raise api_response.json()
+        AlgorithmTypeCheck.assert_parameter_is_int(train_id, 'train_id', 'get_train_classification')
+        api_response = self.__communication_layer.do_get_request('train-classification/{0}'.format(train_id))
+        return api_response.json()
 
     def get_train_classifications(self) -> dict:
-        api_response = self.__do_get_request('train-classifications')
+        api_response = self.__communication_layer.do_get_request('train-classifications')
         return api_response.json()
 
     def cancel_train_from(self, train_path_node_id: int) -> AlgorithmTrain:
         # Cancel an existing Algorithm​Train partially and return the resulting Algorithm​Train.
-        AlgorithmVerifyAssertions.assert_parameter_is_int(train_path_node_id, 'train_path_node_od', 'cancel_train_from')
+        AlgorithmTypeCheck.assert_parameter_is_int(train_path_node_id, 'train_path_node_od', 'cancel_train_from')
         post_request_body = {'trainPathNodeID': train_path_node_id}
-        api_response = self.__do_post_request('cancel-train-from', request_body=post_request_body)
-        return AlgorithmTrain(api_response.json())  # json.loads(api_response.content, object_hook=JSONObject)
+        api_response = self.__communication_layer.do_post_request('cancel-train-from', request_body=post_request_body)
+        return AlgorithmTrain(api_response.json())
 
     def cancel_train_to(self, train_path_node_id: int) -> AlgorithmTrain:
         # Cancel an existing Algorithm​Train partially and return the resulting Algorithm​Train.
-        AlgorithmVerifyAssertions.assert_parameter_is_int(train_path_node_id, 'train_path_node_od', 'cancel_train_to')
+        AlgorithmTypeCheck.assert_parameter_is_int(train_path_node_id, 'train_path_node_od', 'cancel_train_to')
         post_request_body = {'trainPathNodeID': train_path_node_id}
-        api_response = self.__do_post_request('cancel-train-to', request_body=post_request_body)
-        return AlgorithmTrain(api_response.json())  # json.loads(api_response.content, object_hook=JSONObject)
+        api_response = self.__communication_layer.do_post_request('cancel-train-to', request_body=post_request_body)
+        return AlgorithmTrain(api_response.json())
 
     def clone_train(self, train_id: int) -> AlgorithmTrain:
         # Cancel an existing Algorithm​Train partially and return the resulting Algorithm​Train.
-        AlgorithmVerifyAssertions.assert_parameter_is_int(train_id, 'train_id', 'clone_train')
+        AlgorithmTypeCheck.assert_parameter_is_int(train_id, 'train_id', 'clone_train')
         post_request_body = {'TrainID': train_id}
-        api_response = self.__do_post_request('clone-train', request_body=post_request_body)
-        return AlgorithmTrain(api_response.json())  # json.loads(api_response.content, object_hook=JSONObject)
+        api_response = self.__communication_layer.do_post_request('clone-train', request_body=post_request_body)
+        return AlgorithmTrain(api_response.json())
 
     def set_station_track(self, train_path_node_id: int, section_track_id: int) -> AlgorithmTrain:
-        AlgorithmVerifyAssertions.assert_parameter_is_int(train_path_node_id, 'train_path_node_id', 'set_station_track')
-        AlgorithmVerifyAssertions.assert_parameter_is_int(section_track_id, 'section_track_id', 'set_station_track')
+        AlgorithmTypeCheck.assert_parameter_is_int(train_path_node_id, 'train_path_node_id', 'set_station_track')
+        AlgorithmTypeCheck.assert_parameter_is_int(section_track_id, 'section_track_id', 'set_station_track')
         post_request_body = {'trainPathNodeID': train_path_node_id, 'sectionTrackID': section_track_id}
-        api_response = self.__do_post_request('set-section-track', request_body=post_request_body)
-        return AlgorithmTrain(api_response.json())  # json.loads(api_response.content, object_hook=JSONObject)
+        api_response = self.__communication_layer.do_post_request('set-section-track', request_body=post_request_body)
+        return AlgorithmTrain(api_response.json())
 
     def update_train_times(self, train_id: int, update_train_times_node: list) -> AlgorithmTrain:
-        AlgorithmVerifyAssertions.assert_parameter_is_int(train_id, 'train_id', 'update_train_times')
-        assert isinstance(update_train_times_node, list), 'update_train_times_node must be a list of nodes'
-        for node in update_train_times_node:
-            assert isinstance(node, AlgorithmClasses.UpdateTrainTimesNode), \
-                'all objects in update_train_times_node must be of type UpdateTrainTimesNode'
+        AlgorithmTypeCheck.assert_parameter_is_int(train_id, 'train_id', 'update_train_times')
         url_tail = 'trains/{0}/train-path-nodes'.format(train_id)
-        for node in update_train_times_node:
-            put_body = {'TrainPathNodeId': node.TrainPathNodeID, 'ArrivalTime': node.ArrivalTime,
-                        'DepartureTime': node.DepartureTime, 'MinimumRunTime': node.MinimumRunTime,
-                        'MinimumStopTime': node.MinimumStopTime, 'StopStatus': node.StopStatus}
-            api_response = self.__do_put_request(url_tail, request_body=put_body)
+        put_body_list = [{'TrainPathNodeId': node.TrainPathNodeID, 'ArrivalTime': node.ArrivalTime,
+                          'DepartureTime': node.DepartureTime, 'MinimumRunTime': node.MinimumRunTime,
+                          'MinimumStopTime': node.MinimumStopTime, 'StopStatus': node.StopStatus}
+                         for node in update_train_times_node]
+        api_response = self.__communication_layer.do_put_request(url_tail, request_body=put_body_list)
         return AlgorithmTrain(api_response.json())
 
 
 class AlgorithmicPlatformInterfaceIncomplete(AlgorithmicPlatformInterface):
 
-    def reroute_train(self, route: NotImplementedError) -> GenericObjectFromJson:  # AlgorithmClasses.AlgorithmTrain:
+    def reroute_train(self,
+                      route: NotImplementedError) -> GenericObjectFromJson:  # AlgorithmClasses.AlgorithmTrain:
         raise NotImplementedError
         # Cancel an existing Algorithm​Train partially and return the resulting Algorithm​Train.
         assert ()
@@ -273,14 +222,15 @@ class AlgorithmicPlatformInterfaceIncomplete(AlgorithmicPlatformInterface):
             NotImplementedError:
         raise NotImplementedError
 
-    def get_trains_cut_to_time_range(self, time_window: AlgorithmClasses.AlgorithmTimeWindow) -> NotImplementedError:
+    def get_trains_cut_to_time_range(self,
+                                     time_window: AlgorithmClasses.AlgorithmTimeWindow) -> NotImplementedError:
         raise NotImplementedError
 
     def get_trains_cut_to_time_range_driving_any_node(self, time_window: AlgorithmClasses.AlgorithmTimeWindow,
                                                       node_list: list) -> NotImplementedError:
         raise NotImplementedError
 
-        # for attribute_name in attribute_list:
-        # if not (hasattr(self.TrainPathNode, attribute_name)):
-        # AlgorithmStatic.AlgorithmPlatformError('Algorithm Train',
-        # "'attribute {0} is missing'.format(attribute_name))
+    # for attribute_name in attribute_list:
+    # if not (hasattr(self.TrainPathNode, attribute_name)):
+    # AlgorithmStatic.AlgorithmPlatformError('Algorithm Train',
+    # "'attribute {0} is missing'.format(attribute_name))

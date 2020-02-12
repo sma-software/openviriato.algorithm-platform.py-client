@@ -1,7 +1,7 @@
 import requests
 import json
 import AlgorithmClasses
-import AlgorithmVerifyAssertions
+import AlgorithmTypeCheck
 
 
 def custom_dir(c, add): return dir(type(c)) + list(c.__dict__.keys()) + add
@@ -29,7 +29,7 @@ class AlgorithmicPlatformInterface(GetAttr):
     __currentSession: requests.Session()
 
     def __init__(self, base_url: str):
-        AlgorithmVerifyAssertions.assert_parameter_is_str(base_url, 'base_url', '__init__')
+        AlgorithmTypeCheck.assert_parameter_is_str(base_url, 'base_url', '__init__')
         self.__base_url = base_url
         self.__currentSession = requests.Session()
         self.__CommLayer = AlgorithmicPlatformCommuncationLayer()
@@ -60,7 +60,7 @@ class AlgorithmicPlatformCommuncationLayer:
             request_param = {}
         complete_url = self.__merge_base_url_with_request(request_call)
         api_response = self.__currentSession.get(complete_url, params=request_param)
-        AlgorithmVerifyAssertions.check_if_request_successful(api_response)
+        AlgorithmTypeCheck.check_if_request_successful(api_response)
         return api_response
 
     def __do_post_request(self, request_call: str, request_body: dict = None) -> requests.Response:
@@ -68,7 +68,7 @@ class AlgorithmicPlatformCommuncationLayer:
             request_body = {}
         complete_url = self.__merge_base_url_with_request(request_call)
         api_response = self.__currentSession.post(complete_url, json=request_body)
-        AlgorithmVerifyAssertions.check_if_request_successful(api_response)
+        AlgorithmTypeCheck.check_if_request_successful(api_response)
         return api_response
 
     def __do_put_request(self, request_call: str, request_body: dict = None) -> requests.Response:
@@ -76,7 +76,7 @@ class AlgorithmicPlatformCommuncationLayer:
             request_body = {}
         complete_url = self.__merge_base_url_with_request(request_call)
         api_response = self.__currentSession.put(complete_url, json=request_body)
-        AlgorithmVerifyAssertions.check_if_request_successful(api_response)
+        AlgorithmTypeCheck.check_if_request_successful(api_response)
         return api_response
 
 

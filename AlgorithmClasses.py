@@ -20,7 +20,7 @@ class hasID:
         AlgorithmStatic.assert_parameter_is_int(node_id, 'node_id', '__init()__')
         self.__ID = node_id
 
-    @property  # getter for ID
+    @property
     def ID(self) -> int:
         return self.__ID
 
@@ -35,7 +35,7 @@ class hasCode:
         AlgorithmStatic.assert_parameter_is_str(code_string, 'code_string', '__init()__')
         self.__Code = code_string
 
-    @property  # getter for Code
+    @property
     def Code(self) -> str:
         return self.__Code
 
@@ -51,7 +51,7 @@ class hasDebugString:
             AlgorithmStatic.assert_parameter_is_str(debug_string, 'debug_string', '__init()__')
         self.__DebugString = debug_string
 
-    @property  # getter for Code
+    @property
     def DebugString(self):
         return self.__DebugString
 
@@ -67,7 +67,7 @@ class AlgorithmNode(hasID, hasCode, hasDebugString):
             node_tracks = []
         self.__NodeTracks = node_tracks
 
-    @property  # getter for NodeTracks
+    @property
     def NodeTracks(self) -> list:
         return self.__NodeTracks
 
@@ -84,11 +84,11 @@ class AlgorithmSectionTrack(hasID, hasCode, hasDebugString):
         self.__Weight = section_weight
         self.__SectionCode = section_code
 
-    @property  # getter for Weight
+    @property
     def Weight(self) -> int:
         return self.__Weight
 
-    @property  # getter for SectionCode
+    @property
     def SectionCode(self) -> str:
         return self.__SectionCode
 
@@ -123,13 +123,14 @@ class AlgorithmTimeNode:
         return self.__MinimumStopTime
 
 
-
-
-
 class UpdateTrainTimesNode(AlgorithmTimeNode):
+    # missing attributes here:
+
     def __init__(self, arrival_time: datetime.datetime, departure_time: datetime.datetime, minimum_run_time: str = None,
                  minimum_stop_time: str = None, ):
         super().__init__(arrival_time, departure_time, minimum_run_time, minimum_stop_time)
+        raise NotImplementedError
+        # self.
 
 
 class AlgorithmTrainPathNode(hasID, AlgorithmTimeNode):
@@ -137,9 +138,11 @@ class AlgorithmTrainPathNode(hasID, AlgorithmTimeNode):
     __ArrivalTime: datetime.datetime
     __DepartureTime: datetime.datetime
 
-    def __init__(self, node_id: int, arrival_time: datetime.datetime, departure_time: datetime.datetime):
+    def __init__(self, node_id: int, arrival_time: datetime.datetime, departure_time: datetime.datetime,
+                 minimum_run_time, minimum_stop_time):
         hasID.__init__(self, node_id)
         AlgorithmTimeNode.__init__(self, arrival_time, departure_time, minimum_run_time, minimum_stop_time)
+        raise NotImplementedError
         self.__ArrivalTime = arrival_time
         self.__DepartureTime = departure_time
         self.__FormationID = int
@@ -152,13 +155,17 @@ class AlgorithmTrainPathNode(hasID, AlgorithmTimeNode):
         self.__StopStatus = None
 
 
-
 class AlgorithmTrain(hasID, hasDebugString):
+    __trainPathNodes: list
 
     def __init__(self, id: int, debug_string: str, train_path_nodes: list):
         hasID.__init__(self, id)
         hasDebugString.__init__(self, debug_string)
+        self.__trainPathNodes = train_path_nodes
 
+    @property
+    def trainPathNodes(self):
+        return self.__trainPathNodes
 
 
 

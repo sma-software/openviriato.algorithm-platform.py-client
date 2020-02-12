@@ -117,14 +117,15 @@ def main():
 
     test_object_initialisation()
 
-
-
     with interface_module.AlgorithmicPlatformInterface(url_str) as interface_to_viriato:
         # try to retrieve the url:
         print(interface_to_viriato.base_url)
         print('url retrieve test complete')
         test_user_notifications(interface_to_viriato)
-        print(interface_to_viriato.get_train_classifications())
+        try:
+            print(interface_to_viriato.get_train_classifications())
+        except AlgorithmStatic.AlgorithmPlatformError:
+            print('Train classifications not configured')
 
     with test_object_initialisation() as interface_to_viriato:
         test_get_parallel_section_tracks(interface_to_viriato)

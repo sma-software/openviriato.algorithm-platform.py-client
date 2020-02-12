@@ -106,9 +106,7 @@ class AlgorithmicPlatformInterface:
         AlgorithmStatic.assert_parameter_is_str(message_level_1, 'message_level_1', 'notify_user')
         AlgorithmStatic.assert_parameter_is_str(message_level_2, 'message_level_2', 'notify_user')
         request_body = {'messageLevel1': message_level_1, 'messageLevel2': message_level_2}
-        complete_url = self.__merge_base_url_with_request('notifications')
-        api_response = self.__currentSession.post(complete_url, json=request_body)
-        AlgorithmStatic.check_if_request_successful(api_response)
+        self.__do_post_request('notifications', request_body)
 
     def show_status_message(self, short_message: str, long_message=None) -> None:
         """
@@ -120,9 +118,7 @@ class AlgorithmicPlatformInterface:
         if not (long_message is None):
             AlgorithmStatic.assert_parameter_is_str(short_message, 'long_message', 'show_status_message')
         request_body = {'shortMessage': short_message, 'longMessage': long_message}
-        complete_url = self.__merge_base_url_with_request('status-message')
-        api_response = self.__currentSession.post(complete_url, json=request_body)
-        AlgorithmStatic.check_if_request_successful(api_response)
+        self.__do_post_request('status-message', request_body)
 
     def get_neighbor_nodes(self, node_id: int) -> list:
         """
@@ -231,9 +227,7 @@ class AlgorithmicPlatformInterface:
         return json.loads(api_response.content, object_hook=JSONObject)
 
     def update_train_times(self, train_id: int, update_train_times_node: list) -> JSONObject:  # AlgorithmClasses.AlgorithmTrain:
-
-
-
+        raise NotImplementedError
 
     def get_vehicle_type(self, vehicle_type_id: int) -> NotImplementedError:
         raise NotImplementedError

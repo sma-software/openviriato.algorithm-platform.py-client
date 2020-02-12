@@ -244,3 +244,9 @@ class AlgorithmicPlatformInterfaceIncomplete(AlgorithmicPlatformInterface):
     def get_trains_cut_to_time_range_driving_any_node(self, time_window: AlgorithmClasses.AlgorithmTimeWindow,
                                                       node_list: list) -> NotImplementedError:
         raise NotImplementedError
+
+
+class JSONObject:
+    def __init__(self, json_as_dict):
+        Warning('returning response as an Object, no check for consistency')
+        vars(self).update(json_as_dict)

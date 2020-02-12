@@ -7,13 +7,17 @@ def assert_non_negative_weight(weight: int):
     assert not (weight < 0), 'only non-negative values for weights permitted'
 
 
-def parse_to_datetime(datetime_rawstr: str) -> datetime.datetime:
-    return datetime.datetime.strptime(datetime_rawstr, '%Y-%m-%dT%H:%M:%S')
+def parse_to_datetime(datetime_raw_str: str) -> datetime.datetime:
+    return datetime.datetime.strptime(datetime_raw_str, '%Y-%m-%dT%H:%M:%S')
 
 
 def assert_stop_status(stop_status: str) -> None:
     assert isinstance(stop_status, StopStatus), \
         'required to be of type StopStatus\nbut it was a instead: {0}'.format(stop_status.__class__)
+
+
+def assert_datetime(date_time_obj: datetime.datetime):
+    assert isinstance(date_time_obj, datetime.datetime), 'value has to be a datetime object'
 
 
 class StopStatus(Enum):
@@ -98,6 +102,38 @@ class AlgorithmSectionTrack(hasID, hasCode, hasDebugString):
         return self.__SectionCode
 
 
+class AlgorithmTrain(hasID, hasDebugString):
+    __trainPathNodes: list
+
+    def __init__(self, train_id: int, debug_string: str, train_path_nodes: list):
+        hasID.__init__(self, train_id)
+        hasDebugString.__init__(self, debug_string)
+        self.__trainPathNodes = train_path_nodes
+
+    @property
+    def trainPathNodes(self):
+        return self.__trainPathNodes
+
+
+class AlgorithmTimeWindow:
+    __FromTime: datetime.datetime
+    __ToTime: datetime.datetime
+
+    def __init__(self, from_time: datetime.datetime, to_time: datetime.datetime):
+        assert_datetime(from_time)
+        assert_datetime(to_time)
+        self.__FromTime = from_time
+        self.__ToTime = to_time
+
+    @property
+    def FromTime(self):
+        return self.__FromTime
+
+    @property
+    def ToTime(self):
+        return self.__ToTime
+
+
 class AlgorithmGenericTimeNode:
     # no assertions so far!
     __ArrivalTime = datetime.datetime
@@ -138,7 +174,7 @@ class UpdateTrainTimesNode(AlgorithmGenericTimeNode):
                  minimum_run_time: str = None, minimum_stop_time: str = None, stop_status: str = None):
         super().__init__(arrival_time, departure_time, minimum_run_time, minimum_stop_time)
         AlgorithmStatic.assert_parameter_is_int(train_path_node_id, 'train_path_node_id', '__init__')
-        if not stop_status is None:
+        if not(stop_status is None):
             assert_stop_status(stop_status)
         self.__TrainPathNodeID = train_path_node_id
         self.__StopStatus = stop_status
@@ -171,27 +207,6 @@ class AlgorithmTrainPathNode(hasID, AlgorithmGenericTimeNode):
         self.__SectionTrackID = int
         self.__SequenceNumber = int
 
-        if not StopStatus is None:
-            assert_stop_status(stop_status)
-        self.__StopStatus = stop_status
-
-
-class AlgorithmTrain(hasID, hasDebugString):
-    __trainPathNodes: list
-
-    def __init__(self, id: int, debug_string: str, train_path_nodes: list):
-        hasID.__init__(self, id)
-        hasDebugString.__init__(self, debug_string)
-        self.__trainPathNodes = train_path_nodes
-
-    @property
-    def trainPathNodes(self):
-        return self.__trainPathNodes
-
-
-class AlgorithmTimeWindow:
-    __FromTime: datetime
-    __ToTime: datetime
-
-    def __init__(self):
-        raise NotImplementedError
+        # if not StopStatus is None:
+        #     assert_stop_status(stop_status)
+        # self.__StopStatus = stop_status

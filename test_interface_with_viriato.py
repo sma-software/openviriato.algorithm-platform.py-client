@@ -13,8 +13,7 @@ def test_object_initialisation(url_str='http://localhost:8080') -> None:
     try:
         url_nr = 952022
         interface_to_viriato = interface_module.AlgorithmicPlatformInterface(url_nr)
-        # if we made it here, there is something wrong
-        print('was able to insert int as url')
+        print('was able to insert int as url')  # if we made it here, there is something wrong
         raise NotImplementedError
     except AssertionError:
         print('failed to insert int as url')
@@ -41,11 +40,6 @@ def test_user_notifications(interface_to_viriato) -> None:
 
 
 def test_get_directed_section_tracks(interface_to_viriato) -> None:
-    """
-    :return: 0 if passed
-    :rtype: int
-    :type interface_to_viriato: interface_module.AlgorithmicPlatformInterface
-    """
     # lets test the robustness:
     for i in range(1, 50):
         for j in range(1, 50):
@@ -53,23 +47,16 @@ def test_get_directed_section_tracks(interface_to_viriato) -> None:
                 continue
             try:
                 directed_section_tracks = interface_to_viriato.get_directed_section_tracks(i, j)
-                if len(directed_section_tracks) > 0:
-                    print(directed_section_tracks)
-                    for idx in range(len(directed_section_tracks)):
-                        print(directed_section_tracks[idx].ID)
+                # if len(directed_section_tracks) > 0:
+                # print(directed_section_tracks)
+                # for idx in range(len(directed_section_tracks)):
+                #    print(directed_section_tracks[idx].ID)
             except AlgorithmStatic.AlgorithmPlatformError:
                 i
-                # print('at least one of the nodes does not exist')
-
     print('test_get_directed_section_tracks complete')
 
 
-def test_get_node_and_get_neighbor_nodes(interface_to_viriato):
-    """
-    :return: 0 if passed
-    :rtype: int
-    :type interface_to_viriato: interface_module.AlgorithmicPlatformInterface
-    """
+def test_get_node_and_get_neighbor_nodes(interface_to_viriato) -> None:
     # lets test the get_node:
     for i in range(1, 100):
         try:
@@ -80,42 +67,43 @@ def test_get_node_and_get_neighbor_nodes(interface_to_viriato):
     print('test_get_node_and_get_neighbor_nodes complete')
 
 
-def test_get_parallel_section_tracks(interface_to_viriato):
-    """
-    :return: 0 if passed
-    :rtype: int
-    :type interface_to_viriato: interface_module.AlgorithmicPlatformInterface
-    """
+def test_get_parallel_section_tracks(interface_to_viriato) -> None:
     for i in range(1, 1000):
         try:
             track_list = interface_to_viriato.get_parallel_section_tracks(i)
-            if len(track_list) > 0:
-                print(track_list)
-                for idx in range(len(track_list)):
-                    print(track_list[idx].ID)
+            # if len(track_list) > 0:
+            #    for idx in range(len(track_list)):
+            #       print(track_list[idx].ID)
         except AlgorithmStatic.AlgorithmPlatformError:
             i
     print('test_get_parallel_section_tracks complete')
 
 
-def test_algorithm_node_object():
-    test_node = AlgorithmClasses.AlgorithmNode(node_id=1, code_string='someTestNodeID', debug_string='', node_tracks=[])
+def test_algorithm_node_object(node_id=1, code_string='someTestNodeID', debug_string='', node_tracks=[]):
+    test_node = AlgorithmClasses.AlgorithmNode(node_id, code_string, debug_string, node_tracks)
     print(test_node.ID)
     print(test_node.DebugString)
     print(test_node.Code)
 
 
+def test_train_cancellations(interface_to_viriato: interface_module.AlgorithmicPlatformInterface) -> None:
+    for i in range(500, 1000):
+        try:
+            interface_to_viriato.cancel_train_to(train_path_node_id=i)
+        except AlgorithmStatic.AlgorithmPlatformError:
+            i
+    for i in range(500, 1000):
+        try:
+            obj = interface_to_viriato.cancel_train_from(train_path_node_id=i)
+        except AlgorithmStatic.AlgorithmPlatformError:
+            i
+
+
 def main():
     url_str = 'http://localhost:8080'
-    """
-    gathers all tests to check if the client is working as intended. Requires an active Algorithm Platform API
-    :return: int 0
-    """
-
     interface_to_viriato: interface_module.AlgorithmicPlatformInterface
-    test = 1
 
-    test_object_initialisation()
+    test_object_initialisation(url_str)
 
     with interface_module.AlgorithmicPlatformInterface(url_str) as interface_to_viriato:
         # try to retrieve the url:
@@ -127,26 +115,19 @@ def main():
         except AlgorithmStatic.AlgorithmPlatformError:
             print('Train classifications not configured')
 
-    with test_object_initialisation() as interface_to_viriato:
+    with test_object_initialisation(url_str) as interface_to_viriato:
         test_get_parallel_section_tracks(interface_to_viriato)
-        test_get_node_and_get_neighbor_nodes(interface_to_viriato)
         test_get_directed_section_tracks(interface_to_viriato)
-        test_algorithm_node_object()
 
     with interface_module.AlgorithmicPlatformInterface(url_str) as interface_to_viriato:
-        for i in range(50):
-            try:
-                interface_to_viriato.cancel_train_to(train_path_node_id=i)
-            except AlgorithmStatic.AlgorithmPlatformError:
-                i
-        for i in range(5000):
-            try:
-                obj = interface_to_viriato.cancel_train_from(train_path_node_id=i)
-                print(obj.TrainPathNodes[0].StopStatus)
+        test_get_node_and_get_neighbor_nodes(interface_to_viriato)
 
-            except AlgorithmStatic.AlgorithmPlatformError:
-                i
+    with interface_module.AlgorithmicPlatformInterface(url_str) as interface_to_viriato:
+        test_train_cancellations(interface_to_viriato)
 
+    # other tests for the data types
+    test_algorithm_node_object(node_id=1, code_string='TestNodeID', debug_string='test_node', node_tracks=['A', 'B'])
+    UpdateTrainTimesNode = AlgorithmClasses.UpdateTrainTimesNode
 
 
 if __name__ == '__main__':

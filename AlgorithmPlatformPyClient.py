@@ -56,7 +56,7 @@ class AlgorithmicPlatformInterface:
         self.__currentSession = requests.Session()
 
     def __enter__(self):
-        return self  # to be used in with context
+        return self  # to be used in with statement
 
     def __exit__(self, exc_type, exc_val, exc_tb):
         self.__currentSession.close()

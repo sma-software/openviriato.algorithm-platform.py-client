@@ -11,6 +11,12 @@ __author__ = 'Florian Fuchs'
 import requests
 import AlgorithmClasses
 import AlgorithmStatic
+import json
+
+
+class JSONObject:
+    def __init__(self, json_as_dict):
+        vars(self).update(json_as_dict)
 
 
 def initialise_algorithm_node_from_dict(node_as_dict: dict) -> AlgorithmClasses.AlgorithmNode:
@@ -70,7 +76,7 @@ class AlgorithmicPlatformInterface:
         AlgorithmStatic.check_if_request_successful(api_response)
         return api_response
 
-    def __do_post_request(self, request_call: str, request_body: dict=None) -> requests.Response:
+    def __do_post_request(self, request_call: str, request_body: dict = None) -> requests.Response:
         if request_body is None:
             request_body = {}
         complete_url = self.__merge_base_url_with_request(request_call)
@@ -191,22 +197,16 @@ class AlgorithmicPlatformInterface:
     def cancel_train_from(self, train_path_node_id: int) -> None:  # AlgorithmClasses.AlgorithmTrain:
         # Cancel an existing Algorithm​Train partially and return the resulting Algorithm​Train.
         AlgorithmStatic.assert_parameter_is_int(train_path_node_id, 'train_path_node_od', 'cancel_train_from')
-        complete_url = self.__merge_base_url_with_request('cancel-train-from')
         post_request_body = {'trainPathNodeID': train_path_node_id}
-        print(post_request_body)
-        api_response = self.__currentSession.post(complete_url, json=post_request_body)
-        print(api_response.json())
-        AlgorithmStatic.check_if_request_successful(api_response)
+        api_response = self.__do_post_request('cancel-train-from', request_body=post_request_body)
+        return json.loads(api_response.content, object_hook=JSONObject)
 
     def cancel_train_to(self, train_path_node_id: int) -> None:  # AlgorithmClasses.AlgorithmTrain:
         # Cancel an existing Algorithm​Train partially and return the resulting Algorithm​Train.
         AlgorithmStatic.assert_parameter_is_int(train_path_node_id, 'train_path_node_od', 'cancel_train_to')
-        complete_url = self.__merge_base_url_with_request('cancel-train-to')
         post_request_body = {'trainPathNodeID': train_path_node_id}
-        print(post_request_body)
-        api_response = self.__currentSession.post(complete_url, json=post_request_body)
-        print(api_response.json())
-        AlgorithmStatic.check_if_request_successful(api_response)
+        api_response = self.__do_post_request('cancel-train-to', request_body=post_request_body)
+        return json.loads(api_response.content, object_hook=JSONObject)
 
     def get_vehicle_type(self, vehicle_type_id: int) -> NotImplementedError:
         raise NotImplementedError

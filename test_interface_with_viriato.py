@@ -117,15 +117,7 @@ def main():
 
     test_object_initialisation()
 
-    with interface_module.AlgorithmicPlatformInterface(url_str) as interface_to_viriato:
-        for i in range(2):
-            try:
-                interface_to_viriato.cancel_train_to(train_path_node_id=i)
-                NotImplementedError
-            except AlgorithmStatic.AlgorithmPlatformError:
-                i
-        interface_to_viriato.cancel_train_from(train_path_node_id=7726)
-        print()
+
 
     with interface_module.AlgorithmicPlatformInterface(url_str) as interface_to_viriato:
         # try to retrieve the url:
@@ -138,6 +130,16 @@ def main():
         test_get_node_and_get_neighbor_nodes(interface_to_viriato)
         test_get_directed_section_tracks(interface_to_viriato)
         test_algorithm_node_object()
+
+    with interface_module.AlgorithmicPlatformInterface(url_str) as interface_to_viriato:
+        for i in range(2):
+            try:
+                interface_to_viriato.cancel_train_to(train_path_node_id=i)
+                NotImplementedError
+            except AlgorithmStatic.AlgorithmPlatformError:
+                i
+        interface_to_viriato.cancel_train_from(train_path_node_id=7726)
+        print()
 
 
 if __name__ == '__main__':

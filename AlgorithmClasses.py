@@ -93,7 +93,7 @@ class AlgorithmSectionTrack(hasID, hasCode, hasDebugString):
         return self.__SectionCode
 
 class AlgorithmTrainPathNode(hasID):
-    raise NotImplementedError
+    # raise NotImplementedError
     __ArrivalTime: datetime.datetime
     __DepartureTime: datetime.datetime
 

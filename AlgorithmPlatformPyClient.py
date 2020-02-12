@@ -62,6 +62,30 @@ class AlgorithmicPlatformInterface:
     def __merge_base_url_with_request(self, request: str) -> str:
         return '{0}/{1}'.format(self.__base_url, request)
 
+    def __do_get_request(self, request_call: str, request_param: dict = None) -> requests.Response:
+        if request_param is None:
+            request_param = {}
+        complete_url = self.__merge_base_url_with_request(request_call)
+        api_response = self.__currentSession.get(complete_url, params=request_param)
+        AlgorithmStatic.check_if_request_successful(api_response)
+        return api_response
+
+    def __do_post_request(self, request_call: str, request_body: dict=None) -> requests.Response:
+        if request_body is None:
+            request_body = {}
+        complete_url = self.__merge_base_url_with_request(request_call)
+        api_response = self.__currentSession.post(complete_url, json=request_body)
+        AlgorithmStatic.check_if_request_successful(api_response)
+        return api_response
+
+    def __do_put_request(self, request_call: str, request_body: dict = None) -> requests.Response:
+        if request_body is None:
+            request_body = {}
+        complete_url = self.__merge_base_url_with_request(request_call)
+        api_response = self.__currentSession.put(complete_url, json=request_body)
+        AlgorithmStatic.check_if_request_successful(api_response)
+        return api_response
+
     @property
     def base_url(self) -> str:
         return self.__base_url
@@ -102,9 +126,7 @@ class AlgorithmicPlatformInterface:
         """
         AlgorithmStatic.assert_parameter_is_int(node_id, 'node_id', 'get_neighbor_nodes')
         url_tail = 'neighbor-nodes/{0}'.format(node_id)
-        complete_url = self.__merge_base_url_with_request(url_tail)
-        api_response = self.__currentSession.get(complete_url)
-        AlgorithmStatic.check_if_request_successful(api_response)
+        api_response = self.__do_get_request(url_tail)
         return initialise_algorithm_node_list(api_response.json())
 
     def get_node(self, node_id: int) -> AlgorithmClasses.AlgorithmNode:
@@ -115,9 +137,7 @@ class AlgorithmicPlatformInterface:
         """
         AlgorithmStatic.assert_parameter_is_int(node_id, 'node_id', 'get_node')
         url_tail = 'nodes/{0}'.format(node_id)
-        complete_url = self.__merge_base_url_with_request(url_tail)
-        api_response = self.__currentSession.get(complete_url)
-        AlgorithmStatic.check_if_request_successful(api_response)
+        api_response = self.__do_get_request(url_tail)
         return initialise_algorithm_node_from_dict(api_response.json())
 
     def get_directed_section_tracks(self, first_node_id: int, second_node_id: int) -> list:
@@ -131,9 +151,7 @@ class AlgorithmicPlatformInterface:
         AlgorithmStatic.assert_parameter_is_int(second_node_id, 'second_node_id', 'get_directed_section_tracks')
         # assemble and request
         url_tail = 'section-tracks-between/{0}/{1}'.format(first_node_id, second_node_id)
-        complete_url = self.__merge_base_url_with_request(url_tail)
-        api_response = self.__currentSession.get(complete_url)
-        AlgorithmStatic.check_if_request_successful(api_response)
+        api_response = self.__do_get_request(url_tail)
         return initialise_algorithm_section_track_list(api_response.json())
 
     def get_parallel_section_tracks(self, section_track_id: int) -> list:
@@ -146,9 +164,7 @@ class AlgorithmicPlatformInterface:
         """
         AlgorithmStatic.assert_parameter_is_int(section_track_id, 'section_track_id', 'get_parallel_section_tracks')
         url_tail = 'section-tracks-parallel-to/{0}'.format(section_track_id)
-        complete_url = self.__merge_base_url_with_request(url_tail)
-        api_response = self.__currentSession.get(complete_url)
-        AlgorithmStatic.check_if_request_successful(api_response)
+        api_response = self.__do_get_request(url_tail)
         return initialise_algorithm_section_track_list(api_response.json())
 
     def get_train_classification(self, train_id: int) -> NotImplementedError:
@@ -172,7 +188,7 @@ class AlgorithmicPlatformInterface:
                                                       node_list: list) -> NotImplementedError:
         raise NotImplementedError
 
-    def cancel_train_from(self, train_path_node_id: int) -> None: # AlgorithmClasses.AlgorithmTrain:
+    def cancel_train_from(self, train_path_node_id: int) -> None:  # AlgorithmClasses.AlgorithmTrain:
         # Cancel an existing Algorithm​Train partially and return the resulting Algorithm​Train.
         AlgorithmStatic.assert_parameter_is_int(train_path_node_id, 'train_path_node_od', 'cancel_train_from')
         complete_url = self.__merge_base_url_with_request('cancel-train-from')
@@ -182,7 +198,7 @@ class AlgorithmicPlatformInterface:
         print(api_response.json())
         AlgorithmStatic.check_if_request_successful(api_response)
 
-    def cancel_train_to(self, train_path_node_id: int) -> None: # AlgorithmClasses.AlgorithmTrain:
+    def cancel_train_to(self, train_path_node_id: int) -> None:  # AlgorithmClasses.AlgorithmTrain:
         # Cancel an existing Algorithm​Train partially and return the resulting Algorithm​Train.
         AlgorithmStatic.assert_parameter_is_int(train_path_node_id, 'train_path_node_od', 'cancel_train_to')
         complete_url = self.__merge_base_url_with_request('cancel-train-to')
@@ -191,9 +207,6 @@ class AlgorithmicPlatformInterface:
         api_response = self.__currentSession.post(complete_url, json=post_request_body)
         print(api_response.json())
         AlgorithmStatic.check_if_request_successful(api_response)
-
-
-
 
     def get_vehicle_type(self, vehicle_type_id: int) -> NotImplementedError:
         raise NotImplementedError

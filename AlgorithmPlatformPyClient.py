@@ -1,7 +1,6 @@
 """
 This is the module intended to act as an interface to the algorithmic platform of VIRIATO
-It wraps around the REST-API to enhance the usability
-It consists on one hand of the interface as well as the various requests.
+Wraps around the REST-API to enhance the usability. It consists of the interface with the requests as methods.
 """
 
 __all__ = ['AlgorithmicPlatformInterface']
@@ -9,15 +8,9 @@ __version__ = '0.0.1'
 __author__ = 'Florian Fuchs'
 
 import requests
+import json
 import AlgorithmClasses
 import AlgorithmStatic
-import json
-
-
-class JSONObject:
-    def __init__(self, json_as_dict):
-        Warning('returning API response as an Object, no check for consistency yet')
-        vars(self).update(json_as_dict)
 
 
 def initialise_algorithm_node_from_dict(node_as_dict: dict) -> AlgorithmClasses.AlgorithmNode:
@@ -41,6 +34,12 @@ def initialise_algorithm_section_track_from_dict(section_track_as_dict: dict) ->
 
 def initialise_algorithm_section_track_list(list_of_sections_dict: list) -> list:
     return [initialise_algorithm_section_track_from_dict(section_as_dict) for section_as_dict in list_of_sections_dict]
+
+
+class JSONObject:
+    def __init__(self, json_as_dict):
+        Warning('returning response as an Object, no check for consistency')
+        vars(self).update(json_as_dict)
 
 
 class AlgorithmicPlatformInterface:
@@ -195,11 +194,6 @@ class AlgorithmicPlatformInterface:
         api_response = self.__do_post_request('clone-train', request_body=post_request_body)
         return json.loads(api_response.content, object_hook=JSONObject)
 
-    def reroute_train(self, route: NotImplementedError) -> JSONObject:  # AlgorithmClasses.AlgorithmTrain:
-        raise NotImplementedError
-        # Cancel an existing Algorithm​Train partially and return the resulting Algorithm​Train.
-        assert ()
-
     def set_station_track(self, train_path_node_id: int,
                           section_track_id: int) -> JSONObject:  # AlgorithmClasses.AlgorithmTrain:
         AlgorithmStatic.assert_parameter_is_int(train_path_node_id, 'train_path_node_id', 'set_station_track')
@@ -214,7 +208,7 @@ class AlgorithmicPlatformInterface:
         assert isinstance(update_train_times_node, list), 'update_train_times_node must be a list of nodes'
         for node in update_train_times_node:
             assert isinstance(node, AlgorithmClasses.UpdateTrainTimesNode), \
-                    'all objects in update_train_times_node must be of type UpdateTrainTimesNode'
+                'all objects in update_train_times_node must be of type UpdateTrainTimesNode'
         url_tail = 'trains/{0}/train-path-nodes'.format(train_id)
         latest_api_content = None
         for node in update_train_times_node:
@@ -227,6 +221,11 @@ class AlgorithmicPlatformInterface:
 
 
 class AlgorithmicPlatformInterfaceIncomplete(AlgorithmicPlatformInterface):
+
+    def reroute_train(self, route: NotImplementedError) -> JSONObject:  # AlgorithmClasses.AlgorithmTrain:
+        raise NotImplementedError
+        # Cancel an existing Algorithm​Train partially and return the resulting Algorithm​Train.
+        assert ()
 
     def get_vehicle_type(self, vehicle_type_id: int) -> NotImplementedError:
         raise NotImplementedError

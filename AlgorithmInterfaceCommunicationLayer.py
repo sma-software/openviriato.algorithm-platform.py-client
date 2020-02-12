@@ -15,10 +15,10 @@ def check_if_request_successful(api_return: requests.Response) -> None:
         # if there is an error, the algorithm platform supplies us with more information (hopefully)
         try:
             rest_feedback = api_return.json()
+            raise AlgorithmPlatformError(rest_feedback['statusCode'], rest_feedback['message'])
         except json.decoder.JSONDecodeError:
             # there was no information/json, back to the previous error
             api_return.raise_for_status()
-        raise AlgorithmPlatformError(rest_feedback['statusCode'], rest_feedback['message'])
 
 
 class AlgorithmPlatformError(Exception):

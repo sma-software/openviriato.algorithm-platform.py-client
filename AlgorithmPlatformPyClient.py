@@ -230,7 +230,3 @@ class AlgorithmicPlatformInterfaceIncomplete(AlgorithmicPlatformInterface):
                                                       node_list: list) -> NotImplementedError:
         raise NotImplementedError
 
-    # for attribute_name in attribute_list:
-    # if not (hasattr(self.TrainPathNode, attribute_name)):
-    # AlgorithmStatic.AlgorithmPlatformError('Algorithm Train',
-    # "'attribute {0} is missing'.format(attribute_name))

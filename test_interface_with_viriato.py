@@ -108,8 +108,8 @@ def main():
     test_object_initialisation(url_str)
 
     with interface_module.AlgorithmicPlatformInterface(url_str) as interface_to_viriato:
-        # test_train_cancellations(interface_to_viriato)
-        print()
+        test_train_cancellations(interface_to_viriato)
+        print('test_train_cancellations complete')
 
     with interface_module.AlgorithmicPlatformInterface(url_str) as interface_to_viriato:
         # try to retrieve the url:

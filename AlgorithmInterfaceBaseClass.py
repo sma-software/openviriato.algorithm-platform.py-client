@@ -11,7 +11,6 @@ class AlgorithmicPlatformBaseClass:
 
     def __init__(self, base_url: str):
         self.__communication_layer = AlgorithmInterfaceCommunicationLayer.CommunicationLayer(base_url)
-        print()
 
     def __enter__(self):
         return self  # to be used in with statement

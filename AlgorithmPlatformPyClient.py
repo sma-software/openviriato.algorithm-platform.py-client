@@ -52,10 +52,6 @@ class AlgorithmicPlatformInterface:
     __currentSession: requests.Session()
 
     def __init__(self, base_url: str):
-        """
-        to avoid side effects, it the url "protected" attribute, instantiate a new object if you want to change it
-        :type base_url: str
-        """
         AlgorithmStatic.assert_parameter_is_str(base_url, 'base_url', '__init__')
         self.__base_url = base_url
         self.__currentSession = requests.Session()
@@ -178,21 +174,6 @@ class AlgorithmicPlatformInterface:
         api_response = self.__do_get_request('train-classifications')
         return api_response.json()
 
-    # train methods
-    def get_trains(self, time_window: AlgorithmClasses.AlgorithmTimeWindow) -> NotImplementedError:
-        raise NotImplementedError
-
-    def get_trains_driving_any_node(self, time_window: AlgorithmClasses.AlgorithmTimeWindow, node_list: list) -> \
-            NotImplementedError:
-        raise NotImplementedError
-
-    def get_trains_cut_to_time_range(self, time_window: AlgorithmClasses.AlgorithmTimeWindow) -> NotImplementedError:
-        raise NotImplementedError
-
-    def get_trains_cut_to_time_range_driving_any_node(self, time_window: AlgorithmClasses.AlgorithmTimeWindow,
-                                                      node_list: list) -> NotImplementedError:
-        raise NotImplementedError
-
     def cancel_train_from(self, train_path_node_id: int) -> JSONObject:  # AlgorithmClasses.AlgorithmTrain:
         # Cancel an existing Algorithm​Train partially and return the resulting Algorithm​Train.
         AlgorithmStatic.assert_parameter_is_int(train_path_node_id, 'train_path_node_od', 'cancel_train_from')
@@ -214,20 +195,53 @@ class AlgorithmicPlatformInterface:
         api_response = self.__do_post_request('clone-train', request_body=post_request_body)
         return json.loads(api_response.content, object_hook=JSONObject)
 
-    def reroute_train(self, route: int) -> JSONObject:  # AlgorithmClasses.AlgorithmTrain:
+    def reroute_train(self, route: NotImplementedError) -> JSONObject:  # AlgorithmClasses.AlgorithmTrain:
         raise NotImplementedError
         # Cancel an existing Algorithm​Train partially and return the resulting Algorithm​Train.
         assert ()
 
-    def set_station_track(self, train_path_node_id: int, section_track_id: int) -> JSONObject:  # AlgorithmClasses.AlgorithmTrain:
+    def set_station_track(self, train_path_node_id: int,
+                          section_track_id: int) -> JSONObject:  # AlgorithmClasses.AlgorithmTrain:
         AlgorithmStatic.assert_parameter_is_int(train_path_node_id, 'train_path_node_id', 'set_station_track')
         AlgorithmStatic.assert_parameter_is_int(section_track_id, 'section_track_id', 'set_station_track')
         post_request_body = {'trainPathNodeID': train_path_node_id, 'sectionTrackID': section_track_id}
         api_response = self.__do_post_request('set-section-track', request_body=post_request_body)
         return json.loads(api_response.content, object_hook=JSONObject)
 
-    def update_train_times(self, train_id: int, update_train_times_node: list) -> JSONObject:  # AlgorithmClasses.AlgorithmTrain:
-        raise NotImplementedError
+    def update_train_times(self, train_id: int,
+                           update_train_times_node: list) -> JSONObject:  # AlgorithmClasses.AlgorithmTrain:
+        AlgorithmStatic.assert_parameter_is_int(train_id)
+        assert isinstance(update_train_times_node, list), 'update_train_times_node must be a list of nodes'
+        for node in update_train_times_node:
+            assert isinstance(node, AlgorithmClasses.UpdateTrainTimesNode), \
+                    'all objects in update_train_times_node must be of type UpdateTrainTimesNode'
+        url_tail = 'trains/{0}/train-path-nodes'.format(train_id)
+        latest_api_content = None
+        for node in update_train_times_node:
+            put_body = {'TrainPathNodeId': node.TrainPathNodeID, 'ArrivalTime': node.ArrivalTime,
+                        'DepartureTime': node.DepartureTime, 'MinimumRunTime': node.MinimumRunTime,
+                        'MinimumStopTime': node.MinimumStopTime, 'StopStatus': node.StopStatus}
+            api_response = self.__do_put_request(url_tail, request_body=put_body)
+            latest_api_content = api_response.content
+        return json.loads(latest_api_content, object_hook=JSONObject)
+
+
+class AlgorithmicPlatformInterfaceIncomplete(AlgorithmicPlatformInterface):
 
     def get_vehicle_type(self, vehicle_type_id: int) -> NotImplementedError:
+        raise NotImplementedError
+
+    # train methods
+    def get_trains(self, time_window: AlgorithmClasses.AlgorithmTimeWindow) -> NotImplementedError:
+        raise NotImplementedError
+
+    def get_trains_driving_any_node(self, time_window: AlgorithmClasses.AlgorithmTimeWindow, node_list: list) -> \
+            NotImplementedError:
+        raise NotImplementedError
+
+    def get_trains_cut_to_time_range(self, time_window: AlgorithmClasses.AlgorithmTimeWindow) -> NotImplementedError:
+        raise NotImplementedError
+
+    def get_trains_cut_to_time_range_driving_any_node(self, time_window: AlgorithmClasses.AlgorithmTimeWindow,
+                                                      node_list: list) -> NotImplementedError:
         raise NotImplementedError

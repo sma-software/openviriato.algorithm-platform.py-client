@@ -139,9 +139,14 @@ def main():
                 interface_to_viriato.cancel_train_to(train_path_node_id=i)
             except AlgorithmStatic.AlgorithmPlatformError:
                 i
-        obj = interface_to_viriato.cancel_train_from(train_path_node_id=7726)
-        print(obj.TrainPathNodes[0].StopStatus)
-        print(obj)
+        for i in range(5000):
+            try:
+                obj = interface_to_viriato.cancel_train_from(train_path_node_id=i)
+                print(obj.TrainPathNodes[0].StopStatus)
+
+            except AlgorithmStatic.AlgorithmPlatformError:
+                i
+
 
 
 if __name__ == '__main__':

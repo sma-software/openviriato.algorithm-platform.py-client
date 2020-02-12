@@ -1,5 +1,6 @@
 import AlgorithmStatic
 import datetime
+from enum import Enum
 
 
 def assert_non_negative_weight(weight: int):
@@ -10,12 +11,23 @@ def parse_to_datetime(datetime_rawstr: str) -> datetime.datetime:
     return datetime.datetime.strptime(datetime_rawstr, '%Y-%m-%dT%H:%M:%S')
 
 
+def assert_stop_status(stop_status: str) -> None:
+    assert isinstance(stop_status, StopStatus), \
+        'required to be of type StopStatus\nbut it was a instead: {0}'.format(stop_status.__class__)
+
+
+class StopStatus(Enum):
+    CommercialStop = 0
+    OperationalStop = 1
+    Passing = 2
+
+
 class hasID:
     __ID: int
 
-    def __init__(self, node_id: int):
-        AlgorithmStatic.assert_parameter_is_int(node_id, 'node_id', '__init()__')
-        self.__ID = node_id
+    def __init__(self, element_id: int):
+        AlgorithmStatic.assert_parameter_is_int(element_id, 'element_id', '__init()__')
+        self.__ID = element_id
 
     @property
     def ID(self) -> int:
@@ -68,10 +80,12 @@ class AlgorithmSectionTrack(hasID, hasCode, hasDebugString):
     __SectionCode: str
 
     def __init__(self, section_id: int, code_string: str, debug_string: str, section_weight: int, section_code: str):
-        assert_non_negative_weight(section_weight)
         hasID.__init__(self, section_id)
         hasCode.__init__(self, code_string)
         hasDebugString.__init__(self, debug_string)
+        AlgorithmStatic.assert_parameter_is_int(section_weight, 'section_weight', '__init__')
+        assert_non_negative_weight(section_weight)
+        AlgorithmStatic.assert_parameter_is_str(section_code, 'section_code', '__init__')
         self.__Weight = section_weight
         self.__SectionCode = section_code
 
@@ -84,7 +98,8 @@ class AlgorithmSectionTrack(hasID, hasCode, hasDebugString):
         return self.__SectionCode
 
 
-class AlgorithmTimeNode:
+class AlgorithmGenericTimeNode:
+    # no assertions so far!
     __ArrivalTime = datetime.datetime
     __DepartureTime: datetime.datetime
     __MinimumRunTime: str
@@ -114,36 +129,51 @@ class AlgorithmTimeNode:
         return self.__MinimumStopTime
 
 
-class UpdateTrainTimesNode(AlgorithmTimeNode):
-    # missing attributes here:
+# NotImplemented!!,
+class UpdateTrainTimesNode(AlgorithmGenericTimeNode):
+    __TrainPathNodeID: int
+    __StopStatus: str = None
 
-    def __init__(self, arrival_time: datetime.datetime, departure_time: datetime.datetime, minimum_run_time: str = None,
-                 minimum_stop_time: str = None, ):
+    def __init__(self, arrival_time: datetime.datetime, departure_time: datetime.datetime, train_path_node_id: int,
+                 minimum_run_time: str = None, minimum_stop_time: str = None, stop_status: str = None):
         super().__init__(arrival_time, departure_time, minimum_run_time, minimum_stop_time)
-        raise NotImplementedError
-        # self.
+        AlgorithmStatic.assert_parameter_is_int(train_path_node_id, 'train_path_node_id', '__init__')
+        if not stop_status is None:
+            assert_stop_status(stop_status)
+        self.__TrainPathNodeID = train_path_node_id
+        self.__StopStatus = stop_status
+
+    @property
+    def TrainPathNodeID(self):
+        return self.__TrainPathNodeID
+
+    @property
+    def StopStatus(self):
+        return self.__StopStatus
 
 
-class AlgorithmTrainPathNode(hasID, AlgorithmTimeNode):
-    # raise NotImplementedError
-    __ArrivalTime: datetime.datetime
-    __DepartureTime: datetime.datetime
+# NotImplemented!!,
+class AlgorithmTrainPathNode(hasID, AlgorithmGenericTimeNode):
+    __FormationID: int
+    __NodeID: int
+    __NodeTrackID: int
+    __SectionTrackID: int = None
+    __SequenceNumber: int
+    __StopStatus: str
 
     def __init__(self, node_id: int, arrival_time: datetime.datetime, departure_time: datetime.datetime,
                  minimum_run_time, minimum_stop_time):
         hasID.__init__(self, node_id)
-        AlgorithmTimeNode.__init__(self, arrival_time, departure_time, minimum_run_time, minimum_stop_time)
-        raise NotImplementedError
-        self.__ArrivalTime = arrival_time
-        self.__DepartureTime = departure_time
+        AlgorithmGenericTimeNode.__init__(self, arrival_time, departure_time, minimum_run_time, minimum_stop_time)
         self.__FormationID = int
-        self.__MinimumRunTime = int
-        self.__MinimumStopTime = int
         self.__NodeID = int
         self.__NodeTrackID = int
         self.__SectionTrackID = int
         self.__SequenceNumber = int
-        self.__StopStatus = None
+
+        if not StopStatus is None:
+            assert_stop_status(stop_status)
+        self.__StopStatus = stop_status
 
 
 class AlgorithmTrain(hasID, hasDebugString):
@@ -157,7 +187,6 @@ class AlgorithmTrain(hasID, hasDebugString):
     @property
     def trainPathNodes(self):
         return self.__trainPathNodes
-
 
 
 class AlgorithmTimeWindow:

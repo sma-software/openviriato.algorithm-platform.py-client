@@ -36,10 +36,36 @@ def initialise_algorithm_section_track_list(list_of_sections_dict: list) -> list
     return [initialise_algorithm_section_track_from_dict(section_as_dict) for section_as_dict in list_of_sections_dict]
 
 
+def check_attributes_by_list(obj, attribute_names: list):
+    for attribute_name in attribute_names:
+        assert (hasattr(obj, attribute_name)), 'attribute {0} is missing'.format(attribute_name)
+
+
 class JSONObject:
     def __init__(self, json_as_dict):
-        Warning('returning response as an Object, no check for consistency')
         vars(self).update(json_as_dict)
+
+
+class TrainPathNode(JSONObject):
+    def __init__(self, json_as_dict: dict):
+        JSONObject.__init__(self, json_as_dict)
+        train_path_nodes_attribute_list = ['ID', 'SectionTrackID', 'NodeID', 'NodeTrackID', 'FormationID',
+                                           'ArrivalTime',
+                                           'DepartureTime', 'MinimumRunTime', 'MinimumStopTime', 'StopStatus',
+                                           'SequenceNumber']
+        check_attributes_by_list(self, train_path_nodes_attribute_list)
+
+
+class AlgorithmTrain(JSONObject):
+    TrainPathNodes: dict
+
+    def __init__(self, json_as_dict: dict):
+        JSONObject.__init__(self, json_as_dict)
+        attribute_list = ['ID', 'DebugString', 'TrainPathNodes']
+        check_attributes_by_list(self, attribute_list)
+        # cast train path nodes:
+        for i in range(len(self.TrainPathNodes)):
+            self.TrainPathNodes[i] = TrainPathNode(self.TrainPathNodes[i])
 
 
 class AlgorithmicPlatformInterface:
@@ -173,12 +199,13 @@ class AlgorithmicPlatformInterface:
         api_response = self.__do_get_request('train-classifications')
         return api_response.json()
 
-    def cancel_train_from(self, train_path_node_id: int) -> JSONObject:  # AlgorithmClasses.AlgorithmTrain:
+    def cancel_train_from(self, train_path_node_id: int) -> AlgorithmTrain:
         # Cancel an existing Algorithm​Train partially and return the resulting Algorithm​Train.
         AlgorithmStatic.assert_parameter_is_int(train_path_node_id, 'train_path_node_od', 'cancel_train_from')
         post_request_body = {'trainPathNodeID': train_path_node_id}
         api_response = self.__do_post_request('cancel-train-from', request_body=post_request_body)
-        return json.loads(api_response.content, object_hook=JSONObject)
+
+        return AlgorithmTrain(api_response.json())  # json.loads(api_response.content, object_hook=JSONObject)
 
     def cancel_train_to(self, train_path_node_id: int) -> JSONObject:  # AlgorithmClasses.AlgorithmTrain:
         # Cancel an existing Algorithm​Train partially and return the resulting Algorithm​Train.
@@ -245,8 +272,7 @@ class AlgorithmicPlatformInterfaceIncomplete(AlgorithmicPlatformInterface):
                                                       node_list: list) -> NotImplementedError:
         raise NotImplementedError
 
-
-class JSONObject:
-    def __init__(self, json_as_dict):
-        Warning('returning response as an Object, no check for consistency')
-        vars(self).update(json_as_dict)
+        # for attribute_name in attribute_list:
+        # if not (hasattr(self.TrainPathNode, attribute_name)):
+        # AlgorithmStatic.AlgorithmPlatformError('Algorithm Train',
+        # "'attribute {0} is missing'.format(attribute_name))

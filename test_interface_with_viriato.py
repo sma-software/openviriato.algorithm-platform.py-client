@@ -5,9 +5,10 @@ A test script that requires an REST-API of the VIRIATO-Algorithm Platform
 import AlgorithmPlatformPyClient as interface_module
 import AlgorithmClasses
 import AlgorithmStatic
+from datetime import datetime
 
 
-def test_object_initialisation(url_str='http://localhost:8080') -> None:
+def test_object_initialisation(url_str='http://localhost:8080') -> interface_module.AlgorithmicPlatformInterface:
     # test for the object creation:
     # fails on purpose:
     try:
@@ -87,12 +88,12 @@ def test_algorithm_node_object(node_id=1, code_string='someTestNodeID', debug_st
 
 
 def test_train_cancellations(interface_to_viriato: interface_module.AlgorithmicPlatformInterface) -> None:
-    for i in range(500, 1000):
+    for i in range(500, 5000):
         try:
             interface_to_viriato.cancel_train_to(train_path_node_id=i)
         except AlgorithmStatic.AlgorithmPlatformError:
             i
-    for i in range(500, 1000):
+    for i in range(500, 5000):
         try:
             obj = interface_to_viriato.cancel_train_from(train_path_node_id=i)
         except AlgorithmStatic.AlgorithmPlatformError:
@@ -104,6 +105,9 @@ def main():
     interface_to_viriato: interface_module.AlgorithmicPlatformInterface
 
     test_object_initialisation(url_str)
+
+    with interface_module.AlgorithmicPlatformInterface(url_str) as interface_to_viriato:
+        test_train_cancellations(interface_to_viriato)
 
     with interface_module.AlgorithmicPlatformInterface(url_str) as interface_to_viriato:
         # try to retrieve the url:
@@ -122,12 +126,10 @@ def main():
     with interface_module.AlgorithmicPlatformInterface(url_str) as interface_to_viriato:
         test_get_node_and_get_neighbor_nodes(interface_to_viriato)
 
-    with interface_module.AlgorithmicPlatformInterface(url_str) as interface_to_viriato:
-        test_train_cancellations(interface_to_viriato)
-
     # other tests for the data types
     test_algorithm_node_object(node_id=1, code_string='TestNodeID', debug_string='test_node', node_tracks=['A', 'B'])
-    UpdateTrainTimesNode = AlgorithmClasses.UpdateTrainTimesNode
+    AlgorithmClasses.UpdateTrainTimesNode(datetime(year=2001, month=1, day=1, hour=1, minute=1, second=1),
+                                          datetime(year=2001, month=1, day=1, hour=1, minute=1, second=1), 1)
 
 
 if __name__ == '__main__':

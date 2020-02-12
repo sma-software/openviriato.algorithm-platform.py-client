@@ -190,7 +190,7 @@ class UpdateTrainTimesNode(AlgorithmGenericTimeNode):
 
 # NotImplemented!!,
 class AlgorithmTrainPathNode(hasID, AlgorithmGenericTimeNode):
-    __FormationID: int
+    __FormationID: int = None
     __NodeID: int
     __NodeTrackID: int
     __SectionTrackID: int = None

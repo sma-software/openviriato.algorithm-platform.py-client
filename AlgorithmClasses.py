@@ -11,9 +11,6 @@ def parse_to_datetime(datetime_rawstr: str) -> datetime.datetime:
 
 
 class hasID:
-    """
-        items in SMA​Algorithm​PlatformAlgorithm​Interface​AIDM  which have an ID.
-    """
     __ID: int
 
     def __init__(self, node_id: int):
@@ -26,9 +23,6 @@ class hasID:
 
 
 class hasCode:
-    """
-
-    """
     __Code: str
 
     def __init__(self, code_string: str):
@@ -41,9 +35,6 @@ class hasCode:
 
 
 class hasDebugString:
-    """
-
-    """
     __DebugString: str
 
     def __init__(self, debug_string: str = None):

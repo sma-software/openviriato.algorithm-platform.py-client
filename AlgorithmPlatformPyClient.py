@@ -104,7 +104,7 @@ class AlgorithmicPlatformInterface:
         """
         AlgorithmTypeCheck.assert_parameter_is_str(short_message, 'short_message', 'show_status_message')
         if not (long_message is None):
-            AlgorithmTypeCheck.assert_parameter_is_str(short_message, 'long_message', 'show_status_message')
+            AlgorithmTypeCheck.assert_parameter_is_str(long_message, 'long_message', 'show_status_message')
         request_body = {'shortMessage': short_message, 'longMessage': long_message}
         self.__communication_layer.do_post_request('status-message', request_body)
 
@@ -222,8 +222,7 @@ class AlgorithmicPlatformInterfaceIncomplete(AlgorithmicPlatformInterface):
             NotImplementedError:
         raise NotImplementedError
 
-    def get_trains_cut_to_time_range(self,
-                                     time_window: AlgorithmClasses.AlgorithmTimeWindow) -> NotImplementedError:
+    def get_trains_cut_to_time_range(self, time_window: AlgorithmClasses.AlgorithmTimeWindow) -> NotImplementedError:
         raise NotImplementedError
 
     def get_trains_cut_to_time_range_driving_any_node(self, time_window: AlgorithmClasses.AlgorithmTimeWindow,

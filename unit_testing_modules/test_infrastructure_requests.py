@@ -55,3 +55,7 @@ class TestGetDirectedSectionTracks(unittest.TestCase):
     def test_get_directed_section_tracks_str_parameters(self):
         with self.assertRaises(AssertionError):
             self.interface_to_viriato.get_directed_section_tracks('A', 'b')
+
+
+if __name__ == '__main__':
+    unittest.main()

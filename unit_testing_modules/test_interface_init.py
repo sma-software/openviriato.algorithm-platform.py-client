@@ -15,3 +15,7 @@ class TestObjectInitialisation(unittest.TestCase):
         with self.assertRaises(AssertionError):
             with AlgorithmPlatformPyClient.AlgorithmicPlatformInterface(url_nr) as interface_to_viriato:
                 raise NotImplementedError('there is an assertion not raised')
+
+
+if __name__ == '__main__':
+    unittest.main()

@@ -58,3 +58,7 @@ class TestShowStatusMessage(unittest.TestCase):
         with self.assertRaises(AssertionError):
             with AlgorithmPlatformPyClient.AlgorithmicPlatformInterface(get_url_str()) as interface_to_viriato:
                 interface_to_viriato.show_status_message('one', 1)
+
+
+if __name__ == '__main__':
+    unittest.main()

@@ -1,5 +1,7 @@
 import unittest
+
 import AlgorithmPlatformPyClient
+
 
 # test which dont need a mock
 class TestObjectInitialisation(unittest.TestCase):

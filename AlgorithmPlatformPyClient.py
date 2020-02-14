@@ -7,29 +7,29 @@ __all__ = ['AlgorithmicPlatformInterface']
 __version__ = '0.0.1'
 __author__ = 'Florian Fuchs'
 
-import AlgorithmClasses
+import AIDMClasses
 import AlgorithmTypeCheck
 import AlgorithmInterfaceCommunicationLayer
 import Void_AlgorithmInterfaceBaseClass
 
 
-def initialise_algorithm_node_from_dict(node_as_dict: dict) -> AlgorithmClasses.AlgorithmNode:
-    return AlgorithmClasses.AlgorithmNode(node_id=node_as_dict['ID'],
-                                          code_string=node_as_dict['Code'],
-                                          node_tracks=node_as_dict['NodeTracks'],
-                                          debug_string=node_as_dict['DebugString'])
+def initialise_algorithm_node_from_dict(node_as_dict: dict) -> AIDMClasses.AlgorithmNode:
+    return AIDMClasses.AlgorithmNode(node_id=node_as_dict['ID'],
+                                     code_string=node_as_dict['Code'],
+                                     node_tracks=node_as_dict['NodeTracks'],
+                                     debug_string=node_as_dict['DebugString'])
 
 
 def initialise_algorithm_node_list(list_of_nodes_as_dict: list) -> list:
     return [initialise_algorithm_node_from_dict(node_as_dict) for node_as_dict in list_of_nodes_as_dict]
 
 
-def initialise_algorithm_section_track_from_dict(section_track_as_dict: dict) -> AlgorithmClasses.AlgorithmSectionTrack:
-    return AlgorithmClasses.AlgorithmSectionTrack(section_id=section_track_as_dict['ID'],
-                                                  code_string=section_track_as_dict['Code'],
-                                                  section_code=section_track_as_dict['SectionCode'],
-                                                  debug_string=section_track_as_dict['DebugString'],
-                                                  section_weight=section_track_as_dict['Weight'])
+def initialise_algorithm_section_track_from_dict(section_track_as_dict: dict) -> AIDMClasses.AlgorithmSectionTrack:
+    return AIDMClasses.AlgorithmSectionTrack(section_id=section_track_as_dict['ID'],
+                                             code_string=section_track_as_dict['Code'],
+                                             section_code=section_track_as_dict['SectionCode'],
+                                             debug_string=section_track_as_dict['DebugString'],
+                                             section_weight=section_track_as_dict['Weight'])
 
 
 def initialise_algorithm_section_track_list(list_of_sections_dict: list) -> list:
@@ -119,7 +119,7 @@ class AlgorithmicPlatformInterface:
         api_response = self.__communication_layer.do_get_request('neighbor-nodes/{0}'.format(node_id))
         return initialise_algorithm_node_list(api_response.json())
 
-    def get_node(self, node_id: int) -> AlgorithmClasses.AlgorithmNode:
+    def get_node(self, node_id: int) -> AIDMClasses.AlgorithmNode:
         """
         Returns an IAlgorithm​Node dict for the given node_id
         :param node_id: int
@@ -215,17 +215,17 @@ class AlgorithmicPlatformInterfaceIncomplete(AlgorithmicPlatformInterface):
         raise NotImplementedError
 
     # train methods
-    def get_trains(self, time_window: AlgorithmClasses.AlgorithmTimeWindow) -> NotImplementedError:
+    def get_trains(self, time_window: AIDMClasses.AlgorithmTimeWindow) -> NotImplementedError:
         raise NotImplementedError
 
-    def get_trains_driving_any_node(self, time_window: AlgorithmClasses.AlgorithmTimeWindow, node_list: list) -> \
+    def get_trains_driving_any_node(self, time_window: AIDMClasses.AlgorithmTimeWindow, node_list: list) -> \
             NotImplementedError:
         raise NotImplementedError
 
-    def get_trains_cut_to_time_range(self, time_window: AlgorithmClasses.AlgorithmTimeWindow) -> NotImplementedError:
+    def get_trains_cut_to_time_range(self, time_window: AIDMClasses.AlgorithmTimeWindow) -> NotImplementedError:
         raise NotImplementedError
 
-    def get_trains_cut_to_time_range_driving_any_node(self, time_window: AlgorithmClasses.AlgorithmTimeWindow,
+    def get_trains_cut_to_time_range_driving_any_node(self, time_window: AIDMClasses.AlgorithmTimeWindow,
                                                       node_list: list) -> NotImplementedError:
         raise NotImplementedError
 

@@ -1,4 +1,4 @@
-import AlgorithmClasses
+import AIDMClasses
 import AlgorithmTypeCheck
 import AlgorithmInterfaceCommunicationLayer
 import Void_AlgorithmInterfaceBaseClass
@@ -20,23 +20,23 @@ class GetAttr:
     def __dir__(self): return custom_dir(self, self._xtra)
 
 
-def initialise_algorithm_node_from_dict(node_as_dict: dict) -> AlgorithmClasses.AlgorithmNode:
-    return AlgorithmClasses.AlgorithmNode(node_id=node_as_dict['ID'],
-                                          code_string=node_as_dict['Code'],
-                                          node_tracks=node_as_dict['NodeTracks'],
-                                          debug_string=node_as_dict['DebugString'])
+def initialise_algorithm_node_from_dict(node_as_dict: dict) -> AIDMClasses.AlgorithmNode:
+    return AIDMClasses.AlgorithmNode(node_id=node_as_dict['ID'],
+                                     code_string=node_as_dict['Code'],
+                                     node_tracks=node_as_dict['NodeTracks'],
+                                     debug_string=node_as_dict['DebugString'])
 
 
 def initialise_algorithm_node_list(list_of_nodes_as_dict: list) -> list:
     return [initialise_algorithm_node_from_dict(node_as_dict) for node_as_dict in list_of_nodes_as_dict]
 
 
-def initialise_algorithm_section_track_from_dict(section_track_as_dict: dict) -> AlgorithmClasses.AlgorithmSectionTrack:
-    return AlgorithmClasses.AlgorithmSectionTrack(section_id=section_track_as_dict['ID'],
-                                                  code_string=section_track_as_dict['Code'],
-                                                  section_code=section_track_as_dict['SectionCode'],
-                                                  debug_string=section_track_as_dict['DebugString'],
-                                                  section_weight=section_track_as_dict['Weight'])
+def initialise_algorithm_section_track_from_dict(section_track_as_dict: dict) -> AIDMClasses.AlgorithmSectionTrack:
+    return AIDMClasses.AlgorithmSectionTrack(section_id=section_track_as_dict['ID'],
+                                             code_string=section_track_as_dict['Code'],
+                                             section_code=section_track_as_dict['SectionCode'],
+                                             debug_string=section_track_as_dict['DebugString'],
+                                             section_weight=section_track_as_dict['Weight'])
 
 
 def initialise_algorithm_section_track_list(list_of_sections_dict: list) -> list:
@@ -126,7 +126,7 @@ class AlgorithmicPlatformInterface(GetAttr):
         api_response = self.__communication_layer.do_get_request('neighbor-nodes/{0}'.format(node_id))
         return initialise_algorithm_node_list(api_response.json())
 
-    def get_node(self, node_id: int) -> AlgorithmClasses.AlgorithmNode:
+    def get_node(self, node_id: int) -> AIDMClasses.AlgorithmNode:
         """
         Returns an IAlgorithm​Node dict for the given node_id
         :param node_id: int

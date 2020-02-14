@@ -3,7 +3,7 @@ A test script that requires an REST-API of the VIRIATO-Algorithm Platform
 """
 
 import AlgorithmPlatformPyClient as interface_module
-import AlgorithmClasses
+import AIDMClasses
 import AlgorithmTypeCheck
 import AlgorithmInterfaceCommunicationLayer
 from datetime import datetime
@@ -82,7 +82,7 @@ def test_get_parallel_section_tracks(interface_to_viriato) -> None:
 
 
 def test_algorithm_node_object(node_id=1, code_string='someTestNodeID', debug_string='', node_tracks=[]):
-    test_node = AlgorithmClasses.AlgorithmNode(node_id, code_string, debug_string, node_tracks)
+    test_node = AIDMClasses.AlgorithmNode(node_id, code_string, debug_string, node_tracks)
     print(test_node.ID)
     print(test_node.DebugString)
     print(test_node.Code)
@@ -130,8 +130,8 @@ def main():
 
     # other tests for the data types
     test_algorithm_node_object(node_id=1, code_string='TestNodeID', debug_string='test_node', node_tracks=['A', 'B'])
-    AlgorithmClasses.UpdateTrainTimesNode(datetime(year=2001, month=1, day=1, hour=1, minute=1, second=1),
-                                          datetime(year=2001, month=1, day=1, hour=1, minute=1, second=1), 1)
+    AIDMClasses.UpdateTrainTimesNode(datetime(year=2001, month=1, day=1, hour=1, minute=1, second=1),
+                                     datetime(year=2001, month=1, day=1, hour=1, minute=1, second=1), 1)
 
 
 if __name__ == '__main__':

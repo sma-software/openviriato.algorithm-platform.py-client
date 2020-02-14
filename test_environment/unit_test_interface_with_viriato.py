@@ -3,7 +3,7 @@ A test script that requires an REST-API of the VIRIATO-Algorithm Platform
 """
 
 import AlgorithmPlatformPyClient as interface_module
-import AlgorithmClasses
+import AIDMClasses
 import AlgorithmTypeCheck
 import AlgorithmInterfaceCommunicationLayer
 from datetime import datetime
@@ -19,14 +19,14 @@ class TestObjectInitialisation(unittest.TestCase):
     # test for the object creation:
     def test_initialisation_in_with(self):
         with interface_module.AlgorithmicPlatformInterface(get_url_str()) as interface_to_viriato:
-            var = interface_to_viriato.base_url
+            self.assertEqual(interface_to_viriato.base_url, get_url_str())
 
     # fails on purpose:
     def test_if_initialisation_with_int_fails(self):
         url_nr = 952022
         with self.assertRaises(AssertionError):
             with interface_module.AlgorithmicPlatformInterface(url_nr) as interface_to_viriato:
-                var = interface_to_viriato.base_url
+                self.assertEqual(interface_to_viriato.base_url, get_url_str())
 
 
 class TestUserNotifications(unittest.TestCase):
@@ -89,7 +89,6 @@ class TestGetDirectedSectionTracks(unittest.TestCase):
             directed_section_tracks = self.interface_to_viriato.get_directed_section_tracks('A', 'b')
 
 
-
 def test_get_parallel_section_tracks(interface_to_viriato) -> None:
     for i in range(1, 1000):
         try:
@@ -103,7 +102,7 @@ def test_get_parallel_section_tracks(interface_to_viriato) -> None:
 
 
 def test_algorithm_node_object(node_id=1, code_string='someTestNodeID', debug_string='', node_tracks=[]):
-    test_node = AlgorithmClasses.AlgorithmNode(node_id, code_string, debug_string, node_tracks)
+    test_node = AIDMClasses.AlgorithmNode(node_id, code_string, debug_string, node_tracks)
     print(test_node.ID)
     print(test_node.DebugString)
     print(test_node.Code)
@@ -155,8 +154,8 @@ def main_void():
 
     # other tests for the data types
     test_algorithm_node_object(node_id=1, code_string='TestNodeID', debug_string='test_node', node_tracks=['A', 'B'])
-    AlgorithmClasses.UpdateTrainTimesNode(datetime(year=2001, month=1, day=1, hour=1, minute=1, second=1),
-                                          datetime(year=2001, month=1, day=1, hour=1, minute=1, second=1), 1)
+    AIDMClasses.UpdateTrainTimesNode(datetime(year=2001, month=1, day=1, hour=1, minute=1, second=1),
+                                     datetime(year=2001, month=1, day=1, hour=1, minute=1, second=1), 1)
 
 
 if __name__ == '__main__':

@@ -1,6 +1,6 @@
 import unittest
 import AlgorithmPlatformPyClient
-import unit_testing_modules.APISessionMock as APISessionMock
+import unit_testing_with_mock.APISessionMock as APISessionMock
 from unittest import mock
 
 

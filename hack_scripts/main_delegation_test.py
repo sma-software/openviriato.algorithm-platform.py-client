@@ -1,7 +1,6 @@
 import AIDMClasses
 import AlgorithmTypeCheck
 import AlgorithmInterfaceCommunicationLayer
-import Void_AlgorithmInterfaceBaseClass
 
 
 def custom_dir(c, add): return dir(type(c)) + list(c.__dict__.keys()) + add

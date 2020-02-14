@@ -10,7 +10,6 @@ __author__ = 'Florian Fuchs'
 import AIDMClasses
 import AlgorithmTypeCheck
 import AlgorithmInterfaceCommunicationLayer
-import Void_AlgorithmInterfaceBaseClass
 
 
 def initialise_algorithm_node_from_dict(node_as_dict: dict) -> AIDMClasses.AlgorithmNode:

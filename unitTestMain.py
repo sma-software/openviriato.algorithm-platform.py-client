@@ -25,3 +25,4 @@ class DirectedTrack(test_infrastructure_requests.TestGetDirectedSectionTracks):
 if __name__ == '__main__':
     unittest.TestLoader.discover(start_dir=os.getcwd().join('unit_testing_modules'))
     unittest.main()
+    print(os.getcwd())

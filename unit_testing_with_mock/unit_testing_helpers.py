@@ -4,8 +4,8 @@ class SessionMockTestBase:
 
     def __init__(self):
         # print('created a Mocked session')
-        self.__last_request = None
-        self.__last_body = None
+        self.__last_request = str()
+        self.__last_body = dict()
 
     def close(self):
         # #print('closed a Mocked session')

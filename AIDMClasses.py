@@ -2,8 +2,8 @@ import AlgorithmTypeCheck
 import datetime
 from enum import Enum
 
-# rename to AIDM Classes,
 
+# AIDM helpers:
 def assert_non_negative_weight(weight: int):
     assert not (weight < 0), 'only non-negative values for weights permitted'
 
@@ -21,12 +21,18 @@ def assert_datetime(date_time_obj: datetime.datetime):
     assert isinstance(date_time_obj, datetime.datetime), 'value has to be a datetime object'
 
 
+def check_attributes_by_list(obj, attribute_names: list):
+    for attribute_name in attribute_names:
+        assert (hasattr(obj, attribute_name)), 'attribute {0} is missing'.format(attribute_name)
+
 
 class StopStatus(Enum):
     CommercialStop = 0
     OperationalStop = 1
     Passing = 2
 
+
+# rename to AIDM Classes,
 
 class hasID:
     __ID: int
@@ -111,10 +117,97 @@ class AlgorithmTrain(hasID, hasDebugString):
         hasID.__init__(self, train_id)
         hasDebugString.__init__(self, debug_string)
         self.__trainPathNodes = train_path_nodes
+        for i in range(len(train_path_nodes)):
+            self.__trainPathNodes[i] = TrainPathNode(train_path_nodes[i])
 
     @property
-    def trainPathNodes(self):
+    def TrainPathNodes(self):
         return self.__trainPathNodes
+
+
+def dict_to_algorithm_train_factory(json_as_dict: dict) -> AlgorithmTrain:
+    attribute_list = ['ID', 'DebugString', 'TrainPathNodes']
+    return AlgorithmTrain(train_id=json_as_dict['ID'],
+                          debug_string=json_as_dict['DebugString'],
+                          train_path_nodes=json_as_dict['TrainPathNodes'])
+
+
+def adjust_dict_keys_for_hidden_objects(json_as_dict: dict) -> dict:
+    for old_key in json_as_dict.keys():
+        new_key = '__{0}'.format(old_key)
+        json_as_dict[new_key] = json_as_dict.pop(old_key)
+    return json_as_dict
+
+
+def dict_to_algorithm_train_path_node_factory(json_as_dict: dict) -> AlgorithmTrain:
+    attribute_list = ['ID', 'DebugString', 'TrainPathNodes']
+    return AlgorithmTrain(train_id=json_as_dict['ID'],
+                          debug_string=json_as_dict['DebugString'],
+                          train_path_nodes=json_as_dict['TrainPathNodes'])
+
+
+class TrainPathNode(hasID):
+    __SectionTrackID: int
+    __NodeID: int
+    __NodeTrackID: None
+    __FormationID: None
+    __ArrivalTime: None
+    __DepartureTime: None
+    __MinimumRunTime: None
+    __MinimumStopTime: int
+    __StopStatus: StopStatus
+    __SequenceNumber: int
+
+    def __init__(self, json_as_dict: dict):
+        hasID.__init__(self, json_as_dict['ID'].pop('ID'))
+        json_with_hidden_keys = adjust_dict_keys_for_hidden_objects(json_as_dict)
+        vars(self).update(self, json_with_hidden_keys)
+
+    @property
+    def SectionTrackID(self):
+        return self.__SectionTrackID
+
+    @property
+    def NodeID(self):
+        return self.__NodeID
+
+    @property
+    def NodeTrackID(self):
+        return self.__NodeTrackID
+
+    @property
+    def FormationID(self):
+        return self.__FormationID
+
+    @property
+    def ArrivalTime(self):
+        return self.__ArrivalTime
+
+    @property
+    def DepartureTime(self):
+        return self.__DepartureTime
+
+    @property
+    def MinimumRunTime(self):
+        return self.__MinimumRunTime
+
+    @property
+    def MinimumStopTime(self):
+        return self.__MinimumStopTime
+
+    @property
+    def StopStatus(self):
+        return self.__StopStatus
+
+    @property
+    def SequenceNumber(self):
+        return self.__SequenceNumber
+
+        train_path_nodes_attribute_list = ['ID', 'SectionTrackID', 'NodeID', 'NodeTrackID', 'FormationID',
+                                           'ArrivalTime',
+                                           'DepartureTime', 'MinimumRunTime', 'MinimumStopTime', 'StopStatus',
+                                           'SequenceNumber']
+        check_attributes_by_list(self, train_path_nodes_attribute_list)
 
 
 class AlgorithmTimeWindow:
@@ -122,6 +215,7 @@ class AlgorithmTimeWindow:
     __ToTime: datetime.datetime
 
     def __init__(self, from_time: datetime.datetime, to_time: datetime.datetime):
+        raise NotImplementedError
         assert_datetime(from_time)
         assert_datetime(to_time)
         self.__FromTime = from_time
@@ -136,7 +230,8 @@ class AlgorithmTimeWindow:
         return self.__ToTime
 
 
-class AlgorithmGenericTimeNode: # this is a bad idea, for maintenance in future.
+# NotImplemented!!,
+class AlgorithmGenericTimeNode:  # this is a bad idea, for maintenance in future.
     # no assertions so far!
     __ArrivalTime = datetime.datetime
     __DepartureTime: datetime.datetime
@@ -145,6 +240,7 @@ class AlgorithmGenericTimeNode: # this is a bad idea, for maintenance in future.
 
     def __init__(self, arrival_time: datetime.datetime, departure_time: datetime.datetime,
                  minimum_run_time: str = None, minimum_stop_time: str = None):
+        raise NotImplementedError
         self.__ArrivalTime = arrival_time
         self.__DepartureTime = departure_time
         self.__MinimumRunTime = minimum_run_time
@@ -174,9 +270,10 @@ class UpdateTrainTimesNode(AlgorithmGenericTimeNode):
 
     def __init__(self, arrival_time: datetime.datetime, departure_time: datetime.datetime, train_path_node_id: int,
                  minimum_run_time: str = None, minimum_stop_time: str = None, stop_status: str = None):
+        raise NotImplementedError
         super().__init__(arrival_time, departure_time, minimum_run_time, minimum_stop_time)
         AlgorithmTypeCheck.assert_parameter_is_int(train_path_node_id, 'train_path_node_id', '__init__')
-        if not(stop_status is None):
+        if not (stop_status is None):
             assert_stop_status(stop_status)
         self.__TrainPathNodeID = train_path_node_id
         self.__StopStatus = stop_status
@@ -201,6 +298,7 @@ class AlgorithmTrainPathNode(hasID, AlgorithmGenericTimeNode):
 
     def __init__(self, node_id: int, arrival_time: datetime.datetime, departure_time: datetime.datetime,
                  minimum_run_time, minimum_stop_time):
+        raise NotImplementedError
         hasID.__init__(self, node_id)
         AlgorithmGenericTimeNode.__init__(self, arrival_time, departure_time, minimum_run_time, minimum_stop_time)
         self.__FormationID = int

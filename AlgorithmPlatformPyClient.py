@@ -181,14 +181,14 @@ class AlgorithmicPlatformInterface:
         AlgorithmTypeCheck.assert_parameter_is_int(train_id, 'train_id', 'clone_train')
         post_request_body = {'TrainID': train_id}
         api_response = self.__communication_layer.do_post_request('clone-train', request_body=post_request_body)
-        return AlgorithmTrain(api_response.json())
+        return AIDMClasses.dict_to_algorithm_train_factory(api_response.json())
 
     def set_station_track(self, train_path_node_id: int, section_track_id: int) -> AlgorithmTrain:
         AlgorithmTypeCheck.assert_parameter_is_int(train_path_node_id, 'train_path_node_id', 'set_station_track')
         AlgorithmTypeCheck.assert_parameter_is_int(section_track_id, 'section_track_id', 'set_station_track')
         post_request_body = {'trainPathNodeID': train_path_node_id, 'sectionTrackID': section_track_id}
         api_response = self.__communication_layer.do_post_request('set-section-track', request_body=post_request_body)
-        return AlgorithmTrain(api_response.json())
+        return AIDMClasses.dict_to_algorithm_train_factory(api_response.json())
 
     def update_train_times(self, train_id: int, update_train_times_node: list) -> AlgorithmTrain:
         AlgorithmTypeCheck.assert_parameter_is_int(train_id, 'train_id', 'update_train_times')
@@ -198,7 +198,7 @@ class AlgorithmicPlatformInterface:
                           'MinimumStopTime': node.MinimumStopTime, 'StopStatus': node.StopStatus}
                          for node in update_train_times_node]
         api_response = self.__communication_layer.do_put_request(url_tail, request_body=put_body_list)
-        return AlgorithmTrain(api_response.json())
+        return AIDMClasses.dict_to_algorithm_train_factory(api_response.json())
 
 
 class AlgorithmicPlatformInterfaceIncomplete(AlgorithmicPlatformInterface):

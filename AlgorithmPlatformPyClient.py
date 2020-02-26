@@ -40,19 +40,6 @@ def check_attributes_by_list(obj, attribute_names: list):
         assert (hasattr(obj, attribute_name)), 'attribute {0} is missing'.format(attribute_name)
 
 
-class GenericObjectFromJson:
-    def __init__(self, json_as_dict):
-        vars(self).update(json_as_dict)
-
-
-class TrainPathNode(GenericObjectFromJson):
-    def __init__(self, json_as_dict: dict):
-        GenericObjectFromJson.__init__(self, json_as_dict)
-        train_path_nodes_attribute_list = ['ID', 'SectionTrackID', 'NodeID', 'NodeTrackID', 'FormationID',
-                                           'ArrivalTime',
-                                           'DepartureTime', 'MinimumRunTime', 'MinimumStopTime', 'StopStatus',
-                                           'SequenceNumber']
-        check_attributes_by_list(self, train_path_nodes_attribute_list)
 
 
 class AlgorithmicPlatformInterface:
@@ -189,7 +176,12 @@ class AlgorithmicPlatformInterface:
         return AIDMClasses.dict_to_algorithm_train_factory(api_response.json())
 
 
+
+"""
 class AlgorithmicPlatformInterfaceIncomplete(AlgorithmicPlatformInterface):
+    class GenericObjectFromJson:
+        def __init__(self, json_as_dict):
+            vars(self).update(json_as_dict)
 
     def reroute_train(self,
                       route: NotImplementedError) -> GenericObjectFromJson:  # AlgorithmClasses.AlgorithmTrain:
@@ -214,4 +206,4 @@ class AlgorithmicPlatformInterfaceIncomplete(AlgorithmicPlatformInterface):
     def get_trains_cut_to_time_range_driving_any_node(self, time_window: AIDMClasses.AlgorithmTimeWindow,
                                                       node_list: list) -> NotImplementedError:
         raise NotImplementedError
-
+"""

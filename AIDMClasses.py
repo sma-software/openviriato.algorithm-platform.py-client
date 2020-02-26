@@ -1,12 +1,9 @@
 import AlgorithmTypeCheck
 import datetime
 from enum import Enum
-
-
-# AIDM helpers:
 from AlgorithmTypeCheck import assert_datetime
 
-
+# AIDM helpers:
 def parse_to_datetime(datetime_raw_str: str) -> datetime.datetime:
     return datetime.datetime.strptime(datetime_raw_str, '%Y-%m-%dT%H:%M:%S')
 
@@ -21,8 +18,6 @@ class StopStatus(Enum):
     OperationalStop = 1
     Passing = 2
 
-
-# rename to AIDM Classes,
 
 class hasID:
     __ID: int
@@ -86,7 +81,6 @@ class AlgorithmSectionTrack(hasID, hasCode, hasDebugString):
         hasCode.__init__(self, code_string)
         hasDebugString.__init__(self, debug_string)
         AlgorithmTypeCheck.assert_parameter_is_int(section_weight, 'section_weight', '__init__')
-        # assert_non_negative_weight(section_weight) --> is too much
         AlgorithmTypeCheck.assert_parameter_is_str(section_code, 'section_code', '__init__')
         self.__Weight = section_weight
         self.__SectionCode = section_code
@@ -115,25 +109,11 @@ class AlgorithmTrain(hasID, hasDebugString):
         return self.__trainPathNodes
 
 
-def dict_to_algorithm_train_factory(json_as_dict: dict) -> AlgorithmTrain:
-    attribute_list = ['ID', 'DebugString', 'TrainPathNodes']
-    return AlgorithmTrain(train_id=json_as_dict['ID'],
-                          debug_string=json_as_dict['DebugString'],
-                          train_path_nodes=json_as_dict['TrainPathNodes'])
-
-
 def adjust_dict_keys_for_hidden_objects(json_as_dict: dict) -> dict:
     for old_key in json_as_dict.keys():
         new_key = '__{0}'.format(old_key)
         json_as_dict[new_key] = json_as_dict.pop(old_key)
     return json_as_dict
-
-
-def dict_to_algorithm_train_path_node_factory(json_as_dict: dict) -> AlgorithmTrain:
-    attribute_list = ['ID', 'DebugString', 'TrainPathNodes']
-    return AlgorithmTrain(train_id=json_as_dict['ID'],
-                          debug_string=json_as_dict['DebugString'],
-                          train_path_nodes=json_as_dict['TrainPathNodes'])
 
 
 class TrainPathNode(hasID):
@@ -194,15 +174,21 @@ class TrainPathNode(hasID):
         return self.__SequenceNumber
 
 
-'''
-train_path_nodes_attribute_list = ['ID', 'SectionTrackID', 'NodeID', 'NodeTrackID', 'FormationID',
-                                   'ArrivalTime',
-                                   'DepartureTime', 'MinimumRunTime', 'MinimumStopTime', 'StopStatus',
-                                   'SequenceNumber']
-
-'''
+def dict_to_algorithm_train_factory(json_as_dict: dict) -> AlgorithmTrain:
+    attribute_list = ['ID', 'DebugString', 'TrainPathNodes']
+    return AlgorithmTrain(train_id=json_as_dict['ID'],
+                          debug_string=json_as_dict['DebugString'],
+                          train_path_nodes=json_as_dict['TrainPathNodes'])
 
 
+def dict_to_algorithm_train_path_node_factory(json_as_dict: dict) -> AlgorithmTrain:
+    attribute_list = ['ID', 'DebugString', 'TrainPathNodes']
+    return AlgorithmTrain(train_id=json_as_dict['ID'],
+                          debug_string=json_as_dict['DebugString'],
+                          train_path_nodes=json_as_dict['TrainPathNodes'])
+
+
+"""
 class AlgorithmTimeWindow:
     __FromTime: datetime.datetime
     __ToTime: datetime.datetime
@@ -221,6 +207,7 @@ class AlgorithmTimeWindow:
     @property
     def ToTime(self):
         return self.__ToTime
+
 
 
 # NotImplemented!!,
@@ -299,4 +286,4 @@ class AlgorithmTrainPathNode(hasID, AlgorithmGenericTimeNode):
         self.__NodeTrackID = int
         self.__SectionTrackID = int
         self.__SequenceNumber = int
-
+"""

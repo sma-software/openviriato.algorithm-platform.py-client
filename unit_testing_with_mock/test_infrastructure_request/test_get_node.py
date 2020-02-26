@@ -48,11 +48,12 @@ class TestGetNode(TestCase):
     def test_get_node_response(self, mocked_get_obj):
         node_info = self.interface_to_viriato.get_node(0)
         self.assertIsInstance(node_info, AIDMClasses.AlgorithmNode)
-        self.assertEqual(node_info.DebugString, "station:85AR")
-        self.assertEqual(node_info.NodeTracks[0], {"ID": 162, "Code": "1",
-                                                   "DebugString": "stationtrack:85AR_{StationTrack SID = 34138}"})
+        self.assertIsInstance(node_info.NodeTracks[0], AIDMClasses.AlgorithmNodeTrack)
         self.assertEqual(node_info.ID, 161)
         self.assertEqual(node_info.Code, '85AR')
+        self.assertEqual(node_info.DebugString, "station:85AR")
+        self.assertEqual(node_info.NodeTracks[0].ID, 162)
+        self.assertEqual(node_info.NodeTracks[0].DebugString, "stationtrack:85AR_{StationTrack SID = 34138}")
 
     @mock.patch('requests.Session', side_effect=GetNodeTestSessionMock)
     def tearDown(self, mocked_get_obj) -> None:

@@ -57,6 +57,16 @@ class hasDebugString:
         return self.__DebugString
 
 
+class AlgorithmNodeTrack(hasID, hasCode, hasDebugString):
+    __NodeTracks: []
+
+    def __init__(self, node_track_id: int, code_string: str, debug_string: str):
+        hasID.__init__(self, node_track_id)
+        hasCode.__init__(self, code_string)
+        hasDebugString.__init__(self, debug_string)
+
+
+
 class AlgorithmNode(hasID, hasCode, hasDebugString):
     __NodeTracks: []
 
@@ -64,14 +74,14 @@ class AlgorithmNode(hasID, hasCode, hasDebugString):
         hasID.__init__(self, node_id)
         hasCode.__init__(self, code_string)
         hasDebugString.__init__(self, debug_string)
-        if node_tracks is None:
-            node_tracks = []
-        self.__NodeTracks = node_tracks
+        self.__NodeTracks = []
+        if node_tracks is not None:
+            for node_track in node_tracks:
+                self.__NodeTracks.append(node_track)
 
     @property
     def NodeTracks(self) -> list:
         return self.__NodeTracks
-
 
 class AlgorithmSectionTrack(hasID, hasCode, hasDebugString):
     __Weight: int

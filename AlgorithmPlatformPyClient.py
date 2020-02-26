@@ -12,15 +12,26 @@ import AlgorithmTypeCheck
 import AlgorithmInterfaceCommunicationLayer
 
 
-def initialise_algorithm_node_from_dict(node_as_dict: dict) -> AIDMClasses.AlgorithmNode:
+def algorithm_node_track_from_dict_factory(node_track_as_dict: dict) -> AIDMClasses.AlgorithmNodeTrack:
+    return AIDMClasses.AlgorithmNodeTrack(node_track_id=node_track_as_dict['ID'],
+                                          code_string=node_track_as_dict['Code'],
+                                          debug_string=node_track_as_dict['DebugString'])
+
+
+def algorithm_node_from_dict_factory(node_as_dict: dict) -> AIDMClasses.AlgorithmNode:
+    node_track_list = None
+    if not node_as_dict['NodeTracks'] is None:
+        node_track_list = []
+        for node_track in node_as_dict['NodeTracks']:
+            node_track_list.append(algorithm_node_track_from_dict_factory(node_track))
     return AIDMClasses.AlgorithmNode(node_id=node_as_dict['ID'],
                                      code_string=node_as_dict['Code'],
-                                     node_tracks=node_as_dict['NodeTracks'],
+                                     node_tracks=node_track_list,
                                      debug_string=node_as_dict['DebugString'])
 
 
 def algorithm_node_list_factory(list_of_nodes_as_dict: list) -> list:
-    return [initialise_algorithm_node_from_dict(node_as_dict) for node_as_dict in list_of_nodes_as_dict]
+    return [algorithm_node_from_dict_factory(node_as_dict) for node_as_dict in list_of_nodes_as_dict]
 
 
 def algorithm_section_track_from_dict_factory(section_track_as_dict: dict) -> AIDMClasses.AlgorithmSectionTrack:
@@ -47,10 +58,10 @@ class AlgorithmicPlatformInterface:
         self.__communication_layer = AlgorithmInterfaceCommunicationLayer.CommunicationLayer(base_url)
 
     def __enter__(self):
-        return self  # to be used in with statement
+        return self  # to be used in with statement as disposable
 
     def __exit__(self, exc_type, exc_val, exc_tb):
-        self.__communication_layer.currentSession.close()
+        self.__communication_layer.currentSession.close() # to be used in with statement as disposable
 
     @property
     def base_url(self) -> str:
@@ -77,7 +88,7 @@ class AlgorithmicPlatformInterface:
     def get_node(self, node_id: int) -> AIDMClasses.AlgorithmNode:
         AlgorithmTypeCheck.assert_parameter_is_int(node_id, 'node_id', 'get_node')
         api_response = self.__communication_layer.do_get_request('nodes/{0}'.format(node_id))
-        return initialise_algorithm_node_from_dict(api_response.json())
+        return algorithm_node_from_dict_factory(api_response.json())
 
     def get_section_track(self, section_track_id: int) -> AIDMClasses.AlgorithmSectionTrack:
         AlgorithmTypeCheck.assert_parameter_is_int(section_track_id, 'section_track_id', 'get_section_track')
@@ -86,12 +97,6 @@ class AlgorithmicPlatformInterface:
         return algorithm_section_track_from_dict_factory(api_response.json())
 
     def get_directed_section_tracks(self, first_node_id: int, second_node_id: int) -> list:
-        """
-        get all tracks in direction of the section between the two nodes. Direction given by order of the nodes
-        :param first_node_id: int
-        :param second_node_id: int
-        :return: tuple, containing all tracks, empty if no tracks exist
-        """
         AlgorithmTypeCheck.assert_parameter_is_int(first_node_id, 'first_node_id', 'get_directed_section_tracks')
         AlgorithmTypeCheck.assert_parameter_is_int(second_node_id, 'second_node_id', 'get_directed_section_tracks')
         url_tail = 'section-tracks-between/{0}/{1}'.format(first_node_id, second_node_id)
@@ -99,13 +104,6 @@ class AlgorithmicPlatformInterface:
         return algorithm_section_track_list_factory(api_response.json())
 
     def get_parallel_section_tracks(self, section_track_id: int) -> list:
-        """
-        Returns a list of all section tracks starting and ending at the same nodes as the section track with id
-        section_track_id independent of the traffic-ability.
-        The track with id section_track_id is included in the result.
-        :param section_track_id: int
-        :return: tuple
-        """
         AlgorithmTypeCheck.assert_parameter_is_int(section_track_id, 'section_track_id', 'get_parallel_section_tracks')
         api_response = self.__communication_layer.do_get_request(
             'section-tracks-parallel-to/{0}'.format(section_track_id))
@@ -120,16 +118,22 @@ class AlgorithmicPlatformInterface:
         api_response = self.__communication_layer.do_get_request('train-classifications')
         return api_response.json()
 
+    def cancel_train(self, train_id: int) -> AIDMClasses.AlgorithmTrain:
+        # Cancel an existing Algorithm​Train partially and return the resulting Algorithm​Train.
+        AlgorithmTypeCheck.assert_parameter_is_int(train_id, 'train_id', 'cancel_train')
+        api_response = self.__communication_layer.do_post_request('cancel-train', request_body={'trainID': train_id})
+        return api_response.json()['trainID']
+
     def cancel_train_from(self, train_path_node_id: int) -> AIDMClasses.AlgorithmTrain:
         # Cancel an existing Algorithm​Train partially and return the resulting Algorithm​Train.
-        AlgorithmTypeCheck.assert_parameter_is_int(train_path_node_id, 'train_path_node_od', 'cancel_train_from')
+        AlgorithmTypeCheck.assert_parameter_is_int(train_path_node_id, 'train_path_node_id', 'cancel_train_from')
         post_request_body = {'trainPathNodeID': train_path_node_id}
         api_response = self.__communication_layer.do_post_request('cancel-train-from', request_body=post_request_body)
         return AIDMClasses.dict_to_algorithm_train_factory(api_response.json())
 
     def cancel_train_to(self, train_path_node_id: int) -> AIDMClasses.AlgorithmTrain:
         # Cancel an existing Algorithm​Train partially and return the resulting Algorithm​Train.
-        AlgorithmTypeCheck.assert_parameter_is_int(train_path_node_id, 'train_path_node_od', 'cancel_train_to')
+        AlgorithmTypeCheck.assert_parameter_is_int(train_path_node_id, 'train_path_node_id', 'cancel_train_to')
         post_request_body = {'trainPathNodeID': train_path_node_id}
         api_response = self.__communication_layer.do_post_request('cancel-train-to', request_body=post_request_body)
         return AIDMClasses.dict_to_algorithm_train_factory(api_response.json())

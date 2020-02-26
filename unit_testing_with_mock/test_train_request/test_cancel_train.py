@@ -10,7 +10,7 @@ from unit_testing_with_mock.unit_testing_helpers import get_url_str
 
 class TestGetTrainClassifications(unittest.TestCase):
     class CancelTrainTestMockSession(unit_testing_with_mock.unit_testing_helpers.SessionMockTestBase):
-        # to replace session.get:
+        # to replace session.post:
         def post(self, request, json):
             self.__last_body = json
             self.__last_request = request
@@ -23,7 +23,7 @@ class TestGetTrainClassifications(unittest.TestCase):
         self.interface_to_viriato = AlgorithmPlatformPyClient.AlgorithmicPlatformInterface(get_url_str())
 
     @mock.patch('requests.Session', side_effect=CancelTrainTestMockSession)
-    def test_cancel_train_to_request(self, mocked_get_obj):
+    def test_cancel_train_request(self, mocked_get_obj):
         test_dict = dict(trainID=8124)
         self.interface_to_viriato.cancel_train(test_dict['trainID'])
         session_obj = self.interface_to_viriato._AlgorithmicPlatformInterface__communication_layer.currentSession
@@ -31,17 +31,14 @@ class TestGetTrainClassifications(unittest.TestCase):
         self.assertDictEqual(session_obj._CancelTrainTestMockSession__last_body, test_dict)
 
     @mock.patch('requests.Session', side_effect=CancelTrainTestMockSession)
-    def test_cancel_train_from_response(self, mocked_get_obj):
-        test_algorithm_train = self.interface_to_viriato.cancel_train_to(1)
-        self.assertIsInstance(test_algorithm_train, AIDMClasses.AlgorithmTrain)
-        self.assertEqual(test_algorithm_train.ID, 8120)
-        self.assertEqual(test_algorithm_train.DebugString, 'CancelTrainToTestMockSession')
-        self.assertIsInstance(test_algorithm_train.TrainPathNodes[0], AIDMClasses.TrainPathNode)
-        self.assertEqual(test_algorithm_train.TrainPathNodes[0].ID, 8118)
+    def test_cancel_train_response(self, mocked_get_obj):
+        canceled_train_id = self.interface_to_viriato.cancel_train(8124)
+        self.assertEqual(8124, canceled_train_id)
 
-    @mock.patch('requests.Session', side_effect=CancelTrainTestMockSession)
-    def test_cancel_train_from_response_when_broken(self, mocked_get_obj):
-        test_algorithm_train = self.interface_to_viriato.cancel_train_to(1)
+    def test_test_cancel_train_wrong_type(self):
+        with self.assertRaises(AssertionError):
+            with AlgorithmPlatformPyClient.AlgorithmicPlatformInterface(get_url_str()) as interface_to_viriato:
+                interface_to_viriato.cancel_train('wrong type')
 
     @mock.patch('requests.Session', side_effect=CancelTrainTestMockSession)
     def tearDown(self, mocked_get_obj) -> None:

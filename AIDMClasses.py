@@ -147,21 +147,21 @@ def dict_to_algorithm_train_path_node_factory(json_as_dict: dict) -> AlgorithmTr
 
 
 class TrainPathNode(hasID):
+    __ArrivalTime: datetime.datetime
+    __DepartureTime: datetime.datetime
     __SectionTrackID: int
     __NodeID: int
-    __NodeTrackID: None
-    __FormationID: None
-    __ArrivalTime: None
-    __DepartureTime: None
-    __MinimumRunTime: None
+    __NodeTrackID: int
+    __FormationID: int
+    __MinimumRunTime: int
     __MinimumStopTime: int
     __StopStatus: StopStatus
     __SequenceNumber: int
 
     def __init__(self, json_as_dict: dict):
-        hasID.__init__(self, json_as_dict['ID'].pop('ID'))
-        json_with_hidden_keys = adjust_dict_keys_for_hidden_objects(json_as_dict)
-        vars(self).update(self, json_with_hidden_keys)
+        hasID.__init__(self, json_as_dict['ID'])
+        json_as_dict.pop('ID')
+        vars(self).update(adjust_dict_keys_for_hidden_objects(json_as_dict))
 
     @property
     def SectionTrackID(self):
@@ -181,11 +181,11 @@ class TrainPathNode(hasID):
 
     @property
     def ArrivalTime(self):
-        return self.__ArrivalTime
+        return parse_to_datetime(self.__ArrivalTime)
 
     @property
     def DepartureTime(self):
-        return self.__DepartureTime
+        return parse_to_datetime(self.__DepartureTime)
 
     @property
     def MinimumRunTime(self):
@@ -203,11 +203,14 @@ class TrainPathNode(hasID):
     def SequenceNumber(self):
         return self.__SequenceNumber
 
-        train_path_nodes_attribute_list = ['ID', 'SectionTrackID', 'NodeID', 'NodeTrackID', 'FormationID',
-                                           'ArrivalTime',
-                                           'DepartureTime', 'MinimumRunTime', 'MinimumStopTime', 'StopStatus',
-                                           'SequenceNumber']
-        check_attributes_by_list(self, train_path_nodes_attribute_list)
+
+'''
+train_path_nodes_attribute_list = ['ID', 'SectionTrackID', 'NodeID', 'NodeTrackID', 'FormationID',
+                                   'ArrivalTime',
+                                   'DepartureTime', 'MinimumRunTime', 'MinimumStopTime', 'StopStatus',
+                                   'SequenceNumber']
+
+'''
 
 
 class AlgorithmTimeWindow:

@@ -1,3 +1,5 @@
+import datetime
+
 import requests
 import json
 
@@ -14,4 +16,9 @@ def assert_parameter_is_int(received_object: int, object_name: str, method_name:
         "but it was a instead: {2}".format(method_name, object_name, received_object.__class__)
 
 
+def assert_non_negative_weight(weight: int):
+    assert not (weight < 0), 'only non-negative values for weights permitted'
 
+
+def assert_datetime(date_time_obj: datetime.datetime):
+    assert isinstance(date_time_obj, datetime.datetime), 'value has to be a datetime object'

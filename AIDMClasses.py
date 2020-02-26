@@ -4,8 +4,7 @@ from enum import Enum
 
 
 # AIDM helpers:
-def assert_non_negative_weight(weight: int):
-    assert not (weight < 0), 'only non-negative values for weights permitted'
+from AlgorithmTypeCheck import assert_datetime
 
 
 def parse_to_datetime(datetime_raw_str: str) -> datetime.datetime:
@@ -15,10 +14,6 @@ def parse_to_datetime(datetime_raw_str: str) -> datetime.datetime:
 def assert_stop_status(stop_status: str) -> None:
     assert isinstance(stop_status, StopStatus), \
         'required to be of type StopStatus\nbut it was a instead: {0}'.format(stop_status.__class__)
-
-
-def assert_datetime(date_time_obj: datetime.datetime):
-    assert isinstance(date_time_obj, datetime.datetime), 'value has to be a datetime object'
 
 
 def check_attributes_by_list(obj, attribute_names: list):

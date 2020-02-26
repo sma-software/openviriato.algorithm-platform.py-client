@@ -57,22 +57,12 @@ class AlgorithmicPlatformInterface:
         return self.__communication_layer.base_url
 
     def notify_user(self, message_level_1: str, message_level_2: str) -> None:
-        """
-        Allows to notify the user on the other side of the api
-        :param message_level_1: str
-        :param message_level_2: str
-        """
         AlgorithmTypeCheck.assert_parameter_is_str(message_level_1, 'message_level_1', 'notify_user')
         AlgorithmTypeCheck.assert_parameter_is_str(message_level_2, 'message_level_2', 'notify_user')
         request_body = {'messageLevel1': message_level_1, 'messageLevel2': message_level_2}
         self.__communication_layer.do_post_request('notifications', request_body)
 
     def show_status_message(self, short_message: str, long_message=None) -> None:
-        """
-        Notify the user of VIRIATO with information on the status bar
-        :param short_message: str
-        :param long_message: str, None if not required
-        """
         AlgorithmTypeCheck.assert_parameter_is_str(short_message, 'short_message', 'show_status_message')
         if not (long_message is None):
             AlgorithmTypeCheck.assert_parameter_is_str(long_message, 'long_message', 'show_status_message')
@@ -80,25 +70,20 @@ class AlgorithmicPlatformInterface:
         self.__communication_layer.do_post_request('status-message', request_body)
 
     def get_neighbor_nodes(self, node_id: int) -> list:
-        """
-        Returns a list of all neighbor nodes of the given node x with nodeID == node_id, that is, all nodes y such
-        that there exists at least one section track directly from x to y.
-        :param node_id: int
-        :return: list, containing all tracks
-        """
         AlgorithmTypeCheck.assert_parameter_is_int(node_id, 'node_id', 'get_neighbor_nodes')
         api_response = self.__communication_layer.do_get_request('neighbor-nodes/{0}'.format(node_id))
         return algorithm_node_list_factory(api_response.json())
 
     def get_node(self, node_id: int) -> AIDMClasses.AlgorithmNode:
-        """
-        Returns an IAlgorithm​Node dict for the given node_id
-        :param node_id: int
-        :return: dict,
-        """
         AlgorithmTypeCheck.assert_parameter_is_int(node_id, 'node_id', 'get_node')
         api_response = self.__communication_layer.do_get_request('nodes/{0}'.format(node_id))
         return initialise_algorithm_node_from_dict(api_response.json())
+
+    def get_section_track(self, section_track_id: int) -> AIDMClasses.AlgorithmSectionTrack:
+        AlgorithmTypeCheck.assert_parameter_is_int(section_track_id, 'section_track_id', 'get_section_track')
+        url_tail = 'section-tracks/{0}'.format(section_track_id)
+        api_response = self.__communication_layer.do_get_request(url_tail)
+        return algorithm_section_track_from_dict_factory(api_response.json())
 
     def get_directed_section_tracks(self, first_node_id: int, second_node_id: int) -> list:
         """

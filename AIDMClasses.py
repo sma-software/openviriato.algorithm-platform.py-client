@@ -16,11 +16,6 @@ def assert_stop_status(stop_status: str) -> None:
         'required to be of type StopStatus\nbut it was a instead: {0}'.format(stop_status.__class__)
 
 
-def check_attributes_by_list(obj, attribute_names: list):
-    for attribute_name in attribute_names:
-        assert (hasattr(obj, attribute_name)), 'attribute {0} is missing'.format(attribute_name)
-
-
 class StopStatus(Enum):
     CommercialStop = 0
     OperationalStop = 1
@@ -305,6 +300,3 @@ class AlgorithmTrainPathNode(hasID, AlgorithmGenericTimeNode):
         self.__SectionTrackID = int
         self.__SequenceNumber = int
 
-        # if not StopStatus is None:
-        #     assert_stop_status(stop_status)
-        # self.__StopStatus = stop_status

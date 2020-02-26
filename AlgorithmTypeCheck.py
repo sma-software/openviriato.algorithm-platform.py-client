@@ -22,3 +22,8 @@ def assert_non_negative_weight(weight: int):
 
 def assert_datetime(date_time_obj: datetime.datetime):
     assert isinstance(date_time_obj, datetime.datetime), 'value has to be a datetime object'
+
+
+def check_attributes_by_list(obj, attribute_names: list):
+    for attribute_name in attribute_names:
+        assert (hasattr(obj, attribute_name)), 'attribute {0} is missing'.format(attribute_name)

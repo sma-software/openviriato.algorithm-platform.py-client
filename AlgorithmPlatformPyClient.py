@@ -40,8 +40,6 @@ def check_attributes_by_list(obj, attribute_names: list):
         assert (hasattr(obj, attribute_name)), 'attribute {0} is missing'.format(attribute_name)
 
 
-
-
 class AlgorithmicPlatformInterface:
     __communication_layer: AlgorithmInterfaceCommunicationLayer.CommunicationLayer
 
@@ -174,7 +172,6 @@ class AlgorithmicPlatformInterface:
                          for node in update_train_times_node]
         api_response = self.__communication_layer.do_put_request(url_tail, request_body=put_body_list)
         return AIDMClasses.dict_to_algorithm_train_factory(api_response.json())
-
 
 
 """

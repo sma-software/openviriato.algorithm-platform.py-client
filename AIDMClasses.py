@@ -3,6 +3,7 @@ import datetime
 from enum import Enum
 from AlgorithmTypeCheck import assert_datetime
 
+
 # AIDM helpers:
 def parse_to_datetime(datetime_raw_str: str) -> datetime.datetime:
     return datetime.datetime.strptime(datetime_raw_str, '%Y-%m-%dT%H:%M:%S')
@@ -100,9 +101,9 @@ class AlgorithmTrain(hasID, hasDebugString):
     def __init__(self, train_id: int, debug_string: str, train_path_nodes: list):
         hasID.__init__(self, train_id)
         hasDebugString.__init__(self, debug_string)
-        self.__trainPathNodes = train_path_nodes
+        self.__trainPathNodes = list()
         for i in range(len(train_path_nodes)):
-            self.__trainPathNodes[i] = TrainPathNode(train_path_nodes[i])
+            self.__trainPathNodes.append(TrainPathNode(train_path_nodes[i]))
 
     @property
     def TrainPathNodes(self):

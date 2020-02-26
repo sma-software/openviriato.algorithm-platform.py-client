@@ -24,7 +24,7 @@ class AlgorithmicPlatformInterface:
     def __enter__(self):
         return self  # to be used in with statement as disposable
 
-    def __exit__(self, exc_type, exc_val, exc_tb):
+    def __exit__(self, exc_type=None, exc_val=None, exc_tb=None):
         self.__communication_layer.currentSession.close() # to be used in with statement as disposable
 
     @property
@@ -106,10 +106,10 @@ class AlgorithmicPlatformInterface:
         api_response = self.__communication_layer.do_post_request('clone-train', request_body=post_request_body)
         return AIDM_module.AIDM_factories.dict_to_algorithm_train_factory(api_response.json())
 
-    def set_station_track(self, train_path_node_id: int, section_track_id: int) -> AIDM_classes.AlgorithmTrain:
-        AlgorithmTypeCheck.assert_parameter_is_int(train_path_node_id, 'train_path_node_id', 'set_station_track')
-        AlgorithmTypeCheck.assert_parameter_is_int(section_track_id, 'section_track_id', 'set_station_track')
-        post_request_body = {'trainPathNodeID': train_path_node_id, 'sectionTrackID': section_track_id}
+    def set_section_track(self, train_path_node_id: int, section_track_id: int) -> AIDM_classes.AlgorithmTrain:
+        AlgorithmTypeCheck.assert_parameter_is_int(train_path_node_id, 'train_path_node_id', 'set_section_track')
+        AlgorithmTypeCheck.assert_parameter_is_int(section_track_id, 'section_track_id', 'set_section_track')
+        post_request_body = {'TrainPathNodeID': train_path_node_id, 'SectionTrackID': section_track_id}
         api_response = self.__communication_layer.do_post_request('set-section-track', request_body=post_request_body)
         return AIDM_module.AIDM_factories.dict_to_algorithm_train_factory(api_response.json())
 

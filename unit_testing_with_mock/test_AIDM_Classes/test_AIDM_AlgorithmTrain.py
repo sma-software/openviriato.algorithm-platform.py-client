@@ -1,5 +1,7 @@
 import unittest
-from AIDM import AIDM_classes
+
+import AIDM_module.AIDM_factories
+from AIDM_module import AIDM_classes
 
 
 class AlgorithmTrain(unittest.TestCase):
@@ -30,7 +32,7 @@ class AlgorithmTrain(unittest.TestCase):
                  ArrivalTime="2003-09-01T00:14:00", DepartureTime="2003-09-01T00:14:00", MinimumRunTime="PT4M",
                  MinimumStopTime="P0D", StopStatus="passing", SequenceNumber=1)
         ], 'DebugString': "RVZH_12_1_J03 tt_(S) test_dict_to_algorithm_train_factory"}
-        test_train = AIDM_classes.dict_to_algorithm_train_factory(json_as_dict)
+        test_train = AIDM_module.AIDM_factories.dict_to_algorithm_train_factory(json_as_dict)
         self.assertEqual(test_train.ID, json_as_dict['ID'])
         self.assertEqual(test_train.DebugString, json_as_dict['DebugString'])
         self.assertIsInstance(test_train.TrainPathNodes[0], AIDM_classes.TrainPathNode)

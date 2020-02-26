@@ -1,4 +1,4 @@
-from AIDM import AIDM_classes
+from AIDM_module import AIDM_classes
 import AlgorithmTypeCheck
 import AlgorithmInterfaceCommunicationLayer
 

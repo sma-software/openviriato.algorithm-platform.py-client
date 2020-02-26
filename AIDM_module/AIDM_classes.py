@@ -1,60 +1,14 @@
 import AlgorithmTypeCheck
-import datetime
 from enum import Enum
-from AlgorithmTypeCheck import assert_datetime
 
-
-# AIDM helpers:
-def parse_to_datetime(datetime_raw_str: str) -> datetime.datetime:
-    return datetime.datetime.strptime(datetime_raw_str, '%Y-%m-%dT%H:%M:%S')
-
-
-def assert_stop_status(stop_status: str) -> None:
-    assert isinstance(stop_status, StopStatus), \
-        'required to be of type StopStatus\nbut it was a instead: {0}'.format(stop_status.__class__)
+from AIDM_module.AIDM_baseclasses_to_inherit_from import hasID, hasCode, hasDebugString
+from AIDM_module.AIDM_helpers import adjust_dict_keys_for_hidden_objects, parse_to_datetime
 
 
 class StopStatus(Enum):
     CommercialStop = 0
     OperationalStop = 1
     Passing = 2
-
-
-class hasID:
-    __ID: int
-
-    def __init__(self, element_id: int):
-        AlgorithmTypeCheck.assert_parameter_is_int(element_id, 'element_id', '__init()__')
-        self.__ID = element_id
-
-    @property
-    def ID(self) -> int:
-        return self.__ID
-
-
-class hasCode:
-    __Code: str
-
-    def __init__(self, code_string: str):
-        AlgorithmTypeCheck.assert_parameter_is_str(code_string, 'code_string', '__init()__')
-        self.__Code = code_string
-
-    @property
-    def Code(self) -> str:
-        return self.__Code
-
-
-class hasDebugString:
-    __DebugString: str
-
-    def __init__(self, debug_string: str = None):
-        if debug_string is not None:
-            AlgorithmTypeCheck.assert_parameter_is_str(debug_string, 'debug_string', '__init()__')
-        self.__DebugString = debug_string
-
-    @property
-    def DebugString(self):
-        return self.__DebugString
 
 
 class AlgorithmNodeTrack(hasID, hasCode, hasDebugString):
@@ -64,7 +18,6 @@ class AlgorithmNodeTrack(hasID, hasCode, hasDebugString):
         hasID.__init__(self, node_track_id)
         hasCode.__init__(self, code_string)
         hasDebugString.__init__(self, debug_string)
-
 
 
 class AlgorithmNode(hasID, hasCode, hasDebugString):
@@ -82,6 +35,7 @@ class AlgorithmNode(hasID, hasCode, hasDebugString):
     @property
     def NodeTracks(self) -> list:
         return self.__NodeTracks
+
 
 class AlgorithmSectionTrack(hasID, hasCode, hasDebugString):
     __Weight: int
@@ -118,13 +72,6 @@ class AlgorithmTrain(hasID, hasDebugString):
     @property
     def TrainPathNodes(self):
         return self.__trainPathNodes
-
-
-def adjust_dict_keys_for_hidden_objects(json_as_dict: dict) -> dict:
-    for old_key in json_as_dict.keys():
-        new_key = '__{0}'.format(old_key)
-        json_as_dict[new_key] = json_as_dict.pop(old_key)
-    return json_as_dict
 
 
 class TrainPathNode(hasID):
@@ -183,20 +130,6 @@ class TrainPathNode(hasID):
     @property
     def SequenceNumber(self):
         return self.__SequenceNumber
-
-
-def dict_to_algorithm_train_factory(json_as_dict: dict) -> AlgorithmTrain:
-    attribute_list = ['ID', 'DebugString', 'TrainPathNodes']
-    return AlgorithmTrain(train_id=json_as_dict['ID'],
-                          debug_string=json_as_dict['DebugString'],
-                          train_path_nodes=json_as_dict['TrainPathNodes'])
-
-
-def dict_to_algorithm_train_path_node_factory(json_as_dict: dict) -> AlgorithmTrain:
-    attribute_list = ['ID', 'DebugString', 'TrainPathNodes']
-    return AlgorithmTrain(train_id=json_as_dict['ID'],
-                          debug_string=json_as_dict['DebugString'],
-                          train_path_nodes=json_as_dict['TrainPathNodes'])
 
 
 """

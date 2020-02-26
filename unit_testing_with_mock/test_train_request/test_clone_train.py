@@ -1,7 +1,7 @@
 import unittest
 from unittest import mock
 
-from AIDM import AIDM_classes
+from AIDM_module import AIDM_classes
 import AlgorithmPlatformPyClient
 import unit_testing_with_mock.SessionMockFactory as SessionMockFactory
 import unit_testing_with_mock.unit_testing_helpers

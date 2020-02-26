@@ -3,7 +3,7 @@ A test script that requires an REST-API of the VIRIATO-Algorithm Platform
 """
 
 import AlgorithmPlatformPyClient as interface_module
-from AIDM import AIDM_classes
+from AIDM_module import AIDM_classes
 import unittest
 from unittest import mock
 import json

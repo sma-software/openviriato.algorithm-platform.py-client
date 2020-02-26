@@ -8,7 +8,7 @@ import unit_testing_with_mock.unit_testing_helpers
 from unit_testing_with_mock.unit_testing_helpers import get_url_str
 
 
-class TestGetTrainClassifications(unittest.TestCase):
+class TestCancelTrainFrom(unittest.TestCase):
     class CancelTrainFromTestMockSession(unit_testing_with_mock.unit_testing_helpers.SessionMockTestBase):
         # to replace session.get:
         def post(self, request, json):

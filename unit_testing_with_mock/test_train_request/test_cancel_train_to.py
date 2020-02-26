@@ -8,7 +8,7 @@ import unit_testing_with_mock.unit_testing_helpers
 from unit_testing_with_mock.unit_testing_helpers import get_url_str
 
 
-class TestGetTrainClassifications(unittest.TestCase):
+class TestCancelTrainTo(unittest.TestCase):
     class CancelTrainToTestMockSession(unit_testing_with_mock.unit_testing_helpers.SessionMockTestBase):
         # to replace session.get:
         def post(self, request, json):
@@ -62,15 +62,6 @@ class TestGetTrainClassifications(unittest.TestCase):
 
     @mock.patch('requests.Session', side_effect=CancelTrainToTestMockSession)
     def test_cancel_train_from_response(self, mocked_get_obj):
-        test_algorithm_train = self.interface_to_viriato.cancel_train_to(1)
-        self.assertIsInstance(test_algorithm_train, AIDMClasses.AlgorithmTrain)
-        self.assertEqual(test_algorithm_train.ID, 8120)
-        self.assertEqual(test_algorithm_train.DebugString, 'CancelTrainToTestMockSession')
-        self.assertIsInstance(test_algorithm_train.TrainPathNodes[0], AIDMClasses.TrainPathNode)
-        self.assertEqual(test_algorithm_train.TrainPathNodes[0].ID, 8118)
-
-    @mock.patch('requests.Session', side_effect=CancelTrainToTestMockSession)
-    def test_cancel_train_from_response_when_broken(self, mocked_get_obj):
         test_algorithm_train = self.interface_to_viriato.cancel_train_to(1)
         self.assertIsInstance(test_algorithm_train, AIDMClasses.AlgorithmTrain)
         self.assertEqual(test_algorithm_train.ID, 8120)

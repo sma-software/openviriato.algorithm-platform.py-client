@@ -3,12 +3,9 @@ A test script that requires an REST-API of the VIRIATO-Algorithm Platform
 """
 
 import AlgorithmPlatformPyClient as interface_module
-import AIDMClasses
-import AlgorithmInterfaceCommunicationLayer
-from datetime import datetime
+from AIDM import AIDM_classes
 import unittest
 from unittest import mock
-import requests
 import json
 
 
@@ -118,7 +115,7 @@ class TestGetDirectedSectionTracks(unittest.TestCase):
     @mock.patch('requests.Session', side_effect=MockedRequestsGetDirectedSectionTracks)
     def test_get_directed_section_tracks(self, mocked_get_obj):
         directed_section_tracks = self.interface_to_viriato.get_directed_section_tracks(20, 500)
-        self.assertIsInstance(directed_section_tracks[0], AIDMClasses.AlgorithmSectionTrack)
+        self.assertIsInstance(directed_section_tracks[0], AIDM_classes.AlgorithmSectionTrack)
 
     def test_get_directed_section_tracks_str_parameters(self):
         with self.assertRaises(AssertionError):

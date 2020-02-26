@@ -1,7 +1,7 @@
 import unittest
 from unittest import mock
 
-import AIDMClasses
+from AIDM import AIDM_classes
 import AlgorithmPlatformPyClient
 import unit_testing_with_mock.unit_testing_helpers
 from unit_testing_with_mock import SessionMockFactory as SessionMockFactory
@@ -54,7 +54,7 @@ class TestGetDirectedSectionTracks(unittest.TestCase):
     @mock.patch('requests.Session', side_effect=GetDirectedSectionTracksSessionTestMock)
     def test_get_directed_section_tracks_return(self, mocked_get_obj):
         directed_section_tracks = self.interface_to_viriato.get_directed_section_tracks(0, 0)
-        self.assertIsInstance(directed_section_tracks[0], AIDMClasses.AlgorithmSectionTrack)
+        self.assertIsInstance(directed_section_tracks[0], AIDM_classes.AlgorithmSectionTrack)
         self.assertIsInstance(directed_section_tracks[0].ID, int)
         self.assertIsInstance(directed_section_tracks[0].Code, str)
         self.assertIsInstance(directed_section_tracks[0].SectionCode, str)

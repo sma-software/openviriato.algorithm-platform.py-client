@@ -1,6 +1,6 @@
 from unittest import mock, TestCase
 
-import AIDMClasses
+from AIDM import AIDM_classes
 import AlgorithmPlatformPyClient
 import unit_testing_with_mock.SessionMockFactory as SessionMockFactory
 import unit_testing_with_mock.unit_testing_helpers
@@ -56,9 +56,9 @@ class TestGetNeighborNode(TestCase):
     @mock.patch('requests.Session', side_effect=GetNeighborNodeTestSessionMock)
     def test_get_neighbor_nodes_response(self, mocked_get_obj):
         test_neighbor_nodes = self.interface_to_viriato.get_neighbor_nodes(int())
-        self.assertIsInstance(test_neighbor_nodes[0], AIDMClasses.AlgorithmNode)
+        self.assertIsInstance(test_neighbor_nodes[0], AIDM_classes.AlgorithmNode)
         self.assertEqual(test_neighbor_nodes[0].DebugString, "GetNeighborNodeTestSessionMock:85NH")
-        self.assertIsInstance(test_neighbor_nodes[0].NodeTracks[0], AIDMClasses.AlgorithmNodeTrack)
+        self.assertIsInstance(test_neighbor_nodes[0].NodeTracks[0], AIDM_classes.AlgorithmNodeTrack)
 
     @mock.patch('requests.Session', side_effect=GetNeighborNodeTestSessionMock)
     def tearDown(self, mocked_get_obj) -> None:

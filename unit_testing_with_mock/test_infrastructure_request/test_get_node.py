@@ -1,6 +1,6 @@
 from unittest import mock, TestCase
 
-import AIDMClasses
+from AIDM import AIDM_classes
 import AlgorithmPlatformPyClient
 import unit_testing_with_mock.SessionMockFactory as SessionMockFactory
 import unit_testing_with_mock.unit_testing_helpers
@@ -47,8 +47,8 @@ class TestGetNode(TestCase):
     @mock.patch('requests.Session', side_effect=GetNodeTestSessionMock)
     def test_get_node_response(self, mocked_get_obj):
         node_info = self.interface_to_viriato.get_node(0)
-        self.assertIsInstance(node_info, AIDMClasses.AlgorithmNode)
-        self.assertIsInstance(node_info.NodeTracks[0], AIDMClasses.AlgorithmNodeTrack)
+        self.assertIsInstance(node_info, AIDM_classes.AlgorithmNode)
+        self.assertIsInstance(node_info.NodeTracks[0], AIDM_classes.AlgorithmNodeTrack)
         self.assertEqual(node_info.ID, 161)
         self.assertEqual(node_info.Code, '85AR')
         self.assertEqual(node_info.DebugString, "station:85AR")

@@ -1,7 +1,7 @@
 import unittest
 from unittest import mock
 
-import AIDMClasses
+from AIDM import AIDM_classes
 import AlgorithmPlatformPyClient
 import unit_testing_with_mock.unit_testing_helpers
 from unit_testing_with_mock import SessionMockFactory as SessionMockFactory
@@ -54,7 +54,7 @@ class TestGetParallelSectionTracks(unittest.TestCase):
     @mock.patch('requests.Session', side_effect=GetParallelSectionTracksSessionTestMock)
     def test_get_parallel_section_tracks_return(self, mocked_get_obj):
         parallel_section_tracks = self.interface_to_viriato.get_parallel_section_tracks(0)
-        self.assertIsInstance(parallel_section_tracks[0], AIDMClasses.AlgorithmSectionTrack)
+        self.assertIsInstance(parallel_section_tracks[0], AIDM_classes.AlgorithmSectionTrack)
         self.assertEqual(parallel_section_tracks[0].ID, 885)
         self.assertEqual(parallel_section_tracks[0].Code, '838')
         self.assertEqual(parallel_section_tracks[0].SectionCode, '61010')

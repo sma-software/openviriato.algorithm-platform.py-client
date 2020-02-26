@@ -1,6 +1,6 @@
 import unittest
 
-import AIDMClasses
+from AIDM import AIDM_classes
 
 
 class AlgorithmTrain(unittest.TestCase):
@@ -10,7 +10,7 @@ class AlgorithmTrain(unittest.TestCase):
                                ArrivalTime="2003-09-01T00:10:00",
                                DepartureTime="2003-09-01T00:10:00", MinimumRunTime=None, MinimumStopTime="P0D",
                                StopStatus="commercialStop", SequenceNumber=0)
-        test_train_path_node = AIDMClasses.TrainPathNode(train_path_node)
+        test_train_path_node = AIDM_classes.TrainPathNode(train_path_node)
         key: str
         for key in train_path_node.keys():
             self.assertEqual(train_path_node[key], getattr(test_train_path_node, key))

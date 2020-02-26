@@ -1,7 +1,7 @@
 import unittest
 from unittest import mock
 
-import AIDMClasses
+from AIDM import AIDM_classes
 import AlgorithmPlatformPyClient
 import unit_testing_with_mock.SessionMockFactory as SessionMockFactory
 import unit_testing_with_mock.unit_testing_helpers
@@ -42,7 +42,7 @@ class TestCloneTrain(unittest.TestCase):
                            '      "SequenceNumber": 1\n'
                            '    }\n'
                            '  ],\n'
-                           '  "DebugString": "RVZH_1_1_J03 tt_(G)"\n'
+                           '  "DebugString": "CloneTrainTestMockSession"\n'
                            '}')
             return SessionMockFactory.create_response_mock(json_string, 200)
 
@@ -62,18 +62,19 @@ class TestCloneTrain(unittest.TestCase):
 
     @mock.patch('requests.Session', side_effect=CloneTrainTestMockSession)
     def test_clone_train_response(self, mocked_get_obj):
-        test_algorithm_train = self.interface_to_viriato.clone_train(1)
-        self.assertIsInstance(test_algorithm_train, AIDMClasses.AlgorithmTrain)
-        self.assertEqual(test_algorithm_train.ID, 8120)
-        self.assertEqual(test_algorithm_train.DebugString, 'CancelTrainToTestMoaackSession')
-        self.assertIsInstance(test_algorithm_train.TrainPathNodes[0], AIDMClasses.TrainPathNode)
-        self.assertEqual(test_algorithm_train.TrainPathNodes[0].ID, 11038)
-        raise NotImplementedError
+        test_cloned_algorithm_train = self.interface_to_viriato.clone_train(2060)
+        self.assertIsInstance(test_cloned_algorithm_train, AIDM_classes.AlgorithmTrain)
+        self.assertEqual(11037, test_cloned_algorithm_train.ID)
+        self.assertEqual('CloneTrainTestMockSession', test_cloned_algorithm_train.DebugString)
+        self.assertIsInstance(test_cloned_algorithm_train.TrainPathNodes[0], AIDM_classes.TrainPathNode)
+        self.assertEqual(11038, test_cloned_algorithm_train.TrainPathNodes[0].ID)
 
-    def test_clone_train_wrong_type(self):
+    def test_clone_train_string_param(self):
         with self.assertRaises(AssertionError):
             with AlgorithmPlatformPyClient.AlgorithmicPlatformInterface(get_url_str()) as interface_to_viriato:
                 interface_to_viriato.clone_train('str instead of int')
+
+    def test_clone_train_double_param(self):
         with self.assertRaises(AssertionError):
             with AlgorithmPlatformPyClient.AlgorithmicPlatformInterface(get_url_str()) as interface_to_viriato:
                 interface_to_viriato.clone_train(1.5)

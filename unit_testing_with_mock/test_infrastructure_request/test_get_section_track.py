@@ -1,7 +1,7 @@
 import unittest
 from unittest import mock
 
-import AIDMClasses
+from AIDM import AIDM_classes
 import AlgorithmPlatformPyClient
 import unit_testing_with_mock.unit_testing_helpers
 from unit_testing_with_mock import SessionMockFactory as SessionMockFactory
@@ -46,7 +46,7 @@ class TestGetSectionTrack(unittest.TestCase):
     @mock.patch('requests.Session', side_effect=GetSectionTrackSessionTestMock)
     def test_get_section_track_return(self, mocked_get_obj):
         test_section_track = self.interface_to_viriato.get_section_track(0)
-        self.assertIsInstance(test_section_track, AIDMClasses.AlgorithmSectionTrack)
+        self.assertIsInstance(test_section_track, AIDM_classes.AlgorithmSectionTrack)
         self.assertEqual(test_section_track.ID, 1082)
         self.assertEqual(test_section_track.DebugString, 'GetSectionTrackSessionTestMock')
         self.assertEqual(test_section_track.SectionCode, '70015')

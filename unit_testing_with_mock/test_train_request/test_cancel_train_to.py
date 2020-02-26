@@ -1,7 +1,7 @@
 import unittest
 from unittest import mock
 
-import AIDMClasses
+from AIDM import AIDM_classes
 import AlgorithmPlatformPyClient
 import unit_testing_with_mock.SessionMockFactory as SessionMockFactory
 import unit_testing_with_mock.unit_testing_helpers
@@ -63,10 +63,10 @@ class TestCancelTrainTo(unittest.TestCase):
     @mock.patch('requests.Session', side_effect=CancelTrainToTestMockSession)
     def test_cancel_train_to_response(self, mocked_get_obj):
         test_algorithm_train = self.interface_to_viriato.cancel_train_to(1)
-        self.assertIsInstance(test_algorithm_train, AIDMClasses.AlgorithmTrain)
+        self.assertIsInstance(test_algorithm_train, AIDM_classes.AlgorithmTrain)
         self.assertEqual(test_algorithm_train.ID, 8120)
         self.assertEqual(test_algorithm_train.DebugString, 'CancelTrainToTestMockSession')
-        self.assertIsInstance(test_algorithm_train.TrainPathNodes[0], AIDMClasses.TrainPathNode)
+        self.assertIsInstance(test_algorithm_train.TrainPathNodes[0], AIDM_classes.TrainPathNode)
         self.assertEqual(test_algorithm_train.TrainPathNodes[0].ID, 8118)
 
     def test_test_cancel_train_to_wrong_type(self):

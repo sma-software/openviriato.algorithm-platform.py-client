@@ -8,9 +8,9 @@ __version__ = '0.0.1'
 __author__ = 'Florian Fuchs'
 
 import AIDM_module.AIDM_factories
-from AIDM_module import AIDM_classes
-import AlgorithmTypeCheck
 import AlgorithmInterfaceCommunicationLayer
+import AlgorithmTypeCheck
+from AIDM_module import AIDM_classes
 from AIDM_module.AIDM_factories import dict_to_algorithm_node_factory, list_of_dicts_to_algorithm_node_list_factory, \
     dict_to_algorithm_section_track_factory, algorithm_section_track_list_factory
 

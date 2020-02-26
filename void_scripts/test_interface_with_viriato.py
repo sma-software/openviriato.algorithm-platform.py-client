@@ -2,10 +2,11 @@
 A test script that requires an REST-API of the VIRIATO-Algorithm Platform
 """
 
+from datetime import datetime
+
+import AlgorithmInterfaceCommunicationLayer
 import AlgorithmPlatformPyClient as interface_module
 from AIDM_module import AIDM_classes
-import AlgorithmInterfaceCommunicationLayer
-from datetime import datetime
 
 
 def test_object_initialisation(url_str='http://localhost:8080') -> interface_module.AlgorithmicPlatformInterface:

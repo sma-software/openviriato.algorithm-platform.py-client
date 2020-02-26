@@ -2,11 +2,12 @@
 A test script that requires an REST-API of the VIRIATO-Algorithm Platform
 """
 
-import AlgorithmPlatformPyClient as interface_module
-from AIDM_module import AIDM_classes
+import json
 import unittest
 from unittest import mock
-import json
+
+import AlgorithmPlatformPyClient as interface_module
+from AIDM_module import AIDM_classes
 
 
 def get_url_str():

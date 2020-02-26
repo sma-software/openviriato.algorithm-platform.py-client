@@ -1,6 +1,7 @@
-import requests
 import unittest
 from unittest import mock
+
+import requests
 
 
 # This is the class we want to test

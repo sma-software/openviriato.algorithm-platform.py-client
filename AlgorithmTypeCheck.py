@@ -1,7 +1,5 @@
 import datetime
 
-import requests
-import json
 
 # move typechecks into own module -> AlgoPlatTypeAssertions
 def assert_parameter_is_str(received_object: str, object_name: str, method_name: str) -> None:

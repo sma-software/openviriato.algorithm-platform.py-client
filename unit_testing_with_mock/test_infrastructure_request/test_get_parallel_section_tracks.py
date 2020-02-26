@@ -1,9 +1,9 @@
 import unittest
 from unittest import mock
 
-from AIDM_module import AIDM_classes
 import AlgorithmPlatformPyClient
 import unit_testing_with_mock.unit_testing_helpers
+from AIDM_module import AIDM_classes
 from unit_testing_with_mock import SessionMockFactory as SessionMockFactory
 from unit_testing_with_mock.unit_testing_helpers import get_url_str
 

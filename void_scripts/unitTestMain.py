@@ -1,5 +1,5 @@
-import unittest
 import os
+import unittest
 
 import unit_testing_with_mock.test_infrastructure_request.test_get_directed_section_tracks
 import unit_testing_with_mock.test_interface_init as test_interface_init

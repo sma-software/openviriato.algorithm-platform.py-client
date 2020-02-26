@@ -125,21 +125,18 @@ class AlgorithmicPlatformInterface:
         return api_response.json()['trainID']
 
     def cancel_train_from(self, train_path_node_id: int) -> AIDMClasses.AlgorithmTrain:
-        # Cancel an existing Algorithm​Train partially and return the resulting Algorithm​Train.
         AlgorithmTypeCheck.assert_parameter_is_int(train_path_node_id, 'train_path_node_id', 'cancel_train_from')
         post_request_body = {'trainPathNodeID': train_path_node_id}
         api_response = self.__communication_layer.do_post_request('cancel-train-from', request_body=post_request_body)
         return AIDMClasses.dict_to_algorithm_train_factory(api_response.json())
 
     def cancel_train_to(self, train_path_node_id: int) -> AIDMClasses.AlgorithmTrain:
-        # Cancel an existing Algorithm​Train partially and return the resulting Algorithm​Train.
         AlgorithmTypeCheck.assert_parameter_is_int(train_path_node_id, 'train_path_node_id', 'cancel_train_to')
         post_request_body = {'trainPathNodeID': train_path_node_id}
         api_response = self.__communication_layer.do_post_request('cancel-train-to', request_body=post_request_body)
         return AIDMClasses.dict_to_algorithm_train_factory(api_response.json())
 
     def clone_train(self, train_id: int) -> AIDMClasses.AlgorithmTrain:
-        # Cancel an existing Algorithm​Train partially and return the resulting Algorithm​Train.
         AlgorithmTypeCheck.assert_parameter_is_int(train_id, 'train_id', 'clone_train')
         post_request_body = {'TrainID': train_id}
         api_response = self.__communication_layer.do_post_request('clone-train', request_body=post_request_body)

@@ -137,8 +137,8 @@ def dict_to_algorithm_train_path_node_factory(json_as_dict: dict) -> AlgorithmTr
 
 
 class TrainPathNode(hasID):
-    __ArrivalTime: datetime.datetime
-    __DepartureTime: datetime.datetime
+    __ArrivalTime: str
+    __DepartureTime: str
     __SectionTrackID: int
     __NodeID: int
     __NodeTrackID: int

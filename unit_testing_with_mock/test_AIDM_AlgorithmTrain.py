@@ -6,12 +6,12 @@ class AlgorithmTrain(unittest.TestCase):
 
     def test_algorithm_train_objects(self):
         train_id = 5
-        debug_string = 'test'
+        debug_string = 'test_algorithm_train_objects'
         train_path_nodes = [
-            dict(ID=8113, SectionTrackID=None, NodeID=7, NodeTrackID=8, FormationID=1187,
-                 ArrivalTime="2003-09-01T00:10:00",
+            dict(ID=2, SectionTrackID=None, NodeID=7, NodeTrackID=8, FormationID=8,
+                 ArrivalTime="2007-08-01T00:10:00",
                  DepartureTime="2003-09-01T00:10:00", MinimumRunTime=None, MinimumStopTime="P0D",
-                 StopStatus="commercialStop", SequenceNumber=0),
+                 StopStatus="passing", SequenceNumber=0),
             dict(ID=8114, SectionTrackID=1175, NodeID=15, NodeTrackID=16, FormationID=None,
                  ArrivalTime="2003-09-01T00:14:00", DepartureTime="2003-09-01T00:14:00", MinimumRunTime="PT4M",
                  MinimumStopTime="P0D", StopStatus="passing", SequenceNumber=1)]
@@ -29,7 +29,7 @@ class AlgorithmTrain(unittest.TestCase):
             dict(ID=8114, SectionTrackID=1175, NodeID=15, NodeTrackID=16, FormationID=None,
                  ArrivalTime="2003-09-01T00:14:00", DepartureTime="2003-09-01T00:14:00", MinimumRunTime="PT4M",
                  MinimumStopTime="P0D", StopStatus="passing", SequenceNumber=1)
-        ], 'DebugString': "RVZH_12_1_J03 tt_(S)"}
+        ], 'DebugString': "RVZH_12_1_J03 tt_(S) test_dict_to_algorithm_train_factory"}
         test_train = AIDMClasses.dict_to_algorithm_train_factory(json_as_dict)
         self.assertEqual(test_train.ID, json_as_dict['ID'])
         self.assertEqual(test_train.DebugString, json_as_dict['DebugString'])

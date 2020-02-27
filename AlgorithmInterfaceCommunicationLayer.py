@@ -57,7 +57,7 @@ class CommunicationLayer:
         check_if_request_successful(api_response)
         return api_response
 
-    def do_put_request(self, request_call: str, request_body: dict = None) -> requests.Response:
+    def do_put_request(self, request_call: str, request_body: (dict, list) = None) -> requests.Response:
         if request_body is None:
             request_body = {}
         complete_url = self.merge_base_url_with_request(request_call)

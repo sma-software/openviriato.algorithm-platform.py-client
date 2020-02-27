@@ -25,7 +25,7 @@ class AlgorithmicPlatformInterface:
         return self  # to be used in with statement as disposable
 
     def __exit__(self, exc_type=None, exc_val=None, exc_tb=None):
-        self.__communication_layer.currentSession.close() # to be used in with statement as disposable
+        self.__communication_layer.currentSession.close()  # to be used in with statement as disposable
 
     @property
     def base_url(self) -> str:

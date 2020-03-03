@@ -55,10 +55,13 @@ class TestGetNeighborNode(TestCase):
 
     @mock.patch('requests.Session', side_effect=GetNeighborNodeTestSessionMock)
     def test_get_neighbor_nodes_response(self, mocked_get_obj):
-        test_neighbor_nodes = self.interface_to_viriato.get_neighbor_nodes(int())
-        self.assertIsInstance(test_neighbor_nodes[0], AIDM_classes.AlgorithmNode)
-        self.assertEqual(test_neighbor_nodes[0].DebugString, "GetNeighborNodeTestSessionMock:85NH")
-        self.assertIsInstance(test_neighbor_nodes[0].NodeTracks[0], AIDM_classes.AlgorithmNodeTrack)
+        node_id = 1
+
+        mock_return_neighbor_nodes = self.interface_to_viriato.get_neighbor_nodes(node_id)
+
+        self.assertIsInstance(mock_return_neighbor_nodes[0], AIDM_classes.AlgorithmNode)
+        self.assertEqual(mock_return_neighbor_nodes[0].DebugString, "GetNeighborNodeTestSessionMock:85NH")
+        self.assertIsInstance(mock_return_neighbor_nodes[0].NodeTracks[0], AIDM_classes.AlgorithmNodeTrack)
 
     @mock.patch('requests.Session', side_effect=GetNeighborNodeTestSessionMock)
     def tearDown(self, mocked_get_obj) -> None:

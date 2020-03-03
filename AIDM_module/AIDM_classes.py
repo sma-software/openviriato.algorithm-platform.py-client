@@ -26,12 +26,7 @@ class AlgorithmNode(hasID, hasCode, hasDebugString):
         hasID.__init__(self, node_id)
         hasCode.__init__(self, code_string)
         hasDebugString.__init__(self, debug_string)
-        self.__NodeTracks = []
-        node_tracks2 = []
-        for node_tr in node_tracks2:
-            print("test")
-       # for i in range(len(node_tracks)):
-        #    self.__NodeTracks.append(node_tracks[i])
+        self.__NodeTracks = node_tracks
 
     @property
     def NodeTracks(self) -> list:

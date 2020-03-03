@@ -6,7 +6,7 @@ import unittest
 from datetime import datetime
 
 import AlgorithmInterfaceCommunicationLayer
-import AlgorithmPlatformPyClient as interface_module
+import AlgorithmInterfaceFactory as interface_module
 from AIDM_module import AIDM_classes
 
 

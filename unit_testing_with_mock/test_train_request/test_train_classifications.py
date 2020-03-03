@@ -1,10 +1,10 @@
 import unittest
 from unittest import mock
 
-import AlgorithmPlatformPyClient
+import AlgorithmInterfaceFactory
 import unit_testing_with_mock.SessionMockFactory as SessionMockFactory
 import unit_testing_with_mock.unit_testing_helpers
-from unit_testing_with_mock.unit_testing_helpers import get_url_str
+from unit_testing_with_mock.unit_testing_helpers import get_api_url
 
 
 class TestGetTrainClassifications(unittest.TestCase):
@@ -16,18 +16,18 @@ class TestGetTrainClassifications(unittest.TestCase):
             json_string = '[{ "Description": "Unknown"},{"Description": "Freight" }, { "Description": "Passenger"}]'
             return SessionMockFactory.create_response_mock(json_string, 200)
 
-    interface_to_viriato: AlgorithmPlatformPyClient.AlgorithmicPlatformInterface
+    interface_to_viriato: AlgorithmInterfaceFactory.AlgorithmicPlatformInterface
 
     @mock.patch('requests.Session', side_effect=GetTrainClassificationsTestMockSession)
     def setUp(self, mocked_get_obj):
-        self.interface_to_viriato = AlgorithmPlatformPyClient.AlgorithmicPlatformInterface(get_url_str())
+        self.interface_to_viriato = AlgorithmInterfaceFactory.AlgorithmicPlatformInterface(get_api_url())
 
     @mock.patch('requests.Session', side_effect=GetTrainClassificationsTestMockSession)
     def test_get_train_classifications_request(self, mocked_get_obj):
         self.interface_to_viriato.get_train_classifications()
         session_obj = self.interface_to_viriato._AlgorithmicPlatformInterface__communication_layer.currentSession
         self.assertEqual(session_obj._GetTrainClassificationsTestMockSession__last_request,
-                         get_url_str() + '/train-classifications')
+                         get_api_url() + '/train-classifications')
         self.assertEqual(session_obj._GetTrainClassificationsTestMockSession__last_body, {})
 
     @mock.patch('requests.Session', side_effect=GetTrainClassificationsTestMockSession)

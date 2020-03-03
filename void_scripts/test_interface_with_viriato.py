@@ -5,7 +5,7 @@ A test script that requires an REST-API of the VIRIATO-Algorithm Platform
 from datetime import datetime
 
 import AlgorithmInterfaceCommunicationLayer
-import AlgorithmPlatformPyClient as interface_module
+import AlgorithmInterfaceFactory as interface_module
 from AIDM_module import AIDM_classes
 
 

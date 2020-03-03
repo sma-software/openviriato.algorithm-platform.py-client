@@ -1,10 +1,10 @@
 from unittest import mock, TestCase
 
-import AlgorithmPlatformPyClient
+import AlgorithmInterfaceFactory
 import unit_testing_with_mock.SessionMockFactory as SessionMockFactory
 import unit_testing_with_mock.unit_testing_helpers
 from AIDM_module import AIDM_classes
-from unit_testing_with_mock.unit_testing_helpers import get_url_str
+from unit_testing_with_mock.unit_testing_helpers import get_api_url
 
 
 class TestSetSectionTrack(TestCase):
@@ -47,11 +47,11 @@ class TestSetSectionTrack(TestCase):
                            '}')
             return SessionMockFactory.create_response_mock(json_string, 200)
 
-    interface_to_viriato: AlgorithmPlatformPyClient.AlgorithmicPlatformInterface
+    interface_to_viriato: AlgorithmInterfaceFactory.AlgorithmicPlatformInterface
 
     @mock.patch('requests.Session', side_effect=SetSectionTrackTestMockSession)
     def setUp(self, mocked_get_obj):
-        self.interface_to_viriato = AlgorithmPlatformPyClient.AlgorithmicPlatformInterface(get_url_str())
+        self.interface_to_viriato = AlgorithmInterfaceFactory.AlgorithmicPlatformInterface(get_api_url())
 
     @mock.patch('requests.Session', side_effect=SetSectionTrackTestMockSession)
     def test_set_section_track_request(self, mocked_get_obj) -> None:
@@ -59,7 +59,7 @@ class TestSetSectionTrack(TestCase):
         self.interface_to_viriato.set_section_track(test_dict['TrainPathNodeID'], test_dict['SectionTrackID'])
         session_obj = self.interface_to_viriato._AlgorithmicPlatformInterface__communication_layer.currentSession
         self.assertEqual(session_obj._SetSectionTrackTestMockSession__last_request,
-                         get_url_str() + '/set-section-track')
+                         get_api_url() + '/set-section-track')
         self.assertEqual(session_obj._SetSectionTrackTestMockSession__last_body, test_dict)
 
     @mock.patch('requests.Session', side_effect=SetSectionTrackTestMockSession)
@@ -72,10 +72,10 @@ class TestSetSectionTrack(TestCase):
     @mock.patch('requests.Session', side_effect=SetSectionTrackTestMockSession)
     def test_set_section_track_str_param(self, mocked_get_obj):
         with self.assertRaises(AssertionError):
-            with AlgorithmPlatformPyClient.AlgorithmicPlatformInterface(get_url_str()) as interface_to_viriato:
+            with AlgorithmInterfaceFactory.AlgorithmicPlatformInterface(get_api_url()) as interface_to_viriato:
                 interface_to_viriato.set_section_track('1', 2)
         with self.assertRaises(AssertionError):
-            with AlgorithmPlatformPyClient.AlgorithmicPlatformInterface(get_url_str()) as interface_to_viriato:
+            with AlgorithmInterfaceFactory.AlgorithmicPlatformInterface(get_api_url()) as interface_to_viriato:
                 interface_to_viriato.set_section_track(1, '2')
 
     @mock.patch('requests.Session', side_effect=SetSectionTrackTestMockSession)

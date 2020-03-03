@@ -1,10 +1,10 @@
 from unittest import mock, TestCase
 
-import AlgorithmPlatformPyClient
+import AlgorithmInterfaceFactory
 import unit_testing_with_mock.SessionMockFactory as SessionMockFactory
 import unit_testing_with_mock.unit_testing_helpers
 from AIDM_module import AIDM_classes
-from unit_testing_with_mock.unit_testing_helpers import get_url_str
+from unit_testing_with_mock.unit_testing_helpers import get_api_url
 
 
 class TestGetNeighborNode(TestCase):
@@ -43,13 +43,13 @@ class TestGetNeighborNode(TestCase):
 
     @mock.patch('requests.Session', side_effect=GetNeighborNodeTestSessionMock)
     def setUp(self, mocked_get_obj):
-        self.interface_to_viriato = AlgorithmPlatformPyClient.AlgorithmicPlatformInterface(get_url_str())
+        self.interface_to_viriato = AlgorithmInterfaceFactory.AlgorithmicPlatformInterface(get_api_url())
 
     @mock.patch('requests.Session', side_effect=GetNeighborNodeTestSessionMock)
     def test_get_neighbor_nodes_request(self, mocked_get_obj):
         self.interface_to_viriato.get_neighbor_nodes(161)
         session_obj = self.interface_to_viriato._AlgorithmicPlatformInterface__communication_layer.currentSession
-        self.assertEqual(get_url_str() + '/neighbor-nodes/161',
+        self.assertEqual(get_api_url() + '/neighbor-nodes/161',
                          session_obj._GetNeighborNodeTestSessionMock__last_request)
         self.assertEqual(session_obj._GetNeighborNodeTestSessionMock__last_body, {})
 

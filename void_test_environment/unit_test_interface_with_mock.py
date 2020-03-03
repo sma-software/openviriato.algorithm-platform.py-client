@@ -6,7 +6,7 @@ import json
 import unittest
 from unittest import mock
 
-import AlgorithmPlatformPyClient as interface_module
+import AlgorithmInterfaceFactory as interface_module
 from AIDM_module import AIDM_classes
 
 

@@ -12,7 +12,6 @@ class StopStatus(Enum):
 
 
 class AlgorithmNodeTrack(hasID, hasCode, hasDebugString):
-    __NodeTracks: []
 
     def __init__(self, node_track_id: int, code_string: str, debug_string: str):
         hasID.__init__(self, node_track_id)
@@ -23,14 +22,16 @@ class AlgorithmNodeTrack(hasID, hasCode, hasDebugString):
 class AlgorithmNode(hasID, hasCode, hasDebugString):
     __NodeTracks: []
 
-    def __init__(self, node_id: int, code_string: str, debug_string: str, node_tracks: list = None):
+    def __init__(self, node_id: int, code_string: str, debug_string: str, node_tracks: list = []):
         hasID.__init__(self, node_id)
         hasCode.__init__(self, code_string)
         hasDebugString.__init__(self, debug_string)
         self.__NodeTracks = []
-        if node_tracks is not None:
-            for node_track in node_tracks:
-                self.__NodeTracks.append(node_track)
+        node_tracks2 = []
+        for node_tr in node_tracks2:
+            print("test")
+       # for i in range(len(node_tracks)):
+        #    self.__NodeTracks.append(node_tracks[i])
 
     @property
     def NodeTracks(self) -> list:

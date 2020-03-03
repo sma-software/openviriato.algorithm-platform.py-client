@@ -14,8 +14,7 @@ from AIDM_module import AIDM_classes
 from AIDM_module.AIDM_factories import dict_to_algorithm_node_factory, list_of_dicts_to_algorithm_node_list_factory, \
     dict_to_algorithm_section_track_factory, algorithm_section_track_list_factory
 
-
-class AlgorithmicPlatformInterface:
+class AlgorithmicPlatformInterface: # AlgorithmInterface
     __communication_layer: AlgorithmInterfaceCommunicationLayer.CommunicationLayer
 
     def __init__(self, base_url: str):
@@ -123,6 +122,10 @@ class AlgorithmicPlatformInterface:
         api_response = self.__communication_layer.do_put_request(url_tail, request_body=put_body_list)
         return AIDM_module.AIDM_factories.dict_to_algorithm_train_factory(api_response.json())
 
+
+
+def create(base_url: str):
+    return AlgorithmicPlatformInterface(base_url=base_url)
 
 """
 class AlgorithmicPlatformInterfaceIncomplete(AlgorithmicPlatformInterface):

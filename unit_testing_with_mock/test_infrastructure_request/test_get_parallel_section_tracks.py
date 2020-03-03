@@ -1,11 +1,11 @@
 import unittest
 from unittest import mock
 
-import AlgorithmPlatformPyClient
+import AlgorithmInterfaceFactory
 import unit_testing_with_mock.unit_testing_helpers
 from AIDM_module import AIDM_classes
 from unit_testing_with_mock import SessionMockFactory as SessionMockFactory
-from unit_testing_with_mock.unit_testing_helpers import get_url_str
+from unit_testing_with_mock.unit_testing_helpers import get_api_url
 
 
 class TestGetParallelSectionTracks(unittest.TestCase):
@@ -36,11 +36,11 @@ class TestGetParallelSectionTracks(unittest.TestCase):
                            "]")
             return SessionMockFactory.create_response_mock(json_string, 200)
 
-    interface_to_viriato: AlgorithmPlatformPyClient.AlgorithmicPlatformInterface
+    interface_to_viriato: AlgorithmInterfaceFactory.AlgorithmicPlatformInterface
 
     @mock.patch('requests.Session', side_effect=GetParallelSectionTracksSessionTestMock)
     def setUp(self, mocked_get_obj):
-        self.interface_to_viriato = AlgorithmPlatformPyClient.AlgorithmicPlatformInterface(get_url_str())
+        self.interface_to_viriato = AlgorithmInterfaceFactory.AlgorithmicPlatformInterface(get_api_url())
 
     # split in two tests --> one for request and one for return
     @mock.patch('requests.Session', side_effect=GetParallelSectionTracksSessionTestMock)
@@ -48,7 +48,7 @@ class TestGetParallelSectionTracks(unittest.TestCase):
         self.interface_to_viriato.get_parallel_section_tracks(885)
         session_obj = self.interface_to_viriato._AlgorithmicPlatformInterface__communication_layer.currentSession
         self.assertEqual(session_obj._GetParallelSectionTracksSessionTestMock__last_request,
-                         get_url_str() + '/section-tracks-parallel-to/885')
+                         get_api_url() + '/section-tracks-parallel-to/885')
         self.assertEqual(session_obj._GetParallelSectionTracksSessionTestMock__last_body, {})
 
     @mock.patch('requests.Session', side_effect=GetParallelSectionTracksSessionTestMock)

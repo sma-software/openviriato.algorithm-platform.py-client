@@ -9,11 +9,9 @@ def dict_to_algorithm_node_track_factory(node_track_as_dict: dict) -> AIDM_class
 
 
 def dict_to_algorithm_node_factory(node_as_dict: dict) -> AIDM_classes.AlgorithmNode:
-    node_track_list = None
-    if not node_as_dict['NodeTracks'] is None:
-        node_track_list = []
-        for node_track in node_as_dict['NodeTracks']:
-            node_track_list.append(dict_to_algorithm_node_track_factory(node_track))
+    node_track_list = []
+    for node_track in node_as_dict['NodeTracks']:
+        node_track_list.append(dict_to_algorithm_node_track_factory(node_track))
     return AIDM_classes.AlgorithmNode(node_id=node_as_dict['ID'],
                                       code_string=node_as_dict['Code'],
                                       node_tracks=node_track_list,

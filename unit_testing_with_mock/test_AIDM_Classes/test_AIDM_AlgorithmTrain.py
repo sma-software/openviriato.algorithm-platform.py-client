@@ -1,6 +1,6 @@
 import unittest
 
-import AIDM_module
+import AIDM_module.to_AIDM_converter
 
 
 class AlgorithmTrain(unittest.TestCase):

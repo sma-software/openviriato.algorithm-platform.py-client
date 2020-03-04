@@ -1,7 +1,7 @@
 import unittest
 
+import AIDM_module.to_AIDM_converter
 from AIDM_module import AIDM_classes
-import  AIDM_module.to_AIDM_converter
 
 
 class TestAIDMNode(unittest.TestCase):

@@ -1,6 +1,7 @@
+import datetime
 import unittest
 
-import AIDM_module
+import AIDM_module.to_AIDM_converter
 
 
 class AlgorithmTrain(unittest.TestCase):
@@ -17,6 +18,6 @@ class AlgorithmTrain(unittest.TestCase):
         self.assertIsInstance(test_train_path_node.StopStatus, AIDM_module.AIDM_classes.StopStatus)
         self.assertEqual(test_train_path_node.StopStatus, AIDM_module.AIDM_classes.StopStatus['commercialStop'])
         self.assertEqual(test_train_path_node.SequenceNumber, 0)
-        self.assertEqual(test_train_path_node.MinimumRunTime, None)
+        self.assertEqual(test_train_path_node.MinimumRunTime, datetime.timedelta(0))
         self.assertEqual(test_train_path_node.NodeTrackID, 8)
         self.assertEqual(test_train_path_node.NodeID, 7)

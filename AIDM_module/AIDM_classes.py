@@ -1,7 +1,7 @@
+import datetime
 from enum import Enum
 
 from AIDM_module.AIDM_base_classes import hasID, hasCode, hasDebugString
-from AIDM_module.from_AIDM_converter import parse_to_datetime
 
 
 class StopStatus(Enum):
@@ -71,19 +71,20 @@ class AlgorithmTrain(hasID, hasDebugString):
 
 
 class TrainPathNode(hasID):
-    __ArrivalTime: str
-    __DepartureTime: str
+    __ArrivalTime: datetime.datetime
+    __DepartureTime: datetime.datetime
     __SectionTrackID: int
     __NodeID: int
     __NodeTrackID: int
     __FormationID: int
-    __MinimumRunTime: int
-    __MinimumStopTime: int
+    __MinimumRunTime: datetime.timedelta
+    __MinimumStopTime: datetime.timedelta
     __StopStatus: StopStatus
     __SequenceNumber: int
 
-    def __init__(self, ID: int, ArrivalTime: str, DepartureTime: str, SectionTrackID: int, NodeID: int,
-                  NodeTrackID: int, FormationID: int, MinimumRunTime: int, MinimumStopTime: int,
+    def __init__(self, ID: int, ArrivalTime: datetime.datetime, DepartureTime: datetime.datetime,
+                 SectionTrackID: int, NodeID: int, NodeTrackID: int, FormationID: int,
+                 MinimumRunTime: datetime.timedelta, MinimumStopTime: datetime.timedelta,
                  StopStatus: StopStatus, SequenceNumber: int):
         hasID.__init__(self, ID)
         self.__ArrivalTime = ArrivalTime
@@ -115,11 +116,11 @@ class TrainPathNode(hasID):
 
     @property
     def ArrivalTime(self):
-        return parse_to_datetime(self.__ArrivalTime)
+        return self.__ArrivalTime
 
     @property
     def DepartureTime(self):
-        return parse_to_datetime(self.__DepartureTime)
+        return self.__DepartureTime
 
     @property
     def MinimumRunTime(self):

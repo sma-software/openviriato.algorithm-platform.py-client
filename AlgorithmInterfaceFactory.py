@@ -61,7 +61,9 @@ class AlgorithmicPlatformInterface:  # AlgorithmInterface
     def get_parallel_section_tracks(self, section_track_id: int) -> list:
         url_tail = 'section-tracks-parallel-to/{0}'.format(section_track_id)
         api_response = self.__communication_layer.do_get_request(url_tail)
-        return algorithm_section_track_list_factory(api_response.json())
+        return [ AIDM_module.AIDM_classes.AlgorithmSectionTrack.from_json_dict_factory(json_dict)
+                 for json_dict in api_response.json()]
+        # return algorithm_section_track_list_factory(api_response.json())
 
     def get_train_classification(self, train_id: int) -> dict:
         api_response = self.__communication_layer.do_get_request('train-classification/{0}'.format(train_id))
@@ -78,17 +80,20 @@ class AlgorithmicPlatformInterface:  # AlgorithmInterface
     def cancel_train_from(self, train_path_node_id: int) -> AIDM_classes.AlgorithmTrain:
         post_request_body = {'trainPathNodeID': train_path_node_id}
         api_response = self.__communication_layer.do_post_request('cancel-train-from', request_body=post_request_body)
-        return AIDM_module.AIDM_factories.dict_to_algorithm_train_factory(api_response.json())
+        return AIDM_module.AIDM_classes.AlgorithmTrain.from_json_dict_factory(api_response.json())
+        # return AIDM_module.AIDM_factories.dict_to_algorithm_train_factory(api_response.json())
 
     def cancel_train_to(self, train_path_node_id: int) -> AIDM_classes.AlgorithmTrain:
         post_request_body = {'trainPathNodeID': train_path_node_id}
         api_response = self.__communication_layer.do_post_request('cancel-train-to', request_body=post_request_body)
-        return AIDM_module.AIDM_factories.dict_to_algorithm_train_factory(api_response.json())
+        return AIDM_module.AIDM_classes.AlgorithmTrain.from_json_dict_factory(api_response.json())
+        # return AIDM_module.AIDM_factories.dict_to_algorithm_train_factory(api_response.json())
 
     def clone_train(self, train_id: int) -> AIDM_classes.AlgorithmTrain:
         post_request_body = {'TrainID': train_id}
         api_response = self.__communication_layer.do_post_request('clone-train', request_body=post_request_body)
-        return AIDM_module.AIDM_factories.dict_to_algorithm_train_factory(api_response.json())
+        return AIDM_module.AIDM_classes.AlgorithmTrain.from_json_dict_factory(api_response.json())
+        # return AIDM_module.AIDM_factories.dict_to_algorithm_train_factory(api_response.json())
 
     def set_section_track(self, train_path_node_id: int, section_track_id: int) -> AIDM_classes.AlgorithmTrain:
         post_request_body = {'TrainPathNodeID': train_path_node_id, 'SectionTrackID': section_track_id}
@@ -102,7 +107,8 @@ class AlgorithmicPlatformInterface:  # AlgorithmInterface
                           'MinimumStopTime': node.MinimumStopTime, 'StopStatus': node.StopStatus}
                          for node in update_train_times_node]
         api_response = self.__communication_layer.do_put_request(url_tail, request_body=put_body_list)
-        return AIDM_module.AIDM_factories.dict_to_algorithm_train_factory(api_response.json())
+        return AIDM_module.AIDM_classes.AlgorithmTrain.from_json_dict_factory(api_response.json())
+        # return AIDM_module.AIDM_factories.dict_to_algorithm_train_factory(api_response.json())
 
 
 def create(base_url: str):

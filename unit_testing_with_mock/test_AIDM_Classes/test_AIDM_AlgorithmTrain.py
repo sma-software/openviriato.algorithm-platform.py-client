@@ -9,7 +9,7 @@ class AlgorithmTrain(unittest.TestCase):
     def test_algorithm_train_from_json_dict_factory(self):
         json_dict = dict(ID=5,
                          DebugString='test_algorithm_train_objects',
-                         trainPathNodes=[
+                         TrainPathNodes=[
                              dict(ID=2, SectionTrackID=None, NodeID=7, NodeTrackID=8, FormationID=8,
                                   ArrivalTime="2007-08-01T00:10:00",
                                   DepartureTime="2003-09-01T00:10:00", MinimumRunTime=None, MinimumStopTime="P0D",

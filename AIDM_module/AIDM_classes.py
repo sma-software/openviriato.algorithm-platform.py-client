@@ -6,8 +6,8 @@ from AIDM_module.AIDM_helpers import adjust_dict_keys_for_hidden_objects, parse_
 
 
 class StopStatus(Enum):
-    CommercialStop = 0
-    OperationalStop = 1
+    commercialStop = 0
+    operationalStop = 1
     passing = 2
 
 
@@ -70,20 +70,20 @@ class AlgorithmSectionTrack(hasID, hasCode, hasDebugString):
 class AlgorithmTrain(hasID, hasDebugString):
     __trainPathNodes: list
 
-    def __init__(self, ID: int, DebugString: str, trainPathNodes: list):
+    def __init__(self, ID: int, DebugString: str, TrainPathNodes: list):
         hasID.__init__(self, ID)
         hasDebugString.__init__(self, DebugString)
-        self.__trainPathNodes = trainPathNodes
+        self.__TrainPathNodes = TrainPathNodes
 
     @classmethod
     def from_json_dict_factory(cls, json_dict: dict):
-        json_dict['trainPathNodes'] = \
-            [TrainPathNode.from_json_dict_factory(path_node_dict) for path_node_dict in json_dict['trainPathNodes']]
+        json_dict['TrainPathNodes'] = \
+            [TrainPathNode.from_json_dict_factory(path_node_dict) for path_node_dict in json_dict['TrainPathNodes']]
         return cls(**json_dict)
 
     @property
     def TrainPathNodes(self) -> list:
-        return self.__trainPathNodes
+        return self.__TrainPathNodes
 
 
 class TrainPathNode(hasID):

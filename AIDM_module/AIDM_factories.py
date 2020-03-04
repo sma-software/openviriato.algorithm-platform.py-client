@@ -31,16 +31,17 @@ def dict_to_algorithm_section_track_factory(section_track_as_dict: dict) -> AIDM
 
 
 def algorithm_section_track_list_factory(list_of_sections_dict: list) -> list:
-    return [dict_to_algorithm_section_track_factory(section_as_dict) for section_as_dict in list_of_sections_dict]
+    return [AIDM_classes.AlgorithmSectionTrack.from_json_dict_factory(section_dict)
+            for section_dict in list_of_sections_dict]
 
 
 def dict_to_algorithm_train_factory(json_as_dict: dict) -> AlgorithmTrain:
     return AlgorithmTrain(ID=json_as_dict['ID'],
                           DebugString=json_as_dict['DebugString'],
-                          trainPathNodes=json_as_dict['TrainPathNodes'])
+                          TrainPathNodes=json_as_dict['TrainPathNodes'])
 
 
 def void_dict_to_algorithm_train_path_node_factory(json_as_dict: dict) -> AlgorithmTrain:
     return AlgorithmTrain(ID=json_as_dict['ID'],
                           DebugString=json_as_dict['DebugString'],
-                          trainPathNodes=json_as_dict['TrainPathNodes'])
+                          TrainPathNodes=json_as_dict['TrainPathNodes'])

@@ -21,7 +21,7 @@ def convert_dict_to_AIDM(AIDM_class, attribute_dict: dict):
     return AIDM_class(**attribute_dict)
 
 
-def from_list_of_dict_to_list_of_AIDM(AIDM_class, list_of_dict: list):
+def from_list_of_dict_to_list_of_AIDM(AIDM_class, list_of_dict: list) -> list:
     return [convert_dict_to_AIDM(AIDM_class, dict_from_list) for dict_from_list in list_of_dict]
 
 

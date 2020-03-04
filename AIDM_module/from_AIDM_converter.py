@@ -1,6 +1,3 @@
-import AIDM_module.AIDM_classes
-
-
 def remove_leading_and_trailing_underscore_from_keys(any_dict):
     for old_key in any_dict.keys():
         new_key = old_key.strip('__')

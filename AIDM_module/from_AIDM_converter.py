@@ -1,7 +1,19 @@
 import AIDM_module.AIDM_classes
 
-def remove_leading_underscore_from_keys(dictob):
-    return
+
+def remove_leading_and_trailing_underscore_from_keys(any_dict):
+    for old_key in any_dict.keys():
+        new_key = old_key.strip('__')
+        any_dict[new_key] = any_dict.pop(old_key)
+
+    return any_dict
+
 
 def convert_to_dict(AIDM_object) -> dict:
-    return AIDM_object.__dict__
+
+    return remove_leading_and_trailing_underscore_from_keys(AIDM_object.__dict__)
+
+
+def convert_to_list_of_dict(list_of_AIDM_object) -> list:
+
+    return [convert_to_dict(AIDM_object) for AIDM_object in list_of_AIDM_object]

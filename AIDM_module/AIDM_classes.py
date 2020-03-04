@@ -103,39 +103,39 @@ class TrainPathNode(hasID):
         return self.__SectionTrackID
 
     @property
-    def NodeID(self):
+    def NodeID(self) -> int:
         return self.__NodeID
 
     @property
-    def NodeTrackID(self):
+    def NodeTrackID(self) -> int:
         return self.__NodeTrackID
 
     @property
-    def FormationID(self):
+    def FormationID(self) -> int:
         return self.__FormationID
 
     @property
-    def ArrivalTime(self):
+    def ArrivalTime(self) -> datetime.datetime:
         return self.__ArrivalTime
 
     @property
-    def DepartureTime(self):
+    def DepartureTime(self) -> datetime.datetime:
         return self.__DepartureTime
 
     @property
-    def MinimumRunTime(self):
+    def MinimumRunTime(self) -> datetime.timedelta:
         return self.__MinimumRunTime
 
     @property
-    def MinimumStopTime(self):
+    def MinimumStopTime(self) -> datetime.timedelta:
         return self.__MinimumStopTime
 
     @property
-    def StopStatus(self):
+    def StopStatus(self) -> StopStatus:
         return self.__StopStatus
 
     @property
-    def SequenceNumber(self):
+    def SequenceNumber(self) -> int:
         return self.__SequenceNumber
 
 

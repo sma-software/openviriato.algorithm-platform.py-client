@@ -53,10 +53,6 @@ class AlgorithmSectionTrack(hasID, hasCode, hasDebugString):
         self.__Weight = Weight
         self.__SectionCode = SectionCode
 
-    @classmethod
-    def from_json_dict_factory(cls, json_dict: dict):
-        return cls(**json_dict)
-
     @property
     def Weight(self) -> int:
         return self.__Weight

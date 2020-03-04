@@ -12,7 +12,7 @@ class TestShowStatusMessage(unittest.TestCase):
         def post(self, request, json):
             self.__last_request = request
             self.__last_body = json
-            return APISessionMock.create_response_mock('None', 200)
+            return APISessionMock.create_response_mock('', 200)
 
     @mock.patch('requests.Session', side_effect=ShowStatusMessageSessionTestMock)
     def test_show_status_message_one_str(self, mocked_requests_session):

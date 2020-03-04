@@ -12,7 +12,7 @@ class TestUserNotifications(unittest.TestCase):
         def post(self, request, json):
             self.__last_request = request
             self.__last_body = json
-            return APISessionMock.create_response_mock('None', 200)
+            return APISessionMock.create_response_mock('', 200)
 
     @mock.patch('requests.Session', side_effect=UserNotificationSessionTestMock)
     def test_user_notification_request_formulation(self, mocked_requests_session):

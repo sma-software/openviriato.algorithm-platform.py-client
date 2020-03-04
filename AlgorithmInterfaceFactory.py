@@ -12,6 +12,7 @@ import AlgorithmInterfaceCommunicationLayer
 import AlgorithmTypeCheck
 from AIDM_module import AIDM_classes
 from AIDM_module.AIDM_factories import algorithm_section_track_list_factory
+import AIDM_module.to_AIDM_converter
 
 
 class AlgorithmicPlatformInterface:  # AlgorithmInterface
@@ -31,8 +32,6 @@ class AlgorithmicPlatformInterface:  # AlgorithmInterface
         return self.__communication_layer.base_url
 
     def notify_user(self, message_level_1: str, message_level_2: str) -> None:
-        AlgorithmTypeCheck.assert_parameter_is_str(message_level_1, 'message_level_1', 'notify_user')
-        AlgorithmTypeCheck.assert_parameter_is_str(message_level_2, 'message_level_2', 'notify_user')
         request_body = {'messageLevel1': message_level_1, 'messageLevel2': message_level_2}
         self.__communication_layer.do_post_request('notifications', request_body)
 
@@ -41,50 +40,49 @@ class AlgorithmicPlatformInterface:  # AlgorithmInterface
         self.__communication_layer.do_post_request('status-message', request_body)
 
     def get_node(self, node_id: int) -> AIDM_classes.AlgorithmNode:
-        api_response = self.__communication_layer.do_get_request('nodes/{0}'.format(node_id))
-        return AIDM_classes.AlgorithmNode.from_json_dict_factory(api_response.json())
+        response_dict = self.__communication_layer.do_get_request('nodes/{0}'.format(node_id))
+        return AIDM_module.to_AIDM_converter.convert_dict_to_AlgorithmNode(response_dict)
 
     def get_neighbor_nodes(self, node_id: int) -> list:
-        api_response = self.__communication_layer.do_get_request('neighbor-nodes/{0}'.format(node_id))
-        return [AIDM_classes.AlgorithmNode.from_json_dict_factory(json_dict) for json_dict in api_response.json()]
+        response_list = self.__communication_layer.do_get_request('neighbor-nodes/{0}'.format(node_id))
+        return [AIDM_classes.AlgorithmNode.from_json_dict_factory(response_dict) for response_dict in response_list]
 
     def get_section_track(self, section_track_id: int) -> AIDM_classes.AlgorithmSectionTrack:
-        api_response = self.__communication_layer.do_get_request('section-tracks/{0}'.format(section_track_id))
-        return AIDM_classes.AlgorithmSectionTrack.from_json_dict_factory(api_response.json())
+        response_dict = self.__communication_layer.do_get_request('section-tracks/{0}'.format(section_track_id))
+        return AIDM_module.to_AIDM_converter.convert_dict_to_AIDM(
+            AIDM_module.AIDM_classes.AlgorithmSectionTrack, response_dict)
 
     def get_directed_section_tracks(self, first_node_id: int, second_node_id: int) -> list:
         url_tail = 'section-tracks-between/{0}/{1}'.format(first_node_id, second_node_id)
-        api_response = self.__communication_layer.do_get_request(url_tail)
-        return algorithm_section_track_list_factory(api_response.json())
+        response_list = self.__communication_layer.do_get_request(url_tail)
+        return AIDM_module.to_AIDM_converter.from_list_of_dict_to_list_of_AIDM(
+            AIDM_module.AIDM_classes.AlgorithmSectionTrack, response_list)
 
     def get_parallel_section_tracks(self, section_track_id: int) -> list:
         url_tail = 'section-tracks-parallel-to/{0}'.format(section_track_id)
-        api_response = self.__communication_layer.do_get_request(url_tail)
-        return algorithm_section_track_list_factory(api_response.json())
+        response_list = self.__communication_layer.do_get_request(url_tail)
+        return AIDM_module.to_AIDM_converter.from_list_of_dict_to_list_of_AIDM(
+            AIDM_module.AIDM_classes.AlgorithmSectionTrack, response_list)
 
     def get_train_classification(self, train_id: int) -> dict:
-        api_response = self.__communication_layer.do_get_request('train-classification/{0}'.format(train_id))
-        return api_response.json()
+        return self.__communication_layer.do_get_request('train-classification/{0}'.format(train_id))
 
     def get_train_classifications(self) -> dict:
-        api_response = self.__communication_layer.do_get_request('train-classifications')
-        return api_response.json()
+        return self.__communication_layer.do_get_request('train-classifications')
 
     def cancel_train(self, train_id: int) -> AIDM_classes.AlgorithmTrain:
-        api_response = self.__communication_layer.do_post_request('cancel-train', request_body={'trainID': train_id})
-        return api_response.json()['trainID']
+        response_dict = self.__communication_layer.do_post_request('cancel-train', request_body={'trainID': train_id})
+        return response_dict['trainID']
 
     def cancel_train_from(self, train_path_node_id: int) -> AIDM_classes.AlgorithmTrain:
         post_request_body = {'trainPathNodeID': train_path_node_id}
         api_response = self.__communication_layer.do_post_request('cancel-train-from', request_body=post_request_body)
-        return AIDM_module.AIDM_classes.AlgorithmTrain.from_json_dict_factory(api_response.json())
-        # return AIDM_module.AIDM_factories.dict_to_algorithm_train_factory(api_response.json())
+        return AIDM_module.AIDM_classes.AlgorithmTrain.from_json_dict_factory(api_response)
 
     def cancel_train_to(self, train_path_node_id: int) -> AIDM_classes.AlgorithmTrain:
         post_request_body = {'trainPathNodeID': train_path_node_id}
         api_response = self.__communication_layer.do_post_request('cancel-train-to', request_body=post_request_body)
-        return AIDM_module.AIDM_classes.AlgorithmTrain.from_json_dict_factory(api_response.json())
-        # return AIDM_module.AIDM_factories.dict_to_algorithm_train_factory(api_response.json())
+        return AIDM_module.AIDM_classes.AlgorithmTrain.from_json_dict_factory(api_response)
 
     def clone_train(self, train_id: int) -> AIDM_classes.AlgorithmTrain:
         post_request_body = {'TrainID': train_id}
@@ -95,10 +93,15 @@ class AlgorithmicPlatformInterface:  # AlgorithmInterface
     def set_section_track(self, train_path_node_id: int, section_track_id: int) -> AIDM_classes.AlgorithmTrain:
         post_request_body = {'TrainPathNodeID': train_path_node_id, 'SectionTrackID': section_track_id}
         api_response = self.__communication_layer.do_post_request('set-section-track', request_body=post_request_body)
-        return AIDM_module.AIDM_factories.dict_to_algorithm_train_factory(api_response.json())
+        return AIDM_module.AIDM_classes.AlgorithmTrain.from_json_dict_factory(api_response.json())
+        # return AIDM_module.AIDM_factories.dict_to_algorithm_train_factory(api_response.json())
 
     def update_train_times(self, train_id: int, update_train_times_node: list) -> AIDM_classes.AlgorithmTrain:
         url_tail = 'trains/{0}/train-path-nodes'.format(train_id)
+        put_body_list = [{'TrainPathNodeId': node.TrainPathNodeID, 'ArrivalTime': node.ArrivalTime,
+                          'DepartureTime': node.DepartureTime, 'MinimumRunTime': node.MinimumRunTime,
+                          'MinimumStopTime': node.MinimumStopTime, 'StopStatus': node.StopStatus}
+                         for node in update_train_times_node]
         put_body_list = [{'TrainPathNodeId': node.TrainPathNodeID, 'ArrivalTime': node.ArrivalTime,
                           'DepartureTime': node.DepartureTime, 'MinimumRunTime': node.MinimumRunTime,
                           'MinimumStopTime': node.MinimumStopTime, 'StopStatus': node.StopStatus}

@@ -22,6 +22,11 @@ def check_if_request_successful(api_return: requests.Response) -> None:
             # there was no information/json, back to the previous error
             api_return.raise_for_status()
 
+def extract_response_from_dict(response) -> (dict, list, None):
+    extract = None
+    if response.text:
+        extract = response.json()
+    return extract
 
 class AlgorithmPlatformError(Exception):
     def __init__(self, expression: str, message: str):
@@ -41,26 +46,26 @@ class CommunicationLayer:
     def merge_base_url_with_request(self, request: str) -> str:
         return '{0}/{1}'.format(self.base_url, request)
 
-    def do_get_request(self, request_call: str, request_param: dict = None) -> requests.Response:
+    def do_get_request(self, request_call: str, request_param: dict = None) -> (dict, list):
         if request_param is None:
             request_param = {}
         complete_url = self.merge_base_url_with_request(request_call)
         api_response = self.currentSession.get(complete_url, params=request_param)
         check_if_request_successful(api_response)
-        return api_response
+        return extract_response_from_dict(api_response)
 
-    def do_post_request(self, request_call: str, request_body: dict = None) -> requests.Response:
+    def do_post_request(self, request_call: str, request_body: dict = None) -> (dict, list):
         if request_body is None:
             request_body = {}
         complete_url = self.merge_base_url_with_request(request_call)
         api_response = self.currentSession.post(complete_url, json=request_body)
         check_if_request_successful(api_response)
-        return api_response
+        return extract_response_from_dict(api_response)
 
-    def do_put_request(self, request_call: str, request_body: (dict, list) = None) -> requests.Response:
+    def do_put_request(self, request_call: str, request_body: (dict, list) = None) -> (dict, list):
         if request_body is None:
             request_body = {}
         complete_url = self.merge_base_url_with_request(request_call)
         api_response: requests.Response = self.currentSession.put(complete_url, json=request_body)
         check_if_request_successful(api_response)
-        return api_response
+        return extract_response_from_dict(api_response)

@@ -13,20 +13,20 @@ class StopStatus(Enum):
 
 class AlgorithmNodeTrack(hasID, hasCode, hasDebugString):
 
-    def __init__(self, node_track_id: int, code_string: str, debug_string: str):
-        hasID.__init__(self, node_track_id)
-        hasCode.__init__(self, code_string)
-        hasDebugString.__init__(self, debug_string)
+    def __init__(self, ID: int, Code: str, DebugString: str):
+        hasID.__init__(self, ID)
+        hasCode.__init__(self, Code)
+        hasDebugString.__init__(self, DebugString)
 
 
 class AlgorithmNode(hasID, hasCode, hasDebugString):
     __NodeTracks: []
 
-    def __init__(self, node_id: int, code_string: str, debug_string: str, node_tracks: list = []):
-        hasID.__init__(self, node_id)
-        hasCode.__init__(self, code_string)
-        hasDebugString.__init__(self, debug_string)
-        self.__NodeTracks = node_tracks
+    def __init__(self, ID: int, Code: str, DebugString: str, NodeTracks: list = []):
+        hasID.__init__(self, ID)
+        hasCode.__init__(self, Code)
+        hasDebugString.__init__(self, DebugString)
+        self.__NodeTracks = NodeTracks
 
     @property
     def NodeTracks(self) -> list:
@@ -37,14 +37,14 @@ class AlgorithmSectionTrack(hasID, hasCode, hasDebugString):
     __Weight: int
     __SectionCode: str
 
-    def __init__(self, section_id: int, code_string: str, debug_string: str, section_weight: int, section_code: str):
-        hasID.__init__(self, section_id)
-        hasCode.__init__(self, code_string)
-        hasDebugString.__init__(self, debug_string)
-        AlgorithmTypeCheck.assert_parameter_is_int(section_weight, 'section_weight', '__init__')
-        AlgorithmTypeCheck.assert_parameter_is_str(section_code, 'section_code', '__init__')
-        self.__Weight = section_weight
-        self.__SectionCode = section_code
+    def __init__(self, ID: int, Code: str, DebugString: str, Weight: int, SectionCode: str):
+        hasID.__init__(self, ID)
+        hasCode.__init__(self, Code)
+        hasDebugString.__init__(self, DebugString)
+        AlgorithmTypeCheck.assert_parameter_is_int(Weight, 'section_weight', '__init__')
+        AlgorithmTypeCheck.assert_parameter_is_str(SectionCode, 'section_code', '__init__')
+        self.__Weight = Weight
+        self.__SectionCode = SectionCode
 
     @property
     def Weight(self) -> int:

@@ -20,10 +20,10 @@ class GetAttr:
 
 
 def initialise_algorithm_node_from_dict(node_as_dict: dict) -> AIDM_classes.AlgorithmNode:
-    return AIDM_classes.AlgorithmNode(node_id=node_as_dict['ID'],
-                                      code_string=node_as_dict['Code'],
-                                      node_tracks=node_as_dict['NodeTracks'],
-                                      debug_string=node_as_dict['DebugString'])
+    return AIDM_classes.AlgorithmNode(ID=node_as_dict['ID'],
+                                      Code=node_as_dict['Code'],
+                                      NodeTracks=node_as_dict['NodeTracks'],
+                                      DebugString=node_as_dict['DebugString'])
 
 
 def initialise_algorithm_node_list(list_of_nodes_as_dict: list) -> list:
@@ -31,11 +31,11 @@ def initialise_algorithm_node_list(list_of_nodes_as_dict: list) -> list:
 
 
 def initialise_algorithm_section_track_from_dict(section_track_as_dict: dict) -> AIDM_classes.AlgorithmSectionTrack:
-    return AIDM_classes.AlgorithmSectionTrack(section_id=section_track_as_dict['ID'],
-                                              code_string=section_track_as_dict['Code'],
-                                              section_code=section_track_as_dict['SectionCode'],
-                                              debug_string=section_track_as_dict['DebugString'],
-                                              section_weight=section_track_as_dict['Weight'])
+    return AIDM_classes.AlgorithmSectionTrack(ID=section_track_as_dict['ID'],
+                                              Code=section_track_as_dict['Code'],
+                                              SectionCode=section_track_as_dict['SectionCode'],
+                                              DebugString=section_track_as_dict['DebugString'],
+                                              Weight=section_track_as_dict['Weight'])
 
 
 def initialise_algorithm_section_track_list(list_of_sections_dict: list) -> list:

@@ -7,7 +7,6 @@ __all__ = ['AlgorithmicPlatformInterface']
 __version__ = '0.0.1'
 __author__ = 'Florian Fuchs'
 
-import AIDM_module.AIDM_factories
 import AIDM_module.from_AIDM_converter
 import AIDM_module.to_AIDM_converter
 import AlgorithmInterfaceCommunicationLayer

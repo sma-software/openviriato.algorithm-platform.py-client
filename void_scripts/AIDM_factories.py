@@ -1,12 +1,10 @@
-from AIDM_module import AIDM_classes
-
+""""
 
 def algorithm_section_track_list_factory(list_of_sections_dict: list) -> list:
     return [AIDM_classes.AlgorithmSectionTrack.from_json_dict_factory(section_dict)
             for section_dict in list_of_sections_dict]
 
 
-"""
 def dict_to_algorithm_node_track_factory(node_track_as_dict: dict) -> AIDM_classes.AlgorithmNodeTrack:
     return AIDM_classes.AlgorithmNodeTrack(ID=node_track_as_dict['ID'],
                                            Code=node_track_as_dict['Code'],

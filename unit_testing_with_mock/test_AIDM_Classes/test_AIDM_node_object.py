@@ -1,6 +1,7 @@
 import unittest
 
 from AIDM_module import AIDM_classes
+import  AIDM_module.to_AIDM_converter
 
 
 class TestAIDMNode(unittest.TestCase):
@@ -21,7 +22,7 @@ class TestAIDMNode(unittest.TestCase):
     def test_algorithm_node_object_factory(self):
         test_node_json_dict = dict(ID=15, Code='A', DebugString='test123', NodeTracks=[])
 
-        test_node = AIDM_classes.AlgorithmNode.from_json_dict_factory(test_node_json_dict)
+        test_node = AIDM_module.to_AIDM_converter.convert_dict_to_AlgorithmNode(test_node_json_dict)
 
         self.assertEqual(test_node.ID, 15)
         self.assertEqual(test_node.Code, 'A')

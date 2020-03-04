@@ -1,19 +1,3 @@
-"""
-class AlgorithmSectionTrack(hasID, hasCode, hasDebugString):
-    __Weight: int
-    __SectionCode: str
-
-    def __init__(self, ID: int, Code: str, DebugString: str, Weight: int, SectionCode: str):
-        hasID.__init__(self, ID)
-        hasCode.__init__(self, Code)
-        hasDebugString.__init__(self, DebugString)
-        self.__Weight = Weight
-        self.__SectionCode = SectionCode
-
-    @classmethod
-    def convert_dict_to_AIDM(cls, json_dict: dict):
-        return cls(**json_dict)
-"""
 import AIDM_module.AIDM_classes
 
 
@@ -26,11 +10,21 @@ def from_list_of_dict_to_list_of_AIDM(AIDM_class, list_of_dict: list) -> list:
 
 
 def convert_dict_to_AlgorithmNode(attribute_dict: dict) -> AIDM_module.AIDM_classes.AlgorithmNode:
-    attribute_dict['NodeTracks'] = from_list_of_dict_to_list_of_AIDM(AIDM_module.AIDM_classes.AlgorithmNodeTrack, attribute_dict['NodeTracks'])
+    attribute_dict['NodeTracks'] = from_list_of_dict_to_list_of_AIDM(AIDM_module.AIDM_classes.AlgorithmNodeTrack,
+                                                                     attribute_dict['NodeTracks'])
     return convert_dict_to_AIDM(AIDM_module.AIDM_classes.AlgorithmNode, attribute_dict)
 
 
-def from_list_of_dict_to_AlgorithmNode(attribute_dict: dict) -> list:
-    return [convert_dict_to_AIDM(AIDM_class, dict_from_list) for dict_from_list in list_of_dict]
-    attribute_dict['NodeTracks'] = from_list_of_dict_to_list_of_AIDM(AIDM_module.AIDM_classes.AlgorithmNodeTrack, attribute_dict['NodeTracks'])
-    return convert_dict_to_AIDM(AIDM_module.AIDM_classes.AlgorithmNode, attribute_dict)
+def convert_list_of_dict_to_AlgorithmNode(list_of_dict: list) -> list:
+    return [convert_dict_to_AlgorithmNode(attribute_dict) for attribute_dict in list_of_dict]
+
+
+def convert_dict_to_TrainPathNode(attribute_dict: dict) -> AIDM_module.AIDM_classes.AlgorithmNode:
+    attribute_dict['StopStatus'] = AIDM_module.AIDM_classes.StopStatus[attribute_dict['StopStatus']]
+    return convert_dict_to_AIDM(AIDM_module.AIDM_classes.TrainPathNode, attribute_dict)
+
+
+def convert_dict_to_AlgorithmTrain(attribute_dict: dict) -> AIDM_module.AIDM_classes.AlgorithmTrain:
+    attribute_dict['TrainPathNodes'] = [convert_dict_to_TrainPathNode(train_path_node)
+                                        for train_path_node in attribute_dict['TrainPathNodes']]
+    return convert_dict_to_AIDM(AIDM_module.AIDM_classes.AlgorithmTrain, attribute_dict)

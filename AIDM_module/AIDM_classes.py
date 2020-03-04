@@ -1,7 +1,7 @@
 from enum import Enum
 
 from AIDM_module.AIDM_base_classes import hasID, hasCode, hasDebugString
-from AIDM_module.AIDM_helpers import adjust_dict_keys_for_hidden_objects, parse_to_datetime
+from AIDM_module.from_AIDM_converter import parse_to_datetime
 
 
 class StopStatus(Enum):
@@ -30,12 +30,6 @@ class AlgorithmNode(hasID, hasCode, hasDebugString):
         hasCode.__init__(self, Code)
         hasDebugString.__init__(self, DebugString)
         self.__NodeTracks = NodeTracks
-
-    @classmethod
-    def from_json_dict_factory(cls, json_dict: dict):
-        json_dict['NodeTracks'] = \
-            [AlgorithmNodeTrack.from_json_dict_factory(node_track_dict) for node_track_dict in json_dict['NodeTracks']]
-        return cls(**json_dict)
 
     @property
     def NodeTracks(self) -> list:
@@ -70,11 +64,6 @@ class AlgorithmTrain(hasID, hasDebugString):
         hasDebugString.__init__(self, DebugString)
         self.__TrainPathNodes = TrainPathNodes
 
-    @classmethod
-    def from_json_dict_factory(cls, json_dict: dict):
-        json_dict['TrainPathNodes'] = \
-            [TrainPathNode.from_json_dict_factory(path_node_dict) for path_node_dict in json_dict['TrainPathNodes']]
-        return cls(**json_dict)
 
     @property
     def TrainPathNodes(self) -> list:
@@ -93,15 +82,20 @@ class TrainPathNode(hasID):
     __StopStatus: StopStatus
     __SequenceNumber: int
 
-    def __init__(self, json_as_dict: dict):
-        hasID.__init__(self, json_as_dict['ID'])
-        json_as_dict.pop('ID')
-        vars(self).update(adjust_dict_keys_for_hidden_objects(json_as_dict))
-
-    @classmethod
-    def from_json_dict_factory(cls, json_dict: dict):
-        json_dict['StopStatus'] = StopStatus[json_dict['StopStatus']]
-        return cls(json_dict)
+    def __init__(self, ID: int, ArrivalTime: str, DepartureTime: str, SectionTrackID: int, NodeID: int,
+                  NodeTrackID: int, FormationID: int, MinimumRunTime: int, MinimumStopTime: int,
+                 StopStatus: StopStatus, SequenceNumber: int):
+        hasID.__init__(self, ID)
+        self.__ArrivalTime = ArrivalTime
+        self.__DepartureTime = DepartureTime
+        self.__SectionTrackID = SectionTrackID
+        self.__NodeID = NodeID
+        self.__NodeTrackID = NodeTrackID
+        self.__FormationID = FormationID
+        self.__MinimumRunTime = MinimumRunTime
+        self.__MinimumStopTime = MinimumStopTime
+        self.__StopStatus = StopStatus
+        self.__SequenceNumber = SequenceNumber
 
     @property
     def SectionTrackID(self) -> int:

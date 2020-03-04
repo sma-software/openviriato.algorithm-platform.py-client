@@ -1,6 +1,6 @@
 import unittest
 
-from AIDM_module import AIDM_classes
+import AIDM_module
 
 
 class AlgorithmTrain(unittest.TestCase):
@@ -18,9 +18,9 @@ class AlgorithmTrain(unittest.TestCase):
                                   MinimumRunTime="PT4M",
                                   MinimumStopTime="P0D", StopStatus="passing", SequenceNumber=1)])
 
-        test_algo_train = AIDM_classes.AlgorithmTrain.from_json_dict_factory(json_dict)
+        test_algo_train = AIDM_module.to_AIDM_converter.convert_dict_to_AlgorithmTrain(json_dict)
 
         self.assertEqual(test_algo_train.ID, 5)
         self.assertEqual(test_algo_train.DebugString, "test_algorithm_train_objects")
-        self.assertIsInstance(test_algo_train.TrainPathNodes[0], AIDM_classes.TrainPathNode)
+        self.assertIsInstance(test_algo_train.TrainPathNodes[0], AIDM_module.AIDM_classes.TrainPathNode)
         self.assertEqual(test_algo_train.TrainPathNodes[0].ID, 2)

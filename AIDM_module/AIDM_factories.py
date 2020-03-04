@@ -35,12 +35,12 @@ def algorithm_section_track_list_factory(list_of_sections_dict: list) -> list:
 
 
 def dict_to_algorithm_train_factory(json_as_dict: dict) -> AlgorithmTrain:
-    return AlgorithmTrain(train_id=json_as_dict['ID'],
-                          debug_string=json_as_dict['DebugString'],
-                          train_path_nodes=json_as_dict['TrainPathNodes'])
+    return AlgorithmTrain(ID=json_as_dict['ID'],
+                          DebugString=json_as_dict['DebugString'],
+                          trainPathNodes=json_as_dict['TrainPathNodes'])
 
 
 def void_dict_to_algorithm_train_path_node_factory(json_as_dict: dict) -> AlgorithmTrain:
-    return AlgorithmTrain(train_id=json_as_dict['ID'],
-                          debug_string=json_as_dict['DebugString'],
-                          train_path_nodes=json_as_dict['TrainPathNodes'])
+    return AlgorithmTrain(ID=json_as_dict['ID'],
+                          DebugString=json_as_dict['DebugString'],
+                          trainPathNodes=json_as_dict['TrainPathNodes'])

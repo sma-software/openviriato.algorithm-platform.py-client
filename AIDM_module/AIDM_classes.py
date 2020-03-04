@@ -8,7 +8,7 @@ from AIDM_module.AIDM_helpers import adjust_dict_keys_for_hidden_objects, parse_
 class StopStatus(Enum):
     CommercialStop = 0
     OperationalStop = 1
-    Passing = 2
+    passing = 2
 
 
 class AlgorithmNodeTrack(hasID, hasCode, hasDebugString):
@@ -17,6 +17,10 @@ class AlgorithmNodeTrack(hasID, hasCode, hasDebugString):
         hasID.__init__(self, ID)
         hasCode.__init__(self, Code)
         hasDebugString.__init__(self, DebugString)
+
+    @classmethod
+    def from_json_dict_factory(cls, json_dict: dict):
+        return cls(**json_dict)
 
 
 class AlgorithmNode(hasID, hasCode, hasDebugString):
@@ -27,6 +31,12 @@ class AlgorithmNode(hasID, hasCode, hasDebugString):
         hasCode.__init__(self, Code)
         hasDebugString.__init__(self, DebugString)
         self.__NodeTracks = NodeTracks
+
+    @classmethod
+    def from_json_dict_factory(cls, json_dict: dict):
+        json_dict['NodeTracks'] = \
+            [AlgorithmNodeTrack.from_json_dict_factory(node_track_dict) for node_track_dict in json_dict['NodeTracks']]
+        return cls(**json_dict)
 
     @property
     def NodeTracks(self) -> list:
@@ -41,10 +51,12 @@ class AlgorithmSectionTrack(hasID, hasCode, hasDebugString):
         hasID.__init__(self, ID)
         hasCode.__init__(self, Code)
         hasDebugString.__init__(self, DebugString)
-        AlgorithmTypeCheck.assert_parameter_is_int(Weight, 'section_weight', '__init__')
-        AlgorithmTypeCheck.assert_parameter_is_str(SectionCode, 'section_code', '__init__')
         self.__Weight = Weight
         self.__SectionCode = SectionCode
+
+    @classmethod
+    def from_json_dict_factory(cls, json_dict: dict):
+        return cls(**json_dict)
 
     @property
     def Weight(self) -> int:
@@ -58,12 +70,16 @@ class AlgorithmSectionTrack(hasID, hasCode, hasDebugString):
 class AlgorithmTrain(hasID, hasDebugString):
     __trainPathNodes: list
 
-    def __init__(self, train_id: int, debug_string: str, train_path_nodes: list):
-        hasID.__init__(self, train_id)
-        hasDebugString.__init__(self, debug_string)
-        self.__trainPathNodes = list()
-        for i in range(len(train_path_nodes)):
-            self.__trainPathNodes.append(TrainPathNode(train_path_nodes[i]))
+    def __init__(self, ID: int, DebugString: str, trainPathNodes: list):
+        hasID.__init__(self, ID)
+        hasDebugString.__init__(self, DebugString)
+        self.__trainPathNodes = trainPathNodes
+
+    @classmethod
+    def from_json_dict_factory(cls, json_dict: dict):
+        json_dict['trainPathNodes'] = \
+            [TrainPathNode.from_json_dict_factory(path_node_dict) for path_node_dict in json_dict['trainPathNodes']]
+        return cls(**json_dict)
 
     @property
     def TrainPathNodes(self) -> list:
@@ -86,6 +102,11 @@ class TrainPathNode(hasID):
         hasID.__init__(self, json_as_dict['ID'])
         json_as_dict.pop('ID')
         vars(self).update(adjust_dict_keys_for_hidden_objects(json_as_dict))
+
+    @classmethod
+    def from_json_dict_factory(cls, json_dict: dict):
+        json_dict['StopStatus'] = StopStatus[json_dict['StopStatus']]
+        return cls(json_dict)
 
     @property
     def SectionTrackID(self) -> int:

@@ -1,4 +1,4 @@
-from AIDM_module.AIDM_classes import AlgorithmNodeTrack
+from AIDM_module.AIDM_classes import AlgorithmNodeTrack, AlgorithmNode
 import json
 
 
@@ -35,9 +35,7 @@ def case_with_two_tracks() -> None:
                    "  \"DebugString\": \"station:85AR\"\n"
                    "}")
 
-    nodeTrackList = node_track_list_from_json_factory(json_string)
-
-    print_vars_of_node_track_list(nodeTrackList)
+    AlgorithmNode.from_json_dict_factory(json.loads(json_string))
 
 
 def case_with_no_tracks() -> None:
@@ -49,8 +47,7 @@ def case_with_no_tracks() -> None:
                    "  \"DebugString\": \"station:85AR\"\n"
                    "}")
 
-    nodeTrackList = node_track_list_from_json_factory(json_string)
-    print_vars_of_node_track_list(nodeTrackList)
+    AlgorithmNode.from_json_dict_factory(json.loads(json_string))
 
 
 def main():

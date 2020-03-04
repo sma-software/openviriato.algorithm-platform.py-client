@@ -28,17 +28,9 @@ def test_object_initialisation(url_str='http://localhost:8080') -> interface_mod
 def test_user_notifications(interface_to_viriato) -> None:
     # test user notifications:
     interface_to_viriato.notify_user('hi', 'it works')
-    try:
-        for i in range(5):
-            interface_to_viriato.show_status_message(i)
-        print('was able to insert int as show_status_message')
-        raise NotImplementedError
-    except AssertionError:
-        print('failed correctly to insert int as show_status_message')
-        # create an interface with the url as str
-        interface_to_viriato.show_status_message('Foo', 'bar')
-        interface_to_viriato.show_status_message('Foo bar')
-    print('test_user_notifications complete')
+    interface_to_viriato.show_status_message('Foo', 'bar')
+    interface_to_viriato.show_status_message('Foo bar')
+
 
 
 def test_get_directed_section_tracks(interface_to_viriato) -> None:
@@ -81,22 +73,17 @@ def test_get_parallel_section_tracks(interface_to_viriato) -> None:
     print('test_get_parallel_section_tracks complete')
 
 
-def test_algorithm_node_object(node_id=1, code_string='someTestNodeID', debug_string='', node_tracks=[]):
-    test_node = AIDM_classes.AlgorithmNode(node_id, code_string, debug_string, node_tracks)
-    print(test_node.ID)
-    print(test_node.DebugString)
-    print(test_node.Code)
-
-
 def test_train_cancellations(interface_to_viriato: interface_module.AlgorithmicPlatformInterface) -> None:
-    for i in range(500, 5000):
+    for i in range(500, 2500):
         try:
-            interface_to_viriato.cancel_train_to(train_path_node_id=i)
+            obj = interface_to_viriato.cancel_train_to(train_path_node_id=i)
+            print(vars(obj))
         except AlgorithmInterfaceCommunicationLayer.AlgorithmPlatformError:
             i
-    for i in range(500, 5000):
+    for i in range(500, 2500):
         try:
             obj = interface_to_viriato.cancel_train_from(train_path_node_id=i)
+            print(vars(obj))
         except AlgorithmInterfaceCommunicationLayer.AlgorithmPlatformError:
             i
 
@@ -104,8 +91,6 @@ def test_train_cancellations(interface_to_viriato: interface_module.AlgorithmicP
 def main():
     url_str = 'http://localhost:8080'
     interface_to_viriato: interface_module.AlgorithmicPlatformInterface
-
-    test_object_initialisation(url_str)
 
     with interface_module.AlgorithmicPlatformInterface(url_str) as interface_to_viriato:
         test_train_cancellations(interface_to_viriato)
@@ -128,10 +113,6 @@ def main():
     with interface_module.AlgorithmicPlatformInterface(url_str) as interface_to_viriato:
         test_get_node_and_get_neighbor_nodes(interface_to_viriato)
 
-    # other tests for the data types
-    test_algorithm_node_object(node_id=1, code_string='TestNodeID', debug_string='test_node', node_tracks=['A', 'B'])
-    AIDM_classes.UpdateTrainTimesNode(datetime(year=2001, month=1, day=1, hour=1, minute=1, second=1),
-                                      datetime(year=2001, month=1, day=1, hour=1, minute=1, second=1), 1)
 
 
 if __name__ == '__main__':

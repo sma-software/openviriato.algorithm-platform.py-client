@@ -1,5 +1,6 @@
-from AIDM_module.AIDM_classes import AlgorithmNodeTrack, AlgorithmNode
 import json
+
+from AIDM_module.AIDM_classes import AlgorithmNodeTrack, AlgorithmNode
 
 
 def mapped_dict_to_algorithm_node_track_factory(node_track_as_dict: dict) -> AlgorithmNodeTrack:

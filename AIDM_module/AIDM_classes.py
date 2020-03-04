@@ -1,6 +1,5 @@
 from enum import Enum
 
-import AlgorithmTypeCheck
 from AIDM_module.AIDM_base_classes import hasID, hasCode, hasDebugString
 from AIDM_module.AIDM_helpers import adjust_dict_keys_for_hidden_objects, parse_to_datetime
 

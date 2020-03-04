@@ -61,10 +61,6 @@ class TestGetDirectedSectionTracks(unittest.TestCase):
         self.assertIsInstance(directed_section_tracks[0].Weight, int)
         self.assertIsInstance(directed_section_tracks[0].DebugString, str)
 
-    def test_get_directed_section_tracks_str_parameters(self):
-        with self.assertRaises(AssertionError):
-            self.interface_to_viriato.get_directed_section_tracks('A', 'b')
-
     @mock.patch('requests.Session', side_effect=GetDirectedSectionTracksSessionTestMock)
     def tearDown(self, mocked_get_obj) -> None:
         self.interface_to_viriato.__exit__(None, None, None)

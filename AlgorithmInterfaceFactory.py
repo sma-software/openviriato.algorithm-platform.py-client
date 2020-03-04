@@ -14,7 +14,8 @@ from AIDM_module import AIDM_classes
 from AIDM_module.AIDM_factories import dict_to_algorithm_node_factory, list_of_dicts_to_algorithm_node_list_factory, \
     dict_to_algorithm_section_track_factory, algorithm_section_track_list_factory
 
-class AlgorithmicPlatformInterface: # AlgorithmInterface
+
+class AlgorithmicPlatformInterface:  # AlgorithmInterface
     __communication_layer: AlgorithmInterfaceCommunicationLayer.CommunicationLayer
 
     def __init__(self, base_url: str):
@@ -37,43 +38,32 @@ class AlgorithmicPlatformInterface: # AlgorithmInterface
         self.__communication_layer.do_post_request('notifications', request_body)
 
     def show_status_message(self, short_message: str, long_message=None) -> None:
-        AlgorithmTypeCheck.assert_parameter_is_str(short_message, 'short_message', 'show_status_message')
-        if not (long_message is None):
-            AlgorithmTypeCheck.assert_parameter_is_str(long_message, 'long_message', 'show_status_message')
         request_body = {'shortMessage': short_message, 'longMessage': long_message}
         self.__communication_layer.do_post_request('status-message', request_body)
 
     def get_neighbor_nodes(self, node_id: int) -> list:
-        AlgorithmTypeCheck.assert_parameter_is_int(node_id, 'node_id', 'get_neighbor_nodes')
         api_response = self.__communication_layer.do_get_request('neighbor-nodes/{0}'.format(node_id))
         return list_of_dicts_to_algorithm_node_list_factory(api_response.json())
 
     def get_node(self, node_id: int) -> AIDM_classes.AlgorithmNode:
-        AlgorithmTypeCheck.assert_parameter_is_int(node_id, 'node_id', 'get_node')
         api_response = self.__communication_layer.do_get_request('nodes/{0}'.format(node_id))
         return dict_to_algorithm_node_factory(api_response.json())
 
     def get_section_track(self, section_track_id: int) -> AIDM_classes.AlgorithmSectionTrack:
-        AlgorithmTypeCheck.assert_parameter_is_int(section_track_id, 'section_track_id', 'get_section_track')
-        url_tail = 'section-tracks/{0}'.format(section_track_id)
-        api_response = self.__communication_layer.do_get_request(url_tail)
+        api_response = self.__communication_layer.do_get_request('section-tracks/{0}'.format(section_track_id))
         return dict_to_algorithm_section_track_factory(api_response.json())
 
     def get_directed_section_tracks(self, first_node_id: int, second_node_id: int) -> list:
-        AlgorithmTypeCheck.assert_parameter_is_int(first_node_id, 'first_node_id', 'get_directed_section_tracks')
-        AlgorithmTypeCheck.assert_parameter_is_int(second_node_id, 'second_node_id', 'get_directed_section_tracks')
         url_tail = 'section-tracks-between/{0}/{1}'.format(first_node_id, second_node_id)
         api_response = self.__communication_layer.do_get_request(url_tail)
         return algorithm_section_track_list_factory(api_response.json())
 
     def get_parallel_section_tracks(self, section_track_id: int) -> list:
-        AlgorithmTypeCheck.assert_parameter_is_int(section_track_id, 'section_track_id', 'get_parallel_section_tracks')
-        api_response = self.__communication_layer.do_get_request(
-            'section-tracks-parallel-to/{0}'.format(section_track_id))
+        url_tail = 'section-tracks-parallel-to/{0}'.format(section_track_id)
+        api_response = self.__communication_layer.do_get_request(url_tail)
         return algorithm_section_track_list_factory(api_response.json())
 
     def get_train_classification(self, train_id: int) -> dict:
-        AlgorithmTypeCheck.assert_parameter_is_int(train_id, 'train_id', 'get_train_classification')
         api_response = self.__communication_layer.do_get_request('train-classification/{0}'.format(train_id))
         return api_response.json()
 
@@ -82,38 +72,30 @@ class AlgorithmicPlatformInterface: # AlgorithmInterface
         return api_response.json()
 
     def cancel_train(self, train_id: int) -> AIDM_classes.AlgorithmTrain:
-        # Cancel an existing Algorithm​Train partially and return the resulting Algorithm​Train.
-        AlgorithmTypeCheck.assert_parameter_is_int(train_id, 'train_id', 'cancel_train')
         api_response = self.__communication_layer.do_post_request('cancel-train', request_body={'trainID': train_id})
         return api_response.json()['trainID']
 
     def cancel_train_from(self, train_path_node_id: int) -> AIDM_classes.AlgorithmTrain:
-        AlgorithmTypeCheck.assert_parameter_is_int(train_path_node_id, 'train_path_node_id', 'cancel_train_from')
         post_request_body = {'trainPathNodeID': train_path_node_id}
         api_response = self.__communication_layer.do_post_request('cancel-train-from', request_body=post_request_body)
         return AIDM_module.AIDM_factories.dict_to_algorithm_train_factory(api_response.json())
 
     def cancel_train_to(self, train_path_node_id: int) -> AIDM_classes.AlgorithmTrain:
-        AlgorithmTypeCheck.assert_parameter_is_int(train_path_node_id, 'train_path_node_id', 'cancel_train_to')
         post_request_body = {'trainPathNodeID': train_path_node_id}
         api_response = self.__communication_layer.do_post_request('cancel-train-to', request_body=post_request_body)
         return AIDM_module.AIDM_factories.dict_to_algorithm_train_factory(api_response.json())
 
     def clone_train(self, train_id: int) -> AIDM_classes.AlgorithmTrain:
-        AlgorithmTypeCheck.assert_parameter_is_int(train_id, 'train_id', 'clone_train')
         post_request_body = {'TrainID': train_id}
         api_response = self.__communication_layer.do_post_request('clone-train', request_body=post_request_body)
         return AIDM_module.AIDM_factories.dict_to_algorithm_train_factory(api_response.json())
 
     def set_section_track(self, train_path_node_id: int, section_track_id: int) -> AIDM_classes.AlgorithmTrain:
-        AlgorithmTypeCheck.assert_parameter_is_int(train_path_node_id, 'train_path_node_id', 'set_section_track')
-        AlgorithmTypeCheck.assert_parameter_is_int(section_track_id, 'section_track_id', 'set_section_track')
         post_request_body = {'TrainPathNodeID': train_path_node_id, 'SectionTrackID': section_track_id}
         api_response = self.__communication_layer.do_post_request('set-section-track', request_body=post_request_body)
         return AIDM_module.AIDM_factories.dict_to_algorithm_train_factory(api_response.json())
 
     def update_train_times(self, train_id: int, update_train_times_node: list) -> AIDM_classes.AlgorithmTrain:
-        AlgorithmTypeCheck.assert_parameter_is_int(train_id, 'train_id', 'update_train_times')
         url_tail = 'trains/{0}/train-path-nodes'.format(train_id)
         put_body_list = [{'TrainPathNodeId': node.TrainPathNodeID, 'ArrivalTime': node.ArrivalTime,
                           'DepartureTime': node.DepartureTime, 'MinimumRunTime': node.MinimumRunTime,
@@ -123,9 +105,9 @@ class AlgorithmicPlatformInterface: # AlgorithmInterface
         return AIDM_module.AIDM_factories.dict_to_algorithm_train_factory(api_response.json())
 
 
-
 def create(base_url: str):
     return AlgorithmicPlatformInterface(base_url=base_url)
+
 
 """
 class AlgorithmicPlatformInterfaceIncomplete(AlgorithmicPlatformInterface):

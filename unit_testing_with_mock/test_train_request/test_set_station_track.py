@@ -69,14 +69,6 @@ class TestSetSectionTrack(TestCase):
         self.assertEqual(2060, test_algorithm_train.ID)
         self.assertEqual(test_algorithm_train.DebugString, 'SetSectionTrackTestMockSession')
 
-    @mock.patch('requests.Session', side_effect=SetSectionTrackTestMockSession)
-    def test_set_section_track_str_param(self, mocked_get_obj):
-        with self.assertRaises(AssertionError):
-            with AlgorithmInterfaceFactory.AlgorithmicPlatformInterface(get_api_url()) as interface_to_viriato:
-                interface_to_viriato.set_section_track('1', 2)
-        with self.assertRaises(AssertionError):
-            with AlgorithmInterfaceFactory.AlgorithmicPlatformInterface(get_api_url()) as interface_to_viriato:
-                interface_to_viriato.set_section_track(1, '2')
 
     @mock.patch('requests.Session', side_effect=SetSectionTrackTestMockSession)
     def tearDown(self, mocked_get_obj) -> None:

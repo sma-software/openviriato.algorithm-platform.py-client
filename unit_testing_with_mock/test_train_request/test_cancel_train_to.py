@@ -69,11 +69,6 @@ class TestCancelTrainTo(unittest.TestCase):
         self.assertIsInstance(test_algorithm_train.TrainPathNodes[0], AIDM_classes.TrainPathNode)
         self.assertEqual(test_algorithm_train.TrainPathNodes[0].ID, 8118)
 
-    def test_test_cancel_train_to_wrong_type(self):
-        with self.assertRaises(AssertionError):
-            with AlgorithmInterfaceFactory.AlgorithmicPlatformInterface(get_api_url()) as interface_to_viriato:
-                interface_to_viriato.cancel_train_to('str instead of int')
-
     @mock.patch('requests.Session', side_effect=CancelTrainToTestMockSession)
     def tearDown(self, mocked_get_obj) -> None:
         self.interface_to_viriato.__exit__(None, None, None)

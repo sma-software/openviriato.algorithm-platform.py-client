@@ -45,7 +45,10 @@ class TestGetParallelSectionTracks(unittest.TestCase):
     # split in two tests --> one for request and one for return
     @mock.patch('requests.Session', side_effect=GetParallelSectionTracksSessionTestMock)
     def test_get_parallel_section_tracks_request(self, mocked_get_obj):
-        self.interface_to_viriato.get_parallel_section_tracks(885)
+        track_id = 885
+
+        self.interface_to_viriato.get_parallel_section_tracks(track_id)
+
         session_obj = self.interface_to_viriato._AlgorithmicPlatformInterface__communication_layer.currentSession
         self.assertEqual(session_obj._GetParallelSectionTracksSessionTestMock__last_request,
                          get_api_url() + '/section-tracks-parallel-to/885')
@@ -53,17 +56,16 @@ class TestGetParallelSectionTracks(unittest.TestCase):
 
     @mock.patch('requests.Session', side_effect=GetParallelSectionTracksSessionTestMock)
     def test_get_parallel_section_tracks_return(self, mocked_get_obj):
-        parallel_section_tracks = self.interface_to_viriato.get_parallel_section_tracks(0)
+        track_id = 0
+
+        parallel_section_tracks = self.interface_to_viriato.get_parallel_section_tracks(track_id)
+
         self.assertIsInstance(parallel_section_tracks[0], AIDM_classes.AlgorithmSectionTrack)
         self.assertEqual(parallel_section_tracks[0].ID, 885)
         self.assertEqual(parallel_section_tracks[0].Code, '838')
         self.assertEqual(parallel_section_tracks[0].SectionCode, '61010')
         self.assertEqual(parallel_section_tracks[0].Weight, 37040)
         self.assertEqual(parallel_section_tracks[0].DebugString, 'sectiontrack:s_61010 n_85AR 838')
-
-    def test_get_directed_section_tracks_str_parameters(self):
-        with self.assertRaises(AssertionError):
-            self.interface_to_viriato.get_parallel_section_tracks('A')
 
     @mock.patch('requests.Session', side_effect=GetParallelSectionTracksSessionTestMock)
     def tearDown(self, mocked_get_obj) -> None:

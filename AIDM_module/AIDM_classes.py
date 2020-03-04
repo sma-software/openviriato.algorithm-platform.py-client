@@ -66,7 +66,7 @@ class AlgorithmTrain(hasID, hasDebugString):
             self.__trainPathNodes.append(TrainPathNode(train_path_nodes[i]))
 
     @property
-    def TrainPathNodes(self):
+    def TrainPathNodes(self) -> list:
         return self.__trainPathNodes
 
 
@@ -88,7 +88,7 @@ class TrainPathNode(hasID):
         vars(self).update(adjust_dict_keys_for_hidden_objects(json_as_dict))
 
     @property
-    def SectionTrackID(self):
+    def SectionTrackID(self) -> int:
         return self.__SectionTrackID
 
     @property

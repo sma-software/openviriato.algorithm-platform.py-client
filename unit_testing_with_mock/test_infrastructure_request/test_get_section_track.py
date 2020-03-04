@@ -52,10 +52,6 @@ class TestGetSectionTrack(unittest.TestCase):
         self.assertEqual(test_section_track.SectionCode, '70015')
         self.assertEqual(test_section_track.Weight, 10000)
 
-    def test_get_section_track_str_parameters(self):
-        with self.assertRaises(AssertionError):
-            self.interface_to_viriato.get_section_track('A')
-
     @mock.patch('requests.Session', side_effect=GetSectionTrackSessionTestMock)
     def tearDown(self, mocked_get_obj) -> None:
         self.interface_to_viriato.__exit__(None, None, None)

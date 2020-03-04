@@ -17,7 +17,10 @@ class TestShowStatusMessage(unittest.TestCase):
     @mock.patch('requests.Session', side_effect=ShowStatusMessageSessionTestMock)
     def test_show_status_message_one_str(self, mocked_requests_session):
         with AlgorithmInterfaceFactory.AlgorithmicPlatformInterface(get_api_url()) as interface_to_viriato:
-            interface_to_viriato.show_status_message('Only One Message Sent')
+            message_1 = 'Only One Message Sent';
+
+            interface_to_viriato.show_status_message(message_1)
+
             session_obj = interface_to_viriato._AlgorithmicPlatformInterface__communication_layer.currentSession
             self.assertEqual(session_obj._ShowStatusMessageSessionTestMock__last_request,
                              get_api_url() + '/status-message')
@@ -27,22 +30,16 @@ class TestShowStatusMessage(unittest.TestCase):
     @mock.patch('requests.Session', side_effect=ShowStatusMessageSessionTestMock)
     def test_show_status_message_two_str(self, mocked_requests_session):
         with AlgorithmInterfaceFactory.AlgorithmicPlatformInterface(get_api_url()) as interface_to_viriato:
-            interface_to_viriato.show_status_message('this is the short one', 'long one')
+            message_1 = 'this is the short one'
+            message_2 = 'long one'
+
+            interface_to_viriato.show_status_message(message_1, message_2)
+
             session_obj = interface_to_viriato._AlgorithmicPlatformInterface__communication_layer.currentSession
             self.assertEqual(session_obj._ShowStatusMessageSessionTestMock__last_request,
                              get_api_url() + '/status-message')
-            self.assertEqual(session_obj._ShowStatusMessageSessionTestMock__last_body,
+            self.assertDictEqual(session_obj._ShowStatusMessageSessionTestMock__last_body,
                              {'shortMessage': 'this is the short one', 'longMessage': 'long one'})
-
-    def test_show_status_message_wrong_type_one_param(self):
-        with self.assertRaises(AssertionError):
-            with AlgorithmInterfaceFactory.AlgorithmicPlatformInterface(get_api_url()) as interface_to_viriato:
-                interface_to_viriato.show_status_message(1)
-
-    def test_show_status_message_wrong_type_two_param(self):
-        with self.assertRaises(AssertionError):
-            with AlgorithmInterfaceFactory.AlgorithmicPlatformInterface(get_api_url()) as interface_to_viriato:
-                interface_to_viriato.show_status_message('one', 1)
 
 
 if __name__ == '__main__':

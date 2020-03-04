@@ -34,11 +34,6 @@ class TestGetTrainClassification(TestCase):
         self.assertIsInstance(train_class, dict)
         self.assertEqual(train_class, {"Description": "Freight"})
 
-    def test_get_train_classification_with_str(self):
-        with self.assertRaises(AssertionError):
-            self.interface_to_viriato.get_train_classification('b')
-            NotImplementedError('accepted str for train number')
-
     @mock.patch('requests.Session', side_effect=GetTrainClassificationTestMockSession)
     def tearDown(self, mocked_get_obj) -> None:
         self.interface_to_viriato.__exit__(None, None, None)

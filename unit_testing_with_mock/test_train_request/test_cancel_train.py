@@ -24,20 +24,21 @@ class TestGetTrainClassifications(unittest.TestCase):
     @mock.patch('requests.Session', side_effect=CancelTrainTestMockSession)
     def test_cancel_train_request(self, mocked_get_obj):
         test_dict = dict(trainID=8124)
+
         self.interface_to_viriato.cancel_train(test_dict['trainID'])
+
         session_obj = self.interface_to_viriato._AlgorithmicPlatformInterface__communication_layer.currentSession
         self.assertEqual(session_obj._CancelTrainTestMockSession__last_request, get_api_url() + '/cancel-train')
         self.assertDictEqual(session_obj._CancelTrainTestMockSession__last_body, test_dict)
 
     @mock.patch('requests.Session', side_effect=CancelTrainTestMockSession)
     def test_cancel_train_response(self, mocked_get_obj):
-        canceled_train_id = self.interface_to_viriato.cancel_train(8124)
-        self.assertEqual(8124, canceled_train_id)
+        train_id = 8124
 
-    def test_test_cancel_train_wrong_type(self):
-        with self.assertRaises(AssertionError):
-            with AlgorithmInterfaceFactory.AlgorithmicPlatformInterface(get_api_url()) as interface_to_viriato:
-                interface_to_viriato.cancel_train('wrong type')
+        canceled_train_id = self.interface_to_viriato.cancel_train(train_id)
+
+        self.assertEqual(train_id, canceled_train_id)
+
 
     @mock.patch('requests.Session', side_effect=CancelTrainTestMockSession)
     def tearDown(self, mocked_get_obj) -> None:

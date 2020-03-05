@@ -1,6 +1,6 @@
 import AlgorithmInterfaceCommunicationLayer
-from void import AlgorithmTypeCheck
 from AIDM_module import AIDM_classes
+from void import AlgorithmTypeCheck
 
 
 def custom_dir(c, add): return dir(type(c)) + list(c.__dict__.keys()) + add

@@ -1,12 +1,12 @@
+import datetime
 import unittest
 from unittest import mock
+
 import AIDM_module.AIDM_classes as AIDM_classes
 import AlgorithmInterfaceFactory
 import unit_testing_with_mock.SessionMockFactory as SessionMockFactory
 import unit_testing_with_mock.unit_testing_helpers
 from unit_testing_with_mock.unit_testing_helpers import get_api_url
-import datetime
-import json
 
 
 class TestUpdateTrainTimes(unittest.TestCase):

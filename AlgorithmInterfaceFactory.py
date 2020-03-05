@@ -7,9 +7,11 @@ __all__ = ['AlgorithmicPlatformInterface']
 __version__ = '0.0.1'
 __author__ = 'Florian Fuchs'
 
+import datetime
 import AlgorithmInterfaceCommunicationLayer
 import converter_module.from_AIDM_converter
 import converter_module.to_AIDM_converter
+import converter_module.converter_helpers
 from AIDM_module import AIDM_classes
 
 
@@ -97,6 +99,22 @@ class AlgorithmicPlatformInterface:  # AlgorithmInterface
         put_body_list = converter_module.from_AIDM_converter.convert_to_list_of_dict(update_train_times_nodes)
         response_dict = self.__communication_layer.do_put_request(url_tail, request_body=put_body_list)
         return converter_module.to_AIDM_converter.convert_dict_to_AlgorithmTrain(response_dict)
+
+    def get_headway_time_for_train_path_nodes(self, preceding_train_path_node_id: int,
+                                              succeeding_train_path_node_id: int) -> datetime.timedelta:
+        url_tail = 'headway-times/between-train-path-nodes/{0}/{1}'.format(preceding_train_path_node_id,
+                                                                           succeeding_train_path_node_id)
+        response_dict = self.__communication_layer.do_get_request(url_tail)
+        return converter_module.converter_helpers.parse_to_timedelta(response_dict["headwayTime"])
+
+    def get_headway_time_for_train_path_nodes_on_section_track(self, preceding_train_path_node_id: int,
+                                                               succeeding_train_path_node_id: int,
+                                                               section_track_id: int, from_node_id: int,
+                                                               to_node_id: int) -> datetime.timedelta:
+        url_tail = 'headway-times/between-train-path-nodes/{0}/{1}/for-section-track/{2}/in-direction/{3}/{4}'.format(
+            preceding_train_path_node_id, succeeding_train_path_node_id, section_track_id, from_node_id, to_node_id)
+        response_dict = self.__communication_layer.do_get_request(url_tail)
+        return converter_module.converter_helpers.parse_to_timedelta(response_dict["headwayTime"])
 
 
 def create(base_url: str):

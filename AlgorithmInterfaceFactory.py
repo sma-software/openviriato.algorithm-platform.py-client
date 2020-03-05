@@ -8,10 +8,11 @@ __version__ = '0.0.1'
 __author__ = 'Florian Fuchs'
 
 import datetime
+
 import AlgorithmInterfaceCommunicationLayer
+import converter_module.converter_helpers
 import converter_module.from_AIDM_converter
 import converter_module.to_AIDM_converter
-import converter_module.converter_helpers
 from AIDM_module import AIDM_classes
 
 

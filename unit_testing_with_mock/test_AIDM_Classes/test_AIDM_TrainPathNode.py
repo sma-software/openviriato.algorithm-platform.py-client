@@ -5,7 +5,7 @@ import AIDM_module.AIDM_classes
 import converter_module.to_AIDM_converter
 
 
-class AlgorithmTrain(unittest.TestCase):
+class TestTrainPathNode(unittest.TestCase):
 
     def test_convert_dict_to_TrainPathNode(self):
         train_path_node_dict = dict(ID=8113, SectionTrackID=None, NodeID=7, NodeTrackID=8, FormationID=1187,

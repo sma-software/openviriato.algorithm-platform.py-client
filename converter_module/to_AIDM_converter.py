@@ -1,8 +1,5 @@
-import datetime
-
-import isodate
-
 import AIDM_module.AIDM_classes
+from converter_module.converter_helpers import parse_to_datetime, parse_to_timedelta
 
 
 def convert_dict_to_AIDM(AIDM_class, attribute_dict: dict):
@@ -38,12 +35,3 @@ def convert_dict_to_AlgorithmTrain(attribute_dict: dict) -> AIDM_module.AIDM_cla
     return convert_dict_to_AIDM(AIDM_module.AIDM_classes.AlgorithmTrain, attribute_dict)
 
 
-def parse_to_datetime(datetime_raw_str: str) -> datetime.datetime:
-    return datetime.datetime.fromisoformat(datetime_raw_str)
-
-
-def parse_to_timedelta(timedelta_raw_str: (str, None)) -> datetime.timedelta:
-    if timedelta_raw_str is not None:
-        return isodate.parse_duration(timedelta_raw_str)
-    else:
-        return datetime.timedelta(seconds=0)

@@ -11,13 +11,6 @@ class TestObjectInitialisation(unittest.TestCase):
         with AlgorithmInterfaceFactory.AlgorithmicPlatformInterface(url_str) as interface_to_viriato:
             self.assertEqual(interface_to_viriato.base_url, url_str)
 
-    # fails on purpose:
-    def test_if_initialisation_with_int_fails(self):
-        url_nr = 952022
-        with self.assertRaises(AssertionError):
-            with AlgorithmInterfaceFactory.AlgorithmicPlatformInterface(url_nr) as interface_to_viriato:
-                raise NotImplementedError('there is an assertion not raised')
-
 
 if __name__ == '__main__':
     unittest.main()

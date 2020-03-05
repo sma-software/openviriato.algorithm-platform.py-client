@@ -1,4 +1,4 @@
-import AlgorithmTypeCheck
+from void import AlgorithmTypeCheck
 
 
 class hasID:

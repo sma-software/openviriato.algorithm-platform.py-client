@@ -1,7 +1,5 @@
 import requests
 
-import AlgorithmTypeCheck
-
 
 def check_if_request_successful(api_response: requests.Response) -> None:
     """
@@ -46,7 +44,6 @@ class CommunicationLayer:
 
     def __init__(self, base_url: str):
         self.base_url = base_url
-        AlgorithmTypeCheck.assert_parameter_is_str(base_url, 'base_url', '__init__')
         self.currentSession = requests.Session()
 
     def merge_base_url_with_request(self, request: str) -> str:

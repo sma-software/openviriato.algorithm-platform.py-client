@@ -35,8 +35,7 @@ class TestGetNode(TestCase):
 
     @mock.patch('requests.Session', side_effect=GetNodeTestSessionMock)
     def setUp(self, mocked_get_obj):
-        self.interface_to_viriato = AlgorithmInterfaceFactory.create(base_url=get_api_url()) # rename to api url
-        #AlgorithmInterfaceFactory.AlgorithmicPlatformInterface(get_api_url())
+        self.interface_to_viriato = AlgorithmInterfaceFactory.create(base_url=get_api_url())
 
     @mock.patch('requests.Session', side_effect=GetNodeTestSessionMock)
     def test_get_node_request(self, mocked_get_obj):

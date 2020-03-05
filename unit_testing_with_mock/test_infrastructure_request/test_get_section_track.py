@@ -32,21 +32,27 @@ class TestGetSectionTrack(unittest.TestCase):
 
     @mock.patch('requests.Session', side_effect=GetSectionTrackSessionTestMock)
     def setUp(self, mocked_get_obj):
-        self.interface_to_viriato = AlgorithmInterfaceFactory.AlgorithmicPlatformInterface(get_api_url())
+        self.interface_to_viriato = AlgorithmInterfaceFactory.create(get_api_url())
 
     # split in two tests --> one for request and one for return
     @mock.patch('requests.Session', side_effect=GetSectionTrackSessionTestMock)
     def test_get_section_track_request(self, mocked_get_obj):
-        self.interface_to_viriato.get_section_track(1082)
+        node_id = 1082
+        self.interface_to_viriato.get_section_track(node_id)
+
         session_obj = self.interface_to_viriato._AlgorithmicPlatformInterface__communication_layer.currentSession
+
         self.assertEqual(session_obj._GetSectionTrackSessionTestMock__last_request,
                          get_api_url() + '/section-tracks/1082')
         self.assertEqual(session_obj._GetSectionTrackSessionTestMock__last_body, {})
 
     @mock.patch('requests.Session', side_effect=GetSectionTrackSessionTestMock)
     def test_get_section_track_return(self, mocked_get_obj):
-        test_section_track = self.interface_to_viriato.get_section_track(0)
+        node_id = 1082
+        test_section_track = self.interface_to_viriato.get_section_track(node_id)
+
         self.assertIsInstance(test_section_track, AIDM_classes.AlgorithmSectionTrack)
+
         self.assertEqual(test_section_track.ID, 1082)
         self.assertEqual(test_section_track.DebugString, 'GetSectionTrackSessionTestMock')
         self.assertEqual(test_section_track.SectionCode, '70015')

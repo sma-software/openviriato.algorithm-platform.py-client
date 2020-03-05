@@ -40,7 +40,7 @@ class TestGetParallelSectionTracks(unittest.TestCase):
 
     @mock.patch('requests.Session', side_effect=GetParallelSectionTracksSessionTestMock)
     def setUp(self, mocked_get_obj):
-        self.interface_to_viriato = AlgorithmInterfaceFactory.AlgorithmicPlatformInterface(get_api_url())
+        self.interface_to_viriato = AlgorithmInterfaceFactory.create(get_api_url())
 
     # split in two tests --> one for request and one for return
     @mock.patch('requests.Session', side_effect=GetParallelSectionTracksSessionTestMock)

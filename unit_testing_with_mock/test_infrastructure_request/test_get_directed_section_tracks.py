@@ -34,18 +34,22 @@ class TestGetDirectedSectionTracks(unittest.TestCase):
                            '                    "DebugString": "sectiontrack:s_61010 n_85AR 2"\n'
                            '                }\n'
                            '            ]')
+
             return SessionMockFactory.create_response_mock(json_string, 200)
 
     interface_to_viriato: AlgorithmInterfaceFactory.AlgorithmicPlatformInterface
 
     @mock.patch('requests.Session', side_effect=GetDirectedSectionTracksSessionTestMock)
     def setUp(self, mocked_get_obj):
-        self.interface_to_viriato = AlgorithmInterfaceFactory.AlgorithmicPlatformInterface(get_api_url())
+        self.interface_to_viriato = AlgorithmInterfaceFactory.create(get_api_url())
 
-    # split in two tests --> one for request and one for return
     @mock.patch('requests.Session', side_effect=GetDirectedSectionTracksSessionTestMock)
     def test_get_directed_section_tracks_request(self, mocked_get_obj):
-        self.interface_to_viriato.get_directed_section_tracks(20, 500)
+        node_id_1 = 20
+        node_id_2 = 500
+
+        self.interface_to_viriato.get_directed_section_tracks(node_id_1, node_id_2)
+
         session_obj = self.interface_to_viriato._AlgorithmicPlatformInterface__communication_layer.currentSession
         self.assertEqual(session_obj._GetDirectedSectionTracksSessionTestMock__last_request,
                          get_api_url() + '/section-tracks-between/20/500')
@@ -53,7 +57,11 @@ class TestGetDirectedSectionTracks(unittest.TestCase):
 
     @mock.patch('requests.Session', side_effect=GetDirectedSectionTracksSessionTestMock)
     def test_get_directed_section_tracks_return(self, mocked_get_obj):
-        directed_section_tracks = self.interface_to_viriato.get_directed_section_tracks(0, 0)
+        node_id_1 = 0
+        node_id_2 = 0
+
+        directed_section_tracks = self.interface_to_viriato.get_directed_section_tracks(node_id_1, node_id_2)
+
         self.assertIsInstance(directed_section_tracks[0], AIDM_classes.AlgorithmSectionTrack)
         self.assertIsInstance(directed_section_tracks[0].ID, int)
         self.assertIsInstance(directed_section_tracks[0].Code, str)

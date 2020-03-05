@@ -4,7 +4,7 @@ import converter_module.to_AIDM_converter
 from AIDM_module import AIDM_classes
 
 
-class TestAIDMNode(unittest.TestCase):
+class TestAIDMAlgorithmNode(unittest.TestCase):
 
     def test_algorithm_node_object(self):
         node_id = 15

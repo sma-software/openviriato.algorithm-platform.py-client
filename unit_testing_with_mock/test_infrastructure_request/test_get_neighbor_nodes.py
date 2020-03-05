@@ -43,12 +43,15 @@ class TestGetNeighborNode(TestCase):
 
     @mock.patch('requests.Session', side_effect=GetNeighborNodeTestSessionMock)
     def setUp(self, mocked_get_obj):
-        self.interface_to_viriato = AlgorithmInterfaceFactory.AlgorithmicPlatformInterface(get_api_url())
+        self.interface_to_viriato = AlgorithmInterfaceFactory.create(get_api_url())
 
     @mock.patch('requests.Session', side_effect=GetNeighborNodeTestSessionMock)
     def test_get_neighbor_nodes_request(self, mocked_get_obj):
-        self.interface_to_viriato.get_neighbor_nodes(161)
+        node_id = 161
+        self.interface_to_viriato.get_neighbor_nodes(node_id)
+
         session_obj = self.interface_to_viriato._AlgorithmicPlatformInterface__communication_layer.currentSession
+
         self.assertEqual(get_api_url() + '/neighbor-nodes/161',
                          session_obj._GetNeighborNodeTestSessionMock__last_request)
         self.assertEqual(session_obj._GetNeighborNodeTestSessionMock__last_body, {})

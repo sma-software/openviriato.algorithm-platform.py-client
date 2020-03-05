@@ -53,7 +53,7 @@ class TestCancelTrainFrom(unittest.TestCase):
         self.interface_to_viriato = AlgorithmInterfaceFactory.create(get_api_url())
 
     @mock.patch('requests.Session', side_effect=CancelTrainFromTestMockSession)
-    def test_cancel_train_from_request(self, mocked_get_obj):
+    def test_cancel_train_from_request(self, mocked_post_obj):
         test_dict = dict(trainPathNodeID=8114)
 
         self.interface_to_viriato.cancel_train_from(test_dict['trainPathNodeID'])
@@ -64,7 +64,7 @@ class TestCancelTrainFrom(unittest.TestCase):
         self.assertEqual(session_obj._CancelTrainFromTestMockSession__last_body, test_dict)
 
     @mock.patch('requests.Session', side_effect=CancelTrainFromTestMockSession)
-    def test_cancel_train_from_response(self, mocked_get_obj):
+    def test_cancel_train_from_response(self, mocked_post_obj):
         train_path_node_id = 0
 
         test_algorithm_train = self.interface_to_viriato.cancel_train_from(train_path_node_id)

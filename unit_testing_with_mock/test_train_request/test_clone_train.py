@@ -50,7 +50,7 @@ class TestCloneTrain(unittest.TestCase):
 
     @mock.patch('requests.Session', side_effect=CloneTrainTestMockSession)
     def setUp(self, mocked_get_obj):
-        self.interface_to_viriato = AlgorithmInterfaceFactory.AlgorithmicPlatformInterface(get_api_url())
+        self.interface_to_viriato = AlgorithmInterfaceFactory.create(get_api_url())
 
     @mock.patch('requests.Session', side_effect=CloneTrainTestMockSession)
     def test_clone_train_request(self, mocked_get_obj):
@@ -60,7 +60,7 @@ class TestCloneTrain(unittest.TestCase):
 
         session_obj = self.interface_to_viriato._AlgorithmicPlatformInterface__communication_layer.currentSession
         self.assertEqual(session_obj._CloneTrainTestMockSession__last_request, get_api_url() + '/clone-train')
-        self.assertEqual(session_obj._CloneTrainTestMockSession__last_body, dict(TrainID=2060))
+        self.assertDictEqual(session_obj._CloneTrainTestMockSession__last_body, dict(TrainID=2060))
 
     @mock.patch('requests.Session', side_effect=CloneTrainTestMockSession)
     def test_clone_train_response(self, mocked_get_obj):

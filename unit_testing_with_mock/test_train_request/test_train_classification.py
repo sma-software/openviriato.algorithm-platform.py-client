@@ -18,21 +18,27 @@ class TestGetTrainClassification(TestCase):
 
     @mock.patch('requests.Session', side_effect=GetTrainClassificationTestMockSession)
     def setUp(self, mocked_get_obj):
-        self.interface_to_viriato = AlgorithmInterfaceFactory.AlgorithmicPlatformInterface(get_api_url())
+        self.interface_to_viriato = AlgorithmInterfaceFactory.create(get_api_url())
 
     @mock.patch('requests.Session', side_effect=GetTrainClassificationTestMockSession)
     def test_get_train_classification_request(self, mocked_get_obj):
-        self.interface_to_viriato.get_train_classification(99)
+        train_id = 99
+        self.interface_to_viriato.get_train_classification(train_id)
+
         session_obj = self.interface_to_viriato._AlgorithmicPlatformInterface__communication_layer.currentSession
+
         self.assertEqual(session_obj._GetTrainClassificationTestMockSession__last_request,
                          get_api_url() + '/train-classification/99')
-        self.assertEqual(session_obj._GetTrainClassificationTestMockSession__last_body, {})
+        self.assertDictEqual(session_obj._GetTrainClassificationTestMockSession__last_body, {})
 
     @mock.patch('requests.Session', side_effect=GetTrainClassificationTestMockSession)
     def test_get_train_classification_response(self, mocked_get_obj):
-        train_class = self.interface_to_viriato.get_train_classification(1)
+        train_id = 1
+
+        train_class = self.interface_to_viriato.get_train_classification(train_id)
+
         self.assertIsInstance(train_class, dict)
-        self.assertEqual(train_class, {"Description": "Freight"})
+        self.assertDictEqual(train_class, {"Description": "Freight"})
 
     @mock.patch('requests.Session', side_effect=GetTrainClassificationTestMockSession)
     def tearDown(self, mocked_get_obj) -> None:

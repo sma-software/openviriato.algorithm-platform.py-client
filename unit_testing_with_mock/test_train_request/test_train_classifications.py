@@ -20,19 +20,21 @@ class TestGetTrainClassifications(unittest.TestCase):
 
     @mock.patch('requests.Session', side_effect=GetTrainClassificationsTestMockSession)
     def setUp(self, mocked_get_obj):
-        self.interface_to_viriato = AlgorithmInterfaceFactory.AlgorithmicPlatformInterface(get_api_url())
+        self.interface_to_viriato = AlgorithmInterfaceFactory.create(get_api_url())
 
     @mock.patch('requests.Session', side_effect=GetTrainClassificationsTestMockSession)
     def test_get_train_classifications_request(self, mocked_get_obj):
         self.interface_to_viriato.get_train_classifications()
+
         session_obj = self.interface_to_viriato._AlgorithmicPlatformInterface__communication_layer.currentSession
         self.assertEqual(session_obj._GetTrainClassificationsTestMockSession__last_request,
                          get_api_url() + '/train-classifications')
-        self.assertEqual(session_obj._GetTrainClassificationsTestMockSession__last_body, {})
+        self.assertDictEqual(session_obj._GetTrainClassificationsTestMockSession__last_body, {})
 
     @mock.patch('requests.Session', side_effect=GetTrainClassificationsTestMockSession)
     def test_get_train_classifications_response(self, mocked_get_obj):
         train_classes = self.interface_to_viriato.get_train_classifications()
+
         self.assertIsInstance(train_classes, list)
         self.assertDictEqual(train_classes[0], {"Description": "Unknown"})
         self.assertDictEqual(train_classes[1], {"Description": "Freight"})

@@ -50,12 +50,14 @@ class TestCancelTrainFrom(unittest.TestCase):
 
     @mock.patch('requests.Session', side_effect=CancelTrainFromTestMockSession)
     def setUp(self, mocked_get_obj):
-        self.interface_to_viriato = AlgorithmInterfaceFactory.AlgorithmicPlatformInterface(get_api_url())
+        self.interface_to_viriato = AlgorithmInterfaceFactory.create(get_api_url())
 
     @mock.patch('requests.Session', side_effect=CancelTrainFromTestMockSession)
     def test_cancel_train_from_request(self, mocked_get_obj):
         test_dict = dict(trainPathNodeID=8114)
+
         self.interface_to_viriato.cancel_train_from(test_dict['trainPathNodeID'])
+
         session_obj = self.interface_to_viriato._AlgorithmicPlatformInterface__communication_layer.currentSession
         self.assertEqual(session_obj._CancelTrainFromTestMockSession__last_request,
                          get_api_url() + '/cancel-train-from')
@@ -63,7 +65,10 @@ class TestCancelTrainFrom(unittest.TestCase):
 
     @mock.patch('requests.Session', side_effect=CancelTrainFromTestMockSession)
     def test_cancel_train_from_response(self, mocked_get_obj):
-        test_algorithm_train = self.interface_to_viriato.cancel_train_from(1)
+        train_path_node_id = 0
+
+        test_algorithm_train = self.interface_to_viriato.cancel_train_from(train_path_node_id)
+
         self.assertIsInstance(test_algorithm_train, AIDM_classes.AlgorithmTrain)
         self.assertEqual(test_algorithm_train.ID, 8116)
         self.assertEqual(test_algorithm_train.DebugString, 'CancelTrainFromTestMockSession')

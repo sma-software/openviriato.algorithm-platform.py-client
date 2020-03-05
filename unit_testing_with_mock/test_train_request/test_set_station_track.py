@@ -43,7 +43,7 @@ class TestSetSectionTrack(TestCase):
                            '      "SequenceNumber": 1\n'
                            '    }\n'
                            '  ],\n'
-                           '  "DebugString": "SetSectionTrackTestMockSession"\n'
+                           '  "DebugString": "SetSectionTrackTestMockSessionString"\n'
                            '}')
             return SessionMockFactory.create_response_mock(json_string, 200)
 
@@ -51,24 +51,30 @@ class TestSetSectionTrack(TestCase):
 
     @mock.patch('requests.Session', side_effect=SetSectionTrackTestMockSession)
     def setUp(self, mocked_get_obj):
-        self.interface_to_viriato = AlgorithmInterfaceFactory.AlgorithmicPlatformInterface(get_api_url())
+        self.interface_to_viriato = AlgorithmInterfaceFactory.create(get_api_url())
 
     @mock.patch('requests.Session', side_effect=SetSectionTrackTestMockSession)
     def test_set_section_track_request(self, mocked_get_obj) -> None:
         test_dict = dict(TrainPathNodeID=1696, SectionTrackID=1172)
+
         self.interface_to_viriato.set_section_track(test_dict['TrainPathNodeID'], test_dict['SectionTrackID'])
+
         session_obj = self.interface_to_viriato._AlgorithmicPlatformInterface__communication_layer.currentSession
+
         self.assertEqual(session_obj._SetSectionTrackTestMockSession__last_request,
                          get_api_url() + '/set-section-track')
-        self.assertEqual(session_obj._SetSectionTrackTestMockSession__last_body, test_dict)
+        self.assertDictEqual(session_obj._SetSectionTrackTestMockSession__last_body, test_dict)
 
     @mock.patch('requests.Session', side_effect=SetSectionTrackTestMockSession)
     def test_set_section_track_response(self, mocked_get_obj):
-        test_algorithm_train = self.interface_to_viriato.set_section_track(1, 1)
+        TrainPathNodeID = 1
+        SectionTrackID = 1
+
+        test_algorithm_train = self.interface_to_viriato.set_section_track(TrainPathNodeID, SectionTrackID)
+
         self.assertIsInstance(test_algorithm_train, AIDM_classes.AlgorithmTrain)
         self.assertEqual(2060, test_algorithm_train.ID)
-        self.assertEqual(test_algorithm_train.DebugString, 'SetSectionTrackTestMockSession')
-
+        self.assertEqual(test_algorithm_train.DebugString, 'SetSectionTrackTestMockSessionString')
 
     @mock.patch('requests.Session', side_effect=SetSectionTrackTestMockSession)
     def tearDown(self, mocked_get_obj) -> None:

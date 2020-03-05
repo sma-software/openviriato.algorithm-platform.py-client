@@ -16,7 +16,7 @@ class TestShowStatusMessage(unittest.TestCase):
 
     @mock.patch('requests.Session', side_effect=ShowStatusMessageSessionTestMock)
     def test_show_status_message_one_str(self, mocked_requests_session):
-        with AlgorithmInterfaceFactory.AlgorithmicPlatformInterface(get_api_url()) as interface_to_viriato:
+        with AlgorithmInterfaceFactory.create(get_api_url()) as interface_to_viriato:
             message_1 = 'Only One Message Sent';
 
             interface_to_viriato.show_status_message(message_1)
@@ -29,7 +29,7 @@ class TestShowStatusMessage(unittest.TestCase):
 
     @mock.patch('requests.Session', side_effect=ShowStatusMessageSessionTestMock)
     def test_show_status_message_two_str(self, mocked_requests_session):
-        with AlgorithmInterfaceFactory.AlgorithmicPlatformInterface(get_api_url()) as interface_to_viriato:
+        with AlgorithmInterfaceFactory.create(get_api_url()) as interface_to_viriato:
             message_1 = 'this is the short one'
             message_2 = 'long one'
 

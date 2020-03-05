@@ -8,7 +8,7 @@ __version__ = '0.0.1'
 __author__ = 'Florian Fuchs'
 
 import datetime
-
+import warnings
 import AlgorithmInterfaceCommunicationLayer
 import converter_module.converter_helpers
 import converter_module.from_AIDM_converter
@@ -117,38 +117,36 @@ class AlgorithmicPlatformInterface:  # AlgorithmInterface
         response_dict = self.__communication_layer.do_get_request(url_tail)
         return converter_module.converter_helpers.parse_to_timedelta(response_dict["headwayTime"])
 
+    def get_separation_time_in_junction(self, preceding_train_path_node_id: int, succeeding_train_path_node_id: int
+                                        ) -> datetime.timedelta:
+        url_tail = 'junction-separation-time/between-train-path-nodes/{0}/{1}'.format(preceding_train_path_node_id,
+                                                                                      succeeding_train_path_node_id)
+        response_dict = self.__communication_layer.do_get_request(url_tail)
+        warnings.warn("Not Tested Yet")
+        return converter_module.converter_helpers.parse_to_timedelta(response_dict["separationTime"])
+
+    def get_station_track_reoccupation_separation_time(self, preceding_train_path_node_id: int,
+                                                       succeeding_train_path_node_id: int, node_track_id: int
+                                                       ) -> datetime.timedelta:
+        url_tail = 'station-track-reoccupation-separation-time/{0}/{1}/{2}'.format(preceding_train_path_node_id,
+                                                                                   succeeding_train_path_node_id,
+                                                                                   node_track_id)
+        response_dict = self.__communication_layer.do_get_request(url_tail)
+        warnings.warn("Not Tested Yet")
+        return converter_module.converter_helpers.parse_to_timedelta(response_dict["separationTime"])
+
+    def get_separation_time_in_any_junction(self, tbd: NotImplementedError) -> datetime.timedelta:
+        raise NotImplementedError
+        return converter_module.converter_helpers.parse_to_timedelta(response_dict["separationTime"])
+
+    def get_separation_time_in_station(self, tbd: NotImplementedError) -> datetime.timedelta:
+        raise NotImplementedError
+        return converter_module.converter_helpers.parse_to_timedelta(response_dict["separationTime"])
+
+    def get_separation_time_in_station_for_entry_or_exit(self, tbd: NotImplementedError) -> datetime.timedelta:
+        raise NotImplementedError
+        response_dict = self.__communication_layer.do_get_request(url_tail)
+        return converter_module.converter_helpers.parse_to_timedelta(response_dict["separationTime"])
 
 def create(base_url: str):
     return AlgorithmicPlatformInterface(base_url=base_url)
-
-
-"""
-class AlgorithmicPlatformInterfaceIncomplete(AlgorithmicPlatformInterface):
-    class GenericObjectFromJson:
-        def __init__(self, json_as_dict):
-            vars(self).update(json_as_dict)
-
-    def reroute_train(self,
-                      route: NotImplementedError) -> GenericObjectFromJson:  # AlgorithmClasses.AlgorithmTrain:
-        raise NotImplementedError
-        # Cancel an existing Algorithm​Train partially and return the resulting Algorithm​Train.
-        assert ()
-
-    def get_vehicle_type(self, vehicle_type_id: int) -> NotImplementedError:
-        raise NotImplementedError
-
-    # train methods
-    def get_trains(self, time_window: AIDMClasses.AlgorithmTimeWindow) -> NotImplementedError:
-        raise NotImplementedError
-
-    def get_trains_driving_any_node(self, time_window: AIDMClasses.AlgorithmTimeWindow, node_list: list) -> \
-            NotImplementedError:
-        raise NotImplementedError
-
-    def get_trains_cut_to_time_range(self, time_window: AIDMClasses.AlgorithmTimeWindow) -> NotImplementedError:
-        raise NotImplementedError
-
-    def get_trains_cut_to_time_range_driving_any_node(self, time_window: AIDMClasses.AlgorithmTimeWindow,
-                                                      node_list: list) -> NotImplementedError:
-        raise NotImplementedError
-"""

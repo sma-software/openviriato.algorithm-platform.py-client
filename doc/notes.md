@@ -1,9 +1,7 @@
 # Rest API Wrapper in Python
 
 To do: 
-- Enhance test with mock
-- Do tests in unit test
-- Implement methods
+- Implement methods, one with "flat" returned objects first
 
 ## Implementation Progress
 All Methods according to Documentation of REST-API 
@@ -12,6 +10,7 @@ All Methods according to Documentation of REST-API
 * Infrastructure
 * Train Classifications
 * Notifications
+* HeadWays
 
 ##### In Progress:
 
@@ -20,7 +19,6 @@ All Methods according to Documentation of REST-API
 
 ##### Not Implemented
 * Separation Times
-* Headway Times
 * Routing
 * Vehicles
 * Running Time Calculations

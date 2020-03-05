@@ -64,7 +64,6 @@ class AlgorithmTrain(hasID, hasDebugString):
         hasDebugString.__init__(self, DebugString)
         self.__TrainPathNodes = TrainPathNodes
 
-
     @property
     def TrainPathNodes(self) -> list:
         return self.__TrainPathNodes
@@ -137,6 +136,26 @@ class TrainPathNode(hasID):
     @property
     def SequenceNumber(self) -> int:
         return self.__SequenceNumber
+
+
+class updateTrainTimesNode:
+
+    def __init__(self, TrainPathNodeId: int, ArrivalTime: datetime.datetime, DepartureTime: datetime.datetime):
+        self.__TrainPathNodeId = TrainPathNodeId
+        self.__ArrivalTime = ArrivalTime
+        self.__DepartureTime = DepartureTime
+
+    @property
+    def TrainPathNodeId(self):
+        return self.__TrainPathNodeId
+
+    @property
+    def ArrivalTime(self):
+        return self.__ArrivalTime
+
+    @property
+    def DepartureTime(self):
+        return self.__DepartureTime
 
 
 """

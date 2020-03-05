@@ -105,7 +105,7 @@ class AlgorithmicPlatformInterface:  # AlgorithmInterface
         url_tail = 'headway-times/between-train-path-nodes/{0}/{1}'.format(preceding_train_path_node_id,
                                                                            succeeding_train_path_node_id)
         response_dict = self.__communication_layer.do_get_request(url_tail)
-        return converter_module.converter_helpers.parse_to_timedelta(response_dict["headwayTime"])
+        return converter_module.converter_helpers.parse_to_timedelta(response_dict["separationTime"])
 
     def get_headway_time_for_train_path_nodes_on_section_track(self, preceding_train_path_node_id: int,
                                                                succeeding_train_path_node_id: int,

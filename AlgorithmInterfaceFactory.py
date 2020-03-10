@@ -47,7 +47,7 @@ class AlgorithmicPlatformInterface:  # AlgorithmInterface
 
     def get_neighbor_nodes(self, node_id: int) -> list:
         response_list = self.__communication_layer.do_get_request('neighbor-nodes/{0}'.format(node_id))
-        return converter_module.to_AIDM_converter.convert_list_of_dict_to_AlgorithmNode(response_list)
+        return converter_module.to_AIDM_converter.convert_list_of_dict_to_list_of_AlgorithmNode(response_list)
 
     def get_section_track(self, section_track_id: int) -> AIDM_classes.AlgorithmSectionTrack:
         response_dict = self.__communication_layer.do_get_request('section-tracks/{0}'.format(section_track_id))
@@ -62,7 +62,9 @@ class AlgorithmicPlatformInterface:  # AlgorithmInterface
 
     def get_parallel_section_tracks(self, section_track_id: int) -> list:
         url_tail = 'section-tracks-parallel-to/{0}'.format(section_track_id)
+
         response_list = self.__communication_layer.do_get_request(url_tail)
+
         return converter_module.to_AIDM_converter.from_list_of_dict_to_list_of_AIDM(
             AIDM_classes.AlgorithmSectionTrack, response_list)
 
@@ -136,12 +138,25 @@ class AlgorithmicPlatformInterface:  # AlgorithmInterface
         warnings.warn("Not Tested Yet")
         return converter_module.converter_helpers.parse_to_timedelta(response_dict["separationTime"])
 
-    def get_separation_time_in_any_junction(self, tbd: NotImplementedError) -> datetime.timedelta:
-        raise NotImplementedError
+    def get_separation_time_in_any_junction(self, preceding_train_path_node_id: int, succeeding_train_path_node_id: int,
+                                            node_id: int, preceding_route_start_id: int, preceding_route_end_id: int,
+                                            succeeding_route_start_id: int, succeeding_route_end_id: int) \
+            -> datetime.timedelta:
+        url_tail = """junction-separation-time/between-train-path-nodes/{0}/{1}/for-node/{2}/preceding-route/{3}/{4}/
+        succeeding-route/{5}/{6}""".format(preceding_train_path_node_id, succeeding_train_path_node_id, node_id,
+                                           preceding_route_start_id, preceding_route_end_id, succeeding_route_start_id,
+                                           succeeding_route_end_id)
+        response_dict = self.__communication_layer.do_get_request(url_tail)
+        warnings.warn("Not Tested Yet")
         return converter_module.converter_helpers.parse_to_timedelta(response_dict["separationTime"])
 
-    def get_separation_time_in_station(self, tbd: NotImplementedError) -> datetime.timedelta:
+    def get_separation_time_in_station(self, preceding_section_track_id: int, preceding_node_track_id: int,
+                                       preceding_stop_status: AIDM_classes.StopStatus, succeeding_section_track_id: int,
+                                       succeeding_node_track_id:int, succeeding_stop_status: AIDM_classes.StopStatus) -> datetime.timedelta:
         raise NotImplementedError
+        url_tail = """station-separation-time/from-section-track/{precedingSectionTrackID}/to-node-track/
+        {precedingNodeTrackID}/{precedingStopStatus}/from-section-track/{succeedingSectionTrackID}/to-node-track/
+        {succeedingNodeTrackID}/{succeedingStopStatus}""".format(succeedingStopStatus.name)
         return converter_module.converter_helpers.parse_to_timedelta(response_dict["separationTime"])
 
     def get_separation_time_in_station_for_entry_or_exit(self, tbd: NotImplementedError) -> datetime.timedelta:

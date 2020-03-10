@@ -20,5 +20,4 @@ def convert_to_json_conform_dict(AIDM_object) -> dict:
 
 
 def convert_to_list_of_dict(list_of_AIDM_object: list) -> list:
-    l = [convert_to_json_conform_dict(AIDM_object) for AIDM_object in list_of_AIDM_object]
-    return l
+    return [convert_to_json_conform_dict(AIDM_object) for AIDM_object in list_of_AIDM_object]

@@ -16,7 +16,8 @@ def convert_dict_to_AlgorithmNode(attribute_dict: dict) -> AIDM_module.AIDM_clas
     return convert_dict_to_AIDM(AIDM_module.AIDM_classes.AlgorithmNode, attribute_dict)
 
 
-def convert_list_of_dict_to_AlgorithmNode(list_of_dict: list) -> list:
+# there shold be a way to get rid of this redundant function
+def convert_list_of_dict_to_list_of_AlgorithmNode(list_of_dict: list) -> list:
     return [convert_dict_to_AlgorithmNode(attribute_dict) for attribute_dict in list_of_dict]
 
 
@@ -24,7 +25,7 @@ def convert_dict_to_TrainPathNode(attribute_dict: dict) -> AIDM_module.AIDM_clas
     attribute_dict['StopStatus'] = AIDM_module.AIDM_classes.StopStatus[attribute_dict['StopStatus']]
     for key in ['ArrivalTime', 'DepartureTime']:
         attribute_dict[key] = parse_to_datetime(attribute_dict[key])
-    for key in ['MinimumRunTime', 'MinimumStopTime']:
+    for key in ['MinimumRunTime', 'MinimumStopTime']: # some are not none!
         attribute_dict[key] = parse_to_timedelta(attribute_dict[key])
     return convert_dict_to_AIDM(AIDM_module.AIDM_classes.TrainPathNode, attribute_dict)
 

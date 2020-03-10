@@ -4,12 +4,12 @@ from unittest import mock
 
 import AlgorithmInterfaceFactory
 import unit_testing_with_mock.SessionMockFactory as SessionMockFactory
-import unit_testing_with_mock.unit_testing_helpers
-from unit_testing_with_mock.unit_testing_helpers import get_api_url
+import unit_testing_with_mock.unit_testing_with_mock_helpers
+from unit_testing_with_mock.unit_testing_with_mock_helpers import get_api_url
 
 
 class TestGetReoccupationSeparationTime(unittest.TestCase):
-    class GetReoccupationSeparationTimeTestMockSession(unit_testing_with_mock.unit_testing_helpers.SessionMockTestBase):
+    class GetReoccupationSeparationTimeTestMockSession(unit_testing_with_mock.unit_testing_with_mock_helpers.SessionMockTestBase):
         # to replace session.get:
         def get(self, request, params):
             self.__last_body = params

@@ -3,12 +3,12 @@ from unittest import mock
 
 import AlgorithmInterfaceFactory
 import unit_testing_with_mock.SessionMockFactory as SessionMockFactory
-import unit_testing_with_mock.unit_testing_helpers
-from unit_testing_with_mock.unit_testing_helpers import get_api_url
+import unit_testing_with_mock.unit_testing_with_mock_helpers
+from unit_testing_with_mock.unit_testing_with_mock_helpers import get_api_url
 
 
 class TestGetTrainClassifications(unittest.TestCase):
-    class GetTrainClassificationsTestMockSession(unit_testing_with_mock.unit_testing_helpers.SessionMockTestBase):
+    class GetTrainClassificationsTestMockSession(unit_testing_with_mock.unit_testing_with_mock_helpers.SessionMockTestBase):
         # to replace session.get:
         def get(self, request, params):
             self.__last_body = params

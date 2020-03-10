@@ -2,13 +2,13 @@ from unittest import mock, TestCase
 
 import AlgorithmInterfaceFactory
 import unit_testing_with_mock.SessionMockFactory as SessionMockFactory
-import unit_testing_with_mock.unit_testing_helpers
+import unit_testing_with_mock.unit_testing_with_mock_helpers
 from AIDM_module import AIDM_classes
-from unit_testing_with_mock.unit_testing_helpers import get_api_url
+from unit_testing_with_mock.unit_testing_with_mock_helpers import get_api_url
 
 
 class TestSetSectionTrack(TestCase):
-    class SetSectionTrackTestMockSession(unit_testing_with_mock.unit_testing_helpers.SessionMockTestBase):
+    class SetSectionTrackTestMockSession(unit_testing_with_mock.unit_testing_with_mock_helpers.SessionMockTestBase):
         # to replace session.get:
         def post(self, request, json):
             self.__last_body = json

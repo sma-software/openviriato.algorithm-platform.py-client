@@ -2,14 +2,14 @@ import unittest
 from unittest import mock
 
 import AlgorithmInterfaceFactory
-import unit_testing_with_mock.unit_testing_helpers
+import unit_testing_with_mock.unit_testing_with_mock_helpers
 from AIDM_module import AIDM_classes
 from unit_testing_with_mock import SessionMockFactory as SessionMockFactory
-from unit_testing_with_mock.unit_testing_helpers import get_api_url
+from unit_testing_with_mock.unit_testing_with_mock_helpers import get_api_url
 
 
 class TestGetSectionTrack(unittest.TestCase):
-    class GetSectionTrackSessionTestMock(unit_testing_with_mock.unit_testing_helpers.SessionMockTestBase):
+    class GetSectionTrackSessionTestMock(unit_testing_with_mock.unit_testing_with_mock_helpers.SessionMockTestBase):
         # to replace session.get:
         def __init__(self):
             super().__init__()

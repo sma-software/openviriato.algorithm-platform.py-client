@@ -1,5 +1,5 @@
 import AIDM_module.AIDM_classes
-from converter_module.converter_helpers import parse_to_datetime, parse_to_timedelta
+from converter_module.converter_helpers import parse_to_datetime, parse_to_timedelta, parse_to_timedelta_or_None
 
 
 def convert_dict_to_AIDM(AIDM_class, attribute_dict: dict):
@@ -21,12 +21,12 @@ def convert_list_of_dict_to_list_of_AlgorithmNode(list_of_dict: list) -> list:
     return [convert_dict_to_AlgorithmNode(attribute_dict) for attribute_dict in list_of_dict]
 
 
-def convert_dict_to_TrainPathNode(attribute_dict: dict) -> AIDM_module.AIDM_classes.AlgorithmNode:
+def convert_dict_to_TrainPathNode(attribute_dict: dict) -> AIDM_module.AIDM_classes.TrainPathNode:
     attribute_dict['StopStatus'] = AIDM_module.AIDM_classes.StopStatus[attribute_dict['StopStatus']]
     for key in ['ArrivalTime', 'DepartureTime']:
         attribute_dict[key] = parse_to_datetime(attribute_dict[key])
-    for key in ['MinimumRunTime', 'MinimumStopTime']: # some are not none!
-        attribute_dict[key] = parse_to_timedelta(attribute_dict[key])
+    attribute_dict['MinimumRunTime'] = parse_to_timedelta_or_None(attribute_dict['MinimumRunTime']) # some are not none!
+    attribute_dict['MinimumStopTime'] = parse_to_timedelta(attribute_dict['MinimumStopTime'])
     return convert_dict_to_AIDM(AIDM_module.AIDM_classes.TrainPathNode, attribute_dict)
 
 

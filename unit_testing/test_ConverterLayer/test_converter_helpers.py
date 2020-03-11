@@ -1,41 +1,88 @@
+import datetime
 import unittest
 
-import ConverterLayer.from_AIDM_converter
+import isodate
+
+import ConverterLayer.converter_helpers
 from AIDMClasses import AIDM_classes
 
 
-class TestFromAIDMConverter(unittest.TestCase):
+class TestAllConverterHelpers(unittest.TestCase):
 
-    def test_convert_to_json_conform_dict(self):
-        test_section = AIDM_classes.AlgorithmSectionTrack(ID=12, Code='ATest', DebugString='str', Weight=8,
-                                                        SectionCode='TestSection')
+    def test_parse_to_datetime_wrong_format(self):
+        test_str = 'sd'
 
-        test_section_as_dict = ConverterLayer.from_AIDM_converter.convert_to_json_conform_dict(test_section)
+        with self.assertRaises(ValueError) as test_parse_to_datetime_wrong_format:
+            ConverterLayer.converter_helpers.parse_to_datetime(test_str)
 
-        self.assertIsInstance(test_section_as_dict, dict)
-        self.assertEqual(test_section_as_dict['ID'], 12)
-        self.assertEqual(test_section_as_dict['Code'], 'ATest')
-        self.assertEqual(test_section_as_dict['DebugString'], 'str')
-        self.assertEqual(test_section_as_dict['Weight'], 8)
-        self.assertEqual(test_section_as_dict['SectionCode'], 'TestSection')
+    def test_parse_to_datetime_proper_format(self):
+        test_date_str = "0001-05-01T01:01:00"
 
-    def test_convert_to_list_of_dict_emtpy(self):
-        test_list_of_dict = []
+        date = ConverterLayer.converter_helpers.parse_to_datetime(test_date_str)
 
-        test_section_list = ConverterLayer.from_AIDM_converter.convert_to_list_of_dict(test_list_of_dict)
+        self.assertIsInstance(date, datetime.datetime)
+        self.assertEqual(date, datetime.datetime(1, 5, 1, 1, 1))
 
-        self.assertIsInstance(test_section_list, list)
-        self.assertListEqual(test_section_list, [])
+    def test_parse_to_timedelta_wrong_format(self):
+        test_delta_str = '30Seconds'
 
-    def test_convert_to_list_of_dict(self):
-        algorithm_section_track = AIDM_classes.AlgorithmSectionTrack(ID=12, Code='ATest', DebugString='str', Weight=8,
-                                                          SectionCode='TestSection')
-        test_list_of_algorithm_section_track = [algorithm_section_track, algorithm_section_track,
-                                                algorithm_section_track]
+        with self.assertRaises(ValueError) as test_parse_to_datetime_wrong_format:
+            ConverterLayer.converter_helpers.parse_to_timedelta(test_delta_str)
 
-        test_section_list_of_dict = ConverterLayer.from_AIDM_converter.convert_to_list_of_dict(
-            test_list_of_algorithm_section_track)
+    def test_parse_to_timedelta_wrong_none(self):
+        test_delta_str = None
 
-        self.assertIsInstance(test_section_list_of_dict, list)
-        self.assertIsInstance(test_section_list_of_dict[0], dict)
-        self.assertEqual(test_section_list_of_dict[0]['DebugString'], 'str')
+        with self.assertRaises(TypeError) as test_parse_to_datetime_wrong_format:
+            ConverterLayer.converter_helpers.parse_to_timedelta(test_delta_str)
+
+    def test_parse_to_timedelta_proper_format(self):
+        test_delta_str = 'P0D'
+
+        delta = ConverterLayer.converter_helpers.parse_to_timedelta(test_delta_str)
+
+        self.assertIsInstance(delta, datetime.timedelta)
+        self.assertEqual(delta, datetime.timedelta(0))
+
+    def test_parse_to_timedelta_or_none_wrong_format(self):
+        test_delta_str = 'sd'
+
+        with self.assertRaises(isodate.isoerror.ISO8601Error) as test_parse_to_datetime_wrong_format:
+            ConverterLayer.converter_helpers.parse_to_timedelta(test_delta_str)
+
+    def test_parse_to_timedelta_or_none_proper_format(self):
+        test_delta_str = 'P1D'
+
+        delta = ConverterLayer.converter_helpers.parse_to_timedelta_or_None(test_delta_str)
+
+        self.assertIsInstance(delta, datetime.timedelta)
+        self.assertEqual(delta, datetime.timedelta(days=1))
+
+    def test_parse_to_timedelta_or_none_proper_none(self):
+        test_delta_str = None
+
+        delta = ConverterLayer.converter_helpers.parse_to_timedelta_or_None(test_delta_str)
+
+        self.assertIsNone(delta)
+
+    def test_check_and_format_any_datetime_to_iso_str_all_cases(self):
+        test_case_timedelta = datetime.timedelta(days=1)
+        test_case_datetime = datetime.datetime(1, 1, 1, 1, 1)
+        test_case_str = 'should stay the same'
+
+        timedelta_str = ConverterLayer.converter_helpers.check_and_format_any_datetime_to_iso_str(test_case_timedelta)
+        datetime_str = ConverterLayer.converter_helpers.check_and_format_any_datetime_to_iso_str(test_case_datetime)
+        still_str = ConverterLayer.converter_helpers.check_and_format_any_datetime_to_iso_str(test_case_str)
+
+        self.assertEqual(timedelta_str, 'P1D')
+        self.assertEqual(datetime_str, '0001-01-01T01:01:00')
+        self.assertEqual(still_str, 'should stay the same')
+
+    def test_check_and_format_any_enum_to_str_all_cases(self):
+        test_case_enum = AIDM_classes.StopStatus['passing']
+        test_case_str = 'should stay the same'
+
+        timedelta_str = ConverterLayer.converter_helpers.check_and_format_any_enum_to_str(test_case_enum)
+        still_str = ConverterLayer.converter_helpers.check_and_format_any_enum_to_str(test_case_str)
+
+        self.assertEqual(timedelta_str, 'passing')
+        self.assertEqual(still_str, 'should stay the same')

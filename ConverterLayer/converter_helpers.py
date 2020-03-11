@@ -1,5 +1,6 @@
 import datetime
 import enum
+
 import isodate
 
 
@@ -13,7 +14,7 @@ def parse_to_timedelta(timedelta_raw_str: str) -> datetime.timedelta:
 
 def parse_to_timedelta_or_None(timedelta_raw_str: (str, None)) -> (datetime.timedelta, None):
     if timedelta_raw_str is not None:
-        return isodate.parse_duration(timedelta_raw_str)
+        return parse_to_timedelta(timedelta_raw_str)
     else:
         return None
 

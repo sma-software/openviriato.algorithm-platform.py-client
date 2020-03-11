@@ -1,8 +1,8 @@
+import datetime
 import unittest
 
 import ConverterLayer.to_AIDM_converter
 from AIDMClasses import AIDM_classes
-import datetime
 
 
 class TestToAIDMConverterSpecificConversions(unittest.TestCase):

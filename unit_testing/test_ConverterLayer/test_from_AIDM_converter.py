@@ -1,9 +1,9 @@
+import datetime
+import json
 import unittest
 
 import ConverterLayer.from_AIDM_converter
 from AIDMClasses import AIDM_classes
-import datetime
-import json
 
 
 class TestFromAIDMConverter(unittest.TestCase):
@@ -35,15 +35,14 @@ class TestFromAIDMConverter(unittest.TestCase):
                                                           StopStatus=AIDM_classes.StopStatus['passing'],
                                                           SequenceNumber=0)
 
-        test_section_as_dict = ConverterLayer.from_AIDM_converter.convert_to_json_conform_dict(test_train_path_node)
-        test_section_as_jsons = json.dumps(test_section_as_dict)
+        test_node_as_dict = ConverterLayer.from_AIDM_converter.convert_to_json_conform_dict(test_train_path_node)
+        test_node_as_json = json.dumps(test_node_as_dict)
 
-        expected_jsons = ('{"ArrivalTime": "0001-05-01T01:01:00", "DepartureTime": "0001-05-01T01:01:00",' +
-                         ' "FormationID": 1187, "ID": 11038, "MinimumRunTime": null, "MinimumStopTime": "P0D",' +
-                         ' "NodeID": 18, "NodeTrackID": null, "SectionTrackID": null, "SequenceNumber": 0,' +
-                         ' "StopStatus": "passing"}')
-        self.assertEqual(test_section_as_jsons, expected_jsons)
-
+        expected_json_string = ('{"ArrivalTime": "0001-05-01T01:01:00", "DepartureTime": "0001-05-01T01:01:00",' +
+                                ' "FormationID": 1187, "ID": 11038, "MinimumRunTime": null, "MinimumStopTime": "P0D",' +
+                                ' "NodeID": 18, "NodeTrackID": null, "SectionTrackID": null, "SequenceNumber": 0,' +
+                                ' "StopStatus": "passing"}')
+        self.assertEqual(test_node_as_json, expected_json_string)
 
     def test_convert_to_list_of_dict_emtpy(self):
         test_list_of_dict = []

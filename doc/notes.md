@@ -11,6 +11,7 @@ All Methods according to Documentation of REST-API
 * Train Classifications
 * Notifications
 * HeadWays
+* Separation Times
 
 ##### In Progress:
 
@@ -18,7 +19,7 @@ All Methods according to Documentation of REST-API
 * Assignable Station Tracks
 
 ##### Not Implemented
-* Separation Times
+
 * Routing
 * Vehicles
 * Running Time Calculations

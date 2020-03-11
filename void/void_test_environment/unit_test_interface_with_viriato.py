@@ -5,6 +5,7 @@ A test script that requires an REST-API of the VIRIATO-Algorithm Platform
 import unittest
 from datetime import datetime
 
+import AlgorithmInterface.AlgorithmInterface
 from AIDMClasses import AIDM_classes
 from AlgorithmInterface import AlgorithmInterfaceFactory as interface_module
 from CommunicationLayer import AlgorithmInterfaceCommunicationLayer
@@ -18,55 +19,55 @@ def get_url_str():
 class TestObjectInitialisation(unittest.TestCase):
     # test for the object creation:
     def test_initialisation_in_with(self):
-        with interface_module.AlgorithmicPlatformInterface(get_url_str()) as interface_to_viriato:
+        with AlgorithmInterface.AlgorithmInterface.AlgorithmicPlatformInterface(get_url_str()) as interface_to_viriato:
             self.assertEqual(interface_to_viriato.base_url, get_url_str())
 
     # fails on purpose:
     def test_if_initialisation_with_int_fails(self):
         url_nr = 952022
         with self.assertRaises(AssertionError):
-            with interface_module.AlgorithmicPlatformInterface(url_nr) as interface_to_viriato:
+            with AlgorithmInterface.AlgorithmInterface.AlgorithmicPlatformInterface(url_nr) as interface_to_viriato:
                 self.assertEqual(interface_to_viriato.base_url, get_url_str())
 
 
 class TestUserNotifications(unittest.TestCase):
 
     def test_user_notification_with_str(self):
-        with interface_module.AlgorithmicPlatformInterface(get_url_str()) as interface_to_viriato:
+        with AlgorithmInterface.AlgorithmInterface.AlgorithmicPlatformInterface(get_url_str()) as interface_to_viriato:
             interface_to_viriato.notify_user('hi', 'it works')
 
     def test_user_notifications_wrong_type(self):
         with self.assertRaises(AssertionError):
-            with interface_module.AlgorithmicPlatformInterface(get_url_str()) as interface_to_viriato:
+            with AlgorithmInterface.AlgorithmInterface.AlgorithmicPlatformInterface(get_url_str()) as interface_to_viriato:
                 interface_to_viriato.notify_user(1, 2)
 
 
 class TestShowStatusMessage(unittest.TestCase):
 
     def test_show_status_message_one_str(self):
-        with interface_module.AlgorithmicPlatformInterface(get_url_str()) as interface_to_viriato:
+        with AlgorithmInterface.AlgorithmInterface.AlgorithmicPlatformInterface(get_url_str()) as interface_to_viriato:
             interface_to_viriato.show_status_message('Foo bar')
 
     def test_show_status_message_two_str(self):
-        with interface_module.AlgorithmicPlatformInterface(get_url_str()) as interface_to_viriato:
+        with AlgorithmInterface.AlgorithmInterface.AlgorithmicPlatformInterface(get_url_str()) as interface_to_viriato:
             interface_to_viriato.show_status_message('Foo', 'bar')
 
     def test_user_notifications_wrong_type_one_param(self):
         with self.assertRaises(AssertionError):
-            with interface_module.AlgorithmicPlatformInterface(get_url_str()) as interface_to_viriato:
+            with AlgorithmInterface.AlgorithmInterface.AlgorithmicPlatformInterface(get_url_str()) as interface_to_viriato:
                 interface_to_viriato.show_status_message(1)
 
     def test_user_notifications_wrong_type_two_param(self):
         with self.assertRaises(AssertionError):
-            with interface_module.AlgorithmicPlatformInterface(get_url_str()) as interface_to_viriato:
+            with AlgorithmInterface.AlgorithmInterface.AlgorithmicPlatformInterface(get_url_str()) as interface_to_viriato:
                 interface_to_viriato.show_status_message('one', 1)
 
 
 class TestGetDirectedSectionTracks(unittest.TestCase):
-    interface_to_viriato: interface_module.AlgorithmicPlatformInterface
+    interface_to_viriato: AlgorithmInterface.AlgorithmInterface.AlgorithmicPlatformInterface
 
     def setUp(self):
-        self.interface_to_viriato = interface_module.AlgorithmicPlatformInterface(get_url_str())
+        self.interface_to_viriato = AlgorithmInterface.AlgorithmInterface.AlgorithmicPlatformInterface(get_url_str())
 
     def tearDown(self) -> None:
         self.interface_to_viriato.__exit__(None, None, None)
@@ -108,7 +109,7 @@ def test_algorithm_node_object(node_id=1, code_string='someTestNodeID', debug_st
     print(test_node.Code)
 
 
-def test_train_cancellations(interface_to_viriato: interface_module.AlgorithmicPlatformInterface) -> None:
+def test_train_cancellations(interface_to_viriato: AlgorithmInterface.AlgorithmInterface.AlgorithmicPlatformInterface) -> None:
     for i in range(500, 5000):
         try:
             interface_to_viriato.cancel_train_to(train_path_node_id=i)
@@ -127,15 +128,15 @@ def main():
 
 def main_void():
     url_str = 'http://localhost:8080'
-    interface_to_viriato: interface_module.AlgorithmicPlatformInterface
+    interface_to_viriato: AlgorithmInterface.AlgorithmInterface.AlgorithmicPlatformInterface
 
     test_object_initialisation(url_str)
 
-    with interface_module.AlgorithmicPlatformInterface(url_str) as interface_to_viriato:
+    with AlgorithmInterface.AlgorithmInterface.AlgorithmicPlatformInterface(url_str) as interface_to_viriato:
         test_train_cancellations(interface_to_viriato)
         print('test_train_cancellations complete')
 
-    with interface_module.AlgorithmicPlatformInterface(url_str) as interface_to_viriato:
+    with AlgorithmInterface.AlgorithmInterface.AlgorithmicPlatformInterface(url_str) as interface_to_viriato:
         # try to retrieve the url:
         print(interface_to_viriato.base_url)
         print('url retrieve test complete')
@@ -149,7 +150,7 @@ def main_void():
         test_get_parallel_section_tracks(interface_to_viriato)
         test_get_directed_section_tracks(interface_to_viriato)
 
-    with interface_module.AlgorithmicPlatformInterface(url_str) as interface_to_viriato:
+    with AlgorithmInterface.AlgorithmInterface.AlgorithmicPlatformInterface(url_str) as interface_to_viriato:
         test_get_node_and_get_neighbor_nodes(interface_to_viriato)
 
     # other tests for the data types

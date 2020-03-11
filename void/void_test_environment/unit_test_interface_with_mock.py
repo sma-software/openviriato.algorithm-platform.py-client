@@ -6,6 +6,7 @@ import json
 import unittest
 from unittest import mock
 
+import AlgorithmInterface.AlgorithmInterface
 from AIDMClasses import AIDM_classes
 from AlgorithmInterface import AlgorithmInterfaceFactory as interface_module
 
@@ -45,14 +46,14 @@ class MockedRequestsSessionBaseClass:
 class TestObjectInitialisation(unittest.TestCase):
     # test for the object creation:
     def test_initialisation_in_with(self):
-        with interface_module.AlgorithmicPlatformInterface(get_url_str()) as interface_to_viriato:
+        with AlgorithmInterface.AlgorithmInterface.AlgorithmicPlatformInterface(get_url_str()) as interface_to_viriato:
             self.assertEqual(interface_to_viriato.base_url, get_url_str())
 
     # fails on purpose:
     def test_if_initialisation_with_int_fails(self):
         url_nr = 952022
         with self.assertRaises(AssertionError):
-            with interface_module.AlgorithmicPlatformInterface(url_nr) as interface_to_viriato:
+            with AlgorithmInterface.AlgorithmInterface.AlgorithmicPlatformInterface(url_nr) as interface_to_viriato:
                 var = interface_to_viriato.base_url
 
 
@@ -67,12 +68,12 @@ class TestUserNotifications(unittest.TestCase):
 
     @mock.patch('requests.Session', side_effect=MockedRequestsSessionUserNotification)
     def test_user_notification_with_str(self, mocked_requests_session):
-        interface_to_viriato = interface_module.AlgorithmicPlatformInterface(get_url_str())
+        interface_to_viriato = AlgorithmInterface.AlgorithmInterface.AlgorithmicPlatformInterface(get_url_str())
         interface_to_viriato.notify_user('hi', 'it works')
 
     def test_user_notifications_wrong_type(self):
         with self.assertRaises(AssertionError):
-            with interface_module.AlgorithmicPlatformInterface(get_url_str()) as interface_to_viriato:
+            with AlgorithmInterface.AlgorithmInterface.AlgorithmicPlatformInterface(get_url_str()) as interface_to_viriato:
                 interface_to_viriato.notify_user(1, 2)
 
 
@@ -103,11 +104,11 @@ class TestGetDirectedSectionTracks(unittest.TestCase):
                            '            ]')
             return mocked_requests_response(json_string, 200)
 
-    interface_to_viriato: interface_module.AlgorithmicPlatformInterface
+    interface_to_viriato: AlgorithmInterface.AlgorithmInterface.AlgorithmicPlatformInterface
 
     @mock.patch('requests.Session', side_effect=MockedRequestsGetDirectedSectionTracks)
     def setUp(self, mocked_get_obj):
-        self.interface_to_viriato = interface_module.AlgorithmicPlatformInterface(get_url_str())
+        self.interface_to_viriato = AlgorithmInterface.AlgorithmInterface.AlgorithmicPlatformInterface(get_url_str())
 
     @mock.patch('requests.Session', side_effect=MockedRequestsGetDirectedSectionTracks)
     def tearDown(self, mocked_get_obj) -> None:

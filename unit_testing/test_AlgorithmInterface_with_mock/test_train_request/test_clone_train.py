@@ -1,6 +1,7 @@
 import unittest
 from unittest import mock
 
+import AlgorithmInterface.AlgorithmInterface
 import unit_testing.test_AlgorithmInterface_with_mock.SessionMockFactory as SessionMockFactory
 from AIDMClasses import AIDM_classes
 from AlgorithmInterface import AlgorithmInterfaceFactory
@@ -46,7 +47,7 @@ class TestCloneTrain(unittest.TestCase):
                            '}')
             return SessionMockFactory.create_response_mock(json_string, 200)
 
-    interface_to_viriato: AlgorithmInterfaceFactory.AlgorithmicPlatformInterface
+    interface_to_viriato: AlgorithmInterface.AlgorithmInterface.AlgorithmicPlatformInterface
 
     @mock.patch('requests.Session', side_effect=CloneTrainTestMockSession)
     def setUp(self, mocked_get_obj):

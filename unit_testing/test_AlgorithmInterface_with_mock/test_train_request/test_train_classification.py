@@ -1,5 +1,6 @@
 from unittest import mock, TestCase
 
+import AlgorithmInterface.AlgorithmInterface
 from AlgorithmInterface import AlgorithmInterfaceFactory
 from unit_testing.test_AlgorithmInterface_with_mock import SessionMockFactory as APISessionMock
 from unit_testing.test_AlgorithmInterface_with_mock.unit_testing_with_mock_helpers import get_api_url, \
@@ -14,7 +15,7 @@ class TestGetTrainClassification(TestCase):
             self.__last_request = request
             return APISessionMock.create_response_mock('{"Description": "Freight"}', 200)
 
-    interface_to_viriato: AlgorithmInterfaceFactory.AlgorithmicPlatformInterface
+    interface_to_viriato: AlgorithmInterface.AlgorithmInterface.AlgorithmicPlatformInterface
 
     @mock.patch('requests.Session', side_effect=GetTrainClassificationTestMockSession)
     def setUp(self, mocked_get_obj):

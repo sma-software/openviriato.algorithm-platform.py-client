@@ -1,23 +1,23 @@
 """
 A test script that requires an REST-API of the VIRIATO-Algorithm Platform
 """
-
+import AlgorithmInterface.AlgorithmInterface
 from AlgorithmInterface import AlgorithmInterfaceFactory as interface_module
 from CommunicationLayer import AlgorithmInterfaceCommunicationLayer
 
 
-def test_object_initialisation(url_str='http://localhost:8080') -> interface_module.AlgorithmicPlatformInterface:
+def test_object_initialisation(url_str='http://localhost:8080') -> AlgorithmInterface.AlgorithmInterface.AlgorithmicPlatformInterface:
     # test for the object creation:
     # fails on purpose:
     try:
         url_nr = 952022
-        interface_to_viriato = interface_module.AlgorithmicPlatformInterface(url_nr)
+        interface_to_viriato = AlgorithmInterface.AlgorithmInterface.AlgorithmicPlatformInterface(url_nr)
         print('was able to insert int as url')  # if we made it here, there is something wrong
         raise NotImplementedError
     except AssertionError:
         print('failed to insert int as url')
     # create an interface with the url as str
-    interface_to_viriato = interface_module.AlgorithmicPlatformInterface(url_str)
+    interface_to_viriato = AlgorithmInterface.AlgorithmInterface.AlgorithmicPlatformInterface(url_str)
     print('test_object_initialisation complete')
     return interface_to_viriato
 
@@ -70,7 +70,7 @@ def test_get_parallel_section_tracks(interface_to_viriato) -> None:
     print('test_get_parallel_section_tracks complete')
 
 
-def test_train_cancellations(interface_to_viriato: interface_module.AlgorithmicPlatformInterface) -> None:
+def test_train_cancellations(interface_to_viriato: AlgorithmInterface.AlgorithmInterface.AlgorithmicPlatformInterface) -> None:
     for i in range(500, 2500):
         try:
             obj = interface_to_viriato.cancel_train_to(train_path_node_id=i)
@@ -87,13 +87,13 @@ def test_train_cancellations(interface_to_viriato: interface_module.AlgorithmicP
 
 def main():
     url_str = 'http://localhost:8080'
-    interface_to_viriato: interface_module.AlgorithmicPlatformInterface
+    interface_to_viriato: AlgorithmInterface.AlgorithmInterface.AlgorithmicPlatformInterface
 
-    with interface_module.AlgorithmicPlatformInterface(url_str) as interface_to_viriato:
+    with AlgorithmInterface.AlgorithmInterface.AlgorithmicPlatformInterface(url_str) as interface_to_viriato:
         test_train_cancellations(interface_to_viriato)
         print('test_train_cancellations complete')
 
-    with interface_module.AlgorithmicPlatformInterface(url_str) as interface_to_viriato:
+    with AlgorithmInterface.AlgorithmInterface.AlgorithmicPlatformInterface(url_str) as interface_to_viriato:
         # try to retrieve the url:
         print(interface_to_viriato.base_url)
         print('url retrieve test complete')
@@ -107,7 +107,7 @@ def main():
         test_get_parallel_section_tracks(interface_to_viriato)
         test_get_directed_section_tracks(interface_to_viriato)
 
-    with interface_module.AlgorithmicPlatformInterface(url_str) as interface_to_viriato:
+    with AlgorithmInterface.AlgorithmInterface.AlgorithmicPlatformInterface(url_str) as interface_to_viriato:
         test_get_node_and_get_neighbor_nodes(interface_to_viriato)
 
 

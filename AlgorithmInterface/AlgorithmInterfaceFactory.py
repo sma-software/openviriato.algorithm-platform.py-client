@@ -127,7 +127,7 @@ class AlgorithmicPlatformInterface:  # AlgorithmInterface
                                                                                       succeeding_train_path_node_id)
         response_dict = self.__communication_layer.do_get_request(url_tail)
         warnings.warn("Not Tested Yet")
-        return ConverterLayer.converter_helpers.parse_to_timedelta(response_dict["separationTime"])
+        return ConverterLayer.converter_helpers.parse_to_timedelta_or_None(response_dict["separationTime"])
 
     def get_station_track_reoccupation_separation_time(self, preceding_train_path_node_id: int,
                                                        succeeding_train_path_node_id: int, node_track_id: int
@@ -143,13 +143,13 @@ class AlgorithmicPlatformInterface:  # AlgorithmInterface
                                             node_id: int, preceding_route_start_id: int, preceding_route_end_id: int,
                                             succeeding_route_start_id: int, succeeding_route_end_id: int) \
             -> datetime.timedelta:
-        url_tail = """junction-separation-time/between-train-path-nodes/{0}/{1}/for-node/{2}/preceding-route/{3}/{4}/
-        succeeding-route/{5}/{6}""".format(preceding_train_path_node_id, succeeding_train_path_node_id, node_id,
-                                           preceding_route_start_id, preceding_route_end_id, succeeding_route_start_id,
-                                           succeeding_route_end_id)
+        url_tail = ('junction-separation-time/between-train-path-nodes/{0}/{1}/for-node/{2}/preceding-route/{3}/{4}/' +
+                    'succeeding-route/{5}/{6}').format(preceding_train_path_node_id, succeeding_train_path_node_id,
+                                                       node_id, preceding_route_start_id, preceding_route_end_id,
+                                                       succeeding_route_start_id, succeeding_route_end_id)
         response_dict = self.__communication_layer.do_get_request(url_tail)
         warnings.warn("Not Tested Yet")
-        return ConverterLayer.converter_helpers.parse_to_timedelta(response_dict["separationTime"])
+        return ConverterLayer.converter_helpers.parse_to_timedelta_or_None(response_dict["separationTime"])
 
     def get_separation_time_in_station(self, preceding_section_track_id: int, preceding_node_track_id: int,
                                        preceding_stop_status: AIDMClasses.AIDM_enum_classes.StopStatus,
@@ -163,7 +163,7 @@ class AlgorithmicPlatformInterface:  # AlgorithmInterface
                                                      succeeding_node_track_id, succeeding_stop_status.name)
 
         response_dict = self.__communication_layer.do_get_request(url_tail)
-        return ConverterLayer.converter_helpers.parse_to_timedelta(response_dict["separationTime"])
+        return ConverterLayer.converter_helpers.parse_to_timedelta_or_None(response_dict["separationTime"])
 
     def get_separation_time_in_station_for_entry_or_exit(self, preceding_train_path_node_id: int,
                                                          preceding_node_track_id: int, preceding_station_entry_or_exit:
@@ -180,7 +180,7 @@ class AlgorithmicPlatformInterface:  # AlgorithmInterface
                                                                                 succeeding_station_entry_or_exit.name)
         response_dict = self.__communication_layer.do_get_request(url_tail)
         warnings.warn("Not Tested Yet")
-        return ConverterLayer.converter_helpers.parse_to_timedelta(response_dict["separationTime"])
+        return ConverterLayer.converter_helpers.parse_to_timedelta_or_None(response_dict["separationTime"])
 
 
 def create(base_url: str):

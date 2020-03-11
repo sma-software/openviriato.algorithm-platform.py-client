@@ -11,9 +11,6 @@ class AlgorithmNodeTrack(hasID, hasCode, hasDebugString):
         hasCode.__init__(self, Code)
         hasDebugString.__init__(self, DebugString)
 
-    @classmethod
-    def from_json_dict_factory(cls, json_dict: dict):
-        return cls(**json_dict)
 
 
 class AlgorithmNode(hasID, hasCode, hasDebugString):
@@ -76,7 +73,7 @@ class TrainPathNode(hasID):
     __SequenceNumber: int
 
     def __init__(self, ID: int, ArrivalTime: datetime.datetime, DepartureTime: datetime.datetime,
-                 SectionTrackID: (int, None), NodeID: int, NodeTrackID: (int,None), FormationID: int,
+                 SectionTrackID: (int, None), NodeID: int, NodeTrackID: (int, None), FormationID: int,
                  MinimumRunTime: (datetime.timedelta, None), MinimumStopTime: datetime.timedelta,
                  StopStatus: StopStatus, SequenceNumber: int):
         hasID.__init__(self, ID)
@@ -133,6 +130,9 @@ class TrainPathNode(hasID):
 
 
 class updateTrainTimesNode:
+    TrainPathNodeId: int
+    ArrivalTime: datetime.datetime
+    DepartureTime: datetime.datetime
 
     def __init__(self, TrainPathNodeId: int, ArrivalTime: datetime.datetime, DepartureTime: datetime.datetime):
         self.__TrainPathNodeId = TrainPathNodeId

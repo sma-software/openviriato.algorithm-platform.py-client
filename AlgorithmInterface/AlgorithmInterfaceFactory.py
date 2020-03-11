@@ -157,13 +157,12 @@ class AlgorithmicPlatformInterface:  # AlgorithmInterface
                                        succeeding_node_track_id: int,
                                        succeeding_stop_status: AIDMClasses.AIDM_enum_classes.StopStatus) \
             -> datetime.timedelta:
-        url_tail = """station-separation-time/from-section-track/{0}/to-node-track/{1}/{2}/from-section-track/{3}/
-        to-node-track/{4}/{5}""".format(preceding_section_track_id, preceding_node_track_id,
-                                        preceding_stop_status.name, succeeding_section_track_id,
-                                        succeeding_node_track_id, succeeding_stop_status.name)
+        url_tail = ('station-separation-time/from-section-track/{0}/to-node-track/{1}/{2}/from-section-track/{3}' +
+                    '/to-node-track/{4}/{5}').format(preceding_section_track_id, preceding_node_track_id,
+                                                     preceding_stop_status.name, succeeding_section_track_id,
+                                                     succeeding_node_track_id, succeeding_stop_status.name)
 
         response_dict = self.__communication_layer.do_get_request(url_tail)
-        warnings.warn("Not Tested Yet")
         return ConverterLayer.converter_helpers.parse_to_timedelta(response_dict["separationTime"])
 
     def get_separation_time_in_station_for_entry_or_exit(self, preceding_train_path_node_id: int,

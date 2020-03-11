@@ -9,8 +9,6 @@ class TestUpdateTrainTimesNode(unittest.TestCase):
         node_id = 15
         arrival_time = datetime.datetime(2, 2, 2, 2, 2)
         departure_time = datetime.datetime(3, 2, 1, 2, 3)
-        code = 'someTestCode'
-        debug_string = 'some string'
 
         test_node = AIDM_classes.updateTrainTimesNode(TrainPathNodeId=node_id, ArrivalTime=arrival_time,
                                                       DepartureTime=departure_time)

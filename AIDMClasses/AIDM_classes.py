@@ -12,7 +12,6 @@ class AlgorithmNodeTrack(hasID, hasCode, hasDebugString):
         hasDebugString.__init__(self, DebugString)
 
 
-
 class AlgorithmNode(hasID, hasCode, hasDebugString):
     __NodeTracks: []
 
@@ -152,17 +151,13 @@ class updateTrainTimesNode:
         return self.__DepartureTime
 
 
-"""
 class AlgorithmTimeWindow:
     __FromTime: datetime.datetime
     __ToTime: datetime.datetime
 
-    def __init__(self, from_time: datetime.datetime, to_time: datetime.datetime):
-        raise NotImplementedError
-        assert_datetime(from_time)
-        assert_datetime(to_time)
-        self.__FromTime = from_time
-        self.__ToTime = to_time
+    def __init__(self, FromTime: datetime.datetime, ToTime: datetime.datetime):
+        self.__FromTime = FromTime
+        self.__ToTime = ToTime
 
     @property
     def FromTime(self):
@@ -173,7 +168,7 @@ class AlgorithmTimeWindow:
         return self.__ToTime
 
 
-
+"""
 # NotImplemented!!,
 class AlgorithmGenericTimeNode:  # this is a bad idea, for maintenance in future.
     # no assertions so far!
@@ -211,17 +206,32 @@ class AlgorithmGenericTimeNode:  # this is a bad idea, for maintenance in future
 class UpdateTrainTimesNode(AlgorithmGenericTimeNode):
     __TrainPathNodeID: int
     __StopStatus: str = None
+    __ArrivalTime = datetime.datetime
+    __DepartureTime: datetime.datetime
+    __MinimumRunTime: str
+    __MinimumStopTime: str
 
     def __init__(self, arrival_time: datetime.datetime, departure_time: datetime.datetime, train_path_node_id: int,
                  minimum_run_time: str = None, minimum_stop_time: str = None, stop_status: str = None):
-        raise NotImplementedError
-        super().__init__(arrival_time, departure_time, minimum_run_time, minimum_stop_time)
-        AlgorithmTypeCheck.assert_parameter_is_int(train_path_node_id, 'train_path_node_id', '__init__')
-        if not (stop_status is None):
-            assert_stop_status(stop_status)
         self.__TrainPathNodeID = train_path_node_id
         self.__StopStatus = stop_status
+    
+    @property
+    def ArrivalTime(self):
+        return self.__ArrivalTime
 
+    @property
+    def DepartureTime(self):
+        return self.__DepartureTime
+
+    @property
+    def MinimumRunTime(self):
+        return self.__MinimumRunTime
+
+    @property
+    def MinimumStopTime(self):
+        return self.__MinimumStopTime
+    
     @property
     def TrainPathNodeID(self):
         return self.__TrainPathNodeID
@@ -242,12 +252,27 @@ class AlgorithmTrainPathNode(hasID, AlgorithmGenericTimeNode):
 
     def __init__(self, node_id: int, arrival_time: datetime.datetime, departure_time: datetime.datetime,
                  minimum_run_time, minimum_stop_time):
-        raise NotImplementedError
         hasID.__init__(self, node_id)
-        AlgorithmGenericTimeNode.__init__(self, arrival_time, departure_time, minimum_run_time, minimum_stop_time)
         self.__FormationID = int
         self.__NodeID = int
         self.__NodeTrackID = int
         self.__SectionTrackID = int
         self.__SequenceNumber = int
+        
+        
+    @property
+    def ArrivalTime(self):
+        return self.__ArrivalTime
+
+    @property
+    def DepartureTime(self):
+        return self.__DepartureTime
+
+    @property
+    def MinimumRunTime(self):
+        return self.__MinimumRunTime
+
+    @property
+    def MinimumStopTime(self):
+        return self.__MinimumStopTime
 """

@@ -168,12 +168,12 @@ class TimeWindow:
         return self.__ToTime
 
 
-class AlgorithmNodeTrackClosure(hasID):
+class AlgorithmNodeTrackClosure(hasDebugString):
     __NodeID: int
     __NodeTrackID: int
 
-    def __init__(self, ID: int, NodeID: int, NodeTrackID: int):
-        hasID.__init__(self, ID)
+    def __init__(self, DebugString: str, NodeID: int, NodeTrackID: int):
+        hasDebugString.__init__(self, DebugString)
         self.__NodeID = NodeID
         self.__NodeTrackID = NodeTrackID
 
@@ -186,16 +186,16 @@ class AlgorithmNodeTrackClosure(hasID):
         return self.__NodeTrackID
 
 
-class AlgorithmSectionTrackClosure(hasID):
+class AlgorithmSectionTrackClosure(hasDebugString):
     __ClosureTimeWindowFromNode: TimeWindow
     __ClosureTimeWindowToNode: TimeWindow
     __FromNodeID: int
     __SectionTrackID: int
     __ToNodeID: int
 
-    def __init__(self, ID: int, ClosureTimeWindowFromNode: TimeWindow, ClosureTimeWindowToNode: TimeWindow,
+    def __init__(self, DebugString: str, ClosureTimeWindowFromNode: TimeWindow, ClosureTimeWindowToNode: TimeWindow,
                  FromNodeID: int, SectionTrackID: int, ToNodeID: int):
-        hasID.__init__(self, ID)
+        hasDebugString.__init__(self, DebugString)
         self.__ClosureTimeWindowFromNode = ClosureTimeWindowFromNode
         self.__ClosureTimeWindowToNode = ClosureTimeWindowToNode
         self.__FromNodeID = FromNodeID

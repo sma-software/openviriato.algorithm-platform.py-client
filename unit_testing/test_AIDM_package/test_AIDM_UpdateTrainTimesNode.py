@@ -1,5 +1,6 @@
-import unittest
 import datetime
+import unittest
+
 from AIDMClasses import AIDM_classes
 
 

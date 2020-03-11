@@ -1,7 +1,6 @@
 import unittest
 
 import AlgorithmInterface.AlgorithmInterface
-from AlgorithmInterface import AlgorithmInterfaceFactory
 
 
 class TestObjectInitialisation(unittest.TestCase):

@@ -1,5 +1,6 @@
-import AIDMClasses.AIDM_enum_classes
 import unittest
+
+import AIDMClasses.AIDM_enum_classes
 
 
 class TestStopStatus(unittest.TestCase):

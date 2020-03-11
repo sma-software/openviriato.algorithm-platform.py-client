@@ -7,7 +7,6 @@ from datetime import datetime
 
 import AlgorithmInterface.AlgorithmInterface
 from AIDMClasses import AIDM_classes
-from AlgorithmInterface import AlgorithmInterfaceFactory as interface_module
 from CommunicationLayer import AlgorithmInterfaceCommunicationLayer
 
 

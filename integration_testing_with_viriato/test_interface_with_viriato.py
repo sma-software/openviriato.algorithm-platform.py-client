@@ -2,7 +2,6 @@
 A test script that requires an REST-API of the VIRIATO-Algorithm Platform
 """
 import AlgorithmInterface.AlgorithmInterface
-from AlgorithmInterface import AlgorithmInterfaceFactory as interface_module
 from CommunicationLayer import AlgorithmInterfaceCommunicationLayer
 
 

@@ -21,7 +21,6 @@ class TestToAIDMConverterSpecificConversions(unittest.TestCase):
     def test_convert_list_of_dict_to_AlgorithmNode(self):
         test_node_as_dict = dict(ID=15, Code='A', DebugString='test123', NodeTracks=[])
         test_node_as_list_of_dict = [test_node_as_dict, test_node_as_dict, test_node_as_dict, test_node_as_dict]
-        test_node = ConverterLayer.to_AIDM_converter.convert_dict_to_AlgorithmNode(test_node_as_dict)
 
         test_node_list = ConverterLayer.to_AIDM_converter.convert_list_of_dict_to_list_of_AIDM(
             ConverterLayer.to_AIDM_converter.convert_dict_to_AlgorithmNode, test_node_as_list_of_dict)

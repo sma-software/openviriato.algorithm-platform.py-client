@@ -1,7 +1,8 @@
 import datetime
 import unittest
 
-import AIDM_package.AIDM_classes
+import AIDMClasses.AIDM_classes
+import AIDMClasses.AIDM_enum_classes
 import ConverterLayer.to_AIDM_converter
 
 
@@ -17,8 +18,8 @@ class TestTrainPathNode(unittest.TestCase):
 
         self.assertEqual(8113, test_train_path_node.ID)
         self.assertEqual(test_train_path_node.FormationID, 1187)
-        self.assertIsInstance(test_train_path_node.StopStatus, AIDM_package.AIDM_classes.StopStatus)
-        self.assertEqual(test_train_path_node.StopStatus, AIDM_package.AIDM_classes.StopStatus['commercialStop'])
+        self.assertIsInstance(test_train_path_node.StopStatus, AIDMClasses.AIDM_enum_classes.StopStatus)
+        self.assertEqual(test_train_path_node.StopStatus, AIDMClasses.AIDM_enum_classes.StopStatus['commercialStop'])
         self.assertEqual(test_train_path_node.SequenceNumber, 0)
         self.assertEqual(test_train_path_node.MinimumStopTime, datetime.timedelta(seconds=60))
         self.assertEqual(test_train_path_node.MinimumRunTime, None)

@@ -1,13 +1,7 @@
 import datetime
-from enum import Enum
 
-from AIDM_package.AIDM_base_classes import hasID, hasCode, hasDebugString
-
-
-class StopStatus(Enum):
-    commercialStop = 0
-    operationalStop = 1
-    passing = 2
+from AIDMClasses.AIDM_base_classes import hasID, hasCode, hasDebugString
+from AIDMClasses.AIDM_enum_classes import StopStatus
 
 
 class AlgorithmNodeTrack(hasID, hasCode, hasDebugString):

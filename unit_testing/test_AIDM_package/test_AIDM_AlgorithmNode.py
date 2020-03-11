@@ -1,7 +1,7 @@
 import unittest
 
 import ConverterLayer.to_AIDM_converter
-from AIDM_package import AIDM_classes
+from AIDMClasses import AIDM_classes
 
 
 class TestAIDMAlgorithmNode(unittest.TestCase):

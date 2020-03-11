@@ -10,10 +10,11 @@ __author__ = 'Florian Fuchs'
 import datetime
 import warnings
 
+import AIDMClasses.AIDM_enum_classes
 import ConverterLayer.converter_helpers
 import ConverterLayer.from_AIDM_converter
 import ConverterLayer.to_AIDM_converter
-from AIDM_package import AIDM_classes
+from AIDMClasses import AIDM_classes
 from CommunicationLayer import AlgorithmInterfaceCommunicationLayer
 
 
@@ -151,18 +152,37 @@ class AlgorithmicPlatformInterface:  # AlgorithmInterface
         return ConverterLayer.converter_helpers.parse_to_timedelta(response_dict["separationTime"])
 
     def get_separation_time_in_station(self, preceding_section_track_id: int, preceding_node_track_id: int,
-                                       preceding_stop_status: AIDM_classes.StopStatus, succeeding_section_track_id: int,
-                                       succeeding_node_track_id:int, succeeding_stop_status: AIDM_classes.StopStatus) -> datetime.timedelta:
-        raise NotImplementedError
-        url_tail = """station-separation-time/from-section-track/{precedingSectionTrackID}/to-node-track/
-        {precedingNodeTrackID}/{precedingStopStatus}/from-section-track/{succeedingSectionTrackID}/to-node-track/
-        {succeedingNodeTrackID}/{succeedingStopStatus}""".format(succeedingStopStatus.name)
+                                       preceding_stop_status: AIDMClasses.AIDM_enum_classes.StopStatus,
+                                       succeeding_section_track_id: int,
+                                       succeeding_node_track_id: int,
+                                       succeeding_stop_status: AIDMClasses.AIDM_enum_classes.StopStatus) \
+            -> datetime.timedelta:
+        url_tail = """station-separation-time/from-section-track/{0}/to-node-track/{1}/{2}/from-section-track/{3}/
+        to-node-track/{4}/{5}""".format(preceding_section_track_id, preceding_node_track_id,
+                                        preceding_stop_status.name, succeeding_section_track_id,
+                                        succeeding_node_track_id, succeeding_stop_status.name)
+
+        response_dict = self.__communication_layer.do_get_request(url_tail)
+        warnings.warn("Not Tested Yet")
         return ConverterLayer.converter_helpers.parse_to_timedelta(response_dict["separationTime"])
 
-    def get_separation_time_in_station_for_entry_or_exit(self, tbd: NotImplementedError) -> datetime.timedelta:
-        raise NotImplementedError
+    def get_separation_time_in_station_for_entry_or_exit(self, preceding_train_path_node_id: int,
+                                                         preceding_node_track_id: int, preceding_station_entry_or_exit:
+            AIDMClasses.AIDM_enum_classes.StationEntryOrExit, succeeding_train_path_node_id: int,
+                                                         succeeding_node_track_id: int,
+                                                         succeeding_station_entry_or_exit:
+                                                         AIDMClasses.AIDM_enum_classes.StationEntryOrExit) \
+            -> datetime.timedelta:
+        url_tail = """station-separation-time/{0}/{1}/{2}/{3}/{4}/{5}""".format(preceding_train_path_node_id,
+                                                                                preceding_node_track_id,
+                                                                                preceding_station_entry_or_exit.name,
+                                                                                succeeding_train_path_node_id,
+                                                                                succeeding_node_track_id,
+                                                                                succeeding_station_entry_or_exit.name)
         response_dict = self.__communication_layer.do_get_request(url_tail)
+        warnings.warn("Not Tested Yet")
         return ConverterLayer.converter_helpers.parse_to_timedelta(response_dict["separationTime"])
+
 
 def create(base_url: str):
     return AlgorithmicPlatformInterface(base_url=base_url)

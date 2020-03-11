@@ -1,9 +1,10 @@
 from unittest import mock, TestCase
 
-import unit_testing.unit_testing_with_mock.SessionMockFactory as SessionMockFactory
-from AIDM_package import AIDM_classes
+import unit_testing.test_AlgorithmInterface_with_mock.SessionMockFactory as SessionMockFactory
+from AIDMClasses import AIDM_classes
 from AlgorithmInterface import AlgorithmInterfaceFactory
-from unit_testing.unit_testing_with_mock.unit_testing_with_mock_helpers import get_api_url, SessionMockTestBase
+from unit_testing.test_AlgorithmInterface_with_mock.unit_testing_with_mock_helpers import get_api_url, \
+    SessionMockTestBase
 
 
 class TestGetNode(TestCase):

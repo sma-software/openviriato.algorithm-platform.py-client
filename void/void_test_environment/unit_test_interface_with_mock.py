@@ -6,7 +6,7 @@ import json
 import unittest
 from unittest import mock
 
-from AIDM_package import AIDM_classes
+from AIDMClasses import AIDM_classes
 from AlgorithmInterface import AlgorithmInterfaceFactory as interface_module
 
 

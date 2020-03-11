@@ -1,8 +1,9 @@
 from unittest import mock, TestCase
 
 from AlgorithmInterface import AlgorithmInterfaceFactory
-from unit_testing.unit_testing_with_mock import SessionMockFactory as APISessionMock
-from unit_testing.unit_testing_with_mock.unit_testing_with_mock_helpers import get_api_url, SessionMockTestBase
+from unit_testing.test_AlgorithmInterface_with_mock import SessionMockFactory as APISessionMock
+from unit_testing.test_AlgorithmInterface_with_mock.unit_testing_with_mock_helpers import get_api_url, \
+    SessionMockTestBase
 
 
 class TestGetTrainClassification(TestCase):

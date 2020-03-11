@@ -1,21 +1,23 @@
-import unittest
-from unittest import mock
+from unittest import mock, TestCase
 
-import unit_testing.unit_testing_with_mock.SessionMockFactory as SessionMockFactory
-from AIDM_package import AIDM_classes
+import unit_testing.test_AlgorithmInterface_with_mock.SessionMockFactory as SessionMockFactory
+from AIDMClasses import AIDM_classes
 from AlgorithmInterface import AlgorithmInterfaceFactory
-from unit_testing.unit_testing_with_mock.unit_testing_with_mock_helpers import get_api_url, SessionMockTestBase
+from unit_testing.test_AlgorithmInterface_with_mock.unit_testing_with_mock_helpers import get_api_url, \
+    SessionMockTestBase
 
 
-class TestCloneTrain(unittest.TestCase):
-    class CloneTrainTestMockSession(SessionMockTestBase):
-        # to replace session.post:
+class TestSetSectionTrack(TestCase):
+    class SetSectionTrackTestMockSession(SessionMockTestBase):
+        # to replace session.get:
         def post(self, request, json):
             self.__last_body = json
             self.__last_request = request
-            json_string = ('{  "ID": 11037,  "TrainPathNodes": [\n'
+            json_string = ('{\n'
+                           '  "ID": 2060,\n'
+                           '  "TrainPathNodes": [\n'
                            '    {\n'
-                           '      "ID": 11038,\n'
+                           '      "ID": 1332,\n'
                            '      "SectionTrackID": null,\n'
                            '      "NodeID": 18,\n'
                            '      "NodeTrackID": null,\n'
@@ -28,8 +30,8 @@ class TestCloneTrain(unittest.TestCase):
                            '      "SequenceNumber": 0\n'
                            '    },\n'
                            '    {\n'
-                           '      "ID": 11039,\n'
-                           '      "SectionTrackID": 1171,\n'
+                           '      "ID": 1696,\n'
+                           '      "SectionTrackID": 1172,\n'
                            '      "NodeID": 10,\n'
                            '      "NodeTrackID": null,\n'
                            '      "FormationID": null,\n'
@@ -41,38 +43,39 @@ class TestCloneTrain(unittest.TestCase):
                            '      "SequenceNumber": 1\n'
                            '    }\n'
                            '  ],\n'
-                           '  "DebugString": "CloneTrainTestMockSession"\n'
+                           '  "DebugString": "SetSectionTrackTestMockSessionString"\n'
                            '}')
             return SessionMockFactory.create_response_mock(json_string, 200)
 
     interface_to_viriato: AlgorithmInterfaceFactory.AlgorithmicPlatformInterface
 
-    @mock.patch('requests.Session', side_effect=CloneTrainTestMockSession)
+    @mock.patch('requests.Session', side_effect=SetSectionTrackTestMockSession)
     def setUp(self, mocked_get_obj):
         self.interface_to_viriato = AlgorithmInterfaceFactory.create(get_api_url())
 
-    @mock.patch('requests.Session', side_effect=CloneTrainTestMockSession)
-    def test_clone_train_request(self, mocked_get_obj):
-        train_id = 2060
+    @mock.patch('requests.Session', side_effect=SetSectionTrackTestMockSession)
+    def test_set_section_track_request(self, mocked_get_obj) -> None:
+        test_dict = dict(TrainPathNodeID=1696, SectionTrackID=1172)
 
-        self.interface_to_viriato.clone_train(train_id)
+        self.interface_to_viriato.set_section_track(test_dict['TrainPathNodeID'], test_dict['SectionTrackID'])
 
         session_obj = self.interface_to_viriato._AlgorithmicPlatformInterface__communication_layer.currentSession
-        self.assertEqual(session_obj._CloneTrainTestMockSession__last_request, get_api_url() + '/clone-train')
-        self.assertDictEqual(session_obj._CloneTrainTestMockSession__last_body, dict(TrainID=2060))
 
-    @mock.patch('requests.Session', side_effect=CloneTrainTestMockSession)
-    def test_clone_train_response(self, mocked_get_obj):
-        train_id = 0
+        self.assertEqual(session_obj._SetSectionTrackTestMockSession__last_request,
+                         get_api_url() + '/set-section-track')
+        self.assertDictEqual(session_obj._SetSectionTrackTestMockSession__last_body, test_dict)
 
-        test_cloned_algorithm_train = self.interface_to_viriato.clone_train(train_id)
+    @mock.patch('requests.Session', side_effect=SetSectionTrackTestMockSession)
+    def test_set_section_track_response(self, mocked_get_obj):
+        TrainPathNodeID = 1
+        SectionTrackID = 1
 
-        self.assertIsInstance(test_cloned_algorithm_train, AIDM_classes.AlgorithmTrain)
-        self.assertEqual(11037, test_cloned_algorithm_train.ID)
-        self.assertEqual('CloneTrainTestMockSession', test_cloned_algorithm_train.DebugString)
-        self.assertIsInstance(test_cloned_algorithm_train.TrainPathNodes[0], AIDM_classes.TrainPathNode)
-        self.assertEqual(11038, test_cloned_algorithm_train.TrainPathNodes[0].ID)
+        test_algorithm_train = self.interface_to_viriato.set_section_track(TrainPathNodeID, SectionTrackID)
 
-    @mock.patch('requests.Session', side_effect=CloneTrainTestMockSession)
+        self.assertIsInstance(test_algorithm_train, AIDM_classes.AlgorithmTrain)
+        self.assertEqual(2060, test_algorithm_train.ID)
+        self.assertEqual(test_algorithm_train.DebugString, 'SetSectionTrackTestMockSessionString')
+
+    @mock.patch('requests.Session', side_effect=SetSectionTrackTestMockSession)
     def tearDown(self, mocked_get_obj) -> None:
         self.interface_to_viriato.__exit__(None, None, None)

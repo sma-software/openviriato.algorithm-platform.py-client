@@ -3,13 +3,19 @@ import datetime
 from AIDMClasses import AIDM_classes
 
 BASE_URL = 'http://localhost:8080'
-TRAIN_PATH_NODE_ID=1332
-ARRIVAL_TIME=datetime.datetime(2003, 5, 1, 0, 4)
-DEPARTURE_TIME=datetime.datetime(2003, 5, 1, 0, 5)
-
-update_train_time_nodes = [AIDM_classes.updateTrainTimesNode(TrainPathNodeId=TRAIN_PATH_NODE_ID,
-                                                             ArrivalTime=ARRIVAL_TIME,
-                                                             DepartureTime=DEPARTURE_TIME)
+from_time = datetime.datetime(year=2003, month=5, day=1, hour=0, minute=0, second=0)
+to_time = datetime.datetime(year=2003, month=5, day=10, hour=0, minute=0, second=0)
+time_window = AIDM_classes.TimeWindow(FromTime=from_time, ToTime=to_time)
 
 with AlgorithmInterface.AlgorithmInterfaceFactory.create(BASE_URL) as algorithm_interface:
-    algorithm_interface.
+    node_track_closures = algorithm_interface.get_node_track_closures(time_window)
+    print("NodeTrackID: " + node_track_closures[0].NodeID)
+    print("FromTime: " + node_track_closures[0].ClosureTimeWindow.FromTime)
+    print("ToTime: " + node_track_closures[0].ClosureTimeWindow.ToTime)
+
+"""
+Expected Output:
+NodeTrackID: 622
+FromTime: datetime.datetime(2003, 5, 1, 0, 0)
+ToTime: datetime.datetime(2003, 5, 10, 0, 0)
+"""

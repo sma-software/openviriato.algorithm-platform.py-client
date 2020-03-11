@@ -2,13 +2,12 @@ import unittest
 from unittest import mock
 
 import AlgorithmInterfaceFactory
-import unit_testing_with_mock.SessionMockFactory as APISessionMock
-import unit_testing_with_mock.unit_testing_with_mock_helpers
-from unit_testing_with_mock.unit_testing_with_mock_helpers import get_api_url
+import unit_testing.unit_testing_with_mock.SessionMockFactory as APISessionMock
+from unit_testing.unit_testing_with_mock.unit_testing_with_mock_helpers import get_api_url, SessionMockTestBase
 
 
 class TestShowStatusMessage(unittest.TestCase):
-    class ShowStatusMessageSessionTestMock(unit_testing_with_mock.unit_testing_with_mock_helpers.SessionMockTestBase):
+    class ShowStatusMessageSessionTestMock(SessionMockTestBase):
         def post(self, request, json):
             self.__last_request = request
             self.__last_body = json

@@ -4,13 +4,12 @@ from unittest import mock
 
 import AIDM_module.AIDM_classes as AIDM_classes
 import AlgorithmInterfaceFactory
-import unit_testing_with_mock.SessionMockFactory as SessionMockFactory
-import unit_testing_with_mock.unit_testing_with_mock_helpers
-from unit_testing_with_mock.unit_testing_with_mock_helpers import get_api_url
+import unit_testing.unit_testing_with_mock.SessionMockFactory as SessionMockFactory
+from unit_testing.unit_testing_with_mock.unit_testing_with_mock_helpers import get_api_url, SessionMockTestBase
 
 
 class TestUpdateTrainTimes(unittest.TestCase):
-    class UpdateTrainTimesTestMockSession(unit_testing_with_mock.unit_testing_with_mock_helpers.SessionMockTestBase):
+    class UpdateTrainTimesTestMockSession(SessionMockTestBase):
         # to replace session.get:
         def put(self, request, json):
             self.__last_body = json

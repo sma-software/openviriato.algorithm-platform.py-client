@@ -2,13 +2,12 @@ import unittest
 from unittest import mock
 
 import AlgorithmInterfaceFactory
-import unit_testing_with_mock.SessionMockFactory as SessionMockFactory
-import unit_testing_with_mock.unit_testing_with_mock_helpers
-from unit_testing_with_mock.unit_testing_with_mock_helpers import get_api_url
+import unit_testing.unit_testing_with_mock.SessionMockFactory as SessionMockFactory
+from unit_testing.unit_testing_with_mock.unit_testing_with_mock_helpers import get_api_url, SessionMockTestBase
 
 
 class TestGetTrainClassifications(unittest.TestCase):
-    class CancelTrainTestMockSession(unit_testing_with_mock.unit_testing_with_mock_helpers.SessionMockTestBase):
+    class CancelTrainTestMockSession(SessionMockTestBase):
         # to replace session.post:
         def post(self, request, json):
             self.__last_body = json

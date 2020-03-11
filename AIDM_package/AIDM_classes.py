@@ -1,7 +1,7 @@
 import datetime
 from enum import Enum
 
-from AIDM_module.AIDM_base_classes import hasID, hasCode, hasDebugString
+from AIDM_package.AIDM_base_classes import hasID, hasCode, hasDebugString
 
 
 class StopStatus(Enum):

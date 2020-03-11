@@ -1,6 +1,6 @@
 import unittest
 
-import AIDM_module.AIDM_classes
+import AIDM_package.AIDM_classes
 import converter_module.to_AIDM_converter
 
 
@@ -23,5 +23,5 @@ class AlgorithmTrain(unittest.TestCase):
 
         self.assertEqual(test_algo_train.ID, 5)
         self.assertEqual(test_algo_train.DebugString, "test_algorithm_train_objects")
-        self.assertIsInstance(test_algo_train.TrainPathNodes[0], AIDM_module.AIDM_classes.TrainPathNode)
+        self.assertIsInstance(test_algo_train.TrainPathNodes[0], AIDM_package.AIDM_classes.TrainPathNode)
         self.assertEqual(test_algo_train.TrainPathNodes[0].ID, 2)

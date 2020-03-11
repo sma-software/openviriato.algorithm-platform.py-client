@@ -1,6 +1,6 @@
 import unittest
 
-import AlgorithmInterfaceFactory
+from AlgorithmInterface_Package import AlgorithmInterfaceFactory
 
 
 # test which dont need a mock

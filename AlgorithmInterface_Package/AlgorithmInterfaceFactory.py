@@ -14,7 +14,7 @@ import AlgorithmInterfaceCommunicationLayer
 import converter_module.converter_helpers
 import converter_module.from_AIDM_converter
 import converter_module.to_AIDM_converter
-from AIDM_module import AIDM_classes
+from AIDM_package import AIDM_classes
 
 
 class AlgorithmicPlatformInterface:  # AlgorithmInterface

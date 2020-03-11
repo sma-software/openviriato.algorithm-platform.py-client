@@ -1,6 +1,6 @@
 from unittest import mock, TestCase
 
-import AlgorithmInterfaceFactory
+from AlgorithmInterface_Package import AlgorithmInterfaceFactory
 from unit_testing.unit_testing_with_mock import SessionMockFactory as APISessionMock
 from unit_testing.unit_testing_with_mock.unit_testing_with_mock_helpers import get_api_url, SessionMockTestBase
 

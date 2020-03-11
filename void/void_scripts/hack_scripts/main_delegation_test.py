@@ -1,5 +1,5 @@
 import AlgorithmInterfaceCommunicationLayer
-from AIDM_module import AIDM_classes
+from AIDM_package import AIDM_classes
 from void import AlgorithmTypeCheck
 
 

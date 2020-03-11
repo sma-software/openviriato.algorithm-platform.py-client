@@ -6,8 +6,8 @@ import json
 import unittest
 from unittest import mock
 
-import AlgorithmInterfaceFactory as interface_module
-from AIDM_module import AIDM_classes
+from AlgorithmInterface_Package import AlgorithmInterfaceFactory as interface_module
+from AIDM_package import AIDM_classes
 
 
 def get_url_str():

@@ -3,7 +3,7 @@ A test script that requires an REST-API of the VIRIATO-Algorithm Platform
 """
 
 import AlgorithmInterfaceCommunicationLayer
-import AlgorithmInterfaceFactory as interface_module
+from AlgorithmInterface_Package import AlgorithmInterfaceFactory as interface_module
 
 
 def test_object_initialisation(url_str='http://localhost:8080') -> interface_module.AlgorithmicPlatformInterface:

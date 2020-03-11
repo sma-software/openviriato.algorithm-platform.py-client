@@ -151,6 +151,78 @@ class updateTrainTimesNode:
         return self.__DepartureTime
 
 
+class TimeWindow:
+    __FromTime: datetime.datetime
+    __ToTime: datetime.datetime
+
+    def __init__(self, FromTime: datetime.datetime, ToTime: datetime.datetime):
+        self.__FromTime = FromTime
+        self.__ToTime = ToTime
+
+    @property
+    def FromTime(self):
+        return self.__FromTime
+
+    @property
+    def ToTime(self):
+        return self.__ToTime
+
+
+class AlgorithmNodeTrackClosure(hasID):
+    __NodeID: int
+    __NodeTrackID: int
+
+    def __init__(self, ID: int, NodeID: int, NodeTrackID: int):
+        hasID.__init__(self, ID)
+        self.__NodeID = NodeID
+        self.__NodeTrackID = NodeTrackID
+
+    @property
+    def NodeID(self):
+        return self.__NodeID
+
+    @property
+    def NodeTrackID(self):
+        return self.__NodeTrackID
+
+
+class AlgorithmSectionTrackClosure(hasID):
+    __ClosureTimeWindowFromNode: TimeWindow
+    __ClosureTimeWindowToNode: TimeWindow
+    __FromNodeID: int
+    __SectionTrackID: int
+    __ToNodeID: int
+
+    def __init__(self, ID: int, ClosureTimeWindowFromNode: TimeWindow, ClosureTimeWindowToNode: TimeWindow,
+                 FromNodeID: int, SectionTrackID: int, ToNodeID: int):
+        hasID.__init__(self, ID)
+        self.__ClosureTimeWindowFromNode = ClosureTimeWindowFromNode
+        self.__ClosureTimeWindowToNode = ClosureTimeWindowToNode
+        self.__FromNodeID = FromNodeID
+        self.__SectionTrackID = SectionTrackID
+        self.__ToNodeID = ToNodeID
+
+    @property
+    def ClosureTimeWindowFromNode(self):
+        return self.__ClosureTimeWindowFromNode
+
+    @property
+    def ClosureTimeWindowToNode(self):
+        return self.__ClosureTimeWindowToNode
+
+    @property
+    def FromNodeID(self):
+        return self.__FromNodeID
+
+    @property
+    def SectionTrackID(self):
+        return self.__SectionTrackID
+
+    @property
+    def ToNodeID(self):
+        return self.__ToNodeID
+
+
 class AlgorithmTimeWindow:
     __FromTime: datetime.datetime
     __ToTime: datetime.datetime

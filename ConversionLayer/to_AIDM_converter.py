@@ -2,7 +2,7 @@ import inspect
 
 import AIDMClasses.AIDM_classes
 import AIDMClasses.AIDM_enum_classes
-from ConverterLayer.converter_helpers import parse_to_datetime, parse_to_timedelta, parse_to_timedelta_or_None
+from ConversionLayer.converter_helpers import parse_to_datetime, parse_to_timedelta, parse_to_timedelta_or_None
 
 
 def convert_input_to_dict(**kwargs):
@@ -40,3 +40,16 @@ def convert_dict_to_AlgorithmTrain(attribute_dict: dict) -> AIDMClasses.AIDM_cla
     attribute_dict['TrainPathNodes'] = [convert_dict_to_TrainPathNode(train_path_node)
                                         for train_path_node in attribute_dict['TrainPathNodes']]
     return convert_dict_to_AIDM(AIDMClasses.AIDM_classes.AlgorithmTrain, attribute_dict)
+
+
+def convert_dict_to_TimeWindow(attribute_dict: dict) -> AIDMClasses.AIDM_classes.TimeWindow:
+    for key in ['FromTime', 'ToTime']:
+        attribute_dict[key] = parse_to_datetime(attribute_dict[key])
+    return convert_dict_to_AIDM(AIDMClasses.AIDM_classes.TimeWindow, attribute_dict)
+
+
+def convert_dict_to_AlgorithmSectionTrackClosure(attribute_dict: dict) -> \
+        AIDMClasses.AIDM_classes.AlgorithmNodeTrackClosure:
+    for key in ['ClosureTimeWindowFromNode', 'ClosureTimeWindowToNode']:
+        attribute_dict[key] = convert_dict_to_TimeWindow(attribute_dict[key])
+    return convert_dict_to_AIDM(AIDMClasses.AIDM_classes.AlgorithmNodeTrackClosure, attribute_dict)

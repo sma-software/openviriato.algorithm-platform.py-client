@@ -1,7 +1,7 @@
 import unittest
 
 import AIDMClasses.AIDM_classes
-import ConverterLayer.to_AIDM_converter
+import ConversionLayer.to_AIDM_converter
 
 
 class AlgorithmTrain(unittest.TestCase):
@@ -19,7 +19,7 @@ class AlgorithmTrain(unittest.TestCase):
                                   MinimumRunTime="PT4M",
                                   MinimumStopTime="P0D", StopStatus="passing", SequenceNumber=1)])
 
-        test_algo_train = ConverterLayer.to_AIDM_converter.convert_dict_to_AlgorithmTrain(json_dict)
+        test_algo_train = ConversionLayer.to_AIDM_converter.convert_dict_to_AlgorithmTrain(json_dict)
 
         self.assertEqual(test_algo_train.ID, 5)
         self.assertEqual(test_algo_train.DebugString, "test_algorithm_train_objects")

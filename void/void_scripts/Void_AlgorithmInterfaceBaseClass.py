@@ -1,4 +1,4 @@
-import AlgorithmInterfaceCommunicationLayer
+from CommunicationLayer import AlgorithmInterfaceCommunicationLayer
 
 
 class AlgorithmicPlatformBaseClass:

@@ -2,8 +2,8 @@ import datetime
 import unittest
 from unittest import mock
 
-from AlgorithmInterface_Package import AlgorithmInterfaceFactory
 import unit_testing.unit_testing_with_mock.SessionMockFactory as SessionMockFactory
+from AlgorithmInterface import AlgorithmInterfaceFactory
 from unit_testing.unit_testing_with_mock.unit_testing_with_mock_helpers import get_api_url, SessionMockTestBase
 
 

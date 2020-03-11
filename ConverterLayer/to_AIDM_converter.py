@@ -1,5 +1,5 @@
 import AIDM_package.AIDM_classes
-from converter_module.converter_helpers import parse_to_datetime, parse_to_timedelta, parse_to_timedelta_or_None
+from ConverterLayer.converter_helpers import parse_to_datetime, parse_to_timedelta, parse_to_timedelta_or_None
 
 
 def convert_dict_to_AIDM(AIDM_class, attribute_dict: dict):

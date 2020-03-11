@@ -5,9 +5,9 @@ A test script that requires an REST-API of the VIRIATO-Algorithm Platform
 import unittest
 from datetime import datetime
 
-import AlgorithmInterfaceCommunicationLayer
-from AlgorithmInterface_Package import AlgorithmInterfaceFactory as interface_module
 from AIDM_package import AIDM_classes
+from AlgorithmInterface import AlgorithmInterfaceFactory as interface_module
+from CommunicationLayer import AlgorithmInterfaceCommunicationLayer
 
 
 def get_url_str():

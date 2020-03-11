@@ -2,7 +2,7 @@ import datetime
 import unittest
 
 import AIDM_package.AIDM_classes
-import converter_module.to_AIDM_converter
+import ConverterLayer.to_AIDM_converter
 
 
 class TestTrainPathNode(unittest.TestCase):
@@ -13,7 +13,7 @@ class TestTrainPathNode(unittest.TestCase):
                                     DepartureTime="2003-09-01T00:10:00", MinimumRunTime=None, MinimumStopTime="PT1M",
                                     StopStatus="commercialStop", SequenceNumber=0)
 
-        test_train_path_node = converter_module.to_AIDM_converter.convert_dict_to_TrainPathNode(train_path_node_dict)
+        test_train_path_node = ConverterLayer.to_AIDM_converter.convert_dict_to_TrainPathNode(train_path_node_dict)
 
         self.assertEqual(8113, test_train_path_node.ID)
         self.assertEqual(test_train_path_node.FormationID, 1187)
@@ -35,5 +35,5 @@ class TestTrainPathNode(unittest.TestCase):
                                     DepartureTime="2003-09-01T00:10:00", MinimumRunTime=None, MinimumStopTime=None,
                                     StopStatus="commercialStop", SequenceNumber=0)
         with self.assertRaises(TypeError) as MinimumStopTime_wrongly_none:
-            test_train_path_node = converter_module.to_AIDM_converter.convert_dict_to_TrainPathNode(
+            test_train_path_node = ConverterLayer.to_AIDM_converter.convert_dict_to_TrainPathNode(
                 train_path_node_dict)

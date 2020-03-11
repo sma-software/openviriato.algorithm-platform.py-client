@@ -53,3 +53,8 @@ def convert_dict_to_AlgorithmSectionTrackClosure(attribute_dict: dict) -> \
     for key in ['ClosureTimeWindowFromNode', 'ClosureTimeWindowToNode']:
         attribute_dict[key] = convert_dict_to_TimeWindow(attribute_dict[key])
     return convert_dict_to_AIDM(AIDMClasses.AIDM_classes.AlgorithmSectionTrackClosure, attribute_dict)
+
+def convert_dict_to_AlgorithmNodeTrackClosure(attribute_dict: dict) -> \
+        AIDMClasses.AIDM_classes.AlgorithmNodeTrackClosure:
+    attribute_dict["ClosureTimeWindow"] = convert_dict_to_TimeWindow(attribute_dict["ClosureTimeWindow"])
+    return convert_dict_to_AIDM(AIDMClasses.AIDM_classes.AlgorithmNodeTrackClosure, attribute_dict)

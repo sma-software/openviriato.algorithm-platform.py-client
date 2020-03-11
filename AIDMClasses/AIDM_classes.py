@@ -171,11 +171,17 @@ class TimeWindow:
 class AlgorithmNodeTrackClosure(hasDebugString):
     __NodeID: int
     __NodeTrackID: int
+    __ClosureTimeWindow: TimeWindow
 
-    def __init__(self, DebugString: str, NodeID: int, NodeTrackID: int):
+    def __init__(self, DebugString: str, ClosureTimeWindow: TimeWindow, NodeID: int, NodeTrackID: int):
         hasDebugString.__init__(self, DebugString)
+        self.__ClosureTimeWindow = ClosureTimeWindow
         self.__NodeID = NodeID
         self.__NodeTrackID = NodeTrackID
+
+    @property
+    def ClosureTimeWindow(self):
+        return self.__ClosureTimeWindow
 
     @property
     def NodeID(self):

@@ -173,18 +173,16 @@ class AlgorithmicPlatformInterface:
         response_dict = self.__communication_layer.do_get_request(url_tail)
         return ConversionLayer.converter_helpers.parse_to_timedelta_or_None(response_dict['separationTime'])
 
-    def get_node_track_closures(self, time_window: AIDMClasses.AIDM_classes.AlgorithmTimeWindow) -> list:
+    def get_node_track_closures(self, time_window: AIDMClasses.AIDM_classes.TimeWindow) -> list:
         time_window_dict = ConversionLayer.from_AIDM_converter.convert_to_json_conform_dict(time_window)
-        url_tail = 'possessions/node-track-closures?FromTime={0}&ToTime={1}'.format(time_window_dict['FromTime'],
-                                                                                    time_window_dict['ToTime'])
-        response_dict = self.__communication_layer.do_get_request(url_tail)
+        url_tail = 'possessions/node-track-closures'
+        response_dict = self.__communication_layer.do_get_request(url_tail, request_param=time_window_dict)
         return ConversionLayer.to_AIDM_converter.convert_list_of_dict_to_list_of_AIDM(
-            AIDMClasses.AIDM_classes.AlgorithmNodeTrackClosure, response_dict)
+            ConversionLayer.to_AIDM_converter.convert_dict_to_AlgorithmNodeTrackClosure, response_dict)
 
-    def get_section_track_closures(self, time_window: AIDMClasses.AIDM_classes.AlgorithmTimeWindow) -> list:
+    def get_section_track_closures(self, time_window: AIDMClasses.AIDM_classes.TimeWindow) -> list:
         time_window_dict = ConversionLayer.from_AIDM_converter.convert_to_json_conform_dict(time_window)
         url_tail = 'possessions/section-track-closures'
-
         response_list_of_dict = self.__communication_layer.do_get_request(url_tail, request_param=time_window_dict)
         return ConversionLayer.to_AIDM_converter.convert_list_of_dict_to_list_of_AIDM(
             ConversionLayer.to_AIDM_converter.convert_dict_to_AlgorithmSectionTrackClosure, response_list_of_dict)

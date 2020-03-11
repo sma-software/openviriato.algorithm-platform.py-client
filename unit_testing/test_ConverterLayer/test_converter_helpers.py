@@ -29,10 +29,10 @@ class TestAllConverterHelpers(unittest.TestCase):
         with self.assertRaises(ValueError) as test_parse_to_datetime_wrong_format:
             ConverterLayer.converter_helpers.parse_to_timedelta(test_delta_str)
 
-    def test_parse_to_timedelta_wrong_none(self):
+    def test_parse_to_timedelta_wrong_None(self):
         test_delta_str = None
 
-        with self.assertRaises(TypeError) as test_parse_to_datetime_wrong_format:
+        with self.assertRaises(TypeError) as test_parse_to_timedelta_wrong_None:
             ConverterLayer.converter_helpers.parse_to_timedelta(test_delta_str)
 
     def test_parse_to_timedelta_proper_format(self):
@@ -46,7 +46,7 @@ class TestAllConverterHelpers(unittest.TestCase):
     def test_parse_to_timedelta_or_none_wrong_format(self):
         test_delta_str = 'sd'
 
-        with self.assertRaises(isodate.isoerror.ISO8601Error) as test_parse_to_datetime_wrong_format:
+        with self.assertRaises(isodate.isoerror.ISO8601Error) as test_parse_to_timedelta_or_none_wrong_format:
             ConverterLayer.converter_helpers.parse_to_timedelta(test_delta_str)
 
     def test_parse_to_timedelta_or_none_proper_format(self):

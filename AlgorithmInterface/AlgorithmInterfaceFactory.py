@@ -48,7 +48,8 @@ class AlgorithmicPlatformInterface:  # AlgorithmInterface
 
     def get_neighbor_nodes(self, node_id: int) -> list:
         response_list = self.__communication_layer.do_get_request('neighbor-nodes/{0}'.format(node_id))
-        return ConverterLayer.to_AIDM_converter.convert_list_of_dict_to_list_of_AlgorithmNode(response_list)
+        return ConverterLayer.to_AIDM_converter.convert_list_of_dict_to_list_of_AIDM(
+            ConverterLayer.to_AIDM_converter.convert_dict_to_AlgorithmNode, response_list)
 
     def get_section_track(self, section_track_id: int) -> AIDM_classes.AlgorithmSectionTrack:
         response_dict = self.__communication_layer.do_get_request('section-tracks/{0}'.format(section_track_id))
@@ -58,7 +59,7 @@ class AlgorithmicPlatformInterface:  # AlgorithmInterface
     def get_directed_section_tracks(self, first_node_id: int, second_node_id: int) -> list:
         url_tail = 'section-tracks-between/{0}/{1}'.format(first_node_id, second_node_id)
         response_list = self.__communication_layer.do_get_request(url_tail)
-        return ConverterLayer.to_AIDM_converter.from_list_of_dict_to_list_of_AIDM(
+        return ConverterLayer.to_AIDM_converter.convert_list_of_dict_to_list_of_AIDM(
             AIDM_classes.AlgorithmSectionTrack, response_list)
 
     def get_parallel_section_tracks(self, section_track_id: int) -> list:
@@ -66,7 +67,7 @@ class AlgorithmicPlatformInterface:  # AlgorithmInterface
 
         response_list = self.__communication_layer.do_get_request(url_tail)
 
-        return ConverterLayer.to_AIDM_converter.from_list_of_dict_to_list_of_AIDM(
+        return ConverterLayer.to_AIDM_converter.convert_list_of_dict_to_list_of_AIDM(
             AIDM_classes.AlgorithmSectionTrack, response_list)
 
     def get_train_classification(self, train_id: int) -> dict:
@@ -167,7 +168,8 @@ class AlgorithmicPlatformInterface:  # AlgorithmInterface
 
     def get_separation_time_in_station_for_entry_or_exit(self, preceding_train_path_node_id: int,
                                                          preceding_node_track_id: int, preceding_station_entry_or_exit:
-            AIDMClasses.AIDM_enum_classes.StationEntryOrExit, succeeding_train_path_node_id: int,
+                                                         AIDMClasses.AIDM_enum_classes.StationEntryOrExit,
+                                                         succeeding_train_path_node_id: int,
                                                          succeeding_node_track_id: int,
                                                          succeeding_station_entry_or_exit:
                                                          AIDMClasses.AIDM_enum_classes.StationEntryOrExit) \

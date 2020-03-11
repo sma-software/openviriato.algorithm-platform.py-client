@@ -2,11 +2,11 @@ import datetime
 import unittest
 from unittest import mock
 
+import AIDMClasses.AIDM_enum_classes
 import unit_testing.test_AlgorithmInterface_with_mock.SessionMockFactory as SessionMockFactory
 from AlgorithmInterface import AlgorithmInterfaceFactory
 from unit_testing.test_AlgorithmInterface_with_mock.unit_testing_with_mock_helpers import get_api_url, \
     SessionMockTestBase
-import AIDMClasses.AIDM_enum_classes
 
 
 class TestGetSeparationTimeInStation(unittest.TestCase):

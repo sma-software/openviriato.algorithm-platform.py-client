@@ -70,14 +70,14 @@ class TrainPathNode(hasID):
     __NodeID: int
     __NodeTrackID: int
     __FormationID: int
-    __MinimumRunTime: datetime.timedelta
+    __MinimumRunTime: (datetime.timedelta, None)
     __MinimumStopTime: datetime.timedelta
     __StopStatus: StopStatus
     __SequenceNumber: int
 
     def __init__(self, ID: int, ArrivalTime: datetime.datetime, DepartureTime: datetime.datetime,
-                 SectionTrackID: int, NodeID: int, NodeTrackID: int, FormationID: int,
-                 MinimumRunTime: datetime.timedelta, MinimumStopTime: datetime.timedelta,
+                 SectionTrackID: (int, None), NodeID: int, NodeTrackID: (int,None), FormationID: int,
+                 MinimumRunTime: (datetime.timedelta, None), MinimumStopTime: datetime.timedelta,
                  StopStatus: StopStatus, SequenceNumber: int):
         hasID.__init__(self, ID)
         self.__ArrivalTime = ArrivalTime

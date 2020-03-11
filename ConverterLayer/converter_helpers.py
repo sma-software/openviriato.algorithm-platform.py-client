@@ -1,11 +1,6 @@
 import datetime
-
+import enum
 import isodate
-
-
-def check_attributes_by_list(obj, attribute_names: list):
-    for attribute_name in attribute_names:
-        assert (hasattr(obj, attribute_name)), 'attribute {0} is missing'.format(attribute_name)
 
 
 def parse_to_datetime(datetime_raw_str: str) -> datetime.datetime:
@@ -21,3 +16,17 @@ def parse_to_timedelta_or_None(timedelta_raw_str: (str, None)) -> (datetime.time
         return isodate.parse_duration(timedelta_raw_str)
     else:
         return None
+
+
+def check_and_format_any_datetime_to_iso_str(obj):
+    if isinstance(obj, datetime.datetime):
+        obj = obj.isoformat()
+    elif isinstance(obj, datetime.timedelta):
+        obj = isodate.duration_isoformat(obj)
+    return obj
+
+
+def check_and_format_any_enum_to_str(obj):
+    if isinstance(obj, enum.Enum):
+        obj = obj.name
+    return obj

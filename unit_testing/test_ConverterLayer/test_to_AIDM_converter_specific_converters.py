@@ -61,3 +61,25 @@ class TestToAIDMConverterSpecificConversions(unittest.TestCase):
         self.assertIsInstance(test_train.TrainPathNodes[0], AIDM_classes.TrainPathNode)
         self.assertEqual(test_train.TrainPathNodes[0].MinimumRunTime, None)
         self.assertEqual(test_train.TrainPathNodes[0].MinimumStopTime, datetime.timedelta(0))
+
+    def test_convert_dict_to_AlgorithmNodeTrackClosure(self):
+        param_dict = dict(DebugString="nodetrackclosure:85ZMUS 24", NodeID=621, NodeTrackID=622,
+                          ClosureTimeWindow=dict(FromTime="2003-05-01T08:00:00", ToTime="2003-05-02T10:00:00"))
+
+        test_closure = ConversionLayer.to_AIDM_converter.convert_dict_to_AlgorithmNodeTrackClosure(param_dict)
+
+        self.assertIsInstance(test_closure, AIDM_classes.AlgorithmNodeTrackClosure)
+        self.assertIsInstance(test_closure.ClosureTimeWindow, AIDM_classes.TimeWindow)
+        self.assertEqual(test_closure.DebugString, "nodetrackclosure:85ZMUS 24")
+
+    def test_convert_dict_to_AlgorithmSectionTrackClosure(self):
+        param_dict = dict(DebugString="sectiontrackclosure:s_70011 1 n_85ZMUS 85ZLSTA", SectionTrackID=1080,
+                          FromNodeID=621, ToNodeID=620,
+                          ClosureTimeWindowFromNode=dict(FromTime="2003-05-01T08:00:00", ToTime="2003-05-01T09:00:00"),
+                          ClosureTimeWindowToNode=dict(FromTime="2003-05-01T08:30:00", ToTime="2003-05-01T09:30:00"))
+
+        test_closure = ConversionLayer.to_AIDM_converter.convert_dict_to_AlgorithmSectionTrackClosure(param_dict)
+
+        self.assertIsInstance(test_closure, AIDM_classes.AlgorithmSectionTrackClosure)
+        self.assertIsInstance(test_closure.ClosureTimeWindowFromNode, AIDM_classes.TimeWindow)
+        self.assertEqual(test_closure.FromNodeID, 621)

@@ -34,8 +34,7 @@ class TestGetNodeTrackClosures(unittest.TestCase):
                            "      \"ToTime\": \"2003-05-02T10:00:00\"\n"
                            "    }\n"
                            "  }\n"
-                           "]"
-                           )
+                           "]")
 
             return SessionMockFactory.create_response_mock(json_string, 200)
 

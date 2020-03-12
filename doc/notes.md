@@ -47,7 +47,7 @@ in the example of the API it seems to be that way? --> Updates with list are pos
 - Refactor code and especially the tests
 
 
-###### Firs Review Feedback:
+###### First Review Feedback:
 
 Find a way to open a connection only once, user should use interface inside a with statement
 the user should use it with a with statement as disposable, we have to make sure that we open the connection only once

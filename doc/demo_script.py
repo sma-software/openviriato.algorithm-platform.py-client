@@ -14,7 +14,7 @@ with AlgorithmInterface.AlgorithmInterfaceFactory.create(BASE_URL) as algorithm_
     print("ToTime: " + node_track_closures[0].ClosureTimeWindow.ToTime)
 
 """
-Expected Output:
+Expected Example Output:
 NodeTrackID: 622
 FromTime: datetime.datetime(2003, 5, 1, 0, 0)
 ToTime: datetime.datetime(2003, 5, 10, 0, 0)

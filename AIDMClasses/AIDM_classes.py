@@ -139,15 +139,15 @@ class updateTrainTimesNode:
         self.__DepartureTime = DepartureTime
 
     @property
-    def TrainPathNodeId(self):
+    def TrainPathNodeId(self) -> int:
         return self.__TrainPathNodeId
 
     @property
-    def ArrivalTime(self):
+    def ArrivalTime(self) -> datetime.datetime:
         return self.__ArrivalTime
 
     @property
-    def DepartureTime(self):
+    def DepartureTime(self) -> datetime.datetime:
         return self.__DepartureTime
 
 
@@ -160,11 +160,11 @@ class TimeWindow:
         self.__ToTime = ToTime
 
     @property
-    def FromTime(self):
+    def FromTime(self) -> datetime.datetime:
         return self.__FromTime
 
     @property
-    def ToTime(self):
+    def ToTime(self) -> datetime.datetime:
         return self.__ToTime
 
 
@@ -180,15 +180,15 @@ class AlgorithmNodeTrackClosure(IhasDebugString):
         self.__NodeTrackID = NodeTrackID
 
     @property
-    def ClosureTimeWindow(self):
+    def ClosureTimeWindow(self) -> TimeWindow:
         return self.__ClosureTimeWindow
 
     @property
-    def NodeID(self):
+    def NodeID(self) -> int:
         return self.__NodeID
 
     @property
-    def NodeTrackID(self):
+    def NodeTrackID(self) -> int:
         return self.__NodeTrackID
 
 
@@ -209,41 +209,24 @@ class AlgorithmSectionTrackClosure(IhasDebugString):
         self.__ToNodeID = ToNodeID
 
     @property
-    def ClosureTimeWindowFromNode(self):
+    def ClosureTimeWindowFromNode(self) -> TimeWindow:
         return self.__ClosureTimeWindowFromNode
 
     @property
-    def ClosureTimeWindowToNode(self):
+    def ClosureTimeWindowToNode(self) -> TimeWindow:
         return self.__ClosureTimeWindowToNode
 
     @property
-    def FromNodeID(self):
+    def FromNodeID(self) -> int:
         return self.__FromNodeID
 
     @property
-    def SectionTrackID(self):
+    def SectionTrackID(self) -> int:
         return self.__SectionTrackID
 
     @property
-    def ToNodeID(self):
+    def ToNodeID(self) -> int:
         return self.__ToNodeID
-
-
-class AlgorithmTimeWindow:
-    __FromTime: datetime.datetime
-    __ToTime: datetime.datetime
-
-    def __init__(self, FromTime: datetime.datetime, ToTime: datetime.datetime):
-        self.__FromTime = FromTime
-        self.__ToTime = ToTime
-
-    @property
-    def FromTime(self):
-        return self.__FromTime
-
-    @property
-    def ToTime(self):
-        return self.__ToTime
 
 
 class UpdateTrainRoute:
@@ -257,15 +240,15 @@ class UpdateTrainRoute:
         self.__StartTrainPathNodeID = StartTrainPathNodeID
 
     @property
-    def EndTrainPathNodeID(self):
+    def EndTrainPathNodeID(self) -> int:
         return self.__EndTrainPathNodeID
 
     @property
-    def RoutingEdges(self):
+    def RoutingEdges(self) -> list:
         return self.__RoutingEdges
 
     @property
-    def StartTrainPathNodeID(self):
+    def StartTrainPathNodeID(self) -> int:
         return self.__StartTrainPathNodeID
 
 
@@ -276,7 +259,7 @@ class RoutingEdge:
         self.__NodeID = NodeID
 
     @property
-    def NodeID(self):
+    def NodeID(self) -> int:
         return self.__NodeID
 
 
@@ -299,100 +282,45 @@ class UpdateTrainTimesNode:
         self.__StopStatus = StopStatus
 
     @property
-    def ArrivalTime(self):
+    def ArrivalTime(self) -> datetime.datetime:
         return self.__ArrivalTime
 
     @property
-    def DepartureTime(self):
+    def DepartureTime(self) -> datetime.datetime:
         return self.__DepartureTime
 
     @property
-    def MinimumRunTime(self):
+    def MinimumRunTime(self) -> (None, datetime.timedelta):
         return self.__MinimumRunTime
 
     @property
-    def MinimumStopTime(self):
+    def MinimumStopTime(self) -> datetime.timedelta:
         return self.__MinimumStopTime
 
     @property
-    def TrainPathNodeID(self):
+    def TrainPathNodeID(self) -> int:
         return self.__TrainPathNodeID
 
     @property
-    def StopStatus(self):
+    def StopStatus(self) -> StopStatus:
         return self.__StopStatus
 
 
 """
-# NotImplemented!!,
-class AlgorithmGenericTimeNode:  # this is a bad idea, for maintenance in future.
-    # no assertions so far!
-    __ArrivalTime = datetime.datetime
-    __DepartureTime: datetime.datetime
-    __MinimumRunTime: str
-    __MinimumStopTime: str
+class voidAlgorithmTimeWindow:
+    __FromTime: datetime.datetime
+    __ToTime: datetime.datetime
 
-    def __init__(self, arrival_time: datetime.datetime, departure_time: datetime.datetime,
-                 minimum_run_time: str = None, minimum_stop_time: str = None):
-        raise NotImplementedError
-        self.__ArrivalTime = arrival_time
-        self.__DepartureTime = departure_time
-        self.__MinimumRunTime = minimum_run_time
-        self.__MinimumStopTime = minimum_stop_time
+    def __init__(self, FromTime: datetime.datetime, ToTime: datetime.datetime):
+        self.__FromTime = FromTime
+        self.__ToTime = ToTime
 
     @property
-    def ArrivalTime(self):
-        return self.__ArrivalTime
+    def FromTime(self) -> datetime.datetime:
+        return self.__FromTime
 
     @property
-    def DepartureTime(self):
-        return self.__DepartureTime
+    def ToTime(self) -> datetime.datetime:
+        return self.__ToTime
 
-    @property
-    def MinimumRunTime(self):
-        return self.__MinimumRunTime
-
-    @property
-    def MinimumStopTime(self):
-        return self.__MinimumStopTime
-
-
-# NotImplemented!!,
-
-
-
-# NotImplemented!!,
-class AlgorithmTrainPathNode(hasID, AlgorithmGenericTimeNode):
-    __FormationID: int = None
-    __NodeID: int
-    __NodeTrackID: int
-    __SectionTrackID: int = None
-    __SequenceNumber: int
-    __StopStatus: str
-
-    def __init__(self, node_id: int, arrival_time: datetime.datetime, departure_time: datetime.datetime,
-                 minimum_run_time, minimum_stop_time):
-        hasID.__init__(self, node_id)
-        self.__FormationID = int
-        self.__NodeID = int
-        self.__NodeTrackID = int
-        self.__SectionTrackID = int
-        self.__SequenceNumber = int
-        
-        
-    @property
-    def ArrivalTime(self):
-        return self.__ArrivalTime
-
-    @property
-    def DepartureTime(self):
-        return self.__DepartureTime
-
-    @property
-    def MinimumRunTime(self):
-        return self.__MinimumRunTime
-
-    @property
-    def MinimumStopTime(self):
-        return self.__MinimumStopTime
 """

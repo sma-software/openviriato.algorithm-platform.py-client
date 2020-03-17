@@ -73,11 +73,25 @@ class TestRerouteTrain(unittest.TestCase):
     @mock.patch('requests.Session', side_effect=RerouteTrainTestMockSession)
     def test_reroute_train_request(self, mocked_session):
         train_id = 2060
-        update_train_time_nodes = [AIDM_classes.updateTrainTimesNode(TrainPathNodeId=1332,
-                                                                     ArrivalTime=datetime.datetime(2003, 5, 1, 0, 4),
-                                                                     DepartureTime=datetime.datetime(2003, 5, 1, 0, 5))]
+        start_train_path_node_id = 2424
+        end_train_path_node_id = 3152
+        AIDM_classes.IncomingRoutingEdge(Star)
+        routing_edges = [AIDM_classes.CrossingRoutingEdge(train_id, NodeId=7, StartNodeTrackID = 8 ,   endSectionTrack=1165),
+                         AIDM_classes.IncomingRoutingEdge(train_id, NodeId=7, StartNodeTrackID=8, endSectionTrack=1165),
+                         AIDM_classes.IncomingRoutingEdge(train_id, NodeId=7, startNodeTrack=8, endSectionTrack=1165),
+                         AIDM_classes.IncomingRoutingEdge(train_id, NodeId=7, startNodeTrack=8, endSectionTrack=1165)]
+        AIDM_classes.CrossingRoutingEdge()
+        reroute_train = {'TrainID': 3516, 'StartTrainPathNodeId': 2424, 'EndTrainPathNodeId': 3152, 'RoutingEdges': [
+            dict(nodeId=7, startNodeTrack=8, endSectionTrack=1165),
+            dict(nodeId=24, startSectionTrack=1165, endNodeTrack=25),
+            dict(nodeId=24, startNodeTrack=25, endSectionTrack=1166),
+            dict(nodeId=10, startSectionTrack=1166, endNodeTrack=12)
+        ]}
+        AIDM_classes.UpdateTrainRoute(EndTrainPathNodeID= end_train_path_node_id, RoutingEdges=routing_edges, StartTrainPathNodeID =
+        start_train_path_node_id)
 
-        self.interface_to_viriato.update_train_times(train_id, update_train_time_nodes)
+
+        self.interface_to_viriato.reroute_train(train_id)
 
         session_obj = self.interface_to_viriato._AlgorithmicPlatformInterface__communication_layer.currentSession
         self.assertEqual(session_obj._RerouteTrainTestMockSession__last_request,

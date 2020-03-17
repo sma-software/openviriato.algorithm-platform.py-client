@@ -33,3 +33,25 @@ class IhasDebugString:
     @property
     def DebugString(self) -> (str, None):
         return self.__DebugString
+
+
+class IUpdateTrain:
+    __TrainID: int
+
+    def __init__(self, TrainID):
+        self.__TrainID = TrainID
+
+    @property
+    def TrainID(self) -> int:
+        return self.__TrainID
+
+
+class IRoutingEdge:
+    __NodeID: int
+
+    def __init__(self, NodeID):
+        self.__NodeID = NodeID
+
+    @property
+    def NodeID(self) -> int:
+        return self.__NodeID

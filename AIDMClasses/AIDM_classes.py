@@ -1,24 +1,24 @@
 import datetime
 
-from AIDMClasses.AIDM_base_classes import hasID, hasCode, hasDebugString
+from AIDMClasses.AIDM_base_classes import IhasID, IhasCode, IhasDebugString
 from AIDMClasses.AIDM_enum_classes import StopStatus
 
 
-class AlgorithmNodeTrack(hasID, hasCode, hasDebugString):
+class AlgorithmNodeTrack(IhasID, IhasCode, IhasDebugString):
 
     def __init__(self, ID: int, Code: str, DebugString: str):
-        hasID.__init__(self, ID)
-        hasCode.__init__(self, Code)
-        hasDebugString.__init__(self, DebugString)
+        IhasID.__init__(self, ID)
+        IhasCode.__init__(self, Code)
+        IhasDebugString.__init__(self, DebugString)
 
 
-class AlgorithmNode(hasID, hasCode, hasDebugString):
+class AlgorithmNode(IhasID, IhasCode, IhasDebugString):
     __NodeTracks: []
 
     def __init__(self, ID: int, Code: str, DebugString: str, NodeTracks: list = []):
-        hasID.__init__(self, ID)
-        hasCode.__init__(self, Code)
-        hasDebugString.__init__(self, DebugString)
+        IhasID.__init__(self, ID)
+        IhasCode.__init__(self, Code)
+        IhasDebugString.__init__(self, DebugString)
         self.__NodeTracks = NodeTracks
 
     @property
@@ -26,14 +26,14 @@ class AlgorithmNode(hasID, hasCode, hasDebugString):
         return self.__NodeTracks
 
 
-class AlgorithmSectionTrack(hasID, hasCode, hasDebugString):
+class AlgorithmSectionTrack(IhasID, IhasCode, IhasDebugString):
     __Weight: int
     __SectionCode: str
 
     def __init__(self, ID: int, Code: str, DebugString: str, Weight: int, SectionCode: str):
-        hasID.__init__(self, ID)
-        hasCode.__init__(self, Code)
-        hasDebugString.__init__(self, DebugString)
+        IhasID.__init__(self, ID)
+        IhasCode.__init__(self, Code)
+        IhasDebugString.__init__(self, DebugString)
         self.__Weight = Weight
         self.__SectionCode = SectionCode
 
@@ -46,12 +46,12 @@ class AlgorithmSectionTrack(hasID, hasCode, hasDebugString):
         return self.__SectionCode
 
 
-class AlgorithmTrain(hasID, hasDebugString):
+class AlgorithmTrain(IhasID, IhasDebugString):
     __trainPathNodes: list
 
     def __init__(self, ID: int, DebugString: str, TrainPathNodes: list):
-        hasID.__init__(self, ID)
-        hasDebugString.__init__(self, DebugString)
+        IhasID.__init__(self, ID)
+        IhasDebugString.__init__(self, DebugString)
         self.__TrainPathNodes = TrainPathNodes
 
     @property
@@ -59,7 +59,7 @@ class AlgorithmTrain(hasID, hasDebugString):
         return self.__TrainPathNodes
 
 
-class TrainPathNode(hasID):
+class TrainPathNode(IhasID):
     __ArrivalTime: datetime.datetime
     __DepartureTime: datetime.datetime
     __SectionTrackID: int
@@ -75,7 +75,7 @@ class TrainPathNode(hasID):
                  SectionTrackID: (int, None), NodeID: int, NodeTrackID: (int, None), FormationID: int,
                  MinimumRunTime: (datetime.timedelta, None), MinimumStopTime: datetime.timedelta,
                  StopStatus: StopStatus, SequenceNumber: int):
-        hasID.__init__(self, ID)
+        IhasID.__init__(self, ID)
         self.__ArrivalTime = ArrivalTime
         self.__DepartureTime = DepartureTime
         self.__SectionTrackID = SectionTrackID
@@ -168,13 +168,13 @@ class TimeWindow:
         return self.__ToTime
 
 
-class AlgorithmNodeTrackClosure(hasDebugString):
+class AlgorithmNodeTrackClosure(IhasDebugString):
     __NodeID: int
     __NodeTrackID: int
     __ClosureTimeWindow: TimeWindow
 
     def __init__(self, DebugString: str, ClosureTimeWindow: TimeWindow, NodeID: int, NodeTrackID: int):
-        hasDebugString.__init__(self, DebugString)
+        IhasDebugString.__init__(self, DebugString)
         self.__ClosureTimeWindow = ClosureTimeWindow
         self.__NodeID = NodeID
         self.__NodeTrackID = NodeTrackID
@@ -192,7 +192,7 @@ class AlgorithmNodeTrackClosure(hasDebugString):
         return self.__NodeTrackID
 
 
-class AlgorithmSectionTrackClosure(hasDebugString):
+class AlgorithmSectionTrackClosure(IhasDebugString):
     __ClosureTimeWindowFromNode: TimeWindow
     __ClosureTimeWindowToNode: TimeWindow
     __FromNodeID: int
@@ -201,7 +201,7 @@ class AlgorithmSectionTrackClosure(hasDebugString):
 
     def __init__(self, DebugString: str, ClosureTimeWindowFromNode: TimeWindow, ClosureTimeWindowToNode: TimeWindow,
                  FromNodeID: int, SectionTrackID: int, ToNodeID: int):
-        hasDebugString.__init__(self, DebugString)
+        IhasDebugString.__init__(self, DebugString)
         self.__ClosureTimeWindowFromNode = ClosureTimeWindowFromNode
         self.__ClosureTimeWindowToNode = ClosureTimeWindowToNode
         self.__FromNodeID = FromNodeID

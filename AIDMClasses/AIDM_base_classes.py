@@ -1,7 +1,7 @@
 from void import AlgorithmTypeCheck
 
 
-class hasID:
+class IhasID:
     __ID: int
 
     def __init__(self, element_id: int):
@@ -13,7 +13,7 @@ class hasID:
         return self.__ID
 
 
-class hasCode:
+class IhasCode:
     __Code: str
 
     def __init__(self, code_string: str):
@@ -25,7 +25,7 @@ class hasCode:
         return self.__Code
 
 
-class hasDebugString:
+class IhasDebugString:
     __DebugString: str
 
     def __init__(self, debug_string: str = None):

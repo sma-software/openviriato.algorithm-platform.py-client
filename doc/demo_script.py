@@ -1,5 +1,6 @@
-import AlgorithmInterface.AlgorithmInterfaceFactory
 import datetime
+
+import AlgorithmInterface.AlgorithmInterfaceFactory
 from AIDMClasses import AIDM_classes
 
 BASE_URL = 'http://localhost:8080'

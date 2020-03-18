@@ -4,7 +4,8 @@ from unittest import mock
 import AlgorithmInterface.AlgorithmInterface
 import unit_testing.test_AlgorithmInterface_with_mock.unit_testing_requisites.SessionMockFactory as SessionMockFactory
 from AlgorithmInterface import AlgorithmInterfaceFactory
-from unit_testing.test_AlgorithmInterface_with_mock.unit_testing_requisites.unit_testing_with_mock_helpers import get_api_url, \
+from unit_testing.test_AlgorithmInterface_with_mock.unit_testing_requisites.unit_testing_with_mock_helpers import \
+    get_api_url, \
     SessionMockTestBase
 
 

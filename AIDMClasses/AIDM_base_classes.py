@@ -1,6 +1,3 @@
-from void import AlgorithmTypeCheck
-
-
 class IhasID:
     __ID: int
 

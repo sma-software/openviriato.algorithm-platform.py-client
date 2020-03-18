@@ -4,9 +4,9 @@ __author__ = 'Florian Fuchs'
 import datetime
 import warnings
 
-from ConversionLayer import converter_helpers, to_AIDM_converter, from_AIDM_converter
 from AIDMClasses import AIDM_classes, AIDM_enum_classes
 from CommunicationLayer import AlgorithmInterfaceCommunicationLayer
+from ConversionLayer import converter_helpers, to_AIDM_converter, from_AIDM_converter
 
 
 def add_node_filter_to_get_request_params(get_request_param_dict, nodeIDs):

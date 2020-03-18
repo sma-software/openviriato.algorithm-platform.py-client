@@ -5,7 +5,8 @@ import AlgorithmInterface.AlgorithmInterface
 from CommunicationLayer import AlgorithmInterfaceCommunicationLayer
 
 
-def test_object_initialisation(url_str='http://localhost:8080') -> AlgorithmInterface.AlgorithmInterface.AlgorithmicPlatformInterface:
+def test_object_initialisation(url_str='http://localhost:8080') -> \
+        AlgorithmInterface.AlgorithmInterface.AlgorithmicPlatformInterface:
     # test for the object creation:
     # fails on purpose:
     try:
@@ -28,7 +29,6 @@ def test_user_notifications(interface_to_viriato) -> None:
     interface_to_viriato.show_status_message('Foo bar')
 
 
-
 def test_get_directed_section_tracks(interface_to_viriato) -> None:
     # lets test the robustness:
     for i in range(1, 50):
@@ -42,7 +42,7 @@ def test_get_directed_section_tracks(interface_to_viriato) -> None:
                 # for idx in range(len(directed_section_tracks)):
                 #    print(directed_section_tracks[idx].ID)
             except AlgorithmInterfaceCommunicationLayer.AlgorithmPlatformError:
-                i
+                pass
     print('test_get_directed_section_tracks complete')
 
 
@@ -53,7 +53,7 @@ def test_get_node_and_get_neighbor_nodes(interface_to_viriato) -> None:
             node_obj = interface_to_viriato.get_node(i)
             node_list = interface_to_viriato.get_neighbor_nodes(i)
         except AlgorithmInterfaceCommunicationLayer.AlgorithmPlatformError:
-            i
+            pass
     print('test_get_node_and_get_neighbor_nodes complete')
 
 
@@ -65,23 +65,24 @@ def test_get_parallel_section_tracks(interface_to_viriato) -> None:
             #    for idx in range(len(track_list)):
             #       print(track_list[idx].ID)
         except AlgorithmInterfaceCommunicationLayer.AlgorithmPlatformError:
-            i
+            pass
     print('test_get_parallel_section_tracks complete')
 
 
-def test_train_cancellations(interface_to_viriato: AlgorithmInterface.AlgorithmInterface.AlgorithmicPlatformInterface) -> None:
+def test_train_cancellations(
+        interface_to_viriato: AlgorithmInterface.AlgorithmInterface.AlgorithmicPlatformInterface) -> None:
     for i in range(500, 2500):
         try:
             obj = interface_to_viriato.cancel_train_to(train_path_node_id=i)
             print(vars(obj))
         except AlgorithmInterfaceCommunicationLayer.AlgorithmPlatformError:
-            i
+            pass
     for i in range(500, 2500):
         try:
             obj = interface_to_viriato.cancel_train_from(train_path_node_id=i)
             print(vars(obj))
         except AlgorithmInterfaceCommunicationLayer.AlgorithmPlatformError:
-            i
+            pass
 
 
 def main():
@@ -108,7 +109,6 @@ def main():
 
     with AlgorithmInterface.AlgorithmInterface.AlgorithmicPlatformInterface(url_str) as interface_to_viriato:
         test_get_node_and_get_neighbor_nodes(interface_to_viriato)
-
 
 
 if __name__ == '__main__':

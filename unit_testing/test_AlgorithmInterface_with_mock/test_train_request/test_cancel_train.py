@@ -14,7 +14,7 @@ class TestGetTrainClassifications(unittest.TestCase):
         def post(self, request, json):
             self.__last_body = json
             self.__last_request = request
-            return SessionMockFactory.create_response_mock('{ "trainID": 8124 }', 200)
+            return SessionMockFactory.create_response_mock("8124", 200)
 
     interface_to_viriato: AlgorithmInterface.AlgorithmInterface.AlgorithmicPlatformInterface
 

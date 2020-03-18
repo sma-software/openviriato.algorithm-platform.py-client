@@ -8,13 +8,16 @@ from ConversionLayer import converter_helpers, to_AIDM_converter, from_AIDM_conv
 from AIDMClasses import AIDM_classes, AIDM_enum_classes
 from CommunicationLayer import AlgorithmInterfaceCommunicationLayer
 
+
 def add_node_filter_to_get_request_params(get_request_param_dict, nodeIDs):
     get_request_param_dict["NodeFilter"] = nodeIDs
     return get_request_param_dict
 
+
 def add_cut_train_to_get_request_params(get_request_param_dict):
     get_request_param_dict["CutTrain"] = True
     return get_request_param_dict
+
 
 class AlgorithmicPlatformInterface:
     __communication_layer: AlgorithmInterfaceCommunicationLayer.CommunicationLayer
@@ -106,8 +109,7 @@ class AlgorithmicPlatformInterface:
             to_AIDM_converter.convert_dict_to_AlgorithmTrain, response_list)
 
     def cancel_train(self, train_id: int) -> int:
-        response_dict = self.__communication_layer.do_post_request('cancel-train', request_body={'trainID': train_id})
-        return response_dict['trainID']
+        return self.__communication_layer.do_post_request('cancel-train', request_body={'trainID': train_id})
 
     def cancel_train_from(self, train_path_node_id: int) -> AIDM_classes.AlgorithmTrain:
         post_request_body = {'trainPathNodeID': train_path_node_id}
@@ -206,7 +208,7 @@ class AlgorithmicPlatformInterface:
 
     def get_separation_time_in_station_for_entry_or_exit(self, preceding_train_path_node_id: int,
                                                          preceding_node_track_id: int, preceding_station_entry_or_exit:
-                                                         AIDM_enum_classes.StationEntryOrExit,
+            AIDM_enum_classes.StationEntryOrExit,
                                                          succeeding_train_path_node_id: int,
                                                          succeeding_node_track_id: int,
                                                          succeeding_station_entry_or_exit:

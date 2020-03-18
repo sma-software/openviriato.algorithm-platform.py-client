@@ -76,7 +76,8 @@ class TestRerouteTrain(unittest.TestCase):
         train_id = 2060
         start_train_path_node_id = 2424
         end_train_path_node_id = 3152
-        AIDM_classes.IncomingRoutingEdge(Star)
+        AIDM_classes.UpdateTrainRoute(EndTrainPathNodeID=12)
+        AIDM_classes.IncomingRoutingEdge(NodeID=7,EndNodeTrackID=25)
         routing_edges = [AIDM_classes.CrossingRoutingEdge(train_id, NodeId=7, StartNodeTrackID=8, endSectionTrack=1165),
                          AIDM_classes.IncomingRoutingEdge(train_id, NodeId=7, StartNodeTrackID=8, endSectionTrack=1165),
                          AIDM_classes.IncomingRoutingEdge(train_id, NodeId=7, startNodeTrack=8, endSectionTrack=1165),

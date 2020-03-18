@@ -234,7 +234,8 @@ class UpdateTrainRoute(IUpdateTrain):
     __RoutingEdges: list
     __StartTrainPathNodeID: int
 
-    def __init__(self, EndTrainPathNodeID: int, RoutingEdges: list, StartTrainPathNodeID: int):
+    def __init__(self, TrainID: int, EndTrainPathNodeID: int, RoutingEdges: list, StartTrainPathNodeID: int):
+        IUpdateTrain.__init__(self, TrainID)
         self.__EndTrainPathNodeID = EndTrainPathNodeID
         self.__RoutingEdges = RoutingEdges
         self.__StartTrainPathNodeID = StartTrainPathNodeID
@@ -299,7 +300,7 @@ class CrossingRoutingEdge(IRoutingEdge):
     __StartSectionTrackID: int
     __EndSectionTrackID: int
 
-    def __init__(self, TrainID: int, NodeID: int, startSectionTrackID: int, endSectionTrackID: int):
+    def __init__(self, NodeID: int, startSectionTrackID: int, endSectionTrackID: int):
         IRoutingEdge.__init__(self, NodeID)
         self.__StartSectionTrackID = startSectionTrackID
         self.__EndSectionTrackID = endSectionTrackID
@@ -335,7 +336,7 @@ class OutgoingRoutingEdge(IRoutingEdge):
     __EndSectionTrackID: int
     __StartNodeTrackID: int
 
-    def __init__(self, TrainID: int, NodeID: int, EndSectionTrackID: int, StartNodeTrackID: int):
+    def __init__(self, NodeID: int, EndSectionTrackID: int, StartNodeTrackID: int):
         IRoutingEdge.__init__(self, NodeID)
         self.__EndSectionTrackID = EndSectionTrackID
         self.__StartNodeTrackID = StartNodeTrackID

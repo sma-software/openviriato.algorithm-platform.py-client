@@ -72,11 +72,12 @@ class TestRerouteTrain(unittest.TestCase):
 
     @mock.patch('requests.Session', side_effect=RerouteTrainTestMockSession)
     def test_reroute_train_request(self, mocked_session):
+        raise NotImplementedError
         train_id = 2060
         start_train_path_node_id = 2424
         end_train_path_node_id = 3152
         AIDM_classes.IncomingRoutingEdge(Star)
-        routing_edges = [AIDM_classes.CrossingRoutingEdge(train_id, NodeId=7, StartNodeTrackID = 8 ,   endSectionTrack=1165),
+        routing_edges = [AIDM_classes.CrossingRoutingEdge(train_id, NodeId=7, StartNodeTrackID=8, endSectionTrack=1165),
                          AIDM_classes.IncomingRoutingEdge(train_id, NodeId=7, StartNodeTrackID=8, endSectionTrack=1165),
                          AIDM_classes.IncomingRoutingEdge(train_id, NodeId=7, startNodeTrack=8, endSectionTrack=1165),
                          AIDM_classes.IncomingRoutingEdge(train_id, NodeId=7, startNodeTrack=8, endSectionTrack=1165)]
@@ -87,33 +88,24 @@ class TestRerouteTrain(unittest.TestCase):
             dict(nodeId=24, startNodeTrack=25, endSectionTrack=1166),
             dict(nodeId=10, startSectionTrack=1166, endNodeTrack=12)
         ]}
-        AIDM_classes.UpdateTrainRoute(EndTrainPathNodeID= end_train_path_node_id, RoutingEdges=routing_edges, StartTrainPathNodeID =
-        start_train_path_node_id)
-
+        AIDM_classes.UpdateTrainRoute(EndTrainPathNodeID=end_train_path_node_id, RoutingEdges=routing_edges,
+                                      StartTrainPathNodeID=start_train_path_node_id)
 
         self.interface_to_viriato.reroute_train(train_id)
 
         session_obj = self.interface_to_viriato._AlgorithmicPlatformInterface__communication_layer.currentSession
         self.assertEqual(session_obj._RerouteTrainTestMockSession__last_request,
-                         get_api_url() + '/trains/2060/train-path-nodes')
-        self.assertListEqual(session_obj._RerouteTrainTestMockSession__last_body, [{"TrainPathNodeId": 1332,
-                                                                                        "ArrivalTime": "2003-05-01T00:04:00",
-                                                                                        "DepartureTime": "2003-05-01T00:05:00"}])
+                         get_api_url() + '')
+        self.assertListEqual(session_obj._RerouteTrainTestMockSession__last_body, {})
 
     @mock.patch('requests.Session', side_effect=RerouteTrainTestMockSession)
-    def test_update_train_times_response(self, mocked_session):
+    def test_reroute_train_response(self, mocked_session):
+        raise NotImplementedError
         train_id = 2060
-        reroute_train_time_nodes = [AIDM_classes.updateTrainTimesNode(TrainPathNodeId=1332,
-                                                                     ArrivalTime=datetime.datetime(2003, 5, 1, 0, 4),
-                                                                     DepartureTime=datetime.datetime(2003, 5, 1, 0, 5))]
 
-        rerouted_algorithm_train = self.interface_to_viriato.update_train_times(train_id, update_train_time_nodes)
+        rerouted_algorithm_train = self.interface_to_viriato.reroute_train()
 
-        self.assertIsInstance(rerouted_algorithm_train, AIDM_classes.AlgorithmTrain)
-        self.assertEqual(rerouted_algorithm_train.DebugString, 'Mocked RVZH_1_1_J03 tt_(G)' )
-        self.assertEqual(rerouted_algorithm_train.ID, 2060)
-        self.assertIsInstance(rerouted_algorithm_train.TrainPathNodes, list)
-        self.assertIsInstance(rerouted_algorithm_train.TrainPathNodes[0], AIDM_classes.TrainPathNode)
+
 
     @mock.patch('requests.Session', side_effect=RerouteTrainTestMockSession)
     def tearDown(self, mocked_session) -> None:

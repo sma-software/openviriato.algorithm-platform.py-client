@@ -130,7 +130,6 @@ class AlgorithmicPlatformInterface:
         url_tail = "reroute-train"
         post_request_body = from_AIDM_converter.convert_to_json_conform_dict(route)
         response_dict = self.__communication_layer.do_post_request(url_tail, request_body=post_request_body)
-        warnings.warn("call not tested")
         return to_AIDM_converter.convert_dict_to_AlgorithmTrain(response_dict)
 
     def set_section_track(self, train_path_node_id: int, section_track_id: int) -> AIDM_classes.AlgorithmTrain:

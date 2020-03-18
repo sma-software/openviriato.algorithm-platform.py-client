@@ -1,8 +1,6 @@
 from ConversionLayer.converter_helpers import check_and_format_any_datetime_to_iso_str, check_and_format_any_enum_to_str
+import AIDMClasses.AIDM_classes
 
-def convert_to_json_conform_obj(obj) -> dict:
-    obj = check_and_format_any_datetime_to_iso_str(obj)
-    return check_and_format_any_enum_to_str(obj)
 
 def convert_to_json_conform_dict(AIDM_object) -> dict:
     attribute_names = [attr for attr in dir(AIDM_object) if not attr.startswith('_')]
@@ -12,7 +10,20 @@ def convert_to_json_conform_dict(AIDM_object) -> dict:
     return attribute_dict
 
 
-
-
 def convert_to_list_of_dict(list_of_AIDM_object: list) -> list:
     return [convert_to_json_conform_dict(AIDM_object) for AIDM_object in list_of_AIDM_object]
+
+
+def convert_to_json_conform_obj(obj) -> dict:
+    if isinstance(obj, list):
+        obj = [convert_any_type_to_json_conform_dict(el) for el in obj]
+    else:
+        obj = check_and_format_any_datetime_to_iso_str(check_and_format_any_enum_to_str(obj))
+    return obj
+
+
+def convert_any_type_to_json_conform_dict(obj) -> dict:
+    if hasattr(obj, "__module__"):
+        if obj.__module__ == AIDMClasses.AIDM_classes.__name__:
+            obj = convert_to_json_conform_dict(obj)
+    return obj

@@ -296,19 +296,13 @@ class UpdateTrainTimesNode:
 
 
 class CrossingRoutingEdge(IRoutingEdge):
-    __NodeID: int
     __StartSectionTrackID: int
     __EndSectionTrackID: int
 
-    def __init__(self, TrainID: int, nodeID: int, startSectionTrackID: int, endSectionTrackID: int):
-        IRoutingEdge.__init__(self, TrainID)
-        self.__NodeID = nodeID
+    def __init__(self, TrainID: int, NodeID: int, startSectionTrackID: int, endSectionTrackID: int):
+        IRoutingEdge.__init__(self, NodeID)
         self.__StartSectionTrackID = startSectionTrackID
         self.__EndSectionTrackID = endSectionTrackID
-
-    @property
-    def NodeID(self) -> int:
-        return self.__NodeID
 
     @property
     def StartSectionTrackID(self) -> int:
@@ -320,19 +314,13 @@ class CrossingRoutingEdge(IRoutingEdge):
 
 
 class IncomingRoutingEdge(IRoutingEdge):
-    __NodeID: int
     __EndNodeTrackID: int
     __StartSectionTrackID: int
 
-    def __init__(self, TrainID: int, NodeID: int, EndNodeTrackID: int, StartSectionTrackID: int):
-        IRoutingEdge.__init__(self, TrainID)
-        self.__NodeID = NodeID
+    def __init__(self, NodeID: int, EndNodeTrackID: int, StartSectionTrackID: int):
+        IRoutingEdge.__init__(self, NodeID)
         self.__EndNodeTrackID = EndNodeTrackID
         self.__StartSectionTrackID = StartSectionTrackID
-
-    @property
-    def NodeID(self) -> int:
-        return self.__NodeID
 
     @property
     def EndNodeTrackID(self) -> int:
@@ -344,19 +332,13 @@ class IncomingRoutingEdge(IRoutingEdge):
 
 
 class OutgoingRoutingEdge(IRoutingEdge):
-    __NodeID: int
     __EndSectionTrackID: int
     __StartNodeTrackID: int
 
     def __init__(self, TrainID: int, NodeID: int, EndSectionTrackID: int, StartNodeTrackID: int):
-        IRoutingEdge.__init__(self, TrainID)
-        self.__NodeID = NodeID
+        IRoutingEdge.__init__(self, NodeID)
         self.__EndSectionTrackID = EndSectionTrackID
         self.__StartNodeTrackID = StartNodeTrackID
-
-    @property
-    def NodeID(self) -> int:
-        return self.__NodeID
 
     @property
     def StartSectionTrackID(self) -> int:
@@ -365,4 +347,3 @@ class OutgoingRoutingEdge(IRoutingEdge):
     @property
     def StartNodeTrackID(self) -> int:
         return self.__StartNodeTrackID
-

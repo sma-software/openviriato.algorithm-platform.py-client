@@ -142,22 +142,6 @@ class AlgorithmicPlatformInterface:
         warnings.warn("call not tested")
         return to_AIDM_converter.convert_dict_to_AlgorithmTrain(response_dict)
 
-    def get_headway_time_for_train_path_nodes(self, preceding_train_path_node_id: int,
-                                              succeeding_train_path_node_id: int) -> datetime.timedelta:
-        url_tail = 'headway-times/between-train-path-nodes/{0}/{1}'.format(preceding_train_path_node_id,
-                                                                           succeeding_train_path_node_id)
-        response_dict = self.__communication_layer.do_get_request(url_tail)
-        return converter_helpers.parse_to_timedelta(response_dict["separationTime"])
-
-    def get_headway_time_for_train_path_nodes_on_section_track(self, preceding_train_path_node_id: int,
-                                                               succeeding_train_path_node_id: int,
-                                                               section_track_id: int, from_node_id: int,
-                                                               to_node_id: int) -> datetime.timedelta:
-        url_tail = 'headway-times/between-train-path-nodes/{0}/{1}/for-section-track/{2}/in-direction/{3}/{4}'.format(
-            preceding_train_path_node_id, succeeding_train_path_node_id, section_track_id, from_node_id, to_node_id)
-        response_dict = self.__communication_layer.do_get_request(url_tail)
-        return converter_helpers.parse_to_timedelta(response_dict["headwayTime"])
-
     def get_separation_time_in_junction(self, preceding_train_path_node_id: int, succeeding_train_path_node_id: int) \
             -> datetime.timedelta:
         url_tail = 'junction-separation-time/between-train-path-nodes/{0}/{1}'.format(preceding_train_path_node_id,
@@ -210,6 +194,41 @@ class AlgorithmicPlatformInterface:
                                                     succeeding_node_track_id, succeeding_station_entry_or_exit.name)
         response_dict = self.__communication_layer.do_get_request(url_tail)
         return converter_helpers.parse_to_timedelta_or_None(response_dict['separationTime'])
+
+    def get_headway_time_for_train_path_nodes(self, preceding_train_path_node_id: int,
+                                              succeeding_train_path_node_id: int) -> datetime.timedelta:
+        url_tail = 'headway-times/between-train-path-nodes/{0}/{1}'.format(preceding_train_path_node_id,
+                                                                           succeeding_train_path_node_id)
+        response_dict = self.__communication_layer.do_get_request(url_tail)
+        return converter_helpers.parse_to_timedelta(response_dict["separationTime"])
+
+    def get_headway_time_for_train_path_nodes_on_section_track(self, preceding_train_path_node_id: int,
+                                                               succeeding_train_path_node_id: int,
+                                                               section_track_id: int, from_node_id: int,
+                                                               to_node_id: int) -> datetime.timedelta:
+        url_tail = 'headway-times/between-train-path-nodes/{0}/{1}/for-section-track/{2}/in-direction/{3}/{4}'.format(
+            preceding_train_path_node_id, succeeding_train_path_node_id, section_track_id, from_node_id, to_node_id)
+        response_dict = self.__communication_layer.do_get_request(url_tail)
+        return converter_helpers.parse_to_timedelta(response_dict["headwayTime"])
+
+    def get_assignable_station_tracks_in_algorithm_node(self, nodeID: int, trainPathNodeId: int,
+                                                        stopStatus: AIDM_enum_classes.StopStatus) -> list:
+        url_tail = "assignable-station-tracks-in-algorithm-node"
+        get_request_params = dict(NodeID=nodeID, TrainPathNodeID=trainPathNodeId, StopStatus=stopStatus.name)
+        response_list = self.__communication_layer.do_get_request(url_tail, get_request_params)
+        return to_AIDM_converter.convert_list_of_dict_to_list_of_AIDM(AIDM_classes.AlgorithmNodeTrack, response_list)
+
+    def get_assignable_station_tracks_on_train_path_node(self, trainPathNodeId: int) -> list:
+        url_tail = "assignable-station-tracks-on-train-path-node"
+        get_request_params = dict(TrainPathNodeID=trainPathNodeId)
+        response_list = self.__communication_layer.do_get_request(url_tail, get_request_params)
+        return to_AIDM_converter.convert_list_of_dict_to_list_of_AIDM(AIDM_classes.AlgorithmNodeTrack, response_list)
+
+    def assign_station_track(self, trainPathNodeId: int, stationTrackIDOrNone: (None, int) = None) -> list:
+        url_tail = "assign-station-track"
+        post_request_body = dict(TrainPathNodeID=trainPathNodeId, NodeTrackID=stationTrackIDOrNone)
+        response_list = self.__communication_layer.do_post_request(url_tail, post_request_body)
+        return to_AIDM_converter.convert_list_of_dict_to_list_of_AIDM(AIDM_classes.AlgorithmNodeTrack, response_list)
 
     def __delegate_get_any_parameter(self, key: str) -> (bool, int, str, AIDM_classes.AlgorithmTrain,
                                                          AIDM_classes.TimeWindow, list):

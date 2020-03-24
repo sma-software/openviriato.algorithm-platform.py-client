@@ -109,6 +109,7 @@ class TestGetAlgorithmTrainsParameter(unittest.TestCase):
                             "    }\n"
                             "  ]\n"
                             "}")
+
             return APISessionMock.create_response_mock(json__string, 200)
 
     @mock.patch('requests.Session', side_effect=GetAlgorithmTrainsParameterTestSessionMock)

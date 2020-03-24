@@ -12,10 +12,13 @@ All Methods according to Documentation of REST-API
 * Notifications
 * HeadWays
 * Separation Times
+* Parameters
+* Possessions
+
 
 ##### In Progress:
 
-* Trains
+* Trains -> there is a bug (reported)
 * Assignable Station Tracks
 
 ##### Not Implemented
@@ -23,8 +26,6 @@ All Methods according to Documentation of REST-API
 * Routing
 * Vehicles
 * Running Time Calculations
-* Parameters
-* Possessions
 
 ###### Questions:
 > resolved - 

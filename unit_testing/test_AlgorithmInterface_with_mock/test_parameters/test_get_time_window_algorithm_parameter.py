@@ -1,7 +1,9 @@
-import unittest, datetime
+import datetime
+import unittest
 from unittest import mock
-from AIDMClasses import AIDM_classes
+
 import unit_testing.test_AlgorithmInterface_with_mock.unit_testing_requisites.SessionMockFactory as APISessionMock
+from AIDMClasses import AIDM_classes
 from AlgorithmInterface import AlgorithmInterfaceFactory
 from unit_testing.test_AlgorithmInterface_with_mock.unit_testing_requisites.unit_testing_with_mock_helpers import \
     get_api_url, SessionMockTestBase

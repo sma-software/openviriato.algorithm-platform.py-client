@@ -5,7 +5,7 @@ import datetime
 import warnings
 
 from AIDMClasses import AIDM_classes, AIDM_enum_classes
-from AlgorithmInterface.AlgorithmInterfaceHelpers import concat_key_and_request_to_url_tail, \
+from AlgorithmInterface.AlgorithmInterfaceHelpers import \
     add_cut_train_to_get_request_params, add_node_filter_to_get_request_params
 from CommunicationLayer import AlgorithmInterfaceCommunicationLayer
 from ConversionLayer import converter_helpers, to_AIDM_converter, from_AIDM_converter
@@ -213,7 +213,7 @@ class AlgorithmicPlatformInterface:
 
     def __delegate_get_any_parameter(self, key: str) -> (bool, int, str, AIDM_classes.AlgorithmTrain,
                                                          AIDM_classes.TimeWindow, list):
-        url_tail = concat_key_and_request_to_url_tail(key)
+        url_tail = "parameters/{0}".format(key)
         return self.__communication_layer.do_get_request(url_tail)
 
     def get_bool_algorithm_parameter(self, key: str) -> bool:

@@ -22,8 +22,8 @@ def convert_to_json_conform_obj(obj) -> dict:
     return obj
 
 
-def convert_any_type_to_json_conform_dict(obj) -> dict:
-    if hasattr(obj, "__module__"):
-        if obj.__module__ == AIDMClasses.AIDM_classes.__name__:
-            obj = convert_to_json_conform_dict(obj)
-    return obj
+def convert_any_type_to_json_conform_dict(any_type_obj) -> dict:
+    if hasattr(any_type_obj, "__module__"):
+        if any_type_obj.__module__ == AIDMClasses.AIDM_classes.__name__:
+            any_type_obj = convert_to_json_conform_dict(any_type_obj)
+    return any_type_obj

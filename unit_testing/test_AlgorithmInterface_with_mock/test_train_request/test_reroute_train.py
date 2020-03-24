@@ -68,6 +68,7 @@ class TestRerouteTrain(unittest.TestCase):
     @mock.patch('requests.Session', side_effect=RerouteTrainTestMockSession)
     def setUp(self, mocked_session):
         self.interface_to_viriato = AlgorithmInterfaceFactory.create(get_api_url())
+        self.maxDiff = None  # prints more information in the console
 
     @mock.patch('requests.Session', side_effect=RerouteTrainTestMockSession)
     def test_reroute_train_request(self, mocked_session):
@@ -90,7 +91,7 @@ class TestRerouteTrain(unittest.TestCase):
             dict(nodeId=24, startSectionTrack=1165, endNodeTrack=25),
             dict(nodeId=24, startNodeTrack=25, endSectionTrack=1166),
             dict(nodeId=10, startSectionTrack=1166, endNodeTrack=12)])
-        self.maxDiff = None
+
         self.assertEqual(session_obj._RerouteTrainTestMockSession__last_request, get_api_url() + '/reroute-train')
         self.assertDictEqual(session_obj._RerouteTrainTestMockSession__last_body, expected_body)
         self.assertListEqual(session_obj._RerouteTrainTestMockSession__last_body['RoutingEdges'],

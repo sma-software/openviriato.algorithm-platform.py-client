@@ -5,6 +5,8 @@ import datetime
 import warnings
 
 from AIDMClasses import AIDM_classes, AIDM_enum_classes
+from AlgorithmInterface.AlgorithmInterfaceHelpers import concat_key_and_request_to_url_tail, \
+    add_cut_train_to_get_request_params, add_node_filter_to_get_request_params
 from CommunicationLayer import AlgorithmInterfaceCommunicationLayer
 from ConversionLayer import converter_helpers, to_AIDM_converter, from_AIDM_converter
 
@@ -208,6 +210,36 @@ class AlgorithmicPlatformInterface:
                                                     succeeding_node_track_id, succeeding_station_entry_or_exit.name)
         response_dict = self.__communication_layer.do_get_request(url_tail)
         return converter_helpers.parse_to_timedelta_or_None(response_dict['separationTime'])
+
+    def __delegate_get_any_parameter(self, key: str) -> (bool, int, str, AIDM_classes.AlgorithmTrain,
+                                                         AIDM_classes.TimeWindow, list):
+        url_tail = concat_key_and_request_to_url_tail(key)
+        return self.__communication_layer.do_get_request(url_tail)
+
+    def get_bool_algorithm_parameter(self, key: str) -> bool:
+        response_dict = self.__delegate_get_any_parameter(key)
+        return response_dict[key]
+
+    def get_int_algorithm_parameter(self, key: str) -> int:
+        response_dict = self.__delegate_get_any_parameter(key)
+        return response_dict[key]
+
+    def get_string_algorithm_parameter(self, key: str) -> str:
+        response_dict = self.__delegate_get_any_parameter(key)
+        return response_dict[key]
+
+    def get_algorithm_train_parameter(self, key: str) -> AIDM_classes.AlgorithmTrain:
+        response_dict = self.__delegate_get_any_parameter(key)
+        return to_AIDM_converter.convert_dict_to_AlgorithmTrain(response_dict[key])
+
+    def get_algorithm_trains_parameter(self, key: str) -> list:
+        response_dict = self.__delegate_get_any_parameter(key)
+        return to_AIDM_converter.convert_list_of_dict_to_list_of_AIDM(
+            to_AIDM_converter.convert_dict_to_AlgorithmTrain, response_dict[key])
+
+    def get_time_window_algorithm_parameter(self, key: str) -> AIDM_classes.TimeWindow:
+        response_dict = self.__delegate_get_any_parameter(key)
+        return to_AIDM_converter.convert_dict_to_TimeWindow(response_dict[key])
 
     def get_node_track_closures(self, time_window: AIDM_classes.TimeWindow) -> list:
         time_window_dict = from_AIDM_converter.convert_to_json_conform_dict(time_window)

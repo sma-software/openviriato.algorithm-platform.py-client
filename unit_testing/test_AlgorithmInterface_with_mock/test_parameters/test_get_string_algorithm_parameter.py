@@ -38,10 +38,10 @@ class TestGetStringAlgorithmParameter(unittest.TestCase):
     def test_get_string_algorithm_parameter_response(self, mocked_get_obj):
         key = "someStringParameterKey"
 
-        bool_param = self.interface_to_viriato.get_string_algorithm_parameter(key)
+        string_param = self.interface_to_viriato.get_string_algorithm_parameter(key)
 
-        self.assertIsInstance(bool_param, str)
-        self.assertEqual(bool_param, "input of string text field")
+        self.assertIsInstance(string_param, str)
+        self.assertEqual(string_param, "input of string text field")
 
     @mock.patch('requests.Session', side_effect=GetStringAlgorithmParameterTestSessionMock)
     def tearDown(self, mocked_get_obj) -> None:

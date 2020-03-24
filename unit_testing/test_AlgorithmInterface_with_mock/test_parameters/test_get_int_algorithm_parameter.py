@@ -38,10 +38,10 @@ class TestGetIntAlgorithmParameter(unittest.TestCase):
     def test_get_int_algorithm_parameter_response(self, mocked_get_obj):
         key = "someIntParameterKey"
 
-        bool_param = self.interface_to_viriato.get_int_algorithm_parameter(key)
+        int_param = self.interface_to_viriato.get_int_algorithm_parameter(key)
 
-        self.assertIsInstance(bool_param, int)
-        self.assertEqual(bool_param, 125)
+        self.assertIsInstance(int_param, int)
+        self.assertEqual(int_param, 125)
 
     @mock.patch('requests.Session', side_effect=GetIntAlgorithmParameterTestSessionMock)
     def tearDown(self, mocked_get_obj) -> None:

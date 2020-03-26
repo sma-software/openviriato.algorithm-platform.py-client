@@ -264,7 +264,7 @@ class AlgorithmicPlatformInterface:
     def calculate_run_times(self, train_id: int) -> (AIDM_classes.UpdateTrainTimes, None):
         url_tail = "calculate-run-times/{0}".format(train_id)
         response_dict = self.__communication_layer.do_get_request(url_tail)
-        return to_AIDM_converter.convert_dict_to_AIDM(AIDM_classes.AlgorithmVehicleType, response_dict)
+        return to_AIDM_converter.convert_dict_to_UpdateTrainTimes(response_dict)
 
     def __delegate_get_any_parameter(self, key: str) -> (bool, int, str, list, AIDM_classes.AlgorithmTrain,
                                                          AIDM_classes.TimeWindow):

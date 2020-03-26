@@ -72,3 +72,9 @@ def convert_dict_to_OutgoingRoutingEdgeSet(attribute_dict: dict) -> AIDM_classes
 def convert_dict_to_CrossingRoutingEdgeSet(attribute_dict: dict) -> AIDM_classes.CrossingRoutingEdgeSet:
     attribute_dict["crossingEdges"] = convert_list_of_dict_to_list_of_AIDM(attribute_dict["crossingEdges"])
     return convert_dict_to_AIDM(AIDM_classes.CrossingRoutingEdgeSet, attribute_dict)
+
+
+def convert_dict_to_UpdateTrainTimes(attribute_dict: dict) -> AIDM_classes.UpdateTrainTimes:
+    attribute_dict["Times"] = convert_list_of_dict_to_list_of_AIDM(AIDM_classes.UpdateTrainTimesNode,
+                                                                   attribute_dict["Times"])
+    return convert_dict_to_AIDM(AIDM_classes.UpdateTrainTimes, attribute_dict)

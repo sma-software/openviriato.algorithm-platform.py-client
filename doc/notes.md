@@ -15,7 +15,6 @@ All Methods according to Documentation of REST-API
 * Parameters
 * Possessions
 
-
 ##### In Progress:
 
 * Trains -> there is a bug (reported)

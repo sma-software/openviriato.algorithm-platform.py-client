@@ -182,8 +182,8 @@ class AlgorithmicPlatformInterface:
         return converter_helpers.parse_to_timedelta_or_None(response_dict["separationTime"])
 
     def get_separation_time_in_station_for_entry_or_exit(self, preceding_train_path_node_id: int,
-                                                         preceding_node_track_id: int, preceding_station_entry_or_exit:
-            AIDM_enum_classes.StationEntryOrExit,
+                                                         preceding_node_track_id: int,
+                                                         preceding_station_entry_or_exit: AIDM_enum_classes.StationEntryOrExit,
                                                          succeeding_train_path_node_id: int,
                                                          succeeding_node_track_id: int,
                                                          succeeding_station_entry_or_exit:

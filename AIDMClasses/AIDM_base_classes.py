@@ -52,3 +52,14 @@ class IRoutingEdge:
     @property
     def NodeID(self) -> int:
         return self.__NodeID
+
+
+class IRoutingEdgeSet:
+    __RoutingEdges = list
+
+    def __init__(self, RoutingEdges: list):
+        self.__RoutingEdges = RoutingEdges
+
+    @property
+    def RoutingEdges(self) -> list:
+        return self.__RoutingEdges

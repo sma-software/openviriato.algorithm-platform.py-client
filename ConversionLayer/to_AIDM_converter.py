@@ -57,3 +57,18 @@ def convert_dict_to_AlgorithmSectionTrackClosure(attribute_dict: dict) -> AIDM_c
 def convert_dict_to_AlgorithmNodeTrackClosure(attribute_dict: dict) -> AIDM_classes.AlgorithmNodeTrackClosure:
     attribute_dict["ClosureTimeWindow"] = convert_dict_to_TimeWindow(attribute_dict["ClosureTimeWindow"])
     return convert_dict_to_AIDM(AIDM_classes.AlgorithmNodeTrackClosure, attribute_dict)
+
+
+def convert_dict_to_IncomingRoutingEdgeSet(attribute_dict: dict) -> AIDM_classes.IncomingRoutingEdgeSet:
+    attribute_dict["incomingEdges"] = convert_list_of_dict_to_list_of_AIDM(attribute_dict["incomingEdges"])
+    return convert_dict_to_AIDM(AIDM_classes.IncomingRoutingEdgeSet, attribute_dict)
+
+
+def convert_dict_to_OutgoingRoutingEdgeSet(attribute_dict: dict) -> AIDM_classes.OutgoingRoutingEdgeSet:
+    attribute_dict["outgoingEdges"] = convert_list_of_dict_to_list_of_AIDM(attribute_dict["outgoingEdges"])
+    return convert_dict_to_AIDM(AIDM_classes.OutgoingRoutingEdgeSet, attribute_dict)
+
+
+def convert_dict_to_CrossingRoutingEdgeSet(attribute_dict: dict) -> AIDM_classes.CrossingRoutingEdgeSet:
+    attribute_dict["crossingEdges"] = convert_list_of_dict_to_list_of_AIDM(attribute_dict["crossingEdges"])
+    return convert_dict_to_AIDM(AIDM_classes.CrossingRoutingEdgeSet, attribute_dict)

@@ -5,7 +5,7 @@ import datetime
 import warnings
 
 from AIDMClasses import AIDM_classes, AIDM_enum_classes
-from AlgorithmInterface.AlgorithmInterfaceHelpers import \
+from AlgorithmInterface.AlgorithmInterfaceHelpers import extract_parameters_from_routing_point, \
     add_cut_train_to_get_request_params, add_node_filter_to_get_request_params
 from CommunicationLayer import AlgorithmInterfaceCommunicationLayer
 from ConversionLayer import converter_helpers, to_AIDM_converter, from_AIDM_converter
@@ -231,7 +231,27 @@ class AlgorithmicPlatformInterface:
         response_dict = self.__communication_layer.do_post_request(url_tail, post_request_body)
         return to_AIDM_converter.convert_dict_to_AlgorithmTrain(response_dict)
 
-    def __delegate_get_any_parameter(self, key: str) -> (bool, int, str, list,AIDM_classes.AlgorithmTrain,
+    def get_incoming_routing_edges(self, routing_point: AIDM_classes.RoutingPoint) \
+            -> AIDM_classes.IncomingRoutingEdgeSet:
+        url_tail = "nodes/{0}/incoming-routing-edges".format(routing_point.NodeID)
+        get_request_params = extract_parameters_from_routing_point(routing_point)
+        response_dict = self.__communication_layer.do_get_request(url_tail, get_request_params)
+        return to_AIDM_converter.convert_dict_to_IncomingRoutingEdgeSet(response_dict)
+
+    def get_outgoing_routing_edges(self, routing_point: AIDM_classes.RoutingPoint) \
+            -> AIDM_classes.OutgoingRoutingEdgeSet:
+        url_tail = "nodes/{0}/outgoing-routing-edges".format(routing_point.NodeID)
+        get_request_params = extract_parameters_from_routing_point(routing_point)
+        response_dict = self.__communication_layer.do_get_request(url_tail, get_request_params)
+        return to_AIDM_converter.convert_dict_to_OutgoingRoutingEdgeSet(response_dict)
+
+    def get_crossing_routing_edges(self, routing_point: AIDM_classes.RoutingPoint) -> \
+            AIDM_classes.CrossingRoutingEdgeSet:
+        url_tail = "nodes/{0}/incoming-routing-edges".format(routing_point.NodeID)
+        response_dict = self.__communication_layer.do_get_request(url_tail)
+        return to_AIDM_converter.convert_dict_to_CrossingRoutingEdgeSet(response_dict)
+
+    def __delegate_get_any_parameter(self, key: str) -> (bool, int, str, list, AIDM_classes.AlgorithmTrain,
                                                          AIDM_classes.TimeWindow):
         url_tail = "parameters/{0}".format(key)
         return self.__communication_layer.do_get_request(url_tail)["Value"]

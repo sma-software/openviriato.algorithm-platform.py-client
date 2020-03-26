@@ -1,6 +1,6 @@
 import datetime
 
-from AIDMClasses.AIDM_base_classes import IhasID, IhasCode, IhasDebugString, IUpdateTrain, IRoutingEdge
+from AIDMClasses.AIDM_base_classes import IhasID, IhasCode, IhasDebugString, IUpdateTrain, IRoutingEdge, IRoutingEdgeSet
 from AIDMClasses.AIDM_enum_classes import StopStatus
 
 
@@ -348,3 +348,39 @@ class OutgoingRoutingEdge(IRoutingEdge):
     @property
     def StartNodeTrackID(self) -> int:
         return self.__StartNodeTrackID
+
+
+class RoutingPoint:
+    __nodeID: int
+    __nodeTrackID: (None, int)
+
+    def __init__(self, nodeID: int, nodeTrackID: (None, int) = None):
+        self.__nodeID = nodeID
+        self.__nodeTrackID = nodeTrackID
+
+    @property
+    def NodeID(self) -> int:
+        return self.__nodeID
+
+    @property
+    def NodeTrackID(self) -> (None, int):
+        return self.__nodeTrackID
+
+
+class IncomingRoutingEdgeSet(IRoutingEdgeSet):
+
+    def __init__(self, incomingEdges):
+        IRoutingEdgeSet.__init__(self, incomingEdges)
+
+
+class OutgoingRoutingEdgeSet(IRoutingEdgeSet):
+
+    def __init__(self, outgoingEdges):
+        IRoutingEdgeSet.__init__(self, outgoingEdges)
+
+
+class CrossingRoutingEdgeSet(IRoutingEdgeSet):
+
+    def __init__(self, crossingEdges):
+        IRoutingEdgeSet.__init__(self, crossingEdges)
+

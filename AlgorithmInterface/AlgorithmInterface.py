@@ -224,14 +224,15 @@ class AlgorithmicPlatformInterface:
         response_list = self.__communication_layer.do_get_request(url_tail, get_request_params)
         return to_AIDM_converter.convert_list_of_dict_to_list_of_AIDM(AIDM_classes.AlgorithmNodeTrack, response_list)
 
-    def assign_station_track(self, trainPathNodeId: int, stationTrackIDOrNone: (None, int) = None) -> list:
+    def assign_station_track(self, trainPathNodeId: int, stationTrackIDOrNone: (None, int) = None) -> \
+            AIDM_classes.AlgorithmTrain:
         url_tail = "assign-station-track"
-        post_request_body = dict(TrainPathNodeID=trainPathNodeId, NodeTrackID=stationTrackIDOrNone)
-        response_list = self.__communication_layer.do_post_request(url_tail, post_request_body)
-        return to_AIDM_converter.convert_list_of_dict_to_list_of_AIDM(AIDM_classes.AlgorithmNodeTrack, response_list)
+        post_request_body = dict(TrainPathNodeID=trainPathNodeId, NodeTrackID=str(stationTrackIDOrNone))
+        response_dict = self.__communication_layer.do_post_request(url_tail, post_request_body)
+        return to_AIDM_converter.convert_dict_to_AlgorithmTrain(response_dict)
 
-    def __delegate_get_any_parameter(self, key: str) -> (bool, int, str, AIDM_classes.AlgorithmTrain,
-                                                         AIDM_classes.TimeWindow, list):
+    def __delegate_get_any_parameter(self, key: str) -> (bool, int, str, list,AIDM_classes.AlgorithmTrain,
+                                                         AIDM_classes.TimeWindow):
         url_tail = "parameters/{0}".format(key)
         return self.__communication_layer.do_get_request(url_tail)["Value"]
 

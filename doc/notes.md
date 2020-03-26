@@ -14,11 +14,11 @@ All Methods according to Documentation of REST-API
 * Separation Times
 * Parameters
 * Possessions
+* Assignable Station Tracks
 
 ##### In Progress:
 
 * Trains -> there is a bug (reported)
-* Assignable Station Tracks
 
 ##### Not Implemented
 

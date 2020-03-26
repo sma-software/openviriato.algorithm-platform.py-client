@@ -16,15 +16,17 @@ All Methods according to Documentation of REST-API
 * Possessions
 * Assignable Station Tracks
 
+##### To test
+* Routing
+* Vehicles
+* Running Time Calculations
+
 ##### In Progress:
 
 * Trains -> there is a bug (reported)
 
 ##### Not Implemented
 
-* Routing
-* Vehicles
-* Running Time Calculations
 
 ###### Questions:
 > resolved - 

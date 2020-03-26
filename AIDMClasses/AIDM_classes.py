@@ -384,3 +384,41 @@ class CrossingRoutingEdgeSet(IRoutingEdgeSet):
     def __init__(self, crossingEdges):
         IRoutingEdgeSet.__init__(self, crossingEdges)
 
+
+class AlgorithmFormation(IhasID, IhasDebugString):
+    __VehicleTypeIDs: list
+
+    def __init__(self, ID: int, DebugString: str, VehicleTypeIDs: list):
+        IhasID.__init__(self, ID)
+        IhasDebugString.__init__(self, DebugString)
+        self.__VehicleTypeIDs = VehicleTypeIDs
+
+    @property
+    def VehicleTypeIDs(self) -> list:
+        return self.__VehicleTypeIDs
+
+
+class AlgorithmVehicleType(IhasID, IhasDebugString):
+    __IsEngine: bool
+
+    def __init__(self, ID: int, DebugString: str, IsEngine: bool):
+        IhasID.__init__(self, ID)
+        IhasDebugString.__init__(self, DebugString)
+        self.__IsEngine = IsEngine
+
+    @property
+    def IsEngine(self) -> bool:
+        return self.__IsEngine
+
+
+class UpdateTrainTimes(IUpdateTrain):
+    __Times: list
+
+    def __init__(self, TrainID: int, Times: list):
+        IUpdateTrain.__init__(self, TrainID)
+        self.__Times = Times
+
+    @property
+    def Times(self) -> list:
+        return self.__Times
+

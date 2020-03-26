@@ -257,7 +257,7 @@ class AlgorithmicPlatformInterface:
         return to_AIDM_converter.convert_dict_to_AIDM(AIDM_classes.AlgorithmFormation, response_dict)
 
     def get_vehicle_type(self, vehicle_type_id: int) -> AIDM_classes.AlgorithmVehicleType:
-        url_tail = "vehicles/formations/{0}".format(vehicle_type_id)
+        url_tail = "vehicles/types/{0}".format(vehicle_type_id)
         response_dict = self.__communication_layer.do_get_request(url_tail)
         return to_AIDM_converter.convert_dict_to_AIDM(AIDM_classes.AlgorithmVehicleType, response_dict)
 

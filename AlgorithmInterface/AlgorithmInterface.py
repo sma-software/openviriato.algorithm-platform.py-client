@@ -8,7 +8,7 @@ from AIDMClasses import AIDM_classes, AIDM_enum_classes
 from AlgorithmInterface.AlgorithmInterfaceHelpers import extract_parameters_from_routing_point, \
     add_cut_train_to_get_request_params, add_node_filter_to_get_request_params
 from Communication import CommunicationLayer
-from ConversionLayer import converter_helpers, to_AIDM_converter, from_AIDM_converter
+from Conversion import converter_helpers, to_AIDM_converter, from_AIDM_converter
 
 
 class AlgorithmicPlatformInterface:

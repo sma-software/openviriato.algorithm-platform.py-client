@@ -1,5 +1,5 @@
 import AIDMClasses.AIDM_classes
-from ConversionLayer.converter_helpers import check_and_format_any_datetime_to_iso_str, check_and_format_any_enum_to_str
+from Conversion.converter_helpers import check_and_format_any_datetime_to_iso_str, check_and_format_any_enum_to_str
 
 
 def convert_to_json_conform_dict(AIDM_object) -> dict:

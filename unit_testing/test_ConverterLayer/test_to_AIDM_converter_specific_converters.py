@@ -1,7 +1,7 @@
 import datetime
 import unittest
 
-import ConversionLayer.to_AIDM_converter
+import Conversion.to_AIDM_converter
 from AIDMClasses import AIDM_classes
 
 
@@ -12,7 +12,7 @@ class TestToAIDMConverterSpecificConversions(unittest.TestCase):
     def test_convert_dict_to_AlgorithmNode(self):
         test_node_as_dict = dict(ID=15, Code='A', DebugString='test123', NodeTracks=[])
 
-        test_node = ConversionLayer.to_AIDM_converter.convert_dict_to_AlgorithmNode(test_node_as_dict)
+        test_node = Conversion.to_AIDM_converter.convert_dict_to_AlgorithmNode(test_node_as_dict)
 
         self.assertIsInstance(test_node, AIDM_classes.AlgorithmNode)
         self.assertEqual(test_node.ID, 15)
@@ -24,8 +24,8 @@ class TestToAIDMConverterSpecificConversions(unittest.TestCase):
         test_node_as_dict = dict(ID=15, Code='A', DebugString='test123', NodeTracks=[])
         test_node_as_list_of_dict = [test_node_as_dict, test_node_as_dict, test_node_as_dict, test_node_as_dict]
 
-        test_node_list = ConversionLayer.to_AIDM_converter.convert_list_of_dict_to_list_of_AIDM(
-            ConversionLayer.to_AIDM_converter.convert_dict_to_AlgorithmNode, test_node_as_list_of_dict)
+        test_node_list = Conversion.to_AIDM_converter.convert_list_of_dict_to_list_of_AIDM(
+            Conversion.to_AIDM_converter.convert_dict_to_AlgorithmNode, test_node_as_list_of_dict)
 
         self.assertIsInstance(test_node_list, list)
         self.assertIsInstance(test_node_list[1], AIDM_classes.AlgorithmNode)
@@ -37,7 +37,7 @@ class TestToAIDMConverterSpecificConversions(unittest.TestCase):
                                  MinimumRunTime=None, MinimumStopTime="P0D", StopStatus="commercialStop",
                                  SequenceNumber=0)
 
-        test_train_path_node = ConversionLayer.to_AIDM_converter.convert_dict_to_TrainPathNode(test_node_as_dict)
+        test_train_path_node = Conversion.to_AIDM_converter.convert_dict_to_TrainPathNode(test_node_as_dict)
 
         self.assertIsInstance(test_train_path_node, AIDM_classes.TrainPathNode)
         self.assertEqual(test_train_path_node.ID, 1332)
@@ -57,7 +57,7 @@ class TestToAIDMConverterSpecificConversions(unittest.TestCase):
                  MinimumStopTime="P0D", StopStatus="commercialStop", SequenceNumber=2)
         ], DebugString="RVZH_3_1_J03 tt_(S)")
 
-        test_train = ConversionLayer.to_AIDM_converter.convert_dict_to_AlgorithmTrain(test_train_as_dict)
+        test_train = Conversion.to_AIDM_converter.convert_dict_to_AlgorithmTrain(test_train_as_dict)
 
         self.assertIsInstance(test_train, AIDM_classes.AlgorithmTrain)
         self.assertIsInstance(test_train.TrainPathNodes[0], AIDM_classes.TrainPathNode)
@@ -68,7 +68,7 @@ class TestToAIDMConverterSpecificConversions(unittest.TestCase):
         param_dict = dict(DebugString="nodetrackclosure:85ZMUS 24", NodeID=621, NodeTrackID=622,
                           ClosureTimeWindow=dict(FromTime="2003-05-01T08:00:00", ToTime="2003-05-02T10:00:00"))
 
-        test_closure = ConversionLayer.to_AIDM_converter.convert_dict_to_AlgorithmNodeTrackClosure(param_dict)
+        test_closure = Conversion.to_AIDM_converter.convert_dict_to_AlgorithmNodeTrackClosure(param_dict)
 
         self.assertIsInstance(test_closure, AIDM_classes.AlgorithmNodeTrackClosure)
         self.assertIsInstance(test_closure.ClosureTimeWindow, AIDM_classes.TimeWindow)
@@ -80,7 +80,7 @@ class TestToAIDMConverterSpecificConversions(unittest.TestCase):
                           ClosureTimeWindowFromNode=dict(FromTime="2003-05-01T08:00:00", ToTime="2003-05-01T09:00:00"),
                           ClosureTimeWindowToNode=dict(FromTime="2003-05-01T08:30:00", ToTime="2003-05-01T09:30:00"))
 
-        test_closure = ConversionLayer.to_AIDM_converter.convert_dict_to_AlgorithmSectionTrackClosure(param_dict)
+        test_closure = Conversion.to_AIDM_converter.convert_dict_to_AlgorithmSectionTrackClosure(param_dict)
 
         self.assertIsInstance(test_closure, AIDM_classes.AlgorithmSectionTrackClosure)
         self.assertIsInstance(test_closure.ClosureTimeWindowFromNode, AIDM_classes.TimeWindow)

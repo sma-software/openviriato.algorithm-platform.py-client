@@ -1,6 +1,6 @@
 import unittest
 
-import ConversionLayer.to_AIDM_converter
+import Conversion.to_AIDM_converter
 from AIDMClasses import AIDM_classes
 
 
@@ -11,8 +11,8 @@ class TestToAIDMConverterGenericConversions(unittest.TestCase):
     def test_convert_dict_to_AIDM(self):
         test_section_as_dict = dict(ID=12, Code='ATest', DebugString='str', Weight=8, SectionCode='TestSection')
 
-        test_section = ConversionLayer.to_AIDM_converter.convert_dict_to_AIDM(AIDM_classes.AlgorithmSectionTrack,
-                                                                              test_section_as_dict)
+        test_section = Conversion.to_AIDM_converter.convert_dict_to_AIDM(AIDM_classes.AlgorithmSectionTrack,
+                                                                         test_section_as_dict)
 
         self.assertIsInstance(test_section, AIDM_classes.AlgorithmSectionTrack)
         self.assertEqual(test_section.ID, 12)
@@ -25,7 +25,7 @@ class TestToAIDMConverterGenericConversions(unittest.TestCase):
         test_section_as_dict = dict(ID=12, Code='ATest', DebugString='str', Weight=8, SectionCode='TestSection')
         test_section_dict_in_list = [test_section_as_dict, test_section_as_dict, test_section_as_dict]
 
-        test_section_list = ConversionLayer.to_AIDM_converter.convert_list_of_dict_to_list_of_AIDM(
+        test_section_list = Conversion.to_AIDM_converter.convert_list_of_dict_to_list_of_AIDM(
             AIDM_classes.AlgorithmSectionTrack, test_section_dict_in_list)
 
         self.assertIsInstance(test_section_list, list)

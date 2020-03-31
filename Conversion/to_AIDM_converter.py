@@ -2,7 +2,7 @@ import inspect
 
 import AIDMClasses.AIDM_classes as AIDM_classes
 import AIDMClasses.AIDM_enum_classes as AIDM_enum_classes
-from ConversionLayer.converter_helpers import parse_to_datetime, parse_to_timedelta, parse_to_timedelta_or_None
+from Conversion.converter_helpers import parse_to_datetime, parse_to_timedelta, parse_to_timedelta_or_None
 
 
 def convert_input_to_dict(**kwargs):

@@ -55,8 +55,7 @@ class TestFromAIDMConverter(unittest.TestCase):
     def test_convert_to_list_of_dict(self):
         algorithm_section_track = AIDM_classes.AlgorithmSectionTrack(ID=12, Code='ATest', DebugString='str', Weight=8,
                                                                      SectionCode='TestSection')
-        test_list_of_algorithm_section_track = [algorithm_section_track, algorithm_section_track,
-                                                algorithm_section_track]
+        test_list_of_algorithm_section_track = [algorithm_section_track, algorithm_section_track]
 
         test_section_list_of_dict = ConversionLayer.from_AIDM_converter.convert_to_list_of_dict(
             test_list_of_algorithm_section_track)

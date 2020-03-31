@@ -85,6 +85,7 @@ class TestGetOutgoingRoutingEdges(unittest.TestCase):
         session_obj = self.interface_to_viriato._AlgorithmicPlatformInterface__communication_layer.currentSession
         self.assertEqual(session_obj._GetOutgoingRoutingEdgesTestSessionMock__last_request, get_api_url() +
                          "/vehicles/formations/1828")
+        # FIXME The conversion fails -> Bug in Doc (JSON keys != AIDM property names)
         self.assertDictEqual(session_obj._GetOutgoingRoutingEdgesTestSessionMock__last_body, {"nodeTrackID": "12"})
 
     @mock.patch('requests.Session', side_effect=GetOutgoingRoutingEdgesTestSessionMock)
@@ -92,14 +93,14 @@ class TestGetOutgoingRoutingEdges(unittest.TestCase):
         routing_point = AIDM_classes.RoutingPoint(nodeID=1)
 
         routing_edges = self.interface_to_viriato.get_outgoing_routing_edges(routing_point)
-
+        # FIXME The assertions do not match -> Bug in Doc (JSON keys != AIDM property names)
         raise NotImplementedError
 
     def test_get_outgoing_routing_edges_response_node_id_response_and_node_track_id(self, mocked_get_obj):
         routing_point = AIDM_classes.RoutingPoint(nodeID=1, nodeTrackID=21)
 
         routing_edges = self.interface_to_viriato.get_outgoing_routing_edges(routing_point)
-
+        # TODO Is not implemented due to a bug in the Documentation
         raise NotImplementedError
 
     @mock.patch('requests.Session', side_effect=GetOutgoingRoutingEdgesTestSessionMock)

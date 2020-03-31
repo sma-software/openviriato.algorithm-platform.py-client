@@ -92,14 +92,14 @@ class TestGetIncomingRoutingEdges(unittest.TestCase):
         routing_point = AIDM_classes.RoutingPoint(nodeID=1)
 
         routing_edges = self.interface_to_viriato.get_incoming_routing_edges(routing_point)
-
+        # FIXME Is not implemented due to a bug in the Documentation
         raise NotImplementedError
 
     def test_get_incoming_routing_edges_response_node_id_and_node_track_id(self, mocked_get_obj):
         routing_point = AIDM_classes.RoutingPoint(nodeID=1, nodeTrackID=21)
 
         routing_edges = self.interface_to_viriato.get_incoming_routing_edges(routing_point)
-
+        # FIXME Is not implemented due to a bug in the Documentation
         raise NotImplementedError
 
     @mock.patch('requests.Session', side_effect=GetIncomingRoutingEdgesTestSessionMock)

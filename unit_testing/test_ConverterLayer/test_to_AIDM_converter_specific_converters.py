@@ -5,6 +5,8 @@ import ConversionLayer.to_AIDM_converter
 from AIDMClasses import AIDM_classes
 
 
+# TODO Check if all specific conversions are tested!
+
 class TestToAIDMConverterSpecificConversions(unittest.TestCase):
 
     def test_convert_dict_to_AlgorithmNode(self):

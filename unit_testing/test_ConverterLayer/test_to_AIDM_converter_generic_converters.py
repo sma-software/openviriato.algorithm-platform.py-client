@@ -4,6 +4,8 @@ import ConversionLayer.to_AIDM_converter
 from AIDMClasses import AIDM_classes
 
 
+# TODO Check if all conversions are tested!
+
 class TestToAIDMConverterGenericConversions(unittest.TestCase):
 
     def test_convert_dict_to_AIDM(self):

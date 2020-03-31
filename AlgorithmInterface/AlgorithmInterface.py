@@ -7,15 +7,15 @@ import warnings
 from AIDMClasses import AIDM_classes, AIDM_enum_classes
 from AlgorithmInterface.AlgorithmInterfaceHelpers import extract_parameters_from_routing_point, \
     add_cut_train_to_get_request_params, add_node_filter_to_get_request_params
-from CommunicationLayer import AlgorithmInterfaceCommunicationLayer
+from Communication import CommunicationLayer
 from ConversionLayer import converter_helpers, to_AIDM_converter, from_AIDM_converter
 
 
 class AlgorithmicPlatformInterface:
-    __communication_layer: AlgorithmInterfaceCommunicationLayer.CommunicationLayer
+    __communication_layer: CommunicationLayer.CommunicationLayer
 
     def __init__(self, base_url: str):
-        self.__communication_layer = AlgorithmInterfaceCommunicationLayer.CommunicationLayer(base_url)
+        self.__communication_layer = CommunicationLayer.CommunicationLayer(base_url)
 
     def __enter__(self):
         return self

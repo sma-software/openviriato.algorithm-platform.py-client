@@ -2,7 +2,8 @@
 A test script that requires an REST-API of the VIRIATO-Algorithm Platform
 """
 import AlgorithmInterface.AlgorithmInterface
-from CommunicationLayer import AlgorithmInterfaceCommunicationLayer
+import Communication.ResponseProcessing
+from Communication import CommunicationLayer
 
 
 def test_object_initialisation(url_str='http://localhost:8080') -> \
@@ -41,7 +42,7 @@ def test_get_directed_section_tracks(interface_to_viriato) -> None:
                 # print(directed_section_tracks)
                 # for idx in range(len(directed_section_tracks)):
                 #    print(directed_section_tracks[idx].ID)
-            except AlgorithmInterfaceCommunicationLayer.AlgorithmPlatformError:
+            except Communication.ResponseProcessing.AlgorithmPlatformError:
                 pass
     print('test_get_directed_section_tracks complete')
 
@@ -52,7 +53,7 @@ def test_get_node_and_get_neighbor_nodes(interface_to_viriato) -> None:
         try:
             node_obj = interface_to_viriato.get_node(i)
             node_list = interface_to_viriato.get_neighbor_nodes(i)
-        except AlgorithmInterfaceCommunicationLayer.AlgorithmPlatformError:
+        except Communication.ResponseProcessing.AlgorithmPlatformError:
             pass
     print('test_get_node_and_get_neighbor_nodes complete')
 
@@ -64,7 +65,7 @@ def test_get_parallel_section_tracks(interface_to_viriato) -> None:
             # if len(track_list) > 0:
             #    for idx in range(len(track_list)):
             #       print(track_list[idx].ID)
-        except AlgorithmInterfaceCommunicationLayer.AlgorithmPlatformError:
+        except Communication.ResponseProcessing.AlgorithmPlatformError:
             pass
     print('test_get_parallel_section_tracks complete')
 
@@ -75,13 +76,13 @@ def test_train_cancellations(
         try:
             obj = interface_to_viriato.cancel_train_to(train_path_node_id=i)
             print(vars(obj))
-        except AlgorithmInterfaceCommunicationLayer.AlgorithmPlatformError:
+        except Communication.ResponseProcessing.AlgorithmPlatformError:
             pass
     for i in range(500, 2500):
         try:
             obj = interface_to_viriato.cancel_train_from(train_path_node_id=i)
             print(vars(obj))
-        except AlgorithmInterfaceCommunicationLayer.AlgorithmPlatformError:
+        except Communication.ResponseProcessing.AlgorithmPlatformError:
             pass
 
 
@@ -100,7 +101,7 @@ def main():
         test_user_notifications(interface_to_viriato)
         try:
             print(interface_to_viriato.get_train_classifications())
-        except AlgorithmInterfaceCommunicationLayer.AlgorithmPlatformError:
+        except Communication.ResponseProcessing.AlgorithmPlatformError:
             print('Train classifications not configured')
 
     with test_object_initialisation(url_str) as interface_to_viriato:

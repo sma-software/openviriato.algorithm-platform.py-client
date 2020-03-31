@@ -18,10 +18,10 @@ class AlgorithmicPlatformInterface:
         self.__communication_layer = AlgorithmInterfaceCommunicationLayer.CommunicationLayer(base_url)
 
     def __enter__(self):
-        return self  # to be used in with statement as disposable
+        return self
 
     def __exit__(self, exc_type=None, exc_val=None, exc_tb=None):
-        self.__communication_layer.currentSession.close()  # to be used in with statement as disposable
+        self.__communication_layer.currentSession.close()
 
     @property
     def base_url(self) -> str:
@@ -65,7 +65,6 @@ class AlgorithmicPlatformInterface:
         return self.__communication_layer.do_get_request('train-classifications')
 
     def get_trains(self, timeWindow: AIDM_classes.TimeWindow) -> list:
-        warnings.warn("not tested")
         url_tail = "trains"
         get_request_params = from_AIDM_converter.convert_to_json_conform_dict(timeWindow)
         response_list = self.__communication_layer.do_get_request(url_tail, request_param=get_request_params)
@@ -73,7 +72,6 @@ class AlgorithmicPlatformInterface:
             to_AIDM_converter.convert_dict_to_AlgorithmTrain, response_list)
 
     def get_trains_driving_any_node(self, timeWindow: AIDM_classes.TimeWindow, nodeIDs: list) -> list:
-        warnings.warn("not tested")
         url_tail = "trains"
         get_request_params = from_AIDM_converter.convert_to_json_conform_dict(timeWindow)
         get_request_params = add_node_filter_to_get_request_params(get_request_params, nodeIDs)
@@ -82,7 +80,6 @@ class AlgorithmicPlatformInterface:
             to_AIDM_converter.convert_dict_to_AlgorithmTrain, response_list)
 
     def get_trains_cut_to_time_range(self, timeWindow: AIDM_classes.TimeWindow) -> list:
-        warnings.warn("not tested")
         url_tail = "trains"
         get_request_params = from_AIDM_converter.convert_to_json_conform_dict(timeWindow)
         get_request_params = add_cut_train_to_get_request_params(get_request_params)
@@ -91,7 +88,6 @@ class AlgorithmicPlatformInterface:
             to_AIDM_converter.convert_dict_to_AlgorithmTrain, response_list)
 
     def get_trains_cut_to_time_range_driving_any_node(self, timeWindow: AIDM_classes.TimeWindow, nodeIDs: list) -> list:
-        warnings.warn("not tested")
         url_tail = "trains"
         get_request_params = from_AIDM_converter.convert_to_json_conform_dict(timeWindow)
         get_request_params = add_node_filter_to_get_request_params(get_request_params, nodeIDs)
@@ -139,7 +135,6 @@ class AlgorithmicPlatformInterface:
         url_tail = "trains/{0}/train-path-nodes:update-trajectory-stop-times".format(train_id)
         put_body_list = from_AIDM_converter.convert_to_list_of_dict(update_train_stop_times_nodes)
         response_dict = self.__communication_layer.do_put_request(url_tail, request_body=put_body_list)
-        warnings.warn("call not tested")
         return to_AIDM_converter.convert_dict_to_AlgorithmTrain(response_dict)
 
     def get_separation_time_in_junction(self, preceding_train_path_node_id: int, succeeding_train_path_node_id: int) \
@@ -236,7 +231,6 @@ class AlgorithmicPlatformInterface:
         url_tail = "nodes/{0}/incoming-routing-edges".format(routing_point.NodeID)
         get_request_params = extract_parameters_from_routing_point(routing_point)
         response_dict = self.__communication_layer.do_get_request(url_tail, get_request_params)
-        # TODO complete testing after BugFix!
         return to_AIDM_converter.convert_dict_to_IncomingRoutingEdgeSet(response_dict)
 
     def get_outgoing_routing_edges(self, routing_point: AIDM_classes.RoutingPoint) \
@@ -244,14 +238,12 @@ class AlgorithmicPlatformInterface:
         url_tail = "nodes/{0}/outgoing-routing-edges".format(routing_point.NodeID)
         get_request_params = extract_parameters_from_routing_point(routing_point)
         response_dict = self.__communication_layer.do_get_request(url_tail, get_request_params)
-        # TODO complete testing after BugFix!
         return to_AIDM_converter.convert_dict_to_OutgoingRoutingEdgeSet(response_dict)
 
     def get_crossing_routing_edges(self, routing_point: AIDM_classes.RoutingPoint) -> \
             AIDM_classes.CrossingRoutingEdgeSet:
         url_tail = "nodes/{0}/incoming-routing-edges".format(routing_point.NodeID)
         response_dict = self.__communication_layer.do_get_request(url_tail)
-        # TODO complete testing after BugFix!
         return to_AIDM_converter.convert_dict_to_CrossingRoutingEdgeSet(response_dict)
 
     def get_formation(self, formation_id: int) -> AIDM_classes.AlgorithmFormation:

@@ -20,10 +20,12 @@ All Methods according to Documentation of REST-API
 
 ##### In Progress:
 
-* Routing -> there is the same bug as in trains
 * Trains -> there is a bug (reported)
+* Routing -> there is the same bug as in trains
 
-##### Not Implemented
+##### What remains to do:
+- Update calls which were changed in trunk
+- Complete unittests for AIDM, Conversion and Comm-Layers 
 
 
 ###### Questions:

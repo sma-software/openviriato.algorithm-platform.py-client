@@ -3,7 +3,7 @@ from unittest import mock, TestCase
 import AlgorithmInterface.AlgorithmInterface
 from AlgorithmInterface import AlgorithmInterfaceFactory
 from AlgorithmInterface_test.test_helper import SessionMockFactory as APISessionMock
-from AlgorithmInterface_test.test_helper.unit_testing_with_mock_helpers import \
+from AlgorithmInterface_test.test_helper.SessionMockTestBase import \
     get_api_url, \
     SessionMockTestBase
 

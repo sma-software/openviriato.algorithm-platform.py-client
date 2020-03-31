@@ -5,7 +5,7 @@ import AIDMClasses.AIDM_classes as AIDM_classes
 import AlgorithmInterface.AlgorithmInterface
 import AlgorithmInterface_test.test_helper.SessionMockFactory as SessionMockFactory
 from AlgorithmInterface import AlgorithmInterfaceFactory
-from AlgorithmInterface_test.test_helper.unit_testing_with_mock_helpers import \
+from AlgorithmInterface_test.test_helper.SessionMockTestBase import \
     get_api_url, SessionMockTestBase
 
 

@@ -236,6 +236,7 @@ class AlgorithmicPlatformInterface:
         url_tail = "nodes/{0}/incoming-routing-edges".format(routing_point.NodeID)
         get_request_params = extract_parameters_from_routing_point(routing_point)
         response_dict = self.__communication_layer.do_get_request(url_tail, get_request_params)
+        # TODO complete testing after BugFix!
         return to_AIDM_converter.convert_dict_to_IncomingRoutingEdgeSet(response_dict)
 
     def get_outgoing_routing_edges(self, routing_point: AIDM_classes.RoutingPoint) \
@@ -243,12 +244,14 @@ class AlgorithmicPlatformInterface:
         url_tail = "nodes/{0}/outgoing-routing-edges".format(routing_point.NodeID)
         get_request_params = extract_parameters_from_routing_point(routing_point)
         response_dict = self.__communication_layer.do_get_request(url_tail, get_request_params)
+        # TODO complete testing after BugFix!
         return to_AIDM_converter.convert_dict_to_OutgoingRoutingEdgeSet(response_dict)
 
     def get_crossing_routing_edges(self, routing_point: AIDM_classes.RoutingPoint) -> \
             AIDM_classes.CrossingRoutingEdgeSet:
         url_tail = "nodes/{0}/incoming-routing-edges".format(routing_point.NodeID)
         response_dict = self.__communication_layer.do_get_request(url_tail)
+        # TODO complete testing after BugFix!
         return to_AIDM_converter.convert_dict_to_CrossingRoutingEdgeSet(response_dict)
 
     def get_formation(self, formation_id: int) -> AIDM_classes.AlgorithmFormation:

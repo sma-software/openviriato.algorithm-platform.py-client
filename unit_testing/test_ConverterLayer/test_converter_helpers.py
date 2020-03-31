@@ -1,6 +1,6 @@
 import datetime
 import unittest
-
+from enum import Enum
 import isodate
 
 import ConversionLayer.converter_helpers
@@ -86,3 +86,28 @@ class TestAllConverterHelpers(unittest.TestCase):
 
         self.assertEqual(timedelta_str, 'passing')
         self.assertEqual(still_str, 'should stay the same')
+
+    def test_check_and_format_any_enum_to_str_enum_input(self):
+        class TestEnum(Enum):
+            One = 0
+            Two = 1
+
+        test_one = TestEnum['One']
+        test_two = TestEnum['Two']
+
+        str_one = ConversionLayer.converter_helpers.check_and_format_any_enum_to_str(test_one)
+        str_two = ConversionLayer.converter_helpers.check_and_format_any_enum_to_str(test_two)
+
+        self.assertIsInstance(str_one, str)
+        self.assertEqual(str_one, 'One')
+        self.assertEqual(str_two, 'Two')
+
+    def test_check_and_format_any_enum_to_str_not_enum_input(self):
+        test_str = "Not an enum"
+        test_list = ["Not an enum"]
+
+        return_str = ConversionLayer.converter_helpers.check_and_format_any_enum_to_str(test_str)
+        return_list = ConversionLayer.converter_helpers.check_and_format_any_enum_to_str(test_list)
+
+        self.assertEqual(return_str, "Not an enum")
+        self.assertListEqual(return_list, ["Not an enum"])

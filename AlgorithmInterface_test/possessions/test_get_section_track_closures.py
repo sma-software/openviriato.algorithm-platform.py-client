@@ -70,7 +70,8 @@ class TestGetSectionTrackClosures(unittest.TestCase):
 
     @mock.patch('requests.Session', side_effect=GetSectionTrackClosuresTestMockSession)
     def test_get_section_track_closures_response(self, mocked_get_obj):
-        requested_time_window = AIDM_classes.TimeWindow
+        requested_time_window = AIDM_classes.TimeWindow(FromTime=datetime.datetime(2003, 5, 1, 0, 0),
+                                                        ToTime=datetime.datetime(2003, 5, 12, 0, 0))
 
         list_of_section_track_closure = self.interface_to_viriato.get_section_track_closures(requested_time_window)
 

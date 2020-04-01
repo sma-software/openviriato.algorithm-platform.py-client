@@ -2,7 +2,7 @@ import datetime
 import json
 import unittest
 
-import Conversion.to_algorithm_platform_json_converter
+import Conversion.object_to_algorithm_platform_json_converter
 from AIDMClasses import AIDM_classes
 
 
@@ -18,7 +18,7 @@ class TestFromAIDMConverter(unittest.TestCase):
                                                           StopStatus=AIDM_classes.StopStatus['passing'],
                                                           SequenceNumber=0)
 
-        test_node_as_dict = Conversion.to_algorithm_platform_json_converter.convert_any_object(test_train_path_node)
+        test_node_as_dict = Conversion.object_to_algorithm_platform_json_converter.convert_any_object(test_train_path_node)
 
         self.assertIsInstance(test_node_as_dict, dict)
         self.assertEqual(test_node_as_dict['ID'], 11038)
@@ -35,7 +35,7 @@ class TestFromAIDMConverter(unittest.TestCase):
                                                           StopStatus=AIDM_classes.StopStatus['passing'],
                                                           SequenceNumber=0)
 
-        test_node_as_dict = Conversion.to_algorithm_platform_json_converter.convert_any_object(test_train_path_node)
+        test_node_as_dict = Conversion.object_to_algorithm_platform_json_converter.convert_any_object(test_train_path_node)
         test_node_as_json = json.dumps(test_node_as_dict)
 
         expected_json_string = '{"ID": 11038, "ArrivalTime": "0001-05-01T01:01:00", ' \
@@ -48,7 +48,7 @@ class TestFromAIDMConverter(unittest.TestCase):
     def test_convert_to_list_of_dict_empty(self):
         test_list_of_dict = []
 
-        test_section_list = Conversion.to_algorithm_platform_json_converter.convert_any_object(test_list_of_dict)
+        test_section_list = Conversion.object_to_algorithm_platform_json_converter.convert_any_object(test_list_of_dict)
 
         self.assertIsInstance(test_section_list, list)
         self.assertListEqual(test_section_list, [])
@@ -58,7 +58,7 @@ class TestFromAIDMConverter(unittest.TestCase):
                                                                      SectionCode='TestSection')
         test_list_of_algorithm_section_track = [algorithm_section_track, algorithm_section_track]
 
-        test_section_list_of_dict = Conversion.to_algorithm_platform_json_converter.convert_any_object(test_list_of_algorithm_section_track)
+        test_section_list_of_dict = Conversion.object_to_algorithm_platform_json_converter.convert_any_object(test_list_of_algorithm_section_track)
 
         self.assertIsInstance(test_section_list_of_dict, list)
         self.assertIsInstance(test_section_list_of_dict[0], dict)

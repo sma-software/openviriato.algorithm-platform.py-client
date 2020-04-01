@@ -97,6 +97,7 @@ class TestRerouteTrain(unittest.TestCase):
         self.assertListEqual(session_obj._RerouteTrainTestMockSession__last_body['RoutingEdges'],
                              expected_body['RoutingEdges'])
 
+    @unittest.skip("VPLAT-7449")
     @mock.patch('requests.Session', side_effect=RerouteTrainTestMockSession)
     def test_reroute_train_response(self, mocked_session):
         train_id = 2060

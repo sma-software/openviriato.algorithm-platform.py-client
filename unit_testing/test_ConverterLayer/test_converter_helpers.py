@@ -69,25 +69,11 @@ class TestAllConverterHelpers(unittest.TestCase):
         test_case_datetime = datetime.datetime(1, 1, 1, 1, 1)
         test_case_str = 'should stay the same'
 
-        timedelta_str = Conversion.converter_helpers.check_and_format_any_datetime_to_iso_str(test_case_timedelta)
-        datetime_str = Conversion.converter_helpers.check_and_format_any_datetime_to_iso_str(test_case_datetime)
-        still_str = Conversion.converter_helpers.check_and_format_any_datetime_to_iso_str(test_case_str)
+        timedelta_str = Conversion.converter_helpers.convert_to_datetime_format_or_return_self(test_case_timedelta)
+        datetime_str = Conversion.converter_helpers.convert_to_datetime_format_or_return_self(test_case_datetime)
+        still_str = Conversion.converter_helpers.convert_to_datetime_format_or_return_self(test_case_str)
 
         self.assertEqual(timedelta_str, 'P1D')
         self.assertEqual(datetime_str, '0001-01-01T01:01:00')
-        self.assertEqual(still_str, 'should stay the same')
-
-    def test_check_and_format_any_enum_to_str_all_cases(self):
-        class TestEnum(Enum):
-            One = 0
-            Two = 1
-
-        test_case_enum = TestEnum['One']
-        test_case_str = 'should stay the same'
-
-        timedelta_str = Conversion.converter_helpers.check_and_format_any_enum_to_str(test_case_enum)
-        still_str = Conversion.converter_helpers.check_and_format_any_enum_to_str(test_case_str)
-
-        self.assertEqual(timedelta_str, 'One')
         self.assertEqual(still_str, 'should stay the same')
 

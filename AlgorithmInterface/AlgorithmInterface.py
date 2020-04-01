@@ -8,7 +8,7 @@ from AIDMClasses import AIDM_classes, AIDM_enum_classes
 from AlgorithmInterface.AlgorithmInterfaceHelpers import extract_parameters_from_routing_point, \
     add_cut_train_to_get_request_params, add_node_filter_to_get_request_params
 from Communication import CommunicationLayer
-from Conversion import converter_helpers, to_AIDM_converter, from_AIDM_converter
+from Conversion import converter_helpers, to_AIDM_converter, to_algorithm_platform_json_converter
 
 
 class AlgorithmicPlatformInterface:
@@ -66,14 +66,14 @@ class AlgorithmicPlatformInterface:
 
     def get_trains(self, timeWindow: AIDM_classes.TimeWindow) -> list:
         url_tail = "trains"
-        get_request_params = from_AIDM_converter.convert_to_json_conform_dict(timeWindow)
+        get_request_params = to_algorithm_platform_json_converter.convert_any_object(timeWindow)
         response_list = self.__communication_layer.do_get_request(url_tail, request_param=get_request_params)
         return to_AIDM_converter.convert_list_of_dict_to_list_of_AIDM(
             to_AIDM_converter.convert_dict_to_AlgorithmTrain, response_list)
 
     def get_trains_driving_any_node(self, timeWindow: AIDM_classes.TimeWindow, nodeIDs: list) -> list:
         url_tail = "trains"
-        get_request_params = from_AIDM_converter.convert_to_json_conform_dict(timeWindow)
+        get_request_params = to_algorithm_platform_json_converter.convert_any_object(timeWindow)
         get_request_params = add_node_filter_to_get_request_params(get_request_params, nodeIDs)
         response_list = self.__communication_layer.do_get_request(url_tail, request_param=get_request_params)
         return to_AIDM_converter.convert_list_of_dict_to_list_of_AIDM(
@@ -81,7 +81,7 @@ class AlgorithmicPlatformInterface:
 
     def get_trains_cut_to_time_range(self, timeWindow: AIDM_classes.TimeWindow) -> list:
         url_tail = "trains"
-        get_request_params = from_AIDM_converter.convert_to_json_conform_dict(timeWindow)
+        get_request_params = to_algorithm_platform_json_converter.convert_any_object(timeWindow)
         get_request_params = add_cut_train_to_get_request_params(get_request_params)
         response_list = self.__communication_layer.do_get_request(url_tail, request_param=get_request_params)
         return to_AIDM_converter.convert_list_of_dict_to_list_of_AIDM(
@@ -89,7 +89,7 @@ class AlgorithmicPlatformInterface:
 
     def get_trains_cut_to_time_range_driving_any_node(self, timeWindow: AIDM_classes.TimeWindow, nodeIDs: list) -> list:
         url_tail = "trains"
-        get_request_params = from_AIDM_converter.convert_to_json_conform_dict(timeWindow)
+        get_request_params = to_algorithm_platform_json_converter.convert_any_object(timeWindow)
         get_request_params = add_node_filter_to_get_request_params(get_request_params, nodeIDs)
         get_request_params = add_cut_train_to_get_request_params(get_request_params)
         response_list = self.__communication_layer.do_get_request(url_tail, request_param=get_request_params)
@@ -116,7 +116,7 @@ class AlgorithmicPlatformInterface:
 
     def reroute_train(self, route: AIDM_classes.UpdateTrainRoute):
         url_tail = "reroute-train"
-        post_request_body = from_AIDM_converter.convert_to_json_conform_dict(route)
+        post_request_body = to_algorithm_platform_json_converter.convert_any_object(route)
         response_dict = self.__communication_layer.do_post_request(url_tail, request_body=post_request_body)
         return to_AIDM_converter.convert_dict_to_AlgorithmTrain(response_dict)
 
@@ -127,13 +127,13 @@ class AlgorithmicPlatformInterface:
 
     def update_train_times(self, train_id: int, update_train_times_nodes: list) -> AIDM_classes.AlgorithmTrain:
         url_tail = 'trains/{0}/train-path-nodes'.format(train_id)
-        put_body_list = from_AIDM_converter.convert_to_list_of_dict(update_train_times_nodes)
+        put_body_list = to_algorithm_platform_json_converter.convert_any_object(update_train_times_nodes)
         response_dict = self.__communication_layer.do_put_request(url_tail, request_body=put_body_list)
         return to_AIDM_converter.convert_dict_to_AlgorithmTrain(response_dict)
 
     def update_trajectory(self, train_id: int, update_train_stop_times_nodes: list) -> AIDM_classes.AlgorithmTrain:
         url_tail = "trains/{0}/train-path-nodes:update-trajectory-stop-times".format(train_id)
-        put_body_list = from_AIDM_converter.convert_to_list_of_dict(update_train_stop_times_nodes)
+        put_body_list = to_algorithm_platform_json_converter.convert_any_object(update_train_stop_times_nodes)
         response_dict = self.__communication_layer.do_put_request(url_tail, request_body=put_body_list)
         return to_AIDM_converter.convert_dict_to_AlgorithmTrain(response_dict)
 
@@ -289,14 +289,14 @@ class AlgorithmicPlatformInterface:
         return to_AIDM_converter.convert_dict_to_TimeWindow(response_dict)
 
     def get_node_track_closures(self, time_window: AIDM_classes.TimeWindow) -> list:
-        time_window_dict = from_AIDM_converter.convert_to_json_conform_dict(time_window)
+        time_window_dict = to_algorithm_platform_json_converter.convert_any_object(time_window)
         url_tail = 'possessions/node-track-closures'
         response_dict = self.__communication_layer.do_get_request(url_tail, request_param=time_window_dict)
         return to_AIDM_converter.convert_list_of_dict_to_list_of_AIDM(
             to_AIDM_converter.convert_dict_to_AlgorithmNodeTrackClosure, response_dict)
 
     def get_section_track_closures(self, time_window: AIDM_classes.TimeWindow) -> list:
-        time_window_dict = from_AIDM_converter.convert_to_json_conform_dict(time_window)
+        time_window_dict = to_algorithm_platform_json_converter.convert_any_object(time_window)
         url_tail = 'possessions/section-track-closures'
         response_list_of_dict = self.__communication_layer.do_get_request(url_tail, request_param=time_window_dict)
         return to_AIDM_converter.convert_list_of_dict_to_list_of_AIDM(

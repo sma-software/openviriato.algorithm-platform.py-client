@@ -1,6 +1,4 @@
 import datetime
-import enum
-
 import isodate
 
 
@@ -19,15 +17,10 @@ def parse_to_timedelta_or_None(timedelta_raw_str: (str, None)) -> (datetime.time
         return None
 
 
-def check_and_format_any_datetime_to_iso_str(obj):
+def convert_to_datetime_format_or_return_self(obj):
     if isinstance(obj, datetime.datetime):
-        obj = obj.isoformat()
+        return obj.isoformat()
     elif isinstance(obj, datetime.timedelta):
-        obj = isodate.duration_isoformat(obj)
-    return obj
-
-
-def check_and_format_any_enum_to_str(obj):
-    if isinstance(obj, enum.Enum):
-        obj = obj.name
-    return obj
+        return isodate.duration_isoformat(obj)
+    else:
+        return obj

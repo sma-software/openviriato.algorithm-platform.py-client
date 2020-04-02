@@ -1,6 +1,3 @@
-__version__ = '0.0.1'
-__author__ = 'Florian Fuchs'
-
 import datetime
 
 import AIDMClasses

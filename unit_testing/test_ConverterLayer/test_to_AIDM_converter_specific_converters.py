@@ -1,6 +1,7 @@
 import datetime
 import unittest
 
+import AIDMClasses.AIDM_Algorithm_classes
 import AIDMClasses.AIDM_TrackClosure_classes
 import Conversion.algorithm_platform_json_to_AIDM_converter
 from AIDMClasses import AIDM_classes
@@ -15,7 +16,7 @@ class TestToAIDMConverterSpecificConversions(unittest.TestCase):
 
         test_node = Conversion.algorithm_platform_json_to_AIDM_converter.convert_dict_to_AlgorithmNode(test_node_as_dict)
 
-        self.assertIsInstance(test_node, AIDM_classes.AlgorithmNode)
+        self.assertIsInstance(test_node, AIDMClasses.AIDM_Algorithm_classes.AlgorithmNode)
         self.assertEqual(test_node.ID, 15)
         self.assertEqual(test_node.Code, 'A')
         self.assertEqual(test_node.DebugString, 'test123')
@@ -29,7 +30,7 @@ class TestToAIDMConverterSpecificConversions(unittest.TestCase):
             Conversion.algorithm_platform_json_to_AIDM_converter.convert_dict_to_AlgorithmNode, test_node_as_list_of_dict)
 
         self.assertIsInstance(test_node_list, list)
-        self.assertIsInstance(test_node_list[1], AIDM_classes.AlgorithmNode)
+        self.assertIsInstance(test_node_list[1], AIDMClasses.AIDM_Algorithm_classes.AlgorithmNode)
         self.assertEqual(test_node_list[1].ID, 15)
 
     def test_convert_dict_to_TrainPathNode(self):
@@ -60,7 +61,7 @@ class TestToAIDMConverterSpecificConversions(unittest.TestCase):
 
         test_train = Conversion.algorithm_platform_json_to_AIDM_converter.convert_json_to_AlgorithmTrain(test_train_as_dict)
 
-        self.assertIsInstance(test_train, AIDM_classes.AlgorithmTrain)
+        self.assertIsInstance(test_train, AIDMClasses.AIDM_Algorithm_classes.AlgorithmTrain)
         self.assertIsInstance(test_train.TrainPathNodes[0], AIDM_classes.TrainPathNode)
         self.assertEqual(test_train.TrainPathNodes[0].MinimumRunTime, None)
         self.assertEqual(test_train.TrainPathNodes[0].MinimumStopTime, datetime.timedelta(0))

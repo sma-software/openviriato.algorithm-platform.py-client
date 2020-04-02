@@ -1,6 +1,7 @@
 import unittest
 from unittest import mock
 
+import AIDMClasses.AIDM_Algorithm_classes
 import AlgorithmInterface_test.test_helper.SessionMockFactory as APISessionMock
 from AIDMClasses import AIDM_classes
 from AlgorithmInterface import AlgorithmInterfaceFactory
@@ -42,7 +43,7 @@ class TestGetVehicleType(unittest.TestCase):
 
         test_algorithm_vehicle_type = self.interface_to_viriato.get_vehicle_type(vehicle_type_id)
 
-        self.assertIsInstance(test_algorithm_vehicle_type, AIDM_classes.AlgorithmVehicleType)
+        self.assertIsInstance(test_algorithm_vehicle_type, AIDMClasses.AIDM_Algorithm_classes.AlgorithmVehicleType)
         self.assertEqual(test_algorithm_vehicle_type.DebugString,
                          "vehicle isEngine: True, model: ICN, series: 1, velMax: 200")
         self.assertEqual(test_algorithm_vehicle_type.IsEngine, True)

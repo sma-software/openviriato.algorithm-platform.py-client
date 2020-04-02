@@ -1,6 +1,7 @@
 import unittest
 from unittest import mock
 
+import AIDMClasses.AIDM_Algorithm_classes
 import AlgorithmInterface_test.test_helper.SessionMockFactory as APISessionMock
 from AIDMClasses import AIDM_classes
 from AlgorithmInterface import AlgorithmInterfaceFactory
@@ -72,7 +73,7 @@ class TestGetAlgorithmTrainParameter(unittest.TestCase):
 
         test_algorithm_train = self.interface_to_viriato.get_algorithm_train_parameter(key)
 
-        self.assertIsInstance(test_algorithm_train, AIDM_classes.AlgorithmTrain)
+        self.assertIsInstance(test_algorithm_train, AIDMClasses.AIDM_Algorithm_classes.AlgorithmTrain)
         self.assertEqual(test_algorithm_train.DebugString, "RVZH_1_1_J03 tt_(G)")
         self.assertEqual(test_algorithm_train.ID, 2060)
         self.assertIsInstance(test_algorithm_train.TrainPathNodes[0], AIDM_classes.TrainPathNode)

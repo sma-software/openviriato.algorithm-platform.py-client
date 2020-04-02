@@ -1,5 +1,6 @@
 import inspect
 
+import AIDMClasses.AIDM_Algorithm_classes
 import AIDMClasses.AIDM_RoutingEdge_classes
 import AIDMClasses.AIDM_TrackClosure_classes
 import AIDMClasses.AIDM_Update_classes
@@ -19,10 +20,10 @@ def convert_list(AIDM_class, list_of_dict: list) -> list:
     return [convert(AIDM_class, dict_from_list) for dict_from_list in list_of_dict]
 
 
-def convert_dict_to_AlgorithmNode(attribute_dict: dict) -> AIDM_classes.AlgorithmNode:
-    attribute_dict['NodeTracks'] = convert_list(AIDM_classes.AlgorithmNodeTrack,
+def convert_dict_to_AlgorithmNode(attribute_dict: dict) -> AIDMClasses.AIDM_Algorithm_classes.AlgorithmNode:
+    attribute_dict['NodeTracks'] = convert_list(AIDMClasses.AIDM_Algorithm_classes.AlgorithmNodeTrack,
                                                 attribute_dict['NodeTracks'])
-    return convert(AIDM_classes.AlgorithmNode, attribute_dict)
+    return convert(AIDMClasses.AIDM_Algorithm_classes.AlgorithmNode, attribute_dict)
 
 
 def convert_dict_to_TrainPathNode(attribute_dict: dict) -> AIDM_classes.TrainPathNode:
@@ -34,10 +35,10 @@ def convert_dict_to_TrainPathNode(attribute_dict: dict) -> AIDM_classes.TrainPat
     return convert(AIDM_classes.TrainPathNode, attribute_dict)
 
 
-def convert_json_to_AlgorithmTrain(attribute_dict: dict) -> AIDM_classes.AlgorithmTrain:
+def convert_json_to_AlgorithmTrain(attribute_dict: dict) -> AIDMClasses.AIDM_Algorithm_classes.AlgorithmTrain:
     attribute_dict['TrainPathNodes'] = [convert_dict_to_TrainPathNode(train_path_node)
                                         for train_path_node in attribute_dict['TrainPathNodes']]
-    return convert(AIDM_classes.AlgorithmTrain, attribute_dict)
+    return convert(AIDMClasses.AIDM_Algorithm_classes.AlgorithmTrain, attribute_dict)
 
 
 def convert_dict_to_TimeWindow(attribute_dict: dict) -> AIDM_classes.TimeWindow:

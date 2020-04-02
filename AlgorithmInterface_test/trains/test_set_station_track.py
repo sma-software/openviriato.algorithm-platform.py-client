@@ -1,5 +1,6 @@
 from unittest import mock, TestCase
 
+import AIDMClasses.AIDM_Algorithm_classes
 import AlgorithmInterface.AlgorithmInterface
 import AlgorithmInterface_test.test_helper.SessionMockFactory as SessionMockFactory
 from AIDMClasses import AIDM_classes
@@ -74,7 +75,7 @@ class TestSetSectionTrack(TestCase):
 
         test_algorithm_train = self.interface_to_viriato.set_section_track(TrainPathNodeID, SectionTrackID)
 
-        self.assertIsInstance(test_algorithm_train, AIDM_classes.AlgorithmTrain)
+        self.assertIsInstance(test_algorithm_train, AIDMClasses.AIDM_Algorithm_classes.AlgorithmTrain)
         self.assertEqual(2060, test_algorithm_train.ID)
         self.assertEqual(test_algorithm_train.DebugString, 'SetSectionTrackTestMockSessionString')
 

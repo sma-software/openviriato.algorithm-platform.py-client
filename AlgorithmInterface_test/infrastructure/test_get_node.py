@@ -1,5 +1,6 @@
 from unittest import mock, TestCase
 
+import AIDMClasses.AIDM_Algorithm_classes
 import AlgorithmInterface_test.test_helper.SessionMockFactory as SessionMockFactory
 from AIDMClasses import AIDM_classes
 from AlgorithmInterface import AlgorithmInterfaceFactory
@@ -54,8 +55,9 @@ class TestGetNode(TestCase):
 
         node_from_mocked_response = self.interface_to_viriato.get_node(node_id_to_query)
         
-        self.assertIsInstance(node_from_mocked_response, AIDM_classes.AlgorithmNode)
-        self.assertIsInstance(node_from_mocked_response.NodeTracks[0], AIDM_classes.AlgorithmNodeTrack)
+        self.assertIsInstance(node_from_mocked_response, AIDMClasses.AIDM_Algorithm_classes.AlgorithmNode)
+        self.assertIsInstance(node_from_mocked_response.NodeTracks[0],
+                              AIDMClasses.AIDM_Algorithm_classes.AlgorithmNodeTrack)
         self.assertEqual(node_from_mocked_response.ID, 161)
         self.assertEqual(node_from_mocked_response.Code, '85AR')
         self.assertEqual(node_from_mocked_response.DebugString, "station:85AR")

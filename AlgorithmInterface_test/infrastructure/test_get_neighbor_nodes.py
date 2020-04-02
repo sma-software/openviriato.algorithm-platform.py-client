@@ -1,5 +1,6 @@
 from unittest import mock, TestCase
 
+import AIDMClasses.AIDM_Algorithm_classes
 import AlgorithmInterface_test.test_helper.SessionMockFactory as SessionMockFactory
 from AIDMClasses import AIDM_classes
 from AlgorithmInterface import AlgorithmInterfaceFactory
@@ -63,9 +64,10 @@ class TestGetNeighborNode(TestCase):
 
         mock_return_neighbor_nodes = self.interface_to_viriato.get_neighbor_nodes(node_id)
 
-        self.assertIsInstance(mock_return_neighbor_nodes[0], AIDM_classes.AlgorithmNode)
+        self.assertIsInstance(mock_return_neighbor_nodes[0], AIDMClasses.AIDM_Algorithm_classes.AlgorithmNode)
         self.assertEqual(mock_return_neighbor_nodes[0].DebugString, "GetNeighborNodeTestSessionMock:85NH")
-        self.assertIsInstance(mock_return_neighbor_nodes[0].NodeTracks[0], AIDM_classes.AlgorithmNodeTrack)
+        self.assertIsInstance(mock_return_neighbor_nodes[0].NodeTracks[0],
+                              AIDMClasses.AIDM_Algorithm_classes.AlgorithmNodeTrack)
 
     @mock.patch('requests.Session', side_effect=GetNeighborNodeTestSessionMock)
     def tearDown(self, mocked_get_obj) -> None:

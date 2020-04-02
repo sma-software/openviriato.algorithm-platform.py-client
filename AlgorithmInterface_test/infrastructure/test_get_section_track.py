@@ -1,6 +1,7 @@
 import unittest
 from unittest import mock
 
+import AIDMClasses.AIDM_Algorithm_classes
 import AlgorithmInterface.AlgorithmInterface
 from AIDMClasses import AIDM_classes
 from AlgorithmInterface import AlgorithmInterfaceFactory
@@ -53,7 +54,7 @@ class TestGetSectionTrack(unittest.TestCase):
         node_id = 1082
         test_section_track = self.interface_to_viriato.get_section_track(node_id)
 
-        self.assertIsInstance(test_section_track, AIDM_classes.AlgorithmSectionTrack)
+        self.assertIsInstance(test_section_track, AIDMClasses.AIDM_Algorithm_classes.AlgorithmSectionTrack)
 
         self.assertEqual(test_section_track.ID, 1082)
         self.assertEqual(test_section_track.DebugString, 'GetSectionTrackSessionTestMock')

@@ -2,6 +2,7 @@ import datetime
 import json
 import unittest
 
+import AIDMClasses.AIDM_Algorithm_classes
 import Conversion.object_to_algorithm_platform_json_converter
 from AIDMClasses import AIDM_classes
 
@@ -54,8 +55,8 @@ class TestFromAIDMConverter(unittest.TestCase):
         self.assertListEqual(test_section_list, [])
 
     def test_convert_list(self):
-        algorithm_section_track = AIDM_classes.AlgorithmSectionTrack(ID=12, Code='ATest', DebugString='str', Weight=8,
-                                                                     SectionCode='TestSection')
+        algorithm_section_track = AIDMClasses.AlgorithmSectionTrack(ID=12, Code='ATest', DebugString='str', Weight=8,
+                                                                                           SectionCode='TestSection')
         test_list_of_algorithm_section_track = [algorithm_section_track, algorithm_section_track]
 
         test_section_list_of_dict = Conversion.object_to_algorithm_platform_json_converter.convert_any_object(test_list_of_algorithm_section_track)

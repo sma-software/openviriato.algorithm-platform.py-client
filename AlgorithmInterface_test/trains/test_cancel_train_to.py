@@ -1,6 +1,7 @@
 import unittest
 from unittest import mock
 
+import AIDMClasses.AIDM_Algorithm_classes
 import AlgorithmInterface.AlgorithmInterface
 import AlgorithmInterface_test.test_helper.SessionMockFactory as SessionMockFactory
 from AIDMClasses import AIDM_classes
@@ -70,7 +71,7 @@ class TestCancelTrainTo(unittest.TestCase):
 
         test_algorithm_train = self.interface_to_viriato.cancel_train_to(train_path_node_id)
 
-        self.assertIsInstance(test_algorithm_train, AIDM_classes.AlgorithmTrain)
+        self.assertIsInstance(test_algorithm_train, AIDMClasses.AIDM_Algorithm_classes.AlgorithmTrain)
         self.assertEqual(test_algorithm_train.ID, 8120)
         self.assertEqual(test_algorithm_train.DebugString, 'CancelTrainToTestMockSession')
         self.assertIsInstance(test_algorithm_train.TrainPathNodes[0], AIDM_classes.TrainPathNode)

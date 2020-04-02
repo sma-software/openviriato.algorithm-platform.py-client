@@ -2,6 +2,7 @@ import datetime
 import unittest
 from unittest import mock
 
+import AIDMClasses.AIDM_Algorithm_classes
 import AIDMClasses.AIDM_Update_classes
 import AIDMClasses.AIDM_classes as AIDM_classes
 import AlgorithmInterface.AlgorithmInterface
@@ -88,7 +89,7 @@ class TestUpdateTrainTimes(unittest.TestCase):
 
         updated_algorithm_train = self.interface_to_viriato.update_train_times(train_id, update_train_time_nodes)
 
-        self.assertIsInstance(updated_algorithm_train, AIDM_classes.AlgorithmTrain)
+        self.assertIsInstance(updated_algorithm_train, AIDMClasses.AIDM_Algorithm_classes.AlgorithmTrain)
         self.assertEqual(updated_algorithm_train.DebugString, 'Mocked RVZH_1_1_J03 tt_(G)')
         self.assertEqual(updated_algorithm_train.ID, 2060)
         self.assertIsInstance(updated_algorithm_train.TrainPathNodes, list)

@@ -1,6 +1,7 @@
 import unittest
 from unittest import mock
 
+import AIDMClasses.AIDM_Algorithm_classes
 import AlgorithmInterface.AlgorithmInterface
 import AlgorithmInterface_test.test_helper.SessionMockFactory as SessionMockFactory
 from AIDMClasses import AIDM_classes
@@ -70,7 +71,7 @@ class TestCloneTrain(unittest.TestCase):
 
         test_cloned_algorithm_train = self.interface_to_viriato.clone_train(train_id)
 
-        self.assertIsInstance(test_cloned_algorithm_train, AIDM_classes.AlgorithmTrain)
+        self.assertIsInstance(test_cloned_algorithm_train, AIDMClasses.AIDM_Algorithm_classes.AlgorithmTrain)
         self.assertEqual(11037, test_cloned_algorithm_train.ID)
         self.assertEqual('CloneTrainTestMockSession', test_cloned_algorithm_train.DebugString)
         self.assertIsInstance(test_cloned_algorithm_train.TrainPathNodes[0], AIDM_classes.TrainPathNode)

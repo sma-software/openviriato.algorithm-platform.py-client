@@ -1,6 +1,7 @@
 import unittest
 from unittest import mock
 
+import AIDMClasses.AIDM_Algorithm_classes
 import AlgorithmInterface.AlgorithmInterface
 from AIDMClasses import AIDM_classes
 from AlgorithmInterface import AlgorithmInterfaceFactory
@@ -64,7 +65,7 @@ class TestGetDirectedSectionTracks(unittest.TestCase):
 
         directed_section_tracks = self.interface_to_viriato.get_directed_section_tracks(node_id_1, node_id_2)
 
-        self.assertIsInstance(directed_section_tracks[0], AIDM_classes.AlgorithmSectionTrack)
+        self.assertIsInstance(directed_section_tracks[0], AIDMClasses.AIDM_Algorithm_classes.AlgorithmSectionTrack)
         self.assertIsInstance(directed_section_tracks[0].ID, int)
         self.assertIsInstance(directed_section_tracks[0].Code, str)
         self.assertIsInstance(directed_section_tracks[0].SectionCode, str)

@@ -1,6 +1,7 @@
 import unittest
 from unittest import mock
 
+import AIDMClasses.AIDM_Algorithm_classes
 import AlgorithmInterface.AlgorithmInterface
 from AIDMClasses import AIDM_classes
 from AlgorithmInterface import AlgorithmInterfaceFactory
@@ -62,7 +63,7 @@ class TestGetParallelSectionTracks(unittest.TestCase):
 
         parallel_section_tracks = self.interface_to_viriato.get_parallel_section_tracks(track_id)
 
-        self.assertIsInstance(parallel_section_tracks[0], AIDM_classes.AlgorithmSectionTrack)
+        self.assertIsInstance(parallel_section_tracks[0], AIDMClasses.AIDM_Algorithm_classes.AlgorithmSectionTrack)
         self.assertEqual(parallel_section_tracks[0].ID, 885)
         self.assertEqual(parallel_section_tracks[0].Code, '838')
         self.assertEqual(parallel_section_tracks[0].SectionCode, '61010')

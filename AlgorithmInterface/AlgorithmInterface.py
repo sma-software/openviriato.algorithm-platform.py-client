@@ -4,6 +4,7 @@ __author__ = 'Florian Fuchs'
 import datetime
 import AIDMClasses
 import AIDMClasses.AIDM_RoutingEdge_classes
+import AIDMClasses.AIDM_Update_classes
 
 from AlgorithmInterface.AlgorithmInterfaceHelpers import extract_parameters_from_routing_point, \
     add_cut_train_to_get_request_params, add_node_filter_to_get_request_params
@@ -127,7 +128,7 @@ class AlgorithmicPlatformInterface:
         response_dict = self.__communication_layer.do_post_request(url_to_resource, request_body=post_request_body)
         return algorithm_platform_json_to_AIDM_converter.convert_json_to_AlgorithmTrain(response_dict)
 
-    def reroute_train(self, route: AIDMClasses.UpdateTrainRoute):
+    def reroute_train(self, route: AIDMClasses.AIDM_Update_classes.UpdateTrainRoute):
         url_to_resource = "reroute-train"
         post_request_body = object_to_algorithm_platform_json_converter.convert_any_object(route)
         response_dict = self.__communication_layer.do_post_request(url_to_resource, request_body=post_request_body)
@@ -279,7 +280,7 @@ class AlgorithmicPlatformInterface:
         response_dict = self.__communication_layer.do_get_request(url_to_resource)
         return algorithm_platform_json_to_AIDM_converter.convert(AIDMClasses.AlgorithmVehicleType, response_dict)
 
-    def calculate_run_times(self, train_id: int) -> (AIDMClasses.UpdateTrainTimes, None):
+    def calculate_run_times(self, train_id: int) -> (AIDMClasses.AIDM_Update_classes.UpdateTrainTimes, None):
         url_to_resource = "calculate-run-times/{0}".format(train_id)
         response_dict = self.__communication_layer.do_get_request(url_to_resource)
         return algorithm_platform_json_to_AIDM_converter.convert_dict_to_UpdateTrainTimes(response_dict)

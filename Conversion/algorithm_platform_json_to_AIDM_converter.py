@@ -2,6 +2,7 @@ import inspect
 
 import AIDMClasses.AIDM_RoutingEdge_classes
 import AIDMClasses.AIDM_TrackClosure_classes
+import AIDMClasses.AIDM_Update_classes
 import AIDMClasses.AIDM_classes as AIDM_classes
 import AIDMClasses.AIDM_enum_classes as AIDM_enum_classes
 from Conversion.converter_helpers import parse_to_datetime, parse_to_timedelta, parse_to_timedelta_or_None
@@ -74,7 +75,7 @@ def convert_dict_to_CrossingRoutingEdgeSet(attribute_dict: dict) -> AIDMClasses.
     return convert(AIDMClasses.AIDM_RoutingEdge_classes.CrossingRoutingEdgeSet, attribute_dict)
 
 
-def convert_dict_to_UpdateTrainTimes(attribute_dict: dict) -> AIDM_classes.UpdateTrainTimes:
-    attribute_dict["Times"] = convert_list(AIDM_classes.UpdateTrainTimesNode,
+def convert_dict_to_UpdateTrainTimes(attribute_dict: dict) -> AIDMClasses.AIDM_Update_classes.UpdateTrainTimes:
+    attribute_dict["Times"] = convert_list(AIDMClasses.AIDM_Update_classes.UpdateTrainTimesNode,
                                            attribute_dict["Times"])
-    return convert(AIDM_classes.UpdateTrainTimes, attribute_dict)
+    return convert(AIDMClasses.AIDM_Update_classes.UpdateTrainTimes, attribute_dict)

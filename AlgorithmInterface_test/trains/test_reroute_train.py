@@ -2,6 +2,7 @@ import unittest
 from unittest import mock
 
 import AIDMClasses.AIDM_RoutingEdge_classes
+import AIDMClasses.AIDM_Update_classes
 import AIDMClasses.AIDM_classes as AIDM_classes
 import AlgorithmInterface.AlgorithmInterface
 import AlgorithmInterface_test.test_helper.SessionMockFactory as SessionMockFactory
@@ -80,9 +81,9 @@ class TestRerouteTrain(unittest.TestCase):
                          AIDMClasses.AIDM_RoutingEdge_classes.IncomingRoutingEdge(NodeID=7, StartSectionTrackID=1165, EndNodeTrackID=25),
                          AIDMClasses.AIDM_RoutingEdge_classes.OutgoingRoutingEdge(NodeID=24, StartNodeTrackID=1166, EndSectionTrackID=1166),
                          AIDMClasses.AIDM_RoutingEdge_classes.IncomingRoutingEdge(NodeID=10, StartSectionTrackID=1166, EndNodeTrackID=12)]
-        test_route = AIDM_classes.UpdateTrainRoute(TrainID=train_id, EndTrainPathNodeID=end_train_path_node_id,
-                                                   StartTrainPathNodeID=start_train_path_node_id,
-                                                   RoutingEdges=routing_edges)
+        test_route = AIDMClasses.AIDM_Update_classes.UpdateTrainRoute(TrainID=train_id, EndTrainPathNodeID=end_train_path_node_id,
+                                                                      StartTrainPathNodeID=start_train_path_node_id,
+                                                                      RoutingEdges=routing_edges)
 
         self.interface_to_viriato.reroute_train(test_route)
 
@@ -108,9 +109,9 @@ class TestRerouteTrain(unittest.TestCase):
                          AIDMClasses.AIDM_RoutingEdge_classes.IncomingRoutingEdge(nodeID=7, startSectionTrackID=1165, endNodeTrackID=25),
                          AIDMClasses.AIDM_RoutingEdge_classes.OutgoingRoutingEdge(nodeID=24, startNodeTrackID=1166, endSectionTrackID=1166),
                          AIDMClasses.AIDM_RoutingEdge_classes.IncomingRoutingEdge(nodeID=10, startSectionTrackID=1166, endNodeTrackID=12)]
-        test_route = AIDM_classes.UpdateTrainRoute(TrainID=train_id, EndTrainPathNodeID=end_train_path_node_id,
-                                                   StartTrainPathNodeID=start_train_path_node_id,
-                                                   RoutingEdges=routing_edges)
+        test_route = AIDMClasses.AIDM_Update_classes.UpdateTrainRoute(TrainID=train_id, EndTrainPathNodeID=end_train_path_node_id,
+                                                                      StartTrainPathNodeID=start_train_path_node_id,
+                                                                      RoutingEdges=routing_edges)
 
         rerouted_algorithm_train = self.interface_to_viriato.reroute_train(test_route)
 

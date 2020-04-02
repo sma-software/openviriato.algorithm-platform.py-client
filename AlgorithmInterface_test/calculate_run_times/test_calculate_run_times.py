@@ -1,6 +1,7 @@
 import unittest
 from unittest import mock
 
+import AIDMClasses.AIDM_Update_classes
 import AIDMClasses.AIDM_classes as AIDM_classes
 import AlgorithmInterface.AlgorithmInterface
 import AlgorithmInterface_test.test_helper.SessionMockFactory as SessionMockFactory
@@ -69,10 +70,10 @@ class TestCalculateRunTimes(unittest.TestCase):
 
         updated_train_times = self.interface_to_viriato.calculate_run_times(train_id)
 
-        self.assertIsInstance(updated_train_times, AIDM_classes.UpdateTrainTimes)
+        self.assertIsInstance(updated_train_times, AIDMClasses.AIDM_Update_classes.UpdateTrainTimes)
         self.assertEqual(updated_train_times.TrainID, 2060)
         self.assertIsInstance(updated_train_times.Times, list)
-        self.assertIsInstance(updated_train_times.Times[0], AIDM_classes.UpdateTrainTimesNode)
+        self.assertIsInstance(updated_train_times.Times[0], AIDMClasses.AIDM_Update_classes.UpdateTrainTimesNode)
 
     @mock.patch('requests.Session', side_effect=CalculateRunTimesTestMockSession)
     def tearDown(self, mocked_get_obj) -> None:

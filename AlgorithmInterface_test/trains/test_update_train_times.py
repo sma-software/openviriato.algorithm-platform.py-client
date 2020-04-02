@@ -2,6 +2,7 @@ import datetime
 import unittest
 from unittest import mock
 
+import AIDMClasses.AIDM_Update_classes
 import AIDMClasses.AIDM_classes as AIDM_classes
 import AlgorithmInterface.AlgorithmInterface
 import AlgorithmInterface_test.test_helper.SessionMockFactory as SessionMockFactory
@@ -60,9 +61,9 @@ class TestUpdateTrainTimes(unittest.TestCase):
     @mock.patch('requests.Session', side_effect=UpdateTrainTimesTestMockSession)
     def test_update_train_times_request(self, mocked_get_obj):
         train_id = 2060
-        update_train_time_nodes = [AIDM_classes.UpdateTrainTimesNode(TrainPathNodeID=1332,
-                                                                     ArrivalTime=datetime.datetime(2003, 5, 1, 0, 4),
-                                                                     DepartureTime=datetime.datetime(2003, 5, 1, 0, 5))]
+        update_train_time_nodes = [AIDMClasses.AIDM_Update_classes.UpdateTrainTimesNode(TrainPathNodeID=1332,
+                                                                                        ArrivalTime=datetime.datetime(2003, 5, 1, 0, 4),
+                                                                                        DepartureTime=datetime.datetime(2003, 5, 1, 0, 5))]
 
         self.interface_to_viriato.update_train_times(train_id, update_train_time_nodes)
 
@@ -81,9 +82,9 @@ class TestUpdateTrainTimes(unittest.TestCase):
     @mock.patch('requests.Session', side_effect=UpdateTrainTimesTestMockSession)
     def test_update_train_times_response(self, mocked_get_obj):
         train_id = 2060
-        update_train_time_nodes = [AIDM_classes.UpdateTrainTimesNode(TrainPathNodeID=1332,
-                                                                     ArrivalTime=datetime.datetime(2003, 5, 1, 0, 4),
-                                                                     DepartureTime=datetime.datetime(2003, 5, 1, 0, 5))]
+        update_train_time_nodes = [AIDMClasses.AIDM_Update_classes.UpdateTrainTimesNode(TrainPathNodeID=1332,
+                                                                                        ArrivalTime=datetime.datetime(2003, 5, 1, 0, 4),
+                                                                                        DepartureTime=datetime.datetime(2003, 5, 1, 0, 5))]
 
         updated_algorithm_train = self.interface_to_viriato.update_train_times(train_id, update_train_time_nodes)
 

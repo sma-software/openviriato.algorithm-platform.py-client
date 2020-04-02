@@ -1,6 +1,7 @@
 import inspect
 
 import AIDMClasses.AIDM_RoutingEdge_classes
+import AIDMClasses.AIDM_TrackClosure_classes
 import AIDMClasses.AIDM_classes as AIDM_classes
 import AIDMClasses.AIDM_enum_classes as AIDM_enum_classes
 from Conversion.converter_helpers import parse_to_datetime, parse_to_timedelta, parse_to_timedelta_or_None
@@ -44,15 +45,15 @@ def convert_dict_to_TimeWindow(attribute_dict: dict) -> AIDM_classes.TimeWindow:
     return convert(AIDM_classes.TimeWindow, attribute_dict)
 
 
-def convert_dict_to_AlgorithmSectionTrackClosure(attribute_dict: dict) -> AIDM_classes.AlgorithmSectionTrackClosure:
+def convert_dict_to_AlgorithmSectionTrackClosure(attribute_dict: dict) -> AIDMClasses.AIDM_TrackClosure_classes.AlgorithmSectionTrackClosure:
     for key in ['ClosureTimeWindowFromNode', 'ClosureTimeWindowToNode']:
         attribute_dict[key] = convert_dict_to_TimeWindow(attribute_dict[key])
-    return convert(AIDM_classes.AlgorithmSectionTrackClosure, attribute_dict)
+    return convert(AIDMClasses.AIDM_TrackClosure_classes.AlgorithmSectionTrackClosure, attribute_dict)
 
 
-def convert_dict_to_AlgorithmNodeTrackClosure(attribute_dict: dict) -> AIDM_classes.AlgorithmNodeTrackClosure:
+def convert_dict_to_AlgorithmNodeTrackClosure(attribute_dict: dict) -> AIDMClasses.AIDM_TrackClosure_classes.AlgorithmNodeTrackClosure:
     attribute_dict["ClosureTimeWindow"] = convert_dict_to_TimeWindow(attribute_dict["ClosureTimeWindow"])
-    return convert(AIDM_classes.AlgorithmNodeTrackClosure, attribute_dict)
+    return convert(AIDMClasses.AIDM_TrackClosure_classes.AlgorithmNodeTrackClosure, attribute_dict)
 
 
 def convert_dict_to_IncomingRoutingEdgeSet(attribute_dict: dict) -> AIDMClasses.AIDM_RoutingEdge_classes.IncomingRoutingEdgeSet:

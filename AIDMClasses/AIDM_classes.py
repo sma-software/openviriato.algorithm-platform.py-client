@@ -128,29 +128,6 @@ class TrainPathNode(IhasID):
         return self.__SequenceNumber
 
 
-class updateTrainTimesNode:
-    TrainPathNodeId: int
-    ArrivalTime: datetime.datetime
-    DepartureTime: datetime.datetime
-
-    def __init__(self, TrainPathNodeId: int, ArrivalTime: datetime.datetime, DepartureTime: datetime.datetime):
-        self.__TrainPathNodeId = TrainPathNodeId
-        self.__ArrivalTime = ArrivalTime
-        self.__DepartureTime = DepartureTime
-
-    @property
-    def TrainPathNodeId(self) -> int:
-        return self.__TrainPathNodeId
-
-    @property
-    def ArrivalTime(self) -> datetime.datetime:
-        return self.__ArrivalTime
-
-    @property
-    def DepartureTime(self) -> datetime.datetime:
-        return self.__DepartureTime
-
-
 class TimeWindow:
     __FromTime: datetime.datetime
     __ToTime: datetime.datetime
@@ -166,67 +143,6 @@ class TimeWindow:
     @property
     def ToTime(self) -> datetime.datetime:
         return self.__ToTime
-
-
-class AlgorithmNodeTrackClosure(IhasDebugString):
-    __NodeID: int
-    __NodeTrackID: int
-    __ClosureTimeWindow: TimeWindow
-
-    def __init__(self, DebugString: str, ClosureTimeWindow: TimeWindow, NodeID: int, NodeTrackID: int):
-        IhasDebugString.__init__(self, DebugString)
-        self.__ClosureTimeWindow = ClosureTimeWindow
-        self.__NodeID = NodeID
-        self.__NodeTrackID = NodeTrackID
-
-    @property
-    def ClosureTimeWindow(self) -> TimeWindow:
-        return self.__ClosureTimeWindow
-
-    @property
-    def NodeID(self) -> int:
-        return self.__NodeID
-
-    @property
-    def NodeTrackID(self) -> int:
-        return self.__NodeTrackID
-
-
-class AlgorithmSectionTrackClosure(IhasDebugString):
-    __ClosureTimeWindowFromNode: TimeWindow
-    __ClosureTimeWindowToNode: TimeWindow
-    __FromNodeID: int
-    __SectionTrackID: int
-    __ToNodeID: int
-
-    def __init__(self, DebugString: str, ClosureTimeWindowFromNode: TimeWindow, ClosureTimeWindowToNode: TimeWindow,
-                 FromNodeID: int, SectionTrackID: int, ToNodeID: int):
-        IhasDebugString.__init__(self, DebugString)
-        self.__ClosureTimeWindowFromNode = ClosureTimeWindowFromNode
-        self.__ClosureTimeWindowToNode = ClosureTimeWindowToNode
-        self.__FromNodeID = FromNodeID
-        self.__SectionTrackID = SectionTrackID
-        self.__ToNodeID = ToNodeID
-
-    @property
-    def ClosureTimeWindowFromNode(self) -> TimeWindow:
-        return self.__ClosureTimeWindowFromNode
-
-    @property
-    def ClosureTimeWindowToNode(self) -> TimeWindow:
-        return self.__ClosureTimeWindowToNode
-
-    @property
-    def FromNodeID(self) -> int:
-        return self.__FromNodeID
-
-    @property
-    def SectionTrackID(self) -> int:
-        return self.__SectionTrackID
-
-    @property
-    def ToNodeID(self) -> int:
-        return self.__ToNodeID
 
 
 class UpdateTrainRoute(IUpdateTrain):
@@ -254,7 +170,7 @@ class UpdateTrainRoute(IUpdateTrain):
 
 
 class UpdateTrainTimesNode:
-    __ArrivalTime = datetime.datetime
+    __ArrivalTime: datetime.datetime
     __DepartureTime: datetime.datetime
     __MinimumRunTime: (datetime.timedelta, None) = None
     __MinimumStopTime: (datetime.timedelta, None) = None

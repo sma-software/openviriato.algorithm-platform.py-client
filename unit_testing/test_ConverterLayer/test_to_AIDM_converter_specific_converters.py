@@ -1,6 +1,7 @@
 import datetime
 import unittest
 
+import AIDMClasses.AIDM_TrackClosure_classes
 import Conversion.algorithm_platform_json_to_AIDM_converter
 from AIDMClasses import AIDM_classes
 
@@ -70,7 +71,7 @@ class TestToAIDMConverterSpecificConversions(unittest.TestCase):
 
         test_closure = Conversion.algorithm_platform_json_to_AIDM_converter.convert_dict_to_AlgorithmNodeTrackClosure(param_dict)
 
-        self.assertIsInstance(test_closure, AIDM_classes.AlgorithmNodeTrackClosure)
+        self.assertIsInstance(test_closure, AIDMClasses.AIDM_TrackClosure_classes.AlgorithmNodeTrackClosure)
         self.assertIsInstance(test_closure.ClosureTimeWindow, AIDM_classes.TimeWindow)
         self.assertEqual(test_closure.DebugString, "nodetrackclosure:85ZMUS 24")
 
@@ -82,6 +83,6 @@ class TestToAIDMConverterSpecificConversions(unittest.TestCase):
 
         test_closure = Conversion.algorithm_platform_json_to_AIDM_converter.convert_dict_to_AlgorithmSectionTrackClosure(param_dict)
 
-        self.assertIsInstance(test_closure, AIDM_classes.AlgorithmSectionTrackClosure)
+        self.assertIsInstance(test_closure, AIDMClasses.AIDM_TrackClosure_classes.AlgorithmSectionTrackClosure)
         self.assertIsInstance(test_closure.ClosureTimeWindowFromNode, AIDM_classes.TimeWindow)
         self.assertEqual(test_closure.FromNodeID, 621)

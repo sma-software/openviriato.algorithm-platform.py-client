@@ -2,6 +2,7 @@ import datetime
 import unittest
 from unittest import mock
 
+import AIDMClasses.AIDM_TrackClosure_classes
 import AIDMClasses.AIDM_classes as AIDM_classes
 import AlgorithmInterface.AlgorithmInterface
 import AlgorithmInterface_test.test_helper.SessionMockFactory as SessionMockFactory
@@ -66,7 +67,8 @@ class TestGetNodeTrackClosures(unittest.TestCase):
         list_of_section_track_closure = self.interface_to_viriato.get_node_track_closures(requested_time_window)
 
         self.assertIsInstance(list_of_section_track_closure, list)
-        self.assertIsInstance(list_of_section_track_closure[0], AIDM_classes.AlgorithmNodeTrackClosure)
+        self.assertIsInstance(list_of_section_track_closure[0],
+                              AIDMClasses.AIDM_TrackClosure_classes.AlgorithmNodeTrackClosure)
         self.assertIsInstance(list_of_section_track_closure[0].ClosureTimeWindow, AIDM_classes.TimeWindow)
         self.assertEqual(list_of_section_track_closure[0].DebugString, "nodetrackclosure:85ZMUS 24")
         self.assertEqual(list_of_section_track_closure[0].ClosureTimeWindow.FromTime,

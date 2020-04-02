@@ -2,6 +2,7 @@ import datetime
 import unittest
 from unittest import mock
 
+import AIDMClasses.AIDM_TrackClosure_classes
 import AIDMClasses.AIDM_classes as AIDM_classes
 import AlgorithmInterface.AlgorithmInterface
 import AlgorithmInterface_test.test_helper.SessionMockFactory as SessionMockFactory
@@ -76,7 +77,8 @@ class TestGetSectionTrackClosures(unittest.TestCase):
         list_of_section_track_closure = self.interface_to_viriato.get_section_track_closures(requested_time_window)
 
         self.assertIsInstance(list_of_section_track_closure, list)
-        self.assertIsInstance(list_of_section_track_closure[0], AIDM_classes.AlgorithmSectionTrackClosure)
+        self.assertIsInstance(list_of_section_track_closure[0],
+                              AIDMClasses.AIDM_TrackClosure_classes.AlgorithmSectionTrackClosure)
         self.assertIsInstance(list_of_section_track_closure[0].ClosureTimeWindowFromNode, AIDM_classes.TimeWindow)
         self.assertEqual(list_of_section_track_closure[0].DebugString, 'sectiontrackclosure:s_70011 1 n_85ZMUS 85ZLSTA')
         self.assertEqual(list_of_section_track_closure[0].ClosureTimeWindowFromNode.FromTime,

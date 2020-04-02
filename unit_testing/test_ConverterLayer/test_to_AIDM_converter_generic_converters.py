@@ -2,7 +2,7 @@ import unittest
 
 import AIDMClasses.AIDM_Algorithm_classes
 import Conversion.algorithm_platform_json_to_AIDM_converter
-from AIDMClasses import AIDM_classes
+from AIDMClasses import AIDM_TrainPathNode_classes
 
 
 # TODO Check if all conversions are tested!

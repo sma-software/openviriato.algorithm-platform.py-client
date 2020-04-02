@@ -3,7 +3,7 @@ from unittest import mock
 
 import AIDMClasses.AIDM_Algorithm_classes
 import AlgorithmInterface_test.test_helper.SessionMockFactory as APISessionMock
-from AIDMClasses import AIDM_classes
+from AIDMClasses import AIDM_TrainPathNode_classes
 from AlgorithmInterface import AlgorithmInterfaceFactory
 from AlgorithmInterface_test.test_helper.SessionMockTestBase import \
     get_api_url, SessionMockTestBase
@@ -76,7 +76,7 @@ class TestGetAlgorithmTrainParameter(unittest.TestCase):
         self.assertIsInstance(test_algorithm_train, AIDMClasses.AIDM_Algorithm_classes.AlgorithmTrain)
         self.assertEqual(test_algorithm_train.DebugString, "RVZH_1_1_J03 tt_(G)")
         self.assertEqual(test_algorithm_train.ID, 2060)
-        self.assertIsInstance(test_algorithm_train.TrainPathNodes[0], AIDM_classes.TrainPathNode)
+        self.assertIsInstance(test_algorithm_train.TrainPathNodes[0], AIDM_TrainPathNode_classes.TrainPathNode)
         self.assertEqual(test_algorithm_train.TrainPathNodes[0].ID, 1332)
 
     @mock.patch('requests.Session', side_effect=GetAlgorithmTrainParameterTestSessionMock)

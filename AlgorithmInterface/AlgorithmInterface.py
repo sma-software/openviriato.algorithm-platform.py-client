@@ -5,6 +5,8 @@ import datetime
 import AIDMClasses
 import AIDMClasses.AIDM_Algorithm_classes
 import AIDMClasses.AIDM_RoutingEdge_classes
+import AIDMClasses.AIDM_RoutingPoint_classes
+import AIDMClasses.AIDM_TimeWindow_classes
 import AIDMClasses.AIDM_Update_classes
 
 from AlgorithmInterface.AlgorithmInterfaceHelpers import extract_parameters_from_routing_point, \
@@ -77,14 +79,14 @@ class AlgorithmicPlatformInterface:
         url_to_resource = 'train-classifications'
         return self.__communication_layer.do_get_request(url_to_resource)
 
-    def get_trains(self, timeWindow: AIDMClasses.TimeWindow) -> list:
+    def get_trains(self, timeWindow: AIDMClasses.AIDM_TimeWindow_classes.TimeWindow) -> list:
         url_to_resource = "trains"
         get_request_params = object_to_algorithm_platform_json_converter.convert_any_object(timeWindow)
         response_list = self.__communication_layer.do_get_request(url_to_resource, request_param=get_request_params)
         return algorithm_platform_json_to_AIDM_converter.convert_list(
             algorithm_platform_json_to_AIDM_converter.convert_json_to_AlgorithmTrain, response_list)
 
-    def get_trains_driving_any_node(self, timeWindow: AIDMClasses.TimeWindow, nodeIDs: list) -> list:
+    def get_trains_driving_any_node(self, timeWindow: AIDMClasses.AIDM_TimeWindow_classes.TimeWindow, nodeIDs: list) -> list:
         url_to_resource = "trains"
         part_of_get_request_params = object_to_algorithm_platform_json_converter.convert_any_object(timeWindow)
         get_request_params = add_node_filter_to_get_request_params(part_of_get_request_params, nodeIDs)
@@ -92,7 +94,7 @@ class AlgorithmicPlatformInterface:
         return algorithm_platform_json_to_AIDM_converter.convert_list(
             algorithm_platform_json_to_AIDM_converter.convert_json_to_AlgorithmTrain, response_list)
 
-    def get_trains_cut_to_time_range(self, timeWindow: AIDMClasses.TimeWindow) -> list:
+    def get_trains_cut_to_time_range(self, timeWindow: AIDMClasses.AIDM_TimeWindow_classes.TimeWindow) -> list:
         url_to_resource = "trains"
         part_of_get_request_params = object_to_algorithm_platform_json_converter.convert_any_object(timeWindow)
         get_request_params = add_cut_train_to_get_request_params(part_of_get_request_params)
@@ -100,7 +102,7 @@ class AlgorithmicPlatformInterface:
         return algorithm_platform_json_to_AIDM_converter.convert_list(
             algorithm_platform_json_to_AIDM_converter.convert_json_to_AlgorithmTrain, response_list)
 
-    def get_trains_cut_to_time_range_driving_any_node(self, timeWindow: AIDMClasses.TimeWindow, nodeIDs: list) -> list:
+    def get_trains_cut_to_time_range_driving_any_node(self, timeWindow: AIDMClasses.AIDM_TimeWindow_classes.TimeWindow, nodeIDs: list) -> list:
         url_to_resource = "trains"
         get_request_params = object_to_algorithm_platform_json_converter.convert_any_object(timeWindow)
         get_request_params = add_node_filter_to_get_request_params(get_request_params, nodeIDs)
@@ -256,21 +258,21 @@ class AlgorithmicPlatformInterface:
         response_dict = self.__communication_layer.do_post_request(url_to_resource, post_request_body)
         return algorithm_platform_json_to_AIDM_converter.convert_json_to_AlgorithmTrain(response_dict)
 
-    def get_incoming_routing_edges(self, routing_point: AIDMClasses.RoutingPoint) \
+    def get_incoming_routing_edges(self, routing_point: AIDMClasses.AIDM_RoutingPoint_classes.RoutingPoint) \
             -> AIDMClasses.AIDM_RoutingEdge_classes.IncomingRoutingEdgeSet:
         url_to_resource = "nodes/{0}/incoming-routing-edges".format(routing_point.NodeID)
         get_request_params = extract_parameters_from_routing_point(routing_point)
         response_dict = self.__communication_layer.do_get_request(url_to_resource, get_request_params)
         return algorithm_platform_json_to_AIDM_converter.convert_dict_to_IncomingRoutingEdgeSet(response_dict)
 
-    def get_outgoing_routing_edges(self, routing_point: AIDMClasses.RoutingPoint) \
+    def get_outgoing_routing_edges(self, routing_point: AIDMClasses.AIDM_RoutingPoint_classes.RoutingPoint) \
             -> AIDMClasses.AIDM_RoutingEdge_classes.OutgoingRoutingEdgeSet:
         url_to_resource = "nodes/{0}/outgoing-routing-edges".format(routing_point.NodeID)
         get_request_params = extract_parameters_from_routing_point(routing_point)
         response_dict = self.__communication_layer.do_get_request(url_to_resource, get_request_params)
         return algorithm_platform_json_to_AIDM_converter.convert_dict_to_OutgoingRoutingEdgeSet(response_dict)
 
-    def get_crossing_routing_edges(self, routing_point: AIDMClasses.RoutingPoint) -> \
+    def get_crossing_routing_edges(self, routing_point: AIDMClasses.AIDM_RoutingPoint_classes.RoutingPoint) -> \
             AIDMClasses.AIDM_RoutingEdge_classes.CrossingRoutingEdgeSet:
         url_to_resource = "nodes/{0}/crossing-routing-edges".format(routing_point.NodeID)
         response_dict = self.__communication_layer.do_get_request(url_to_resource)
@@ -294,7 +296,7 @@ class AlgorithmicPlatformInterface:
 
     def __delegate_get_any_parameter(self, key: str) -> (bool, int, str, list,
                                                          AIDMClasses.AIDM_Algorithm_classes.AlgorithmTrain,
-                                                         AIDMClasses.TimeWindow):
+                                                         AIDMClasses.AIDM_TimeWindow_classes.TimeWindow):
         url_to_resource = "parameters/{0}".format(key)
         return self.__communication_layer.do_get_request(url_to_resource)["Value"]
 
@@ -316,18 +318,18 @@ class AlgorithmicPlatformInterface:
         return algorithm_platform_json_to_AIDM_converter.convert_list(
             algorithm_platform_json_to_AIDM_converter.convert_json_to_AlgorithmTrain, response_list)
 
-    def get_time_window_algorithm_parameter(self, key: str) -> AIDMClasses.TimeWindow:
+    def get_time_window_algorithm_parameter(self, key: str) -> AIDMClasses.AIDM_TimeWindow_classes.TimeWindow:
         response_dict = self.__delegate_get_any_parameter(key)
         return algorithm_platform_json_to_AIDM_converter.convert_dict_to_TimeWindow(response_dict)
 
-    def get_node_track_closures(self, time_window: AIDMClasses.TimeWindow) -> list:
+    def get_node_track_closures(self, time_window: AIDMClasses.AIDM_TimeWindow_classes.TimeWindow) -> list:
         url_to_resource = 'possessions/node-track-closures'
         get_request_params = object_to_algorithm_platform_json_converter.convert_any_object(time_window)
         response_dict = self.__communication_layer.do_get_request(url_to_resource, request_param=get_request_params)
         return algorithm_platform_json_to_AIDM_converter.convert_list(
             algorithm_platform_json_to_AIDM_converter.convert_dict_to_AlgorithmNodeTrackClosure, response_dict)
 
-    def get_section_track_closures(self, time_window: AIDMClasses.TimeWindow) -> list:
+    def get_section_track_closures(self, time_window: AIDMClasses.AIDM_TimeWindow_classes.TimeWindow) -> list:
         get_request_params = object_to_algorithm_platform_json_converter.convert_any_object(time_window)
         url_to_resource = 'possessions/section-track-closures'
         response_list_of_dict = self.__communication_layer.do_get_request(url_to_resource,

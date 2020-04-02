@@ -73,37 +73,3 @@ class TrainPathNode(IhasID):
         return self.__SequenceNumber
 
 
-class TimeWindow:
-    __FromTime: datetime.datetime
-    __ToTime: datetime.datetime
-
-    def __init__(self, FromTime: datetime.datetime, ToTime: datetime.datetime):
-        self.__FromTime = FromTime
-        self.__ToTime = ToTime
-
-    @property
-    def FromTime(self) -> datetime.datetime:
-        return self.__FromTime
-
-    @property
-    def ToTime(self) -> datetime.datetime:
-        return self.__ToTime
-
-
-class RoutingPoint:
-    __nodeID: int
-    __nodeTrackID: (None, int)
-
-    def __init__(self, nodeID: int, nodeTrackID: (None, int) = None):
-        self.__nodeID = nodeID
-        self.__nodeTrackID = nodeTrackID
-
-    @property
-    def NodeID(self) -> int:
-        return self.__nodeID
-
-    @property
-    def NodeTrackID(self) -> (None, int):
-        return self.__nodeTrackID
-
-

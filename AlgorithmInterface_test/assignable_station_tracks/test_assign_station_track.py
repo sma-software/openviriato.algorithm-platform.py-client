@@ -3,7 +3,7 @@ from unittest import mock
 
 import AIDMClasses.AIDM_Algorithm_classes
 import AlgorithmInterface_test.test_helper.SessionMockFactory as APISessionMock
-from AIDMClasses import AIDM_classes
+from AIDMClasses import AIDM_TrainPathNode_classes
 from AlgorithmInterface import AlgorithmInterfaceFactory
 from AlgorithmInterface_test.test_helper.SessionMockTestBase import \
     get_api_url, SessionMockTestBase
@@ -88,7 +88,7 @@ class TestSetStationTracksNode(unittest.TestCase):
         test_train = self.interface_to_viriato.assign_station_track(trainPathNodeId=train_path_node_id)
 
         self.assertIsInstance(test_train, AIDMClasses.AIDM_Algorithm_classes.AlgorithmTrain)
-        self.assertIsInstance(test_train.TrainPathNodes[0], AIDM_classes.TrainPathNode)
+        self.assertIsInstance(test_train.TrainPathNodes[0], AIDM_TrainPathNode_classes.TrainPathNode)
         self.assertEqual(test_train.DebugString, "FV_9_J03 tt_(SZ)")
 
     @mock.patch('requests.Session', side_effect=SetStationTracksNodeTestSessionMock)

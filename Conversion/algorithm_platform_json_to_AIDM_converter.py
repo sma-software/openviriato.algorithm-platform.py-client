@@ -2,9 +2,10 @@ import inspect
 
 import AIDMClasses.AIDM_Algorithm_classes
 import AIDMClasses.AIDM_RoutingEdge_classes
+import AIDMClasses.AIDM_TimeWindow_classes
 import AIDMClasses.AIDM_TrackClosure_classes
 import AIDMClasses.AIDM_Update_classes
-import AIDMClasses.AIDM_classes as AIDM_classes
+import AIDMClasses.AIDM_TrainPathNode_classes as AIDM_classes
 import AIDMClasses.AIDM_enum_classes as AIDM_enum_classes
 from Conversion.converter_helpers import parse_to_datetime, parse_to_timedelta, parse_to_timedelta_or_None
 
@@ -41,10 +42,10 @@ def convert_json_to_AlgorithmTrain(attribute_dict: dict) -> AIDMClasses.AIDM_Alg
     return convert(AIDMClasses.AIDM_Algorithm_classes.AlgorithmTrain, attribute_dict)
 
 
-def convert_dict_to_TimeWindow(attribute_dict: dict) -> AIDM_classes.TimeWindow:
+def convert_dict_to_TimeWindow(attribute_dict: dict) -> AIDMClasses.AIDM_TimeWindow_classes.TimeWindow:
     for key in ['FromTime', 'ToTime']:
         attribute_dict[key] = parse_to_datetime(attribute_dict[key])
-    return convert(AIDM_classes.TimeWindow, attribute_dict)
+    return convert(AIDMClasses.AIDM_TimeWindow_classes.TimeWindow, attribute_dict)
 
 
 def convert_dict_to_AlgorithmSectionTrackClosure(attribute_dict: dict) -> AIDMClasses.AIDM_TrackClosure_classes.AlgorithmSectionTrackClosure:

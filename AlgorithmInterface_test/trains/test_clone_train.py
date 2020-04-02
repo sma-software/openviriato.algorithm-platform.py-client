@@ -4,7 +4,7 @@ from unittest import mock
 import AIDMClasses.AIDM_Algorithm_classes
 import AlgorithmInterface.AlgorithmInterface
 import AlgorithmInterface_test.test_helper.SessionMockFactory as SessionMockFactory
-from AIDMClasses import AIDM_classes
+from AIDMClasses import AIDM_TrainPathNode_classes
 from AlgorithmInterface import AlgorithmInterfaceFactory
 from AlgorithmInterface_test.test_helper.SessionMockTestBase import \
     get_api_url, \
@@ -74,7 +74,7 @@ class TestCloneTrain(unittest.TestCase):
         self.assertIsInstance(test_cloned_algorithm_train, AIDMClasses.AIDM_Algorithm_classes.AlgorithmTrain)
         self.assertEqual(11037, test_cloned_algorithm_train.ID)
         self.assertEqual('CloneTrainTestMockSession', test_cloned_algorithm_train.DebugString)
-        self.assertIsInstance(test_cloned_algorithm_train.TrainPathNodes[0], AIDM_classes.TrainPathNode)
+        self.assertIsInstance(test_cloned_algorithm_train.TrainPathNodes[0], AIDM_TrainPathNode_classes.TrainPathNode)
         self.assertEqual(11038, test_cloned_algorithm_train.TrainPathNodes[0].ID)
 
     @mock.patch('requests.Session', side_effect=CloneTrainTestMockSession)

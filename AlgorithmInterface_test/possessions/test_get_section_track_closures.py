@@ -2,8 +2,9 @@ import datetime
 import unittest
 from unittest import mock
 
+import AIDMClasses.AIDM_TimeWindow_classes
 import AIDMClasses.AIDM_TrackClosure_classes
-import AIDMClasses.AIDM_classes as AIDM_classes
+import AIDMClasses.AIDM_TrainPathNode_classes as AIDM_classes
 import AlgorithmInterface.AlgorithmInterface
 import AlgorithmInterface_test.test_helper.SessionMockFactory as SessionMockFactory
 from AlgorithmInterface import AlgorithmInterfaceFactory
@@ -58,8 +59,8 @@ class TestGetSectionTrackClosures(unittest.TestCase):
 
     @mock.patch('requests.Session', side_effect=GetSectionTrackClosuresTestMockSession)
     def test_get_section_track_closures_request(self, mocked_get_obj):
-        requested_time_window = AIDM_classes.TimeWindow(FromTime=datetime.datetime(2003, 5, 1, 0, 0),
-                                                        ToTime=datetime.datetime(2003, 5, 12, 0, 0))
+        requested_time_window = AIDMClasses.AIDM_TimeWindow_classes.TimeWindow(FromTime=datetime.datetime(2003, 5, 1, 0, 0),
+                                                                               ToTime=datetime.datetime(2003, 5, 12, 0, 0))
 
         self.interface_to_viriato.get_section_track_closures(time_window=requested_time_window)
 
@@ -71,15 +72,16 @@ class TestGetSectionTrackClosures(unittest.TestCase):
 
     @mock.patch('requests.Session', side_effect=GetSectionTrackClosuresTestMockSession)
     def test_get_section_track_closures_response(self, mocked_get_obj):
-        requested_time_window = AIDM_classes.TimeWindow(FromTime=datetime.datetime(2003, 5, 1, 0, 0),
-                                                        ToTime=datetime.datetime(2003, 5, 12, 0, 0))
+        requested_time_window = AIDMClasses.AIDM_TimeWindow_classes.TimeWindow(FromTime=datetime.datetime(2003, 5, 1, 0, 0),
+                                                                               ToTime=datetime.datetime(2003, 5, 12, 0, 0))
 
         list_of_section_track_closure = self.interface_to_viriato.get_section_track_closures(requested_time_window)
 
         self.assertIsInstance(list_of_section_track_closure, list)
         self.assertIsInstance(list_of_section_track_closure[0],
                               AIDMClasses.AIDM_TrackClosure_classes.AlgorithmSectionTrackClosure)
-        self.assertIsInstance(list_of_section_track_closure[0].ClosureTimeWindowFromNode, AIDM_classes.TimeWindow)
+        self.assertIsInstance(list_of_section_track_closure[0].ClosureTimeWindowFromNode,
+                              AIDMClasses.AIDM_TimeWindow_classes.TimeWindow)
         self.assertEqual(list_of_section_track_closure[0].DebugString, 'sectiontrackclosure:s_70011 1 n_85ZMUS 85ZLSTA')
         self.assertEqual(list_of_section_track_closure[0].ClosureTimeWindowFromNode.FromTime,
                          datetime.datetime(2003, 5, 1, 8, 0))

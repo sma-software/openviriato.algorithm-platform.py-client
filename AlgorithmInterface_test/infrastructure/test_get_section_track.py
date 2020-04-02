@@ -3,7 +3,7 @@ from unittest import mock
 
 import AIDMClasses.AIDM_Algorithm_classes
 import AlgorithmInterface.AlgorithmInterface
-from AIDMClasses import AIDM_classes
+from AIDMClasses import AIDM_TrainPathNode_classes
 from AlgorithmInterface import AlgorithmInterfaceFactory
 from AlgorithmInterface_test.test_helper import SessionMockFactory as SessionMockFactory
 from AlgorithmInterface_test.test_helper.SessionMockTestBase import \

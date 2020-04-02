@@ -2,8 +2,9 @@ import datetime
 import unittest
 from unittest import mock
 
+import AIDMClasses.AIDM_TimeWindow_classes
 import AlgorithmInterface_test.test_helper.SessionMockFactory as APISessionMock
-from AIDMClasses import AIDM_classes
+from AIDMClasses import AIDM_TrainPathNode_classes
 from AlgorithmInterface import AlgorithmInterfaceFactory
 from AlgorithmInterface_test.test_helper.SessionMockTestBase import \
     get_api_url, SessionMockTestBase
@@ -45,7 +46,7 @@ class TestGetTimeWindowParameter(unittest.TestCase):
 
         time_window_param = self.interface_to_viriato.get_time_window_algorithm_parameter(key)
 
-        self.assertIsInstance(time_window_param, AIDM_classes.TimeWindow)
+        self.assertIsInstance(time_window_param, AIDMClasses.AIDM_TimeWindow_classes.TimeWindow)
         self.assertIsInstance(time_window_param.FromTime, datetime.datetime)
         self.assertEqual(time_window_param.FromTime, datetime.datetime(2003, 1, 1, 10, 20, 30))
 

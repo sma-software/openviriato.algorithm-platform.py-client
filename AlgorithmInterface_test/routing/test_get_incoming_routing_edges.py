@@ -1,8 +1,9 @@
 import unittest
 from unittest import mock
 
+import AIDMClasses.AIDM_RoutingPoint_classes
 import AlgorithmInterface_test.test_helper.SessionMockFactory as APISessionMock
-from AIDMClasses import AIDM_classes
+from AIDMClasses import AIDM_TrainPathNode_classes
 from AlgorithmInterface import AlgorithmInterfaceFactory
 from AlgorithmInterface_test.test_helper.SessionMockTestBase import \
     get_api_url, SessionMockTestBase
@@ -79,7 +80,7 @@ class TestGetIncomingRoutingEdges(unittest.TestCase):
     @unittest.skip("VPLAT-7449")
     @mock.patch('requests.Session', side_effect=GetIncomingRoutingEdgesTestSessionMock)
     def test_get_incoming_routing_edges_request(self, mocked_get_obj):
-        routing_point = AIDM_classes.RoutingPoint(nodeID=1, nodeTrackID=12)
+        routing_point = AIDMClasses.AIDM_RoutingPoint_classes.RoutingPoint(nodeID=1, nodeTrackID=12)
 
         self.interface_to_viriato.get_incoming_routing_edges(routing_point=routing_point)
 
@@ -91,7 +92,7 @@ class TestGetIncomingRoutingEdges(unittest.TestCase):
     @unittest.skip("VPLAT-7449")
     @mock.patch('requests.Session', side_effect=GetIncomingRoutingEdgesTestSessionMock)
     def test_get_incoming_routing_edges_response_only_node_id(self, mocked_get_obj):
-        routing_point = AIDM_classes.RoutingPoint(nodeID=1)
+        routing_point = AIDMClasses.AIDM_RoutingPoint_classes.RoutingPoint(nodeID=1)
 
         routing_edges = self.interface_to_viriato.get_incoming_routing_edges(routing_point)
         # FIXME Is not implemented due to a bug in the Documentation
@@ -99,7 +100,7 @@ class TestGetIncomingRoutingEdges(unittest.TestCase):
 
     @unittest.skip("VPLAT-7449")
     def test_get_incoming_routing_edges_response_node_id_and_node_track_id(self, mocked_get_obj):
-        routing_point = AIDM_classes.RoutingPoint(nodeID=1, nodeTrackID=21)
+        routing_point = AIDMClasses.AIDM_RoutingPoint_classes.RoutingPoint(nodeID=1, nodeTrackID=21)
 
         routing_edges = self.interface_to_viriato.get_incoming_routing_edges(routing_point)
         # FIXME Is not implemented due to a bug in the Documentation

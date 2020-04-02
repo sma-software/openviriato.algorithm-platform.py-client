@@ -4,7 +4,7 @@ from enum import Enum
 import isodate
 
 import Conversion.converter_helpers
-from AIDMClasses import AIDM_classes
+from AIDMClasses import AIDM_TrainPathNode_classes
 
 
 class TestAllConverterHelpers(unittest.TestCase):

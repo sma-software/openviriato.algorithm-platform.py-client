@@ -1,5 +1,5 @@
 from AIDMClasses.AIDM_base_classes import IhasDebugString
-from AIDMClasses import TimeWindow
+from AIDMClasses.AIDM_TimeWindow_classes import TimeWindow
 
 
 class AlgorithmNodeTrackClosure(IhasDebugString):

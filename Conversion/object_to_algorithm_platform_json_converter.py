@@ -1,4 +1,4 @@
-import AIDMClasses.AIDM_classes
+import AIDMClasses.AIDM_TrainPathNode_classes
 from Conversion.converter_helpers import convert_to_datetime_format_or_return_self
 import enum
 

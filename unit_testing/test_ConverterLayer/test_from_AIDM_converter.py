@@ -4,20 +4,20 @@ import unittest
 
 import AIDMClasses.AIDM_Algorithm_classes
 import Conversion.object_to_algorithm_platform_json_converter
-from AIDMClasses import AIDM_classes
+from AIDMClasses import AIDM_TrainPathNode_classes
 
 
 class TestFromAIDMConverter(unittest.TestCase):
 
     def test_convert_AIDM_object_with_properties_to_convert(self):
-        test_train_path_node = AIDM_classes.TrainPathNode(ID=11038, SectionTrackID=None, NodeID=18, NodeTrackID=None,
-                                                          FormationID=1187, ArrivalTime=
+        test_train_path_node = AIDM_TrainPathNode_classes.TrainPathNode(ID=11038, SectionTrackID=None, NodeID=18, NodeTrackID=None,
+                                                                        FormationID=1187, ArrivalTime=
                                                           datetime.datetime(year=1, month=5, day=1, hour=1, minute=1),
-                                                          DepartureTime=
+                                                                        DepartureTime=
                                                           datetime.datetime(year=1, month=5, day=1, hour=1, minute=1),
-                                                          MinimumRunTime=None, MinimumStopTime=datetime.timedelta(0),
-                                                          StopStatus=AIDM_classes.StopStatus['passing'],
-                                                          SequenceNumber=0)
+                                                                        MinimumRunTime=None, MinimumStopTime=datetime.timedelta(0),
+                                                                        StopStatus=AIDM_TrainPathNode_classes.StopStatus['passing'],
+                                                                        SequenceNumber=0)
 
         test_node_as_dict = Conversion.object_to_algorithm_platform_json_converter.convert_any_object(test_train_path_node)
 
@@ -27,14 +27,14 @@ class TestFromAIDMConverter(unittest.TestCase):
         self.assertEqual(test_node_as_dict['StopStatus'], 'passing')
 
     def test_convert_AIDM_object_with_properties_is_json_conform_dict(self):
-        test_train_path_node = AIDM_classes.TrainPathNode(ID=11038, SectionTrackID=None, NodeID=18, NodeTrackID=None,
-                                                          FormationID=1187, ArrivalTime=
+        test_train_path_node = AIDM_TrainPathNode_classes.TrainPathNode(ID=11038, SectionTrackID=None, NodeID=18, NodeTrackID=None,
+                                                                        FormationID=1187, ArrivalTime=
                                                           datetime.datetime(year=1, month=5, day=1, hour=1, minute=1),
-                                                          DepartureTime=
+                                                                        DepartureTime=
                                                           datetime.datetime(year=1, month=5, day=1, hour=1, minute=1),
-                                                          MinimumRunTime=None, MinimumStopTime=datetime.timedelta(0),
-                                                          StopStatus=AIDM_classes.StopStatus['passing'],
-                                                          SequenceNumber=0)
+                                                                        MinimumRunTime=None, MinimumStopTime=datetime.timedelta(0),
+                                                                        StopStatus=AIDM_TrainPathNode_classes.StopStatus['passing'],
+                                                                        SequenceNumber=0)
 
         test_node_as_dict = Conversion.object_to_algorithm_platform_json_converter.convert_any_object(test_train_path_node)
         test_node_as_json = json.dumps(test_node_as_dict)

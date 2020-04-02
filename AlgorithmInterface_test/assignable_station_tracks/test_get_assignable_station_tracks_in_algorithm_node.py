@@ -3,7 +3,7 @@ from unittest import mock
 
 import AIDMClasses.AIDM_Algorithm_classes
 import AlgorithmInterface_test.test_helper.SessionMockFactory as APISessionMock
-from AIDMClasses import AIDM_classes, AIDM_enum_classes
+from AIDMClasses import AIDM_TrainPathNode_classes, AIDM_enum_classes
 from AlgorithmInterface import AlgorithmInterfaceFactory
 from AlgorithmInterface_test.test_helper.SessionMockTestBase import \
     get_api_url, SessionMockTestBase

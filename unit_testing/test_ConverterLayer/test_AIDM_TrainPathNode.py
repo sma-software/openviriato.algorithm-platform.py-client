@@ -1,7 +1,7 @@
 import datetime
 import unittest
 
-import AIDMClasses.AIDM_classes
+import AIDMClasses.AIDM_TrainPathNode_classes
 import AIDMClasses.AIDM_enum_classes
 import Conversion.algorithm_platform_json_to_AIDM_converter
 

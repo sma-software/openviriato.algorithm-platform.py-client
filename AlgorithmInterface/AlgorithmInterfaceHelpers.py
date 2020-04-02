@@ -1,5 +1,4 @@
 import AIDMClasses.AIDM_RoutingPoint_classes
-from AIDMClasses import AIDM_TrainPathNode_classes
 
 
 def add_node_filter_to_get_request_params(get_request_param_dict, nodeIDs):

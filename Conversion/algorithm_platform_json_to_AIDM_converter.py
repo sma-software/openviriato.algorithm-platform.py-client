@@ -4,8 +4,8 @@ import AIDMClasses.AIDM_Algorithm_classes
 import AIDMClasses.AIDM_RoutingEdge_classes
 import AIDMClasses.AIDM_TimeWindow_classes
 import AIDMClasses.AIDM_TrackClosure_classes
-import AIDMClasses.AIDM_Update_classes
 import AIDMClasses.AIDM_TrainPathNode_classes as AIDM_classes
+import AIDMClasses.AIDM_Update_classes
 import AIDMClasses.AIDM_enum_classes as AIDM_enum_classes
 from Conversion.converter_helpers import parse_to_datetime, parse_to_timedelta, parse_to_timedelta_or_None
 

@@ -1,7 +1,7 @@
 import datetime
 
-from AIDMClasses.AIDM_base_classes import IUpdateTrain
 from AIDMClasses import StopStatus
+from AIDMClasses.AIDM_base_classes import IUpdateTrain
 
 
 class UpdateTrainRoute(IUpdateTrain):

@@ -71,5 +71,3 @@ class TrainPathNode(IhasID):
     @property
     def SequenceNumber(self) -> int:
         return self.__SequenceNumber
-
-

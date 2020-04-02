@@ -1,6 +1,8 @@
+import enum
+
 import AIDMClasses.AIDM_TrainPathNode_classes
 from Conversion.converter_helpers import convert_to_datetime_format_or_return_self
-import enum
+
 
 def get_attribute_name_without_class_prefix(attribute_name_with_prefix):
     last_occurence_double_underscore = attribute_name_with_prefix.rfind('__')

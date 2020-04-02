@@ -2,7 +2,6 @@ import datetime
 
 import AIDMClasses.AIDM_TimeWindow_classes
 import AlgorithmInterface.AlgorithmInterfaceFactory
-from AIDMClasses import AIDM_TrainPathNode_classes
 
 BASE_URL = 'http://localhost:8080'
 from_time = datetime.datetime(year=2003, month=5, day=1, hour=0, minute=0, second=0)

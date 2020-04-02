@@ -4,7 +4,6 @@ from unittest import mock
 
 import AIDMClasses.AIDM_TimeWindow_classes
 import AIDMClasses.AIDM_TrackClosure_classes
-import AIDMClasses.AIDM_TrainPathNode_classes as AIDM_classes
 import AlgorithmInterface.AlgorithmInterface
 import AlgorithmInterface_test.test_helper.SessionMockFactory as SessionMockFactory
 from AlgorithmInterface import AlgorithmInterfaceFactory

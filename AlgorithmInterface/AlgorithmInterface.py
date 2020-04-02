@@ -2,13 +2,13 @@ __version__ = '0.0.1'
 __author__ = 'Florian Fuchs'
 
 import datetime
+
 import AIDMClasses
 import AIDMClasses.AIDM_Algorithm_classes
 import AIDMClasses.AIDM_RoutingEdge_classes
 import AIDMClasses.AIDM_RoutingPoint_classes
 import AIDMClasses.AIDM_TimeWindow_classes
 import AIDMClasses.AIDM_Update_classes
-
 from AlgorithmInterface.AlgorithmInterfaceHelpers import extract_parameters_from_routing_point, \
     add_cut_train_to_get_request_params, add_node_filter_to_get_request_params
 from Communication import CommunicationLayer

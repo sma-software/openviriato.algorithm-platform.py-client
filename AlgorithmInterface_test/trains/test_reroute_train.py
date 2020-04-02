@@ -2,8 +2,8 @@ import unittest
 from unittest import mock
 
 import AIDMClasses.AIDM_RoutingEdge_classes
-import AIDMClasses.AIDM_Update_classes
 import AIDMClasses.AIDM_TrainPathNode_classes as AIDM_classes
+import AIDMClasses.AIDM_Update_classes
 import AlgorithmInterface.AlgorithmInterface
 import AlgorithmInterface_test.test_helper.SessionMockFactory as SessionMockFactory
 from AlgorithmInterface import AlgorithmInterfaceFactory

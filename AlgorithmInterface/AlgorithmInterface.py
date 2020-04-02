@@ -3,6 +3,7 @@ __author__ = 'Florian Fuchs'
 
 import datetime
 import AIDMClasses
+import AIDMClasses.AIDM_RoutingEdge_classes
 
 from AlgorithmInterface.AlgorithmInterfaceHelpers import extract_parameters_from_routing_point, \
     add_cut_train_to_get_request_params, add_node_filter_to_get_request_params
@@ -249,21 +250,21 @@ class AlgorithmicPlatformInterface:
         return algorithm_platform_json_to_AIDM_converter.convert_json_to_AlgorithmTrain(response_dict)
 
     def get_incoming_routing_edges(self, routing_point: AIDMClasses.RoutingPoint) \
-            -> AIDMClasses.IncomingRoutingEdgeSet:
+            -> AIDMClasses.AIDM_RoutingEdge_classes.IncomingRoutingEdgeSet:
         url_to_resource = "nodes/{0}/incoming-routing-edges".format(routing_point.NodeID)
         get_request_params = extract_parameters_from_routing_point(routing_point)
         response_dict = self.__communication_layer.do_get_request(url_to_resource, get_request_params)
         return algorithm_platform_json_to_AIDM_converter.convert_dict_to_IncomingRoutingEdgeSet(response_dict)
 
     def get_outgoing_routing_edges(self, routing_point: AIDMClasses.RoutingPoint) \
-            -> AIDMClasses.OutgoingRoutingEdgeSet:
+            -> AIDMClasses.AIDM_RoutingEdge_classes.OutgoingRoutingEdgeSet:
         url_to_resource = "nodes/{0}/outgoing-routing-edges".format(routing_point.NodeID)
         get_request_params = extract_parameters_from_routing_point(routing_point)
         response_dict = self.__communication_layer.do_get_request(url_to_resource, get_request_params)
         return algorithm_platform_json_to_AIDM_converter.convert_dict_to_OutgoingRoutingEdgeSet(response_dict)
 
     def get_crossing_routing_edges(self, routing_point: AIDMClasses.RoutingPoint) -> \
-            AIDMClasses.CrossingRoutingEdgeSet:
+            AIDMClasses.AIDM_RoutingEdge_classes.CrossingRoutingEdgeSet:
         url_to_resource = "nodes/{0}/crossing-routing-edges".format(routing_point.NodeID)
         response_dict = self.__communication_layer.do_get_request(url_to_resource)
         return algorithm_platform_json_to_AIDM_converter.convert_dict_to_CrossingRoutingEdgeSet(response_dict)

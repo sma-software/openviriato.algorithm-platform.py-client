@@ -1,6 +1,7 @@
 import unittest
 from unittest import mock
 
+import AIDMClasses.AIDM_RoutingEdge_classes
 import AIDMClasses.AIDM_classes as AIDM_classes
 import AlgorithmInterface.AlgorithmInterface
 import AlgorithmInterface_test.test_helper.SessionMockFactory as SessionMockFactory
@@ -75,10 +76,10 @@ class TestRerouteTrain(unittest.TestCase):
         train_id = 2060
         start_train_path_node_id = 2424
         end_train_path_node_id = 3152
-        routing_edges = [AIDM_classes.OutgoingRoutingEdge(NodeID=7, StartNodeTrackID=8, EndSectionTrackID=1165),
-                         AIDM_classes.IncomingRoutingEdge(NodeID=7, StartSectionTrackID=1165, EndNodeTrackID=25),
-                         AIDM_classes.OutgoingRoutingEdge(NodeID=24, StartNodeTrackID=1166, EndSectionTrackID=1166),
-                         AIDM_classes.IncomingRoutingEdge(NodeID=10, StartSectionTrackID=1166, EndNodeTrackID=12)]
+        routing_edges = [AIDMClasses.AIDM_RoutingEdge_classes.OutgoingRoutingEdge(NodeID=7, StartNodeTrackID=8, EndSectionTrackID=1165),
+                         AIDMClasses.AIDM_RoutingEdge_classes.IncomingRoutingEdge(NodeID=7, StartSectionTrackID=1165, EndNodeTrackID=25),
+                         AIDMClasses.AIDM_RoutingEdge_classes.OutgoingRoutingEdge(NodeID=24, StartNodeTrackID=1166, EndSectionTrackID=1166),
+                         AIDMClasses.AIDM_RoutingEdge_classes.IncomingRoutingEdge(NodeID=10, StartSectionTrackID=1166, EndNodeTrackID=12)]
         test_route = AIDM_classes.UpdateTrainRoute(TrainID=train_id, EndTrainPathNodeID=end_train_path_node_id,
                                                    StartTrainPathNodeID=start_train_path_node_id,
                                                    RoutingEdges=routing_edges)
@@ -103,10 +104,10 @@ class TestRerouteTrain(unittest.TestCase):
         train_id = 2060
         start_train_path_node_id = 2424
         end_train_path_node_id = 3152
-        routing_edges = [AIDM_classes.OutgoingRoutingEdge(nodeID=7, startNodeTrackID=8, endSectionTrackID=1165),
-                         AIDM_classes.IncomingRoutingEdge(nodeID=7, startSectionTrackID=1165, endNodeTrackID=25),
-                         AIDM_classes.OutgoingRoutingEdge(nodeID=24, startNodeTrackID=1166, endSectionTrackID=1166),
-                         AIDM_classes.IncomingRoutingEdge(nodeID=10, startSectionTrackID=1166, endNodeTrackID=12)]
+        routing_edges = [AIDMClasses.AIDM_RoutingEdge_classes.OutgoingRoutingEdge(nodeID=7, startNodeTrackID=8, endSectionTrackID=1165),
+                         AIDMClasses.AIDM_RoutingEdge_classes.IncomingRoutingEdge(nodeID=7, startSectionTrackID=1165, endNodeTrackID=25),
+                         AIDMClasses.AIDM_RoutingEdge_classes.OutgoingRoutingEdge(nodeID=24, startNodeTrackID=1166, endSectionTrackID=1166),
+                         AIDMClasses.AIDM_RoutingEdge_classes.IncomingRoutingEdge(nodeID=10, startSectionTrackID=1166, endNodeTrackID=12)]
         test_route = AIDM_classes.UpdateTrainRoute(TrainID=train_id, EndTrainPathNodeID=end_train_path_node_id,
                                                    StartTrainPathNodeID=start_train_path_node_id,
                                                    RoutingEdges=routing_edges)

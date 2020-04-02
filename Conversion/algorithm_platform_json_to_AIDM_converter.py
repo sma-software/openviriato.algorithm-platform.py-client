@@ -1,5 +1,6 @@
 import inspect
 
+import AIDMClasses.AIDM_RoutingEdge_classes
 import AIDMClasses.AIDM_classes as AIDM_classes
 import AIDMClasses.AIDM_enum_classes as AIDM_enum_classes
 from Conversion.converter_helpers import parse_to_datetime, parse_to_timedelta, parse_to_timedelta_or_None
@@ -54,22 +55,22 @@ def convert_dict_to_AlgorithmNodeTrackClosure(attribute_dict: dict) -> AIDM_clas
     return convert(AIDM_classes.AlgorithmNodeTrackClosure, attribute_dict)
 
 
-def convert_dict_to_IncomingRoutingEdgeSet(attribute_dict: dict) -> AIDM_classes.IncomingRoutingEdgeSet:
-    attribute_dict["incomingEdges"] = convert_list(AIDM_classes.IncomingRoutingEdge,
+def convert_dict_to_IncomingRoutingEdgeSet(attribute_dict: dict) -> AIDMClasses.AIDM_RoutingEdge_classes.IncomingRoutingEdgeSet:
+    attribute_dict["incomingEdges"] = convert_list(AIDMClasses.AIDM_RoutingEdge_classes.IncomingRoutingEdge,
                                                    attribute_dict["incomingEdges"])
-    return convert(AIDM_classes.IncomingRoutingEdgeSet, attribute_dict)
+    return convert(AIDMClasses.AIDM_RoutingEdge_classes.IncomingRoutingEdgeSet, attribute_dict)
 
 
-def convert_dict_to_OutgoingRoutingEdgeSet(attribute_dict: dict) -> AIDM_classes.OutgoingRoutingEdgeSet:
-    attribute_dict["outgoingEdges"] = convert_list(AIDM_classes.OutgoingRoutingEdge,
+def convert_dict_to_OutgoingRoutingEdgeSet(attribute_dict: dict) -> AIDMClasses.AIDM_RoutingEdge_classes.OutgoingRoutingEdgeSet:
+    attribute_dict["outgoingEdges"] = convert_list(AIDMClasses.AIDM_RoutingEdge_classes.OutgoingRoutingEdge,
                                                    attribute_dict["outgoingEdges"])
-    return convert(AIDM_classes.OutgoingRoutingEdgeSet, attribute_dict)
+    return convert(AIDMClasses.AIDM_RoutingEdge_classes.OutgoingRoutingEdgeSet, attribute_dict)
 
 
-def convert_dict_to_CrossingRoutingEdgeSet(attribute_dict: dict) -> AIDM_classes.CrossingRoutingEdgeSet:
-    attribute_dict["crossingEdges"] = convert_list(AIDM_classes.CrossingRoutingEdge,
+def convert_dict_to_CrossingRoutingEdgeSet(attribute_dict: dict) -> AIDMClasses.AIDM_RoutingEdge_classes.CrossingRoutingEdgeSet:
+    attribute_dict["crossingEdges"] = convert_list(AIDMClasses.AIDM_RoutingEdge_classes.CrossingRoutingEdge,
                                                    attribute_dict["crossingEdges"])
-    return convert(AIDM_classes.CrossingRoutingEdgeSet, attribute_dict)
+    return convert(AIDMClasses.AIDM_RoutingEdge_classes.CrossingRoutingEdgeSet, attribute_dict)
 
 
 def convert_dict_to_UpdateTrainTimes(attribute_dict: dict) -> AIDM_classes.UpdateTrainTimes:

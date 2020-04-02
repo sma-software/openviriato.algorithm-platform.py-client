@@ -286,8 +286,7 @@ class AlgorithmicPlatformInterface:
         response_dict = self.__communication_layer.do_get_request(url_to_resource)
         return algorithm_platform_json_to_AIDM_converter.convert_dict_to_UpdateTrainTimes(response_dict)
 
-    def __delegate_get_any_parameter(self, key: str) -> (bool, int, str, list,
-                                                         AIDMClasses.AlgorithmTrain,
+    def __delegate_get_any_parameter(self, key: str) -> (bool, int, str, list, AIDMClasses.AlgorithmTrain,
                                                          AIDMClasses.TimeWindow):
         url_to_resource = "parameters/{0}".format(key)
         return self.__communication_layer.do_get_request(url_to_resource)["Value"]

@@ -1,4 +1,4 @@
-import AIDMClasses.AIDM_RoutingPoint_classes
+import AIDMClasses
 
 
 def add_node_filter_to_get_request_params(get_request_param_dict, nodeIDs):
@@ -11,7 +11,7 @@ def add_cut_train_to_get_request_params(get_request_param_dict):
     return get_request_param_dict
 
 
-def extract_parameters_from_routing_point(routing_point: AIDMClasses.AIDM_RoutingPoint_classes.RoutingPoint):
+def extract_parameters_from_routing_point(routing_point: AIDMClasses.RoutingPoint):
     get_request_params = {}
     if routing_point.NodeTrackID is not None:
         get_request_params["EndNodeTrackID"] = routing_point.NodeTrackID

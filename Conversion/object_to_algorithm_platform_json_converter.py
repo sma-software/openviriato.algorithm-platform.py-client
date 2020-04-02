@@ -19,11 +19,11 @@ def convert_any_object(obj):
     if isinstance(obj, list):
         return [convert_any_object(el) for el in obj]
 
-    isAIDMObject = hasattr(obj, "__module__") and obj.__module__ == AIDMClasses.AIDM_classes.__name__
-    if (isAIDMObject):
-        return convert_any_AIDM_object_to_dict(obj)
-
     if isinstance(obj, enum.Enum):
         return obj.name
+
+    is_from_AIDM_package = hasattr(obj, "__module__") and obj.__module__.split('.')[0] == AIDMClasses.__name__
+    if is_from_AIDM_package:
+        return convert_any_AIDM_object_to_dict(obj)
     else:
         return convert_to_datetime_format_or_return_self(obj)

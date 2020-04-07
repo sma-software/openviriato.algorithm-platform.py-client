@@ -24,16 +24,6 @@ class AlgorithmicPlatformInterface:
     def base_url(self) -> str:
         return self.__communication_layer.base_url
 
-    def notify_user(self, message_level_1: str, message_level_2: str) -> None:
-        url_to_resource = 'notifications'
-        request_body = {'messageLevel1': message_level_1, 'messageLevel2': message_level_2}
-        self.__communication_layer.do_post_request(url_to_resource, request_body)
-
-    def show_status_message(self, short_message: str, long_message: (str, None) = None) -> None:
-        url_to_resource = 'status-message'
-        request_body = {'shortMessage': short_message, 'longMessage': long_message}
-        self.__communication_layer.do_post_request(url_to_resource, request_body)
-
     def get_node(self, node_id: int) -> AIDMClasses.AlgorithmNode:
         url_to_resource = 'nodes/{0}'.format(node_id)
         response_dict = self.__communication_layer.do_get_request(url_to_resource)
@@ -285,6 +275,16 @@ class AlgorithmicPlatformInterface:
         url_to_resource = "calculate-run-times/{0}".format(train_id)
         response_dict = self.__communication_layer.do_get_request(url_to_resource)
         return algorithm_platform_json_to_AIDM_converter.convert_dict_to_UpdateTrainTimes(response_dict)
+
+    def notify_user(self, message_level_1: str, message_level_2: str) -> None:
+        url_to_resource = 'notifications'
+        request_body = {'messageLevel1': message_level_1, 'messageLevel2': message_level_2}
+        self.__communication_layer.do_post_request(url_to_resource, request_body)
+
+    def show_status_message(self, short_message: str, long_message: (str, None) = None) -> None:
+        url_to_resource = 'status-message'
+        request_body = {'shortMessage': short_message, 'longMessage': long_message}
+        self.__communication_layer.do_post_request(url_to_resource, request_body)
 
     def __delegate_get_any_parameter(self, key: str) -> (bool, int, str, list, AIDMClasses.AlgorithmTrain,
                                                          AIDMClasses.TimeWindow):

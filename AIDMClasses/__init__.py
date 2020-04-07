@@ -6,3 +6,4 @@ from .AIDM_TrackClosure_classes import *
 from .AIDM_TrainPathNode_classes import *
 from .AIDM_Update_classes import *
 from .AIDM_enum_classes import *
+from .AIDM_TrainClassification_classes import *

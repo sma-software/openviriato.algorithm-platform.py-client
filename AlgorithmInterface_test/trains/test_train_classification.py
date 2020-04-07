@@ -1,16 +1,14 @@
 from unittest import mock, TestCase
 
+import AIDMClasses
 import AlgorithmInterface.AlgorithmInterface
 from AlgorithmInterface import AlgorithmInterfaceFactory
 from AlgorithmInterface_test.test_helper import SessionMockFactory as APISessionMock
-from AlgorithmInterface_test.test_helper.SessionMockTestBase import \
-    get_api_url, \
-    SessionMockTestBase
+from AlgorithmInterface_test.test_helper.SessionMockTestBase import get_api_url, SessionMockTestBase
 
 
 class TestGetTrainClassification(TestCase):
     class GetTrainClassificationTestMockSession(SessionMockTestBase):
-        # to replace session.get:
         def get(self, request, params):
             self.__last_body = params
             self.__last_request = request
@@ -39,8 +37,8 @@ class TestGetTrainClassification(TestCase):
 
         train_class = self.interface_to_viriato.get_train_classification(train_id)
 
-        self.assertIsInstance(train_class, dict)
-        self.assertDictEqual(train_class, {"Description": "Freight"})
+        self.assertIsInstance(train_class, AIDMClasses.TrainClassification)
+        self.assertEqual(train_class.Description, "Freight")
 
     @mock.patch('requests.Session', side_effect=GetTrainClassificationTestMockSession)
     def tearDown(self, mocked_get_obj) -> None:

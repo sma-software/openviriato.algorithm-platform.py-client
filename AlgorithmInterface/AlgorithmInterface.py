@@ -1,6 +1,7 @@
 import datetime
 
 import AIDMClasses
+    add_cut_train_to_get_request_params, add_node_filter_to_get_request_params
 from AlgorithmInterface.AlgorithmInterfaceHelpers import merge_query_parameters
 
 from Communication import CommunicationLayer
@@ -53,13 +54,15 @@ class AlgorithmicPlatformInterface:
         response_list = self.__communication_layer.do_get_request(url_to_resource)
         return algorithm_platform_json_to_AIDM_converter.convert_list(AIDMClasses.AlgorithmSectionTrack, response_list)
 
-    def get_train_classification(self, train_id: int) -> dict:
+    def get_train_classification(self, train_id: int) -> AIDMClasses.TrainClassification:
         url_to_resource = 'train-classification/{0}'.format(train_id)
-        return self.__communication_layer.do_get_request(url_to_resource)
+        response_dict = self.__communication_layer.do_get_request(url_to_resource)
+        return algorithm_platform_json_to_AIDM_converter.convert(AIDMClasses.TrainClassification, response_dict)
 
-    def get_train_classifications(self) -> dict:
+    def get_train_classifications(self) -> list:
         url_to_resource = 'train-classifications'
-        return self.__communication_layer.do_get_request(url_to_resource)
+        response_list = self.__communication_layer.do_get_request(url_to_resource)
+        return algorithm_platform_json_to_AIDM_converter.convert_list(AIDMClasses.TrainClassification, response_list)
 
     def get_trains(self, timeWindow: AIDMClasses.TimeWindow) -> list:
         url_to_resource = "trains"

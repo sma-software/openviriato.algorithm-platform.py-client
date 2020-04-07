@@ -1,11 +1,8 @@
 import datetime
 import unittest
 
-import AIDMClasses.AIDM_Algorithm_classes
-import AIDMClasses.AIDM_TimeWindow_classes
-import AIDMClasses.AIDM_TrackClosure_classes
-import Conversion.algorithm_platform_json_to_AIDM_converter
-from AIDMClasses import AIDM_TrainPathNode_classes
+import AIDMClasses
+from Conversion import algorithm_platform_json_to_AIDM_converter
 
 
 class TestToAIDMConverterSpecificConversions(unittest.TestCase):
@@ -13,9 +10,9 @@ class TestToAIDMConverterSpecificConversions(unittest.TestCase):
     def test_convert_dict_to_AlgorithmNode(self):
         test_node_as_dict = dict(ID=15, Code='A', DebugString='test123', NodeTracks=[])
 
-        test_node = Conversion.algorithm_platform_json_to_AIDM_converter.convert_dict_to_AlgorithmNode(test_node_as_dict)
+        test_node = algorithm_platform_json_to_AIDM_converter.convert_dict_to_AlgorithmNode(test_node_as_dict)
 
-        self.assertIsInstance(test_node, AIDMClasses.AIDM_Algorithm_classes.AlgorithmNode)
+        self.assertIsInstance(test_node, AIDMClasses.AlgorithmNode)
         self.assertEqual(test_node.ID, 15)
         self.assertEqual(test_node.Code, 'A')
         self.assertEqual(test_node.DebugString, 'test123')
@@ -25,11 +22,11 @@ class TestToAIDMConverterSpecificConversions(unittest.TestCase):
         test_node_as_dict = dict(ID=15, Code='A', DebugString='test123', NodeTracks=[])
         test_node_as_list_of_dict = [test_node_as_dict, test_node_as_dict, test_node_as_dict, test_node_as_dict]
 
-        test_node_list = Conversion.algorithm_platform_json_to_AIDM_converter.convert_list(
-            Conversion.algorithm_platform_json_to_AIDM_converter.convert_dict_to_AlgorithmNode, test_node_as_list_of_dict)
+        test_node_list = algorithm_platform_json_to_AIDM_converter.convert_list(
+            algorithm_platform_json_to_AIDM_converter.convert_dict_to_AlgorithmNode, test_node_as_list_of_dict)
 
         self.assertIsInstance(test_node_list, list)
-        self.assertIsInstance(test_node_list[1], AIDMClasses.AIDM_Algorithm_classes.AlgorithmNode)
+        self.assertIsInstance(test_node_list[1], AIDMClasses.AlgorithmNode)
         self.assertEqual(test_node_list[1].ID, 15)
 
     def test_convert_dict_to_TrainPathNode(self):
@@ -38,9 +35,9 @@ class TestToAIDMConverterSpecificConversions(unittest.TestCase):
                                  MinimumRunTime=None, MinimumStopTime="P0D", StopStatus="commercialStop",
                                  SequenceNumber=0)
 
-        test_train_path_node = Conversion.algorithm_platform_json_to_AIDM_converter.convert_dict_to_TrainPathNode(test_node_as_dict)
+        test_train_path_node = algorithm_platform_json_to_AIDM_converter.convert_dict_to_TrainPathNode(test_node_as_dict)
 
-        self.assertIsInstance(test_train_path_node, AIDM_TrainPathNode_classes.TrainPathNode)
+        self.assertIsInstance(test_train_path_node, AIDMClasses.TrainPathNode)
         self.assertEqual(test_train_path_node.ID, 1332)
         self.assertEqual(test_train_path_node.MinimumRunTime, None)
         self.assertEqual(test_train_path_node.MinimumStopTime, datetime.timedelta(0))
@@ -58,10 +55,10 @@ class TestToAIDMConverterSpecificConversions(unittest.TestCase):
                  MinimumStopTime="P0D", StopStatus="commercialStop", SequenceNumber=2)
         ], DebugString="RVZH_3_1_J03 tt_(S)")
 
-        test_train = Conversion.algorithm_platform_json_to_AIDM_converter.convert_json_to_AlgorithmTrain(test_train_as_dict)
+        test_train = algorithm_platform_json_to_AIDM_converter.convert_json_to_AlgorithmTrain(test_train_as_dict)
 
-        self.assertIsInstance(test_train, AIDMClasses.AIDM_Algorithm_classes.AlgorithmTrain)
-        self.assertIsInstance(test_train.TrainPathNodes[0], AIDM_TrainPathNode_classes.TrainPathNode)
+        self.assertIsInstance(test_train, AIDMClasses.AlgorithmTrain)
+        self.assertIsInstance(test_train.TrainPathNodes[0], AIDMClasses.TrainPathNode)
         self.assertEqual(test_train.TrainPathNodes[0].MinimumRunTime, None)
         self.assertEqual(test_train.TrainPathNodes[0].MinimumStopTime, datetime.timedelta(0))
 
@@ -69,10 +66,10 @@ class TestToAIDMConverterSpecificConversions(unittest.TestCase):
         param_dict = dict(DebugString="nodetrackclosure:85ZMUS 24", NodeID=621, NodeTrackID=622,
                           ClosureTimeWindow=dict(FromTime="2003-05-01T08:00:00", ToTime="2003-05-02T10:00:00"))
 
-        test_closure = Conversion.algorithm_platform_json_to_AIDM_converter.convert_dict_to_AlgorithmNodeTrackClosure(param_dict)
+        test_closure = algorithm_platform_json_to_AIDM_converter.convert_dict_to_AlgorithmNodeTrackClosure(param_dict)
 
-        self.assertIsInstance(test_closure, AIDMClasses.AIDM_TrackClosure_classes.AlgorithmNodeTrackClosure)
-        self.assertIsInstance(test_closure.ClosureTimeWindow, AIDMClasses.AIDM_TimeWindow_classes.TimeWindow)
+        self.assertIsInstance(test_closure, AIDMClasses.AlgorithmNodeTrackClosure)
+        self.assertIsInstance(test_closure.ClosureTimeWindow, AIDMClasses.TimeWindow)
         self.assertEqual(test_closure.DebugString, "nodetrackclosure:85ZMUS 24")
 
     def test_convert_dict_to_AlgorithmSectionTrackClosure(self):
@@ -81,8 +78,8 @@ class TestToAIDMConverterSpecificConversions(unittest.TestCase):
                           ClosureTimeWindowFromNode=dict(FromTime="2003-05-01T08:00:00", ToTime="2003-05-01T09:00:00"),
                           ClosureTimeWindowToNode=dict(FromTime="2003-05-01T08:30:00", ToTime="2003-05-01T09:30:00"))
 
-        test_closure = Conversion.algorithm_platform_json_to_AIDM_converter.convert_dict_to_AlgorithmSectionTrackClosure(param_dict)
+        test_closure = algorithm_platform_json_to_AIDM_converter.convert_dict_to_AlgorithmSectionTrackClosure(param_dict)
 
-        self.assertIsInstance(test_closure, AIDMClasses.AIDM_TrackClosure_classes.AlgorithmSectionTrackClosure)
-        self.assertIsInstance(test_closure.ClosureTimeWindowFromNode, AIDMClasses.AIDM_TimeWindow_classes.TimeWindow)
+        self.assertIsInstance(test_closure, AIDMClasses.AlgorithmSectionTrackClosure)
+        self.assertIsInstance(test_closure.ClosureTimeWindowFromNode, AIDMClasses.TimeWindow)
         self.assertEqual(test_closure.FromNodeID, 621)

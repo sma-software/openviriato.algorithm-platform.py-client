@@ -14,12 +14,12 @@ def convert_list(AIDM_class, list_of_dict: list) -> list:
     return [convert(AIDM_class, dict_from_list) for dict_from_list in list_of_dict]
 
 
-def convert_dict_to_AlgorithmNode(attribute_dict: dict) -> AIDMClasses.AlgorithmNode:
+def convert_json_to_AlgorithmNode(attribute_dict: dict) -> AIDMClasses.AlgorithmNode:
     attribute_dict['NodeTracks'] = convert_list(AIDMClasses.AlgorithmNodeTrack, attribute_dict['NodeTracks'])
     return convert(AIDMClasses.AlgorithmNode, attribute_dict)
 
 
-def convert_dict_to_TrainPathNode(attribute_dict: dict) -> AIDMClasses.TrainPathNode:
+def convert_json_to_TrainPathNode(attribute_dict: dict) -> AIDMClasses.TrainPathNode:
     attribute_dict['StopStatus'] = AIDMClasses.StopStatus[attribute_dict['StopStatus']]
     for key in ['ArrivalTime', 'DepartureTime']:
         attribute_dict[key] = parse_to_datetime(attribute_dict[key])
@@ -29,49 +29,49 @@ def convert_dict_to_TrainPathNode(attribute_dict: dict) -> AIDMClasses.TrainPath
 
 
 def convert_json_to_AlgorithmTrain(attribute_dict: dict) -> AIDMClasses.AlgorithmTrain:
-    attribute_dict['TrainPathNodes'] = [convert_dict_to_TrainPathNode(train_path_node)
+    attribute_dict['TrainPathNodes'] = [convert_json_to_TrainPathNode(train_path_node)
                                         for train_path_node in attribute_dict['TrainPathNodes']]
     return convert(AIDMClasses.AlgorithmTrain, attribute_dict)
 
 
-def convert_dict_to_TimeWindow(attribute_dict: dict) -> AIDMClasses.TimeWindow:
+def convert_json_to_TimeWindow(attribute_dict: dict) -> AIDMClasses.TimeWindow:
     for key in ['FromTime', 'ToTime']:
         attribute_dict[key] = parse_to_datetime(attribute_dict[key])
     return convert(AIDMClasses.TimeWindow, attribute_dict)
 
 
-def convert_dict_to_AlgorithmSectionTrackClosure(attribute_dict: dict) -> AIDMClasses.AlgorithmSectionTrackClosure:
+def convert_json_to_AlgorithmSectionTrackClosure(attribute_dict: dict) -> AIDMClasses.AlgorithmSectionTrackClosure:
     for key in ['ClosureTimeWindowFromNode', 'ClosureTimeWindowToNode']:
-        attribute_dict[key] = convert_dict_to_TimeWindow(attribute_dict[key])
+        attribute_dict[key] = convert_json_to_TimeWindow(attribute_dict[key])
     return convert(AIDMClasses.AlgorithmSectionTrackClosure, attribute_dict)
 
 
-def convert_dict_to_AlgorithmNodeTrackClosure(attribute_dict: dict) -> AIDMClasses.AlgorithmNodeTrackClosure:
-    attribute_dict["ClosureTimeWindow"] = convert_dict_to_TimeWindow(attribute_dict["ClosureTimeWindow"])
+def convert_json_to_AlgorithmNodeTrackClosure(attribute_dict: dict) -> AIDMClasses.AlgorithmNodeTrackClosure:
+    attribute_dict["ClosureTimeWindow"] = convert_json_to_TimeWindow(attribute_dict["ClosureTimeWindow"])
     return convert(AIDMClasses.AlgorithmNodeTrackClosure, attribute_dict)
 
 
-def convert_dict_to_IncomingRoutingEdgeSet(attribute_dict: dict) -> AIDMClasses.IncomingRoutingEdgeSet:
+def convert_json_to_IncomingRoutingEdgeSet(attribute_dict: dict) -> AIDMClasses.IncomingRoutingEdgeSet:
     attribute_dict["incomingEdges"] = convert_list(AIDMClasses.IncomingRoutingEdge, attribute_dict["incomingEdges"])
     return convert(AIDMClasses.IncomingRoutingEdgeSet, attribute_dict)
 
 
-def convert_dict_to_OutgoingRoutingEdgeSet(attribute_dict: dict) -> AIDMClasses.OutgoingRoutingEdgeSet:
+def convert_json_to_OutgoingRoutingEdgeSet(attribute_dict: dict) -> AIDMClasses.OutgoingRoutingEdgeSet:
     attribute_dict["outgoingEdges"] = convert_list(AIDMClasses.OutgoingRoutingEdge, attribute_dict["outgoingEdges"])
     return convert(AIDMClasses.OutgoingRoutingEdgeSet, attribute_dict)
 
 
-def convert_dict_to_CrossingRoutingEdgeSet(attribute_dict: dict) -> AIDMClasses.CrossingRoutingEdgeSet:
+def convert_json_to_CrossingRoutingEdgeSet(attribute_dict: dict) -> AIDMClasses.CrossingRoutingEdgeSet:
     attribute_dict["crossingEdges"] = convert_list(AIDMClasses.CrossingRoutingEdge, attribute_dict["crossingEdges"])
     return convert(AIDMClasses.CrossingRoutingEdgeSet, attribute_dict)
 
 
-def convert_dict_to_UpdateTrainTimes(attribute_dict: dict) -> AIDMClasses.UpdateTrainTimes:
-    attribute_dict["Times"] = convert_list(convert_dict_to_UpdateTrainTimesNode, attribute_dict["Times"])
+def convert_json_to_UpdateTrainTimes(attribute_dict: dict) -> AIDMClasses.UpdateTrainTimes:
+    attribute_dict["Times"] = convert_list(convert_json_to_UpdateTrainTimesNode, attribute_dict["Times"])
     return convert(AIDMClasses.UpdateTrainTimes, attribute_dict)
 
 
-def convert_dict_to_UpdateTrainTimesNode(attribute_dict: dict) -> AIDMClasses.UpdateTrainTimesNode:
+def convert_json_to_UpdateTrainTimesNode(attribute_dict: dict) -> AIDMClasses.UpdateTrainTimesNode:
     for key in ['ArrivalTime', 'DepartureTime']:
         attribute_dict[key] = parse_to_datetime(attribute_dict[key])
     for key in ['MinimumRunTime', 'MinimumStopTime']:

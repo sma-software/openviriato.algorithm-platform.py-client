@@ -1,7 +1,7 @@
 import datetime
 
 import AIDMClasses
-    add_cut_train_to_get_request_params, add_node_filter_to_get_request_params
+
 from AlgorithmInterface.AlgorithmInterfaceHelpers import merge_query_parameters
 
 from Communication import CommunicationLayer
@@ -28,14 +28,14 @@ class AlgorithmicPlatformInterface:
     def get_node(self, node_id: int) -> AIDMClasses.AlgorithmNode:
         url_to_resource = 'nodes/{0}'.format(node_id)
         response_dict = self.__communication_layer.do_get_request(url_to_resource)
-        return algorithm_platform_json_to_AIDM_converter.convert_dict_to_AlgorithmNode(response_dict)
+        return algorithm_platform_json_to_AIDM_converter.convert_json_to_AlgorithmNode(response_dict)
 
     def get_neighbor_nodes(self, node_id: int) -> list:
         url_to_resource = 'neighbor-nodes/{0}'.format(node_id)
         response_list = self.__communication_layer.do_get_request(url_to_resource)
 
         return algorithm_platform_json_to_AIDM_converter.convert_list(
-            algorithm_platform_json_to_AIDM_converter.convert_dict_to_AlgorithmNode,
+            algorithm_platform_json_to_AIDM_converter.convert_json_to_AlgorithmNode,
             response_list
         )
 
@@ -323,7 +323,7 @@ class AlgorithmicPlatformInterface:
         else:
             get_request_params = dict()
         response_dict = self.__communication_layer.do_get_request(url_to_resource, get_request_params)
-        return algorithm_platform_json_to_AIDM_converter.convert_dict_to_IncomingRoutingEdgeSet(response_dict)
+        return algorithm_platform_json_to_AIDM_converter.convert_json_to_IncomingRoutingEdgeSet(response_dict)
 
     def get_outgoing_routing_edges(self, routing_point: AIDMClasses.RoutingPoint) -> AIDMClasses.OutgoingRoutingEdgeSet:
         url_to_resource = "nodes/{0}/outgoing-routing-edges".format(routing_point.NodeID)
@@ -332,12 +332,12 @@ class AlgorithmicPlatformInterface:
         else:
             get_request_params = dict()
         response_dict = self.__communication_layer.do_get_request(url_to_resource, get_request_params)
-        return algorithm_platform_json_to_AIDM_converter.convert_dict_to_OutgoingRoutingEdgeSet(response_dict)
+        return algorithm_platform_json_to_AIDM_converter.convert_json_to_OutgoingRoutingEdgeSet(response_dict)
 
     def get_crossing_routing_edges(self, routing_point: AIDMClasses.RoutingPoint) -> AIDMClasses.CrossingRoutingEdgeSet:
         url_to_resource = "nodes/{0}/crossing-routing-edges".format(routing_point.NodeID)
         response_dict = self.__communication_layer.do_get_request(url_to_resource)
-        return algorithm_platform_json_to_AIDM_converter.convert_dict_to_CrossingRoutingEdgeSet(response_dict)
+        return algorithm_platform_json_to_AIDM_converter.convert_json_to_CrossingRoutingEdgeSet(response_dict)
 
     def get_formation(self, formation_id: int) -> AIDMClasses.AlgorithmFormation:
         url_to_resource = "vehicles/formations/{0}".format(formation_id)
@@ -352,7 +352,7 @@ class AlgorithmicPlatformInterface:
     def calculate_run_times(self, train_id: int) -> (AIDMClasses.UpdateTrainTimes, None):
         url_to_resource = "calculate-run-times/{0}".format(train_id)
         response_dict = self.__communication_layer.do_get_request(url_to_resource)
-        return algorithm_platform_json_to_AIDM_converter.convert_dict_to_UpdateTrainTimes(response_dict)
+        return algorithm_platform_json_to_AIDM_converter.convert_json_to_UpdateTrainTimes(response_dict)
 
     def notify_user(self, message_level_1: str, message_level_2: str) -> None:
         url_to_resource = 'notifications'
@@ -401,7 +401,7 @@ class AlgorithmicPlatformInterface:
 
     def get_time_window_algorithm_parameter(self, key: str) -> AIDMClasses.TimeWindow:
         response_dict = self.__delegate_get_any_parameter(key)
-        return algorithm_platform_json_to_AIDM_converter.convert_dict_to_TimeWindow(response_dict)
+        return algorithm_platform_json_to_AIDM_converter.convert_json_to_TimeWindow(response_dict)
 
     def get_node_track_closures(self, time_window: AIDMClasses.TimeWindow) -> list:
         url_to_resource = 'possessions/node-track-closures'
@@ -412,7 +412,7 @@ class AlgorithmicPlatformInterface:
         )
 
         return algorithm_platform_json_to_AIDM_converter.convert_list(
-            algorithm_platform_json_to_AIDM_converter.convert_dict_to_AlgorithmNodeTrackClosure,
+            algorithm_platform_json_to_AIDM_converter.convert_json_to_AlgorithmNodeTrackClosure,
             response_list_of_dict
         )
 
@@ -425,6 +425,6 @@ class AlgorithmicPlatformInterface:
         )
 
         return algorithm_platform_json_to_AIDM_converter.convert_list(
-            algorithm_platform_json_to_AIDM_converter.convert_dict_to_AlgorithmSectionTrackClosure,
+            algorithm_platform_json_to_AIDM_converter.convert_json_to_AlgorithmSectionTrackClosure,
             response_list_of_dict
         )

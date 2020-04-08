@@ -43,7 +43,7 @@ class TestFromAIDMConverter(unittest.TestCase):
 
         self.assertEqual(test_node_as_json, expected_json_string)
 
-    def test_convert_to_list_of_dict_empty(self):
+    def test_convert_list_empty(self):
         test_list_of_dict = []
 
         test_section_list = Conversion.object_to_algorithm_platform_json_converter.convert_any_object(test_list_of_dict)

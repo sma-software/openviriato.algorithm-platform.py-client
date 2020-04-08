@@ -63,7 +63,7 @@ class TestToAIDMConverterSpecificConversions(unittest.TestCase):
         self.assertEqual(test_train.TrainPathNodes[0].MinimumRunTime, None)
         self.assertEqual(test_train.TrainPathNodes[0].MinimumStopTime, datetime.timedelta(0))
 
-    def test_convert_json_to_time_window(self):
+    def test_convert_json_to_TimeWindow(self):
         test_time_window_as_dict = dict(FromTime="2003-05-01T08:00:00", ToTime="2023-05-02T10:00:50")
 
         test_time_window = algorithm_platform_json_to_AIDM_converter.convert_json_to_TimeWindow(
@@ -75,16 +75,6 @@ class TestToAIDMConverterSpecificConversions(unittest.TestCase):
         self.assertIsInstance(test_time_window.ToTime, datetime.datetime)
         self.assertEqual(test_time_window.ToTime, datetime.datetime(year=2023, month=5, day=2, hour=10, minute=0,
                                                                     second=50))
-
-    def test_convert_json_to_AlgorithmNodeTrackClosure(self):
-        param_dict = dict(DebugString="nodetrackclosure:85ZMUS 24", NodeID=621, NodeTrackID=622,
-                          ClosureTimeWindow=dict(FromTime="2003-05-01T08:00:00", ToTime="2003-05-02T10:00:00"))
-
-        test_closure = algorithm_platform_json_to_AIDM_converter.convert_json_to_AlgorithmNodeTrackClosure(param_dict)
-
-        self.assertIsInstance(test_closure, AIDMClasses.AlgorithmNodeTrackClosure)
-        self.assertIsInstance(test_closure.ClosureTimeWindow, AIDMClasses.TimeWindow)
-        self.assertEqual(test_closure.DebugString, "nodetrackclosure:85ZMUS 24")
 
     def test_convert_json_to_AlgorithmSectionTrackClosure(self):
         param_dict = dict(DebugString="sectiontrackclosure:s_70011 1 n_85ZMUS 85ZLSTA", SectionTrackID=1080,
@@ -99,6 +89,16 @@ class TestToAIDMConverterSpecificConversions(unittest.TestCase):
         self.assertIsInstance(test_closure.ClosureTimeWindowFromNode, AIDMClasses.TimeWindow)
         self.assertEqual(test_closure.FromNodeID, 621)
 
+    def test_convert_json_to_AlgorithmNodeTrackClosure(self):
+        param_dict = dict(DebugString="nodetrackclosure:85ZMUS 24", NodeID=621, NodeTrackID=622,
+                          ClosureTimeWindow=dict(FromTime="2003-05-01T08:00:00", ToTime="2003-05-02T10:00:00"))
+
+        test_closure = algorithm_platform_json_to_AIDM_converter.convert_json_to_AlgorithmNodeTrackClosure(param_dict)
+
+        self.assertIsInstance(test_closure, AIDMClasses.AlgorithmNodeTrackClosure)
+        self.assertIsInstance(test_closure.ClosureTimeWindow, AIDMClasses.TimeWindow)
+        self.assertEqual(test_closure.DebugString, "nodetrackclosure:85ZMUS 24")
+
     @unittest.skip('VPLAT-7405:')
     def test_convert_json_to_incoming_routing_edge_set(self):
         raise NotImplementedError
@@ -110,21 +110,6 @@ class TestToAIDMConverterSpecificConversions(unittest.TestCase):
     @unittest.skip('VPLAT-7405:')
     def test_convert_json_to_crossing_routing_edge_set(self):
         raise NotImplementedError
-
-    def test_convert_json_to_update_train_times_node(self):
-        param_dict = dict(TrainPathNodeID=3880, ArrivalTime="2003-05-01T07:00:00", DepartureTime="2003-05-01T07:00:00",
-                          MinimumRunTime=None, MinimumStopTime="P0D", StopStatus="commercialStop")
-
-        test_update_train_times_node = algorithm_platform_json_to_AIDM_converter.convert_json_to_UpdateTrainTimesNode(
-            param_dict)
-
-        self.assertIsInstance(test_update_train_times_node, AIDMClasses.UpdateTrainTimesNode)
-        self.assertEqual(test_update_train_times_node.TrainPathNodeID, 3880)
-        self.assertEqual(test_update_train_times_node.ArrivalTime,
-                         datetime.datetime(year=2003, month=5, day=1, hour=7, minute=0))
-        self.assertEqual(test_update_train_times_node.MinimumRunTime, None)
-        self.assertEqual(test_update_train_times_node.MinimumStopTime, datetime.timedelta(0))
-        self.assertEqual(test_update_train_times_node.StopStatus, AIDMClasses.StopStatus["commercialStop"])
 
     def test_convert_json_to_UpdateTrainTimes(self):
         param_dict = dict(TrainID=1012, Times= \
@@ -142,3 +127,18 @@ class TestToAIDMConverterSpecificConversions(unittest.TestCase):
         self.assertEqual(test_update_train_times.Times[0].TrainPathNodeID, 3880)
         self.assertEqual(test_update_train_times.Times[0].ArrivalTime,
                          datetime.datetime(year=2003, month=5, day=1, hour=7, minute=0))
+
+    def test_convert_json_to_update_train_times_node(self):
+        param_dict = dict(TrainPathNodeID=3880, ArrivalTime="2003-05-01T07:00:00", DepartureTime="2003-05-01T07:00:00",
+                          MinimumRunTime=None, MinimumStopTime="P0D", StopStatus="commercialStop")
+
+        test_update_train_times_node = algorithm_platform_json_to_AIDM_converter.convert_json_to_UpdateTrainTimesNode(
+            param_dict)
+
+        self.assertIsInstance(test_update_train_times_node, AIDMClasses.UpdateTrainTimesNode)
+        self.assertEqual(test_update_train_times_node.TrainPathNodeID, 3880)
+        self.assertEqual(test_update_train_times_node.ArrivalTime,
+                         datetime.datetime(year=2003, month=5, day=1, hour=7, minute=0))
+        self.assertEqual(test_update_train_times_node.MinimumRunTime, None)
+        self.assertEqual(test_update_train_times_node.MinimumStopTime, datetime.timedelta(0))
+        self.assertEqual(test_update_train_times_node.StopStatus, AIDMClasses.StopStatus["commercialStop"])

@@ -13,6 +13,12 @@ class TestAllConverterHelpers(unittest.TestCase):
         with self.assertRaises(ValueError) as test_parse_to_datetime_wrong_format:
             converter_helpers.parse_to_datetime(test_str)
 
+    def test_parse_to_datetime_wrong_None(self):
+        test_none = None
+
+        with self.assertRaises(TypeError) as test_parse_to_datetime_wrong_format:
+            converter_helpers.parse_to_datetime(test_none)
+
     def test_parse_to_datetime_proper_format(self):
         test_date_str = "0001-05-01T01:01:00"
 

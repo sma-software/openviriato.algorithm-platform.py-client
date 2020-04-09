@@ -4,7 +4,6 @@ import AIDMClasses.AIDM_Algorithm_classes
 import Conversion.algorithm_platform_json_to_AIDM_converter
 
 
-# TODO Check if all conversions are tested!
 
 class TestToAIDMConverterGenericConversions(unittest.TestCase):
 

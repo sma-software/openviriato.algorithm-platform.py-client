@@ -43,7 +43,6 @@ class TestCrossingRoutingEdges(unittest.TestCase):
         self.interface_to_viriato.get_crossing_routing_edges(routing_point=routing_point)
 
         session_obj = self.interface_to_viriato._AlgorithmicPlatformInterface__communication_layer.currentSession
-        # FIXME The assertions do not match -> Bug in Doc (JSON keys != AIDM property names)
         self.assertEqual(session_obj._GetCrossingRoutingEdgesTestSessionMock__last_request, get_api_url() +
                          "/vehicles/formations/1828")
         self.assertDictEqual(session_obj._GetCrossingRoutingEdgesTestSessionMock__last_body, {"nodeTrackID": "12"})
@@ -54,7 +53,6 @@ class TestCrossingRoutingEdges(unittest.TestCase):
         routing_point = AIDMClasses.AIDM_RoutingPoint_classes.RoutingPoint(nodeID=1)
 
         routing_edges = self.interface_to_viriato.get_crossing_routing_edges(routing_point)
-        # FIXME Is not implemented due to a bug in the Documentation
         raise NotImplementedError
 
     @mock.patch('requests.Session', side_effect=GetCrossingRoutingEdgesTestSessionMock)

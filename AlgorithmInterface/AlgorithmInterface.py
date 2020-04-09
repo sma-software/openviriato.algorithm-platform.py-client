@@ -64,7 +64,7 @@ class AlgorithmicPlatformInterface:
     def get_trains(self, timeWindow: AIDMClasses.TimeWindow) -> list:
         url_to_resource = "trains"
         get_request_params = object_to_algorithm_platform_json_converter.convert_any_object(timeWindow)
-        response_list = self.__communication_layer.do_get_request(url_to_resource, request_param=get_request_params)
+        response_list = self.__communication_layer.do_get_request(url_to_resource, query_param=get_request_params)
 
         return algorithm_platform_json_to_AIDM_converter.convert_list(
             algorithm_platform_json_to_AIDM_converter.convert_json_to_AlgorithmTrain,
@@ -80,7 +80,7 @@ class AlgorithmicPlatformInterface:
                 object_to_algorithm_platform_json_converter.convert_any_object(timeWindow)
             ]
         )
-        response_list = self.__communication_layer.do_get_request(url_to_resource, request_param=query_parameters)
+        response_list = self.__communication_layer.do_get_request(url_to_resource, query_param=query_parameters)
         return algorithm_platform_json_to_AIDM_converter.convert_list(
             algorithm_platform_json_to_AIDM_converter.convert_json_to_AlgorithmTrain,
             response_list
@@ -95,7 +95,7 @@ class AlgorithmicPlatformInterface:
                 object_to_algorithm_platform_json_converter.convert_any_object(timeWindow)
             ]
         )
-        response_list = self.__communication_layer.do_get_request(url_to_resource, request_param=query_parameters)
+        response_list = self.__communication_layer.do_get_request(url_to_resource, query_param=query_parameters)
 
         return algorithm_platform_json_to_AIDM_converter.convert_list(
             algorithm_platform_json_to_AIDM_converter.convert_json_to_AlgorithmTrain,
@@ -111,7 +111,7 @@ class AlgorithmicPlatformInterface:
                 object_to_algorithm_platform_json_converter.convert_any_object(timeWindow)
             ]
         )
-        response_list = self.__communication_layer.do_get_request(url_to_resource, request_param=query_parameters)
+        response_list = self.__communication_layer.do_get_request(url_to_resource, query_param=query_parameters)
 
         return algorithm_platform_json_to_AIDM_converter.convert_list(
             algorithm_platform_json_to_AIDM_converter.convert_json_to_AlgorithmTrain,
@@ -405,7 +405,7 @@ class AlgorithmicPlatformInterface:
         get_request_params = object_to_algorithm_platform_json_converter.convert_any_object(time_window)
         response_list_of_dict = self.__communication_layer.do_get_request(
             url_to_resource,
-            request_param=get_request_params
+            query_param=get_request_params
         )
 
         return algorithm_platform_json_to_AIDM_converter.convert_list(
@@ -418,7 +418,7 @@ class AlgorithmicPlatformInterface:
         url_to_resource = 'possessions/section-track-closures'
         response_list_of_dict = self.__communication_layer.do_get_request(
             url_to_resource,
-            request_param=get_request_params
+            query_param=get_request_params
         )
 
         return algorithm_platform_json_to_AIDM_converter.convert_list(

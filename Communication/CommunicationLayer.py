@@ -14,12 +14,12 @@ class CommunicationLayer:
     def merge_base_url_with_request(self, request: str) -> str:
         return '{0}/{1}'.format(self.base_url, request)
 
-    def do_get_request(self, request_call: str, query_param: dict = None) -> (dict, list):
-        if query_param is None:
-            query_param = {}
+    def do_get_request(self, request_call: str, query_parameters: dict = None) -> (dict, list):
+        if query_parameters is None:
+            query_parameters = {}
         complete_url = self.merge_base_url_with_request(request_call)
 
-        api_response = self.currentSession.get(complete_url, params=query_param)
+        api_response = self.currentSession.get(complete_url, params=query_parameters)
 
         return extract_json_if_possible(api_response)
 

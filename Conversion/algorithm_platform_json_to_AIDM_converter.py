@@ -4,7 +4,8 @@ from Conversion.converter_helpers import parse_to_datetime, parse_to_timedelta, 
 
 
 def convert(AIDM_class_or_AIDM_class_factory, attribute_dict: dict):
-    if inspect.isfunction(AIDM_class_or_AIDM_class_factory):
+    is_factory_method = inspect.isfunction(AIDM_class_or_AIDM_class_factory)
+    if is_factory_method:
         return AIDM_class_or_AIDM_class_factory(attribute_dict)
     else:
         return AIDM_class_or_AIDM_class_factory(**attribute_dict)

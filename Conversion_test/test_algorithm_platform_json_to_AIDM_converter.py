@@ -7,7 +7,7 @@ from Conversion import algorithm_platform_json_to_AIDM_converter
 
 class TestToAIDMConverter(unittest.TestCase):
 
-    def test_convert_dict_to_AIDM_from_constructor(self):
+    def test_convert_json_to_AIDM_Class_from_constructor(self):
         test_section_as_dict = dict(ID=12, Code='ATest', DebugString='str', Weight=8, SectionCode='TestSection')
 
         test_section = algorithm_platform_json_to_AIDM_converter.convert(
@@ -20,7 +20,7 @@ class TestToAIDMConverter(unittest.TestCase):
         self.assertEqual(test_section.Weight, 8)
         self.assertEqual(test_section.SectionCode, 'TestSection')
 
-    def test_convert_AIDM_Class_populated_from_factory_method(self):
+    def test_convert_json_to_AIDM_Class_populated_from_factory_method(self):
         test_class_inner_object = TestClassInner(ID=99)
         test_class_outer_object = TestClassOuter(ID=200, inner=test_class_inner_object)
 

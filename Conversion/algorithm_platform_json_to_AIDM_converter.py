@@ -53,17 +53,17 @@ def convert_json_to_AlgorithmNodeTrackClosure(attribute_dict: dict) -> AIDMClass
 
 
 def convert_json_to_IncomingRoutingEdgeSet(attribute_dict: dict) -> AIDMClasses.IncomingRoutingEdgeSet:
-    attribute_dict["incomingEdges"] = convert_list(AIDMClasses.IncomingRoutingEdge, attribute_dict["incomingEdges"])
+    attribute_dict["IncomingEdges"] = convert_list(AIDMClasses.IncomingRoutingEdge, attribute_dict["IncomingEdges"])
     return convert(AIDMClasses.IncomingRoutingEdgeSet, attribute_dict)
 
 
 def convert_json_to_OutgoingRoutingEdgeSet(attribute_dict: dict) -> AIDMClasses.OutgoingRoutingEdgeSet:
-    attribute_dict["outgoingEdges"] = convert_list(AIDMClasses.OutgoingRoutingEdge, attribute_dict["outgoingEdges"])
+    attribute_dict["OutgoingEdges"] = convert_list(AIDMClasses.OutgoingRoutingEdge, attribute_dict["OutgoingEdges"])
     return convert(AIDMClasses.OutgoingRoutingEdgeSet, attribute_dict)
 
 
 def convert_json_to_CrossingRoutingEdgeSet(attribute_dict: dict) -> AIDMClasses.CrossingRoutingEdgeSet:
-    attribute_dict["crossingEdges"] = convert_list(AIDMClasses.CrossingRoutingEdge, attribute_dict["crossingEdges"])
+    attribute_dict["CrossingEdges"] = convert_list(AIDMClasses.CrossingRoutingEdge, attribute_dict["CrossingEdges"])
     return convert(AIDMClasses.CrossingRoutingEdgeSet, attribute_dict)
 
 

@@ -1,11 +1,10 @@
 import unittest
 from unittest import mock
 
-import AIDMClasses.AIDM_RoutingPoint_classes
+import AIDMClasses
 import AlgorithmInterface_test.test_helper.SessionMockFactory as APISessionMock
 from AlgorithmInterface import AlgorithmInterfaceFactory
-from AlgorithmInterface_test.test_helper.SessionMockTestBase import \
-    get_api_url, SessionMockTestBase
+from AlgorithmInterface_test.test_helper.SessionMockTestBase import get_api_url, SessionMockTestBase
 
 
 class TestCrossingRoutingEdges(unittest.TestCase):
@@ -15,16 +14,16 @@ class TestCrossingRoutingEdges(unittest.TestCase):
             self.__last_body = params
 
             json_string = ("{\n"
-                           "  \"crossingEdges\": [\n"
+                           "  \"CrossingEdges\": [\n"
                            "    {\n"
-                           "      \"nodeID\": \"281\",\n"
-                           "      \"startSectionTrack\": \"887\",\n"
-                           "      \"endSectionTrack\": \"888\"\n"
+                           "      \"StartSectionTrackID\": 887,\n"
+                           "      \"EndSectionTrackID\": 888,\n"
+                           "      \"NodeID\": 281\n"
                            "    },\n"
                            "    {\n"
-                           "      \"nodeID\": \"281\",\n"
-                           "      \"startSectionTrack\": \"888\",\n"
-                           "      \"endSectionTrack\": \"887\"\n"
+                           "      \"StartSectionTrackID\": 888,\n"
+                           "      \"EndSectionTrackID\": 887,\n"
+                           "      \"NodeID\": 281\n"
                            "    }\n"
                            "  ]\n"
                            "}")
@@ -35,25 +34,28 @@ class TestCrossingRoutingEdges(unittest.TestCase):
     def setUp(self, mocked_get_obj):
         self.interface_to_viriato = AlgorithmInterfaceFactory.create(get_api_url())
 
-    @unittest.skip("VPLAT-7449")
     @mock.patch('requests.Session', side_effect=GetCrossingRoutingEdgesTestSessionMock)
     def test_get_crossing_routing_edges_request(self, mocked_get_obj):
-        routing_point = AIDMClasses.AIDM_RoutingPoint_classes.RoutingPoint(nodeID=1, nodeTrackID=12)
+        routing_point = AIDMClasses.RoutingPoint(nodeID=121, nodeTrackID=12)
 
         self.interface_to_viriato.get_crossing_routing_edges(routing_point=routing_point)
 
         session_obj = self.interface_to_viriato._AlgorithmicPlatformInterface__communication_layer.currentSession
         self.assertEqual(session_obj._GetCrossingRoutingEdgesTestSessionMock__last_request, get_api_url() +
-                         "/vehicles/formations/1828")
-        self.assertDictEqual(session_obj._GetCrossingRoutingEdgesTestSessionMock__last_body, {"nodeTrackID": "12"})
+                         "/nodes/121/crossing-routing-edges")
+        self.assertDictEqual(session_obj._GetCrossingRoutingEdgesTestSessionMock__last_body, {})
 
-    @unittest.skip("VPLAT-7449")
     @mock.patch('requests.Session', side_effect=GetCrossingRoutingEdgesTestSessionMock)
-    def test_get_crossing_routing_edges__response(self, mocked_get_obj):
-        routing_point = AIDMClasses.AIDM_RoutingPoint_classes.RoutingPoint(nodeID=1)
+    def test_get_crossing_routing_edges_response(self, mocked_get_obj):
+        routing_point = AIDMClasses.RoutingPoint(nodeID=1)
 
         routing_edges = self.interface_to_viriato.get_crossing_routing_edges(routing_point)
-        raise NotImplementedError
+
+        self.assertIsInstance(routing_edges, AIDMClasses.CrossingRoutingEdgeSet)
+        self.assertIsInstance(routing_edges.RoutingEdges[0], AIDMClasses.CrossingRoutingEdge)
+        self.assertEqual(routing_edges.RoutingEdges[0].StartSectionTrackID, 887)
+        self.assertEqual(routing_edges.RoutingEdges[0].EndSectionTrackID, 888)
+        self.assertEqual(routing_edges.RoutingEdges[0].NodeID, 281)
 
     @mock.patch('requests.Session', side_effect=GetCrossingRoutingEdgesTestSessionMock)
     def tearDown(self, mocked_get_obj) -> None:

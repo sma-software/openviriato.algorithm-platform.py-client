@@ -5,10 +5,10 @@ class CrossingRoutingEdge(IRoutingEdge):
     __StartSectionTrackID: int
     __EndSectionTrackID: int
 
-    def __init__(self, nodeID: int, startSectionTrackID: int, endSectionTrackID: int):
-        IRoutingEdge.__init__(self, nodeID)
-        self.__StartSectionTrackID = startSectionTrackID
-        self.__EndSectionTrackID = endSectionTrackID
+    def __init__(self, NodeID: int, StartSectionTrackID: int, EndSectionTrackID: int):
+        IRoutingEdge.__init__(self, NodeID)
+        self.__StartSectionTrackID = StartSectionTrackID
+        self.__EndSectionTrackID = EndSectionTrackID
 
     @property
     def StartSectionTrackID(self) -> int:
@@ -23,10 +23,10 @@ class IncomingRoutingEdge(IRoutingEdge):
     __EndNodeTrackID: int
     __StartSectionTrackID: int
 
-    def __init__(self, nodeID: int, endNodeTrackID: int, startSectionTrackID: int):
-        IRoutingEdge.__init__(self, nodeID)
-        self.__EndNodeTrackID = endNodeTrackID
-        self.__StartSectionTrackID = startSectionTrackID
+    def __init__(self, NodeID: int, EndNodeTrackID: int, StartSectionTrackID: int):
+        IRoutingEdge.__init__(self, NodeID)
+        self.__EndNodeTrackID = EndNodeTrackID
+        self.__StartSectionTrackID = StartSectionTrackID
 
     @property
     def EndNodeTrackID(self) -> int:
@@ -41,13 +41,13 @@ class OutgoingRoutingEdge(IRoutingEdge):
     __EndSectionTrackID: int
     __StartNodeTrackID: int
 
-    def __init__(self, nodeID: int, endSectionTrackID: int, startNodeTrackID: int):
-        IRoutingEdge.__init__(self, nodeID)
-        self.__EndSectionTrackID = endSectionTrackID
-        self.__StartNodeTrackID = startNodeTrackID
+    def __init__(self, NodeID: int, EndSectionTrackID: int, StartNodeTrackID: int):
+        IRoutingEdge.__init__(self, NodeID)
+        self.__EndSectionTrackID = EndSectionTrackID
+        self.__StartNodeTrackID = StartNodeTrackID
 
     @property
-    def StartSectionTrackID(self) -> int:
+    def EndSectionTrackID(self) -> int:
         return self.__EndSectionTrackID
 
     @property
@@ -57,17 +57,17 @@ class OutgoingRoutingEdge(IRoutingEdge):
 
 class IncomingRoutingEdgeSet(IRoutingEdgeSet):
 
-    def __init__(self, incomingEdges):
-        IRoutingEdgeSet.__init__(self, incomingEdges)
+    def __init__(self, IncomingEdges):
+        IRoutingEdgeSet.__init__(self, IncomingEdges)
 
 
 class OutgoingRoutingEdgeSet(IRoutingEdgeSet):
 
-    def __init__(self, outgoingEdges):
-        IRoutingEdgeSet.__init__(self, outgoingEdges)
+    def __init__(self, OutgoingEdges):
+        IRoutingEdgeSet.__init__(self, OutgoingEdges)
 
 
 class CrossingRoutingEdgeSet(IRoutingEdgeSet):
 
-    def __init__(self, crossingEdges):
-        IRoutingEdgeSet.__init__(self, crossingEdges)
+    def __init__(self, CrossingEdges):
+        IRoutingEdgeSet.__init__(self, CrossingEdges)

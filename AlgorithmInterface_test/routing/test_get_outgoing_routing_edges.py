@@ -1,11 +1,10 @@
 import unittest
 from unittest import mock
 
-import AIDMClasses.AIDM_RoutingPoint_classes
+import AIDMClasses
 import AlgorithmInterface_test.test_helper.SessionMockFactory as APISessionMock
 from AlgorithmInterface import AlgorithmInterfaceFactory
-from AlgorithmInterface_test.test_helper.SessionMockTestBase import \
-    get_api_url, SessionMockTestBase
+from AlgorithmInterface_test.test_helper.SessionMockTestBase import get_api_url, SessionMockTestBase
 
 
 class TestGetOutgoingRoutingEdges(unittest.TestCase):
@@ -14,58 +13,58 @@ class TestGetOutgoingRoutingEdges(unittest.TestCase):
             self.__last_request = request
             self.__last_body = params
 
-            if params["EndNodeTrackID"] is None:
+            if "StartNodeTrackID" in params.keys():
                 json_string = ("{\n"
-                               "  \"outgoingEdges\": [\n"
+                               "  \"OutgoingEdges\": [\n"
                                "    {\n"
-                               "      \"nodeID\": \"161\",\n"
-                               "      \"startNodeTrack\": \"162\",\n"
-                               "      \"endSectionTrack\": \"885\"\n"
+                               "      \"StartNodeTrackID\": 21,\n"
+                               "      \"EndSectionTrackID\": 885,\n"
+                               "      \"NodeID\": 1\n"
                                "    },\n"
                                "    {\n"
-                               "      \"nodeID\": \"161\",\n"
-                               "      \"startNodeTrack\": \"162\",\n"
-                               "      \"endSectionTrack\": \"886\"\n"
+                               "      \"StartNodeTrackID\": 21,\n"
+                               "      \"EndSectionTrackID\": 886,\n"
+                               "      \"NodeID\": 1\n"
                                "    },\n"
                                "    {\n"
-                               "      \"nodeID\": \"161\",\n"
-                               "      \"startNodeTrack\": \"162\",\n"
-                               "      \"endSectionTrack\": \"887\"\n"
-                               "    },\n"
-                               "    {\n"
-                               "      \"nodeID\": \"161\",\n"
-                               "      \"startNodeTrack\": \"163\",\n"
-                               "      \"endSectionTrack\": \"885\"\n"
-                               "    },\n"
-                               "    {\n"
-                               "      \"nodeID\": \"161\",\n"
-                               "      \"startNodeTrack\": \"163\",\n"
-                               "      \"endSectionTrack\": \"886\"\n"
-                               "    },\n"
-                               "    {\n"
-                               "      \"nodeID\": \"161\",\n"
-                               "      \"startNodeTrack\": \"163\",\n"
-                               "      \"endSectionTrack\": \"887\"\n"
+                               "      \"StartNodeTrackID\": 21,\n"
+                               "      \"EndSectionTrackID\": 887,\n"
+                               "      \"NodeID\": 1\n"
                                "    }\n"
                                "  ]\n"
                                "}")
             else:
                 json_string = ("{\n"
-                               "  \"outgoingEdges\": [\n"
+                               "  \"OutgoingEdges\": [\n"
                                "    {\n"
-                               "      \"nodeID\": \"161\",\n"
-                               "      \"startNodeTrack\": \"163\",\n"
-                               "      \"endSectionTrack\": \"885\"\n"
+                               "      \"StartNodeTrackID\": 162,\n"
+                               "      \"EndSectionTrackID\": 885,\n"
+                               "      \"NodeID\": 161\n"
                                "    },\n"
                                "    {\n"
-                               "      \"nodeID\": \"161\",\n"
-                               "      \"startNodeTrack\": \"163\",\n"
-                               "      \"endSectionTrack\": \"886\"\n"
+                               "      \"StartNodeTrackID\": 162,\n"
+                               "      \"EndSectionTrackID\": 886,\n"
+                               "      \"NodeID\": 161\n"
                                "    },\n"
                                "    {\n"
-                               "      \"nodeID\": \"161\",\n"
-                               "      \"startNodeTrack\": \"163\",\n"
-                               "      \"endSectionTrack\": \"887\"\n"
+                               "      \"StartNodeTrackID\": 162,\n"
+                               "      \"EndSectionTrackID\": 887,\n"
+                               "      \"NodeID\": 161\n"
+                               "    },\n"
+                               "    {\n"
+                               "      \"StartNodeTrackID\": 163,\n"
+                               "      \"EndSectionTrackID\": 885,\n"
+                               "      \"NodeID\": 161\n"
+                               "    },\n"
+                               "    {\n"
+                               "      \"StartNodeTrackID\": 163,\n"
+                               "      \"EndSectionTrackID\": 886,\n"
+                               "      \"NodeID\": 161\n"
+                               "    },\n"
+                               "    {\n"
+                               "      \"StartNodeTrackID\": 163,\n"
+                               "      \"EndSectionTrackID\": 887,\n"
+                               "      \"NodeID\": 161\n"
                                "    }\n"
                                "  ]\n"
                                "}")
@@ -76,32 +75,40 @@ class TestGetOutgoingRoutingEdges(unittest.TestCase):
     def setUp(self, mocked_get_obj):
         self.interface_to_viriato = AlgorithmInterfaceFactory.create(get_api_url())
 
-    @unittest.skip("VPLAT-7449")
     @mock.patch('requests.Session', side_effect=GetOutgoingRoutingEdgesTestSessionMock)
-    def test_get_incoming_routing_edges_request(self, mocked_get_obj):
-        routing_point = AIDMClasses.AIDM_RoutingPoint_classes.RoutingPoint(nodeID=1, nodeTrackID=12)
+    def test_get_outgoing_routing_edges_request(self, mocked_get_obj):
+        routing_point = AIDMClasses.RoutingPoint(nodeID=1, nodeTrackID=12)
 
         self.interface_to_viriato.get_outgoing_routing_edges(routing_point=routing_point)
 
         session_obj = self.interface_to_viriato._AlgorithmicPlatformInterface__communication_layer.currentSession
-        self.assertEqual(session_obj._GetOutgoingRoutingEdgesTestSessionMock__last_request, get_api_url() +
-                         "/vehicles/formations/1828")
-        self.assertDictEqual(session_obj._GetOutgoingRoutingEdgesTestSessionMock__last_body, {"nodeTrackID": "12"})
+        self.assertEqual(get_api_url() + "/nodes/1/outgoing-routing-edges",
+                         session_obj._GetOutgoingRoutingEdgesTestSessionMock__last_request)
+        self.assertDictEqual(session_obj._GetOutgoingRoutingEdgesTestSessionMock__last_body, {"StartNodeTrackID": 12})
 
-    @unittest.skip("VPLAT-7449")
     @mock.patch('requests.Session', side_effect=GetOutgoingRoutingEdgesTestSessionMock)
     def test_get_outgoing_routing_edges_response_only_node_id(self, mocked_get_obj):
-        routing_point = AIDMClasses.AIDM_RoutingPoint_classes.RoutingPoint(nodeID=1)
+        routing_point = AIDMClasses.RoutingPoint(nodeID=161)
 
         routing_edges = self.interface_to_viriato.get_outgoing_routing_edges(routing_point)
-        raise NotImplementedError
+        self.assertIsInstance(routing_edges, AIDMClasses.OutgoingRoutingEdgeSet)
+        self.assertIsInstance(routing_edges.RoutingEdges[0], AIDMClasses.OutgoingRoutingEdge)
+        self.assertEqual(routing_edges.RoutingEdges[0].StartNodeTrackID, 162)
+        self.assertEqual(routing_edges.RoutingEdges[3].StartNodeTrackID, 163)
+        self.assertEqual(routing_edges.RoutingEdges[3].EndSectionTrackID, 885)
+        self.assertEqual(routing_edges.RoutingEdges[3].NodeID, 161)
 
-    @unittest.skip("VPLAT-7449")
+    @mock.patch('requests.Session', side_effect=GetOutgoingRoutingEdgesTestSessionMock)
     def test_get_outgoing_routing_edges_response_node_id_response_and_node_track_id(self, mocked_get_obj):
-        routing_point = AIDMClasses.AIDM_RoutingPoint_classes.RoutingPoint(nodeID=1, nodeTrackID=21)
+        routing_point = AIDMClasses.RoutingPoint(nodeID=1, nodeTrackID=21)
 
         routing_edges = self.interface_to_viriato.get_outgoing_routing_edges(routing_point)
-        raise NotImplementedError
+
+        self.assertIsInstance(routing_edges, AIDMClasses.OutgoingRoutingEdgeSet)
+        self.assertIsInstance(routing_edges.RoutingEdges[0], AIDMClasses.OutgoingRoutingEdge)
+        self.assertEqual(routing_edges.RoutingEdges[1].StartNodeTrackID, 21)
+        self.assertEqual(routing_edges.RoutingEdges[1].EndSectionTrackID, 886)
+        self.assertEqual(routing_edges.RoutingEdges[1].NodeID, 1)
 
     @mock.patch('requests.Session', side_effect=GetOutgoingRoutingEdgesTestSessionMock)
     def tearDown(self, mocked_get_obj) -> None:

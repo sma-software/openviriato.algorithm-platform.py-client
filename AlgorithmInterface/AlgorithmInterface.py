@@ -328,7 +328,7 @@ class AlgorithmicPlatformInterface:
     def get_outgoing_routing_edges(self, routing_point: AIDMClasses.RoutingPoint) -> AIDMClasses.OutgoingRoutingEdgeSet:
         url_to_resource = "nodes/{0}/outgoing-routing-edges".format(routing_point.NodeID)
         if routing_point.NodeTrackID is not None:
-            get_request_params = dict(EndNodeTrackID=routing_point.NodeTrackID)
+            get_request_params = dict(StartNodeTrackID=routing_point.NodeTrackID)
         else:
             get_request_params = dict()
         response_dict = self.__communication_layer.do_get_request(url_to_resource, get_request_params)

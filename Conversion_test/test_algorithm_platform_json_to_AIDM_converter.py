@@ -30,6 +30,7 @@ class TestToAIDMConverter(unittest.TestCase):
 
         self.assertIsInstance(result, TestClassOuter)
         self.assertEqual(test_class_outer_object.ID, result.ID)
+        self.assertIsInstance(result.Inner, TestClassInner)
         self.assertEqual(test_class_outer_object.Inner.ID, result.Inner.ID)
 
     def test_convert_list_of_dict_to_list_of_AIDM(self):
@@ -59,6 +60,19 @@ class TestToAIDMConverter(unittest.TestCase):
         self.assertEqual(test_node.NodeTracks[0].ID, 162)
         self.assertEqual(test_node.NodeTracks[0].Code, "1")
         self.assertEqual(test_node.NodeTracks[0].DebugString, "AString")
+
+    def test_convert_json_to_AlgorithmNode_without_node_tracks(self):
+        test_node_tracks_as_list = []
+        test_node_as_dict = dict(ID=15, Code='A', DebugString='test123', NodeTracks=test_node_tracks_as_list)
+
+        test_node = algorithm_platform_json_to_AIDM_converter.convert_json_to_AlgorithmNode(test_node_as_dict)
+
+        self.assertIsInstance(test_node, AIDMClasses.AlgorithmNode)
+        self.assertEqual(test_node.ID, 15)
+        self.assertEqual(test_node.Code, 'A')
+        self.assertEqual(test_node.DebugString, 'test123')
+        self.assertIsInstance(test_node.NodeTracks, list)
+        self.assertListEqual(test_node.NodeTracks, [])
 
     def test_convert_list_of_json_to_AlgorithmNode(self):
         test_node_tracks_as_list = [

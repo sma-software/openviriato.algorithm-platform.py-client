@@ -162,17 +162,47 @@ class TestToAIDMConverter(unittest.TestCase):
         self.assertIsInstance(test_closure.ClosureTimeWindow, AIDMClasses.TimeWindow)
         self.assertEqual(test_closure.DebugString, "nodetrackclosure:85ZMUS 24")
 
-    @unittest.skip('VPLAT-7405:')
     def test_convert_json_to_incoming_routing_edge_set(self):
-        raise NotImplementedError
+        param_dict = dict(IncomingEdges=[
+            dict(StartSectionTrackID=887, EndNodeTrackID=888, NodeID=281),
+            dict(StartSectionTrackID=888, EndNodeTrackID=887, NodeID=281)])
 
-    @unittest.skip('VPLAT-7405:')
+        test_incoming_routing_edge_set = \
+            algorithm_platform_json_to_AIDM_converter.convert_json_to_IncomingRoutingEdgeSet(param_dict)
+
+        self.assertIsInstance(test_incoming_routing_edge_set, AIDMClasses.IncomingRoutingEdgeSet)
+        self.assertIsInstance(test_incoming_routing_edge_set.RoutingEdges[0], AIDMClasses.IncomingRoutingEdge)
+        self.assertEqual(test_incoming_routing_edge_set.RoutingEdges[0].StartSectionTrackID, 887)
+        self.assertEqual(test_incoming_routing_edge_set.RoutingEdges[0].EndNodeTrackID, 888)
+        self.assertEqual(test_incoming_routing_edge_set.RoutingEdges[0].NodeID, 281)
+
     def test_convert_json_to_outgoing_routing_edge_set(self):
-        raise NotImplementedError
+        param_dict = dict(OutgoingEdges=[
+            dict(StartNodeTrackID=887, EndSectionTrackID=888, NodeID=281),
+            dict(StartNodeTrackID=888, EndSectionTrackID=887, NodeID=281)])
 
-    @unittest.skip('VPLAT-7405:')
+        test_outgoing_routing_edge_set = \
+            algorithm_platform_json_to_AIDM_converter.convert_json_to_OutgoingRoutingEdgeSet(param_dict)
+
+        self.assertIsInstance(test_outgoing_routing_edge_set, AIDMClasses.OutgoingRoutingEdgeSet)
+        self.assertIsInstance(test_outgoing_routing_edge_set.RoutingEdges[0], AIDMClasses.OutgoingRoutingEdge)
+        self.assertEqual(test_outgoing_routing_edge_set.RoutingEdges[0].StartNodeTrackID, 887)
+        self.assertEqual(test_outgoing_routing_edge_set.RoutingEdges[0].EndSectionTrackID, 888)
+        self.assertEqual(test_outgoing_routing_edge_set.RoutingEdges[0].NodeID, 281)
+
     def test_convert_json_to_crossing_routing_edge_set(self):
-        raise NotImplementedError
+        param_dict = dict(CrossingEdges=[
+            dict(StartSectionTrackID=887, EndSectionTrackID=888, NodeID=281),
+            dict(StartSectionTrackID=888, EndSectionTrackID=887, NodeID=281)])
+
+        test_crossing_routing_edge_set = \
+            algorithm_platform_json_to_AIDM_converter.convert_json_to_CrossingRoutingEdgeSet(param_dict)
+
+        self.assertIsInstance(test_crossing_routing_edge_set, AIDMClasses.CrossingRoutingEdgeSet)
+        self.assertIsInstance(test_crossing_routing_edge_set.RoutingEdges[0], AIDMClasses.CrossingRoutingEdge)
+        self.assertEqual(test_crossing_routing_edge_set.RoutingEdges[0].StartSectionTrackID, 887)
+        self.assertEqual(test_crossing_routing_edge_set.RoutingEdges[0].EndSectionTrackID, 888)
+        self.assertEqual(test_crossing_routing_edge_set.RoutingEdges[0].NodeID, 281)
 
     def test_convert_json_to_UpdateTrainTimes(self):
         param_dict = dict(TrainID=1012, Times= \

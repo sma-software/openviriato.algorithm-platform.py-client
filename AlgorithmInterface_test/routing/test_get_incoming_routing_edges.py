@@ -31,21 +31,6 @@ class TestGetIncomingRoutingEdges(unittest.TestCase):
                                "      \"StartSectionTrackID\": 886,\n"
                                "      \"EndNodeTrackID\": 162,\n"
                                "      \"NodeID\": 161\n"
-                               "    },\n"
-                               "    {\n"
-                               "      \"StartSectionTrackID\": 886,\n"
-                               "      \"EndNodeTrackID\": 163,\n"
-                               "      \"NodeID\": 161\n"
-                               "    },\n"
-                               "    {\n"
-                               "      \"StartSectionTrackID\": 887,\n"
-                               "      \"EndNodeTrackID\": 162,\n"
-                               "      \"NodeID\": 161\n"
-                               "    },\n"
-                               "    {\n"
-                               "      \"StartSectionTrackID\": 887,\n"
-                               "      \"EndNodeTrackID\": 163,\n"
-                               "      \"NodeID\": 161\n"
                                "    }\n"
                                "  ]\n"
                                "}")
@@ -53,17 +38,7 @@ class TestGetIncomingRoutingEdges(unittest.TestCase):
                 json_string = ("{\n"
                                "  \"IncomingEdges\": [\n"
                                "    {\n"
-                               "      \"StartSectionTrackID\": 885,\n"
-                               "      \"EndNodeTrackID\": 162,\n"
-                               "      \"NodeID\": 161\n"
-                               "    },\n"
-                               "    {\n"
                                "      \"StartSectionTrackID\": 886,\n"
-                               "      \"EndNodeTrackID\": 162,\n"
-                               "      \"NodeID\": 161\n"
-                               "    },\n"
-                               "    {\n"
-                               "      \"StartSectionTrackID\": 887,\n"
                                "      \"EndNodeTrackID\": 162,\n"
                                "      \"NodeID\": 161\n"
                                "    }\n"
@@ -94,9 +69,21 @@ class TestGetIncomingRoutingEdges(unittest.TestCase):
         routing_edges = self.interface_to_viriato.get_incoming_routing_edges(routing_point)
         self.assertIsInstance(routing_edges, AIDMClasses.IncomingRoutingEdgeSet)
         self.assertIsInstance(routing_edges.RoutingEdges[0], AIDMClasses.IncomingRoutingEdge)
-        self.assertEqual(routing_edges.RoutingEdges[3].EndNodeTrackID, 163)
-        self.assertEqual(routing_edges.RoutingEdges[3].StartSectionTrackID, 886)
-        self.assertEqual(routing_edges.RoutingEdges[3].NodeID, 161)
+        self.assertEqual(routing_edges.RoutingEdges[0].EndNodeTrackID, 162)
+        self.assertEqual(routing_edges.RoutingEdges[0].StartSectionTrackID, 885)
+        self.assertEqual(routing_edges.RoutingEdges[0].NodeID, 161)
+
+        self.assertIsInstance(routing_edges.RoutingEdges[1], AIDMClasses.IncomingRoutingEdge)
+        self.assertEqual(routing_edges.RoutingEdges[1].EndNodeTrackID, 163)
+        self.assertEqual(routing_edges.RoutingEdges[1].StartSectionTrackID, 885)
+        self.assertEqual(routing_edges.RoutingEdges[1].NodeID, 161)
+
+        self.assertIsInstance(routing_edges.RoutingEdges[2], AIDMClasses.IncomingRoutingEdge)
+        self.assertEqual(routing_edges.RoutingEdges[2].EndNodeTrackID, 162)
+        self.assertEqual(routing_edges.RoutingEdges[2].StartSectionTrackID, 886)
+        self.assertEqual(routing_edges.RoutingEdges[2].NodeID, 161)
+
+        self.assertEqual(len(routing_edges.RoutingEdges), 3)
 
     @mock.patch('requests.Session', side_effect=GetIncomingRoutingEdgesTestSessionMock)
     def test_get_incoming_routing_edges_response_node_id_and_node_track_id(self, mocked_get_obj):
@@ -105,9 +92,11 @@ class TestGetIncomingRoutingEdges(unittest.TestCase):
         routing_edges = self.interface_to_viriato.get_incoming_routing_edges(routing_point)
         self.assertIsInstance(routing_edges, AIDMClasses.IncomingRoutingEdgeSet)
         self.assertIsInstance(routing_edges.RoutingEdges[0], AIDMClasses.IncomingRoutingEdge)
-        self.assertEqual(routing_edges.RoutingEdges[1].EndNodeTrackID, 162)
-        self.assertEqual(routing_edges.RoutingEdges[1].StartSectionTrackID, 886)
-        self.assertEqual(routing_edges.RoutingEdges[1].NodeID, 161)
+        self.assertEqual(routing_edges.RoutingEdges[0].EndNodeTrackID, 162)
+        self.assertEqual(routing_edges.RoutingEdges[0].StartSectionTrackID, 886)
+        self.assertEqual(routing_edges.RoutingEdges[0].NodeID, 161)
+
+        self.assertEqual(len(routing_edges.RoutingEdges), 1)
 
     @mock.patch('requests.Session', side_effect=GetIncomingRoutingEdgesTestSessionMock)
     def tearDown(self, mocked_get_obj) -> None:

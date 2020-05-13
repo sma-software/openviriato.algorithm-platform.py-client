@@ -57,6 +57,13 @@ class TestCrossingRoutingEdges(unittest.TestCase):
         self.assertEqual(routing_edges.RoutingEdges[0].EndSectionTrackID, 888)
         self.assertEqual(routing_edges.RoutingEdges[0].NodeID, 281)
 
+        self.assertIsInstance(routing_edges.RoutingEdges[1], AIDMClasses.CrossingRoutingEdge)
+        self.assertEqual(routing_edges.RoutingEdges[1].StartSectionTrackID, 888)
+        self.assertEqual(routing_edges.RoutingEdges[1].EndSectionTrackID, 887)
+        self.assertEqual(routing_edges.RoutingEdges[1].NodeID, 281)
+
+        self.assertEqual(len(routing_edges.RoutingEdges), 2)
+
     @mock.patch('requests.Session', side_effect=GetCrossingRoutingEdgesTestSessionMock)
     def tearDown(self, mocked_get_obj) -> None:
         self.interface_to_viriato.__exit__(None, None, None)

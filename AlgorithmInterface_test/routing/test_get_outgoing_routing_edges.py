@@ -13,23 +13,23 @@ class TestGetOutgoingRoutingEdges(unittest.TestCase):
             self.__last_request = request
             self.__last_body = params
 
-            if "StartNodeTrackID" in params.keys():
+            if "StartNodeTrackID" not in params.keys():
                 json_string = ("{\n"
                                "  \"OutgoingEdges\": [\n"
                                "    {\n"
                                "      \"StartNodeTrackID\": 21,\n"
                                "      \"EndSectionTrackID\": 885,\n"
-                               "      \"NodeID\": 1\n"
+                               "      \"NodeID\": 154\n"
                                "    },\n"
                                "    {\n"
                                "      \"StartNodeTrackID\": 21,\n"
                                "      \"EndSectionTrackID\": 886,\n"
-                               "      \"NodeID\": 1\n"
+                               "      \"NodeID\": 154\n"
                                "    },\n"
                                "    {\n"
                                "      \"StartNodeTrackID\": 21,\n"
                                "      \"EndSectionTrackID\": 887,\n"
-                               "      \"NodeID\": 1\n"
+                               "      \"NodeID\": 154\n"
                                "    }\n"
                                "  ]\n"
                                "}")
@@ -39,32 +39,7 @@ class TestGetOutgoingRoutingEdges(unittest.TestCase):
                                "    {\n"
                                "      \"StartNodeTrackID\": 162,\n"
                                "      \"EndSectionTrackID\": 885,\n"
-                               "      \"NodeID\": 161\n"
-                               "    },\n"
-                               "    {\n"
-                               "      \"StartNodeTrackID\": 162,\n"
-                               "      \"EndSectionTrackID\": 886,\n"
-                               "      \"NodeID\": 161\n"
-                               "    },\n"
-                               "    {\n"
-                               "      \"StartNodeTrackID\": 162,\n"
-                               "      \"EndSectionTrackID\": 887,\n"
-                               "      \"NodeID\": 161\n"
-                               "    },\n"
-                               "    {\n"
-                               "      \"StartNodeTrackID\": 163,\n"
-                               "      \"EndSectionTrackID\": 885,\n"
-                               "      \"NodeID\": 161\n"
-                               "    },\n"
-                               "    {\n"
-                               "      \"StartNodeTrackID\": 163,\n"
-                               "      \"EndSectionTrackID\": 886,\n"
-                               "      \"NodeID\": 161\n"
-                               "    },\n"
-                               "    {\n"
-                               "      \"StartNodeTrackID\": 163,\n"
-                               "      \"EndSectionTrackID\": 887,\n"
-                               "      \"NodeID\": 161\n"
+                               "      \"NodeID\": 45\n"
                                "    }\n"
                                "  ]\n"
                                "}")
@@ -93,10 +68,21 @@ class TestGetOutgoingRoutingEdges(unittest.TestCase):
         routing_edges = self.interface_to_viriato.get_outgoing_routing_edges(routing_point)
         self.assertIsInstance(routing_edges, AIDMClasses.OutgoingRoutingEdgeSet)
         self.assertIsInstance(routing_edges.RoutingEdges[0], AIDMClasses.OutgoingRoutingEdge)
-        self.assertEqual(routing_edges.RoutingEdges[0].StartNodeTrackID, 162)
-        self.assertEqual(routing_edges.RoutingEdges[3].StartNodeTrackID, 163)
-        self.assertEqual(routing_edges.RoutingEdges[3].EndSectionTrackID, 885)
-        self.assertEqual(routing_edges.RoutingEdges[3].NodeID, 161)
+        self.assertEqual(routing_edges.RoutingEdges[0].StartNodeTrackID, 21)
+        self.assertEqual(routing_edges.RoutingEdges[0].EndSectionTrackID, 885)
+        self.assertEqual(routing_edges.RoutingEdges[0].NodeID, 154)
+
+        self.assertIsInstance(routing_edges.RoutingEdges[1], AIDMClasses.OutgoingRoutingEdge)
+        self.assertEqual(routing_edges.RoutingEdges[1].StartNodeTrackID, 21)
+        self.assertEqual(routing_edges.RoutingEdges[1].EndSectionTrackID, 886)
+        self.assertEqual(routing_edges.RoutingEdges[1].NodeID, 154)
+
+        self.assertIsInstance(routing_edges.RoutingEdges[2], AIDMClasses.OutgoingRoutingEdge)
+        self.assertEqual(routing_edges.RoutingEdges[2].StartNodeTrackID, 21)
+        self.assertEqual(routing_edges.RoutingEdges[2].EndSectionTrackID, 887)
+        self.assertEqual(routing_edges.RoutingEdges[2].NodeID, 154)
+
+        self.assertEqual(len(routing_edges.RoutingEdges), 3)
 
     @mock.patch('requests.Session', side_effect=GetOutgoingRoutingEdgesTestSessionMock)
     def test_get_outgoing_routing_edges_response_node_id_response_and_node_track_id(self, mocked_get_obj):
@@ -106,9 +92,11 @@ class TestGetOutgoingRoutingEdges(unittest.TestCase):
 
         self.assertIsInstance(routing_edges, AIDMClasses.OutgoingRoutingEdgeSet)
         self.assertIsInstance(routing_edges.RoutingEdges[0], AIDMClasses.OutgoingRoutingEdge)
-        self.assertEqual(routing_edges.RoutingEdges[1].StartNodeTrackID, 21)
-        self.assertEqual(routing_edges.RoutingEdges[1].EndSectionTrackID, 886)
-        self.assertEqual(routing_edges.RoutingEdges[1].NodeID, 1)
+        self.assertEqual(routing_edges.RoutingEdges[0].StartNodeTrackID, 162)
+        self.assertEqual(routing_edges.RoutingEdges[0].EndSectionTrackID, 885)
+        self.assertEqual(routing_edges.RoutingEdges[0].NodeID, 45)
+
+        self.assertEqual(len(routing_edges.RoutingEdges), 1)
 
     @mock.patch('requests.Session', side_effect=GetOutgoingRoutingEdgesTestSessionMock)
     def tearDown(self, mocked_get_obj) -> None:

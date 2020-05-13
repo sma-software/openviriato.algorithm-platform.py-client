@@ -1,8 +1,11 @@
+from typing import Optional
+
+
 class RoutingPoint:
     __nodeID: int
-    __nodeTrackID: (None, int)
+    __nodeTrackID: Optional[int]
 
-    def __init__(self, nodeID: int, nodeTrackID: (None, int) = None):
+    def __init__(self, nodeID: int, nodeTrackID: Optional[int] = None):
         self.__nodeID = nodeID
         self.__nodeTrackID = nodeTrackID
 
@@ -11,5 +14,5 @@ class RoutingPoint:
         return self.__nodeID
 
     @property
-    def NodeTrackID(self) -> (None, int):
+    def NodeTrackID(self) -> Optional[int]:
         return self.__nodeTrackID

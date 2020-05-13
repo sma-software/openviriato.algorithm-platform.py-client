@@ -1,5 +1,5 @@
 import datetime
-
+from typing import Optional
 from AIDMClasses.AIDM_base_classes import IhasID
 from AIDMClasses.AIDM_enum_classes import StopStatus
 
@@ -7,19 +7,29 @@ from AIDMClasses.AIDM_enum_classes import StopStatus
 class TrainPathNode(IhasID):
     __ArrivalTime: datetime.datetime
     __DepartureTime: datetime.datetime
-    __SectionTrackID: int
+    __SectionTrackID: Optional[int]
     __NodeID: int
-    __NodeTrackID: int
-    __FormationID: int
-    __MinimumRunTime: (datetime.timedelta, None)
+    __NodeTrackID: Optional[int]
+    __FormationID: Optional[int]
+    __MinimumRunTime: Optional[datetime.timedelta]
     __MinimumStopTime: datetime.timedelta
     __StopStatus: StopStatus
     __SequenceNumber: int
 
-    def __init__(self, ID: int, ArrivalTime: datetime.datetime, DepartureTime: datetime.datetime,
-                 SectionTrackID: (int, None), NodeID: int, NodeTrackID: (int, None), FormationID: int,
-                 MinimumRunTime: (datetime.timedelta, None), MinimumStopTime: datetime.timedelta,
-                 StopStatus: StopStatus, SequenceNumber: int):
+    def __init__(
+            self,
+            ID: int,
+            ArrivalTime: datetime.datetime,
+            DepartureTime: datetime.datetime,
+            SectionTrackID: Optional[int],
+            NodeID: int,
+            NodeTrackID: Optional[int],
+            FormationID: Optional[int],
+            MinimumRunTime: Optional[datetime.timedelta],
+            MinimumStopTime: datetime.timedelta,
+            StopStatus: StopStatus,
+            SequenceNumber: int
+    ):
         IhasID.__init__(self, ID)
         self.__ArrivalTime = ArrivalTime
         self.__DepartureTime = DepartureTime
@@ -33,7 +43,7 @@ class TrainPathNode(IhasID):
         self.__SequenceNumber = SequenceNumber
 
     @property
-    def SectionTrackID(self) -> int:
+    def SectionTrackID(self) -> Optional[int]:
         return self.__SectionTrackID
 
     @property
@@ -41,11 +51,11 @@ class TrainPathNode(IhasID):
         return self.__NodeID
 
     @property
-    def NodeTrackID(self) -> int:
+    def NodeTrackID(self) -> Optional[int]:
         return self.__NodeTrackID
 
     @property
-    def FormationID(self) -> int:
+    def FormationID(self) -> Optional[int]:
         return self.__FormationID
 
     @property
@@ -57,7 +67,7 @@ class TrainPathNode(IhasID):
         return self.__DepartureTime
 
     @property
-    def MinimumRunTime(self) -> datetime.timedelta:
+    def MinimumRunTime(self) -> Optional[datetime.timedelta]:
         return self.__MinimumRunTime
 
     @property

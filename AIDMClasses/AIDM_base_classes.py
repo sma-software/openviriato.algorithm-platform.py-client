@@ -1,3 +1,6 @@
+from typing import List, Optional
+
+
 class IhasID:
     __ID: int
 
@@ -21,9 +24,9 @@ class IhasCode:
 
 
 class IhasDebugString:
-    __DebugString: (str, None)
+    __DebugString: Optional[str]
 
-    def __init__(self, DebugString: (str, None) = None):
+    def __init__(self, DebugString: Optional[str] = None):
         if DebugString is not None:
             self.__DebugString = DebugString
 
@@ -55,11 +58,11 @@ class IRoutingEdge:
 
 
 class IRoutingEdgeSet:
-    __RoutingEdges = list
+    __RoutingEdges = List[IRoutingEdge]
 
-    def __init__(self, RoutingEdges: list):
+    def __init__(self, RoutingEdges: List[IRoutingEdge]):
         self.__RoutingEdges = RoutingEdges
 
     @property
-    def RoutingEdges(self) -> list:
+    def RoutingEdges(self) -> List[IRoutingEdge]:
         return self.__RoutingEdges

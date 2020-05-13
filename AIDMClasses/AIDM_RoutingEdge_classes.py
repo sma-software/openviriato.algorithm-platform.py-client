@@ -1,4 +1,5 @@
 from AIDMClasses.AIDM_base_classes import IRoutingEdge, IRoutingEdgeSet
+from typing import List
 
 
 class CrossingRoutingEdge(IRoutingEdge):
@@ -57,17 +58,29 @@ class OutgoingRoutingEdge(IRoutingEdge):
 
 class IncomingRoutingEdgeSet(IRoutingEdgeSet):
 
-    def __init__(self, IncomingEdges):
-        IRoutingEdgeSet.__init__(self, IncomingEdges)
+    def __init__(self, IncomingEdges: List[IncomingRoutingEdge]):
+        super().__init__(IncomingEdges)
+
+    @property
+    def RoutingEdges(self) -> List[IncomingRoutingEdge]:
+        return super().RoutingEdges
 
 
 class OutgoingRoutingEdgeSet(IRoutingEdgeSet):
 
-    def __init__(self, OutgoingEdges):
-        IRoutingEdgeSet.__init__(self, OutgoingEdges)
+    def __init__(self, OutgoingEdges: List[OutgoingRoutingEdge]):
+        super().__init__(OutgoingEdges)
+
+    @property
+    def RoutingEdges(self) -> List[OutgoingRoutingEdge]:
+        return super().RoutingEdges
 
 
 class CrossingRoutingEdgeSet(IRoutingEdgeSet):
 
-    def __init__(self, CrossingEdges):
-        IRoutingEdgeSet.__init__(self, CrossingEdges)
+    def __init__(self, CrossingEdges: List[CrossingRoutingEdge]):
+        super().__init__(CrossingEdges)
+
+    @property
+    def RoutingEdges(self) -> List[CrossingRoutingEdge]:
+        return super().RoutingEdges

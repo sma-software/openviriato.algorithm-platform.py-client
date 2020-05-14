@@ -76,7 +76,7 @@ class TestGetAlgorithmTrainParameter(unittest.TestCase):
         self.assertIsInstance(test_algorithm_train, AIDMClasses.AIDM_Algorithm_classes.AlgorithmTrain)
         self.assertEqual(test_algorithm_train.DebugString, "RVZH_1_1_J03 tt_(G)")
         self.assertEqual(test_algorithm_train.ID, 2060)
-        self.assertIsInstance(test_algorithm_train.TrainPathNodes[0], AIDM_TrainPathNode_classes.TrainPathNode)
+        self.assertIsInstance(test_algorithm_train.TrainPathNodes[0], AIDM_TrainPathNode_classes.AlgorithmTrainPathNode)
         self.assertEqual(test_algorithm_train.TrainPathNodes[0].ID, 1332)
 
     @mock.patch('requests.Session', side_effect=GetAlgorithmTrainParameterTestSessionMock)

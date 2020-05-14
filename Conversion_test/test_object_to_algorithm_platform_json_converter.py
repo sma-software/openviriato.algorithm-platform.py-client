@@ -10,11 +10,11 @@ class TestFromAIDMConverter(unittest.TestCase):
 
     def test_convert_AIDM_object_with_properties_to_convert(self):
         test_train_path_node = AIDMClasses. \
-            TrainPathNode(ID=11038, SectionTrackID=None, NodeID=18, NodeTrackID=None, FormationID=1187,
-                          ArrivalTime=datetime.datetime(year=1, month=5, day=1, hour=1, minute=1),
-                          DepartureTime=datetime.datetime(year=1, month=5, day=1, hour=1, minute=1),
-                          MinimumRunTime=None, MinimumStopTime=datetime.timedelta(0),
-                          StopStatus=AIDMClasses.StopStatus['passing'], SequenceNumber=0)
+            AlgorithmTrainPathNode(ID=11038, SectionTrackID=None, NodeID=18, NodeTrackID=None, FormationID=1187,
+                                   ArrivalTime=datetime.datetime(year=1, month=5, day=1, hour=1, minute=1),
+                                   DepartureTime=datetime.datetime(year=1, month=5, day=1, hour=1, minute=1),
+                                   MinimumRunTime=None, MinimumStopTime=datetime.timedelta(0),
+                                   StopStatus=AIDMClasses.StopStatus['passing'], SequenceNumber=0)
 
         test_node_as_dict = Conversion.object_to_algorithm_platform_json_converter.convert_any_object(
             test_train_path_node)
@@ -26,11 +26,11 @@ class TestFromAIDMConverter(unittest.TestCase):
 
     def test_convert_AIDM_object_with_properties_is_json_conform_dict(self):
         test_train_path_node = AIDMClasses. \
-            TrainPathNode(ID=11038, SectionTrackID=None, NodeID=18, NodeTrackID=None, FormationID=1187,
-                          ArrivalTime=datetime.datetime(year=1, month=5, day=1, hour=1, minute=1),
-                          DepartureTime=datetime.datetime(year=1, month=5, day=1, hour=1, minute=1),
-                          MinimumRunTime=None, MinimumStopTime=datetime.timedelta(0),
-                          StopStatus=AIDMClasses.StopStatus['passing'], SequenceNumber=0)
+            AlgorithmTrainPathNode(ID=11038, SectionTrackID=None, NodeID=18, NodeTrackID=None, FormationID=1187,
+                                   ArrivalTime=datetime.datetime(year=1, month=5, day=1, hour=1, minute=1),
+                                   DepartureTime=datetime.datetime(year=1, month=5, day=1, hour=1, minute=1),
+                                   MinimumRunTime=None, MinimumStopTime=datetime.timedelta(0),
+                                   StopStatus=AIDMClasses.StopStatus['passing'], SequenceNumber=0)
 
         test_node_as_dict = Conversion.object_to_algorithm_platform_json_converter.convert_any_object(
             test_train_path_node)

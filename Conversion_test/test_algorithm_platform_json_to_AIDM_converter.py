@@ -98,10 +98,10 @@ class TestToAIDMConverter(unittest.TestCase):
                                  MinimumRunTime=None, MinimumStopTime="P0D", StopStatus="commercialStop",
                                  SequenceNumber=0)
 
-        test_train_path_node = algorithm_platform_json_to_AIDM_converter.convert_json_to_TrainPathNode(
+        test_train_path_node = algorithm_platform_json_to_AIDM_converter.convert_json_to_AlgorithmTrainPathNode(
             test_node_as_dict)
 
-        self.assertIsInstance(test_train_path_node, AIDMClasses.TrainPathNode)
+        self.assertIsInstance(test_train_path_node, AIDMClasses.AlgorithmTrainPathNode)
         self.assertEqual(test_train_path_node.ID, 1332)
         self.assertEqual(test_train_path_node.MinimumRunTime, None)
         self.assertEqual(test_train_path_node.MinimumStopTime, datetime.timedelta(0))
@@ -122,7 +122,7 @@ class TestToAIDMConverter(unittest.TestCase):
         test_train = algorithm_platform_json_to_AIDM_converter.convert_json_to_AlgorithmTrain(test_train_as_dict)
 
         self.assertIsInstance(test_train, AIDMClasses.AlgorithmTrain)
-        self.assertIsInstance(test_train.TrainPathNodes[0], AIDMClasses.TrainPathNode)
+        self.assertIsInstance(test_train.TrainPathNodes[0], AIDMClasses.AlgorithmTrainPathNode)
         self.assertEqual(test_train.TrainPathNodes[0].MinimumRunTime, None)
         self.assertEqual(test_train.TrainPathNodes[0].MinimumStopTime, datetime.timedelta(0))
 

@@ -117,7 +117,7 @@ class TestRerouteTrain(unittest.TestCase):
         self.assertEqual(rerouted_algorithm_train.ID, 3516)
         self.assertEqual(rerouted_algorithm_train.DebugString, "RVZH_3_1_J03 tt_(S)")
         self.assertIsInstance(rerouted_algorithm_train.TrainPathNodes, list)
-        self.assertIsInstance(rerouted_algorithm_train.TrainPathNodes[0], AIDMClasses.TrainPathNode)
+        self.assertIsInstance(rerouted_algorithm_train.TrainPathNodes[0], AIDMClasses.AlgorithmTrainPathNode)
         self.assertEqual(rerouted_algorithm_train.TrainPathNodes[0].ID, 2424)
 
     @mock.patch('requests.Session', side_effect=RerouteTrainTestMockSession)

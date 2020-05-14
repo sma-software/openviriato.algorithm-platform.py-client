@@ -1,14 +1,14 @@
 from AIDMClasses.AIDM_TimeWindow_classes import TimeWindow
-from AIDMClasses.AIDM_base_classes import IhasDebugString
+from AIDMClasses.AIDM_base_classes import HasDebugString
 
 
-class AlgorithmNodeTrackClosure(IhasDebugString):
+class AlgorithmNodeTrackClosure(HasDebugString):
     __NodeID: int
     __NodeTrackID: int
     __ClosureTimeWindow: TimeWindow
 
     def __init__(self, DebugString: str, ClosureTimeWindow: TimeWindow, NodeID: int, NodeTrackID: int):
-        IhasDebugString.__init__(self, DebugString)
+        HasDebugString.__init__(self, DebugString)
         self.__ClosureTimeWindow = ClosureTimeWindow
         self.__NodeID = NodeID
         self.__NodeTrackID = NodeTrackID
@@ -26,7 +26,7 @@ class AlgorithmNodeTrackClosure(IhasDebugString):
         return self.__NodeTrackID
 
 
-class AlgorithmSectionTrackClosure(IhasDebugString):
+class AlgorithmSectionTrackClosure(HasDebugString):
     __ClosureTimeWindowFromNode: TimeWindow
     __ClosureTimeWindowToNode: TimeWindow
     __FromNodeID: int
@@ -35,7 +35,7 @@ class AlgorithmSectionTrackClosure(IhasDebugString):
 
     def __init__(self, DebugString: str, ClosureTimeWindowFromNode: TimeWindow, ClosureTimeWindowToNode: TimeWindow,
                  FromNodeID: int, SectionTrackID: int, ToNodeID: int):
-        IhasDebugString.__init__(self, DebugString)
+        HasDebugString.__init__(self, DebugString)
         self.__ClosureTimeWindowFromNode = ClosureTimeWindowFromNode
         self.__ClosureTimeWindowToNode = ClosureTimeWindowToNode
         self.__FromNodeID = FromNodeID

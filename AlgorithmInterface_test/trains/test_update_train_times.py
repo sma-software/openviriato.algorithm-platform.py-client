@@ -93,7 +93,7 @@ class TestUpdateTrainTimes(unittest.TestCase):
         self.assertEqual(updated_algorithm_train.DebugString, 'Mocked RVZH_1_1_J03 tt_(G)')
         self.assertEqual(updated_algorithm_train.ID, 2060)
         self.assertIsInstance(updated_algorithm_train.TrainPathNodes, list)
-        self.assertIsInstance(updated_algorithm_train.TrainPathNodes[0], AIDM_classes.TrainPathNode)
+        self.assertIsInstance(updated_algorithm_train.TrainPathNodes[0], AIDM_classes.AlgorithmTrainPathNode)
 
     @mock.patch('requests.Session', side_effect=UpdateTrainTimesTestMockSession)
     def tearDown(self, mocked_get_obj) -> None:

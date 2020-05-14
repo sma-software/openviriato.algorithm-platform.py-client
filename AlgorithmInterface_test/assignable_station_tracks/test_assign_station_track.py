@@ -88,7 +88,7 @@ class TestSetStationTracksNode(unittest.TestCase):
         test_train = self.interface_to_viriato.assign_station_track(trainPathNodeId=train_path_node_id)
 
         self.assertIsInstance(test_train, AIDMClasses.AIDM_Algorithm_classes.AlgorithmTrain)
-        self.assertIsInstance(test_train.TrainPathNodes[0], AIDM_TrainPathNode_classes.TrainPathNode)
+        self.assertIsInstance(test_train.TrainPathNodes[0], AIDM_TrainPathNode_classes.AlgorithmTrainPathNode)
         self.assertEqual(test_train.DebugString, "FV_9_J03 tt_(SZ)")
 
     @mock.patch('requests.Session', side_effect=SetStationTracksNodeTestSessionMock)

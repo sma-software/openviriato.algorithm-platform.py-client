@@ -1,13 +1,13 @@
-from AIDMClasses.AIDM_base_classes import IRoutingEdge, IRoutingEdgeSet
+from AIDMClasses.AIDM_base_classes import RoutingEdge, RoutingEdgeSet
 from typing import List
 
 
-class CrossingRoutingEdge(IRoutingEdge):
+class CrossingRoutingEdge(RoutingEdge):
     __StartSectionTrackID: int
     __EndSectionTrackID: int
 
     def __init__(self, NodeID: int, StartSectionTrackID: int, EndSectionTrackID: int):
-        IRoutingEdge.__init__(self, NodeID)
+        RoutingEdge.__init__(self, NodeID)
         self.__StartSectionTrackID = StartSectionTrackID
         self.__EndSectionTrackID = EndSectionTrackID
 
@@ -20,12 +20,12 @@ class CrossingRoutingEdge(IRoutingEdge):
         return self.__EndSectionTrackID
 
 
-class IncomingRoutingEdge(IRoutingEdge):
+class IncomingRoutingEdge(RoutingEdge):
     __EndNodeTrackID: int
     __StartSectionTrackID: int
 
     def __init__(self, NodeID: int, EndNodeTrackID: int, StartSectionTrackID: int):
-        IRoutingEdge.__init__(self, NodeID)
+        RoutingEdge.__init__(self, NodeID)
         self.__EndNodeTrackID = EndNodeTrackID
         self.__StartSectionTrackID = StartSectionTrackID
 
@@ -38,12 +38,12 @@ class IncomingRoutingEdge(IRoutingEdge):
         return self.__StartSectionTrackID
 
 
-class OutgoingRoutingEdge(IRoutingEdge):
+class OutgoingRoutingEdge(RoutingEdge):
     __EndSectionTrackID: int
     __StartNodeTrackID: int
 
     def __init__(self, NodeID: int, EndSectionTrackID: int, StartNodeTrackID: int):
-        IRoutingEdge.__init__(self, NodeID)
+        RoutingEdge.__init__(self, NodeID)
         self.__EndSectionTrackID = EndSectionTrackID
         self.__StartNodeTrackID = StartNodeTrackID
 
@@ -56,7 +56,7 @@ class OutgoingRoutingEdge(IRoutingEdge):
         return self.__StartNodeTrackID
 
 
-class IncomingRoutingEdgeSet(IRoutingEdgeSet):
+class IncomingRoutingEdgeSet(RoutingEdgeSet):
 
     def __init__(self, IncomingEdges: List[IncomingRoutingEdge]):
         super().__init__(IncomingEdges)
@@ -66,7 +66,7 @@ class IncomingRoutingEdgeSet(IRoutingEdgeSet):
         return super().RoutingEdges
 
 
-class OutgoingRoutingEdgeSet(IRoutingEdgeSet):
+class OutgoingRoutingEdgeSet(RoutingEdgeSet):
 
     def __init__(self, OutgoingEdges: List[OutgoingRoutingEdge]):
         super().__init__(OutgoingEdges)
@@ -76,7 +76,7 @@ class OutgoingRoutingEdgeSet(IRoutingEdgeSet):
         return super().RoutingEdges
 
 
-class CrossingRoutingEdgeSet(IRoutingEdgeSet):
+class CrossingRoutingEdgeSet(RoutingEdgeSet):
 
     def __init__(self, CrossingEdges: List[CrossingRoutingEdge]):
         super().__init__(CrossingEdges)

@@ -58,15 +58,15 @@ class AlgorithmInterface:
         response_list = self.__communication_layer.do_get_request(url_to_resource)
         return algorithm_platform_json_to_AIDM_converter.convert_list(AIDMClasses.AlgorithmSectionTrack, response_list)
 
-    def get_train_classification(self, train_id: int) -> AIDMClasses.TrainClassification:
+    def get_train_classification(self, train_id: int) -> AIDMClasses.AlgorithmTrainClassification:
         url_to_resource = 'train-classification/{0}'.format(train_id)
         response_dict = self.__communication_layer.do_get_request(url_to_resource)
-        return algorithm_platform_json_to_AIDM_converter.convert(AIDMClasses.TrainClassification, response_dict)
+        return algorithm_platform_json_to_AIDM_converter.convert(AIDMClasses.AlgorithmTrainClassification, response_dict)
 
-    def get_train_classifications(self) -> List[AIDMClasses.TrainClassification]:
+    def get_train_classifications(self) -> List[AIDMClasses.AlgorithmTrainClassification]:
         url_to_resource = 'train-classifications'
         response_list = self.__communication_layer.do_get_request(url_to_resource)
-        return algorithm_platform_json_to_AIDM_converter.convert_list(AIDMClasses.TrainClassification, response_list)
+        return algorithm_platform_json_to_AIDM_converter.convert_list(AIDMClasses.AlgorithmTrainClassification, response_list)
 
     def get_trains(self, timeWindow: AIDMClasses.TimeWindow) -> List[AIDMClasses.AlgorithmTrain]:
         url_to_resource = "trains"

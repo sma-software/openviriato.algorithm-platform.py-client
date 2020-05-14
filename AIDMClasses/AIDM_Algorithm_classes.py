@@ -1,23 +1,23 @@
-from AIDMClasses.AIDM_base_classes import IhasID, IhasCode, IhasDebugString
-from AIDMClasses.AIDM_TrainPathNode_classes import TrainPathNode
+from AIDMClasses.AIDM_base_classes import HasID, HasCode, HasDebugString
+from AIDMClasses.AIDM_TrainPathNode_classes import AlgorithmTrainPathNode
 from typing import List
 
 
-class AlgorithmNodeTrack(IhasID, IhasCode, IhasDebugString):
+class AlgorithmNodeTrack(HasID, HasCode, HasDebugString):
 
     def __init__(self, ID: int, Code: str, DebugString: str):
-        IhasID.__init__(self, ID)
-        IhasCode.__init__(self, Code)
-        IhasDebugString.__init__(self, DebugString)
+        HasID.__init__(self, ID)
+        HasCode.__init__(self, Code)
+        HasDebugString.__init__(self, DebugString)
 
 
-class AlgorithmNode(IhasID, IhasCode, IhasDebugString):
+class AlgorithmNode(HasID, HasCode, HasDebugString):
     __NodeTracks: [AlgorithmNodeTrack]
 
     def __init__(self, ID: int, Code: str, DebugString: str, NodeTracks: List[AlgorithmNodeTrack] = []):
-        IhasID.__init__(self, ID)
-        IhasCode.__init__(self, Code)
-        IhasDebugString.__init__(self, DebugString)
+        HasID.__init__(self, ID)
+        HasCode.__init__(self, Code)
+        HasDebugString.__init__(self, DebugString)
         self.__NodeTracks = NodeTracks
 
     @property
@@ -25,14 +25,14 @@ class AlgorithmNode(IhasID, IhasCode, IhasDebugString):
         return self.__NodeTracks
 
 
-class AlgorithmSectionTrack(IhasID, IhasCode, IhasDebugString):
+class AlgorithmSectionTrack(HasID, HasCode, HasDebugString):
     __Weight: int
     __SectionCode: str
 
     def __init__(self, ID: int, Code: str, DebugString: str, Weight: int, SectionCode: str):
-        IhasID.__init__(self, ID)
-        IhasCode.__init__(self, Code)
-        IhasDebugString.__init__(self, DebugString)
+        HasID.__init__(self, ID)
+        HasCode.__init__(self, Code)
+        HasDebugString.__init__(self, DebugString)
         self.__Weight = Weight
         self.__SectionCode = SectionCode
 
@@ -45,25 +45,25 @@ class AlgorithmSectionTrack(IhasID, IhasCode, IhasDebugString):
         return self.__SectionCode
 
 
-class AlgorithmTrain(IhasID, IhasDebugString):
-    __trainPathNodes: List[TrainPathNode]
+class AlgorithmTrain(HasID, HasDebugString):
+    __trainPathNodes: List[AlgorithmTrainPathNode]
 
-    def __init__(self, ID: int, DebugString: str, TrainPathNodes: List[TrainPathNode]):
-        IhasID.__init__(self, ID)
-        IhasDebugString.__init__(self, DebugString)
+    def __init__(self, ID: int, DebugString: str, TrainPathNodes: List[AlgorithmTrainPathNode]):
+        HasID.__init__(self, ID)
+        HasDebugString.__init__(self, DebugString)
         self.__TrainPathNodes = TrainPathNodes
 
     @property
-    def TrainPathNodes(self) -> List[TrainPathNode]:
+    def TrainPathNodes(self) -> List[AlgorithmTrainPathNode]:
         return self.__TrainPathNodes
 
 
-class AlgorithmFormation(IhasID, IhasDebugString):
+class AlgorithmFormation(HasID, HasDebugString):
     __VehicleTypeIDs: List[int]
 
     def __init__(self, ID: int, DebugString: str, VehicleTypeIDs: List[int]):
-        IhasID.__init__(self, ID)
-        IhasDebugString.__init__(self, DebugString)
+        HasID.__init__(self, ID)
+        HasDebugString.__init__(self, DebugString)
         self.__VehicleTypeIDs = VehicleTypeIDs
 
     @property
@@ -71,12 +71,12 @@ class AlgorithmFormation(IhasID, IhasDebugString):
         return self.__VehicleTypeIDs
 
 
-class AlgorithmVehicleType(IhasID, IhasDebugString):
+class AlgorithmVehicleType(HasID, HasDebugString):
     __IsEngine: bool
 
     def __init__(self, ID: int, DebugString: str, IsEngine: bool):
-        IhasID.__init__(self, ID)
-        IhasDebugString.__init__(self, DebugString)
+        HasID.__init__(self, ID)
+        HasDebugString.__init__(self, DebugString)
         self.__IsEngine = IsEngine
 
     @property

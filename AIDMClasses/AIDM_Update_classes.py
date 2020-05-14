@@ -1,22 +1,22 @@
 import datetime
-from AIDMClasses.AIDM_base_classes import IUpdateTrain, IRoutingEdge
+from AIDMClasses.AIDM_base_classes import UpdateTrain, RoutingEdge
 from AIDMClasses import StopStatus
 from typing import List, Optional
 
 
-class UpdateTrainRoute(IUpdateTrain):
+class UpdateTrainRoute(UpdateTrain):
     __EndTrainPathNodeID: int
-    __RoutingEdges: List[IRoutingEdge]
+    __RoutingEdges: List[RoutingEdge]
     __StartTrainPathNodeID: int
 
     def __init__(
             self,
             TrainID: int,
             EndTrainPathNodeID: int,
-            RoutingEdges: List[IRoutingEdge],
+            RoutingEdges: List[RoutingEdge],
             StartTrainPathNodeID: int
     ):
-        IUpdateTrain.__init__(self, TrainID)
+        UpdateTrain.__init__(self, TrainID)
         self.__EndTrainPathNodeID = EndTrainPathNodeID
         self.__RoutingEdges = RoutingEdges
         self.__StartTrainPathNodeID = StartTrainPathNodeID
@@ -26,7 +26,7 @@ class UpdateTrainRoute(IUpdateTrain):
         return self.__EndTrainPathNodeID
 
     @property
-    def RoutingEdges(self) -> List[IRoutingEdge]:
+    def RoutingEdges(self) -> List[RoutingEdge]:
         return self.__RoutingEdges
 
     @property
@@ -83,11 +83,11 @@ class UpdateTrainTimesNode:
         return self.__StopStatus
 
 
-class UpdateTrainTimes(IUpdateTrain):
+class UpdateTrainTimes(UpdateTrain):
     __Times: List[UpdateTrainTimesNode]
 
     def __init__(self, TrainID: int, Times: List[UpdateTrainTimesNode]):
-        IUpdateTrain.__init__(self, TrainID)
+        UpdateTrain.__init__(self, TrainID)
         self.__Times = Times
 
     @property

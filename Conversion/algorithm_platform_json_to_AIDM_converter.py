@@ -20,17 +20,17 @@ def convert_json_to_AlgorithmNode(attribute_dict: dict) -> AIDMClasses.Algorithm
     return convert(AIDMClasses.AlgorithmNode, attribute_dict)
 
 
-def convert_json_to_TrainPathNode(attribute_dict: dict) -> AIDMClasses.TrainPathNode:
+def convert_json_to_AlgorithmTrainPathNode(attribute_dict: dict) -> AIDMClasses.AlgorithmTrainPathNode:
     attribute_dict['StopStatus'] = AIDMClasses.StopStatus[attribute_dict['StopStatus']]
     for key in ['ArrivalTime', 'DepartureTime']:
         attribute_dict[key] = parse_to_datetime(attribute_dict[key])
     attribute_dict['MinimumRunTime'] = parse_to_timedelta_or_None(attribute_dict['MinimumRunTime'])
     attribute_dict['MinimumStopTime'] = parse_to_timedelta(attribute_dict['MinimumStopTime'])
-    return convert(AIDMClasses.TrainPathNode, attribute_dict)
+    return convert(AIDMClasses.AlgorithmTrainPathNode, attribute_dict)
 
 
 def convert_json_to_AlgorithmTrain(attribute_dict: dict) -> AIDMClasses.AlgorithmTrain:
-    attribute_dict['TrainPathNodes'] = [convert_json_to_TrainPathNode(train_path_node)
+    attribute_dict['TrainPathNodes'] = [convert_json_to_AlgorithmTrainPathNode(train_path_node)
                                         for train_path_node in attribute_dict['TrainPathNodes']]
     return convert(AIDMClasses.AlgorithmTrain, attribute_dict)
 

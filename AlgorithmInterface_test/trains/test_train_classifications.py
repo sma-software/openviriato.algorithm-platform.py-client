@@ -38,7 +38,7 @@ class TestGetTrainClassifications(unittest.TestCase):
         train_classes = self.interface_to_viriato.get_train_classifications()
 
         self.assertIsInstance(train_classes, list)
-        self.assertIsInstance(train_classes[0], AIDMClasses.TrainClassification)
+        self.assertIsInstance(train_classes[0], AIDMClasses.AlgorithmTrainClassification)
         self.assertEqual(train_classes[0].Description, "Unknown")
         self.assertEqual(train_classes[1].Description, "Freight")
 

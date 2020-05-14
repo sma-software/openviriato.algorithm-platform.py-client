@@ -1,10 +1,10 @@
 import datetime
 from typing import Optional
-from AIDMClasses.AIDM_base_classes import IhasID
+from AIDMClasses.AIDM_base_classes import HasID
 from AIDMClasses.AIDM_enum_classes import StopStatus
 
 
-class TrainPathNode(IhasID):
+class AlgorithmTrainPathNode(HasID):
     __ArrivalTime: datetime.datetime
     __DepartureTime: datetime.datetime
     __SectionTrackID: Optional[int]
@@ -30,7 +30,7 @@ class TrainPathNode(IhasID):
             StopStatus: StopStatus,
             SequenceNumber: int
     ):
-        IhasID.__init__(self, ID)
+        HasID.__init__(self, ID)
         self.__ArrivalTime = ArrivalTime
         self.__DepartureTime = DepartureTime
         self.__SectionTrackID = SectionTrackID

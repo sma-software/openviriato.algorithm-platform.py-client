@@ -1,6 +1,6 @@
 
 
-class TrainClassification:
+class AlgorithmTrainClassification:
     __Description: str
 
     def __init__(self, Description: str):

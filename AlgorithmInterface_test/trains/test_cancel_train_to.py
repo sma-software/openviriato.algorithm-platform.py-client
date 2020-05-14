@@ -74,7 +74,7 @@ class TestCancelTrainTo(unittest.TestCase):
         self.assertIsInstance(test_algorithm_train, AIDMClasses.AIDM_Algorithm_classes.AlgorithmTrain)
         self.assertEqual(test_algorithm_train.ID, 8120)
         self.assertEqual(test_algorithm_train.DebugString, 'CancelTrainToTestMockSession')
-        self.assertIsInstance(test_algorithm_train.TrainPathNodes[0], AIDM_TrainPathNode_classes.TrainPathNode)
+        self.assertIsInstance(test_algorithm_train.TrainPathNodes[0], AIDM_TrainPathNode_classes.AlgorithmTrainPathNode)
         self.assertEqual(test_algorithm_train.TrainPathNodes[0].ID, 8118)
 
     @mock.patch('requests.Session', side_effect=CancelTrainToTestMockSession)

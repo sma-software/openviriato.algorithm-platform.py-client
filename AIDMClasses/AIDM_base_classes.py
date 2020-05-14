@@ -1,7 +1,7 @@
 from typing import List, Optional
 
 
-class IhasID:
+class HasID:
     __ID: int
 
     def __init__(self, ID: int):
@@ -12,7 +12,7 @@ class IhasID:
         return self.__ID
 
 
-class IhasCode:
+class HasCode:
     __Code: str
 
     def __init__(self, Code: str):
@@ -23,7 +23,7 @@ class IhasCode:
         return self.__Code
 
 
-class IhasDebugString:
+class HasDebugString:
     __DebugString: Optional[str]
 
     def __init__(self, DebugString: Optional[str] = None):
@@ -35,7 +35,7 @@ class IhasDebugString:
         return self.__DebugString
 
 
-class IUpdateTrain:
+class UpdateTrain:
     __TrainID: int
 
     def __init__(self, TrainID):
@@ -46,7 +46,7 @@ class IUpdateTrain:
         return self.__TrainID
 
 
-class IRoutingEdge:
+class RoutingEdge:
     __NodeID: int
 
     def __init__(self, NodeID):
@@ -57,12 +57,12 @@ class IRoutingEdge:
         return self.__NodeID
 
 
-class IRoutingEdgeSet:
-    __RoutingEdges = List[IRoutingEdge]
+class RoutingEdgeSet:
+    __RoutingEdges = List[RoutingEdge]
 
-    def __init__(self, RoutingEdges: List[IRoutingEdge]):
+    def __init__(self, RoutingEdges: List[RoutingEdge]):
         self.__RoutingEdges = RoutingEdges
 
     @property
-    def RoutingEdges(self) -> List[IRoutingEdge]:
+    def RoutingEdges(self) -> List[RoutingEdge]:
         return self.__RoutingEdges

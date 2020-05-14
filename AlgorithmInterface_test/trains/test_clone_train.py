@@ -74,7 +74,7 @@ class TestCloneTrain(unittest.TestCase):
         self.assertIsInstance(test_cloned_algorithm_train, AIDMClasses.AIDM_Algorithm_classes.AlgorithmTrain)
         self.assertEqual(11037, test_cloned_algorithm_train.ID)
         self.assertEqual('CloneTrainTestMockSession', test_cloned_algorithm_train.DebugString)
-        self.assertIsInstance(test_cloned_algorithm_train.TrainPathNodes[0], AIDM_TrainPathNode_classes.TrainPathNode)
+        self.assertIsInstance(test_cloned_algorithm_train.TrainPathNodes[0], AIDM_TrainPathNode_classes.AlgorithmTrainPathNode)
         self.assertEqual(11038, test_cloned_algorithm_train.TrainPathNodes[0].ID)
 
     @mock.patch('requests.Session', side_effect=CloneTrainTestMockSession)

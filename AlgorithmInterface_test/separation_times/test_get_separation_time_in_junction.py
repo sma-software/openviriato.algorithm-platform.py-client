@@ -20,7 +20,7 @@ class TestGetSeparationTimeInJunction(unittest.TestCase):
 
             return SessionMockFactory.create_response_mock(json_string, 200)
 
-    interface_to_viriato: AlgorithmInterface.AlgorithmInterface.AlgorithmicPlatformInterface
+    interface_to_viriato: AlgorithmInterface.AlgorithmInterface.AlgorithmInterface
 
     @mock.patch('requests.Session', side_effect=GetSeparationTimeInJunctionTestMockSession)
     def setUp(self, mocked_get_obj):
@@ -34,7 +34,7 @@ class TestGetSeparationTimeInJunction(unittest.TestCase):
         self.interface_to_viriato.get_separation_time_in_junction(proceeding_train_path_node_id,
                                                                   succeeding_train_path_node_id)
 
-        session_obj = self.interface_to_viriato._AlgorithmicPlatformInterface__communication_layer.currentSession
+        session_obj = self.interface_to_viriato._AlgorithmInterface__communication_layer.currentSession
         self.assertEqual(session_obj._GetSeparationTimeInJunctionTestMockSession__last_request,
                          get_api_url() + "/junction-separation-time/between-train-path-nodes/4246/5702")
         self.assertDictEqual(session_obj._GetSeparationTimeInJunctionTestMockSession__last_body, {})

@@ -9,7 +9,7 @@ from Conversion import converter_helpers, algorithm_platform_json_to_AIDM_conver
     object_to_algorithm_platform_json_converter
 
 
-class AlgorithmicPlatformInterface:
+class AlgorithmInterface:
     __communication_layer: CommunicationLayer.CommunicationLayer
 
     def __init__(self, base_url: str):

@@ -34,7 +34,7 @@ class TestGetTimeWindowParameter(unittest.TestCase):
 
         self.interface_to_viriato.get_time_window_algorithm_parameter(key)
 
-        session_obj = self.interface_to_viriato._AlgorithmicPlatformInterface__communication_layer.currentSession
+        session_obj = self.interface_to_viriato._AlgorithmInterface__communication_layer.currentSession
         self.assertEqual(session_obj._GetTimeWindowParameterTestSessionMock__last_request, get_api_url() +
                          '/parameters/someTimeWindowParameterKey')
         self.assertDictEqual(session_obj._GetTimeWindowParameterTestSessionMock__last_body, {})

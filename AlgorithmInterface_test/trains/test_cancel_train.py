@@ -17,7 +17,7 @@ class TestGetTrainClassifications(unittest.TestCase):
             self.__last_request = request
             return SessionMockFactory.create_response_mock("8124", 200)
 
-    interface_to_viriato: AlgorithmInterface.AlgorithmInterface.AlgorithmicPlatformInterface
+    interface_to_viriato: AlgorithmInterface.AlgorithmInterface.AlgorithmInterface
 
     @mock.patch('requests.Session', side_effect=CancelTrainTestMockSession)
     def setUp(self, mocked_get_obj):
@@ -29,7 +29,7 @@ class TestGetTrainClassifications(unittest.TestCase):
 
         self.interface_to_viriato.cancel_train(test_dict['trainID'])
 
-        session_obj = self.interface_to_viriato._AlgorithmicPlatformInterface__communication_layer.currentSession
+        session_obj = self.interface_to_viriato._AlgorithmInterface__communication_layer.currentSession
         self.assertEqual(session_obj._CancelTrainTestMockSession__last_request, get_api_url() + '/cancel-train')
         self.assertDictEqual(session_obj._CancelTrainTestMockSession__last_body, test_dict)
 

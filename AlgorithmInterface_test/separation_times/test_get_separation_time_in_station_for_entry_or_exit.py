@@ -21,7 +21,7 @@ class TestGetSeparationTimeInStationForEntryOrExit(unittest.TestCase):
 
             return SessionMockFactory.create_response_mock(json_string, 200)
 
-    interface_to_viriato: AlgorithmInterface.AlgorithmInterface.AlgorithmicPlatformInterface
+    interface_to_viriato: AlgorithmInterface.AlgorithmInterface.AlgorithmInterface
 
     @mock.patch('requests.Session', side_effect=GetSeparationTimeInStationForEntryOrExitTestMockSession)
     def setUp(self, mocked_get_obj):
@@ -43,7 +43,7 @@ class TestGetSeparationTimeInStationForEntryOrExit(unittest.TestCase):
                                                                                    succeeding_node_track_id,
                                                                                    succeeding_station_entry_or_exit)
 
-        session_obj = self.interface_to_viriato._AlgorithmicPlatformInterface__communication_layer.currentSession
+        session_obj = self.interface_to_viriato._AlgorithmInterface__communication_layer.currentSession
         self.assertEqual(session_obj._GetSeparationTimeInStationForEntryOrExitTestMockSession__last_request,
                          get_api_url() + '/station-separation-time/80/1/exit/324/500/entry')
         self.assertDictEqual(session_obj._GetSeparationTimeInStationForEntryOrExitTestMockSession__last_body, {})

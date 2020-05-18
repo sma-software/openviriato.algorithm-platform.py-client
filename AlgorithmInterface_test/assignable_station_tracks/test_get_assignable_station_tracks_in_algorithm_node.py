@@ -39,7 +39,7 @@ class TestGetAssignableStationTracksInAlgorithmNode(unittest.TestCase):
                                                                                   trainPathNodeId=train_path_node_id,
                                                                                   stopStatus=test_stop_status)
 
-        session_obj = self.interface_to_viriato._AlgorithmicPlatformInterface__communication_layer.currentSession
+        session_obj = self.interface_to_viriato._AlgorithmInterface__communication_layer.currentSession
         self.assertEqual(session_obj._GetAssignableStationTracksInAlgorithmNodeTestSessionMock__last_request,
                          get_api_url() + '/assignable-station-tracks-in-algorithm-node')
         self.assertDictEqual(session_obj._GetAssignableStationTracksInAlgorithmNodeTestSessionMock__last_body,

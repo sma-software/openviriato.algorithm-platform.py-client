@@ -22,7 +22,7 @@ class TestShowStatusMessage(unittest.TestCase):
 
             interface_to_viriato.show_status_message(message_1)
 
-            session_obj = interface_to_viriato._AlgorithmicPlatformInterface__communication_layer.currentSession
+            session_obj = interface_to_viriato._AlgorithmInterface__communication_layer.currentSession
             self.assertEqual(session_obj._ShowStatusMessageSessionTestMock__last_request,
                              get_api_url() + '/status-message')
             self.assertEqual(session_obj._ShowStatusMessageSessionTestMock__last_body,
@@ -36,7 +36,7 @@ class TestShowStatusMessage(unittest.TestCase):
 
             interface_to_viriato.show_status_message(message_1, message_2)
 
-            session_obj = interface_to_viriato._AlgorithmicPlatformInterface__communication_layer.currentSession
+            session_obj = interface_to_viriato._AlgorithmInterface__communication_layer.currentSession
             self.assertEqual(session_obj._ShowStatusMessageSessionTestMock__last_request,
                              get_api_url() + '/status-message')
             self.assertDictEqual(session_obj._ShowStatusMessageSessionTestMock__last_body,

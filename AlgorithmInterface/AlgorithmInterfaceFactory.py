@@ -1,5 +1,5 @@
-from AlgorithmInterface.AlgorithmInterface import AlgorithmicPlatformInterface
+from AlgorithmInterface.AlgorithmInterface import AlgorithmInterface
 
 
-def create(base_url: str) -> AlgorithmicPlatformInterface:
-    return AlgorithmicPlatformInterface(base_url=base_url)
+def create(base_url: str) -> AlgorithmInterface:
+    return AlgorithmInterface(base_url=base_url)

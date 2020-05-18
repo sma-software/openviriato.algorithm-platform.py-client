@@ -44,7 +44,7 @@ class TestGetNode(TestCase):
 
         self.interface_to_viriato.get_node(node_id_to_query)
 
-        session_obj = self.interface_to_viriato._AlgorithmicPlatformInterface__communication_layer.currentSession
+        session_obj = self.interface_to_viriato._AlgorithmInterface__communication_layer.currentSession
         self.assertEqual(get_api_url() + '/nodes/169', session_obj._GetNodeTestSessionMock__last_request)
         self.assertEqual(session_obj._GetNodeTestSessionMock__last_body, {})
 

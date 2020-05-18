@@ -82,7 +82,7 @@ class TestRerouteTrain(unittest.TestCase):
 
         self.interface_to_viriato.reroute_train(test_route)
 
-        session_obj = self.interface_to_viriato._AlgorithmicPlatformInterface__communication_layer.currentSession
+        session_obj = self.interface_to_viriato._AlgorithmInterface__communication_layer.currentSession
         expected_routing_edge_body = [dict(NodeID=7, StartNodeTrackID=8, EndSectionTrackID=1165),
                                       dict(NodeID=24, StartSectionTrackID=1165, EndNodeTrackID=25),
                                       dict(NodeID=24, StartNodeTrackID=25, EndSectionTrackID=1166),

@@ -57,7 +57,7 @@ class TestGetIncomingRoutingEdges(unittest.TestCase):
 
         self.interface_to_viriato.get_incoming_routing_edges(routing_point=routing_point)
 
-        session_obj = self.interface_to_viriato._AlgorithmicPlatformInterface__communication_layer.currentSession
+        session_obj = self.interface_to_viriato._AlgorithmInterface__communication_layer.currentSession
         self.assertEqual(session_obj._GetIncomingRoutingEdgesTestSessionMock__last_request,
                          get_api_url() + '/nodes/1/incoming-routing-edges')
         self.assertDictEqual(session_obj._GetIncomingRoutingEdgesTestSessionMock__last_body, dict(EndNodeTrackID=12))

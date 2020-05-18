@@ -40,7 +40,7 @@ class TestCrossingRoutingEdges(unittest.TestCase):
 
         self.interface_to_viriato.get_crossing_routing_edges(routing_point=routing_point)
 
-        session_obj = self.interface_to_viriato._AlgorithmicPlatformInterface__communication_layer.currentSession
+        session_obj = self.interface_to_viriato._AlgorithmInterface__communication_layer.currentSession
         self.assertEqual(session_obj._GetCrossingRoutingEdgesTestSessionMock__last_request, get_api_url() +
                          "/nodes/121/crossing-routing-edges")
         self.assertDictEqual(session_obj._GetCrossingRoutingEdgesTestSessionMock__last_body, {})

@@ -20,7 +20,7 @@ class TestGetHeadwayTimeForTrainPathNodesOnSectionTrack(unittest.TestCase):
 
             return SessionMockFactory.create_response_mock(json_string, 200)
 
-    interface_to_viriato: AlgorithmInterface.AlgorithmInterface.AlgorithmicPlatformInterface
+    interface_to_viriato: AlgorithmInterface.AlgorithmInterface.AlgorithmInterface
 
     @mock.patch('requests.Session', side_effect=GetHeadwayTimeForTrainPathNodesOnSectionTrackTestMockSession)
     def setUp(self, mocked_get_obj):
@@ -39,7 +39,7 @@ class TestGetHeadwayTimeForTrainPathNodesOnSectionTrack(unittest.TestCase):
                                                                                          section_track_id,
                                                                                          from_node_id, to_node_id)
 
-        session_obj = self.interface_to_viriato._AlgorithmicPlatformInterface__communication_layer.currentSession
+        session_obj = self.interface_to_viriato._AlgorithmInterface__communication_layer.currentSession
         self.assertEqual(session_obj._GetHeadwayTimeForTrainPathNodesOnSectionTrackTestMockSession__last_request,
                          get_api_url() + "/headway-times/between-train-path-nodes/4246/2/for-section-track/9998/in"
                                          "-direction/162/348")

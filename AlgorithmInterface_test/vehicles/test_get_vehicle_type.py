@@ -31,7 +31,7 @@ class TestGetVehicleType(unittest.TestCase):
 
         self.interface_to_viriato.get_vehicle_type(vehicle_type_id=vehicle_type_id)
 
-        session_obj = self.interface_to_viriato._AlgorithmicPlatformInterface__communication_layer.currentSession
+        session_obj = self.interface_to_viriato._AlgorithmInterface__communication_layer.currentSession
         self.assertEqual(session_obj._GetVehicleTypeTestSessionMock__last_request, get_api_url() +
                          "/vehicles/types/1828")
         self.assertDictEqual(session_obj._GetVehicleTypeTestSessionMock__last_body, {})

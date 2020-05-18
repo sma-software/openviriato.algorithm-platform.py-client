@@ -51,7 +51,7 @@ class TestGetNeighborNode(TestCase):
         node_id = 161
         self.interface_to_viriato.get_neighbor_nodes(node_id)
 
-        session_obj = self.interface_to_viriato._AlgorithmicPlatformInterface__communication_layer.currentSession
+        session_obj = self.interface_to_viriato._AlgorithmInterface__communication_layer.currentSession
 
         self.assertEqual(get_api_url() + '/neighbor-nodes/161',
                          session_obj._GetNeighborNodeTestSessionMock__last_request)

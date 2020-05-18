@@ -34,7 +34,7 @@ class TestGetAssignableStationTracksOnTrainPathNode(unittest.TestCase):
 
         self.interface_to_viriato.get_assignable_station_tracks_on_train_path_node(trainPathNodeId=train_path_node_id)
 
-        session_obj = self.interface_to_viriato._AlgorithmicPlatformInterface__communication_layer.currentSession
+        session_obj = self.interface_to_viriato._AlgorithmInterface__communication_layer.currentSession
         self.assertEqual(session_obj._GetAssignableStationTracksOnTrainPathNodeTestSessionMock__last_request,
                          get_api_url() + '/assignable-station-tracks-on-train-path-node')
         self.assertDictEqual(session_obj._GetAssignableStationTracksOnTrainPathNodeTestSessionMock__last_body,

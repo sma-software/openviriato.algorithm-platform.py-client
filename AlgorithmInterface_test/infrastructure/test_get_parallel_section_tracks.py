@@ -38,7 +38,7 @@ class TestGetParallelSectionTracks(unittest.TestCase):
                            "]")
             return SessionMockFactory.create_response_mock(json_string, 200)
 
-    interface_to_viriato: AlgorithmInterface.AlgorithmInterface.AlgorithmicPlatformInterface
+    interface_to_viriato: AlgorithmInterface.AlgorithmInterface.AlgorithmInterface
 
     @mock.patch('requests.Session', side_effect=GetParallelSectionTracksSessionTestMock)
     def setUp(self, mocked_get_obj):
@@ -51,7 +51,7 @@ class TestGetParallelSectionTracks(unittest.TestCase):
 
         self.interface_to_viriato.get_parallel_section_tracks(track_id)
 
-        session_obj = self.interface_to_viriato._AlgorithmicPlatformInterface__communication_layer.currentSession
+        session_obj = self.interface_to_viriato._AlgorithmInterface__communication_layer.currentSession
         self.assertEqual(session_obj._GetParallelSectionTracksSessionTestMock__last_request,
                          get_api_url() + '/section-tracks-parallel-to/885')
         self.assertEqual(session_obj._GetParallelSectionTracksSessionTestMock__last_body, {})

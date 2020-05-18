@@ -56,7 +56,7 @@ class TestGetOutgoingRoutingEdges(unittest.TestCase):
 
         self.interface_to_viriato.get_outgoing_routing_edges(routing_point=routing_point)
 
-        session_obj = self.interface_to_viriato._AlgorithmicPlatformInterface__communication_layer.currentSession
+        session_obj = self.interface_to_viriato._AlgorithmInterface__communication_layer.currentSession
         self.assertEqual(get_api_url() + "/nodes/1/outgoing-routing-edges",
                          session_obj._GetOutgoingRoutingEdgesTestSessionMock__last_request)
         self.assertDictEqual(session_obj._GetOutgoingRoutingEdgesTestSessionMock__last_body, {"StartNodeTrackID": 12})

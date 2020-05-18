@@ -14,7 +14,7 @@ class TestGetTrainClassification(TestCase):
             self.__last_request = request
             return APISessionMock.create_response_mock('{"Description": "Freight"}', 200)
 
-    interface_to_viriato: AlgorithmInterface.AlgorithmInterface.AlgorithmicPlatformInterface
+    interface_to_viriato: AlgorithmInterface.AlgorithmInterface.AlgorithmInterface
 
     @mock.patch('requests.Session', side_effect=GetTrainClassificationTestMockSession)
     def setUp(self, mocked_get_obj):
@@ -25,7 +25,7 @@ class TestGetTrainClassification(TestCase):
         train_id = 99
         self.interface_to_viriato.get_train_classification(train_id)
 
-        session_obj = self.interface_to_viriato._AlgorithmicPlatformInterface__communication_layer.currentSession
+        session_obj = self.interface_to_viriato._AlgorithmInterface__communication_layer.currentSession
 
         self.assertEqual(session_obj._GetTrainClassificationTestMockSession__last_request,
                          get_api_url() + '/train-classification/99')

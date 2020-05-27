@@ -1,5 +1,4 @@
 import datetime
-
 import AIDMClasses
 
 from AlgorithmInterface.AlgorithmInterfaceHelpers import merge_query_parameters
@@ -181,10 +180,10 @@ class AlgorithmInterface:
     def update_trajectory(
             self,
             train_id: int,
-            update_train_stop_times_nodes: List[AIDMClasses.UpdateTrainTimesNode]
+            update_train_stop_times_node: AIDMClasses.UpdateTrainStopTimesNode
     ) -> AIDMClasses.AlgorithmTrain:
         url_to_resource = "trains/{0}/train-path-nodes:update-trajectory-stop-times".format(train_id)
-        put_body_list = object_to_algorithm_platform_json_converter.convert_any_object(update_train_stop_times_nodes)
+        put_body_list = object_to_algorithm_platform_json_converter.convert_any_object(update_train_stop_times_node)
         response_dict = self.__communication_layer.do_put_request(url_to_resource, request_body=put_body_list)
         return algorithm_platform_json_to_AIDM_converter.convert_json_to_AlgorithmTrain(response_dict)
 

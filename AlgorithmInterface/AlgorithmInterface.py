@@ -1,7 +1,7 @@
 import datetime
 import AIDMClasses
-
-from AlgorithmInterface.AlgorithmInterfaceHelpers import merge_query_parameters
+from AlgorithmInterface.AlgorithmInterfaceHelpers import merge_query_parameters, \
+    create_query_parameters_from_preceding_and_succeeding_routing_edge
 from typing import List, Optional, Union
 from Communication import CommunicationLayer
 from Conversion import converter_helpers, algorithm_platform_json_to_AIDM_converter, \
@@ -187,95 +187,86 @@ class AlgorithmInterface:
         response_dict = self.__communication_layer.do_put_request(url_to_resource, request_body=put_body_list)
         return algorithm_platform_json_to_AIDM_converter.convert_json_to_AlgorithmTrain(response_dict)
 
-    def get_separation_time_in_junction(
+    def get_separation_time_in_junction_for_planned_train_paths(
             self,
+            node_id: int,
             preceding_train_path_node_id: int,
             succeeding_train_path_node_id: int
-    ) -> datetime.timedelta:
-        url_to_resource = 'junction-separation-time/between-train-path-nodes/{0}/{1}'.format(
-            preceding_train_path_node_id,
-            succeeding_train_path_node_id
-        )
-        response_dict = self.__communication_layer.do_get_request(url_to_resource)
+    ) -> Optional[datetime.timedelta]:
+        url_to_resource = 'nodes/{0}/separation-times'.format(node_id)
+        query_parameters = dict(
+            PrecedingTrainPathNodeID=preceding_train_path_node_id,
+            SucceedingTrainPathNodeID=succeeding_train_path_node_id)
+        response_dict = self.__communication_layer.do_get_request(url_to_resource, query_parameters)
         return converter_helpers.parse_to_timedelta_or_None(response_dict["separationTime"])
 
-    def get_station_track_reoccupation_separation_time(
+    def get_separation_time_in_junction_for_routes(
             self,
-            preceding_train_path_node_id: int,
-            succeeding_train_path_node_id: int,
-            node_track_id: int
-    ) -> datetime.timedelta:
-        url_to_resource = 'station-track-reoccupation-separation-time/{0}/{1}/{2}'.format(
-            preceding_train_path_node_id,
-            succeeding_train_path_node_id,
-            node_track_id
-        )
-        response_dict = self.__communication_layer.do_get_request(url_to_resource)
+            preceding_routing_edge: AIDMClasses.CrossingRoutingEdge,
+            succeeding_routing_edge: AIDMClasses.CrossingRoutingEdge
+    ) -> Optional[datetime.timedelta]:
+        url_to_resource = 'nodes/{0}/separation-times'.format(preceding_routing_edge.NodeID)
+        query_parameters = dict(
+            PrecedingFromSectionTrackID=preceding_routing_edge.StartSectionTrackID,
+            PrecedingToSectionTrackID=preceding_routing_edge.EndSectionTrackID,
+            SucceedingFromSectionTrackID=succeeding_routing_edge.StartSectionTrackID,
+            SucceedingToSectionTrackID=succeeding_routing_edge.EndSectionTrackID)
+
+        response_dict = self.__communication_layer.do_get_request(url_to_resource, query_parameters)
+        return converter_helpers.parse_to_timedelta_or_None(response_dict["separationTime"])
+
+    def get_separation_time_in_station_for_node_track_reoccupation(
+            self,
+            node_id: int,
+            node_track_id: int) -> datetime.timedelta:
+        url_to_resource = 'nodes/{0}/separation-times'.format(node_id)
+        query_parameters = dict(NodeTrackID=node_track_id)
+        response_dict = self.__communication_layer.do_get_request(url_to_resource, query_parameters)
         return converter_helpers.parse_to_timedelta(response_dict["separationTime"])
 
-    def get_separation_time_in_any_junction(
+    def get_separation_time_in_station_for_planned_train_paths(
             self,
-            preceding_train_path_node_id: int,
-            succeeding_train_path_node_id: int,
             node_id: int,
-            preceding_route_start_id: int,
-            preceding_route_end_id: int,
-            succeeding_route_start_id: int,
-            succeeding_route_end_id: int
-    ) -> datetime.timedelta:
-        url_to_resource = 'junction-separation-time/between-train-path-nodes/{0}/{1}/for-node/{2}/' \
-                          'preceding-route/{3}/{4}/succeeding-route/{5}/{6}'.format(
-            preceding_train_path_node_id,
-            succeeding_train_path_node_id,
-            node_id,
-            preceding_route_start_id,
-            preceding_route_end_id,
-            succeeding_route_start_id,
-            succeeding_route_end_id
-        )
-        response_dict = self.__communication_layer.do_get_request(url_to_resource)
-        return converter_helpers.parse_to_timedelta_or_None(response_dict["separationTime"])
-
-    def get_separation_time_in_station(
-            self,
-            preceding_section_track_id: int,
-            preceding_node_track_id: int,
-            preceding_stop_status: AIDMClasses.StopStatus,
-            succeeding_section_track_id: int,
-            succeeding_node_track_id: int,
-            succeeding_stop_status: AIDMClasses.StopStatus
-    ) -> datetime.timedelta:
-        url_to_resource = 'station-separation-time/from-section-track/{0}/to-node-track/{1}/{2}' \
-                          '/from-section-track/{3}/to-node-track/{4}/{5}'.format(
-            preceding_section_track_id,
-            preceding_node_track_id,
-            preceding_stop_status.name,
-            succeeding_section_track_id,
-            succeeding_node_track_id,
-            succeeding_stop_status.name
-        )
-        response_dict = self.__communication_layer.do_get_request(url_to_resource)
-        return converter_helpers.parse_to_timedelta_or_None(response_dict["separationTime"])
-
-    def get_separation_time_in_station_for_entry_or_exit(
-            self,
             preceding_train_path_node_id: int,
-            preceding_node_track_id: int,
+            preceding_train_stop_status: Optional[AIDMClasses.StopStatus],
             preceding_station_entry_or_exit: AIDMClasses.StationEntryOrExit,
             succeeding_train_path_node_id: int,
-            succeeding_node_track_id: int,
+            succeeding_train_stop_status: Optional[AIDMClasses.StopStatus],
             succeeding_station_entry_or_exit: AIDMClasses.StationEntryOrExit
-    ) -> datetime.timedelta:
-        url_to_resource = "station-separation-time/{0}/{1}/{2}/{3}/{4}/{5}".format(
-            preceding_train_path_node_id,
-            preceding_node_track_id,
-            preceding_station_entry_or_exit.name,
-            succeeding_train_path_node_id,
-            succeeding_node_track_id,
-            succeeding_station_entry_or_exit.name
-        )
-        response_dict = self.__communication_layer.do_get_request(url_to_resource)
+    ) -> Optional[datetime.timedelta]:
+
+        url_to_resource = "nodes/{0}/separation-times".format(node_id)
+        query_parameters = dict(
+            PrecedingTrainPathNodeID=preceding_train_path_node_id,
+            PrecedingEntryOrExit=preceding_station_entry_or_exit.name,
+            SucceedingTrainPathNodeID=succeeding_train_path_node_id,
+            SucceedingEntryOrExit=succeeding_station_entry_or_exit.name)
+
+        if preceding_train_stop_status is not None:
+            query_parameters['PrecedingStopStatus'] = preceding_train_stop_status.name
+        if succeeding_train_stop_status is not None:
+            query_parameters['SucceedingStopStatus'] = succeeding_train_stop_status.name
+
+        response_dict = self.__communication_layer.do_get_request(url_to_resource, query_parameters)
         return converter_helpers.parse_to_timedelta_or_None(response_dict['separationTime'])
+
+    def get_separation_time_in_station_for_routes(
+            self,
+            preceding_train_routing_edge: Union[AIDMClasses.IncomingRoutingEdge, AIDMClasses.OutgoingRoutingEdge],
+            preceding_stop_status: AIDMClasses.StopStatus,
+            succeeding_train_routing_edge: Union[AIDMClasses.IncomingRoutingEdge, AIDMClasses.OutgoingRoutingEdge],
+            succeeding_stop_status: AIDMClasses.StopStatus
+    ) -> Optional[datetime.timedelta]:
+
+        url_to_resource = 'nodes/{0}/separation-times'.format(preceding_train_routing_edge.NodeID)
+        query_parameters = create_query_parameters_from_preceding_and_succeeding_routing_edge(
+            preceding_train_routing_edge,
+            succeeding_train_routing_edge)
+        query_parameters['PrecedingStopStatus'] = preceding_stop_status.name
+        query_parameters['SucceedingStopStatus'] = succeeding_stop_status.name
+        response_dict = self.__communication_layer.do_get_request(url_to_resource, query_parameters)
+
+        return converter_helpers.parse_to_timedelta_or_None(response_dict["separationTime"])
 
     def get_default_headway_time(
             self,

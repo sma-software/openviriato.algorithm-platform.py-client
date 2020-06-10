@@ -277,6 +277,44 @@ class AlgorithmInterface:
         response_dict = self.__communication_layer.do_get_request(url_to_resource)
         return converter_helpers.parse_to_timedelta_or_None(response_dict['separationTime'])
 
+    def get_default_headway_time(
+            self,
+            section_track_id: int,
+            from_node_id: Optional[int],
+            to_node_id: Optional[int]
+    ) -> datetime.timedelta:
+
+        url_to_resource = "section-tracks/{0}/headway-times".format(section_track_id)
+        headway_query_parameters = dict()
+        if from_node_id is not None:
+            headway_query_parameters['FromNodeID'] = from_node_id
+        if to_node_id is not None:
+            headway_query_parameters['ToNodeID'] = to_node_id
+
+        response_dict = self.__communication_layer.do_get_request(url_to_resource, headway_query_parameters)
+        return converter_helpers.parse_to_timedelta(response_dict["headwayTime"])
+
+    def get_headway_time(
+            self,
+            section_track_id: int,
+            from_node_id: Optional[int],
+            to_node_id: Optional[int],
+            preceding_train_path_node_id: int,
+            succeeding_train_path_node_id: int
+    ) -> datetime.timedelta:
+
+        url_to_resource = "section-tracks/{0}/headway-times".format(section_track_id)
+        headway_query_parameters = dict(
+            PrecedingTrainPathNodeID=preceding_train_path_node_id,
+            SucceedingTrainPathNodeID=succeeding_train_path_node_id)
+        if from_node_id is not None:
+            headway_query_parameters['FromNodeID'] = from_node_id
+        if to_node_id is not None:
+            headway_query_parameters['ToNodeID'] = to_node_id
+
+        response_dict = self.__communication_layer.do_get_request(url_to_resource, headway_query_parameters)
+        return converter_helpers.parse_to_timedelta(response_dict["headwayTime"])
+
     def get_headway_time_for_train_path_nodes(
             self,
             preceding_train_path_node_id: int,

@@ -4,11 +4,11 @@ from End_to_end_tests_tool.runner.tests_runner_config import TestsRunnerConfig
 
 
 def read_headless_runner_config_from_config_file(
-        absolute_path_to_viriato: str,
+        absolute_root_path: str,
         config_file_on_relative_path: str
 ) -> TestsRunnerConfig:
 
-    config_file_path = os.path.join(absolute_path_to_viriato, config_file_on_relative_path)
+    config_file_path = os.path.join(absolute_root_path, config_file_on_relative_path)
 
     with open(config_file_path, encoding='utf-8-sig') as input_file:
         json_config = json.loads(input_file.read())

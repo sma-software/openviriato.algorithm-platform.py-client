@@ -52,15 +52,21 @@ class TestGetParallelSectionTracks(unittest.TestCase):
         self.interface_to_viriato.get_parallel_section_tracks(track_id)
 
         session_obj = self.interface_to_viriato._AlgorithmInterface__communication_layer.currentSession
-        self.assertEqual(session_obj._GetParallelSectionTracksSessionTestMock__last_request,
-                         get_api_url() + '/section-tracks-parallel-to/885')
-        self.assertEqual(session_obj._GetParallelSectionTracksSessionTestMock__last_body, {})
+        self.assertEqual(
+            session_obj._GetParallelSectionTracksSessionTestMock__last_request,
+            get_api_url() + '/section-tracks')
+        self.assertEqual(
+            session_obj._GetParallelSectionTracksSessionTestMock__last_body,
+            dict(ParallelToSectionTrackID=885))
 
     @mock.patch('requests.Session', side_effect=GetParallelSectionTracksSessionTestMock)
     def test_get_parallel_section_tracks_return(self, mocked_get_obj):
         track_id = 0
 
         parallel_section_tracks = self.interface_to_viriato.get_parallel_section_tracks(track_id)
+
+        self.assertIsInstance(parallel_section_tracks, list)
+        self.assertEqual(len(parallel_section_tracks), 2)
 
         self.assertIsInstance(parallel_section_tracks[0], AIDMClasses.AIDM_Algorithm_classes.AlgorithmSectionTrack)
         self.assertEqual(parallel_section_tracks[0].ID, 885)

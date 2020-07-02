@@ -19,7 +19,7 @@ class TestGetSectionTrack(unittest.TestCase):
             json_string = ('{\n'
                            ' "ID": 1082,\n'
                            ' "Code": "900",\n'
-                           ' "SectionCode": "70015",\n'
+                           ' "section_code": "70015",\n'
                            ' "Weight": 10000,\n'
                            ' "DebugString": "GetSectionTrackSessionTestMock"\n'
                            '}')
@@ -50,11 +50,11 @@ class TestGetSectionTrack(unittest.TestCase):
 
         self.assertIsInstance(test_section_track, AlgorithmSectionTrack)
 
-        self.assertEqual(test_section_track.ID, 1082)
-        self.assertEqual(test_section_track.Code, '900')
-        self.assertEqual(test_section_track.DebugString, 'GetSectionTrackSessionTestMock')
-        self.assertEqual(test_section_track.SectionCode, '70015')
-        self.assertEqual(test_section_track.Weight, 10000)
+        self.assertEqual(test_section_track.id, 1082)
+        self.assertEqual(test_section_track.code, '900')
+        self.assertEqual(test_section_track.debug_string, 'GetSectionTrackSessionTestMock')
+        self.assertEqual(test_section_track.section_code, '70015')
+        self.assertEqual(test_section_track.weight, 10000)
 
     @mock.patch('requests.Session', side_effect=GetSectionTrackSessionTestMock)
     def tearDown(self, mocked_get_obj) -> None:

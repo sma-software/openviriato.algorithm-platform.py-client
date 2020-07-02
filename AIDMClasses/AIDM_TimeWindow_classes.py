@@ -2,17 +2,17 @@ import datetime
 
 
 class TimeWindow:
-    __FromTime: datetime.datetime
-    __ToTime: datetime.datetime
+    __from_time: datetime.datetime
+    __to_time: datetime.datetime
 
-    def __init__(self, FromTime: datetime.datetime, ToTime: datetime.datetime):
-        self.__FromTime = FromTime
-        self.__ToTime = ToTime
-
-    @property
-    def FromTime(self) -> datetime.datetime:
-        return self.__FromTime
+    def __init__(self, from_time: datetime.datetime, to_time: datetime.datetime):
+        self.__from_time = from_time
+        self.__to_time = to_time
 
     @property
-    def ToTime(self) -> datetime.datetime:
-        return self.__ToTime
+    def from_time(self) -> datetime.datetime:
+        return self.__from_time
+
+    @property
+    def to_time(self) -> datetime.datetime:
+        return self.__to_time

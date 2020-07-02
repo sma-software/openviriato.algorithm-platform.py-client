@@ -5,79 +5,79 @@ from AIDMClasses.AIDM_enum_classes import StopStatus
 
 
 class AlgorithmTrainPathNode(HasID):
-    __ArrivalTime: datetime.datetime
-    __DepartureTime: datetime.datetime
-    __SectionTrackID: Optional[int]
-    __NodeID: int
-    __NodeTrackID: Optional[int]
-    __FormationID: Optional[int]
-    __MinimumRunTime: Optional[datetime.timedelta]
-    __MinimumStopTime: datetime.timedelta
-    __StopStatus: StopStatus
-    __SequenceNumber: int
+    __arrival_time: datetime.datetime
+    __departure_time: datetime.datetime
+    __section_track_id: Optional[int]
+    __node_id: int
+    __node_track_id: Optional[int]
+    __formation_id: Optional[int]
+    __minimum_run_time: Optional[datetime.timedelta]
+    __minimum_stop_time: datetime.timedelta
+    __stop_status: StopStatus
+    __sequence_number: int
 
     def __init__(
             self,
-            ID: int,
-            ArrivalTime: datetime.datetime,
-            DepartureTime: datetime.datetime,
-            SectionTrackID: Optional[int],
-            NodeID: int,
-            NodeTrackID: Optional[int],
-            FormationID: Optional[int],
-            MinimumRunTime: Optional[datetime.timedelta],
-            MinimumStopTime: datetime.timedelta,
-            StopStatus: StopStatus,
-            SequenceNumber: int
+            id: int,
+            arrival_time: datetime.datetime,
+            departure_time: datetime.datetime,
+            section_track_id: Optional[int],
+            node_id: int,
+            node_track_id: Optional[int],
+            formation_id: Optional[int],
+            minimum_run_time: Optional[datetime.timedelta],
+            minimum_stop_time: datetime.timedelta,
+            stop_status: StopStatus,
+            sequence_number: int
     ):
-        HasID.__init__(self, ID)
-        self.__ArrivalTime = ArrivalTime
-        self.__DepartureTime = DepartureTime
-        self.__SectionTrackID = SectionTrackID
-        self.__NodeID = NodeID
-        self.__NodeTrackID = NodeTrackID
-        self.__FormationID = FormationID
-        self.__MinimumRunTime = MinimumRunTime
-        self.__MinimumStopTime = MinimumStopTime
-        self.__StopStatus = StopStatus
-        self.__SequenceNumber = SequenceNumber
+        HasID.__init__(self, id)
+        self.__arrival_time = arrival_time
+        self.__departure_time = departure_time
+        self.__section_track_id = section_track_id
+        self.__node_id = node_id
+        self.__node_track_id = node_track_id
+        self.__formation_id = formation_id
+        self.__minimum_run_time = minimum_run_time
+        self.__minimum_stop_time = minimum_stop_time
+        self.__stop_status = stop_status
+        self.__sequence_number = sequence_number
 
     @property
-    def SectionTrackID(self) -> Optional[int]:
-        return self.__SectionTrackID
+    def section_track_id(self) -> Optional[int]:
+        return self.__section_track_id
 
     @property
-    def NodeID(self) -> int:
-        return self.__NodeID
+    def node_id(self) -> int:
+        return self.__node_id
 
     @property
-    def NodeTrackID(self) -> Optional[int]:
-        return self.__NodeTrackID
+    def node_track_id(self) -> Optional[int]:
+        return self.__node_track_id
 
     @property
-    def FormationID(self) -> Optional[int]:
-        return self.__FormationID
+    def formation_id(self) -> Optional[int]:
+        return self.__formation_id
 
     @property
-    def ArrivalTime(self) -> datetime.datetime:
-        return self.__ArrivalTime
+    def arrival_time(self) -> datetime.datetime:
+        return self.__arrival_time
 
     @property
-    def DepartureTime(self) -> datetime.datetime:
-        return self.__DepartureTime
+    def departure_time(self) -> datetime.datetime:
+        return self.__departure_time
 
     @property
-    def MinimumRunTime(self) -> Optional[datetime.timedelta]:
-        return self.__MinimumRunTime
+    def minimum_run_time(self) -> Optional[datetime.timedelta]:
+        return self.__minimum_run_time
 
     @property
-    def MinimumStopTime(self) -> datetime.timedelta:
-        return self.__MinimumStopTime
+    def minimum_stop_time(self) -> datetime.timedelta:
+        return self.__minimum_stop_time
 
     @property
-    def StopStatus(self) -> StopStatus:
-        return self.__StopStatus
+    def stop_status(self) -> StopStatus:
+        return self.__stop_status
 
     @property
-    def SequenceNumber(self) -> int:
-        return self.__SequenceNumber
+    def sequence_number(self) -> int:
+        return self.__sequence_number

@@ -38,7 +38,7 @@ class TestGetTrainClassification(TestCase):
         train_class = self.interface_to_viriato.get_train_classification(train_id)
 
         self.assertIsInstance(train_class, AIDMClasses.AlgorithmTrainClassification)
-        self.assertEqual(train_class.Description, "Freight")
+        self.assertEqual(train_class.description, "Freight")
 
     @mock.patch('requests.Session', side_effect=GetTrainClassificationTestMockSession)
     def tearDown(self, mocked_get_obj) -> None:

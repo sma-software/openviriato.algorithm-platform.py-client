@@ -21,8 +21,8 @@ class TestSetSectionTrack(TestCase):
                            '    {\n'
                            '      "ID": 1332,\n'
                            '      "SectionTrackID": null,\n'
-                           '      "NodeID": 18,\n'
-                           '      "NodeTrackID": null,\n'
+                           '      "node_id": 18,\n'
+                           '      "node_track_id": null,\n'
                            '      "FormationID": 1187,\n'
                            '      "ArrivalTime": "2003-05-01T00:05:00",\n'
                            '      "DepartureTime": "2003-05-01T00:05:00",\n'
@@ -34,8 +34,8 @@ class TestSetSectionTrack(TestCase):
                            '    {\n'
                            '      "ID": 1696,\n'
                            '      "SectionTrackID": 1172,\n'
-                           '      "NodeID": 10,\n'
-                           '      "NodeTrackID": null,\n'
+                           '      "node_id": 10,\n'
+                           '      "node_track_id": null,\n'
                            '      "FormationID": null,\n'
                            '      "ArrivalTime": "2003-05-01T00:10:00",\n'
                            '      "DepartureTime": "2003-05-01T00:10:00",\n'
@@ -75,8 +75,8 @@ class TestSetSectionTrack(TestCase):
         test_algorithm_train = self.interface_to_viriato.set_section_track(TrainPathNodeID, SectionTrackID)
 
         self.assertIsInstance(test_algorithm_train, AIDMClasses.AIDM_Algorithm_classes.AlgorithmTrain)
-        self.assertEqual(2060, test_algorithm_train.ID)
-        self.assertEqual(test_algorithm_train.DebugString, 'SetSectionTrackTestMockSessionString')
+        self.assertEqual(2060, test_algorithm_train.id)
+        self.assertEqual(test_algorithm_train.debug_string, 'SetSectionTrackTestMockSessionString')
 
     @mock.patch('requests.Session', side_effect=SetSectionTrackTestMockSession)
     def tearDown(self, mocked_get_obj) -> None:

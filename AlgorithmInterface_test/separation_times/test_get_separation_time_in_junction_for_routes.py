@@ -40,16 +40,15 @@ class TestGetSeparationTimeInJunctionForRoutes(unittest.TestCase):
 
     @mock.patch('requests.Session', side_effect=GetSeparationTimeInJunctionForRoutesTestMockSession)
     def test_get_separation_time_in_junction_for_routes_request(self, mocked_get_obj):
-        preceding_routing_edge = CrossingRoutingEdge(NodeID=123, StartSectionTrackID=80, EndSectionTrackID=324)
-        succeeding_routing_edge = CrossingRoutingEdge(NodeID=123, StartSectionTrackID=178, EndSectionTrackID=12740)
+        preceding_edge = CrossingRoutingEdge(node_id=123, start_section_track_id=80, end_section_track_id=324)
+        succeeding_edge = CrossingRoutingEdge(node_id=123, start_section_track_id=178, end_section_track_id=12740)
 
-        self.interface_to_viriato.get_separation_time_in_junction_for_routes(
-            preceding_routing_edge,
-            succeeding_routing_edge)
+        self.interface_to_viriato.get_separation_time_in_junction_for_routes(preceding_edge, succeeding_edge)
 
         session_obj = self.interface_to_viriato._AlgorithmInterface__communication_layer.currentSession
-        self.assertEqual(session_obj._GetSeparationTimeInJunctionForRoutesTestMockSession__last_request,
-                         get_api_url() + "/nodes/123/separation-times")
+        self.assertEqual(
+            session_obj._GetSeparationTimeInJunctionForRoutesTestMockSession__last_request,
+            get_api_url() + "/nodes/123/separation-times")
 
         expected_query_parameters = dict(
             PrecedingFromSectionTrackID=80,
@@ -62,24 +61,24 @@ class TestGetSeparationTimeInJunctionForRoutes(unittest.TestCase):
 
     @mock.patch('requests.Session', side_effect=GetSeparationTimeInJunctionForRoutesTestMockSession)
     def test_get_separation_time_in_junction_for_routes_response_timedelta(self, mocked_get_obj):
-        preceding_routing_edge = CrossingRoutingEdge(NodeID=123, StartSectionTrackID=80, EndSectionTrackID=324)
-        succeeding_routing_edge = CrossingRoutingEdge(NodeID=123, StartSectionTrackID=178, EndSectionTrackID=12740)
+        preceding_edge = CrossingRoutingEdge(node_id=123, start_section_track_id=80, end_section_track_id=324)
+        succeeding_edge = CrossingRoutingEdge(node_id=123, start_section_track_id=178, end_section_track_id=12740)
 
         separation_time = self.interface_to_viriato.get_separation_time_in_junction_for_routes(
-            preceding_routing_edge,
-            succeeding_routing_edge)
+            preceding_edge,
+            succeeding_edge)
 
         self.assertIsInstance(separation_time, datetime.timedelta)
         self.assertEqual(separation_time, datetime.timedelta(days=1))
 
     @mock.patch('requests.Session', side_effect=GetSeparationTimeInJunctionForRoutesTestMockSession)
     def test_get_separation_time_in_junction_for_routes_response_None(self, mocked_get_obj):
-        preceding_routing_edge = CrossingRoutingEdge(NodeID=123, StartSectionTrackID=1, EndSectionTrackID=1)
-        succeeding_routing_edge = CrossingRoutingEdge(NodeID=123, StartSectionTrackID=1, EndSectionTrackID=1)
+        preceding_edge = CrossingRoutingEdge(node_id=123, start_section_track_id=1, end_section_track_id=1)
+        succeeding_edge = CrossingRoutingEdge(node_id=123, start_section_track_id=1, end_section_track_id=1)
 
         separation_time = self.interface_to_viriato.get_separation_time_in_junction_for_routes(
-            preceding_routing_edge,
-            succeeding_routing_edge)
+            preceding_edge,
+            succeeding_edge)
 
         self.assertIsNone(separation_time)
 

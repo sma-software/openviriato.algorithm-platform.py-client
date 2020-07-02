@@ -17,7 +17,7 @@ class TestGetNode(TestCase):
             json_string = ("{\n"
                            "  \"ID\": 161,\n"
                            "  \"Code\": \"85AR\",\n"
-                           "  \"NodeTracks\": [\n"
+                           "  \"node_tracks\": [\n"
                            "    {\n"
                            "      \"ID\": 162,\n"
                            "      \"Code\": \"1\",\n"
@@ -55,13 +55,13 @@ class TestGetNode(TestCase):
         node_from_mocked_response = self.interface_to_viriato.get_node(node_id_to_query)
         
         self.assertIsInstance(node_from_mocked_response, AIDMClasses.AIDM_Algorithm_classes.AlgorithmNode)
-        self.assertIsInstance(node_from_mocked_response.NodeTracks[0],
+        self.assertIsInstance(node_from_mocked_response.node_tracks[0],
                               AIDMClasses.AIDM_Algorithm_classes.AlgorithmNodeTrack)
-        self.assertEqual(node_from_mocked_response.ID, 161)
-        self.assertEqual(node_from_mocked_response.Code, '85AR')
-        self.assertEqual(node_from_mocked_response.DebugString, "station:85AR")
-        self.assertEqual(node_from_mocked_response.NodeTracks[0].ID, 162)
-        self.assertEqual(node_from_mocked_response.NodeTracks[0].DebugString, "stationtrack:85AR_{StationTrack SID = 34138}")
+        self.assertEqual(node_from_mocked_response.id, 161)
+        self.assertEqual(node_from_mocked_response.code, '85AR')
+        self.assertEqual(node_from_mocked_response.debug_string, "station:85AR")
+        self.assertEqual(node_from_mocked_response.node_tracks[0].id, 162)
+        self.assertEqual(node_from_mocked_response.node_tracks[0].debug_string, "stationtrack:85AR_{StationTrack SID = 34138}")
 
     @mock.patch('requests.Session', side_effect=GetNodeTestSessionMock)
     def tearDown(self, mocked_get_obj) -> None:

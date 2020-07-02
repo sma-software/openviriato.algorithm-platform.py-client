@@ -49,7 +49,7 @@ class TestGetAssignableStationTracksOnTrainPathNode(unittest.TestCase):
 
         self.assertIsInstance(test_list, list)
         self.assertIsInstance(test_list[0], AIDMClasses.AIDM_Algorithm_classes.AlgorithmNodeTrack)
-        self.assertEqual(test_list[0].DebugString, "stationtrack:85AR_{StationTrack SID = 34140}")
+        self.assertEqual(test_list[0].debug_string, "stationtrack:85AR_{StationTrack SID = 34140}")
 
     @mock.patch('requests.Session', side_effect=GetAssignableStationTracksOnTrainPathNodeTestSessionMock)
     def tearDown(self, mocked_get_obj) -> None:

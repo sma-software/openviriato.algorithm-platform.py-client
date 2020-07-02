@@ -2,67 +2,67 @@ from typing import List, Optional
 
 
 class HasID:
-    __ID: int
+    __id: int
 
-    def __init__(self, ID: int):
-        self.__ID = ID
+    def __init__(self, id: int):
+        self.__id = id
 
     @property
-    def ID(self) -> int:
-        return self.__ID
+    def id(self) -> int:
+        return self.__id
 
 
 class HasCode:
-    __Code: str
+    __code: str
 
-    def __init__(self, Code: str):
-        self.__Code = Code
+    def __init__(self, code: str):
+        self.__code = code
 
     @property
-    def Code(self) -> str:
-        return self.__Code
+    def code(self) -> str:
+        return self.__code
 
 
 class HasDebugString:
-    __DebugString: Optional[str]
+    __debug_string: Optional[str]
 
-    def __init__(self, DebugString: Optional[str] = None):
-        if DebugString is not None:
-            self.__DebugString = DebugString
+    def __init__(self, debug_string: Optional[str] = None):
+        if debug_string is not None:
+            self.__debug_string = debug_string
 
     @property
-    def DebugString(self) -> (str, None):
-        return self.__DebugString
+    def debug_string(self) -> (str, None):
+        return self.__debug_string
 
 
 class UpdateTrain:
-    __TrainID: int
+    __train_id: int
 
-    def __init__(self, TrainID):
-        self.__TrainID = TrainID
+    def __init__(self, train_id):
+        self.__train_id = train_id
 
     @property
-    def TrainID(self) -> int:
-        return self.__TrainID
+    def train_id(self) -> int:
+        return self.__train_id
 
 
 class RoutingEdge:
-    __NodeID: int
+    __node_id: int
 
-    def __init__(self, NodeID):
-        self.__NodeID = NodeID
+    def __init__(self, node_id):
+        self.__node_id = node_id
 
     @property
-    def NodeID(self) -> int:
-        return self.__NodeID
+    def node_id(self) -> int:
+        return self.__node_id
 
 
 class RoutingEdgeSet:
-    __RoutingEdges = List[RoutingEdge]
+    __routing_edges = List[RoutingEdge]
 
-    def __init__(self, RoutingEdges: List[RoutingEdge]):
-        self.__RoutingEdges = RoutingEdges
+    def __init__(self, routing_edges: List[RoutingEdge]):
+        self.__routing_edges = routing_edges
 
     @property
-    def RoutingEdges(self) -> List[RoutingEdge]:
-        return self.__RoutingEdges
+    def routing_edges(self) -> List[RoutingEdge]:
+        return self.__routing_edges

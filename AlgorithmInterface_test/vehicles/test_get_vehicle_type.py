@@ -43,10 +43,10 @@ class TestGetVehicleType(unittest.TestCase):
         test_algorithm_vehicle_type = self.interface_to_viriato.get_vehicle_type(vehicle_type_id)
 
         self.assertIsInstance(test_algorithm_vehicle_type, AIDMClasses.AIDM_Algorithm_classes.AlgorithmVehicleType)
-        self.assertEqual(test_algorithm_vehicle_type.DebugString,
+        self.assertEqual(test_algorithm_vehicle_type.debug_string,
                          "vehicle isEngine: True, model: ICN, series: 1, velMax: 200")
-        self.assertEqual(test_algorithm_vehicle_type.IsEngine, True)
-        self.assertEqual(test_algorithm_vehicle_type.ID, 1828)
+        self.assertEqual(test_algorithm_vehicle_type.is_engine, True)
+        self.assertEqual(test_algorithm_vehicle_type.id, 1828)
 
     @mock.patch('requests.Session', side_effect=GetVehicleTypeTestSessionMock)
     def tearDown(self, mocked_get_obj) -> None:

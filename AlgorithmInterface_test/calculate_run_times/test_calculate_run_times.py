@@ -70,9 +70,9 @@ class TestCalculateRunTimes(unittest.TestCase):
         updated_train_times = self.interface_to_viriato.calculate_run_times(train_id)
 
         self.assertIsInstance(updated_train_times, AIDMClasses.AIDM_Update_classes.UpdateTrainTimes)
-        self.assertEqual(updated_train_times.TrainID, 2060)
-        self.assertIsInstance(updated_train_times.Times, list)
-        self.assertIsInstance(updated_train_times.Times[0], AIDMClasses.AIDM_Update_classes.UpdateTrainTimesNode)
+        self.assertEqual(updated_train_times.train_id, 2060)
+        self.assertIsInstance(updated_train_times.times, list)
+        self.assertIsInstance(updated_train_times.times[0], AIDMClasses.AIDM_Update_classes.UpdateTrainTimesNode)
 
     @mock.patch('requests.Session', side_effect=CalculateRunTimesTestMockSession)
     def tearDown(self, mocked_get_obj) -> None:

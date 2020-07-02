@@ -2,17 +2,17 @@ from typing import Optional
 
 
 class RoutingPoint:
-    __nodeID: int
-    __nodeTrackID: Optional[int]
+    __node_id: int
+    __node_track_id: Optional[int]
 
-    def __init__(self, nodeID: int, nodeTrackID: Optional[int] = None):
-        self.__nodeID = nodeID
-        self.__nodeTrackID = nodeTrackID
-
-    @property
-    def NodeID(self) -> int:
-        return self.__nodeID
+    def __init__(self, node_id: int, node_track_id: Optional[int] = None):
+        self.__node_id = node_id
+        self.__node_track_id = node_track_id
 
     @property
-    def NodeTrackID(self) -> Optional[int]:
-        return self.__nodeTrackID
+    def node_id(self) -> int:
+        return self.__node_id
+
+    @property
+    def node_track_id(self) -> Optional[int]:
+        return self.__node_track_id

@@ -24,8 +24,8 @@ class TestGetAlgorithmTrainsParameter(unittest.TestCase):
                             "        {\n"
                             "          \"ID\": 1186,\n"
                             "          \"SectionTrackID\": null,\n"
-                            "          \"NodeID\": 526,\n"
-                            "          \"NodeTrackID\": null,\n"
+                            "          \"node_id\": 526,\n"
+                            "          \"node_track_id\": null,\n"
                             "          \"FormationID\": 1187,\n"
                             "          \"ArrivalTime\": \"2005-05-01T04:00:00\",\n"
                             "          \"DepartureTime\": \"2005-05-01T04:00:00\",\n"
@@ -37,8 +37,8 @@ class TestGetAlgorithmTrainsParameter(unittest.TestCase):
                             "        {\n"
                             "          \"ID\": 1188,\n"
                             "          \"SectionTrackID\": 688,\n"
-                            "          \"NodeID\": 351,\n"
-                            "          \"NodeTrackID\": null,\n"
+                            "          \"node_id\": 351,\n"
+                            "          \"node_track_id\": null,\n"
                             "          \"FormationID\": 1187,\n"
                             "          \"ArrivalTime\": \"2005-05-01T04:04:00\",\n"
                             "          \"DepartureTime\": \"2005-05-01T04:04:00\",\n"
@@ -50,8 +50,8 @@ class TestGetAlgorithmTrainsParameter(unittest.TestCase):
                             "        {\n"
                             "          \"ID\": 1189,\n"
                             "          \"SectionTrackID\": 690,\n"
-                            "          \"NodeID\": 296,\n"
-                            "          \"NodeTrackID\": null,\n"
+                            "          \"node_id\": 296,\n"
+                            "          \"node_track_id\": null,\n"
                             "          \"FormationID\": null,\n"
                             "          \"ArrivalTime\": \"2005-05-01T04:07:00\",\n"
                             "          \"DepartureTime\": \"2005-05-01T04:07:00\",\n"
@@ -69,8 +69,8 @@ class TestGetAlgorithmTrainsParameter(unittest.TestCase):
                             "        {\n"
                             "          \"ID\": 1191,\n"
                             "          \"SectionTrackID\": null,\n"
-                            "          \"NodeID\": 296,\n"
-                            "          \"NodeTrackID\": null,\n"
+                            "          \"node_id\": 296,\n"
+                            "          \"node_track_id\": null,\n"
                             "          \"FormationID\": 1187,\n"
                             "          \"ArrivalTime\": \"2005-05-01T05:00:00\",\n"
                             "          \"DepartureTime\": \"2005-05-01T05:00:00\",\n"
@@ -82,8 +82,8 @@ class TestGetAlgorithmTrainsParameter(unittest.TestCase):
                             "        {\n"
                             "          \"ID\": 1192,\n"
                             "          \"SectionTrackID\": 691,\n"
-                            "          \"NodeID\": 351,\n"
-                            "          \"NodeTrackID\": null,\n"
+                            "          \"node_id\": 351,\n"
+                            "          \"node_track_id\": null,\n"
                             "          \"FormationID\": 1187,\n"
                             "          \"ArrivalTime\": \"2005-05-01T05:07:00\",\n"
                             "          \"DepartureTime\": \"2005-05-01T05:07:00\",\n"
@@ -95,8 +95,8 @@ class TestGetAlgorithmTrainsParameter(unittest.TestCase):
                             "        {\n"
                             "          \"ID\": 1193,\n"
                             "          \"SectionTrackID\": 689,\n"
-                            "          \"NodeID\": 526,\n"
-                            "          \"NodeTrackID\": null,\n"
+                            "          \"node_id\": 526,\n"
+                            "          \"node_track_id\": null,\n"
                             "          \"FormationID\": null,\n"
                             "          \"ArrivalTime\": \"2005-05-01T05:11:00\",\n"
                             "          \"DepartureTime\": \"2005-05-01T05:11:00\",\n"
@@ -136,10 +136,12 @@ class TestGetAlgorithmTrainsParameter(unittest.TestCase):
 
         self.assertIsInstance(test_algorithm_trains, list)
         self.assertIsInstance(test_algorithm_trains[0], AIDMClasses.AIDM_Algorithm_classes.AlgorithmTrain)
-        self.assertEqual(test_algorithm_trains[0].DebugString, "GV_9_J05 tt_()")
-        self.assertEqual(test_algorithm_trains[0].ID, 1190)
-        self.assertIsInstance(test_algorithm_trains[0].TrainPathNodes[0], AIDM_TrainPathNode_classes.AlgorithmTrainPathNode)
-        self.assertEqual(test_algorithm_trains[0].TrainPathNodes[0].ID, 1186)
+        self.assertEqual(test_algorithm_trains[0].debug_string, "GV_9_J05 tt_()")
+        self.assertEqual(test_algorithm_trains[0].id, 1190)
+        self.assertIsInstance(
+            test_algorithm_trains[0].train_path_nodes[0],
+            AIDM_TrainPathNode_classes.AlgorithmTrainPathNode)
+        self.assertEqual(test_algorithm_trains[0].train_path_nodes[0].id, 1186)
 
     @mock.patch('requests.Session', side_effect=GetAlgorithmTrainsParameterTestSessionMock)
     def tearDown(self, mocked_get_obj) -> None:

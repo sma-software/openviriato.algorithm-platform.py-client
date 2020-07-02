@@ -45,10 +45,10 @@ class TestGetFormation(unittest.TestCase):
         test_algorithm_formation = self.interface_to_viriato.get_formation(key)
 
         self.assertIsInstance(test_algorithm_formation, AIDMClasses.AIDM_Algorithm_classes.AlgorithmFormation)
-        self.assertEqual(test_algorithm_formation.DebugString, "train configuration: ")
-        self.assertEqual(test_algorithm_formation.ID, 1828)
-        self.assertIsInstance(test_algorithm_formation.VehicleTypeIDs[0], int)
-        self.assertEqual(test_algorithm_formation.VehicleTypeIDs[0], 4107)
+        self.assertEqual(test_algorithm_formation.debug_string, "train configuration: ")
+        self.assertEqual(test_algorithm_formation.id, 1828)
+        self.assertIsInstance(test_algorithm_formation.vehicle_type_ids[0], int)
+        self.assertEqual(test_algorithm_formation.vehicle_type_ids[0], 4107)
 
     @mock.patch('requests.Session', side_effect=GetGetFormationTestSessionMock)
     def tearDown(self, mocked_get_obj) -> None:

@@ -20,8 +20,8 @@ class TestCancelTrainFrom(unittest.TestCase):
                            '                        {\n'
                            '                          "ID": 8113,\n'
                            '                          "SectionTrackID": null,\n'
-                           '                          "NodeID": 7,\n'
-                           '                          "NodeTrackID": 8,\n'
+                           '                          "node_id": 7,\n'
+                           '                          "node_track_id": 8,\n'
                            '                          "FormationID": 1187,\n'
                            '                          "ArrivalTime": "2003-09-01T00:10:00",\n'
                            '                          "DepartureTime": "2003-09-01T00:10:00",\n'
@@ -33,8 +33,8 @@ class TestCancelTrainFrom(unittest.TestCase):
                            '                        {\n'
                            '                          "ID": 8114,\n'
                            '                          "SectionTrackID": 1175,\n'
-                           '                          "NodeID": 15,\n'
-                           '                          "NodeTrackID": 16,\n'
+                           '                          "node_id": 15,\n'
+                           '                          "node_track_id": 16,\n'
                            '                          "FormationID": null,\n'
                            '                          "ArrivalTime": "2003-09-01T00:14:00",\n'
                            '                          "DepartureTime": "2003-09-01T00:14:00",\n'
@@ -72,8 +72,8 @@ class TestCancelTrainFrom(unittest.TestCase):
         test_algorithm_train = self.interface_to_viriato.cancel_train_from(train_path_node_id)
 
         self.assertIsInstance(test_algorithm_train, AIDMClasses.AIDM_Algorithm_classes.AlgorithmTrain)
-        self.assertEqual(test_algorithm_train.ID, 8116)
-        self.assertEqual(test_algorithm_train.DebugString, 'CancelTrainFromTestMockSession')
+        self.assertEqual(test_algorithm_train.id, 8116)
+        self.assertEqual(test_algorithm_train.debug_string, 'CancelTrainFromTestMockSession')
 
     @mock.patch('requests.Session', side_effect=CancelTrainFromTestMockSession)
     def tearDown(self, mocked_get_obj) -> None:

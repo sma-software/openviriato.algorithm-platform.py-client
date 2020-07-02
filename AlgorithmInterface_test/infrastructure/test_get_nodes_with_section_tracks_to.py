@@ -20,7 +20,7 @@ class TestGetNodesWithSectionTrackTo(unittest.TestCase):
                            "  {\n"
                            "    \"ID\": 348,\n"
                            "    \"Code\": \"85NH\",\n"
-                           "    \"NodeTracks\": [\n"
+                           "    \"node_tracks\": [\n"
                            "      {\n"
                            "        \"ID\": 349,\n"
                            "        \"Code\": \"1\",\n"
@@ -37,7 +37,7 @@ class TestGetNodesWithSectionTrackTo(unittest.TestCase):
                            "  {\n"
                            "    \"ID\": 281,\n"
                            "    \"Code\": \"85JE\",\n"
-                           "    \"NodeTracks\": [],\n"
+                           "    \"node_tracks\": [],\n"
                            "    \"DebugString\": \"station:85JE\"\n"
                            "  }\n"
                            "]")
@@ -71,22 +71,22 @@ class TestGetNodesWithSectionTrackTo(unittest.TestCase):
         self.assertEqual(len(nodes), 2)
 
         self.assertIsInstance(nodes[0], AlgorithmNode)
-        self.assertEqual(nodes[0].ID, 348)
-        self.assertEqual(nodes[0].Code, '85NH')
-        self.assertEqual(nodes[0].DebugString, 'station:85NH')
-        self.assertIsInstance(nodes[0].NodeTracks, list)
-        self.assertEqual(len(nodes[0].NodeTracks), 2)
-        self.assertIsInstance(nodes[0].NodeTracks[0], AlgorithmNodeTrack)
-        self.assertEqual(nodes[0].NodeTracks[0].ID, 349)
-        self.assertEqual(nodes[0].NodeTracks[0].Code, '1')
-        self.assertEqual(nodes[0].NodeTracks[0].DebugString, 'stationtrack:85NH_1')
+        self.assertEqual(nodes[0].id, 348)
+        self.assertEqual(nodes[0].code, '85NH')
+        self.assertEqual(nodes[0].debug_string, 'station:85NH')
+        self.assertIsInstance(nodes[0].node_tracks, list)
+        self.assertEqual(len(nodes[0].node_tracks), 2)
+        self.assertIsInstance(nodes[0].node_tracks[0], AlgorithmNodeTrack)
+        self.assertEqual(nodes[0].node_tracks[0].id, 349)
+        self.assertEqual(nodes[0].node_tracks[0].code, '1')
+        self.assertEqual(nodes[0].node_tracks[0].debug_string, 'stationtrack:85NH_1')
 
         self.assertIsInstance(nodes[1], AlgorithmNode)
-        self.assertEqual(nodes[1].ID, 281)
-        self.assertEqual(nodes[1].Code, '85JE')
-        self.assertEqual(nodes[1].DebugString, 'station:85JE')
-        self.assertIsInstance(nodes[1].NodeTracks, list)
-        self.assertEqual(nodes[1].NodeTracks, [])
+        self.assertEqual(nodes[1].id, 281)
+        self.assertEqual(nodes[1].code, '85JE')
+        self.assertEqual(nodes[1].debug_string, 'station:85JE')
+        self.assertIsInstance(nodes[1].node_tracks, list)
+        self.assertEqual(nodes[1].node_tracks, [])
 
     @mock.patch('requests.Session', side_effect=GetNodesWithSectionTrackToTestMock)
     def tearDown(self, mocked_get_obj) -> None:

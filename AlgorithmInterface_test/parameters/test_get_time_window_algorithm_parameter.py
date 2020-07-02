@@ -18,8 +18,8 @@ class TestGetTimeWindowParameter(unittest.TestCase):
             json__string = ("{\n"
                             "  \"Key\": \"someTimeWindowParameterKey\",\n"
                             "  \"Value\": {\n"
-                            "    \"FromTime\": \"2003-01-01T10:20:30\",\n"
-                            "    \"ToTime\": \"2003-01-01T11:00:00\"\n"
+                            "    \"from_time\": \"2003-01-01T10:20:30\",\n"
+                            "    \"to_time\": \"2003-01-01T11:00:00\"\n"
                             "  }\n"
                             "}")
             return APISessionMock.create_response_mock(json__string, 200)
@@ -46,8 +46,8 @@ class TestGetTimeWindowParameter(unittest.TestCase):
         time_window_param = self.interface_to_viriato.get_time_window_algorithm_parameter(key)
 
         self.assertIsInstance(time_window_param, AIDMClasses.AIDM_TimeWindow_classes.TimeWindow)
-        self.assertIsInstance(time_window_param.FromTime, datetime.datetime)
-        self.assertEqual(time_window_param.FromTime, datetime.datetime(2003, 1, 1, 10, 20, 30))
+        self.assertIsInstance(time_window_param.from_time, datetime.datetime)
+        self.assertEqual(time_window_param.from_time, datetime.datetime(2003, 1, 1, 10, 20, 30))
 
     @mock.patch('requests.Session', side_effect=GetTimeWindowParameterTestSessionMock)
     def tearDown(self, mocked_get_obj) -> None:

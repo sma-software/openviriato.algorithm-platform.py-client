@@ -24,8 +24,8 @@ class TestUpdateTrainTimes(unittest.TestCase):
                            "                    {\n"
                            "                        \"ID\": 1332,\n"
                            "                        \"SectionTrackID\": null,\n"
-                           "                        \"NodeID\": 18,\n"
-                           "                        \"NodeTrackID\": null,\n"
+                           "                        \"node_id\": 18,\n"
+                           "                        \"node_track_id\": null,\n"
                            "                        \"FormationID\": 1187,\n"
                            "                        \"ArrivalTime\": \"2003-05-01T00:04:00\",\n"
                            "                        \"DepartureTime\": \"2003-05-01T00:05:00\",\n"
@@ -37,8 +37,8 @@ class TestUpdateTrainTimes(unittest.TestCase):
                            "                    {\n"
                            "                        \"ID\": 1696,\n"
                            "                        \"SectionTrackID\": 1172,\n"
-                           "                        \"NodeID\": 10,\n"
-                           "                        \"NodeTrackID\": null,\n"
+                           "                        \"node_id\": 10,\n"
+                           "                        \"node_track_id\": null,\n"
                            "                        \"FormationID\": null,\n"
                            "                        \"ArrivalTime\": \"2003-05-01T00:10:00\",\n"
                            "                        \"DepartureTime\": \"2003-05-01T00:10:00\",\n"
@@ -62,9 +62,9 @@ class TestUpdateTrainTimes(unittest.TestCase):
     @mock.patch('requests.Session', side_effect=UpdateTrainTimesTestMockSession)
     def test_update_train_times_request(self, mocked_get_obj):
         train_id = 2060
-        update_train_time_nodes = [AIDMClasses.AIDM_Update_classes.UpdateTrainTimesNode(TrainPathNodeID=1332,
-                                                                                        ArrivalTime=datetime.datetime(2003, 5, 1, 0, 4),
-                                                                                        DepartureTime=datetime.datetime(2003, 5, 1, 0, 5))]
+        update_train_time_nodes = [AIDMClasses.AIDM_Update_classes.UpdateTrainTimesNode(train_path_node_id=1332,
+                                                                                        arrival_time=datetime.datetime(2003, 5, 1, 0, 4),
+                                                                                        departure_time=datetime.datetime(2003, 5, 1, 0, 5))]
 
         self.interface_to_viriato.update_train_times(train_id, update_train_time_nodes)
 
@@ -83,17 +83,17 @@ class TestUpdateTrainTimes(unittest.TestCase):
     @mock.patch('requests.Session', side_effect=UpdateTrainTimesTestMockSession)
     def test_update_train_times_response(self, mocked_get_obj):
         train_id = 2060
-        update_train_time_nodes = [AIDMClasses.AIDM_Update_classes.UpdateTrainTimesNode(TrainPathNodeID=1332,
-                                                                                        ArrivalTime=datetime.datetime(2003, 5, 1, 0, 4),
-                                                                                        DepartureTime=datetime.datetime(2003, 5, 1, 0, 5))]
+        update_train_time_nodes = [AIDMClasses.AIDM_Update_classes.UpdateTrainTimesNode(train_path_node_id=1332,
+                                                                                        arrival_time=datetime.datetime(2003, 5, 1, 0, 4),
+                                                                                        departure_time=datetime.datetime(2003, 5, 1, 0, 5))]
 
         updated_algorithm_train = self.interface_to_viriato.update_train_times(train_id, update_train_time_nodes)
 
         self.assertIsInstance(updated_algorithm_train, AIDMClasses.AIDM_Algorithm_classes.AlgorithmTrain)
-        self.assertEqual(updated_algorithm_train.DebugString, 'Mocked RVZH_1_1_J03 tt_(G)')
-        self.assertEqual(updated_algorithm_train.ID, 2060)
-        self.assertIsInstance(updated_algorithm_train.TrainPathNodes, list)
-        self.assertIsInstance(updated_algorithm_train.TrainPathNodes[0], AIDM_classes.AlgorithmTrainPathNode)
+        self.assertEqual(updated_algorithm_train.debug_string, 'Mocked RVZH_1_1_J03 tt_(G)')
+        self.assertEqual(updated_algorithm_train.id, 2060)
+        self.assertIsInstance(updated_algorithm_train.train_path_nodes , list)
+        self.assertIsInstance(updated_algorithm_train.train_path_nodes[0], AIDM_classes.AlgorithmTrainPathNode)
 
     @mock.patch('requests.Session', side_effect=UpdateTrainTimesTestMockSession)
     def tearDown(self, mocked_get_obj) -> None:

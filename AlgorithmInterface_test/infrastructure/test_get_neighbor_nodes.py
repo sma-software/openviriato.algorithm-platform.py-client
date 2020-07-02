@@ -18,7 +18,7 @@ class TestGetNeighborNode(TestCase):
                            '  {\n'
                            '    "ID": 348,\n'
                            '    "Code": "85NH",\n'
-                           '    "NodeTracks": [\n'
+                           '    "node_tracks": [\n'
                            '      {\n'
                            '        "ID": 349,\n'
                            '        "Code": "1",\n'
@@ -35,7 +35,7 @@ class TestGetNeighborNode(TestCase):
                            '  {\n'
                            '    "ID": 281,\n'
                            '    "Code": "85JE",\n'
-                           '    "NodeTracks": [],\n'
+                           '    "node_tracks": [],\n'
                            '    "DebugString": "station:85JE"\n'
                            '  }\n'
                            ']')
@@ -64,8 +64,8 @@ class TestGetNeighborNode(TestCase):
         mock_return_neighbor_nodes = self.interface_to_viriato.get_neighbor_nodes(node_id)
 
         self.assertIsInstance(mock_return_neighbor_nodes[0], AIDMClasses.AIDM_Algorithm_classes.AlgorithmNode)
-        self.assertEqual(mock_return_neighbor_nodes[0].DebugString, "GetNeighborNodeTestSessionMock:85NH")
-        self.assertIsInstance(mock_return_neighbor_nodes[0].NodeTracks[0],
+        self.assertEqual(mock_return_neighbor_nodes[0].debug_string, "GetNeighborNodeTestSessionMock:85NH")
+        self.assertIsInstance(mock_return_neighbor_nodes[0].node_tracks[0],
                               AIDMClasses.AIDM_Algorithm_classes.AlgorithmNodeTrack)
 
     @mock.patch('requests.Session', side_effect=GetNeighborNodeTestSessionMock)

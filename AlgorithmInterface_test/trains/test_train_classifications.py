@@ -39,8 +39,8 @@ class TestGetTrainClassifications(unittest.TestCase):
 
         self.assertIsInstance(train_classes, list)
         self.assertIsInstance(train_classes[0], AIDMClasses.AlgorithmTrainClassification)
-        self.assertEqual(train_classes[0].Description, "Unknown")
-        self.assertEqual(train_classes[1].Description, "Freight")
+        self.assertEqual(train_classes[0].description, "Unknown")
+        self.assertEqual(train_classes[1].description, "Freight")
 
     @mock.patch('requests.Session', side_effect=GetTrainClassificationsTestMockSession)
     def tearDown(self, mocked_get_obj) -> None:

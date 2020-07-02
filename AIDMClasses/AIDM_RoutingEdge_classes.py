@@ -3,84 +3,84 @@ from typing import List
 
 
 class CrossingRoutingEdge(RoutingEdge):
-    __StartSectionTrackID: int
-    __EndSectionTrackID: int
+    __start_section_track_id: int
+    __end_section_track_id: int
 
-    def __init__(self, NodeID: int, StartSectionTrackID: int, EndSectionTrackID: int):
-        RoutingEdge.__init__(self, NodeID)
-        self.__StartSectionTrackID = StartSectionTrackID
-        self.__EndSectionTrackID = EndSectionTrackID
-
-    @property
-    def StartSectionTrackID(self) -> int:
-        return self.__StartSectionTrackID
+    def __init__(self, node_id: int, start_section_track_id: int, end_section_track_id: int):
+        RoutingEdge.__init__(self, node_id)
+        self.__start_section_track_id = start_section_track_id
+        self.__end_section_track_id = end_section_track_id
 
     @property
-    def EndSectionTrackID(self) -> int:
-        return self.__EndSectionTrackID
+    def start_section_track_id(self) -> int:
+        return self.__start_section_track_id
+
+    @property
+    def end_section_track_id(self) -> int:
+        return self.__end_section_track_id
 
 
 class IncomingRoutingEdge(RoutingEdge):
-    __EndNodeTrackID: int
-    __StartSectionTrackID: int
+    __end_node_track_id: int
+    __start_section_track_id: int
 
-    def __init__(self, NodeID: int, EndNodeTrackID: int, StartSectionTrackID: int):
-        RoutingEdge.__init__(self, NodeID)
-        self.__EndNodeTrackID = EndNodeTrackID
-        self.__StartSectionTrackID = StartSectionTrackID
-
-    @property
-    def EndNodeTrackID(self) -> int:
-        return self.__EndNodeTrackID
+    def __init__(self, node_id: int, end_node_track_id: int, start_section_track_id: int):
+        RoutingEdge.__init__(self, node_id)
+        self.__end_node_track_id = end_node_track_id
+        self.__start_section_track_id = start_section_track_id
 
     @property
-    def StartSectionTrackID(self) -> int:
-        return self.__StartSectionTrackID
+    def end_node_track_id(self) -> int:
+        return self.__end_node_track_id
+
+    @property
+    def start_section_track_id(self) -> int:
+        return self.__start_section_track_id
 
 
 class OutgoingRoutingEdge(RoutingEdge):
-    __EndSectionTrackID: int
-    __StartNodeTrackID: int
+    __end_section_track_id: int
+    __start_node_track_id: int
 
-    def __init__(self, NodeID: int, EndSectionTrackID: int, StartNodeTrackID: int):
-        RoutingEdge.__init__(self, NodeID)
-        self.__EndSectionTrackID = EndSectionTrackID
-        self.__StartNodeTrackID = StartNodeTrackID
-
-    @property
-    def EndSectionTrackID(self) -> int:
-        return self.__EndSectionTrackID
+    def __init__(self, node_id: int, end_section_track_id: int, start_node_track_id: int):
+        RoutingEdge.__init__(self, node_id)
+        self.__end_section_track_id = end_section_track_id
+        self.__start_node_track_id = start_node_track_id
 
     @property
-    def StartNodeTrackID(self) -> int:
-        return self.__StartNodeTrackID
+    def end_section_track_id(self) -> int:
+        return self.__end_section_track_id
+
+    @property
+    def start_node_track_id(self) -> int:
+        return self.__start_node_track_id
 
 
 class IncomingRoutingEdgeSet(RoutingEdgeSet):
 
-    def __init__(self, IncomingEdges: List[IncomingRoutingEdge]):
-        super().__init__(IncomingEdges)
+    def __init__(self, incoming_edges: List[IncomingRoutingEdge]):
+        super().__init__(incoming_edges)
 
     @property
-    def RoutingEdges(self) -> List[IncomingRoutingEdge]:
-        return super().RoutingEdges
+    def routing_edges(self) -> List[IncomingRoutingEdge]:
+        return super().routing_edges
 
 
 class OutgoingRoutingEdgeSet(RoutingEdgeSet):
 
-    def __init__(self, OutgoingEdges: List[OutgoingRoutingEdge]):
-        super().__init__(OutgoingEdges)
+    def __init__(self, outgoing_edges: List[OutgoingRoutingEdge]):
+        super().__init__(outgoing_edges)
 
     @property
-    def RoutingEdges(self) -> List[OutgoingRoutingEdge]:
-        return super().RoutingEdges
+    def routing_edges(self) -> List[OutgoingRoutingEdge]:
+        return super().routing_edges
 
 
 class CrossingRoutingEdgeSet(RoutingEdgeSet):
 
-    def __init__(self, CrossingEdges: List[CrossingRoutingEdge]):
-        super().__init__(CrossingEdges)
+    def __init__(self, crossing_edges: List[CrossingRoutingEdge]):
+        super().__init__(crossing_edges)
 
     @property
-    def RoutingEdges(self) -> List[CrossingRoutingEdge]:
-        return super().RoutingEdges
+    def routing_edges(self) -> List[CrossingRoutingEdge]:
+        return super().routing_edges

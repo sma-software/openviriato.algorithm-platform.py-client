@@ -17,12 +17,12 @@ class TestGetTrainsCutToTimeRangeDrivingAnyNode(unittest.TestCase):
                 "[\n"
                 "  {\n"
                 "    \"ID\": 2060,\n"
-                "    \"TrainPathNodes\": [\n"
+                "    \"train_path_nodes\": [\n"
                 "      {\n"
                 "        \"ID\": 1332,\n"
                 "        \"SectionTrackID\": null,\n"
-                "        \"NodeID\": 18,\n"
-                "        \"NodeTrackID\": null,\n"
+                "        \"node_id\": 18,\n"
+                "        \"node_track_id\": null,\n"
                 "        \"FormationID\": 1187,\n"
                 "        \"ArrivalTime\": \"2003-05-01T00:05:00\",\n"
                 "        \"DepartureTime\": \"2003-05-01T00:05:00\",\n"
@@ -34,8 +34,8 @@ class TestGetTrainsCutToTimeRangeDrivingAnyNode(unittest.TestCase):
                 "      {\n"
                 "        \"ID\": 1696,\n"
                 "        \"SectionTrackID\": 1171,\n"
-                "        \"NodeID\": 10,\n"
-                "        \"NodeTrackID\": null,\n"
+                "        \"node_id\": 10,\n"
+                "        \"node_track_id\": null,\n"
                 "        \"FormationID\": null,\n"
                 "        \"ArrivalTime\": \"2003-05-01T00:10:00\",\n"
                 "        \"DepartureTime\": \"2003-05-01T00:10:00\",\n"
@@ -59,8 +59,8 @@ class TestGetTrainsCutToTimeRangeDrivingAnyNode(unittest.TestCase):
 
     @mock.patch('requests.Session', side_effect=GetTrainsCutToTimeRangeDrivingAnyNodeTestMockSession)
     def test_get_trains_cut_to_time_range_driving_any_node_request(self, mocked_get_obj):
-        time_window = TimeWindow(FromTime=datetime.datetime(2000, 1, 1, 1, 1),
-                                 ToTime=datetime.datetime(2004, 1, 1, 0, 0))
+        time_window = TimeWindow(from_time=datetime.datetime(2000, 1, 1, 1, 1),
+                                 to_time=datetime.datetime(2004, 1, 1, 0, 0))
         node_ids = [10, 11, 18]
 
         self.interface_to_viriato.get_trains_cut_to_time_range_driving_any_node(time_window, nodeIDs=node_ids)
@@ -76,8 +76,8 @@ class TestGetTrainsCutToTimeRangeDrivingAnyNode(unittest.TestCase):
 
     @mock.patch('requests.Session', side_effect=GetTrainsCutToTimeRangeDrivingAnyNodeTestMockSession)
     def test_get_trains_cut_to_time_range_driving_any_node_response(self, mocked_get_obj):
-        time_window = TimeWindow(FromTime=datetime.datetime(2000, 1, 1, 1, 1),
-                                 ToTime=datetime.datetime(2004, 1, 1, 0, 0))
+        time_window = TimeWindow(from_time=datetime.datetime(2000, 1, 1, 1, 1),
+                                 to_time=datetime.datetime(2004, 1, 1, 0, 0))
         node_ids = [10]
 
         listed_algorithm_trains = self.interface_to_viriato.get_trains_cut_to_time_range_driving_any_node(time_window,
@@ -87,25 +87,25 @@ class TestGetTrainsCutToTimeRangeDrivingAnyNode(unittest.TestCase):
         self.assertEqual(listed_algorithm_trains.__len__(), 1)
 
         self.assertIsInstance(listed_algorithm_trains[0], AlgorithmTrain)
-        self.assertEqual(listed_algorithm_trains[0].ID, 2060)
-        self.assertEqual(listed_algorithm_trains[0].DebugString, 'RVZH_1_1_J03 tt_(G)')
-        self.assertIsInstance(listed_algorithm_trains[0].TrainPathNodes, list)
-        self.assertEqual(listed_algorithm_trains[0].TrainPathNodes.__len__(), 2)
+        self.assertEqual(listed_algorithm_trains[0].id, 2060)
+        self.assertEqual(listed_algorithm_trains[0].debug_string, 'RVZH_1_1_J03 tt_(G)')
+        self.assertIsInstance(listed_algorithm_trains[0].train_path_nodes, list)
+        self.assertEqual(listed_algorithm_trains[0].train_path_nodes.__len__(), 2)
 
-        self.assertIsInstance(listed_algorithm_trains[0].TrainPathNodes[0], AlgorithmTrainPathNode)
-        self.assertEqual(listed_algorithm_trains[0].TrainPathNodes[0].ID, 1332)
-        self.assertEqual(listed_algorithm_trains[0].TrainPathNodes[0].SectionTrackID, None)
-        self.assertEqual(listed_algorithm_trains[0].TrainPathNodes[0].NodeID, 18)
-        self.assertEqual(listed_algorithm_trains[0].TrainPathNodes[0].NodeTrackID, None)
-        self.assertEqual(listed_algorithm_trains[0].TrainPathNodes[0].FormationID, 1187)
-        self.assertEqual(listed_algorithm_trains[0].TrainPathNodes[0].ArrivalTime,
+        self.assertIsInstance(listed_algorithm_trains[0].train_path_nodes[0], AlgorithmTrainPathNode)
+        self.assertEqual(listed_algorithm_trains[0].train_path_nodes[0].id, 1332)
+        self.assertEqual(listed_algorithm_trains[0].train_path_nodes[0].section_track_id, None)
+        self.assertEqual(listed_algorithm_trains[0].train_path_nodes[0].node_id, 18)
+        self.assertEqual(listed_algorithm_trains[0].train_path_nodes[0].node_track_id, None)
+        self.assertEqual(listed_algorithm_trains[0].train_path_nodes[0].formation_id, 1187)
+        self.assertEqual(listed_algorithm_trains[0].train_path_nodes[0].arrival_time,
                          datetime.datetime(2003, 5, 1, 0, 5))
-        self.assertEqual(listed_algorithm_trains[0].TrainPathNodes[0].DepartureTime,
+        self.assertEqual(listed_algorithm_trains[0].train_path_nodes[0].departure_time,
                          datetime.datetime(2003, 5, 1, 0, 5))
-        self.assertEqual(listed_algorithm_trains[0].TrainPathNodes[0].MinimumRunTime, None)
-        self.assertEqual(listed_algorithm_trains[0].TrainPathNodes[0].MinimumStopTime, datetime.timedelta(0))
-        self.assertEqual(listed_algorithm_trains[0].TrainPathNodes[0].StopStatus, StopStatus['commercialStop'])
-        self.assertEqual(listed_algorithm_trains[0].TrainPathNodes[0].SequenceNumber, 0)
+        self.assertEqual(listed_algorithm_trains[0].train_path_nodes[0].minimum_run_time, None)
+        self.assertEqual(listed_algorithm_trains[0].train_path_nodes[0].minimum_stop_time, datetime.timedelta(0))
+        self.assertEqual(listed_algorithm_trains[0].train_path_nodes[0].stop_status, StopStatus['commercialStop'])
+        self.assertEqual(listed_algorithm_trains[0].train_path_nodes[0].sequence_number, 0)
 
     @mock.patch('requests.Session', side_effect=GetTrainsCutToTimeRangeDrivingAnyNodeTestMockSession)
     def tearDown(self, mocked_get_obj) -> None:

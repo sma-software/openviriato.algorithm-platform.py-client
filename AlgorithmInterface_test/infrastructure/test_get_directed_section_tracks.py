@@ -24,14 +24,14 @@ class TestGetDirectedSectionTracks(unittest.TestCase):
                            '                {\n'
                            '                    "ID": 885,\n'
                            '                    "Code": "838",\n'
-                           '                    "SectionCode": "61010",\n'
+                           '                    "section_code": "61010",\n'
                            '                    "Weight": 37040,\n'
                            '                    "DebugString": "sectiontrack:s_61010 n_85AR 838"\n'
                            '                },\n'
                            '                {\n'
                            '                    "ID": 886,\n'
                            '                    "Code": "2",\n'
-                           '                    "SectionCode": "61010",\n'
+                           '                    "section_code": "61010",\n'
                            '                    "Weight": 37040,\n'
                            '                    "DebugString": "sectiontrack:s_61010 n_85AR 2"\n'
                            '                }\n'
@@ -65,11 +65,11 @@ class TestGetDirectedSectionTracks(unittest.TestCase):
         directed_section_tracks = self.interface_to_viriato.get_directed_section_tracks(node_id_1, node_id_2)
 
         self.assertIsInstance(directed_section_tracks[0], AIDMClasses.AIDM_Algorithm_classes.AlgorithmSectionTrack)
-        self.assertIsInstance(directed_section_tracks[0].ID, int)
-        self.assertIsInstance(directed_section_tracks[0].Code, str)
-        self.assertIsInstance(directed_section_tracks[0].SectionCode, str)
-        self.assertIsInstance(directed_section_tracks[0].Weight, int)
-        self.assertIsInstance(directed_section_tracks[0].DebugString, str)
+        self.assertIsInstance(directed_section_tracks[0].id, int)
+        self.assertIsInstance(directed_section_tracks[0].code, str)
+        self.assertIsInstance(directed_section_tracks[0].section_code, str)
+        self.assertIsInstance(directed_section_tracks[0].weight, int)
+        self.assertIsInstance(directed_section_tracks[0].debug_string, str)
 
     @mock.patch('requests.Session', side_effect=GetDirectedSectionTracksSessionTestMock)
     def tearDown(self, mocked_get_obj) -> None:

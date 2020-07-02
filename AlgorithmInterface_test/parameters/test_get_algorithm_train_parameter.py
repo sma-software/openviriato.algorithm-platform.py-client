@@ -23,8 +23,8 @@ class TestGetAlgorithmTrainParameter(unittest.TestCase):
                             "           {\n"
                             "                \"ID\": 1332,\n"
                             "                \"SectionTrackID\": null,\n"
-                            "                \"NodeID\": 18,\n"
-                            "                \"NodeTrackID\": null,\n"
+                            "                \"node_id\": 18,\n"
+                            "                \"node_track_id\": null,\n"
                             "                \"FormationID\": 1187,\n"
                             "                \"ArrivalTime\": \"2003-05-01T00:04:00\",\n"
                             "                \"DepartureTime\": \"2003-05-01T00:05:30\",\n"
@@ -36,8 +36,8 @@ class TestGetAlgorithmTrainParameter(unittest.TestCase):
                             "           {\n"
                             "                \"ID\": 1696,\n"
                             "                \"SectionTrackID\": 1172,\n"
-                            "                \"NodeID\": 10,\n"
-                            "                \"NodeTrackID\": null,\n"
+                            "                \"node_id\": 10,\n"
+                            "                \"node_track_id\": null,\n"
                             "                \"FormationID\": null,\n"
                             "                \"ArrivalTime\": \"2003-05-01T00:10:30\",\n"
                             "                \"DepartureTime\": \"2003-05-01T00:10:30\",\n"
@@ -74,10 +74,12 @@ class TestGetAlgorithmTrainParameter(unittest.TestCase):
         test_algorithm_train = self.interface_to_viriato.get_algorithm_train_parameter(key)
 
         self.assertIsInstance(test_algorithm_train, AIDMClasses.AIDM_Algorithm_classes.AlgorithmTrain)
-        self.assertEqual(test_algorithm_train.DebugString, "RVZH_1_1_J03 tt_(G)")
-        self.assertEqual(test_algorithm_train.ID, 2060)
-        self.assertIsInstance(test_algorithm_train.TrainPathNodes[0], AIDM_TrainPathNode_classes.AlgorithmTrainPathNode)
-        self.assertEqual(test_algorithm_train.TrainPathNodes[0].ID, 1332)
+        self.assertEqual(test_algorithm_train.debug_string, "RVZH_1_1_J03 tt_(G)")
+        self.assertEqual(test_algorithm_train.id, 2060)
+        self.assertIsInstance(
+            test_algorithm_train.train_path_nodes[0],
+            AIDM_TrainPathNode_classes.AlgorithmTrainPathNode)
+        self.assertEqual(test_algorithm_train.train_path_nodes[0].id, 1332)
 
     @mock.patch('requests.Session', side_effect=GetAlgorithmTrainParameterTestSessionMock)
     def tearDown(self, mocked_get_obj) -> None:

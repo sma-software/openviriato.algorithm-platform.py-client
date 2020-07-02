@@ -14,20 +14,20 @@ def create_query_parameters_from_preceding_and_succeeding_routing_edge(
 
     if isinstance(preceding_routing_edge, IncomingRoutingEdge):
         preceding_query_parameters = dict(
-            PrecedingFromSectionTrackID=preceding_routing_edge.StartSectionTrackID,
-            PrecedingToNodeTrackID=preceding_routing_edge.EndNodeTrackID)
+            PrecedingFromSectionTrackID=preceding_routing_edge.start_section_track_id,
+            PrecedingToNodeTrackID=preceding_routing_edge.end_node_track_id)
     elif isinstance(preceding_routing_edge, OutgoingRoutingEdge):
         preceding_query_parameters = dict(
-            PrecedingToSectionTrackID=preceding_routing_edge.EndSectionTrackID,
-            PrecedingFromNodeTrackID=preceding_routing_edge.StartNodeTrackID)
+            PrecedingToSectionTrackID=preceding_routing_edge.end_section_track_id,
+            PrecedingFromNodeTrackID=preceding_routing_edge.start_node_track_id)
 
     if isinstance(succeeding_routing_edge, IncomingRoutingEdge):
         succeeding_query_parameters = dict(
-            SucceedingFromSectionTrackID=succeeding_routing_edge.StartSectionTrackID,
-            SucceedingToNodeTrackID=succeeding_routing_edge.EndNodeTrackID)
+            SucceedingFromSectionTrackID=succeeding_routing_edge.start_section_track_id,
+            SucceedingToNodeTrackID=succeeding_routing_edge.end_node_track_id)
     elif isinstance(succeeding_routing_edge, OutgoingRoutingEdge):
         succeeding_query_parameters = dict(
-            SucceedingToSectionTrackID=succeeding_routing_edge.EndSectionTrackID,
-            SucceedingFromNodeTrackID=succeeding_routing_edge.StartNodeTrackID)
+            SucceedingToSectionTrackID=succeeding_routing_edge.end_section_track_id,
+            SucceedingFromNodeTrackID=succeeding_routing_edge.start_node_track_id)
 
     return merge_query_parameters([preceding_query_parameters, succeeding_query_parameters])

@@ -67,9 +67,9 @@ class TestGetSeparationTimeInStationForRoutes(unittest.TestCase):
 
     @mock.patch('requests.Session', side_effect=GetSeparationTimeInStationForRoutesTestMockSession)
     def test_get_separation_time_in_station_for_routes_request(self, mocked_get_obj):
-        preceding_routing_edge = IncomingRoutingEdge(NodeID=12, EndNodeTrackID=1, StartSectionTrackID=999)
+        preceding_routing_edge = IncomingRoutingEdge(node_id=12, end_node_track_id=1, start_section_track_id=999)
         preceding_stop_status = StopStatus['operationalStop']
-        succeeding_routing_edge = OutgoingRoutingEdge(NodeID=12, StartNodeTrackID=500, EndSectionTrackID=324)
+        succeeding_routing_edge = OutgoingRoutingEdge(node_id=12, start_node_track_id=500, end_section_track_id=324)
         succeeding_stop_status = StopStatus['passing']
 
         self.interface_to_viriato.get_separation_time_in_station_for_routes(
@@ -96,9 +96,9 @@ class TestGetSeparationTimeInStationForRoutes(unittest.TestCase):
 
     @mock.patch('requests.Session', side_effect=GetSeparationTimeInStationForRoutesTestMockSession)
     def test_get_separation_time_in_station_for_routes_response_incoming_incoming(self, mocked_get_obj):
-        preceding_routing_edge = IncomingRoutingEdge(NodeID=12, EndNodeTrackID=1, StartSectionTrackID=1000)
+        preceding_routing_edge = IncomingRoutingEdge(node_id=12, end_node_track_id=1, start_section_track_id=1000)
         preceding_stop_status = StopStatus['passing']
-        succeeding_routing_edge = IncomingRoutingEdge(NodeID=12, EndNodeTrackID=1, StartSectionTrackID=1000)
+        succeeding_routing_edge = IncomingRoutingEdge(node_id=12, end_node_track_id=1, start_section_track_id=1000)
         succeeding_stop_status = StopStatus['commercialStop']
 
         separation_time = self.interface_to_viriato.get_separation_time_in_station_for_routes(
@@ -112,9 +112,9 @@ class TestGetSeparationTimeInStationForRoutes(unittest.TestCase):
 
     @mock.patch('requests.Session', side_effect=GetSeparationTimeInStationForRoutesTestMockSession)
     def test_get_separation_time_in_station_for_routes_response_incoming_outgoing(self, mocked_get_obj):
-        preceding_routing_edge = IncomingRoutingEdge(NodeID=12, EndNodeTrackID=1, StartSectionTrackID=999)
+        preceding_routing_edge = IncomingRoutingEdge(node_id=12, end_node_track_id=1, start_section_track_id=999)
         preceding_stop_status = StopStatus['operationalStop']
-        succeeding_routing_edge = OutgoingRoutingEdge(NodeID=12, StartNodeTrackID=500, EndSectionTrackID=324)
+        succeeding_routing_edge = OutgoingRoutingEdge(node_id=12, start_node_track_id=500, end_section_track_id=324)
         succeeding_stop_status = StopStatus['passing']
 
         separation_time = self.interface_to_viriato.get_separation_time_in_station_for_routes(
@@ -128,9 +128,9 @@ class TestGetSeparationTimeInStationForRoutes(unittest.TestCase):
 
     @mock.patch('requests.Session', side_effect=GetSeparationTimeInStationForRoutesTestMockSession)
     def test_get_separation_time_in_station_for_routes_response_outgoing_incoming(self, mocked_get_obj):
-        preceding_routing_edge = OutgoingRoutingEdge(NodeID=111, StartNodeTrackID=2, EndSectionTrackID=1)
+        preceding_routing_edge = OutgoingRoutingEdge(node_id=111, start_node_track_id=2, end_section_track_id=1)
         preceding_stop_status = StopStatus['commercialStop']
-        succeeding_routing_edge = IncomingRoutingEdge(NodeID=111, EndNodeTrackID=4, StartSectionTrackID=3)
+        succeeding_routing_edge = IncomingRoutingEdge(node_id=111, end_node_track_id=4, start_section_track_id=3)
         succeeding_stop_status = StopStatus['passing']
 
         separation_time = self.interface_to_viriato.get_separation_time_in_station_for_routes(
@@ -143,9 +143,9 @@ class TestGetSeparationTimeInStationForRoutes(unittest.TestCase):
 
     @mock.patch('requests.Session', side_effect=GetSeparationTimeInStationForRoutesTestMockSession)
     def test_get_separation_time_in_station_for_routes_response_outgoing_outgoing(self, mocked_get_obj):
-        preceding_routing_edge = OutgoingRoutingEdge(NodeID=12, StartNodeTrackID=150, EndSectionTrackID=100)
+        preceding_routing_edge = OutgoingRoutingEdge(node_id=12, start_node_track_id=150, end_section_track_id=100)
         preceding_stop_status = StopStatus['operationalStop']
-        succeeding_routing_edge = OutgoingRoutingEdge(NodeID=12, StartNodeTrackID=250, EndSectionTrackID=200)
+        succeeding_routing_edge = OutgoingRoutingEdge(node_id=12, start_node_track_id=250, end_section_track_id=200)
         succeeding_stop_status = StopStatus['commercialStop']
 
         separation_time = self.interface_to_viriato.get_separation_time_in_station_for_routes(

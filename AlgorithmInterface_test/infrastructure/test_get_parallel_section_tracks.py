@@ -24,14 +24,14 @@ class TestGetParallelSectionTracks(unittest.TestCase):
                            "  {\n"
                            "    \"ID\": 885,\n"
                            "    \"Code\": \"838\",\n"
-                           "    \"SectionCode\": \"61010\",\n"
+                           "    \"section_code\": \"61010\",\n"
                            "    \"Weight\": 37040,\n"
                            "    \"DebugString\": \"sectiontrack:s_61010 n_85AR 838\"\n"
                            "  },\n"
                            "  {\n"
                            "    \"ID\": 886,\n"
                            "    \"Code\": \"2\",\n"
-                           "    \"SectionCode\": \"61010\",\n"
+                           "    \"section_code\": \"61010\",\n"
                            "    \"Weight\": 37040,\n"
                            "    \"DebugString\": \"sectiontrack:s_61010 n_85AR 2\"\n"
                            "  }\n"
@@ -69,11 +69,11 @@ class TestGetParallelSectionTracks(unittest.TestCase):
         self.assertEqual(len(parallel_section_tracks), 2)
 
         self.assertIsInstance(parallel_section_tracks[0], AIDMClasses.AIDM_Algorithm_classes.AlgorithmSectionTrack)
-        self.assertEqual(parallel_section_tracks[0].ID, 885)
-        self.assertEqual(parallel_section_tracks[0].Code, '838')
-        self.assertEqual(parallel_section_tracks[0].SectionCode, '61010')
-        self.assertEqual(parallel_section_tracks[0].Weight, 37040)
-        self.assertEqual(parallel_section_tracks[0].DebugString, 'sectiontrack:s_61010 n_85AR 838')
+        self.assertEqual(parallel_section_tracks[0].id, 885)
+        self.assertEqual(parallel_section_tracks[0].code, '838')
+        self.assertEqual(parallel_section_tracks[0].section_code, '61010')
+        self.assertEqual(parallel_section_tracks[0].weight, 37040)
+        self.assertEqual(parallel_section_tracks[0].debug_string, 'sectiontrack:s_61010 n_85AR 838')
 
     @mock.patch('requests.Session', side_effect=GetParallelSectionTracksSessionTestMock)
     def tearDown(self, mocked_get_obj) -> None:

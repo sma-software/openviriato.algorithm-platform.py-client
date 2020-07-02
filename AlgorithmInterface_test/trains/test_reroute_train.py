@@ -19,8 +19,8 @@ class TestRerouteTrain(unittest.TestCase):
                 "                        {\n"
                 "                            \"ID\": 2424,\n"
                 "                            \"SectionTrackID\": null,\n"
-                "                            \"NodeID\": 7,\n"
-                "                            \"NodeTrackID\": 8,\n"
+                "                            \"node_id\": 7,\n"
+                "                            \"node_track_id\": 8,\n"
                 "                            \"FormationID\": 1187,\n"
                 "                            \"ArrivalTime\": \"2003-05-01T00:10:00\",\n"
                 "                            \"DepartureTime\": \"2003-05-01T00:10:00\",\n"
@@ -32,8 +32,8 @@ class TestRerouteTrain(unittest.TestCase):
                 "                        {\n"
                 "                            \"ID\": 11040,\n"
                 "                            \"SectionTrackID\": 1165,\n"
-                "                            \"NodeID\": 24,\n"
-                "                            \"NodeTrackID\": 25,\n"
+                "                            \"node_id\": 24,\n"
+                "                            \"node_track_id\": 25,\n"
                 "                            \"FormationID\": 1187,\n"
                 "                            \"ArrivalTime\": \"2003-05-01T00:10:00\",\n"
                 "                            \"DepartureTime\": \"2003-05-01T00:10:00\",\n"
@@ -45,8 +45,8 @@ class TestRerouteTrain(unittest.TestCase):
                 "                        {\n"
                 "                            \"ID\": 3152,\n"
                 "                            \"SectionTrackID\": 1166,\n"
-                "                            \"NodeID\": 10,\n"
-                "                            \"NodeTrackID\": 12,\n"
+                "                            \"node_id\": 10,\n"
+                "                            \"node_track_id\": 12,\n"
                 "                            \"FormationID\": null,\n"
                 "                            \"ArrivalTime\": \"2003-05-01T00:19:00\",\n"
                 "                            \"DepartureTime\": \"2003-05-01T00:19:00\",\n"
@@ -70,15 +70,15 @@ class TestRerouteTrain(unittest.TestCase):
         train_id = 2060
         start_train_path_node_id = 2424
         end_train_path_node_id = 3152
-        routing_edges = [AIDMClasses.OutgoingRoutingEdge(NodeID=7, StartNodeTrackID=8, EndSectionTrackID=1165),
-                         AIDMClasses.IncomingRoutingEdge(NodeID=24, StartSectionTrackID=1165, EndNodeTrackID=25),
-                         AIDMClasses.OutgoingRoutingEdge(NodeID=24, StartNodeTrackID=25, EndSectionTrackID=1166),
-                         AIDMClasses.IncomingRoutingEdge(NodeID=10, StartSectionTrackID=1166, EndNodeTrackID=12)]
+        routing_edges = [AIDMClasses.OutgoingRoutingEdge(node_id=7, start_node_track_id=8, end_section_track_id=1165),
+                         AIDMClasses.IncomingRoutingEdge(node_id=24, start_section_track_id=1165, end_node_track_id=25),
+                         AIDMClasses.OutgoingRoutingEdge(node_id=24, start_node_track_id=25, end_section_track_id=1166),
+                         AIDMClasses.IncomingRoutingEdge(node_id=10, start_section_track_id=1166, end_node_track_id=12)]
 
-        test_route = AIDMClasses.AIDM_Update_classes.UpdateTrainRoute(TrainID=train_id,
-                                                                      EndTrainPathNodeID=end_train_path_node_id,
-                                                                      StartTrainPathNodeID=start_train_path_node_id,
-                                                                      RoutingEdges=routing_edges)
+        test_route = AIDMClasses.AIDM_Update_classes.UpdateTrainRoute(train_id=train_id,
+                                                                      end_train_path_node_id=end_train_path_node_id,
+                                                                      start_train_path_node_id=start_train_path_node_id,
+                                                                      routing_edges=routing_edges)
 
         self.interface_to_viriato.reroute_train(test_route)
 
@@ -102,23 +102,23 @@ class TestRerouteTrain(unittest.TestCase):
         train_id = 2060
         start_train_path_node_id = 2424
         end_train_path_node_id = 3152
-        routing_edges = [AIDMClasses.OutgoingRoutingEdge(NodeID=7, StartNodeTrackID=8, EndSectionTrackID=1165),
-                         AIDMClasses.IncomingRoutingEdge(NodeID=24, StartSectionTrackID=1165, EndNodeTrackID=25),
-                         AIDMClasses.OutgoingRoutingEdge(NodeID=24, StartNodeTrackID=25, EndSectionTrackID=1166),
-                         AIDMClasses.IncomingRoutingEdge(NodeID=10, StartSectionTrackID=1166, EndNodeTrackID=12)]
+        routing_edges = [AIDMClasses.OutgoingRoutingEdge(node_id=7, start_node_track_id=8, end_section_track_id=1165),
+                         AIDMClasses.IncomingRoutingEdge(node_id=24, start_section_track_id=1165, end_node_track_id=25),
+                         AIDMClasses.OutgoingRoutingEdge(node_id=24, start_node_track_id=25, end_section_track_id=1166),
+                         AIDMClasses.IncomingRoutingEdge(node_id=10, start_section_track_id=1166, end_node_track_id=12)]
 
-        test_route = AIDMClasses.AIDM_Update_classes.UpdateTrainRoute(TrainID=train_id,
-                                                                      EndTrainPathNodeID=end_train_path_node_id,
-                                                                      StartTrainPathNodeID=start_train_path_node_id,
-                                                                      RoutingEdges=routing_edges)
+        test_route = AIDMClasses.AIDM_Update_classes.UpdateTrainRoute(train_id=train_id,
+                                                                      end_train_path_node_id=end_train_path_node_id,
+                                                                      start_train_path_node_id=start_train_path_node_id,
+                                                                      routing_edges=routing_edges)
 
         rerouted_algorithm_train = self.interface_to_viriato.reroute_train(test_route)
 
-        self.assertEqual(rerouted_algorithm_train.ID, 3516)
-        self.assertEqual(rerouted_algorithm_train.DebugString, "RVZH_3_1_J03 tt_(S)")
-        self.assertIsInstance(rerouted_algorithm_train.TrainPathNodes, list)
-        self.assertIsInstance(rerouted_algorithm_train.TrainPathNodes[0], AIDMClasses.AlgorithmTrainPathNode)
-        self.assertEqual(rerouted_algorithm_train.TrainPathNodes[0].ID, 2424)
+        self.assertEqual(rerouted_algorithm_train.id, 3516)
+        self.assertEqual(rerouted_algorithm_train.debug_string, "RVZH_3_1_J03 tt_(S)")
+        self.assertIsInstance(rerouted_algorithm_train.train_path_nodes, list)
+        self.assertIsInstance(rerouted_algorithm_train.train_path_nodes[0], AIDMClasses.AlgorithmTrainPathNode)
+        self.assertEqual(rerouted_algorithm_train.train_path_nodes[0].id, 2424)
 
     @mock.patch('requests.Session', side_effect=RerouteTrainTestMockSession)
     def tearDown(self, mocked_session) -> None:

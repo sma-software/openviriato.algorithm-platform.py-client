@@ -21,8 +21,8 @@ class TestCloneTrain(unittest.TestCase):
                            '    {\n'
                            '      "ID": 11038,\n'
                            '      "SectionTrackID": null,\n'
-                           '      "NodeID": 18,\n'
-                           '      "NodeTrackID": null,\n'
+                           '      "node_id": 18,\n'
+                           '      "node_track_id": null,\n'
                            '      "FormationID": 1187,\n'
                            '      "ArrivalTime": "2003-05-01T00:05:00",\n'
                            '      "DepartureTime": "2003-05-01T00:05:00",\n'
@@ -34,8 +34,8 @@ class TestCloneTrain(unittest.TestCase):
                            '    {\n'
                            '      "ID": 11039,\n'
                            '      "SectionTrackID": 1171,\n'
-                           '      "NodeID": 10,\n'
-                           '      "NodeTrackID": null,\n'
+                           '      "node_id": 10,\n'
+                           '      "node_track_id": null,\n'
                            '      "FormationID": null,\n'
                            '      "ArrivalTime": "2003-05-01T00:10:00",\n'
                            '      "DepartureTime": "2003-05-01T00:10:00",\n'
@@ -72,10 +72,12 @@ class TestCloneTrain(unittest.TestCase):
         test_cloned_algorithm_train = self.interface_to_viriato.clone_train(train_id)
 
         self.assertIsInstance(test_cloned_algorithm_train, AIDMClasses.AIDM_Algorithm_classes.AlgorithmTrain)
-        self.assertEqual(11037, test_cloned_algorithm_train.ID)
-        self.assertEqual('CloneTrainTestMockSession', test_cloned_algorithm_train.DebugString)
-        self.assertIsInstance(test_cloned_algorithm_train.TrainPathNodes[0], AIDM_TrainPathNode_classes.AlgorithmTrainPathNode)
-        self.assertEqual(11038, test_cloned_algorithm_train.TrainPathNodes[0].ID)
+        self.assertEqual(11037, test_cloned_algorithm_train.id)
+        self.assertEqual('CloneTrainTestMockSession', test_cloned_algorithm_train.debug_string)
+        self.assertIsInstance(
+            test_cloned_algorithm_train.train_path_nodes[0],
+            AIDM_TrainPathNode_classes.AlgorithmTrainPathNode)
+        self.assertEqual(11038, test_cloned_algorithm_train.train_path_nodes[0].id)
 
     @mock.patch('requests.Session', side_effect=CloneTrainTestMockSession)
     def tearDown(self, mocked_get_obj) -> None:

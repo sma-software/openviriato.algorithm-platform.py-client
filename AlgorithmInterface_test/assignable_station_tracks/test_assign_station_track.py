@@ -21,8 +21,8 @@ class TestSetStationTracksNode(unittest.TestCase):
                             "    {\n"
                             "      \"ID\": 5338,\n"
                             "      \"SectionTrackID\": null,\n"
-                            "      \"NodeID\": 321,\n"
-                            "      \"NodeTrackID\": 322,\n"
+                            "      \"node_id\": 321,\n"
+                            "      \"node_track_id\": 322,\n"
                             "      \"FormationID\": 4108,\n"
                             "      \"ArrivalTime\": \"2003-05-01T06:00:00\",\n"
                             "      \"DepartureTime\": \"2003-05-01T06:00:00\",\n"
@@ -34,8 +34,8 @@ class TestSetStationTracksNode(unittest.TestCase):
                             "    {\n"
                             "      \"ID\": 5702,\n"
                             "      \"SectionTrackID\": 888,\n"
-                            "      \"NodeID\": 281,\n"
-                            "      \"NodeTrackID\": null,\n"
+                            "      \"node_id\": 281,\n"
+                            "      \"node_track_id\": null,\n"
                             "      \"FormationID\": 4108,\n"
                             "      \"ArrivalTime\": \"2003-05-01T06:02:42\",\n"
                             "      \"DepartureTime\": \"2003-05-01T06:02:42\",\n"
@@ -47,8 +47,8 @@ class TestSetStationTracksNode(unittest.TestCase):
                             "    {\n"
                             "      \"ID\": 6066,\n"
                             "      \"SectionTrackID\": 887,\n"
-                            "      \"NodeID\": 161,\n"
-                            "      \"NodeTrackID\": 162,\n"
+                            "      \"node_id\": 161,\n"
+                            "      \"node_track_id\": 162,\n"
                             "      \"FormationID\": null,\n"
                             "      \"ArrivalTime\": \"2003-05-01T06:03:54\",\n"
                             "      \"DepartureTime\": \"2003-05-01T06:03:54\",\n"
@@ -88,8 +88,8 @@ class TestSetStationTracksNode(unittest.TestCase):
         test_train = self.interface_to_viriato.assign_station_track(trainPathNodeId=train_path_node_id)
 
         self.assertIsInstance(test_train, AIDMClasses.AIDM_Algorithm_classes.AlgorithmTrain)
-        self.assertIsInstance(test_train.TrainPathNodes[0], AIDM_TrainPathNode_classes.AlgorithmTrainPathNode)
-        self.assertEqual(test_train.DebugString, "FV_9_J03 tt_(SZ)")
+        self.assertIsInstance(test_train.train_path_nodes[0], AIDM_TrainPathNode_classes.AlgorithmTrainPathNode)
+        self.assertEqual(test_train.debug_string, "FV_9_J03 tt_(SZ)")
 
     @mock.patch('requests.Session', side_effect=SetStationTracksNodeTestSessionMock)
     def tearDown(self, mocked_get_obj) -> None:

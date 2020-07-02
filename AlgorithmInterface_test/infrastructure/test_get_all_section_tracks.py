@@ -21,21 +21,21 @@ class TestGetAllSectionTracks(unittest.TestCase):
                            "  {\n"
                            "    \"ID\": 686,\n"
                            "    \"Code\": \"411\",\n"
-                           "    \"SectionCode\": \"15115\",\n"
+                           "    \"section_code\": \"15115\",\n"
                            "    \"Weight\": 18430,\n"
                            "    \"DebugString\": \"sectiontrack:s_15115 n_85KLW 411\"\n"
                            "  },\n"
                            "  {\n"
                            "    \"ID\": 687,\n"
                            "    \"Code\": \"311\",\n"
-                           "    \"SectionCode\": \"15115\",\n"
+                           "    \"section_code\": \"15115\",\n"
                            "    \"Weight\": 18430,\n"
                            "    \"DebugString\": \"sectiontrack:s_15115 n_85KLW 311\"\n"
                            "  },\n"
                            "  {\n"
                            "    \"ID\": 688,\n"
                            "    \"Code\": \"712\",\n"
-                           "    \"SectionCode\": \"16010\",\n"
+                           "    \"section_code\": \"16010\",\n"
                            "    \"Weight\": 15420,\n"
                            "    \"DebugString\": \"sectiontrack:s_16010 n_85NHOF 712\"\n"
                            "  }\n"
@@ -68,18 +68,18 @@ class TestGetAllSectionTracks(unittest.TestCase):
         self.assertEqual(len(section_tracks), 3)
 
         self.assertIsInstance(section_tracks[0], AlgorithmSectionTrack)
-        self.assertEqual(section_tracks[0].ID, 686)
-        self.assertEqual(section_tracks[0].Code, '411')
-        self.assertEqual(section_tracks[0].SectionCode, '15115')
-        self.assertEqual(section_tracks[0].Weight, 18430)
-        self.assertEqual(section_tracks[0].DebugString, 'sectiontrack:s_15115 n_85KLW 411')
+        self.assertEqual(section_tracks[0].id, 686)
+        self.assertEqual(section_tracks[0].code, '411')
+        self.assertEqual(section_tracks[0].section_code, '15115')
+        self.assertEqual(section_tracks[0].weight, 18430)
+        self.assertEqual(section_tracks[0].debug_string, 'sectiontrack:s_15115 n_85KLW 411')
 
         self.assertIsInstance(section_tracks[1], AlgorithmSectionTrack)
-        self.assertEqual(section_tracks[1].ID, 687)
-        self.assertEqual(section_tracks[1].Code, '311')
-        self.assertEqual(section_tracks[1].SectionCode, '15115')
-        self.assertEqual(section_tracks[1].Weight, 18430)
-        self.assertEqual(section_tracks[1].DebugString, 'sectiontrack:s_15115 n_85KLW 311')
+        self.assertEqual(section_tracks[1].id, 687)
+        self.assertEqual(section_tracks[1].code, '311')
+        self.assertEqual(section_tracks[1].section_code, '15115')
+        self.assertEqual(section_tracks[1].weight, 18430)
+        self.assertEqual(section_tracks[1].debug_string, 'sectiontrack:s_15115 n_85KLW 311')
 
     @mock.patch('requests.Session', side_effect=GetAllSectionTracksSessionTestMock)
     def tearDown(self, mocked_get_obj) -> None:

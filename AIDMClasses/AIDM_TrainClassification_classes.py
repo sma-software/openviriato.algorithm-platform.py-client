@@ -1,11 +1,11 @@
 
 
 class AlgorithmTrainClassification:
-    __Description: str
+    __description: str
 
-    def __init__(self, Description: str):
-        self.__Description = Description
+    def __init__(self, description: str):
+        self.__description = description
 
     @property
-    def Description(self) -> str:
-        return self.__Description
+    def description(self) -> str:
+        return self.__description

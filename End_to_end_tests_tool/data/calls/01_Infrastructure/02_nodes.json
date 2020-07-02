@@ -5,7 +5,5 @@
     "requestBody": null,
     "CSharpMethodName": "GetNode(nodeId)",
     "CSharpMethodParameterTypes": [ "System.Int64" ],
-    "PythonMethodName": "get_node(node_id)",
-    "PythonMethodParameterTypes": [ "int" ],
     "subcategory": "Get Node"
 }

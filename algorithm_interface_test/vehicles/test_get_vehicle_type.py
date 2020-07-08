@@ -1,9 +1,9 @@
 import unittest
 from unittest import mock
 
-import aidm.aidm_algorithm_classes
+import py_client.aidm.aidm_algorithm_classes
 import algorithm_interface_test.test_helper.SessionMockFactory as APISessionMock
-from algorithm_interface import algorithm_interface_factory
+from py_client.algorithm_interface import algorithm_interface_factory
 from algorithm_interface_test.test_helper.SessionMockTestBase import \
     get_api_url, SessionMockTestBase
 
@@ -42,7 +42,7 @@ class TestGetVehicleType(unittest.TestCase):
 
         test_algorithm_vehicle_type = self.interface_to_viriato.get_vehicle_type(vehicle_type_id)
 
-        self.assertIsInstance(test_algorithm_vehicle_type, aidm.aidm_algorithm_classes.AlgorithmVehicleType)
+        self.assertIsInstance(test_algorithm_vehicle_type, py_client.aidm.aidm_algorithm_classes.AlgorithmVehicleType)
         self.assertEqual(test_algorithm_vehicle_type.debug_string,
                          "vehicle isEngine: True, model: ICN, series: 1, velMax: 200")
         self.assertEqual(test_algorithm_vehicle_type.is_engine, True)

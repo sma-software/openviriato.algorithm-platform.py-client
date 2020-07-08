@@ -1,9 +1,9 @@
 from unittest import mock, TestCase
 
-import aidm.aidm_algorithm_classes
-import algorithm_interface.algorithm_interface
+import py_client.aidm.aidm_algorithm_classes
+from py_client import algorithm_interface
 import algorithm_interface_test.test_helper.SessionMockFactory as SessionMockFactory
-from algorithm_interface import algorithm_interface_factory
+from py_client.algorithm_interface import algorithm_interface_factory
 from algorithm_interface_test.test_helper.SessionMockTestBase import \
     get_api_url, \
     SessionMockTestBase
@@ -49,7 +49,7 @@ class TestSetSectionTrack(TestCase):
                            '}')
             return SessionMockFactory.create_response_mock(json_string, 200)
 
-    interface_to_viriato: algorithm_interface.algorithm_interface.AlgorithmInterface
+    interface_to_viriato: py_client.algorithm_interface.algorithm_interface.AlgorithmInterface
 
     @mock.patch('requests.Session', side_effect=SetSectionTrackTestMockSession)
     def setUp(self, mocked_get_obj):
@@ -74,7 +74,7 @@ class TestSetSectionTrack(TestCase):
 
         test_algorithm_train = self.interface_to_viriato.set_section_track(TrainPathNodeID, SectionTrackID)
 
-        self.assertIsInstance(test_algorithm_train, aidm.aidm_algorithm_classes.AlgorithmTrain)
+        self.assertIsInstance(test_algorithm_train, py_client.aidm.aidm_algorithm_classes.AlgorithmTrain)
         self.assertEqual(2060, test_algorithm_train.id)
         self.assertEqual(test_algorithm_train.debug_string, 'SetSectionTrackTestMockSessionString')
 

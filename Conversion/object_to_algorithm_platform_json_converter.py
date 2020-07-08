@@ -1,6 +1,6 @@
 import enum
 
-import aidm
+import py_client
 from Conversion.converter_helpers import convert_to_datetime_format_or_return_self, _convert_to_camel_case
 
 
@@ -25,7 +25,7 @@ def convert_any_object(obj):
     if isinstance(obj, enum.Enum):
         return _convert_to_camel_case(obj.name)
 
-    is_from_AIDM_package = hasattr(obj, "__module__") and obj.__module__.split('.')[0] == aidm.__name__
+    is_from_AIDM_package = hasattr(obj, "__module__") and obj.__module__.split('.')[0] == py_client.__name__
     if is_from_AIDM_package:
         return convert_any_AIDM_object_to_dict(obj)
     else:

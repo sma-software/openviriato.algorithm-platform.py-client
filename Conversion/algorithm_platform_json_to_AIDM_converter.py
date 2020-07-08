@@ -1,8 +1,5 @@
 import inspect
-from aidm import AlgorithmNode, AlgorithmNodeTrack, AlgorithmTrainPathNode, StopStatus, AlgorithmTrain, \
-    TimeWindow, AlgorithmSectionTrackClosure, AlgorithmNodeTrackClosure, IncomingRoutingEdgeSet, IncomingRoutingEdge, \
-    OutgoingRoutingEdgeSet, OutgoingRoutingEdge, CrossingRoutingEdgeSet, CrossingRoutingEdge, UpdateTrainTimes, \
-    UpdateTrainTimesNode
+from py_client.aidm import *
 from Conversion.converter_helpers import parse_to_datetime, parse_to_timedelta, parse_to_timedelta_or_None, \
     convert_keys_to_snake_case, convert_to_snake_case
 

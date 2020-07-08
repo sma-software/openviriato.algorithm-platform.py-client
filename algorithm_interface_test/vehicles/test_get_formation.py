@@ -1,9 +1,9 @@
 import unittest
 from unittest import mock
 
-import aidm.aidm_algorithm_classes
+import py_client.aidm.aidm_algorithm_classes
 import algorithm_interface_test.test_helper.SessionMockFactory as APISessionMock
-from algorithm_interface import algorithm_interface_factory
+from py_client.algorithm_interface import algorithm_interface_factory
 from algorithm_interface_test.test_helper.SessionMockTestBase import \
     get_api_url, SessionMockTestBase
 
@@ -44,7 +44,7 @@ class TestGetFormation(unittest.TestCase):
 
         test_algorithm_formation = self.interface_to_viriato.get_formation(key)
 
-        self.assertIsInstance(test_algorithm_formation, aidm.aidm_algorithm_classes.AlgorithmFormation)
+        self.assertIsInstance(test_algorithm_formation, py_client.aidm.aidm_algorithm_classes.AlgorithmFormation)
         self.assertEqual(test_algorithm_formation.debug_string, "train configuration: ")
         self.assertEqual(test_algorithm_formation.id, 1828)
         self.assertIsInstance(test_algorithm_formation.vehicle_type_ids[0], int)

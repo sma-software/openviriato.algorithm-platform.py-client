@@ -1,6 +1,6 @@
 import unittest
 
-from algorithm_interface import algorithm_interface, algorithm_interface_factory
+from py_client.algorithm_interface import algorithm_interface, algorithm_interface_factory
 
 
 class TestObjectInitialisation(unittest.TestCase):

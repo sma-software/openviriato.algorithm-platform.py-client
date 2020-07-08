@@ -1,10 +1,9 @@
 import unittest
 from unittest import mock
 
-import aidm
-import algorithm_interface.algorithm_interface
+from py_client.aidm import AlgorithmTrainClassification
 import algorithm_interface_test.test_helper.SessionMockFactory as SessionMockFactory
-from algorithm_interface import algorithm_interface_factory
+from py_client.algorithm_interface import algorithm_interface_factory
 from algorithm_interface_test.test_helper.SessionMockTestBase import get_api_url, SessionMockTestBase
 
 
@@ -17,8 +16,6 @@ class TestGetTrainClassifications(unittest.TestCase):
                           '{"Description": "Freight" }, ' \
                           '{ "Description": "Passenger"}]'
             return SessionMockFactory.create_response_mock(json_string, 200)
-
-    interface_to_viriato: algorithm_interface.algorithm_interface.AlgorithmInterface
 
     @mock.patch('requests.Session', side_effect=GetTrainClassificationsTestMockSession)
     def setUp(self, mocked_get_obj):
@@ -38,7 +35,7 @@ class TestGetTrainClassifications(unittest.TestCase):
         train_classes = self.interface_to_viriato.get_train_classifications()
 
         self.assertIsInstance(train_classes, list)
-        self.assertIsInstance(train_classes[0], aidm.AlgorithmTrainClassification)
+        self.assertIsInstance(train_classes[0], AlgorithmTrainClassification)
         self.assertEqual(train_classes[0].description, "Unknown")
         self.assertEqual(train_classes[1].description, "Freight")
 

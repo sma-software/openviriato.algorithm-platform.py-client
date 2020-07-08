@@ -1,8 +1,7 @@
 import unittest
 from unittest import mock
-from aidm import AlgorithmSectionTrack
-import algorithm_interface.algorithm_interface
-from algorithm_interface import algorithm_interface_factory
+from py_client.aidm import AlgorithmSectionTrack
+from py_client.algorithm_interface import algorithm_interface_factory
 from algorithm_interface_test.test_helper import SessionMockFactory as SessionMockFactory
 from algorithm_interface_test.test_helper.SessionMockTestBase import get_api_url, SessionMockTestBase
 
@@ -41,8 +40,6 @@ class TestGetSectionTrackTo(unittest.TestCase):
                            "]")
 
             return SessionMockFactory.create_response_mock(json_string, 200)
-
-    interface_to_viriato: algorithm_interface.algorithm_interface.AlgorithmInterface
 
     @mock.patch('requests.Session', side_effect=GetSectionTrackToSessionTestMock)
     def setUp(self, mocked_get_obj):

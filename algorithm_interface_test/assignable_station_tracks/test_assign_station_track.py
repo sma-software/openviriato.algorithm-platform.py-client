@@ -1,10 +1,9 @@
 import unittest
 from unittest import mock
-
-import aidm.aidm_algorithm_classes
+import py_client.aidm.aidm_algorithm_classes
 import algorithm_interface_test.test_helper.SessionMockFactory as APISessionMock
-from aidm import aidm_train_path_node_classes
-from algorithm_interface import algorithm_interface_factory
+from py_client.aidm import aidm_train_path_node_classes
+from py_client.algorithm_interface import algorithm_interface_factory
 from algorithm_interface_test.test_helper.SessionMockTestBase import \
     get_api_url, SessionMockTestBase
 
@@ -87,7 +86,7 @@ class TestSetStationTracksNode(unittest.TestCase):
 
         test_train = self.interface_to_viriato.assign_station_track(trainPathNodeId=train_path_node_id)
 
-        self.assertIsInstance(test_train, aidm.aidm_algorithm_classes.AlgorithmTrain)
+        self.assertIsInstance(test_train, py_client.aidm.aidm_algorithm_classes.AlgorithmTrain)
         self.assertIsInstance(test_train.train_path_nodes[0], aidm_train_path_node_classes.AlgorithmTrainPathNode)
         self.assertEqual(test_train.debug_string, "FV_9_J03 tt_(SZ)")
 

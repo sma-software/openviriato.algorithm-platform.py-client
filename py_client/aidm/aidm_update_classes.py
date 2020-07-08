@@ -1,6 +1,6 @@
 import datetime
-from aidm.aidm_base_classes import _UpdateTrain, _RoutingEdge
-from aidm import StopStatus
+from py_client.aidm.aidm_base_classes import _UpdateTrain, _RoutingEdge
+from py_client.aidm import StopStatus
 from typing import List, Optional
 
 

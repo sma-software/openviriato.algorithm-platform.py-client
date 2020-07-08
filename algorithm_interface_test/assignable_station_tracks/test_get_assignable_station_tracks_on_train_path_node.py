@@ -1,9 +1,9 @@
 import unittest
 from unittest import mock
 
-import aidm.aidm_algorithm_classes
+import py_client.aidm.aidm_algorithm_classes
 import algorithm_interface_test.test_helper.SessionMockFactory as APISessionMock
-from algorithm_interface import algorithm_interface_factory
+from py_client.algorithm_interface import algorithm_interface_factory
 from algorithm_interface_test.test_helper.SessionMockTestBase import \
     get_api_url, SessionMockTestBase
 
@@ -48,7 +48,7 @@ class TestGetAssignableStationTracksOnTrainPathNode(unittest.TestCase):
                                                                                                train_path_node_id)
 
         self.assertIsInstance(test_list, list)
-        self.assertIsInstance(test_list[0], aidm.aidm_algorithm_classes.AlgorithmNodeTrack)
+        self.assertIsInstance(test_list[0], py_client.aidm.aidm_algorithm_classes.AlgorithmNodeTrack)
         self.assertEqual(test_list[0].debug_string, "stationtrack:85AR_{StationTrack SID = 34140}")
 
     @mock.patch('requests.Session', side_effect=GetAssignableStationTracksOnTrainPathNodeTestSessionMock)

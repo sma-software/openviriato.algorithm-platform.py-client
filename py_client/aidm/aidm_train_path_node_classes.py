@@ -1,7 +1,7 @@
 import datetime
 from typing import Optional
-from aidm.aidm_base_classes import _HasID
-from aidm.aidm_enum_classes import StopStatus
+from py_client.aidm.aidm_base_classes import _HasID
+from py_client.aidm.aidm_enum_classes import StopStatus
 
 
 class AlgorithmTrainPathNode(_HasID):

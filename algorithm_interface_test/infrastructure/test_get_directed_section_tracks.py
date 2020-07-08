@@ -1,9 +1,9 @@
 import unittest
 from unittest import mock
 
-import aidm.aidm_algorithm_classes
-import algorithm_interface.algorithm_interface
-from algorithm_interface import algorithm_interface_factory
+import py_client.aidm.aidm_algorithm_classes
+from py_client import algorithm_interface
+from py_client.algorithm_interface import algorithm_interface_factory
 from algorithm_interface_test.test_helper import SessionMockFactory as SessionMockFactory
 from algorithm_interface_test.test_helper.SessionMockTestBase import \
     get_api_url, \
@@ -39,7 +39,7 @@ class TestGetDirectedSectionTracks(unittest.TestCase):
 
             return SessionMockFactory.create_response_mock(json_string, 200)
 
-    interface_to_viriato: algorithm_interface.algorithm_interface.AlgorithmInterface
+    interface_to_viriato: py_client.algorithm_interface.algorithm_interface.AlgorithmInterface
 
     @mock.patch('requests.Session', side_effect=GetDirectedSectionTracksSessionTestMock)
     def setUp(self, mocked_get_obj):
@@ -64,7 +64,7 @@ class TestGetDirectedSectionTracks(unittest.TestCase):
 
         directed_section_tracks = self.interface_to_viriato.get_directed_section_tracks(node_id_1, node_id_2)
 
-        self.assertIsInstance(directed_section_tracks[0], aidm.aidm_algorithm_classes.AlgorithmSectionTrack)
+        self.assertIsInstance(directed_section_tracks[0], py_client.aidm.aidm_algorithm_classes.AlgorithmSectionTrack)
         self.assertIsInstance(directed_section_tracks[0].id, int)
         self.assertIsInstance(directed_section_tracks[0].code, str)
         self.assertIsInstance(directed_section_tracks[0].section_code, str)

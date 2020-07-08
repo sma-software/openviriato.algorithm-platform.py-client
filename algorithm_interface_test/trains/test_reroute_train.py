@@ -1,9 +1,9 @@
 import unittest
 from unittest import mock
 
-import aidm
+from py_client.aidm import AlgorithmTrainPathNode, IncomingRoutingEdge, OutgoingRoutingEdge, UpdateTrainRoute
 import algorithm_interface_test.test_helper.SessionMockFactory as SessionMockFactory
-from algorithm_interface import algorithm_interface_factory
+from py_client.algorithm_interface import algorithm_interface_factory
 from algorithm_interface_test.test_helper.SessionMockTestBase import get_api_url, SessionMockTestBase
 
 
@@ -70,15 +70,15 @@ class TestRerouteTrain(unittest.TestCase):
         train_id = 2060
         start_train_path_node_id = 2424
         end_train_path_node_id = 3152
-        routing_edges = [aidm.OutgoingRoutingEdge(node_id=7, start_node_track_id=8, end_section_track_id=1165),
-                         aidm.IncomingRoutingEdge(node_id=24, start_section_track_id=1165, end_node_track_id=25),
-                         aidm.OutgoingRoutingEdge(node_id=24, start_node_track_id=25, end_section_track_id=1166),
-                         aidm.IncomingRoutingEdge(node_id=10, start_section_track_id=1166, end_node_track_id=12)]
+        routing_edges = [OutgoingRoutingEdge(node_id=7, start_node_track_id=8, end_section_track_id=1165),
+                         IncomingRoutingEdge(node_id=24, start_section_track_id=1165, end_node_track_id=25),
+                         OutgoingRoutingEdge(node_id=24, start_node_track_id=25, end_section_track_id=1166),
+                         IncomingRoutingEdge(node_id=10, start_section_track_id=1166, end_node_track_id=12)]
 
-        test_route = aidm.aidm_update_classes.UpdateTrainRoute(train_id=train_id,
-                                                               end_train_path_node_id=end_train_path_node_id,
-                                                               start_train_path_node_id=start_train_path_node_id,
-                                                               routing_edges=routing_edges)
+        test_route = UpdateTrainRoute(train_id=train_id,
+                                      end_train_path_node_id=end_train_path_node_id,
+                                      start_train_path_node_id=start_train_path_node_id,
+                                      routing_edges=routing_edges)
 
         self.interface_to_viriato.reroute_train(test_route)
 
@@ -102,22 +102,22 @@ class TestRerouteTrain(unittest.TestCase):
         train_id = 2060
         start_train_path_node_id = 2424
         end_train_path_node_id = 3152
-        routing_edges = [aidm.OutgoingRoutingEdge(node_id=7, start_node_track_id=8, end_section_track_id=1165),
-                         aidm.IncomingRoutingEdge(node_id=24, start_section_track_id=1165, end_node_track_id=25),
-                         aidm.OutgoingRoutingEdge(node_id=24, start_node_track_id=25, end_section_track_id=1166),
-                         aidm.IncomingRoutingEdge(node_id=10, start_section_track_id=1166, end_node_track_id=12)]
+        routing_edges = [OutgoingRoutingEdge(node_id=7, start_node_track_id=8, end_section_track_id=1165),
+                         IncomingRoutingEdge(node_id=24, start_section_track_id=1165, end_node_track_id=25),
+                         OutgoingRoutingEdge(node_id=24, start_node_track_id=25, end_section_track_id=1166),
+                         IncomingRoutingEdge(node_id=10, start_section_track_id=1166, end_node_track_id=12)]
 
-        test_route = aidm.aidm_update_classes.UpdateTrainRoute(train_id=train_id,
-                                                               end_train_path_node_id=end_train_path_node_id,
-                                                               start_train_path_node_id=start_train_path_node_id,
-                                                               routing_edges=routing_edges)
+        test_route = UpdateTrainRoute(train_id=train_id,
+                                      end_train_path_node_id=end_train_path_node_id,
+                                      start_train_path_node_id=start_train_path_node_id,
+                                      routing_edges=routing_edges)
 
         rerouted_algorithm_train = self.interface_to_viriato.reroute_train(test_route)
 
         self.assertEqual(rerouted_algorithm_train.id, 3516)
         self.assertEqual(rerouted_algorithm_train.debug_string, "RVZH_3_1_J03 tt_(S)")
         self.assertIsInstance(rerouted_algorithm_train.train_path_nodes, list)
-        self.assertIsInstance(rerouted_algorithm_train.train_path_nodes[0], aidm.AlgorithmTrainPathNode)
+        self.assertIsInstance(rerouted_algorithm_train.train_path_nodes[0], AlgorithmTrainPathNode)
         self.assertEqual(rerouted_algorithm_train.train_path_nodes[0].id, 2424)
 
     @mock.patch('requests.Session', side_effect=RerouteTrainTestMockSession)

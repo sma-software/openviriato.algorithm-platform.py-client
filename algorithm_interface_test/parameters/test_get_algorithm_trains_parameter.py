@@ -1,10 +1,10 @@
 import unittest
 from unittest import mock
 
-import aidm.aidm_algorithm_classes
+import py_client.aidm.aidm_algorithm_classes
 import algorithm_interface_test.test_helper.SessionMockFactory as APISessionMock
-from aidm import aidm_train_path_node_classes
-from algorithm_interface import algorithm_interface_factory
+from py_client.aidm import aidm_train_path_node_classes
+from py_client.algorithm_interface import algorithm_interface_factory
 from algorithm_interface_test.test_helper.SessionMockTestBase import \
     get_api_url, SessionMockTestBase
 
@@ -135,7 +135,7 @@ class TestGetAlgorithmTrainsParameter(unittest.TestCase):
         test_algorithm_trains = self.interface_to_viriato.get_algorithm_trains_parameter(key)
 
         self.assertIsInstance(test_algorithm_trains, list)
-        self.assertIsInstance(test_algorithm_trains[0], aidm.aidm_algorithm_classes.AlgorithmTrain)
+        self.assertIsInstance(test_algorithm_trains[0], py_client.aidm.aidm_algorithm_classes.AlgorithmTrain)
         self.assertEqual(test_algorithm_trains[0].debug_string, "GV_9_J05 tt_()")
         self.assertEqual(test_algorithm_trains[0].id, 1190)
         self.assertIsInstance(

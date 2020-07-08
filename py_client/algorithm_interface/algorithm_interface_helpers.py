@@ -1,5 +1,5 @@
 from typing import List, Union
-from aidm import IncomingRoutingEdge, OutgoingRoutingEdge
+from py_client.aidm import IncomingRoutingEdge, OutgoingRoutingEdge
 
 
 def merge_query_parameters(query_parameter_dictionaries: List[dict]) -> dict:

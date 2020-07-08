@@ -2,11 +2,11 @@ import datetime
 import unittest
 from unittest import mock
 
-import aidm.aidm_time_window_classes
-import aidm.aidm_track_closure_classes
-import algorithm_interface.algorithm_interface
+import py_client.aidm.aidm_time_window_classes
+import py_client.aidm.aidm_track_closure_classes
+from py_client import algorithm_interface
 import algorithm_interface_test.test_helper.SessionMockFactory as SessionMockFactory
-from algorithm_interface import algorithm_interface_factory
+from py_client.algorithm_interface import algorithm_interface_factory
 from algorithm_interface_test.test_helper.SessionMockTestBase import \
     get_api_url, \
     SessionMockTestBase
@@ -40,7 +40,7 @@ class TestGetNodeTrackClosures(unittest.TestCase):
 
             return SessionMockFactory.create_response_mock(json_string, 200)
 
-    interface_to_viriato: algorithm_interface.algorithm_interface.AlgorithmInterface
+    interface_to_viriato: py_client.algorithm_interface.algorithm_interface.AlgorithmInterface
 
     @mock.patch('requests.Session', side_effect=GetNodeTrackClosuresTestMockSession)
     def setUp(self, mocked_get_obj):
@@ -48,7 +48,7 @@ class TestGetNodeTrackClosures(unittest.TestCase):
 
     @mock.patch('requests.Session', side_effect=GetNodeTrackClosuresTestMockSession)
     def test_get_node_track_closures_request(self, mocked_get_obj):
-        requested_time_window = aidm.aidm_time_window_classes.TimeWindow(
+        requested_time_window = py_client.aidm.aidm_time_window_classes.TimeWindow(
             from_time=datetime.datetime(2003, 5, 1, 0, 0),
             to_time=datetime.datetime(2003, 5, 12, 0, 0))
 
@@ -62,7 +62,7 @@ class TestGetNodeTrackClosures(unittest.TestCase):
 
     @mock.patch('requests.Session', side_effect=GetNodeTrackClosuresTestMockSession)
     def test_get_node_track_closures_response(self, mocked_get_obj):
-        requested_time_window = aidm.aidm_time_window_classes.TimeWindow(
+        requested_time_window = py_client.aidm.aidm_time_window_classes.TimeWindow(
             from_time=datetime.datetime(2003, 5, 1, 0, 0),
             to_time=datetime.datetime(2003, 5, 12, 0, 0))
 
@@ -70,9 +70,9 @@ class TestGetNodeTrackClosures(unittest.TestCase):
 
         self.assertIsInstance(list_of_section_track_closure, list)
         self.assertIsInstance(list_of_section_track_closure[0],
-                              aidm.aidm_track_closure_classes.AlgorithmNodeTrackClosure)
+                              py_client.aidm.aidm_track_closure_classes.AlgorithmNodeTrackClosure)
         self.assertIsInstance(list_of_section_track_closure[0].closure_time_window,
-                              aidm.aidm_time_window_classes.TimeWindow)
+                              py_client.aidm.aidm_time_window_classes.TimeWindow)
         self.assertEqual(list_of_section_track_closure[0].debug_string, "nodetrackclosure:85ZMUS 24")
         self.assertEqual(list_of_section_track_closure[0].closure_time_window.from_time,
                          datetime.datetime(2003, 5, 1, 8, 0))

@@ -1,9 +1,8 @@
 import datetime
 import unittest
 from unittest import mock
-import algorithm_interface.algorithm_interface
 import algorithm_interface_test.test_helper.SessionMockFactory as SessionMockFactory
-from algorithm_interface import algorithm_interface_factory
+from py_client.algorithm_interface import algorithm_interface_factory
 from algorithm_interface_test.test_helper.SessionMockTestBase import get_api_url,  SessionMockTestBase
 
 
@@ -21,8 +20,6 @@ class TestGetSeparationTimeInJunctionForPlannedTrainPaths(unittest.TestCase):
             elif self.__last_body == null_case_parameters:
                 json_string = """{ "separationTime": null}"""
                 return SessionMockFactory.create_response_mock(json_string, 200)
-
-    interface_to_viriato: algorithm_interface.algorithm_interface.AlgorithmInterface
 
     @mock.patch('requests.Session', side_effect=GetSeparationTimeInJunctionForPlannedTrainPathsTestMockSession)
     def setUp(self, mocked_get_obj):

@@ -1,4 +1,4 @@
-from aidm.aidm_base_classes import _RoutingEdge, _RoutingEdgeSet
+from py_client.aidm.aidm_base_classes import _RoutingEdge, _RoutingEdgeSet
 from typing import List
 
 

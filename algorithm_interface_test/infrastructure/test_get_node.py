@@ -1,8 +1,8 @@
 from unittest import mock, TestCase
 
-import aidm.aidm_algorithm_classes
+import py_client.aidm.aidm_algorithm_classes
 import algorithm_interface_test.test_helper.SessionMockFactory as SessionMockFactory
-from algorithm_interface import algorithm_interface_factory
+from py_client.algorithm_interface import algorithm_interface_factory
 from algorithm_interface_test.test_helper.SessionMockTestBase import \
     get_api_url, \
     SessionMockTestBase
@@ -54,9 +54,9 @@ class TestGetNode(TestCase):
 
         node_from_mocked_response = self.interface_to_viriato.get_node(node_id_to_query)
         
-        self.assertIsInstance(node_from_mocked_response, aidm.aidm_algorithm_classes.AlgorithmNode)
+        self.assertIsInstance(node_from_mocked_response, py_client.aidm.aidm_algorithm_classes.AlgorithmNode)
         self.assertIsInstance(node_from_mocked_response.node_tracks[0],
-                              aidm.aidm_algorithm_classes.AlgorithmNodeTrack)
+                              py_client.aidm.aidm_algorithm_classes.AlgorithmNodeTrack)
         self.assertEqual(node_from_mocked_response.id, 161)
         self.assertEqual(node_from_mocked_response.code, '85AR')
         self.assertEqual(node_from_mocked_response.debug_string, "station:85AR")

@@ -1,8 +1,8 @@
 from unittest import mock, TestCase
 
-import aidm.aidm_algorithm_classes
+from py_client.aidm.aidm_algorithm_classes import AlgorithmNode, AlgorithmNodeTrack
 import algorithm_interface_test.test_helper.SessionMockFactory as SessionMockFactory
-from algorithm_interface import algorithm_interface_factory
+from py_client.algorithm_interface import algorithm_interface_factory
 from algorithm_interface_test.test_helper.SessionMockTestBase import \
     get_api_url, \
     SessionMockTestBase
@@ -10,7 +10,6 @@ from algorithm_interface_test.test_helper.SessionMockTestBase import \
 
 class TestGetNeighborNode(TestCase):
     class GetNeighborNodeTestSessionMock(SessionMockTestBase):
-        # to replace session.get:
         def get(self, request, params):
             self.__last_body = params
             self.__last_request = request
@@ -63,10 +62,9 @@ class TestGetNeighborNode(TestCase):
 
         mock_return_neighbor_nodes = self.interface_to_viriato.get_neighbor_nodes(node_id)
 
-        self.assertIsInstance(mock_return_neighbor_nodes[0], aidm.aidm_algorithm_classes.AlgorithmNode)
+        self.assertIsInstance(mock_return_neighbor_nodes[0], AlgorithmNode)
         self.assertEqual(mock_return_neighbor_nodes[0].debug_string, "GetNeighborNodeTestSessionMock:85NH")
-        self.assertIsInstance(mock_return_neighbor_nodes[0].node_tracks[0],
-                              aidm.aidm_algorithm_classes.AlgorithmNodeTrack)
+        self.assertIsInstance(mock_return_neighbor_nodes[0].node_tracks[0], AlgorithmNodeTrack)
 
     @mock.patch('requests.Session', side_effect=GetNeighborNodeTestSessionMock)
     def tearDown(self, mocked_get_obj) -> None:

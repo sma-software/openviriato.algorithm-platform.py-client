@@ -1,9 +1,9 @@
 import unittest
 from unittest import mock
 
-import aidm
+from py_client.aidm import RoutingPoint, CrossingRoutingEdge, CrossingRoutingEdgeSet
 import algorithm_interface_test.test_helper.SessionMockFactory as APISessionMock
-from algorithm_interface import algorithm_interface_factory
+from py_client.algorithm_interface import algorithm_interface_factory
 from algorithm_interface_test.test_helper.SessionMockTestBase import get_api_url, SessionMockTestBase
 
 
@@ -36,7 +36,7 @@ class TestCrossingRoutingEdges(unittest.TestCase):
 
     @mock.patch('requests.Session', side_effect=GetCrossingRoutingEdgesTestSessionMock)
     def test_get_crossing_routing_edges_request(self, mocked_get_obj):
-        routing_point = aidm.RoutingPoint(node_id=121, node_track_id=12)
+        routing_point = RoutingPoint(node_id=121, node_track_id=12)
 
         self.interface_to_viriato.get_crossing_routing_edges(routing_point=routing_point)
 
@@ -48,17 +48,17 @@ class TestCrossingRoutingEdges(unittest.TestCase):
 
     @mock.patch('requests.Session', side_effect=GetCrossingRoutingEdgesTestSessionMock)
     def test_get_crossing_routing_edges_response(self, mocked_get_obj):
-        routing_point = aidm.RoutingPoint(node_id=1)
+        routing_point = RoutingPoint(node_id=1)
 
         routing_edges = self.interface_to_viriato.get_crossing_routing_edges(routing_point)
 
-        self.assertIsInstance(routing_edges, aidm.CrossingRoutingEdgeSet)
-        self.assertIsInstance(routing_edges.routing_edges[0], aidm.CrossingRoutingEdge)
+        self.assertIsInstance(routing_edges, CrossingRoutingEdgeSet)
+        self.assertIsInstance(routing_edges.routing_edges[0], CrossingRoutingEdge)
         self.assertEqual(routing_edges.routing_edges[0].start_section_track_id, 887)
         self.assertEqual(routing_edges.routing_edges[0].end_section_track_id, 888)
         self.assertEqual(routing_edges.routing_edges[0].node_id, 281)
 
-        self.assertIsInstance(routing_edges.routing_edges[1], aidm.CrossingRoutingEdge)
+        self.assertIsInstance(routing_edges.routing_edges[1], CrossingRoutingEdge)
         self.assertEqual(routing_edges.routing_edges[1].start_section_track_id, 888)
         self.assertEqual(routing_edges.routing_edges[1].end_section_track_id, 887)
         self.assertEqual(routing_edges.routing_edges[1].node_id, 281)

@@ -1,5 +1,5 @@
-from aidm.aidm_base_classes import _HasID, _HasCode, _HasDebugString
-from aidm.aidm_train_path_node_classes import AlgorithmTrainPathNode
+from py_client.aidm.aidm_base_classes import _HasID, _HasCode, _HasDebugString
+from py_client.aidm.aidm_train_path_node_classes import AlgorithmTrainPathNode
 from typing import List
 
 

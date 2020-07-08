@@ -1,9 +1,8 @@
 import unittest
 from unittest import mock
 
-import algorithm_interface.algorithm_interface
 import algorithm_interface_test.test_helper.SessionMockFactory as SessionMockFactory
-from algorithm_interface import algorithm_interface_factory
+from py_client.algorithm_interface import algorithm_interface_factory
 from algorithm_interface_test.test_helper.SessionMockTestBase import \
     get_api_url, \
     SessionMockTestBase
@@ -16,8 +15,6 @@ class TestGetTrainClassifications(unittest.TestCase):
             self.__last_body = json
             self.__last_request = request
             return SessionMockFactory.create_response_mock("8124", 200)
-
-    interface_to_viriato: algorithm_interface.algorithm_interface.AlgorithmInterface
 
     @mock.patch('requests.Session', side_effect=CancelTrainTestMockSession)
     def setUp(self, mocked_get_obj):

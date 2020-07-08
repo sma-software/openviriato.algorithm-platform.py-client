@@ -1,9 +1,7 @@
 import unittest
 from unittest import mock
-
-import aidm.aidm_algorithm_classes
-import algorithm_interface.algorithm_interface
-from algorithm_interface import algorithm_interface_factory
+from py_client.aidm import AlgorithmSectionTrack
+from py_client.algorithm_interface import algorithm_interface_factory
 from algorithm_interface_test.test_helper import SessionMockFactory as SessionMockFactory
 from algorithm_interface_test.test_helper.SessionMockTestBase import \
     get_api_url, \
@@ -12,7 +10,6 @@ from algorithm_interface_test.test_helper.SessionMockTestBase import \
 
 class TestGetParallelSectionTracks(unittest.TestCase):
     class GetParallelSectionTracksSessionTestMock(SessionMockTestBase):
-        # to replace session.get:
         def __init__(self):
             super().__init__()
 
@@ -37,8 +34,6 @@ class TestGetParallelSectionTracks(unittest.TestCase):
                            "  }\n"
                            "]")
             return SessionMockFactory.create_response_mock(json_string, 200)
-
-    interface_to_viriato: algorithm_interface.algorithm_interface.AlgorithmInterface
 
     @mock.patch('requests.Session', side_effect=GetParallelSectionTracksSessionTestMock)
     def setUp(self, mocked_get_obj):
@@ -68,7 +63,7 @@ class TestGetParallelSectionTracks(unittest.TestCase):
         self.assertIsInstance(parallel_section_tracks, list)
         self.assertEqual(len(parallel_section_tracks), 2)
 
-        self.assertIsInstance(parallel_section_tracks[0], aidm.aidm_algorithm_classes.AlgorithmSectionTrack)
+        self.assertIsInstance(parallel_section_tracks[0], AlgorithmSectionTrack)
         self.assertEqual(parallel_section_tracks[0].id, 885)
         self.assertEqual(parallel_section_tracks[0].code, '838')
         self.assertEqual(parallel_section_tracks[0].section_code, '61010')

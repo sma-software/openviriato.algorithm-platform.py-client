@@ -81,3 +81,24 @@ class TestAllConverterHelpers(unittest.TestCase):
         self.assertEqual(datetime_str, '0001-01-01T01:01:00')
         self.assertEqual(still_str, 'should stay the same')
 
+    def test_convert_to_snake_case_key(self):
+        test_dict = dict(
+            ID=1,
+            nodeID=2,
+            SectionTrackID=123,
+            algorithmSectionTrack=4,
+            AlgorithmNode='test',
+            debugstring='lower')
+
+        converted_dict = converter_helpers.convert_keys_to_snake_case(test_dict)
+
+        expected_dict = dict(
+            id=1,
+            node_id=2,
+            section_track_id=123,
+            algorithm_section_track=4,
+            algorithm_node='test',
+            debugstring='lower')
+
+        self.assertIsInstance(converted_dict, dict)
+        self.assertDictEqual(converted_dict, expected_dict)

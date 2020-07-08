@@ -142,7 +142,7 @@ class TestGetTrains(unittest.TestCase):
                          datetime.datetime(2003, 5, 1, 0, 10))
         self.assertEqual(listed_algorithm_trains[0].train_path_nodes[0].minimum_run_time, None)
         self.assertEqual(listed_algorithm_trains[0].train_path_nodes[0].minimum_stop_time, datetime.timedelta(0))
-        self.assertEqual(listed_algorithm_trains[0].train_path_nodes[0].stop_status, StopStatus['commercialStop'])
+        self.assertEqual(listed_algorithm_trains[0].train_path_nodes[0].stop_status, StopStatus.commercial_stop)
         self.assertEqual(listed_algorithm_trains[0].train_path_nodes[0].sequence_number, 0)
 
     @mock.patch('requests.Session', side_effect=GetTrainsTestMockSession)

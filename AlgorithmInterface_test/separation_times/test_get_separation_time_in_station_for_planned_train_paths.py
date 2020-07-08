@@ -48,9 +48,9 @@ class TestGetSeparationTimeInStationForEntryOrExit(unittest.TestCase):
             get_api_url() + '/nodes/123/separation-times')
         expected_query_parameters = dict(
             PrecedingTrainPathNodeID=80,
-            PrecedingEntryOrExit='exit',
+            PrecedingEntryOrExit='Exit',
             SucceedingTrainPathNodeID=123,
-            SucceedingEntryOrExit='entry')
+            SucceedingEntryOrExit='Entry')
 
         self.assertDictEqual(
             session_obj._GetSeparationTimeInStationForEntryOrExitTestMockSession__last_body,
@@ -81,10 +81,10 @@ class TestGetSeparationTimeInStationForEntryOrExit(unittest.TestCase):
             get_api_url() + '/nodes/123/separation-times')
         expected_query_parameters = dict(
             PrecedingTrainPathNodeID=80,
-            PrecedingStopStatus='passing',
-            PrecedingEntryOrExit='exit',
+            PrecedingStopStatus='Passing',
+            PrecedingEntryOrExit='Exit',
             SucceedingTrainPathNodeID=123,
-            SucceedingEntryOrExit='entry')
+            SucceedingEntryOrExit='Entry')
         self.assertDictEqual(
             session_obj._GetSeparationTimeInStationForEntryOrExitTestMockSession__last_body,
             expected_query_parameters)
@@ -93,7 +93,7 @@ class TestGetSeparationTimeInStationForEntryOrExit(unittest.TestCase):
     def test_get_separation_time_in_station_for_planned_train_paths_request_both_stop_status(self, mocked_get_obj):
         node_id = 123
         preceding_train_path_node_id = 80
-        preceding_train_stop_status = StopStatus['commercialStop']
+        preceding_train_stop_status = StopStatus['commercial_stop']
         preceding_station_entry_or_exit = StationEntryOrExit['exit']
         succeeding_train_path_node_id = 123
         succeeding_train_stop_status = StopStatus['passing']
@@ -114,11 +114,11 @@ class TestGetSeparationTimeInStationForEntryOrExit(unittest.TestCase):
             get_api_url() + '/nodes/123/separation-times')
         expected_query_parameters = dict(
             PrecedingTrainPathNodeID=80,
-            PrecedingStopStatus='commercialStop',
-            PrecedingEntryOrExit='exit',
+            PrecedingStopStatus='CommercialStop',
+            PrecedingEntryOrExit='Exit',
             SucceedingTrainPathNodeID=123,
-            SucceedingEntryOrExit='entry',
-            SucceedingStopStatus='passing')
+            SucceedingEntryOrExit='Entry',
+            SucceedingStopStatus='Passing')
 
         self.assertDictEqual(
             session_obj._GetSeparationTimeInStationForEntryOrExitTestMockSession__last_body,
@@ -131,7 +131,7 @@ class TestGetSeparationTimeInStationForEntryOrExit(unittest.TestCase):
         preceding_train_stop_status = StopStatus['passing']
         preceding_station_entry_or_exit = StationEntryOrExit['exit']
         succeeding_train_path_node_id = 123
-        succeeding_train_stop_status = StopStatus['commercialStop']
+        succeeding_train_stop_status = StopStatus['commercial_stop']
         succeeding_station_entry_or_exit = StationEntryOrExit['entry']
 
         separation_time = self.interface_to_viriato.get_separation_time_in_station_for_planned_train_paths(

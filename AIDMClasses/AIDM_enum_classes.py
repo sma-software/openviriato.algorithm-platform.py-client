@@ -2,8 +2,8 @@ from enum import Enum
 
 
 class StopStatus(Enum):
-    commercialStop = 0
-    operationalStop = 1
+    commercial_stop = 0
+    operational_stop = 1
     passing = 2
 
 

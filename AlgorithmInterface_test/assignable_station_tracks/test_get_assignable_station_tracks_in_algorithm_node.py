@@ -33,27 +33,27 @@ class TestGetAssignableStationTracksInAlgorithmNode(unittest.TestCase):
     def test_get_assignable_station_tracks_in_algorithm_node_request(self, mocked_get_obj):
         node_id = 1
         train_path_node_id = 1
-        test_stop_status = AIDM_enum_classes.StopStatus['commercialStop']
+        test_stop_status = AIDM_enum_classes.StopStatus.commercial_stop
 
-        self.interface_to_viriato.get_assignable_station_tracks_in_algorithm_node(nodeID=node_id,
-                                                                                  trainPathNodeId=train_path_node_id,
-                                                                                  stopStatus=test_stop_status)
+        self.interface_to_viriato.get_assignable_station_tracks_in_algorithm_node(node_id=node_id,
+                                                                                  train_path_node_id=train_path_node_id,
+                                                                                  stop_status=test_stop_status)
 
         session_obj = self.interface_to_viriato._AlgorithmInterface__communication_layer.currentSession
         self.assertEqual(session_obj._GetAssignableStationTracksInAlgorithmNodeTestSessionMock__last_request,
                          get_api_url() + '/assignable-station-tracks-in-algorithm-node')
         self.assertDictEqual(session_obj._GetAssignableStationTracksInAlgorithmNodeTestSessionMock__last_body,
-                             dict(NodeID=1, TrainPathNodeID=1, StopStatus="commercialStop"))
+                             dict(NodeID=1, TrainPathNodeID=1, StopStatus="CommercialStop"))
 
     @mock.patch('requests.Session', side_effect=GetAssignableStationTracksInAlgorithmNodeTestSessionMock)
     def test_get_assignable_station_tracks_in_algorithm_node_response(self, mocked_get_obj):
         node_id = 1
         train_path_node_id = 1
-        test_stop_status = AIDM_enum_classes.StopStatus['commercialStop']
+        test_stop_status = AIDM_enum_classes.StopStatus.commercial_stop
 
-        test_list = self.interface_to_viriato.get_assignable_station_tracks_in_algorithm_node(nodeID=node_id,
-                                                                                              trainPathNodeId=train_path_node_id,
-                                                                                              stopStatus=test_stop_status)
+        test_list = self.interface_to_viriato.get_assignable_station_tracks_in_algorithm_node(node_id=node_id,
+                                                                                              train_path_node_id=train_path_node_id,
+                                                                                              stop_status=test_stop_status)
 
         self.assertIsInstance(test_list, list)
         self.assertIsInstance(test_list[0], AIDMClasses.AIDM_Algorithm_classes.AlgorithmNodeTrack)

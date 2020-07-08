@@ -60,7 +60,7 @@ class TestUpdateTrajectory(unittest.TestCase):
         update_train_stop_time_node = UpdateTrainStopTimesNode(train_path_node_id=1332,
                                                                arrival_time=datetime.datetime(2003, 5, 1, 0, 4),
                                                                departure_time=datetime.datetime(2003, 5, 1, 0, 5),
-                                                               stop_status=StopStatus['operationalStop'],
+                                                               stop_status=StopStatus.operational_stop,
                                                                minimum_stop_time=datetime.timedelta(seconds=30))
 
         self.interface_to_viriato.update_trajectory(train_id, update_train_stop_time_node)
@@ -73,7 +73,7 @@ class TestUpdateTrajectory(unittest.TestCase):
                                   ArrivalTime="2003-05-01T00:04:00",
                                   DepartureTime="2003-05-01T00:05:00",
                                   MinimumStopTime="PT30S",
-                                  StopStatus="operationalStop"))
+                                  StopStatus="OperationalStop"))
 
     @mock.patch('requests.Session', side_effect=UpdateTrajectoryTestMockSession)
     def test_update_trajectory_response(self, mocked_get_obj):
@@ -81,7 +81,7 @@ class TestUpdateTrajectory(unittest.TestCase):
         update_train_stop_time_node = UpdateTrainStopTimesNode(train_path_node_id=1332,
                                                                arrival_time=datetime.datetime(2003, 5, 1, 0, 4),
                                                                departure_time=datetime.datetime(2003, 5, 1, 0, 5),
-                                                               stop_status=StopStatus['operationalStop'],
+                                                               stop_status=StopStatus.operational_stop,
                                                                minimum_stop_time=datetime.timedelta(seconds=30))
 
         updated_algorithm_train = self.interface_to_viriato.update_trajectory(train_id, update_train_stop_time_node)
@@ -101,7 +101,7 @@ class TestUpdateTrajectory(unittest.TestCase):
             datetime.datetime(2003, 5, 1, 0, 5, 30))
         self.assertEqual(updated_algorithm_train.train_path_nodes[0].minimum_run_time, None)
         self.assertEqual(updated_algorithm_train.train_path_nodes[0].minimum_stop_time, datetime.timedelta(0))
-        self.assertEqual(updated_algorithm_train.train_path_nodes[0].stop_status, StopStatus['operationalStop'])
+        self.assertEqual(updated_algorithm_train.train_path_nodes[0].stop_status, StopStatus.operational_stop)
 
     @mock.patch('requests.Session', side_effect=UpdateTrajectoryTestMockSession)
     def tearDown(self, mocked_get_obj) -> None:

@@ -1,4 +1,5 @@
-from py_client import *
+from py_client.aidm import *
+import datetime
 from py_client.algorithm_interface import algorithm_interface_factory
 
 BASE_URL = 'http://localhost:8080'

@@ -3,9 +3,9 @@ import datetime
 from py_client.algorithm_interface.algorithm_interface_helpers import merge_query_parameters, \
     create_query_parameters_from_preceding_and_succeeding_routing_edge
 from typing import List, Optional, Union
-from Communication import CommunicationLayer
-from Conversion import converter_helpers, algorithm_platform_json_to_AIDM_converter, \
-    object_to_algorithm_platform_json_converter
+from py_client.Communication import CommunicationLayer
+from py_client.Conversion import object_to_algorithm_platform_json_converter, converter_helpers, \
+    algorithm_platform_json_to_AIDM_converter
 
 
 class AlgorithmInterface:

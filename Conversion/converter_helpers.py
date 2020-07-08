@@ -2,15 +2,26 @@ import datetime
 import isodate
 
 
+def _convert_to_camel_case(snake_case_key: str):
+    split_by_underscore = snake_case_key.split('_')
+    split_by_underscore_camel_case = [*map(str.title, split_by_underscore)]
+    if split_by_underscore_camel_case[-1] == 'Id':
+        split_by_underscore_camel_case[-1] = 'ID'
+    return ''.join(split_by_underscore_camel_case)
+
+
 def _translate_id(any_key: str) -> str:
     if any_key.endswith("ID"):
         leading_underscore_if_needed = "_" if (any_key.__len__() > 2) else ""
         return any_key.rstrip("ID") + leading_underscore_if_needed + "id"
+    if any_key.endswith("IDs"):
+        leading_underscore_if_needed = "_" if (any_key.__len__() > 3) else ""
+        return any_key.rstrip("IDs") + leading_underscore_if_needed + "ids"
     else:
         return any_key
 
 
-def _convert_to_snake_case(any_key: str) -> str:
+def convert_to_snake_case(any_key: str) -> str:
     snake_case_key = ""
     for character in any_key:
         leading_underscore_if_needed = "_" if character.isupper() else ""
@@ -20,7 +31,7 @@ def _convert_to_snake_case(any_key: str) -> str:
 
 def _translate_key(key: str) -> str:
     key_with_correct_id = _translate_id(key)
-    return _convert_to_snake_case(key_with_correct_id)
+    return convert_to_snake_case(key_with_correct_id)
 
 
 def convert_keys_to_snake_case(json_with_camel_case_keys: dict) -> dict:

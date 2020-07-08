@@ -88,7 +88,8 @@ class TestAllConverterHelpers(unittest.TestCase):
             SectionTrackID=123,
             algorithmSectionTrack=4,
             AlgorithmNode='test',
-            debugstring='lower')
+            debugstring='lower',
+            vehicleTypeIDs=124)
 
         converted_dict = converter_helpers.convert_keys_to_snake_case(test_dict)
 
@@ -98,7 +99,8 @@ class TestAllConverterHelpers(unittest.TestCase):
             section_track_id=123,
             algorithm_section_track=4,
             algorithm_node='test',
-            debugstring='lower')
+            debugstring='lower',
+            vehicle_type_ids=124)
 
         self.assertIsInstance(converted_dict, dict)
         self.assertDictEqual(converted_dict, expected_dict)

@@ -1,82 +1,100 @@
 import inspect
-import AIDMClasses
-from Conversion.converter_helpers import parse_to_datetime, parse_to_timedelta, parse_to_timedelta_or_None
+from AIDMClasses import AlgorithmNode, AlgorithmNodeTrack, AlgorithmTrainPathNode, StopStatus, AlgorithmTrain, \
+    TimeWindow, AlgorithmSectionTrackClosure, AlgorithmNodeTrackClosure, IncomingRoutingEdgeSet, IncomingRoutingEdge, \
+    OutgoingRoutingEdgeSet, OutgoingRoutingEdge, CrossingRoutingEdgeSet, CrossingRoutingEdge, UpdateTrainTimes, \
+    UpdateTrainTimesNode
+from Conversion.converter_helpers import parse_to_datetime, parse_to_timedelta, parse_to_timedelta_or_None, \
+    convert_keys_to_snake_case, convert_to_snake_case
 
 
 def convert(AIDM_class_or_AIDM_class_factory, attribute_dict: dict):
+    snake_case_attribute_dict = convert_keys_to_snake_case(attribute_dict)
     is_factory_method = inspect.isfunction(AIDM_class_or_AIDM_class_factory)
     if is_factory_method:
-        return AIDM_class_or_AIDM_class_factory(attribute_dict)
+        return AIDM_class_or_AIDM_class_factory(snake_case_attribute_dict)
     else:
-        return AIDM_class_or_AIDM_class_factory(**attribute_dict)
+        return AIDM_class_or_AIDM_class_factory(**snake_case_attribute_dict)
 
 
 def convert_list(AIDM_class, list_of_dict: list) -> list:
     return [convert(AIDM_class, dict_from_list) for dict_from_list in list_of_dict]
 
 
-def convert_json_to_AlgorithmNode(attribute_dict: dict) -> AIDMClasses.AlgorithmNode:
-    attribute_dict['NodeTracks'] = convert_list(AIDMClasses.AlgorithmNodeTrack, attribute_dict['NodeTracks'])
-    return convert(AIDMClasses.AlgorithmNode, attribute_dict)
+def convert_json_to_AlgorithmNode(attribute_dict: dict) -> AlgorithmNode:
+    snake_case_dict = convert_keys_to_snake_case(attribute_dict)
+    snake_case_dict['node_tracks'] = convert_list(AlgorithmNodeTrack, snake_case_dict['node_tracks'])
+    return convert(AlgorithmNode, snake_case_dict)
 
 
-def convert_json_to_AlgorithmTrainPathNode(attribute_dict: dict) -> AIDMClasses.AlgorithmTrainPathNode:
-    attribute_dict['StopStatus'] = AIDMClasses.StopStatus[attribute_dict['StopStatus']]
-    for key in ['ArrivalTime', 'DepartureTime']:
-        attribute_dict[key] = parse_to_datetime(attribute_dict[key])
-    attribute_dict['MinimumRunTime'] = parse_to_timedelta_or_None(attribute_dict['MinimumRunTime'])
-    attribute_dict['MinimumStopTime'] = parse_to_timedelta(attribute_dict['MinimumStopTime'])
-    return convert(AIDMClasses.AlgorithmTrainPathNode, attribute_dict)
+def convert_json_to_AlgorithmTrainPathNode(attribute_dict: dict) -> AlgorithmTrainPathNode:
+    snake_case_dict = convert_keys_to_snake_case(attribute_dict)
+    stop_status_value = snake_case_dict['stop_status']
+    snake_case_dict['stop_status'] = StopStatus[convert_to_snake_case(stop_status_value)]
+    for key in ['arrival_time', 'departure_time']:
+        snake_case_dict[key] = parse_to_datetime(snake_case_dict[key])
+    snake_case_dict['minimum_run_time'] = parse_to_timedelta_or_None(snake_case_dict['minimum_run_time'])
+    snake_case_dict['minimum_stop_time'] = parse_to_timedelta(snake_case_dict['minimum_stop_time'])
+    return convert(AlgorithmTrainPathNode, snake_case_dict)
 
 
-def convert_json_to_AlgorithmTrain(attribute_dict: dict) -> AIDMClasses.AlgorithmTrain:
-    attribute_dict['TrainPathNodes'] = [convert_json_to_AlgorithmTrainPathNode(train_path_node)
-                                        for train_path_node in attribute_dict['TrainPathNodes']]
-    return convert(AIDMClasses.AlgorithmTrain, attribute_dict)
+def convert_json_to_AlgorithmTrain(attribute_dict: dict) -> AlgorithmTrain:
+    snake_case_dict = convert_keys_to_snake_case(attribute_dict)
+    snake_case_dict['train_path_nodes'] = [convert_json_to_AlgorithmTrainPathNode(train_path_node)
+                                           for train_path_node in snake_case_dict['train_path_nodes']]
+    return convert(AlgorithmTrain, snake_case_dict)
 
 
-def convert_json_to_TimeWindow(attribute_dict: dict) -> AIDMClasses.TimeWindow:
-    for key in ['FromTime', 'ToTime']:
-        attribute_dict[key] = parse_to_datetime(attribute_dict[key])
-    return convert(AIDMClasses.TimeWindow, attribute_dict)
+def convert_json_to_TimeWindow(attribute_dict: dict) -> TimeWindow:
+    snake_case_dict = convert_keys_to_snake_case(attribute_dict)
+    for key in ['from_time', 'to_time']:
+        snake_case_dict[key] = parse_to_datetime(snake_case_dict[key])
+    return convert(TimeWindow, snake_case_dict)
 
 
-def convert_json_to_AlgorithmSectionTrackClosure(attribute_dict: dict) -> AIDMClasses.AlgorithmSectionTrackClosure:
-    for key in ['ClosureTimeWindowFromNode', 'ClosureTimeWindowToNode']:
-        attribute_dict[key] = convert_json_to_TimeWindow(attribute_dict[key])
-    return convert(AIDMClasses.AlgorithmSectionTrackClosure, attribute_dict)
+def convert_json_to_AlgorithmSectionTrackClosure(attribute_dict: dict) -> AlgorithmSectionTrackClosure:
+    snake_case_dict = convert_keys_to_snake_case(attribute_dict)
+    for key in ['closure_time_window_from_node', 'closure_time_window_to_node']:
+        snake_case_dict[key] = convert_json_to_TimeWindow(snake_case_dict[key])
+    return convert(AlgorithmSectionTrackClosure, snake_case_dict)
 
 
-def convert_json_to_AlgorithmNodeTrackClosure(attribute_dict: dict) -> AIDMClasses.AlgorithmNodeTrackClosure:
-    attribute_dict["ClosureTimeWindow"] = convert_json_to_TimeWindow(attribute_dict["ClosureTimeWindow"])
-    return convert(AIDMClasses.AlgorithmNodeTrackClosure, attribute_dict)
+def convert_json_to_AlgorithmNodeTrackClosure(attribute_dict: dict) -> AlgorithmNodeTrackClosure:
+    snake_case_dict = convert_keys_to_snake_case(attribute_dict)
+    snake_case_dict["closure_time_window"] = convert_json_to_TimeWindow(snake_case_dict["closure_time_window"])
+    return convert(AlgorithmNodeTrackClosure, snake_case_dict)
 
 
-def convert_json_to_IncomingRoutingEdgeSet(attribute_dict: dict) -> AIDMClasses.IncomingRoutingEdgeSet:
-    attribute_dict["IncomingEdges"] = convert_list(AIDMClasses.IncomingRoutingEdge, attribute_dict["IncomingEdges"])
-    return convert(AIDMClasses.IncomingRoutingEdgeSet, attribute_dict)
+def convert_json_to_IncomingRoutingEdgeSet(attribute_dict: dict) -> IncomingRoutingEdgeSet:
+    snake_case_dict = convert_keys_to_snake_case(attribute_dict)
+    snake_case_dict["incoming_edges"] = convert_list(IncomingRoutingEdge, snake_case_dict["incoming_edges"])
+    return convert(IncomingRoutingEdgeSet, snake_case_dict)
 
 
-def convert_json_to_OutgoingRoutingEdgeSet(attribute_dict: dict) -> AIDMClasses.OutgoingRoutingEdgeSet:
-    attribute_dict["OutgoingEdges"] = convert_list(AIDMClasses.OutgoingRoutingEdge, attribute_dict["OutgoingEdges"])
-    return convert(AIDMClasses.OutgoingRoutingEdgeSet, attribute_dict)
+def convert_json_to_OutgoingRoutingEdgeSet(attribute_dict: dict) -> OutgoingRoutingEdgeSet:
+    snake_case_dict = convert_keys_to_snake_case(attribute_dict)
+    snake_case_dict["outgoing_edges"] = convert_list(OutgoingRoutingEdge, snake_case_dict["outgoing_edges"])
+    return convert(OutgoingRoutingEdgeSet, snake_case_dict)
 
 
-def convert_json_to_CrossingRoutingEdgeSet(attribute_dict: dict) -> AIDMClasses.CrossingRoutingEdgeSet:
-    attribute_dict["CrossingEdges"] = convert_list(AIDMClasses.CrossingRoutingEdge, attribute_dict["CrossingEdges"])
-    return convert(AIDMClasses.CrossingRoutingEdgeSet, attribute_dict)
+def convert_json_to_CrossingRoutingEdgeSet(attribute_dict: dict) -> CrossingRoutingEdgeSet:
+    snake_case_dict = convert_keys_to_snake_case(attribute_dict)
+    snake_case_dict["crossing_edges"] = convert_list(CrossingRoutingEdge, snake_case_dict["crossing_edges"])
+    return convert(CrossingRoutingEdgeSet, snake_case_dict)
 
 
-def convert_json_to_UpdateTrainTimes(attribute_dict: dict) -> AIDMClasses.UpdateTrainTimes:
-    attribute_dict["Times"] = convert_list(convert_json_to_UpdateTrainTimesNode, attribute_dict["Times"])
-    return convert(AIDMClasses.UpdateTrainTimes, attribute_dict)
+def convert_json_to_UpdateTrainTimes(attribute_dict: dict) -> UpdateTrainTimes:
+    snake_case_dict = convert_keys_to_snake_case(attribute_dict)
+    snake_case_dict["times"] = convert_list(convert_json_to_UpdateTrainTimesNode, snake_case_dict["times"])
+    return convert(UpdateTrainTimes, snake_case_dict)
 
 
-def convert_json_to_UpdateTrainTimesNode(attribute_dict: dict) -> AIDMClasses.UpdateTrainTimesNode:
-    for key in ['ArrivalTime', 'DepartureTime']:
-        attribute_dict[key] = parse_to_datetime(attribute_dict[key])
-    for key in ['MinimumRunTime', 'MinimumStopTime']:
-        attribute_dict[key] = parse_to_timedelta_or_None(attribute_dict[key])
-    if attribute_dict['StopStatus'] is not None:
-        attribute_dict['StopStatus'] = AIDMClasses.StopStatus[attribute_dict['StopStatus']]
-    return convert(AIDMClasses.UpdateTrainTimesNode, attribute_dict)
+def convert_json_to_UpdateTrainTimesNode(attribute_dict: dict) -> UpdateTrainTimesNode:
+    snake_case_dict = convert_keys_to_snake_case(attribute_dict)
+    for key in ['arrival_time', 'departure_time']:
+        snake_case_dict[key] = parse_to_datetime(snake_case_dict[key])
+    for key in ['minimum_run_time', 'minimum_stop_time']:
+        snake_case_dict[key] = parse_to_timedelta_or_None(snake_case_dict[key])
+    if snake_case_dict['stop_status'] is not None:
+        stop_status_value = snake_case_dict['stop_status']
+        snake_case_dict['stop_status'] = StopStatus[convert_to_snake_case(stop_status_value)]
+    return convert(UpdateTrainTimesNode, snake_case_dict)

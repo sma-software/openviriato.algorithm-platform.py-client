@@ -1,5 +1,5 @@
 import inspect
-from AIDMClasses import AlgorithmNode, AlgorithmNodeTrack, AlgorithmTrainPathNode, StopStatus, AlgorithmTrain, \
+from aidm import AlgorithmNode, AlgorithmNodeTrack, AlgorithmTrainPathNode, StopStatus, AlgorithmTrain, \
     TimeWindow, AlgorithmSectionTrackClosure, AlgorithmNodeTrackClosure, IncomingRoutingEdgeSet, IncomingRoutingEdge, \
     OutgoingRoutingEdgeSet, OutgoingRoutingEdge, CrossingRoutingEdgeSet, CrossingRoutingEdge, UpdateTrainTimes, \
     UpdateTrainTimesNode

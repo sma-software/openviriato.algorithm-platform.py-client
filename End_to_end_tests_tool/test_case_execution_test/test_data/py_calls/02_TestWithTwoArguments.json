@@ -1,0 +1,6 @@
+﻿{
+    "PythonParameterMapping": {
+      "from_node_id" : "$.queryParameters.[0].value",
+      "to_node_id" : "$.queryParameters.[1].value"
+    }
+}

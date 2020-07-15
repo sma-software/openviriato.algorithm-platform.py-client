@@ -1,0 +1,19 @@
+﻿[
+  {
+    "ID": 1,
+    "Code": "0085AAT",
+    "DebugString": "station:0085AAT",
+    "NodeTracks": [
+      {
+        "ID": 2,
+        "Code": "1",
+        "DebugString": "stationtrack:0085AAT_1"
+      },
+      {
+        "ID": 3,
+        "Code": "2",
+        "DebugString": "stationtrack:0085AAT_2"
+      }
+    ]
+  }
+]

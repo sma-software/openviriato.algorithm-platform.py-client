@@ -1,0 +1,9 @@
+﻿{
+    "restResource": "/nodes/{nodeId}",
+    "httpMethod": "GET",
+    "urlParameters": [ "161" ],
+    "requestBody": null,
+    "CSharpMethodName": "GetNode(nodeId)",
+    "CSharpMethodParameterTypes": [ "System.Int64" ],
+    "subcategory": "Get Node"
+}

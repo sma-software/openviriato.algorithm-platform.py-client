@@ -1,2 +1,4 @@
 isodate~=0.6.0
 requests~=2.22.0
+responses~=0.10.8
+html-testRunner~=1.2.1

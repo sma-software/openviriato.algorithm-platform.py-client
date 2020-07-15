@@ -5,7 +5,7 @@ import time
 import requests
 from typing import Optional
 from End_to_end_tests_tool.runner.tests_runner_config import TestsRunnerConfig
-from AlgorithmInterface.AlgorithmInterface import AlgorithmInterface
+from py_client.algorithm_interface.algorithm_interface_factory import AlgorithmInterface
 
 
 class ViriatoHeadlessRunner:

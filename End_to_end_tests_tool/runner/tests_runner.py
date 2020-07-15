@@ -15,10 +15,13 @@ TEST_EXPECTED_DIRECTORY = 'expected'
 def print_all_test_case_statuses_and_messages_in_console(performed_tests: List[EndToEndTestCaseResult]):
     print('End to End Test results \n')
     for result in performed_tests:
-        print("Method:        {0}".format(result.invoked_method_name))
-        print("Status:        {0}".format(result.test_case_result_status.name))
-        print("Arguments:     {0}".format(result.applied_arguments))
-        print("Error Message: {0}".format(result.error_message))
+        print("Method:         {0}".format(result.invoked_method_name))
+        print("Status:         {0}".format(result.test_case_result_status.name))
+        if result.applied_arguments_result.is_success:
+            print("Arguments:      {0}".format(result.applied_arguments_result.result_value))
+        else:
+            print("Argument Error: {0}".format(result.applied_arguments_result.error_message))
+        print("Error Message:  {0}".format(result.error_message))
         print('----')
 
 

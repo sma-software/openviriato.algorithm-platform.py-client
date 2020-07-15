@@ -1,0 +1,9 @@
+﻿{
+    "restResource": "/section-tracks/{section-track-id}",
+    "httpMethod": "GET",
+    "urlParameters": [ "599" ],
+    "requestBody": null,
+    "CSharpMethodName": "GetSectionTrack(sectionTrackId)",
+    "CSharpMethodParameterTypes": [ "System.Int64" ],
+    "subcategory": "Get Node"
+}

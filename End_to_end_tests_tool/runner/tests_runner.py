@@ -3,7 +3,7 @@ from typing import List
 from py_client.algorithm_interface import algorithm_interface_factory
 from End_to_end_tests_tool.runner import tests_runner_config_file_reader, headless_runner
 from End_to_end_tests_tool.runner.tests_runner_config import TestsRunnerConfig
-from End_to_end_tests_tool.test_case_execution.test_case_result import ExecutedEndToEndTest
+from End_to_end_tests_tool.test_case_execution.test_case_result import EndToEndTestCaseResult
 from End_to_end_tests_tool.test_case_execution.test_case_executor import execute_test_case
 from End_to_end_tests_tool.test_case_execution.test_case_reader import read_test_cases_from_calls_py_calls_and_expected
 
@@ -12,12 +12,13 @@ PY_CALL_DIRECTORY = 'py_calls'
 TEST_EXPECTED_DIRECTORY = 'expected'
 
 
-def print_all_test_case_statuses_and_messages_in_console(performed_tests: List[ExecutedEndToEndTest]):
+def print_all_test_case_statuses_and_messages_in_console(performed_tests: List[EndToEndTestCaseResult]):
     print('End to End Test results \n')
-    for case in performed_tests:
-        print(case.executed_test_case.name_of_method_to_test)
-        print(case.test_case_result.test_case_result_status.name)
-        print(case.test_case_result.error_message)
+    for result in performed_tests:
+        print("Method:        {0}".format(result.invoked_method_name))
+        print("Status:        {0}".format(result.test_case_result_status.name))
+        print("Arguments:     {0}".format(result.applied_arguments))
+        print("Error Message: {0}".format(result.error_message))
         print('----')
 
 
@@ -28,7 +29,7 @@ def __find_absolute_paths_of_jsons_in_data_subdir(headless_runner_config: TestsR
             for name in files if name.endswith('.json')]
 
 
-def run_end_to_end_tests(root_directory: str, configuration_file_path: str) -> List[ExecutedEndToEndTest]:
+def run_end_to_end_tests(root_directory: str, configuration_file_path: str) -> List[EndToEndTestCaseResult]:
     headless_runner_config = tests_runner_config_file_reader.read_headless_runner_config_from_config_file(
         root_directory,
         configuration_file_path)

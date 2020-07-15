@@ -228,15 +228,9 @@ class AlgorithmInterface:
     def update_train_times(
             self,
             train_id: int,
-<<<<<<< HEAD:algorithm_interface/algorithm_interface.py
-            update_train_times_nodes: List[aidm.UpdateTrainTimesNode]
-    ) -> aidm.AlgorithmTrain:
-        url_to_resource = 'trains/{0}/train-path-nodes:update-times'.format(train_id)
-=======
             update_train_times_nodes: List[UpdateTrainTimesNode]
     ) -> AlgorithmTrain:
-        url_to_resource = 'trains/{0}/train-path-nodes'.format(train_id)
->>>>>>> 9052803... VPLAT-7605: Test Moved aidm and interface into py_client directory:py_client/algorithm_interface/algorithm_interface.py
+        url_to_resource = 'trains/{0}/train-path-nodes:update-times'.format(train_id)
         put_body_list = object_to_algorithm_platform_json_converter.convert_any_object(update_train_times_nodes)
         response_dict = self.__communication_layer.do_put_request(url_to_resource, request_body=put_body_list)
         return algorithm_platform_json_to_AIDM_converter.convert_json_to_AlgorithmTrain(response_dict)

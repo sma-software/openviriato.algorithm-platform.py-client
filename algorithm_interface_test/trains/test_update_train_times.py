@@ -70,7 +70,7 @@ class TestUpdateTrainTimes(unittest.TestCase):
 
         session_obj = self.interface_to_viriato._AlgorithmInterface__communication_layer.currentSession
         self.assertEqual(session_obj._UpdateTrainTimesTestMockSession__last_request,
-                         get_api_url() + '/trains/2060/train-path-nodes')
+                         get_api_url() + '/trains/2060/train-path-nodes:update-times')
         self.assertListEqual(session_obj._UpdateTrainTimesTestMockSession__last_body, [{"TrainPathNodeID": 1332,
                                                                                         "ArrivalTime":
                                                                                             "2003-05-01T00:04:00",

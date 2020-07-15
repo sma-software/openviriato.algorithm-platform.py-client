@@ -230,7 +230,7 @@ class AlgorithmInterface:
             train_id: int,
             update_train_times_nodes: List[aidm.UpdateTrainTimesNode]
     ) -> aidm.AlgorithmTrain:
-        url_to_resource = 'trains/{0}/train-path-nodes'.format(train_id)
+        url_to_resource = 'trains/{0}/train-path-nodes:update-times'.format(train_id)
         put_body_list = object_to_algorithm_platform_json_converter.convert_any_object(update_train_times_nodes)
         response_dict = self.__communication_layer.do_put_request(url_to_resource, request_body=put_body_list)
         return algorithm_platform_json_to_AIDM_converter.convert_json_to_AlgorithmTrain(response_dict)

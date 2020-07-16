@@ -1,0 +1,26 @@
+﻿[
+    {
+        "Code": "0085HED",
+        "DebugString": "station:0085HED",
+        "ID": 158,
+        "NodeTracks": [
+            {
+                "ID": 159,
+                "Code": "1",
+                "DebugString": "stationtrack:0085HED_1"
+            },
+            {
+                "ID": 160,
+                "Code": "2",
+                "DebugString": "stationtrack:0085HED_2"
+            }
+        ]
+    },
+    {
+        "Code": "0085BONS",
+        "DebugString": "station:0085BONS",
+        "ID": 51,
+        "NodeTracks": []
+    }
+]
+

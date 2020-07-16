@@ -108,7 +108,7 @@ class TestCase(unittest.TestCase):
         self.assertFalse(test_case.arguments_for_py_client_method_result.is_success)
         self.assertEqual(
             test_case.arguments_for_py_client_method_result.error_message,
-            'Extra mapping parameter: to_node_id')
+            'Extra mapping keys: to_node_id')
         self.assertEqual(test_case.name_of_method_to_test, "test_one_mapping_extra")
         self.assertDictEqual(test_case.expected_response_as_json, expected_json)
 
@@ -127,7 +127,7 @@ class TestCase(unittest.TestCase):
         self.assertFalse(test_case.arguments_for_py_client_method_result.is_success)
         self.assertEqual(
             test_case.arguments_for_py_client_method_result.error_message,
-            "No argument found for jpath $.queryParameters.[0].value")
+            "No value found for jpath $.queryParameters.[0].value")
         self.assertEqual(test_case.name_of_method_to_test, "get_section_track")
         self.assertDictEqual(test_case.expected_response_as_json, expected_json)
 
@@ -152,7 +152,7 @@ class TestCase(unittest.TestCase):
         self.assertFalse(test_case.arguments_for_py_client_method_result.is_success)
         self.assertEqual(
             test_case.arguments_for_py_client_method_result.error_message,
-            "No argument found for jpath NotAValidPathExpression")
+            "Can not parse jpath: ?NotAValidPathExpression")
         self.assertEqual(test_case.name_of_method_to_test, "get_section_track")
         self.assertDictEqual(test_case.expected_response_as_json, expected_json)
 

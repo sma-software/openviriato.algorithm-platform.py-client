@@ -1,0 +1,11 @@
+﻿{
+  "PythonObjectMapping" : [
+    {
+      "ParameterName" : "routing_point",
+      "ClassName": "RoutingPointers",
+      "PythonParameterMapping": {
+        "node_id" : "$.queryParameters.[0]"
+      }
+    }
+  ]
+}

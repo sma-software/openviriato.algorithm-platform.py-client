@@ -1,0 +1,11 @@
+﻿{
+  "PythonObjectMapping" : [
+    {
+      "ParameterName" : "another_object",
+      "ClassName": "RoutingPointers",
+      "PythonParameterMapping": {
+        "node_id" : "$.urlParameters.[0]"
+      }
+    }
+  ]
+}

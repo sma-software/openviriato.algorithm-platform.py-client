@@ -69,10 +69,18 @@ def _evaluate_python_object_mapping(py_method_parameter_names,
             return result.from_error('Missing class name for parameter: {0}'.format(py_method_parameter_name))
         expected_class_name = found_mappings[0]['ClassName']
 
+        if not primitive_values.is_success:
+            return primitive_values
+
         primitive_values_by_parameter_keys = {
             key: primitive_values.result_value[i] for i, key in enumerate(parameter_mapping_for_object.keys())}
         try:
             expected_class = eval(expected_class_name)
+        except NameError:
+            return result.from_error("Class {0} is not defined for {1}".format(
+                expected_class_name,
+                py_method_parameter_name))
+        try:
             object_arguments.append(convert(expected_class, primitive_values_by_parameter_keys))
         except TypeError:
             return result.from_error("Conversion failed for class {0} in parameter {1}".format(

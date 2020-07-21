@@ -1,0 +1,11 @@
+﻿{
+  "PythonObjectMapping" : [
+    {
+      "ParameterName" : "routing_point",
+      "ClassName": "TimeWindow",
+      "PythonParameterMapping": {
+        "node_id" : "$.urlParameters.[0]"
+      }
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+﻿{
+  "PythonObjectMapping" : [
+    {
+      "ParameterName" : "routing_point",
+      "PythonParameterMapping": {
+        "node_id" : "$.urlParameters.[0]"
+      }
+    }
+  ]
+}

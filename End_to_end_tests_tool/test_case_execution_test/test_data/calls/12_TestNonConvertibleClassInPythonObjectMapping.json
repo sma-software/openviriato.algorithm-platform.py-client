@@ -1,0 +1,22 @@
+﻿{
+    "restResource": "/nodes/{id}/incoming-routing-edges",
+    "httpMethod": "GET",
+    "urlParameters": [  ],
+    "queryParameters":
+    [
+        {
+            "key": "ToNodeID",
+            "value": "348",
+            "optional": true
+        },
+        {
+            "key": "FromNodeID",
+            "value": "348",
+            "optional": true
+        }
+    ],
+    "requestBody": null,
+    "CSharpMethodName": "GetIncomingRoutingEdges(routingPoint)",
+    "CSharpMethodParameterTypes": [ "SMA.AlgorithmPlatform.AlgorithmInterface.AIDM.RoutingPoint" ],
+    "subcategory": "Get Incoming Routing Edges"
+}

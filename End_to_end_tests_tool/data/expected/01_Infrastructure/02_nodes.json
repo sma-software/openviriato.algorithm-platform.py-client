@@ -1,8 +1,18 @@
 ﻿{
     "ID": 161,
-    "Code": "0085HEDN",
-    "DebugString": "station:0085HEDN",
-    "NodeTracks": []
+    "Code": "85AR",
+    "DebugString": "station:85AR",
+    "NodeTracks":
+    [
+        {
+            "ID": 162,
+            "Code": "1",
+            "DebugString": "stationtrack:85AR_{StationTrack SID = 34138}"
+        },
+        {
+            "ID": 163,
+            "Code": "2",
+            "DebugString": "stationtrack:85AR_{StationTrack SID = 34140}"
+        }
+    ]
 }
-
-

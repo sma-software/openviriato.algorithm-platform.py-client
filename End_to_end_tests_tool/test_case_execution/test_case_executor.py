@@ -1,5 +1,5 @@
 from py_client.algorithm_interface.algorithm_interface import AlgorithmInterface
-from py_client.Conversion import object_to_algorithm_platform_json_converter
+from py_client.conversion import object_to_algorithm_platform_json_converter
 from py_client.communication.response_processing import AlgorithmPlatformError
 from End_to_end_tests_tool.test_case_execution.test_case import EndToEndTestCase
 from End_to_end_tests_tool.test_case_execution.test_case_result import EndToEndTestCaseResult, TestCaseResultStatus

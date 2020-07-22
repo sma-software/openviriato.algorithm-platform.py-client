@@ -2,7 +2,7 @@ import json
 from jsonpath_ng import parse
 from typing import List, Dict
 from End_to_end_tests_tool.test_case_execution.test_case import EndToEndTestCase
-from py_client.Conversion.converter_helpers import _translate_key
+from py_client.conversion.converter_helpers import _translate_key
 from End_to_end_tests_tool import result
 
 

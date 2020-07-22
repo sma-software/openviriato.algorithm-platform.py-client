@@ -61,7 +61,9 @@ class TestGetNode(TestCase):
         self.assertEqual(node_from_mocked_response.code, '85AR')
         self.assertEqual(node_from_mocked_response.debug_string, "station:85AR")
         self.assertEqual(node_from_mocked_response.node_tracks[0].id, 162)
-        self.assertEqual(node_from_mocked_response.node_tracks[0].debug_string, "stationtrack:85AR_{StationTrack SID = 34138}")
+        self.assertEqual(
+            node_from_mocked_response.node_tracks[0].debug_string,
+            "stationtrack:85AR_{StationTrack SID = 34138}")
 
     @mock.patch('requests.Session', side_effect=GetNodeTestSessionMock)
     def tearDown(self, mocked_get_obj) -> None:

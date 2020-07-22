@@ -69,10 +69,10 @@ class TestSetSectionTrack(TestCase):
 
     @mock.patch('requests.Session', side_effect=SetSectionTrackTestMockSession)
     def test_set_section_track_response(self, mocked_get_obj):
-        TrainPathNodeID = 1
-        SectionTrackID = 1
+        train_path_node_id = 1
+        section_track_id = 1
 
-        test_algorithm_train = self.interface_to_viriato.set_section_track(TrainPathNodeID, SectionTrackID)
+        test_algorithm_train = self.interface_to_viriato.set_section_track(train_path_node_id, section_track_id)
 
         self.assertIsInstance(test_algorithm_train, py_client.aidm.aidm_algorithm_classes.AlgorithmTrain)
         self.assertEqual(2060, test_algorithm_train.id)

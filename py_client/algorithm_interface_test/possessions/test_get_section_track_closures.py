@@ -85,7 +85,9 @@ class TestGetSectionTrackClosures(unittest.TestCase):
         self.assertIsInstance(
             list_of_section_track_closure[0].closure_time_window_from_node,
             py_client.aidm.aidm_time_window_classes.TimeWindow)
-        self.assertEqual(list_of_section_track_closure[0].debug_string, 'sectiontrackclosure:s_70011 1 n_85ZMUS 85ZLSTA')
+        self.assertEqual(
+            list_of_section_track_closure[0].debug_string,
+            'sectiontrackclosure:s_70011 1 n_85ZMUS 85ZLSTA')
         self.assertEqual(
             list_of_section_track_closure[0].closure_time_window_from_node.from_time,
             datetime.datetime(2003, 5, 1, 8, 0))

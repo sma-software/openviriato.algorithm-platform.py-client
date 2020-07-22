@@ -25,8 +25,9 @@ class TestUserNotifications(unittest.TestCase):
 
         session_obj = interface_to_viriato._AlgorithmInterface__communication_layer.currentSession
         self.assertEqual(session_obj._UserNotificationSessionTestMock__last_request, get_api_url() + '/notifications')
-        self.assertDictEqual(session_obj._UserNotificationSessionTestMock__last_body,
-                         {'messageLevel1': 'hi', 'messageLevel2': 'it works'})
+        self.assertDictEqual(
+            session_obj._UserNotificationSessionTestMock__last_body,
+            {'messageLevel1': 'hi', 'messageLevel2': 'it works'})
 
 
 if __name__ == '__main__':

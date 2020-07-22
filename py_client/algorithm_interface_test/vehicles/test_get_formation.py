@@ -29,7 +29,7 @@ class TestGetFormation(unittest.TestCase):
 
     @mock.patch('requests.Session', side_effect=GetGetFormationTestSessionMock)
     def test_get_formation_request(self, mocked_get_obj):
-        formation_id=1828
+        formation_id = 1828
 
         self.interface_to_viriato.get_formation(formation_id=formation_id)
 

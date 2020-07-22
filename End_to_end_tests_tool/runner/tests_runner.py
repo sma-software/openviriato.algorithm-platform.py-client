@@ -54,7 +54,7 @@ def run_end_to_end_tests(root_directory: str, configuration_file_path: str) -> L
                 TEST_EXPECTED_DIRECTORY)
 
             performed_tests = []
-            for examples_file_path, py_call_file_path, expected_file_path,  in \
+            for examples_file_path, py_call_file_path, expected_file_path, in \
                     zip(examples_json_files_with_path, py_call_json_files_with_path, expected_json_files_with_path):
                 end_to_end_test_case = read_test_cases_from_calls_py_calls_and_expected(
                     examples_file_path,

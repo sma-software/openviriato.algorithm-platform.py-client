@@ -138,10 +138,10 @@ class AlgorithmInterface:
     def get_trains_driving_any_node(
             self,
             time_window: TimeWindow,
-            nodeIDs: List[int]
+            node_ids: List[int]
     ) -> List[AlgorithmTrain]:
         url_to_resource = "trains"
-        manual_converted_query_parameters = dict(NodeFilter=nodeIDs)
+        manual_converted_query_parameters = dict(NodeFilter=node_ids)
         query_parameters = merge_query_parameters(
             [
                 manual_converted_query_parameters,
@@ -173,10 +173,10 @@ class AlgorithmInterface:
     def get_trains_cut_to_time_range_driving_any_node(
             self,
             time_window: TimeWindow,
-            nodeIDs: List[int]
+            node_ids: List[int]
     ) -> List[AlgorithmTrain]:
         url_to_resource = "trains"
-        manual_converted_query_parameters = dict(CutTrain=True, NodeFilter=nodeIDs)
+        manual_converted_query_parameters = dict(CutTrain=True, NodeFilter=node_ids)
         query_parameters = merge_query_parameters(
             [
                 manual_converted_query_parameters,
@@ -395,14 +395,12 @@ class AlgorithmInterface:
             from_node_id: int,
             to_node_id: int
     ) -> datetime.timedelta:
-        url_to_resource = 'headway-times/between-train-path-nodes/{0}/{1}/for-section-track/{2}/' \
-                          'in-direction/{3}/{4}'.format(
-            preceding_train_path_node_id,
-            succeeding_train_path_node_id,
-            section_track_id,
-            from_node_id,
-            to_node_id
-        )
+        url_to_resource = 'headway-times/between-train-path-nodes/{0}/{1}/for-section-track/{2}/in-direction/{3}/{4}' \
+            .format(preceding_train_path_node_id,
+                    succeeding_train_path_node_id,
+                    section_track_id,
+                    from_node_id,
+                    to_node_id)
         response_dict = self.__communication_layer.do_get_request(url_to_resource)
         return converter_helpers.parse_to_timedelta(response_dict["headwayTime"])
 
@@ -420,20 +418,20 @@ class AlgorithmInterface:
 
     def get_assignable_station_tracks_on_train_path_node(
             self,
-            trainPathNodeId: int
+            train_path_node_id: int
     ) -> List[AlgorithmNodeTrack]:
         url_to_resource = "assignable-station-tracks-on-train-path-node"
-        get_request_params = dict(TrainPathNodeID=trainPathNodeId)
+        get_request_params = dict(TrainPathNodeID=train_path_node_id)
         response_list = self.__communication_layer.do_get_request(url_to_resource, get_request_params)
         return algorithm_platform_json_to_AIDM_converter.convert_list(AlgorithmNodeTrack, response_list)
 
     def assign_station_track(
             self,
-            trainPathNodeId: int,
-            stationTrackIDOrNone: Optional[int] = None
+            train_path_node_id: int,
+            station_track_id_or_none: Optional[int] = None
     ) -> AlgorithmTrain:
         url_to_resource = "assign-station-track"
-        post_request_body = dict(TrainPathNodeID=trainPathNodeId, NodeTrackID=str(stationTrackIDOrNone))
+        post_request_body = dict(TrainPathNodeID=train_path_node_id, NodeTrackID=str(station_track_id_or_none))
         response_dict = self.__communication_layer.do_post_request(url_to_resource, post_request_body)
         return algorithm_platform_json_to_AIDM_converter.convert_json_to_AlgorithmTrain(response_dict)
 

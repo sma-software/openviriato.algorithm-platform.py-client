@@ -7,8 +7,8 @@ from py_client.algorithm_interface import algorithm_interface_factory
 from py_client.algorithm_interface_test.test_helper.SessionMockTestBase import get_api_url, SessionMockTestBase
 
 
-class TestGetOutgoingrouting_edges(unittest.TestCase):
-    class GetOutgoingrouting_edgesTestSessionMock(SessionMockTestBase):
+class TestGetOutgoingRoutingEdges(unittest.TestCase):
+    class GetOutgoingRoutingEdgesTestSessionMock(SessionMockTestBase):
         def get(self, request, params):
             self.__last_request = request
             self.__last_body = params
@@ -46,11 +46,11 @@ class TestGetOutgoingrouting_edges(unittest.TestCase):
 
             return APISessionMock.create_response_mock(json_string, 200)
 
-    @mock.patch('requests.Session', side_effect=GetOutgoingrouting_edgesTestSessionMock)
+    @mock.patch('requests.Session', side_effect=GetOutgoingRoutingEdgesTestSessionMock)
     def setUp(self, mocked_get_obj):
         self.interface_to_viriato = algorithm_interface_factory.create(get_api_url())
 
-    @mock.patch('requests.Session', side_effect=GetOutgoingrouting_edgesTestSessionMock)
+    @mock.patch('requests.Session', side_effect=GetOutgoingRoutingEdgesTestSessionMock)
     def test_get_outgoing_routing_edges_request(self, mocked_get_obj):
         routing_point = RoutingPoint(node_id=1, node_track_id=12)
 
@@ -58,10 +58,10 @@ class TestGetOutgoingrouting_edges(unittest.TestCase):
 
         session_obj = self.interface_to_viriato._AlgorithmInterface__communication_layer.currentSession
         self.assertEqual(get_api_url() + "/nodes/1/outgoing-routing-edges",
-                         session_obj._GetOutgoingrouting_edgesTestSessionMock__last_request)
-        self.assertDictEqual(session_obj._GetOutgoingrouting_edgesTestSessionMock__last_body, {"StartNodeTrackID": 12})
+                         session_obj._GetOutgoingRoutingEdgesTestSessionMock__last_request)
+        self.assertDictEqual(session_obj._GetOutgoingRoutingEdgesTestSessionMock__last_body, {"StartNodeTrackID": 12})
 
-    @mock.patch('requests.Session', side_effect=GetOutgoingrouting_edgesTestSessionMock)
+    @mock.patch('requests.Session', side_effect=GetOutgoingRoutingEdgesTestSessionMock)
     def test_get_outgoing_routing_edges_response_only_node_id(self, mocked_get_obj):
         routing_point = RoutingPoint(node_id=161)
 
@@ -84,7 +84,7 @@ class TestGetOutgoingrouting_edges(unittest.TestCase):
 
         self.assertEqual(len(routing_edges.routing_edges), 3)
 
-    @mock.patch('requests.Session', side_effect=GetOutgoingrouting_edgesTestSessionMock)
+    @mock.patch('requests.Session', side_effect=GetOutgoingRoutingEdgesTestSessionMock)
     def test_get_outgoing_routing_edges_response_node_id_response_and_node_track_id(self, mocked_get_obj):
         routing_point = RoutingPoint(node_id=1, node_track_id=21)
 
@@ -98,7 +98,7 @@ class TestGetOutgoingrouting_edges(unittest.TestCase):
 
         self.assertEqual(len(routing_edges.routing_edges), 1)
 
-    @mock.patch('requests.Session', side_effect=GetOutgoingrouting_edgesTestSessionMock)
+    @mock.patch('requests.Session', side_effect=GetOutgoingRoutingEdgesTestSessionMock)
     def tearDown(self, mocked_get_obj) -> None:
         self.interface_to_viriato.__exit__(None, None, None)
 

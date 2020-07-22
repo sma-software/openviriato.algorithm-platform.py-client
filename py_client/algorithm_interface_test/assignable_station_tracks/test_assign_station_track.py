@@ -69,10 +69,10 @@ class TestSetStationTracksNode(unittest.TestCase):
     @mock.patch('requests.Session', side_effect=SetStationTracksNodeTestSessionMock)
     def test_assign_station_track_request(self, mocked_get_obj):
         train_path_node_id = 50
-        station_track_id = "162"
+        station_track_id = 162
 
-        self.interface_to_viriato.assign_station_track(trainPathNodeId=train_path_node_id,
-                                                       stationTrackIDOrNone=station_track_id)
+        self.interface_to_viriato.assign_station_track(train_path_node_id=train_path_node_id,
+                                                       station_track_id_or_none=station_track_id)
 
         session_obj = self.interface_to_viriato._AlgorithmInterface__communication_layer.currentSession
         self.assertEqual(session_obj._SetStationTracksNodeTestSessionMock__last_request,
@@ -84,7 +84,7 @@ class TestSetStationTracksNode(unittest.TestCase):
     def test_assign_station_track_response(self, mocked_get_obj):
         train_path_node_id = 1
 
-        test_train = self.interface_to_viriato.assign_station_track(trainPathNodeId=train_path_node_id)
+        test_train = self.interface_to_viriato.assign_station_track(train_path_node_id=train_path_node_id)
 
         self.assertIsInstance(test_train, py_client.aidm.aidm_algorithm_classes.AlgorithmTrain)
         self.assertIsInstance(test_train.train_path_nodes[0], aidm_train_path_node_classes.AlgorithmTrainPathNode)

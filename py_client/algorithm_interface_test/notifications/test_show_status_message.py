@@ -18,7 +18,7 @@ class TestShowStatusMessage(unittest.TestCase):
     @mock.patch('requests.Session', side_effect=ShowStatusMessageSessionTestMock)
     def test_show_status_message_one_str(self, mocked_requests_session):
         with algorithm_interface_factory.create(get_api_url()) as interface_to_viriato:
-            message_1 = 'Only One Message Sent';
+            message_1 = 'Only One Message Sent'
 
             interface_to_viriato.show_status_message(message_1)
 
@@ -40,7 +40,7 @@ class TestShowStatusMessage(unittest.TestCase):
             self.assertEqual(session_obj._ShowStatusMessageSessionTestMock__last_request,
                              get_api_url() + '/status-message')
             self.assertDictEqual(session_obj._ShowStatusMessageSessionTestMock__last_body,
-                             {'shortMessage': 'this is the short one', 'longMessage': 'long one'})
+                                 {'shortMessage': 'this is the short one', 'longMessage': 'long one'})
 
 
 if __name__ == '__main__':

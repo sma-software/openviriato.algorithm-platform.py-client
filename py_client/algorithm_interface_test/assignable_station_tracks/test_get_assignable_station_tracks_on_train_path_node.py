@@ -32,7 +32,8 @@ class TestGetAssignableStationTracksOnTrainPathNode(unittest.TestCase):
     def test_get_assignable_station_tracks_on_train_path_node_request(self, mocked_get_obj):
         train_path_node_id = 1
 
-        self.interface_to_viriato.get_assignable_station_tracks_on_train_path_node(trainPathNodeId=train_path_node_id)
+        self.interface_to_viriato.get_assignable_station_tracks_on_train_path_node(
+            train_path_node_id=train_path_node_id)
 
         session_obj = self.interface_to_viriato._AlgorithmInterface__communication_layer.currentSession
         self.assertEqual(session_obj._GetAssignableStationTracksOnTrainPathNodeTestSessionMock__last_request,
@@ -44,7 +45,7 @@ class TestGetAssignableStationTracksOnTrainPathNode(unittest.TestCase):
     def test_get_assignable_station_tracks_on_train_path_node_response(self, mocked_get_obj):
         train_path_node_id = 1
 
-        test_list = self.interface_to_viriato.get_assignable_station_tracks_on_train_path_node(trainPathNodeId=
+        test_list = self.interface_to_viriato.get_assignable_station_tracks_on_train_path_node(train_path_node_id=
                                                                                                train_path_node_id)
 
         self.assertIsInstance(test_list, list)

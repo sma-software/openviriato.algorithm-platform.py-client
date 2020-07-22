@@ -43,7 +43,6 @@ class TestGetNeighboringNodesBetween(unittest.TestCase):
 
             return SessionMockFactory.create_response_mock(json_string, 200)
 
-
     @mock.patch('requests.Session', side_effect=GetNeighboringNodesBetweenTestMock)
     def setUp(self, mocked_get_obj):
         self.interface_to_viriato = algorithm_interface_factory.create(get_api_url())

@@ -3,16 +3,16 @@ import datetime
 from py_client.algorithm_interface.algorithm_interface_helpers import merge_query_parameters, \
     create_query_parameters_from_preceding_and_succeeding_routing_edge
 from typing import List, Optional, Union
-from py_client.Communication import CommunicationLayer
+from py_client.communication import communication_layer
 from py_client.Conversion import object_to_algorithm_platform_json_converter, converter_helpers, \
     algorithm_platform_json_to_AIDM_converter
 
 
 class AlgorithmInterface:
-    __communication_layer: CommunicationLayer.CommunicationLayer
+    __communication_layer: communication_layer.CommunicationLayer
 
     def __init__(self, base_url: str):
-        self.__communication_layer = CommunicationLayer.CommunicationLayer(base_url)
+        self.__communication_layer = communication_layer.CommunicationLayer(base_url)
 
     def __enter__(self):
         return self

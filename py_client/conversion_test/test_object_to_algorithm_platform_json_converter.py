@@ -1,8 +1,9 @@
 import datetime
 import json
 import unittest
-from py_client.aidm import AlgorithmSectionTrack, AlgorithmTrainPathNode, StopStatus
+
 import py_client.conversion.object_to_algorithm_platform_json_converter
+from py_client.aidm import AlgorithmSectionTrack, AlgorithmTrainPathNode, StopStatus
 
 
 class TestFromAIDMConverter(unittest.TestCase):

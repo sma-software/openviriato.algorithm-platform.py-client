@@ -1,4 +1,5 @@
 import unittest
+
 from py_client.aidm import AlgorithmNodeTrack
 from py_client.conversion.algorithm_platform_json_to_aidm_converter import convert, convert_json_to_algorithm_node
 

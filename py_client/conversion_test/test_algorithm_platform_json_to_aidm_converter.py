@@ -1,4 +1,5 @@
 import unittest
+
 from py_client.aidm import *
 from py_client.conversion import algorithm_platform_json_to_aidm_converter
 

@@ -1,5 +1,6 @@
 import unittest
 from unittest import mock
+
 from py_client.aidm import AlgorithmSectionTrack
 from py_client.algorithm_interface import algorithm_interface_factory
 from py_client.algorithm_interface_test.test_helper import SessionMockFactory as SessionMockFactory

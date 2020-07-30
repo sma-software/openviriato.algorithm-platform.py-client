@@ -1,5 +1,6 @@
 import unittest
 from unittest import mock
+
 import py_client.aidm.aidm_algorithm_classes
 import py_client.algorithm_interface_test.test_helper.SessionMockFactory as APISessionMock
 from py_client.aidm import aidm_train_path_node_classes

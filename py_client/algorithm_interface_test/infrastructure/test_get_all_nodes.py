@@ -1,6 +1,7 @@
 from unittest import mock, TestCase
-from py_client.aidm.aidm_algorithm_classes import AlgorithmNode, AlgorithmNodeTrack
+
 import py_client.algorithm_interface_test.test_helper.SessionMockFactory as SessionMockFactory
+from py_client.aidm.aidm_algorithm_classes import AlgorithmNode, AlgorithmNodeTrack
 from py_client.algorithm_interface import algorithm_interface_factory
 from py_client.algorithm_interface_test.test_helper.SessionMockTestBase import get_api_url, SessionMockTestBase
 

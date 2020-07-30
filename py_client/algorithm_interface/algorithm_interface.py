@@ -1,8 +1,8 @@
+from typing import Union
+
 from py_client.aidm import *
-import datetime
 from py_client.algorithm_interface.algorithm_interface_helpers import merge_query_parameters, \
     create_query_parameters_from_preceding_and_succeeding_routing_edge
-from typing import List, Optional, Union
 from py_client.communication import communication_layer
 from py_client.conversion import object_to_algorithm_platform_json_converter, converter_helpers, \
     algorithm_platform_json_to_aidm_converter

@@ -1,9 +1,10 @@
 import datetime
 import unittest
 from unittest import mock
+
+import py_client.algorithm_interface_test.test_helper.SessionMockFactory as SessionMockFactory
 from py_client.aidm import TimeWindow, AlgorithmTrain, AlgorithmTrainPathNode, StopStatus
 from py_client.algorithm_interface import algorithm_interface_factory
-import py_client.algorithm_interface_test.test_helper.SessionMockFactory as SessionMockFactory
 from py_client.algorithm_interface_test.test_helper.SessionMockTestBase import get_api_url, SessionMockTestBase
 
 

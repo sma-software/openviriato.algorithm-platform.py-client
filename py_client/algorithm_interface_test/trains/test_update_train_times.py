@@ -5,7 +5,6 @@ from unittest import mock
 import py_client.aidm.aidm_algorithm_classes
 import py_client.aidm.aidm_train_path_node_classes as aidm_classes
 import py_client.aidm.aidm_update_classes
-from py_client import algorithm_interface
 import py_client.algorithm_interface_test.test_helper.SessionMockFactory as SessionMockFactory
 from py_client.algorithm_interface import algorithm_interface_factory
 from py_client.algorithm_interface_test.test_helper.SessionMockTestBase import \

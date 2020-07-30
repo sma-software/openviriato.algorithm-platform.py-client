@@ -1,4 +1,5 @@
 from typing import List, Union
+
 from py_client.aidm import IncomingRoutingEdge, OutgoingRoutingEdge
 
 

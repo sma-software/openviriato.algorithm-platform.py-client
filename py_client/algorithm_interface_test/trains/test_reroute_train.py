@@ -1,8 +1,8 @@
 import unittest
 from unittest import mock
 
-from py_client.aidm import AlgorithmTrainPathNode, IncomingRoutingEdge, OutgoingRoutingEdge, UpdateTrainRoute
 import py_client.algorithm_interface_test.test_helper.SessionMockFactory as SessionMockFactory
+from py_client.aidm import AlgorithmTrainPathNode, IncomingRoutingEdge, OutgoingRoutingEdge, UpdateTrainRoute
 from py_client.algorithm_interface import algorithm_interface_factory
 from py_client.algorithm_interface_test.test_helper.SessionMockTestBase import get_api_url, SessionMockTestBase
 

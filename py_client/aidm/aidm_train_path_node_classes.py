@@ -1,5 +1,6 @@
 import datetime
 from typing import Optional
+
 from py_client.aidm.aidm_base_classes import _HasID
 from py_client.aidm.aidm_enum_classes import StopStatus
 

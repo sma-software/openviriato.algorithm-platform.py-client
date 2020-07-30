@@ -1,5 +1,5 @@
-from py_client.aidm.aidm_time_window_classes import TimeWindow
 from py_client.aidm.aidm_base_classes import _HasDebugString
+from py_client.aidm.aidm_time_window_classes import TimeWindow
 
 
 class AlgorithmNodeTrackClosure(_HasDebugString):

@@ -1,6 +1,8 @@
 import unittest
+
 import requests
 import responses
+
 from py_client.communication import response_processing
 
 

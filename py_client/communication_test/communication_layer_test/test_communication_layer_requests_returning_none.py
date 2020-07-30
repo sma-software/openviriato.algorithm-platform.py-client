@@ -1,5 +1,7 @@
 import unittest
+
 import responses
+
 from py_client.communication import communication_layer
 
 

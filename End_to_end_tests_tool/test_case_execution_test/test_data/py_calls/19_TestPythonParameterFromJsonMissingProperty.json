@@ -1,0 +1,11 @@
+﻿{
+  "PythonParameterFromJson" : [
+    {
+      "ParameterName" : "train_id",
+      "aidm_factory": "str",
+      "ObjectJson": {
+        "object": "2060"
+      }
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+﻿{
+    "restResource": "/nodes",
+    "httpMethod": "GET",
+    "urlParameters": null,
+    "requestBody": null,
+    "CSharpMethodName": "GetAllNodes()",
+    "CSharpMethodParameterTypes": [],
+    "subcategory": "Get All Nodes"
+}

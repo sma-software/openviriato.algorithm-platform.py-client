@@ -1,0 +1,15 @@
+﻿{
+    "restResource": "/trains/{trainID}/train-path-nodes",
+    "httpMethod": "PUT",
+    "urlParameters": [ "=shortTrain:ID=" ],
+    "requestBody": [
+        {
+            "TrainPathNodeID": "=shortTrain:TrainPathNodes[0].ID=",
+            "ArrivalTime": "2003-05-01T00:04:00",
+            "DepartureTime": "2003-05-01T00:05:00"
+        }
+    ],
+    "CSharpMethodName": "UpdateTrainTimes(trainID, times)",
+    "CSharpMethodParameterTypes": [ "System.Int64", "IImmutableList{SMA.AlgorithmPlatform.AlgorithmInterface.AIDM.IUpdateTrainTimesNode}" ],
+    "subcategory": "Update Train Times"
+}

@@ -6,6 +6,7 @@ import requests
 from typing import Optional
 from End_to_end_tests_tool.runner.tests_runner_config import TestsRunnerConfig
 from py_client.algorithm_interface.algorithm_interface_factory import AlgorithmInterface
+from py_client.communication.response_processing import AlgorithmPlatformError
 
 
 class ViriatoHeadlessRunner:
@@ -51,6 +52,10 @@ class ViriatoHeadlessRunner:
                 print("Warning *** \n No connection to runner, trying once more in {0} seconds"
                       .format(self.headless_runner_config.connection_retry_wait_seconds))
                 self.__remaining_connection_attempts -= 1
+            except AlgorithmPlatformError as algorithm_platform_error_instance:
+                print("Warning *** \n Algorithm Platform responded with an error {0}".format(
+                    algorithm_platform_error_instance.message))
+                break
 
         if self.__remaining_connection_attempts < 2:
             time.sleep(self.headless_runner_config.connection_retry_wait_seconds)

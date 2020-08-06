@@ -33,7 +33,10 @@ def main():
         project_root_directory=sys.argv[3],
         output_directory=sys.argv[4])
 
-    PackagingManager().make_package(setup_tools_arguments)
+    if PackagingManager().make_package(setup_tools_arguments):
+        sys.exit(0)
+    else:
+        sys.exit(1)
 
 
 if __name__ == '__main__':

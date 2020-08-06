@@ -1,6 +1,6 @@
 class SetupToolsArguments:
     __release_package_requirements_on_relative_path: str
-    __version: str
+    __py_client_version: str
     __project_root_directory: str
     __output_directory: str
 
@@ -20,8 +20,8 @@ class SetupToolsArguments:
         return self.__release_package_requirements_on_relative_path
 
     @property
-    def py_client_build_number(self) -> str:
-        return self.__version
+    def py_client_version(self) -> str:
+        return self.__py_client_version
 
     @property
     def project_root_directory(self) -> str:

@@ -3,7 +3,6 @@ import os
 
 
 def add_project_root_directory_to_python_path(project_root_directory):
-    # python requires the root directory on its path variables to discover the modules/packages in the project
     sys.path.append(os.path.abspath(project_root_directory))
 
 
@@ -12,7 +11,7 @@ def main():
         print(
             'Expected arguments: '
             '[py_client_version_number] '
-            '[name_of_requirements.txt] '
+            '[release_package_requirements_on_relative_path.txt] '
             '[project_root_directory] '
             '[output_directory]',
             file=sys.stderr)
@@ -23,9 +22,8 @@ def main():
     add_project_root_directory_to_python_path(project_root_directory=sys.argv[3])
     # now that we added the root-project-directory to the python path we finally can import elements from jenkins
     # package
-    from jenkins.packaging.setup_tools_runner import PackagingManager
+    from jenkins.packaging.setup_tools_runner import SetupToolsRunner
     from jenkins.packaging.setup_tools_arguments import SetupToolsArguments
-
 
     setup_tools_arguments = SetupToolsArguments(
         py_client_version_number=sys.argv[1],
@@ -33,7 +31,7 @@ def main():
         project_root_directory=sys.argv[3],
         output_directory=sys.argv[4])
 
-    if PackagingManager().make_package(setup_tools_arguments):
+    if SetupToolsRunner().make_package(setup_tools_arguments):
         sys.exit(0)
     else:
         sys.exit(1)

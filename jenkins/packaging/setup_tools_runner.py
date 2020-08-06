@@ -1,7 +1,7 @@
 import os
 from setuptools import setup
 from typing import TypeVar, List
-from jenkins.packaging.packaging_arguments import SetupToolsArguments
+from jenkins.packaging.setup_tools_arguments import SetupToolsArguments
 
 SELF = TypeVar('SELF', bound="PackagingManager")
 
@@ -9,7 +9,7 @@ PACKAGE_BASENAME: str = "algorithmplatform"
 PACKAGE_OUTPUT_SUFFIX: str = "py3-none-any"
 
 
-class PackagingManager:
+class SetupToolsRunner:
 
     @staticmethod
     def __switch_working_directory_for_packaging(packaging_root_directory: str):
@@ -24,11 +24,7 @@ class PackagingManager:
         os.chdir(current_working_directory)
 
     @staticmethod
-    def __create_version_id_from_build_number(py_client_build_number: str):
-        return
-
-    @staticmethod
-    def __rename_wheel_after_packaging(output_directory: str, py_client_version: str) -> bool:
+    def __rename_wheel_after_packaging(output_directory: str, py_client_version: str):
         packaging_file_name = os.path.join(
             output_directory, "{0}-{1}-{2}.whl".format(
                 PACKAGE_BASENAME,
@@ -72,8 +68,8 @@ class PackagingManager:
             self.__start_packaging_as_instructed(setup_tools_arguments_dictionary)
         finally:
             self.__switch_working_directory_back_to_previous_one(current_working_directory)
-			
-		self.__rename_wheel_after_packaging(
+
+        self.__rename_wheel_after_packaging(
             os.path.join(current_working_directory, setup_tools_arguments.output_directory),
             setup_tools_arguments.py_client_version)
-		return True
+        return True

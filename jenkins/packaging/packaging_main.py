@@ -11,7 +11,7 @@ def main():
     if len(sys.argv) != 5:
         print(
             'Expected arguments: '
-            '[py_client_build_number] '
+            '[py_client_version_number] '
             '[name_of_requirements.txt] '
             '[project_root_directory] '
             '[output_directory]',
@@ -27,8 +27,13 @@ def main():
     from jenkins.packaging.setup_tools_arguments import SetupToolsArguments
 
 
-    packaging_parameters = assemble_packaging_arguments(name_of_requirements, py_client_build_number, output_directory)
-    PackagingManager.create_and_start_packaging_manager(packaging_parameters, project_root_directory)
+    setup_tools_arguments = SetupToolsArguments(
+        py_client_version_number=sys.argv[1],
+        release_package_requirements_on_relative_path=sys.argv[2],
+        project_root_directory=sys.argv[3],
+        output_directory=sys.argv[4])
+
+    PackagingManager().make_package(setup_tools_arguments)
 
 
 if __name__ == '__main__':

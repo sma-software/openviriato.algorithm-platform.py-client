@@ -1,21 +1,32 @@
-import os
+class SetupToolsArguments:
+    __release_package_requirements_on_relative_path: str
+    __version: str
+    __project_root_directory: str
+    __output_directory: str
 
+    def __init__(self,
+                 release_package_requirements_on_relative_path: str,
+                 py_client_version_number: str,
+                 project_root_directory: str,
+                 output_directory: str):
 
-def assemble_packaging_arguments(name_of_requirements: str, py_client_build_number: str, output_file_path: str) -> dict:
-    with open(name_of_requirements, 'r') as f:
-        required_modules = f.read().splitlines()
+        self.__release_package_requirements_on_relative_path = release_package_requirements_on_relative_path
+        self.__py_client_version = py_client_version_number
+        self.__project_root_directory = project_root_directory
+        self.__output_directory = output_directory
 
-    absolute_output_path = os.path.abspath(output_file_path)
+    @property
+    def release_package_requirements_on_relative_path(self) -> str:
+        return self.__release_package_requirements_on_relative_path
 
-    return dict(
-        install_requires=required_modules,
-        name='algorithmplatform',
-        version='0.0.{0}'.format(py_client_build_number),
-        packages=['py_client.aidm', 'py_client.Conversion', 'py_client.Communication', 'py_client.algorithm_interface'],
-        url='https://www.sma-partner.com',
-        license='',
-        author='',
-        author_email='',
-        description='',
-        script_args=["bdist_wheel",  "-d", absolute_output_path]
-    )
+    @property
+    def py_client_build_number(self) -> str:
+        return self.__version
+
+    @property
+    def project_root_directory(self) -> str:
+        return self.__project_root_directory
+
+    @property
+    def output_directory(self) -> str:
+        return self.__output_directory

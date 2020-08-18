@@ -1,0 +1,15 @@
+{
+  "RoutingEdges":
+  [
+    {
+      "StartSectionTrackID":887,
+      "EndSectionTrackID":888,
+      "NodeID":281
+    },
+    {
+      "StartSectionTrackID":888,
+      "EndSectionTrackID":887,
+      "NodeID":281
+    }
+  ]
+}

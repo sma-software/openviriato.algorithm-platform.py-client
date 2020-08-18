@@ -1,0 +1,21 @@
+﻿{
+    "restResource": "/nodes",
+    "httpMethod": "GET",
+    "urlParameters": null,
+    "queryParameters": [
+        {
+            "key": "HasSectionTrackFromNodeID",
+            "value": "7",
+            "optional": false
+        },
+        {
+            "key": "HasSectionTrackToNodeID",
+            "value": "10",
+            "optional": false
+        }
+    ],
+    "requestBody": null,
+    "CSharpMethodName": "GetNeighboringNodesBetween(fromNodeID, toNodeID)",
+    "CSharpMethodParameterTypes": [ "System.Int64", "System.Int64" ],
+    "subcategory": "Get Neighboring Nodes Between"
+}

@@ -1,0 +1,16 @@
+﻿{
+    "restResource": "/section-tracks",
+    "httpMethod": "GET",
+    "urlParameters": null,
+    "queryParameters": [
+        {
+            "key": "ToNodeID",
+            "value": "348",
+            "optional": true
+        }
+    ],
+    "requestBody": null,
+    "CSharpMethodName": "GetSectionTracksTo(toNodeID)",
+    "CSharpMethodParameterTypes": [ "System.Int64" ],
+    "subcategory": "Get Section Tracks For Node"
+}

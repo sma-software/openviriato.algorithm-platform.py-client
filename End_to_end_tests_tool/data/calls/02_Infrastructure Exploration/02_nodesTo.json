@@ -1,0 +1,16 @@
+﻿{
+    "restResource": "/nodes",
+    "httpMethod": "GET",
+    "urlParameters": null,
+    "queryParameters": [
+        {
+            "key": "HasSectionTrackToNodeID",
+            "value": "161",
+            "optional": true
+        }
+    ],
+    "requestBody": null,
+    "CSharpMethodName": "GetNodesWithSectionTrackTo(toNodeID)",
+    "CSharpMethodParameterTypes": [ "System.Int64" ],
+    "subcategory": "Get Neighboring Nodes"
+}

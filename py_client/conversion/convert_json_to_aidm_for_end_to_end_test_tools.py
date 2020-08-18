@@ -14,3 +14,7 @@ def convert_json_to_update_train_times_node(attribute_dict: dict) -> UpdateTrain
     for key in ['arrival_time', 'departure_time']:
         snake_case_dict[key] = parse_to_datetime(snake_case_dict[key])
     return convert(UpdateTrainTimesNode, snake_case_dict)
+
+
+def extract_first_dict_value(attribute_dict: dict) -> object:
+    return attribute_dict[list(attribute_dict.keys())[0]]

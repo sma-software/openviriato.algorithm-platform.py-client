@@ -13,7 +13,6 @@ from py_client.algorithm_interface_test.test_helper.SessionMockTestBase import \
 
 class TestCloneTrain(unittest.TestCase):
     class CloneTrainTestMockSession(SessionMockTestBase):
-        # to replace session.post:
         def post(self, request, json):
             self.__last_body = json
             self.__last_request = request
@@ -49,8 +48,6 @@ class TestCloneTrain(unittest.TestCase):
                            '}')
             return SessionMockFactory.create_response_mock(json_string, 200)
 
-    interface_to_viriato: py_client.algorithm_interface.algorithm_interface.AlgorithmInterface
-
     @mock.patch('requests.Session', side_effect=CloneTrainTestMockSession)
     def setUp(self, mocked_get_obj):
         self.interface_to_viriato = algorithm_interface_factory.create(get_api_url())
@@ -62,8 +59,8 @@ class TestCloneTrain(unittest.TestCase):
         self.interface_to_viriato.clone_train(train_id)
 
         session_obj = self.interface_to_viriato._AlgorithmInterface__communication_layer.currentSession
-        self.assertEqual(session_obj._CloneTrainTestMockSession__last_request, get_api_url() + '/clone-train')
-        self.assertDictEqual(session_obj._CloneTrainTestMockSession__last_body, dict(TrainID=2060))
+        self.assertEqual(session_obj._CloneTrainTestMockSession__last_request, get_api_url() + '/trains/2060:clone')
+        self.assertDictEqual(session_obj._CloneTrainTestMockSession__last_body, {})
 
     @mock.patch('requests.Session', side_effect=CloneTrainTestMockSession)
     def test_clone_train_response(self, mocked_get_obj):

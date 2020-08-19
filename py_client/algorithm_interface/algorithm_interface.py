@@ -191,26 +191,22 @@ class AlgorithmInterface:
         )
 
     def cancel_train(self, train_id: int) -> int:
-        url_to_resource = 'cancel-train'
-        post_request_body = dict(trainID=train_id)
-        return self.__communication_layer.do_post_request(url_to_resource, request_body=post_request_body)
+        url_to_resource = 'trains/{0}'.format(train_id)
+        return self.__communication_layer.do_delete_request(url_to_resource)
 
-    def cancel_train_from(self, train_path_node_id: int) -> AlgorithmTrain:
-        url_to_resource = 'cancel-train-from'
-        post_request_body = dict(trainPathNodeID=train_path_node_id)
-        response_dict = self.__communication_layer.do_post_request(url_to_resource, request_body=post_request_body)
+    def cancel_train_after(self, train_id: int, train_path_node_id: int) -> AlgorithmTrain:
+        url_to_resource = 'trains/{0}/train-path-nodes/{1}:cancel-after'.format(train_id, train_path_node_id)
+        response_dict = self.__communication_layer.do_put_request(url_to_resource)
         return algorithm_platform_json_to_aidm_converter.convert_json_to_algorithm_train(response_dict)
 
-    def cancel_train_to(self, train_path_node_id: int) -> AlgorithmTrain:
-        url_to_resource = 'cancel-train-to'
-        post_request_body = dict(trainPathNodeID=train_path_node_id)
-        response_dict = self.__communication_layer.do_post_request(url_to_resource, request_body=post_request_body)
+    def cancel_train_before(self, train_id: int, train_path_node_id: int) -> AlgorithmTrain:
+        url_to_resource = 'trains/{0}/train-path-nodes/{1}:cancel-before'.format(train_id, train_path_node_id)
+        response_dict = self.__communication_layer.do_put_request(url_to_resource)
         return algorithm_platform_json_to_aidm_converter.convert_json_to_algorithm_train(response_dict)
 
     def clone_train(self, train_id: int) -> AlgorithmTrain:
-        url_to_resource = 'clone-train'
-        post_request_body = dict(TrainID=train_id)
-        response_dict = self.__communication_layer.do_post_request(url_to_resource, request_body=post_request_body)
+        url_to_resource = 'trains/{0}:clone'.format(train_id)
+        response_dict = self.__communication_layer.do_post_request(url_to_resource)
         return algorithm_platform_json_to_aidm_converter.convert_json_to_algorithm_train(response_dict)
 
     def reroute_train(self, route: UpdateTrainRoute):

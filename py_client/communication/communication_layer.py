@@ -40,3 +40,12 @@ class CommunicationLayer:
         api_response: requests.Response = self.currentSession.put(complete_url, json=request_body)
 
         return extract_json_if_possible(api_response)
+
+    def do_delete_request(self, request_call: str, request_body: (dict, list) = None) -> (dict, list):
+        if request_body is None:
+            request_body = {}
+        complete_url = self.merge_base_url_with_request(request_call)
+
+        api_response: requests.Response = self.currentSession.delete(complete_url, json=request_body)
+
+        return extract_json_if_possible(api_response)

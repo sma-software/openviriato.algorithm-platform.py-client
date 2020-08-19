@@ -1,0 +1,9 @@
+﻿{
+    "restResource": "/trains/{trainID}/train-path-nodes/{trainPathNodeID}:cancel-before",
+    "httpMethod": "PUT",
+    "urlParameters": [ "=cancelTrainTo:ID=", "=cancelTrainTo:TrainPathNodes[1].ID=" ],
+    "requestBody": null,
+    "CSharpMethodName": "CancelTrainBefore(trainID, trainPathNodeID)",
+    "CSharpMethodParameterTypes": [ "System.Int64", "System.Int64" ],
+    "subcategory": "Cancel Train Before"
+}

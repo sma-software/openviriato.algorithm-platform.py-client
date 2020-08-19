@@ -1,0 +1,24 @@
+﻿{
+  "PythonParameterFromJson" :
+  [
+      {
+          "ParameterName" : "train_id",
+          "aidm_factory": "str",
+          "ObjectJson":
+          {
+              "object": "2060"
+          }
+      },
+      {
+          "ParameterName": "update_train_times_node",
+          "aidm_factory": "convert_json_to_update_train_stop_times_node",
+          "ObjectJson":
+          {
+              "TrainPathNodeID": "1332",
+              "ArrivalTime": "2003-05-01T00:04:00",
+              "DepartureTime": "2003-05-01T00:05:30",
+              "StopStatus": "operational_stop"
+          }
+      }
+  ]
+}

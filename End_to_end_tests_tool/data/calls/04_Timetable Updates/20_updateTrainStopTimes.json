@@ -1,0 +1,14 @@
+﻿{
+    "restResource": "/trains/{trainID}/train-path-nodes:update-trajectory-stop-times",
+    "httpMethod": "PUT",
+    "urlParameters": [ "=shortTrain:ID=" ],
+    "requestBody": {
+        "TrainPathNodeID": "=shortTrain:TrainPathNodes[0].ID=",
+        "ArrivalTime": "2003-05-01T00:04:00",
+        "DepartureTime": "2003-05-01T00:05:30",
+        "StopStatus": "operationalStop"
+    },
+    "CSharpMethodName": "UpdateTrajectory(trainID, updateStopTimesTrainPathNode)",
+    "CSharpMethodParameterTypes": [ "System.Int64", "SMA.AlgorithmPlatform.AlgorithmInterface.AIDM.IUpdateStopTimesTrainPathNode" ],
+    "subcategory": "Update Train Stop Times"
+}

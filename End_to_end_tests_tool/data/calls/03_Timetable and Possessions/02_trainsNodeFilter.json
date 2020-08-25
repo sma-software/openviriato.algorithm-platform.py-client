@@ -1,0 +1,26 @@
+﻿{
+    "restResource": "/trains",
+    "httpMethod": "GET",
+    "urlParameters": null,
+    "queryParameters": [
+        {
+            "key": "FromTime",
+            "value": "2003-05-01T00%3A05%3A00",
+            "optional": false
+        },
+        {
+            "key": "ToTime",
+            "value": "2003-05-01T00%3A10%3A00",
+            "optional": false
+        },
+        {
+            "key": "NodeFilter",
+            "value": "10",
+            "optional": true
+        }
+    ],
+    "requestBody": null,
+    "CSharpMethodName": "GetTrainsDrivingAnyNode(timeWindow, nodeIDs)",
+    "CSharpMethodParameterTypes": [ "SMA.AlgorithmPlatform.AlgorithmInterface.AIDM.ITimeWindow", "IImmutableList{System.Int64}" ],
+    "subcategory": "Get Trains"
+}

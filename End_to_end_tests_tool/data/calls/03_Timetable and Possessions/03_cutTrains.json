@@ -1,0 +1,26 @@
+﻿{
+    "restResource": "/trains",
+    "httpMethod": "GET",
+    "urlParameters": null,
+    "queryParameters": [
+        {
+            "key": "FromTime",
+            "value": "2003-05-01T00%3A10%3A00",
+            "optional": false
+        },
+        {
+            "key": "ToTime",
+            "value": "2003-05-01T00%3A11%3A30",
+            "optional": false
+        },
+        {
+            "key": "CutTrain",
+            "value": "true",
+            "optional": true
+        }
+    ],
+    "requestBody": null,
+    "CSharpMethodName": "GetTrainsCutToTimeRange(timeWindow)",
+    "CSharpMethodParameterTypes": [ "SMA.AlgorithmPlatform.AlgorithmInterface.AIDM.ITimeWindow" ],
+    "subcategory": "Get Trains"
+}

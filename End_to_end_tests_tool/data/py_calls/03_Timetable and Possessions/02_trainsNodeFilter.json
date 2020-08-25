@@ -1,0 +1,22 @@
+﻿{
+  "PythonParameterFromJson" :
+  [
+      {
+          "ParameterName" : "time_window",
+          "aidm_factory": "convert_json_to_time_window",
+          "ObjectJson":
+          {
+              "from_time": "2003-05-01T00:05:00",
+              "to_time": "2003-05-01T00:10:00"
+          }
+      },
+      {
+          "ParameterName" : "node_filter",
+          "aidm_factory": "extract_first_dict_value",
+          "ObjectJson":
+          {
+              "node_filter" : [ 10 ]
+          }
+      }
+  ]
+}

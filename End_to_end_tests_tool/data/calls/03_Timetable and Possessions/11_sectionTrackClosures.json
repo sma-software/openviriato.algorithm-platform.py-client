@@ -1,0 +1,21 @@
+﻿{
+    "restResource": "/possessions/section-track-closures",
+    "httpMethod": "GET",
+    "urlParameters": null,
+    "queryParameters": [
+        {
+            "key": "FromTime",
+            "value": "2003-05-01T07%3A30%3A00",
+            "optional": false
+        },
+        {
+            "key": "ToTime",
+            "value": "2003-05-01T08%3A05%3A45",
+            "optional": false
+        }
+    ],
+    "requestBody": null,
+    "CSharpMethodName": "GetSectionTrackClosures(timeWindow)",
+    "CSharpMethodParameterTypes": [ "SMA.AlgorithmPlatform.AlgorithmInterface.AIDM.ITimeWindow" ],
+    "subcategory": "Get Section Track Closures"
+}

@@ -25,10 +25,10 @@ def _get_parameter_value_from_algorithm_platform(parameter_name: str,
             "status code {0}, could not get value for parameter {1}:{2} from algorithm platform".format(
                 response.status_code, parameter_name, path_expression_to_parameter))
     else:
-        return _extract_value_with_path_expression(response.json()["Value"], path_expression_to_parameter)
+        return _try_extract_value_from_jpath_expression(response.json()["Value"], path_expression_to_parameter)
 
 
-def _extract_value_with_path_expression(call_json: dict, path_expression: str) -> result.Result:
+def _try_extract_value_from_jpath_expression(call_json: dict, path_expression: str) -> result.Result:
     try:
         parsed_expression = parse(path_expression)
     except JsonPathLexerError:
@@ -44,47 +44,73 @@ def _extract_value_with_path_expression(call_json: dict, path_expression: str) -
             return result.from_error("Ambiguous jpath: {0}".format(path_expression))
 
 
-def _evaluate_primitive_values_by_key_from_path_expressions(
-        keys: List[str],
-        path_expressions_by_keys: Dict[str, str],
+def determine_python_arguments_from_python_parameter_mapping(
+        python_parameter_names: List[str],
+        jpath_expressions_by_python_parameter_names: Dict[str, str],
         call_json: Dict[str, str]) -> result.Result:
+    python_parameter_values_for_python_parameters = []
 
-    primitive_values_for_keys = []
-    for key in keys:
-        # maybe the case that a key is missing in the parameter mapping
-        if key in path_expressions_by_keys.keys():
-            value_mapping_expression = path_expressions_by_keys[key]
-            result_value = _extract_value_with_path_expression(call_json, value_mapping_expression)
+    extra_mapping_keys = [key for key in jpath_expressions_by_python_parameter_names.keys()
+                          if key not in python_parameter_names]
 
-            if result_value.is_success:
-                result_value = result_value.result_value
-                value_is_a_parameter_from_algorithm_platform = (
-                        isinstance(result_value, str) and result_value.startswith("=") and result_value.endswith("="))
-
-                if value_is_a_parameter_from_algorithm_platform:
-                    parameter_with_path_expression: str = result_value.strip("=")
-                    parameter_name = parameter_with_path_expression.split(":")[0]
-                    path_expression = parameter_with_path_expression[len(parameter_name) + 1:]
-                    parameter_value = _get_parameter_value_from_algorithm_platform(parameter_name, path_expression)
-                    if parameter_value.is_success:
-                        primitive_values_for_keys.append(parameter_value.result_value)
-                    else:
-                        return parameter_value
-                else:
-                    primitive_values_for_keys.append(result_value)
-            else:
-                return result_value
-
-    extra_mapping_keys = [key for key in path_expressions_by_keys.keys() if key not in keys]
     if len(extra_mapping_keys) > 0:
-        return result.from_error('Extra mapping keys: {0}'.format(", ".join(extra_mapping_keys)))
+        return result.from_error('Extra mapping python_parameter_names: {0}'.format(", ".join(extra_mapping_keys)))
 
-    return result.from_result(primitive_values_for_keys)
+    for python_parameter_name in python_parameter_names:
+        exists_jpath_for_python_parameter = python_parameter_name in jpath_expressions_by_python_parameter_names.keys()
+        if not exists_jpath_for_python_parameter:
+            # In this case, the python method invocation will fail because of a missing argument
+            continue
+
+        mapping_expression_for_python_parameter_name = \
+            jpath_expressions_by_python_parameter_names[python_parameter_name]
+        # mapping_expression_for_python_parameter_name is always a jpath expression
+        evaluated_jpath_expression = _try_extract_value_from_jpath_expression(
+            call_json,
+            mapping_expression_for_python_parameter_name)
+        # the evaluated mapping_expression_for_python_parameter_name
+        # is either a primitive value or another jpath expression
+
+        if not evaluated_jpath_expression.is_success:
+            return evaluated_jpath_expression
+
+        is_primitive_value = not _value_is_a_parameter_from_algorithm_platform(evaluated_jpath_expression.result_value)
+
+        if is_primitive_value:
+            python_parameter_values_for_python_parameters.append(evaluated_jpath_expression.result_value)
+        else:
+            mapped_parameter_value_result = _try_extract_value_from_algorithm_platform_parameter(
+                evaluated_jpath_expression.result_value)
+            if mapped_parameter_value_result.is_success:
+                python_parameter_values_for_python_parameters.append(mapped_parameter_value_result.result_value)
+            else:
+                return mapped_parameter_value_result
+
+    return result.from_result(python_parameter_values_for_python_parameters)
 
 
-def _evaluate_python_object_mapping(py_method_parameter_names,
-                                    py_object_path_expressions,
-                                    call_json) -> result.Result:
+def _try_extract_value_from_algorithm_platform_parameter(result_value):
+    parameter_with_path_expression: str = result_value.strip("=")
+    parameter_name = parameter_with_path_expression.split(":")[0]
+    path_expression = parameter_with_path_expression[len(parameter_name) + 1:]
+    parameter_value = _get_parameter_value_from_algorithm_platform(parameter_name, path_expression)
+    return parameter_value
+
+
+def _value_is_a_parameter_from_algorithm_platform(result_value: object):
+    if not isinstance(result_value, str):
+        return False
+    elif not result_value.startswith("="):
+        return False
+    elif not result_value.endswith("="):
+        return False
+    else:
+        return True
+
+
+def determine_python_arguments_from_python_object_mapping(py_method_parameter_names,
+                                                          py_object_path_expressions,
+                                                          call_json) -> result.Result:
     object_arguments = []
     for py_method_parameter_name in py_method_parameter_names:
         found_mappings = [
@@ -97,7 +123,7 @@ def _evaluate_python_object_mapping(py_method_parameter_names,
             return result.from_error('Multiple object mappings for parameter: {0}'.format(py_method_parameter_name))
 
         parameter_mapping_for_object = found_mappings[0]["PythonParameterMapping"]
-        primitive_values = _evaluate_primitive_values_by_key_from_path_expressions(
+        primitive_values = determine_python_arguments_from_python_parameter_mapping(
             parameter_mapping_for_object.keys(),
             parameter_mapping_for_object,
             call_json)
@@ -127,7 +153,7 @@ def _evaluate_python_object_mapping(py_method_parameter_names,
     return result.from_result(object_arguments)
 
 
-def read_arguments_from_object_json(arguments: List[dict]) -> result.Result:
+def determine_python_arguments_from_json(arguments: List[dict]) -> result.Result:
     result_list = []
     for argument in arguments:
         if "ObjectJson" not in argument.keys():

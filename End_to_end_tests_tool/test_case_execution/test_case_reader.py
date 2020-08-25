@@ -1,8 +1,8 @@
 import json
 from End_to_end_tests_tool.test_case_execution.test_case import EndToEndTestCase
 from End_to_end_tests_tool.test_case_execution.value_mapping_evaluators import _get_parameter_names_for_test_method, \
-    _evaluate_primitive_values_by_key_from_path_expressions, _evaluate_python_object_mapping, \
-    read_arguments_from_object_json
+    determine_python_arguments_from_python_parameter_mapping, determine_python_arguments_from_python_object_mapping, \
+    determine_python_arguments_from_json
 from py_client.conversion.converter_helpers import _translate_key
 from End_to_end_tests_tool import result
 
@@ -22,7 +22,7 @@ def _create_headless_test_case(call_json: dict, py_call_json: dict, expected_jso
 
     if "PythonObjectMapping" in py_call_json.keys():
         py_object_path_expressions = py_call_json['PythonObjectMapping']
-        arguments_for_method_to_test_result = _evaluate_python_object_mapping(
+        arguments_for_method_to_test_result = determine_python_arguments_from_python_object_mapping(
             py_method_parameter_names,
             py_object_path_expressions,
             call_json)
@@ -34,7 +34,7 @@ def _create_headless_test_case(call_json: dict, py_call_json: dict, expected_jso
 
     elif "PythonParameterMapping" in py_call_json.keys():
         py_argument_path_expressions = py_call_json['PythonParameterMapping']
-        arguments_for_method_to_test_result = _evaluate_primitive_values_by_key_from_path_expressions(
+        arguments_for_method_to_test_result = determine_python_arguments_from_python_parameter_mapping(
             py_method_parameter_names,
             py_argument_path_expressions,
             call_json)
@@ -49,7 +49,7 @@ def _create_headless_test_case(call_json: dict, py_call_json: dict, expected_jso
 
         return EndToEndTestCase(
             name_of_method_to_test=py_method_name,
-            py_client_argument_result=read_arguments_from_object_json(arguments),
+            py_client_argument_result=determine_python_arguments_from_json(arguments),
             expected_response_as_json=expected_json)
     else:
         return EndToEndTestCase(

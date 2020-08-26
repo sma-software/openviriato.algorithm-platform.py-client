@@ -24,20 +24,6 @@ class SetupToolsRunner:
         os.chdir(current_working_directory)
 
     @staticmethod
-    def __rename_wheel_after_packaging(output_directory: str, py_client_version: str):
-        packaging_file_name = os.path.join(
-            output_directory, "{0}-{1}-{2}.whl".format(
-                PACKAGE_BASENAME,
-                py_client_version,
-                PACKAGE_OUTPUT_SUFFIX))
-
-        desired_file_name = os.path.join(
-            output_directory,
-            "{0}-{1}.whl".format(PACKAGE_BASENAME, py_client_version))
-
-        os.rename(packaging_file_name, desired_file_name)
-
-    @staticmethod
     def __assemble_arguments_dictionary_for_setup(setup_tools_arguments: SetupToolsArguments) -> dict:
         def read_required_packages_from_requirements_file_name(release_package_requirements_filename: str) -> List[str]:
             with open(release_package_requirements_filename, 'r') as f:
@@ -69,7 +55,4 @@ class SetupToolsRunner:
         finally:
             self.__switch_working_directory_back_to_previous_one(current_working_directory)
 
-        self.__rename_wheel_after_packaging(
-            os.path.join(current_working_directory, setup_tools_arguments.output_directory),
-            setup_tools_arguments.py_client_version)
         return True

@@ -1,0 +1,9 @@
+﻿{
+    "restResource": "/parameters/{key}",
+    "urlParameters": [ "stringParameter" ],
+    "httpMethod": "GET",
+    "requestBody": null,
+    "CSharpMethodName": "GetStringAlgorithmParameter(key)",
+    "CSharpMethodParameterTypes": [ "System.String" ],
+    "subcategory": "Get Parameters"
+}

@@ -1,0 +1,92 @@
+[
+  {
+    "id": 1190,
+    "trainPathNodes": [
+      {
+        "id": 1186,
+        "sectionTrackId": null,
+        "nodeId": 526,
+        "nodeTrackId": null,
+        "formationId": 1187,
+        "arrivalTime": "2005-05-01T04:00:00",
+        "departureTime": "2005-05-01T04:00:00",
+        "minimumRunTime": null,
+        "minimumStopTime": "P0D",
+        "stopStatus": "commercialStop",
+        "sequenceNumber": 0
+      },
+      {
+        "id": 1188,
+        "sectionTrackId": 688,
+        "nodeId": 351,
+        "nodeTrackId": null,
+        "formationId": 1187,
+        "arrivalTime": "2005-05-01T04:04:00",
+        "departureTime": "2005-05-01T04:04:00",
+        "minimumRunTime": "PT4M",
+        "minimumStopTime": "P0D",
+        "stopStatus": "passing",
+        "sequenceNumber": 1
+      },
+      {
+        "id": 1189,
+        "sectionTrackId": 690,
+        "nodeId": 296,
+        "nodeTrackId": null,
+        "formationId": null,
+        "arrivalTime": "2005-05-01T04:07:00",
+        "departureTime": "2005-05-01T04:07:00",
+        "minimumRunTime": "PT3M",
+        "minimumStopTime": "P0D",
+        "stopStatus": "commercialStop",
+        "sequenceNumber": 2
+      }
+    ],
+    "debugString": "GV_9_J05 tt_()"
+  },
+  {
+    "id": 1194,
+    "trainPathNodes": [
+      {
+        "id": 1191,
+        "sectionTrackId": null,
+        "nodeId": 296,
+        "nodeTrackId": null,
+        "formationId": 1187,
+        "arrivalTime": "2005-05-01T05:00:00",
+        "departureTime": "2005-05-01T05:00:00",
+        "minimumRunTime": null,
+        "minimumStopTime": "P0D",
+        "stopStatus": "commercialStop",
+        "sequenceNumber": 0
+      },
+      {
+        "id": 1192,
+        "sectionTrackId": 691,
+        "nodeId": 351,
+        "nodeTrackId": null,
+        "formationId": 1187,
+        "arrivalTime": "2005-05-01T05:07:00",
+        "departureTime": "2005-05-01T05:07:00",
+        "minimumRunTime": "PT3M",
+        "minimumStopTime": "P0D",
+        "stopStatus": "passing",
+        "sequenceNumber": 1
+      },
+      {
+        "id": 1193,
+        "sectionTrackId": 689,
+        "nodeId": 526,
+        "nodeTrackId": null,
+        "formationId": null,
+        "arrivalTime": "2005-05-01T05:11:00",
+        "departureTime": "2005-05-01T05:11:00",
+        "minimumRunTime": "PT4M",
+        "minimumStopTime": "P0D",
+        "stopStatus": "commercialStop",
+        "sequenceNumber": 2
+      }
+    ],
+    "debugString": "GV_10_J05 tt_()"
+  }
+]

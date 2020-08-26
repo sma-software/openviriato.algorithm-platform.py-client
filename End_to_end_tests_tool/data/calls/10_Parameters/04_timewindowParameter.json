@@ -1,0 +1,9 @@
+﻿{
+    "restResource": "/parameters/{key}",
+    "urlParameters": [ "timeWindowParameter" ],
+    "httpMethod": "GET",
+    "requestBody": null,
+    "CSharpMethodName": "GetTimeWindowAlgorithmParameter(key)",
+    "CSharpMethodParameterTypes": [ "System.String" ],
+    "subcategory": "Get Parameters"
+}

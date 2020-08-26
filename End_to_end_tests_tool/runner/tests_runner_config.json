@@ -1,7 +1,7 @@
 {
   "dataRootPathRelative" : "data",
   "relativeConfigFilePath": "headless_cfg.json",
-  "absolutePathToViriato": "C:\\Workspace\\ViriatoForEndToEndTest\\End2EndTest\\SMA.Viriato.Standard-1.0.17358.test",
+  "absolutePathToViriato": "C:\\Workspace\\ViriatoForEndToEndTest\\End2EndTest\\SMA.Viriato.Standard-1.0.17410.test",
   "databasePath": "C:\\Workspace\\ViriatoForEndToEndTest\\End2EndTest\\Samples_Database.mdb",
   "headlessExecutable": "SMA.Viriato.AlgorithmPlatform.Headless.exe",
   "port": 8089,

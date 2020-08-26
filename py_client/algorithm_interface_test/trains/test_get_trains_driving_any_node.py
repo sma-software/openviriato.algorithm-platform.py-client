@@ -16,36 +16,36 @@ class TestGetTrainsDrivingAnyNode(unittest.TestCase):
             json_string = (
                 "[\n"
                 "  {\n"
-                "    \"ID\": 2060,\n"
-                "    \"train_path_nodes\": [\n"
+                "    \"id\": 2060,\n"
+                "    \"trainPathNodes\": [\n"
                 "      {\n"
-                "        \"ID\": 1332,\n"
+                "        \"id\": 1332,\n"
                 "        \"SectionTrackID\": null,\n"
-                "        \"node_id\": 18,\n"
-                "        \"node_track_id\": null,\n"
-                "        \"FormationID\": 1187,\n"
-                "        \"ArrivalTime\": \"2003-05-01T00:05:00\",\n"
-                "        \"DepartureTime\": \"2003-05-01T00:05:00\",\n"
-                "        \"MinimumRunTime\": null,\n"
-                "        \"MinimumStopTime\": \"P0D\",\n"
-                "        \"StopStatus\": \"commercialStop\",\n"
-                "        \"SequenceNumber\": 0\n"
+                "        \"nodeId\": 18,\n"
+                "        \"nodeTrackId\": null,\n"
+                "        \"formationId\": 1187,\n"
+                "        \"arrivalTime\": \"2003-05-01T00:05:00\",\n"
+                "        \"departureTime\": \"2003-05-01T00:05:00\",\n"
+                "        \"minimumRunTime\": null,\n"
+                "        \"minimumStopTime\": \"P0D\",\n"
+                "        \"stopStatus\": \"commercialStop\",\n"
+                "        \"sequenceNumber\": 0\n"
                 "      },\n"
                 "      {\n"
-                "        \"ID\": 1696,\n"
-                "        \"SectionTrackID\": 1171,\n"
-                "        \"node_id\": 10,\n"
-                "        \"node_track_id\": null,\n"
-                "        \"FormationID\": null,\n"
-                "        \"ArrivalTime\": \"2003-05-01T00:10:00\",\n"
-                "        \"DepartureTime\": \"2003-05-01T00:10:00\",\n"
-                "        \"MinimumRunTime\": \"PT5M\",\n"
-                "        \"MinimumStopTime\": \"P0D\",\n"
-                "        \"StopStatus\": \"commercialStop\",\n"
-                "        \"SequenceNumber\": 1\n"
+                "        \"id\": 1696,\n"
+                "        \"sectionTrackId\": 1171,\n"
+                "        \"nodeId\": 10,\n"
+                "        \"nodeTrackId\": null,\n"
+                "        \"formationId\": null,\n"
+                "        \"arrivalTime\": \"2003-05-01T00:10:00\",\n"
+                "        \"departureTime\": \"2003-05-01T00:10:00\",\n"
+                "        \"minimumRunTime\": \"PT5M\",\n"
+                "        \"minimumStopTime\": \"P0D\",\n"
+                "        \"stopStatus\": \"commercialStop\",\n"
+                "        \"sequenceNumber\": 1\n"
                 "      }\n"
                 "    ],\n"
-                "    \"DebugString\": \"RVZH_1_1_J03 tt_(G)\"\n"
+                "    \"debugString\": \"RVZH_1_1_J03 tt_(G)\"\n"
                 "  }\n"
                 "]")
 
@@ -66,9 +66,9 @@ class TestGetTrainsDrivingAnyNode(unittest.TestCase):
         session_obj = self.interface_to_viriato._AlgorithmInterface__communication_layer.currentSession
         self.assertEqual(session_obj._GetTrainsDrivingAnyNodeTestMockSession__last_request, get_api_url() + '/trains')
         self.assertDictEqual(session_obj._GetTrainsDrivingAnyNodeTestMockSession__last_body,
-                             dict(FromTime="2000-01-01T01:01:00",
-                                  ToTime="2004-01-01T00:00:00",
-                                  NodeFilter=[10]))
+                             dict(fromTime="2000-01-01T01:01:00",
+                                  toTime="2004-01-01T00:00:00",
+                                  nodeFilter=[10]))
 
     @mock.patch('requests.Session', side_effect=GetTrainsDrivingAnyNodeTestMockSession)
     def test_get_trains_driving_any_node_response(self, mocked_get_obj):

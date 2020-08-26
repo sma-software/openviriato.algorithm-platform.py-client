@@ -6,9 +6,8 @@ import isodate
 def _convert_to_camel_case(snake_case_key: str):
     split_by_underscore = snake_case_key.split('_')
     split_by_underscore_camel_case = [*map(str.title, split_by_underscore)]
-    if split_by_underscore_camel_case[-1] == 'Id':
-        split_by_underscore_camel_case[-1] = 'ID'
-    return ''.join(split_by_underscore_camel_case)
+    camel_case_with_first_letter_upper_case = ''.join(split_by_underscore_camel_case)
+    return camel_case_with_first_letter_upper_case[:1].lower() + camel_case_with_first_letter_upper_case[1:]
 
 
 def _translate_id(any_key: str) -> str:

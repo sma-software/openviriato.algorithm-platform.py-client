@@ -14,49 +14,49 @@ class TestRerouteTrain(unittest.TestCase):
             self.__last_request = request
             json_string = (
                 "             {\n"
-                "                    \"ID\": 3516,\n"
-                "                    \"TrainPathNodes\": [\n"
+                "                    \"id\": 3516,\n"
+                "                    \"trainPathNodes\": [\n"
                 "                        {\n"
-                "                            \"ID\": 2424,\n"
-                "                            \"SectionTrackID\": null,\n"
-                "                            \"node_id\": 7,\n"
-                "                            \"node_track_id\": 8,\n"
-                "                            \"FormationID\": 1187,\n"
-                "                            \"ArrivalTime\": \"2003-05-01T00:10:00\",\n"
-                "                            \"DepartureTime\": \"2003-05-01T00:10:00\",\n"
-                "                            \"MinimumRunTime\": null,\n"
-                "                            \"MinimumStopTime\": \"P0D\",\n"
-                "                            \"StopStatus\": \"commercialStop\",\n"
-                "                            \"SequenceNumber\": 0\n"
+                "                            \"id\": 2424,\n"
+                "                            \"sectionTrackId\": null,\n"
+                "                            \"nodeId\": 7,\n"
+                "                            \"nodeTrackId\": 8,\n"
+                "                            \"formationId\": 1187,\n"
+                "                            \"arrivalTime\": \"2003-05-01T00:10:00\",\n"
+                "                            \"departureTime\": \"2003-05-01T00:10:00\",\n"
+                "                            \"minimumRunTime\": null,\n"
+                "                            \"minimumStopTime\": \"P0D\",\n"
+                "                            \"stopStatus\": \"commercialStop\",\n"
+                "                            \"sequenceNumber\": 0\n"
                 "                        },\n"
                 "                        {\n"
-                "                            \"ID\": 11040,\n"
-                "                            \"SectionTrackID\": 1165,\n"
-                "                            \"node_id\": 24,\n"
-                "                            \"node_track_id\": 25,\n"
-                "                            \"FormationID\": 1187,\n"
-                "                            \"ArrivalTime\": \"2003-05-01T00:10:00\",\n"
-                "                            \"DepartureTime\": \"2003-05-01T00:10:00\",\n"
-                "                            \"MinimumRunTime\": \"P0D\",\n"
-                "                            \"MinimumStopTime\": \"P0D\",\n"
-                "                            \"StopStatus\": \"passing\",\n"
-                "                            \"SequenceNumber\": 1\n"
+                "                            \"id\": 11040,\n"
+                "                            \"sectionTrackId\": 1165,\n"
+                "                            \"nodeId\": 24,\n"
+                "                            \"nodeTrackId\": 25,\n"
+                "                            \"formationId\": 1187,\n"
+                "                            \"arrivalTime\": \"2003-05-01T00:10:00\",\n"
+                "                            \"departureTime\": \"2003-05-01T00:10:00\",\n"
+                "                            \"minimumRunTime\": \"P0D\",\n"
+                "                            \"minimumStopTime\": \"P0D\",\n"
+                "                            \"stopStatus\": \"passing\",\n"
+                "                            \"sequenceNumber\": 1\n"
                 "                        },\n"
                 "                        {\n"
-                "                            \"ID\": 3152,\n"
-                "                            \"SectionTrackID\": 1166,\n"
-                "                            \"node_id\": 10,\n"
-                "                            \"node_track_id\": 12,\n"
-                "                            \"FormationID\": null,\n"
-                "                            \"ArrivalTime\": \"2003-05-01T00:19:00\",\n"
-                "                            \"DepartureTime\": \"2003-05-01T00:19:00\",\n"
-                "                            \"MinimumRunTime\": \"PT9M\",\n"
-                "                            \"MinimumStopTime\": \"P0D\",\n"
-                "                            \"StopStatus\": \"commercialStop\",\n"
-                "                            \"SequenceNumber\": 2\n"
+                "                            \"id\": 3152,\n"
+                "                            \"sectionTrackId\": 1166,\n"
+                "                            \"nodeId\": 10,\n"
+                "                            \"nodeTrackId\": 12,\n"
+                "                            \"formationId\": null,\n"
+                "                            \"arrivalTime\": \"2003-05-01T00:19:00\",\n"
+                "                            \"departureTime\": \"2003-05-01T00:19:00\",\n"
+                "                            \"minimumRunTime\": \"PT9M\",\n"
+                "                            \"minimumStopTime\": \"P0D\",\n"
+                "                            \"stopStatus\": \"commercialStop\",\n"
+                "                            \"sequenceNumber\": 2\n"
                 "                        }\n"
                 "                    ],\n"
-                "                    \"DebugString\": \"RVZH_3_1_J03 tt_(S)\"\n"
+                "                    \"debugString\": \"RVZH_3_1_J03 tt_(S)\"\n"
                 "                }")
 
             return SessionMockFactory.create_response_mock(json_string, 200)
@@ -83,19 +83,19 @@ class TestRerouteTrain(unittest.TestCase):
         self.interface_to_viriato.reroute_train(test_route)
 
         session_obj = self.interface_to_viriato._AlgorithmInterface__communication_layer.currentSession
-        expected_routing_edge_body = [dict(NodeID=7, StartNodeTrackID=8, EndSectionTrackID=1165),
-                                      dict(NodeID=24, StartSectionTrackID=1165, EndNodeTrackID=25),
-                                      dict(NodeID=24, StartNodeTrackID=25, EndSectionTrackID=1166),
-                                      dict(NodeID=10, StartSectionTrackID=1166, EndNodeTrackID=12)]
+        expected_routing_edge_body = [dict(nodeId=7,  startNodeTrackId=8, endSectionTrackId=1165),
+                                      dict(nodeId=24, startSectionTrackId=1165, endNodeTrackId=25),
+                                      dict(nodeId=24, startNodeTrackId=25, endSectionTrackId=1166),
+                                      dict(nodeId=10, startSectionTrackId=1166, endNodeTrackId=12)]
 
         self.assertEqual(get_api_url() + "/reroute-train",
                          session_obj._RerouteTrainTestMockSession__last_request)
-        self.assertListEqual(session_obj._RerouteTrainTestMockSession__last_body['RoutingEdges'],
+        self.assertListEqual(session_obj._RerouteTrainTestMockSession__last_body['routingEdges'],
                              expected_routing_edge_body)
-        self.assertDictEqual(session_obj._RerouteTrainTestMockSession__last_body["RoutingEdges"][0],
+        self.assertDictEqual(session_obj._RerouteTrainTestMockSession__last_body["routingEdges"][0],
                              expected_routing_edge_body[0])
-        self.assertEqual(session_obj._RerouteTrainTestMockSession__last_body["StartTrainPathNodeID"], 2424)
-        self.assertEqual(session_obj._RerouteTrainTestMockSession__last_body["EndTrainPathNodeID"], 3152)
+        self.assertEqual(session_obj._RerouteTrainTestMockSession__last_body["startTrainPathNodeId"], 2424)
+        self.assertEqual(session_obj._RerouteTrainTestMockSession__last_body["endTrainPathNodeId"], 3152)
 
     @mock.patch('requests.Session', side_effect=RerouteTrainTestMockSession)
     def test_reroute_train_response(self, mocked_session):

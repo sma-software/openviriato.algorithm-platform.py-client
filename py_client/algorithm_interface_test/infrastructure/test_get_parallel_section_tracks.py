@@ -20,18 +20,18 @@ class TestGetParallelSectionTracks(unittest.TestCase):
 
             json_string = ("[\n"
                            "  {\n"
-                           "    \"ID\": 885,\n"
-                           "    \"Code\": \"838\",\n"
-                           "    \"section_code\": \"61010\",\n"
-                           "    \"Weight\": 37040,\n"
-                           "    \"DebugString\": \"sectiontrack:s_61010 n_85AR 838\"\n"
+                           "    \"id\": 885,\n"
+                           "    \"code\": \"838\",\n"
+                           "    \"sectionCode\": \"61010\",\n"
+                           "    \"weight\": 37040,\n"
+                           "    \"debugString\": \"sectiontrack:s_61010 n_85AR 838\"\n"
                            "  },\n"
                            "  {\n"
-                           "    \"ID\": 886,\n"
-                           "    \"Code\": \"2\",\n"
-                           "    \"section_code\": \"61010\",\n"
-                           "    \"Weight\": 37040,\n"
-                           "    \"DebugString\": \"sectiontrack:s_61010 n_85AR 2\"\n"
+                           "    \"id\": 886,\n"
+                           "    \"code\": \"2\",\n"
+                           "    \"sectionCode\": \"61010\",\n"
+                           "    \"weight\": 37040,\n"
+                           "    \"debugString\": \"sectiontrack:s_61010 n_85AR 2\"\n"
                            "  }\n"
                            "]")
             return SessionMockFactory.create_response_mock(json_string, 200)
@@ -53,7 +53,7 @@ class TestGetParallelSectionTracks(unittest.TestCase):
             get_api_url() + '/section-tracks')
         self.assertEqual(
             session_obj._GetParallelSectionTracksSessionTestMock__last_body,
-            dict(ParallelToSectionTrackID=885))
+            dict(parallelToSectionTrackId=885))
 
     @mock.patch('requests.Session', side_effect=GetParallelSectionTracksSessionTestMock)
     def test_get_parallel_section_tracks_return(self, mocked_get_obj):

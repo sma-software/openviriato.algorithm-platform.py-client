@@ -18,27 +18,27 @@ class TestGetNodesWithSectionTrackTo(unittest.TestCase):
 
             json_string = ("[\n"
                            "  {\n"
-                           "    \"ID\": 348,\n"
-                           "    \"Code\": \"85NH\",\n"
-                           "    \"node_tracks\": [\n"
+                           "    \"id\": 348,\n"
+                           "    \"code\": \"85NH\",\n"
+                           "    \"nodeTracks\": [\n"
                            "      {\n"
-                           "        \"ID\": 349,\n"
-                           "        \"Code\": \"1\",\n"
-                           "        \"DebugString\": \"stationtrack:85NH_1\"\n"
+                           "        \"id\": 349,\n"
+                           "        \"code\": \"1\",\n"
+                           "        \"debugString\": \"stationtrack:85NH_1\"\n"
                            "      },\n"
                            "      {\n"
-                           "        \"ID\": 350,\n"
-                           "        \"Code\": \"2\",\n"
-                           "        \"DebugString\": \"stationtrack:85NH_2\"\n"
+                           "        \"id\": 350,\n"
+                           "        \"code\": \"2\",\n"
+                           "        \"debugString\": \"stationtrack:85NH_2\"\n"
                            "      }\n"
                            "    ],\n"
-                           "    \"DebugString\": \"station:85NH\"\n"
+                           "    \"debugString\": \"station:85NH\"\n"
                            "  },\n"
                            "  {\n"
-                           "    \"ID\": 281,\n"
-                           "    \"Code\": \"85JE\",\n"
-                           "    \"node_tracks\": [],\n"
-                           "    \"DebugString\": \"station:85JE\"\n"
+                           "    \"id\": 281,\n"
+                           "    \"code\": \"85JE\",\n"
+                           "    \"nodeTracks\": [],\n"
+                           "    \"debugString\": \"station:85JE\"\n"
                            "  }\n"
                            "]")
 
@@ -58,7 +58,7 @@ class TestGetNodesWithSectionTrackTo(unittest.TestCase):
         self.assertEqual(session_obj._GetNodesWithSectionTrackToTestMock__last_request, get_api_url() + '/nodes')
         self.assertDictEqual(
             session_obj._GetNodesWithSectionTrackToTestMock__last_body,
-            dict(HasSectionTrackToNodeID=1099))
+            dict(hasSectionTrackToNodeId=1099))
 
     @mock.patch('requests.Session', side_effect=GetNodesWithSectionTrackToTestMock)
     def test_get_nodes_with_section_track_to_return(self, mocked_get_obj):

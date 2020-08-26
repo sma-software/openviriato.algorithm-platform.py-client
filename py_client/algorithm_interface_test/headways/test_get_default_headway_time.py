@@ -46,7 +46,7 @@ class TestGetDefaultHeadwayTime(unittest.TestCase):
         self.assertEqual(session_obj._GetDefaultHeadwayTimeTestMockSession__last_request,
                          get_api_url() + "/section-tracks/5332/headway-times")
 
-        self.assertDictEqual(session_obj._GetDefaultHeadwayTimeTestMockSession__last_body, dict(FromNodeID=15))
+        self.assertDictEqual(session_obj._GetDefaultHeadwayTimeTestMockSession__last_body, dict(fromNodeId=15))
 
     @mock.patch('requests.Session', side_effect=GetDefaultHeadwayTimeTestMockSession)
     def test_get_default_headway_time_request_section_track_and_to_node_id(self, mocked_get_obj):
@@ -60,7 +60,7 @@ class TestGetDefaultHeadwayTime(unittest.TestCase):
         self.assertEqual(session_obj._GetDefaultHeadwayTimeTestMockSession__last_request,
                          get_api_url() + "/section-tracks/5332/headway-times")
 
-        self.assertDictEqual(session_obj._GetDefaultHeadwayTimeTestMockSession__last_body, dict(ToNodeID=50))
+        self.assertDictEqual(session_obj._GetDefaultHeadwayTimeTestMockSession__last_body, dict(toNodeId=50))
 
     @mock.patch('requests.Session', side_effect=GetDefaultHeadwayTimeTestMockSession)
     def test_get_default_headway_time_request_all_parameters_defined(self, mocked_get_obj):
@@ -75,7 +75,7 @@ class TestGetDefaultHeadwayTime(unittest.TestCase):
                          get_api_url() + "/section-tracks/5332/headway-times")
 
         self.assertDictEqual(session_obj._GetDefaultHeadwayTimeTestMockSession__last_body,
-                             dict(FromNodeID=125, ToNodeID=50))
+                             dict(fromNodeId=125, toNodeId=50))
 
     @mock.patch('requests.Session', side_effect=GetDefaultHeadwayTimeTestMockSession)
     def test_get_default_headway_time_response(self, mocked_get_obj):

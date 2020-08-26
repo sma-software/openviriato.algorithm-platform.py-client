@@ -12,28 +12,24 @@ from py_client.algorithm_interface_test.test_helper.SessionMockTestBase import \
 
 class TestGetDirectedSectionTracks(unittest.TestCase):
     class GetDirectedSectionTracksSessionTestMock(SessionMockTestBase):
-        # to replace session.get:
-        def __init__(self):
-            super().__init__()
-
         def get(self, request: str, params: dict):
             self.__last_body = params
             self.__last_request = request
 
             json_string = ('[\n'
                            '                {\n'
-                           '                    "ID": 885,\n'
-                           '                    "Code": "838",\n'
-                           '                    "section_code": "61010",\n'
-                           '                    "Weight": 37040,\n'
-                           '                    "DebugString": "sectiontrack:s_61010 n_85AR 838"\n'
+                           '                    "id": 885,\n'
+                           '                    "code": "838",\n'
+                           '                    "sectionCode": "61010",\n'
+                           '                    "weight": 37040,\n'
+                           '                    "debugString": "sectiontrack:s_61010 n_85AR 838"\n'
                            '                },\n'
                            '                {\n'
-                           '                    "ID": 886,\n'
-                           '                    "Code": "2",\n'
-                           '                    "section_code": "61010",\n'
-                           '                    "Weight": 37040,\n'
-                           '                    "DebugString": "sectiontrack:s_61010 n_85AR 2"\n'
+                           '                    "id": 886,\n'
+                           '                    "code": "2",\n'
+                           '                    "sectionCode": "61010",\n'
+                           '                    "weight": 37040,\n'
+                           '                    "debugString": "sectiontrack:s_61010 n_85AR 2"\n'
                            '                }\n'
                            '            ]')
 

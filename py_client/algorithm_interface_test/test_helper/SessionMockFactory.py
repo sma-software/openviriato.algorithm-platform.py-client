@@ -1,7 +1,6 @@
 import json
 
 
-# This method will be used by the mock to replace requests.get/post/put
 def create_response_mock(json_string: str, status_code: int = 200):
     class ResponseMock:
 

@@ -17,11 +17,11 @@ class TestGetSectionTrack(unittest.TestCase):
             self.__last_request = request
 
             json_string = ('{\n'
-                           ' "ID": 1082,\n'
-                           ' "Code": "900",\n'
-                           ' "section_code": "70015",\n'
-                           ' "Weight": 10000,\n'
-                           ' "DebugString": "GetSectionTrackSessionTestMock"\n'
+                           ' "id": 1082,\n'
+                           ' "code": "900",\n'
+                           ' "sectionCode": "70015",\n'
+                           ' "weight": 10000,\n'
+                           ' "debugString": "GetSectionTrackSessionTestMock"\n'
                            '}')
 
             return SessionMockFactory.create_response_mock(json_string, 200)

@@ -14,36 +14,36 @@ class TestUpdateTrajectory(unittest.TestCase):
             self.__last_body = json
             self.__last_request = request
             json_string = ("{ \n"
-                           "  \"ID\": 2060,\n"
+                           "  \"id\": 2060,\n"
                            "  \"TrainPathNodes\": [\n"
                            "    {\n"
-                           "      \"ID\": 1332,\n"
-                           "      \"SectionTrackID\": null,\n"
-                           "      \"node_id\": 18,\n"
-                           "      \"node_track_id\": null,\n"
-                           "      \"FormationID\": 1187,\n"
-                           "      \"ArrivalTime\": \"2003-05-01T00:04:00\",\n"
-                           "      \"DepartureTime\": \"2003-05-01T00:05:30\",\n"
-                           "      \"MinimumRunTime\": null,\n"
-                           "      \"MinimumStopTime\": \"P0D\",\n"
-                           "      \"StopStatus\": \"operationalStop\",\n"
-                           "      \"SequenceNumber\": 0\n"
+                           "      \"id\": 1332,\n"
+                           "      \"sectionTrackId\": null,\n"
+                           "      \"nodeId\": 18,\n"
+                           "      \"nodeTrackId\": null,\n"
+                           "      \"FormationId\": 1187,\n"
+                           "      \"arrivalTime\": \"2003-05-01T00:04:00\",\n"
+                           "      \"departureTime\": \"2003-05-01T00:05:30\",\n"
+                           "      \"minimumRunTime\": null,\n"
+                           "      \"minimumStopTime\": \"P0D\",\n"
+                           "      \"stopStatus\": \"operationalStop\",\n"
+                           "      \"sequenceNumber\": 0\n"
                            "    },\n"
                            "    {\n"
-                           "      \"ID\": 1696,\n"
-                           "      \"SectionTrackID\": 1172,\n"
-                           "      \"node_id\": 10,\n"
-                           "      \"node_track_id\": null,\n"
-                           "      \"FormationID\": null,\n"
-                           "      \"ArrivalTime\": \"2003-05-01T00:10:30\",\n"
-                           "      \"DepartureTime\": \"2003-05-01T00:10:30\",\n"
-                           "      \"MinimumRunTime\": \"PT5M\",\n"
-                           "      \"MinimumStopTime\": \"P0D\",\n"
-                           "      \"StopStatus\": \"commercialStop\",\n"
-                           "      \"SequenceNumber\": 1\n"
+                           "      \"id\": 1696,\n"
+                           "      \"sectionTrackId\": 1172,\n"
+                           "      \"nodeId\": 10,\n"
+                           "      \"nodeTrackId\": null,\n"
+                           "      \"FormationId\": null,\n"
+                           "      \"arrivalTime\": \"2003-05-01T00:10:30\",\n"
+                           "      \"departureTime\": \"2003-05-01T00:10:30\",\n"
+                           "      \"minimumRunTime\": \"PT5M\",\n"
+                           "      \"minimumStopTime\": \"P0D\",\n"
+                           "      \"stopStatus\": \"commercialStop\",\n"
+                           "      \"sequenceNumber\": 1\n"
                            "    }\n"
                            "  ],\n"
-                           "  \"DebugString\": \"Mocked RVZH_1_1_J03 tt_(G)\"\n"
+                           "  \"debugString\": \"Mocked RVZH_1_1_J03 tt_(G)\"\n"
                            "}")
 
             return SessionMockFactory.create_response_mock(json_string, 200)
@@ -67,11 +67,11 @@ class TestUpdateTrajectory(unittest.TestCase):
         self.assertEqual(session_obj._UpdateTrajectoryTestMockSession__last_request,
                          get_api_url() + '/trains/2060/train-path-nodes:update-trajectory-stop-times')
         self.assertDictEqual(session_obj._UpdateTrajectoryTestMockSession__last_body,
-                             dict(TrainPathNodeID=1332,
-                                  ArrivalTime="2003-05-01T00:04:00",
-                                  DepartureTime="2003-05-01T00:05:00",
-                                  MinimumStopTime="PT30S",
-                                  StopStatus="OperationalStop"))
+                             dict(trainPathNodeId=1332,
+                                  arrivalTime="2003-05-01T00:04:00",
+                                  departureTime="2003-05-01T00:05:00",
+                                  minimumStopTime="PT30S",
+                                  stopStatus="operationalStop"))
 
     @mock.patch('requests.Session', side_effect=UpdateTrajectoryTestMockSession)
     def test_update_trajectory_response(self, mocked_get_obj):

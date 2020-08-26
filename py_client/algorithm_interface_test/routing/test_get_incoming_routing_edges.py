@@ -14,33 +14,33 @@ class TestGetIncomingRoutingEdges(unittest.TestCase):
             self.__last_request = request
             self.__last_body = params
 
-            if 'EndNodeTrackID' not in params.keys():
+            if 'endNodeTrackId' not in params.keys():
                 json_string = ("{\n"
-                               "  \"IncomingEdges\": [\n"
+                               "  \"incomingEdges\": [\n"
                                "    {\n"
-                               "      \"StartSectionTrackID\": 885,\n"
-                               "      \"EndNodeTrackID\": 162,\n"
-                               "      \"node_id\": 161\n"
+                               "      \"startSectionTrackId\": 885,\n"
+                               "      \"endNodeTrackId\": 162,\n"
+                               "      \"nodeId\": 161\n"
                                "    },\n"
                                "    {\n"
-                               "      \"StartSectionTrackID\": 885,\n"
-                               "      \"EndNodeTrackID\": 163,\n"
-                               "      \"node_id\": 161\n"
+                               "      \"startSectionTrackId\": 885,\n"
+                               "      \"endNodeTrackId\": 163,\n"
+                               "      \"nodeId\": 161\n"
                                "    },\n"
                                "    {\n"
-                               "      \"StartSectionTrackID\": 886,\n"
-                               "      \"EndNodeTrackID\": 162,\n"
-                               "      \"node_id\": 161\n"
+                               "      \"startSectionTrackId\": 886,\n"
+                               "      \"endNodeTrackId\": 162,\n"
+                               "      \"nodeId\": 161\n"
                                "    }\n"
                                "  ]\n"
                                "}")
             else:
                 json_string = ("{\n"
-                               "  \"IncomingEdges\": [\n"
+                               "  \"incomingEdges\": [\n"
                                "    {\n"
-                               "      \"StartSectionTrackID\": 886,\n"
-                               "      \"EndNodeTrackID\": 162,\n"
-                               "      \"node_id\": 161\n"
+                               "      \"startSectionTrackId\": 886,\n"
+                               "      \"endNodeTrackId\": 162,\n"
+                               "      \"nodeId\": 161\n"
                                "    }\n"
                                "  ]\n"
                                "}")
@@ -60,7 +60,7 @@ class TestGetIncomingRoutingEdges(unittest.TestCase):
         session_obj = self.interface_to_viriato._AlgorithmInterface__communication_layer.currentSession
         self.assertEqual(session_obj._GetIncomingRoutingEdgesTestSessionMock__last_request,
                          get_api_url() + '/nodes/1/incoming-routing-edges')
-        self.assertDictEqual(session_obj._GetIncomingRoutingEdgesTestSessionMock__last_body, dict(EndNodeTrackID=12))
+        self.assertDictEqual(session_obj._GetIncomingRoutingEdgesTestSessionMock__last_body, dict(endNodeTrackId=12))
 
     @mock.patch('requests.Session', side_effect=GetIncomingRoutingEdgesTestSessionMock)
     def test_get_incoming_routing_edges_response_only_node_id(self, mocked_get_obj):

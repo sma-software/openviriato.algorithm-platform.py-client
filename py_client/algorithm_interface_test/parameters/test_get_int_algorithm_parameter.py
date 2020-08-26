@@ -14,8 +14,8 @@ class TestGetIntAlgorithmParameter(unittest.TestCase):
             self.__last_body = params
 
             json__string = ("{\n"
-                            "  \"Key\": \"someIntParameterKey\",\n"
-                            "  \"Value\": 125\n"
+                            "  \"key\": \"someIntParameterKey\",\n"
+                            "  \"value\": 125\n"
                             "}")
             return APISessionMock.create_response_mock(json__string, 200)
 

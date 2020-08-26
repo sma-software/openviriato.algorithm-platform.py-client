@@ -12,8 +12,8 @@ class TestGetSeparationTimeInJunctionForPlannedTrainPaths(unittest.TestCase):
         def get(self, request, params):
             self.__last_body = params
             self.__last_request = request
-            five_minute_case_parameters = dict(PrecedingTrainPathNodeID=4246, SucceedingTrainPathNodeID=5702)
-            null_case_parameters = dict(PrecedingTrainPathNodeID=1, SucceedingTrainPathNodeID=1)
+            five_minute_case_parameters = dict(precedingTrainPathNodeId=4246, succeedingTrainPathNodeId=5702)
+            null_case_parameters = dict(precedingTrainPathNodeId=1, succeedingTrainPathNodeId=1)
 
             if self.__last_body == five_minute_case_parameters:
                 json_string = """{ "separationTime": "PT5M"}"""
@@ -42,7 +42,7 @@ class TestGetSeparationTimeInJunctionForPlannedTrainPaths(unittest.TestCase):
             session_obj._GetSeparationTimeInJunctionForPlannedTrainPathsTestMockSession__last_request,
             get_api_url() + "/nodes/123/separation-times")
 
-        expected_query_parameters = dict(PrecedingTrainPathNodeID=4246, SucceedingTrainPathNodeID=5702)
+        expected_query_parameters = dict(precedingTrainPathNodeId=4246, succeedingTrainPathNodeId=5702)
         self.assertDictEqual(
             session_obj._GetSeparationTimeInJunctionForPlannedTrainPathsTestMockSession__last_body,
             expected_query_parameters)

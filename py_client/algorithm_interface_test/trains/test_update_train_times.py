@@ -73,12 +73,12 @@ class TestUpdateTrainTimes(unittest.TestCase):
         self.assertListEqual(
             session_obj._UpdateTrainTimesTestMockSession__last_body,
             [
-                {"TrainPathNodeID": 1332,
-                 "ArrivalTime": "2003-05-01T00:04:00",
-                 "DepartureTime": "2003-05-01T00:05:00",
-                 'MinimumRunTime': None,
-                 'MinimumStopTime': None,
-                 'StopStatus': None}
+                {"trainPathNodeId": 1332,
+                 "arrivalTime": "2003-05-01T00:04:00",
+                 "departureTime": "2003-05-01T00:05:00",
+                 'minimumRunTime': None,
+                 'minimumStopTime': None,
+                 'stopStatus': None}
             ])
 
     @mock.patch('requests.Session', side_effect=UpdateTrainTimesTestMockSession)

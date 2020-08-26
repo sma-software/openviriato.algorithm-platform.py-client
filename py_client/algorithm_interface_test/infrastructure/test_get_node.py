@@ -10,26 +10,25 @@ from py_client.algorithm_interface_test.test_helper.SessionMockTestBase import \
 
 class TestGetNode(TestCase):
     class GetNodeTestSessionMock(SessionMockTestBase):
-        # to replace session.get:
         def get(self, request, params):
             self.__last_body = params
             self.__last_request = request
             json_string = ("{\n"
-                           "  \"ID\": 161,\n"
-                           "  \"Code\": \"85AR\",\n"
-                           "  \"node_tracks\": [\n"
+                           "  \"id\": 161,\n"
+                           "  \"code\": \"85AR\",\n"
+                           "  \"nodeTracks\": [\n"
                            "    {\n"
-                           "      \"ID\": 162,\n"
-                           "      \"Code\": \"1\",\n"
-                           "      \"DebugString\": \"stationtrack:85AR_{StationTrack SID = 34138}\"\n"
+                           "      \"id\": 162,\n"
+                           "      \"code\": \"1\",\n"
+                           "      \"debugString\": \"stationtrack:85AR_{StationTrack SID = 34138}\"\n"
                            "    },\n"
                            "    {\n"
-                           "      \"ID\": 163,\n"
-                           "      \"Code\": \"2\",\n"
-                           "      \"DebugString\": \"stationtrack:85AR_{StationTrack SID = 34140}\"\n"
+                           "      \"id\": 163,\n"
+                           "      \"code\": \"2\",\n"
+                           "      \"debugString\": \"stationtrack:85AR_{StationTrack SID = 34140}\"\n"
                            "    }\n"
                            "  ],\n"
-                           "  \"DebugString\": \"station:85AR\"\n"
+                           "  \"debugString\": \"station:85AR\"\n"
                            "}")
 
             return SessionMockFactory.create_response_mock(json_string, 200)

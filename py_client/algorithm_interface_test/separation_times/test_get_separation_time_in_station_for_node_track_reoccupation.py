@@ -32,7 +32,7 @@ class TestGetSeparationTimeInStationForNodeTrackReoccupation(unittest.TestCase):
             get_api_url() + "/nodes/1123/separation-times")
         self.assertDictEqual(
             session_obj._GetSeparationTimeInStationForNodeTrackReoccupationTestMockSession__last_body,
-            dict(NodeTrackID=123))
+            dict(nodeTrackId=123))
 
     @mock.patch('requests.Session', side_effect=GetSeparationTimeInStationForNodeTrackReoccupationTestMockSession)
     def test_get_separation_time_in_station_for_node_track_reoccupation_response(self, mocked_get_obj):

@@ -15,36 +15,36 @@ class TestGetSeparationTimeInStationForRoutes(unittest.TestCase):
             self.__last_request = request
 
             incoming_incoming_case_parameters = dict(
-                PrecedingFromSectionTrackID=1000,
-                PrecedingToNodeTrackID=1,
-                PrecedingStopStatus='Passing',
-                SucceedingFromSectionTrackID=1000,
-                SucceedingToNodeTrackID=1,
-                SucceedingStopStatus='CommercialStop')
+                precedingFromSectionTrackId=1000,
+                precedingToNodeTrackId=1,
+                precedingStopStatus='passing',
+                succeedingFromSectionTrackId=1000,
+                succeedingToNodeTrackId=1,
+                succeedingStopStatus='commercialStop')
 
             incoming_outgoing_case_parameters = dict(
-                PrecedingFromSectionTrackID=999,
-                PrecedingToNodeTrackID=1,
-                PrecedingStopStatus='OperationalStop',
-                SucceedingToSectionTrackID=324,
-                SucceedingFromNodeTrackID=500,
-                SucceedingStopStatus='Passing')
+                precedingFromSectionTrackId=999,
+                precedingToNodeTrackId=1,
+                precedingStopStatus='operationalStop',
+                succeedingToSectionTrackId=324,
+                succeedingFromNodeTrackId=500,
+                succeedingStopStatus='passing')
 
             outgoing_incoming_case_parameters = dict(
-                PrecedingToSectionTrackID=1,
-                PrecedingFromNodeTrackID=2,
-                PrecedingStopStatus='CommercialStop',
-                SucceedingFromSectionTrackID=3,
-                SucceedingToNodeTrackID=4,
-                SucceedingStopStatus='Passing')
+                precedingToSectionTrackId=1,
+                precedingFromNodeTrackId=2,
+                precedingStopStatus='commercialStop',
+                succeedingFromSectionTrackId=3,
+                succeedingToNodeTrackId=4,
+                succeedingStopStatus='passing')
 
             outgoing_outgoing_case_parameters = dict(
-                PrecedingToSectionTrackID=100,
-                PrecedingFromNodeTrackID=150,
-                PrecedingStopStatus='OperationalStop',
-                SucceedingToSectionTrackID=200,
-                SucceedingFromNodeTrackID=250,
-                SucceedingStopStatus='CommercialStop')
+                precedingToSectionTrackId=100,
+                precedingFromNodeTrackId=150,
+                precedingStopStatus='operationalStop',
+                succeedingToSectionTrackId=200,
+                succeedingFromNodeTrackId=250,
+                succeedingStopStatus='commercialStop')
 
             if self.__last_body == incoming_incoming_case_parameters:
                 json_string = """{ "separationTime": "PT24S"}"""
@@ -66,9 +66,9 @@ class TestGetSeparationTimeInStationForRoutes(unittest.TestCase):
     @mock.patch('requests.Session', side_effect=GetSeparationTimeInStationForRoutesTestMockSession)
     def test_get_separation_time_in_station_for_routes_request(self, mocked_get_obj):
         preceding_routing_edge = IncomingRoutingEdge(node_id=12, end_node_track_id=1, start_section_track_id=999)
-        preceding_stop_status = StopStatus['operational_stop']
+        preceding_stop_status = StopStatus.operational_stop
         succeeding_routing_edge = OutgoingRoutingEdge(node_id=12, start_node_track_id=500, end_section_track_id=324)
-        succeeding_stop_status = StopStatus['passing']
+        succeeding_stop_status = StopStatus.passing
 
         self.interface_to_viriato.get_separation_time_in_station_for_routes(
             preceding_routing_edge,
@@ -82,12 +82,12 @@ class TestGetSeparationTimeInStationForRoutes(unittest.TestCase):
             get_api_url() + '/nodes/12/separation-times')
 
         expected_query_parameters = dict(
-            PrecedingFromSectionTrackID=999,
-            PrecedingToNodeTrackID=1,
-            PrecedingStopStatus='OperationalStop',
-            SucceedingFromNodeTrackID=500,
-            SucceedingToSectionTrackID=324,
-            SucceedingStopStatus='Passing')
+            precedingFromSectionTrackId=999,
+            precedingToNodeTrackId=1,
+            precedingStopStatus='operationalStop',
+            succeedingFromNodeTrackId=500,
+            succeedingToSectionTrackId=324,
+            succeedingStopStatus='passing')
         self.assertDictEqual(
             session_obj._GetSeparationTimeInStationForRoutesTestMockSession__last_body,
             expected_query_parameters)
@@ -95,9 +95,9 @@ class TestGetSeparationTimeInStationForRoutes(unittest.TestCase):
     @mock.patch('requests.Session', side_effect=GetSeparationTimeInStationForRoutesTestMockSession)
     def test_get_separation_time_in_station_for_routes_response_incoming_incoming(self, mocked_get_obj):
         preceding_routing_edge = IncomingRoutingEdge(node_id=12, end_node_track_id=1, start_section_track_id=1000)
-        preceding_stop_status = StopStatus['passing']
+        preceding_stop_status = StopStatus.passing
         succeeding_routing_edge = IncomingRoutingEdge(node_id=12, end_node_track_id=1, start_section_track_id=1000)
-        succeeding_stop_status = StopStatus['commercial_stop']
+        succeeding_stop_status = StopStatus.commercial_stop
 
         separation_time = self.interface_to_viriato.get_separation_time_in_station_for_routes(
             preceding_routing_edge,
@@ -111,9 +111,9 @@ class TestGetSeparationTimeInStationForRoutes(unittest.TestCase):
     @mock.patch('requests.Session', side_effect=GetSeparationTimeInStationForRoutesTestMockSession)
     def test_get_separation_time_in_station_for_routes_response_incoming_outgoing(self, mocked_get_obj):
         preceding_routing_edge = IncomingRoutingEdge(node_id=12, end_node_track_id=1, start_section_track_id=999)
-        preceding_stop_status = StopStatus['operational_stop']
+        preceding_stop_status = StopStatus.operational_stop
         succeeding_routing_edge = OutgoingRoutingEdge(node_id=12, start_node_track_id=500, end_section_track_id=324)
-        succeeding_stop_status = StopStatus['passing']
+        succeeding_stop_status = StopStatus.passing
 
         separation_time = self.interface_to_viriato.get_separation_time_in_station_for_routes(
             preceding_routing_edge,
@@ -127,9 +127,9 @@ class TestGetSeparationTimeInStationForRoutes(unittest.TestCase):
     @mock.patch('requests.Session', side_effect=GetSeparationTimeInStationForRoutesTestMockSession)
     def test_get_separation_time_in_station_for_routes_response_outgoing_incoming(self, mocked_get_obj):
         preceding_routing_edge = OutgoingRoutingEdge(node_id=111, start_node_track_id=2, end_section_track_id=1)
-        preceding_stop_status = StopStatus['commercial_stop']
+        preceding_stop_status = StopStatus.commercial_stop
         succeeding_routing_edge = IncomingRoutingEdge(node_id=111, end_node_track_id=4, start_section_track_id=3)
-        succeeding_stop_status = StopStatus['passing']
+        succeeding_stop_status = StopStatus.passing
 
         separation_time = self.interface_to_viriato.get_separation_time_in_station_for_routes(
             preceding_routing_edge,
@@ -142,9 +142,9 @@ class TestGetSeparationTimeInStationForRoutes(unittest.TestCase):
     @mock.patch('requests.Session', side_effect=GetSeparationTimeInStationForRoutesTestMockSession)
     def test_get_separation_time_in_station_for_routes_response_outgoing_outgoing(self, mocked_get_obj):
         preceding_routing_edge = OutgoingRoutingEdge(node_id=12, start_node_track_id=150, end_section_track_id=100)
-        preceding_stop_status = StopStatus['operational_stop']
+        preceding_stop_status = StopStatus.operational_stop
         succeeding_routing_edge = OutgoingRoutingEdge(node_id=12, start_node_track_id=250, end_section_track_id=200)
-        succeeding_stop_status = StopStatus['commercial_stop']
+        succeeding_stop_status = StopStatus.commercial_stop
 
         separation_time = self.interface_to_viriato.get_separation_time_in_station_for_routes(
             preceding_routing_edge,

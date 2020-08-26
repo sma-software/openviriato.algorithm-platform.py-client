@@ -45,10 +45,10 @@ class TestGetSeparationTimeInStationForEntryOrExit(unittest.TestCase):
             session_obj._GetSeparationTimeInStationForEntryOrExitTestMockSession__last_request,
             get_api_url() + '/nodes/123/separation-times')
         expected_query_parameters = dict(
-            PrecedingTrainPathNodeID=80,
-            PrecedingEntryOrExit='Exit',
-            SucceedingTrainPathNodeID=123,
-            SucceedingEntryOrExit='Entry')
+            precedingTrainPathNodeId=80,
+            precedingEntryOrExit='exit',
+            succeedingTrainPathNodeId=123,
+            succeedingEntryOrExit='entry')
 
         self.assertDictEqual(
             session_obj._GetSeparationTimeInStationForEntryOrExitTestMockSession__last_body,
@@ -78,11 +78,11 @@ class TestGetSeparationTimeInStationForEntryOrExit(unittest.TestCase):
             session_obj._GetSeparationTimeInStationForEntryOrExitTestMockSession__last_request,
             get_api_url() + '/nodes/123/separation-times')
         expected_query_parameters = dict(
-            PrecedingTrainPathNodeID=80,
-            PrecedingStopStatus='Passing',
-            PrecedingEntryOrExit='Exit',
-            SucceedingTrainPathNodeID=123,
-            SucceedingEntryOrExit='Entry')
+            precedingTrainPathNodeId=80,
+            precedingStopStatus='passing',
+            precedingEntryOrExit='exit',
+            succeedingTrainPathNodeId=123,
+            succeedingEntryOrExit='entry')
         self.assertDictEqual(
             session_obj._GetSeparationTimeInStationForEntryOrExitTestMockSession__last_body,
             expected_query_parameters)
@@ -111,12 +111,12 @@ class TestGetSeparationTimeInStationForEntryOrExit(unittest.TestCase):
             session_obj._GetSeparationTimeInStationForEntryOrExitTestMockSession__last_request,
             get_api_url() + '/nodes/123/separation-times')
         expected_query_parameters = dict(
-            PrecedingTrainPathNodeID=80,
-            PrecedingStopStatus='CommercialStop',
-            PrecedingEntryOrExit='Exit',
-            SucceedingTrainPathNodeID=123,
-            SucceedingEntryOrExit='Entry',
-            SucceedingStopStatus='Passing')
+            precedingTrainPathNodeId=80,
+            precedingStopStatus='commercialStop',
+            precedingEntryOrExit='exit',
+            succeedingTrainPathNodeId=123,
+            succeedingEntryOrExit='entry',
+            succeedingStopStatus='passing')
 
         self.assertDictEqual(
             session_obj._GetSeparationTimeInStationForEntryOrExitTestMockSession__last_body,

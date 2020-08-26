@@ -18,18 +18,18 @@ class TestGetSectionTracksBetween(unittest.TestCase):
 
             json_string = ("[\n"
                            "  {\n"
-                           "    \"ID\": 885,\n"
-                           "    \"Code\": \"838\",\n"
-                           "    \"section_code\": \"61010\",\n"
-                           "    \"Weight\": 37040,\n"
-                           "    \"DebugString\": \"sectiontrack:s_61010 n_85AR 838\"\n"
+                           "    \"id\": 885,\n"
+                           "    \"code\": \"838\",\n"
+                           "    \"sectionCode\": \"61010\",\n"
+                           "    \"weight\": 37040,\n"
+                           "    \"debugString\": \"sectiontrack:s_61010 n_85AR 838\"\n"
                            "  },\n"
                            "  {\n"
-                           "    \"ID\": 886,\n"
-                           "    \"Code\": \"2\",\n"
-                           "    \"section_code\": \"61010\",\n"
-                           "    \"Weight\": 37040,\n"
-                           "    \"DebugString\": \"sectiontrack:s_61010 n_85AR 2\"\n"
+                           "    \"id\": 886,\n"
+                           "    \"code\": \"2\",\n"
+                           "    \"sectionCode\": \"61010\",\n"
+                           "    \"weight\": 37040,\n"
+                           "    \"debugString\": \"sectiontrack:s_61010 n_85AR 2\"\n"
                            "  }\n"
                            "]")
 
@@ -52,7 +52,7 @@ class TestGetSectionTracksBetween(unittest.TestCase):
             get_api_url() + '/section-tracks')
         self.assertEqual(
             session_obj._GetSectionTracksBetweenSessionTestMock__last_body,
-            dict(FromNodeID=1082, ToNodeID=1))
+            dict(fromNodeId=1082, toNodeId=1))
 
     @mock.patch('requests.Session', side_effect=GetSectionTracksBetweenSessionTestMock)
     def test_get_section_tracks_between_return(self, mocked_get_obj):

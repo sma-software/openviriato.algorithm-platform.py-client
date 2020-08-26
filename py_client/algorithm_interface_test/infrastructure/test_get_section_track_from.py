@@ -18,25 +18,25 @@ class TestGetSectionTrackFrom(unittest.TestCase):
 
             json_string = ("[\n"
                            "  {\n"
-                           "    \"ID\": 885,\n"
-                           "    \"Code\": \"838\",\n"
-                           "    \"section_code\": \"61010\",\n"
-                           "    \"Weight\": 37040,\n"
-                           "    \"DebugString\": \"sectiontrack:s_61010 n_85AR 838\"\n"
+                           "    \"id\": 885,\n"
+                           "    \"code\": \"838\",\n"
+                           "    \"sectionCode\": \"61010\",\n"
+                           "    \"weight\": 37040,\n"
+                           "    \"debugString\": \"sectiontrack:s_61010 n_85AR 838\"\n"
                            "  },\n"
                            "  {\n"
-                           "    \"ID\": 886,\n"
-                           "    \"Code\": \"2\",\n"
-                           "    \"section_code\": \"61010\",\n"
-                           "    \"Weight\": 37040,\n"
-                           "    \"DebugString\": \"sectiontrack:s_61010 n_85AR 2\"\n"
+                           "    \"id\": 886,\n"
+                           "    \"code\": \"2\",\n"
+                           "    \"sectionCode\": \"61010\",\n"
+                           "    \"weight\": 37040,\n"
+                           "    \"debugString\": \"sectiontrack:s_61010 n_85AR 2\"\n"
                            "  },\n"
                            "  {\n"
-                           "    \"ID\": 887,\n"
-                           "    \"Code\": \"835\",\n"
-                           "    \"section_code\": \"61010\",\n"
-                           "    \"Weight\": 20910,\n"
-                           "    \"DebugString\": \"sectiontrack:s_61010 n_85JE 835\"\n"
+                           "    \"id\": 887,\n"
+                           "    \"code\": \"835\",\n"
+                           "    \"sectionCode\": \"61010\",\n"
+                           "    \"weight\": 20910,\n"
+                           "    \"debugString\": \"sectiontrack:s_61010 n_85JE 835\"\n"
                            "  }\n"
                            "]")
 
@@ -56,7 +56,7 @@ class TestGetSectionTrackFrom(unittest.TestCase):
         self.assertEqual(
             session_obj._GetSectionTrackFromSessionTestMock__last_request,
             get_api_url() + '/section-tracks')
-        self.assertEqual(session_obj._GetSectionTrackFromSessionTestMock__last_body, dict(FromNodeID=1082))
+        self.assertEqual(session_obj._GetSectionTrackFromSessionTestMock__last_body, dict(fromNodeId=1082))
 
     @mock.patch('requests.Session', side_effect=GetSectionTrackFromSessionTestMock)
     def test_get_section_tracks_from_return(self, mocked_get_obj):

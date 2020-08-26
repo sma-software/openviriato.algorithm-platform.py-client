@@ -14,16 +14,16 @@ class TestCrossingRoutingEdges(unittest.TestCase):
             self.__last_body = params
 
             json_string = ("{\n"
-                           "  \"CrossingEdges\": [\n"
+                           "  \"crossingEdges\": [\n"
                            "    {\n"
-                           "      \"StartSectionTrackID\": 887,\n"
-                           "      \"EndSectionTrackID\": 888,\n"
-                           "      \"node_id\": 281\n"
+                           "      \"startSectionTrackId\": 887,\n"
+                           "      \"endSectionTrackId\": 888,\n"
+                           "      \"nodeId\": 281\n"
                            "    },\n"
                            "    {\n"
-                           "      \"StartSectionTrackID\": 888,\n"
-                           "      \"EndSectionTrackID\": 887,\n"
-                           "      \"node_id\": 281\n"
+                           "      \"startSectionTrackId\": 888,\n"
+                           "      \"endSectionTrackId\": 887,\n"
+                           "      \"nodeId\": 281\n"
                            "    }\n"
                            "  ]\n"
                            "}")

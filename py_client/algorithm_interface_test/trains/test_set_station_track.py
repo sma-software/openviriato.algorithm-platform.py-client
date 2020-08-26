@@ -16,36 +16,36 @@ class TestSetSectionTrack(TestCase):
             self.__last_body = json
             self.__last_request = request
             json_string = ('{\n'
-                           '  "ID": 2060,\n'
-                           '  "TrainPathNodes": [\n'
+                           '  "id": 2060,\n'
+                           '  "trainPathNodes": [\n'
                            '    {\n'
-                           '      "ID": 1332,\n'
-                           '      "SectionTrackID": null,\n'
-                           '      "node_id": 18,\n'
-                           '      "node_track_id": null,\n'
-                           '      "FormationID": 1187,\n'
-                           '      "ArrivalTime": "2003-05-01T00:05:00",\n'
-                           '      "DepartureTime": "2003-05-01T00:05:00",\n'
-                           '      "MinimumRunTime": null,\n'
-                           '      "MinimumStopTime": "P0D",\n'
-                           '      "StopStatus": "commercialStop",\n'
-                           '      "SequenceNumber": 0\n'
+                           '      "id": 1332,\n'
+                           '      "SectionTrackId": null,\n'
+                           '      "nodeId": 18,\n'
+                           '      "nodeTrackId": null,\n'
+                           '      "formationId": 1187,\n'
+                           '      "arrivalTime": "2003-05-01T00:05:00",\n'
+                           '      "departureTime": "2003-05-01T00:05:00",\n'
+                           '      "minimumRunTime": null,\n'
+                           '      "minimumStopTime": "P0D",\n'
+                           '      "stopStatus": "commercialStop",\n'
+                           '      "sequenceNumber": 0\n'
                            '    },\n'
                            '    {\n'
-                           '      "ID": 1696,\n'
-                           '      "SectionTrackID": 1172,\n'
-                           '      "node_id": 10,\n'
-                           '      "node_track_id": null,\n'
-                           '      "FormationID": null,\n'
-                           '      "ArrivalTime": "2003-05-01T00:10:00",\n'
-                           '      "DepartureTime": "2003-05-01T00:10:00",\n'
-                           '      "MinimumRunTime": "PT5M",\n'
-                           '      "MinimumStopTime": "P0D",\n'
-                           '      "StopStatus": "commercialStop",\n'
-                           '      "SequenceNumber": 1\n'
+                           '      "id": 1696,\n'
+                           '      "SectionTrackId": 1172,\n'
+                           '      "nodeId": 10,\n'
+                           '      "nodeTrackId": null,\n'
+                           '      "formationId": null,\n'
+                           '      "arrivalTime": "2003-05-01T00:10:00",\n'
+                           '      "departureTime": "2003-05-01T00:10:00",\n'
+                           '      "minimumRunTime": "PT5M",\n'
+                           '      "minimumStopTime": "P0D",\n'
+                           '      "stopStatus": "commercialStop",\n'
+                           '      "sequenceNumber": 1\n'
                            '    }\n'
                            '  ],\n'
-                           '  "DebugString": "SetSectionTrackTestMockSessionString"\n'
+                           '  "debugString": "SetSectionTrackTestMockSessionString"\n'
                            '}')
             return SessionMockFactory.create_response_mock(json_string, 200)
 
@@ -57,9 +57,9 @@ class TestSetSectionTrack(TestCase):
 
     @mock.patch('requests.Session', side_effect=SetSectionTrackTestMockSession)
     def test_set_section_track_request(self, mocked_get_obj) -> None:
-        test_dict = dict(TrainPathNodeID=1696, SectionTrackID=1172)
+        test_dict = dict(trainPathNodeId=1696, sectionTrackId=1172)
 
-        self.interface_to_viriato.set_section_track(test_dict['TrainPathNodeID'], test_dict['SectionTrackID'])
+        self.interface_to_viriato.set_section_track(test_dict['trainPathNodeId'], test_dict['sectionTrackId'])
 
         session_obj = self.interface_to_viriato._AlgorithmInterface__communication_layer.currentSession
 

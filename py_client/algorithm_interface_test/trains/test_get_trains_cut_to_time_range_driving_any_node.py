@@ -67,10 +67,10 @@ class TestGetTrainsCutToTimeRangeDrivingAnyNode(unittest.TestCase):
         self.assertEqual(session_obj._GetTrainsCutToTimeRangeDrivingAnyNodeTestMockSession__last_request,
                          get_api_url() + '/trains')
         self.assertDictEqual(session_obj._GetTrainsCutToTimeRangeDrivingAnyNodeTestMockSession__last_body,
-                             dict(FromTime="2000-01-01T01:01:00",
-                                  ToTime="2004-01-01T00:00:00",
-                                  CutTrain=True,
-                                  NodeFilter=[10, 11, 18]))
+                             dict(fromTime="2000-01-01T01:01:00",
+                                  toTime="2004-01-01T00:00:00",
+                                  cutTrain=True,
+                                  nodeFilter=[10, 11, 18]))
 
     @mock.patch('requests.Session', side_effect=GetTrainsCutToTimeRangeDrivingAnyNodeTestMockSession)
     def test_get_trains_cut_to_time_range_driving_any_node_response(self, mocked_get_obj):

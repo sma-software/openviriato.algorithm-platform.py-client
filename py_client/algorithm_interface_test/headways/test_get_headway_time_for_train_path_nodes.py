@@ -11,7 +11,6 @@ from py_client.algorithm_interface_test.test_helper.SessionMockTestBase import \
 
 class TestGetHeadwayTimeForTrainPathNodes(unittest.TestCase):
     class GetHeadwayTimeForTrainPathNodesTestMockSession(SessionMockTestBase):
-        # to replace session.get:
         def get(self, request, params):
             self.__last_body = params
             self.__last_request = request

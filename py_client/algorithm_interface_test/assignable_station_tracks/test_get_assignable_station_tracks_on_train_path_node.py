@@ -16,9 +16,9 @@ class TestGetAssignableStationTracksOnTrainPathNode(unittest.TestCase):
 
             json__string = ("[\n"
                             "  {\n"
-                            "    \"ID\": 163,\n"
-                            "    \"Code\": \"2\",\n"
-                            "    \"DebugString\": \"stationtrack:85AR_{StationTrack SID = 34140}\"\n"
+                            "    \"id\": 163,\n"
+                            "    \"code\": \"2\",\n"
+                            "    \"debugString\": \"stationtrack:85AR_{StationTrack SID = 34140}\"\n"
                             "  }\n"
                             "]")
 
@@ -39,7 +39,7 @@ class TestGetAssignableStationTracksOnTrainPathNode(unittest.TestCase):
         self.assertEqual(session_obj._GetAssignableStationTracksOnTrainPathNodeTestSessionMock__last_request,
                          get_api_url() + '/assignable-station-tracks-on-train-path-node')
         self.assertDictEqual(session_obj._GetAssignableStationTracksOnTrainPathNodeTestSessionMock__last_body,
-                             dict(TrainPathNodeID=1))
+                             dict(trainPathNodeId=1))
 
     @mock.patch('requests.Session', side_effect=GetAssignableStationTracksOnTrainPathNodeTestSessionMock)
     def test_get_assignable_station_tracks_on_train_path_node_response(self, mocked_get_obj):

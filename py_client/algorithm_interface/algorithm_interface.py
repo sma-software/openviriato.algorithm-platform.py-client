@@ -48,7 +48,7 @@ class AlgorithmInterface:
 
     def get_nodes_with_section_track_from(self, from_node_id: int) -> List[AlgorithmNode]:
         url_to_resource = 'nodes'
-        request_parameters = dict(HasSectionTrackFromNodeID=from_node_id)
+        request_parameters = dict(hasSectionTrackFromNodeId=from_node_id)
         response_list = self.__communication_layer.do_get_request(url_to_resource, request_parameters)
         return algorithm_platform_json_to_aidm_converter.convert_list(
             algorithm_platform_json_to_aidm_converter.convert_json_to_algorithm_node,
@@ -56,7 +56,7 @@ class AlgorithmInterface:
 
     def get_nodes_with_section_track_to(self, to_node_id: int) -> List[AlgorithmNode]:
         url_to_resource = 'nodes'
-        request_parameters = dict(HasSectionTrackToNodeID=to_node_id)
+        request_parameters = dict(hasSectionTrackToNodeId=to_node_id)
         response_list = self.__communication_layer.do_get_request(url_to_resource, request_parameters)
         return algorithm_platform_json_to_aidm_converter.convert_list(
             algorithm_platform_json_to_aidm_converter.convert_json_to_algorithm_node,
@@ -64,7 +64,7 @@ class AlgorithmInterface:
 
     def get_neighboring_nodes_between(self, from_node_id: int, to_node_id: int) -> List[AlgorithmNode]:
         url_to_resource = 'nodes'
-        request_parameters = dict(HasSectionTrackFromNodeID=from_node_id, HasSectionTrackToNodeID=to_node_id)
+        request_parameters = dict(hasSectionTrackFromNodeId=from_node_id, hasSectionTrackToNodeId=to_node_id)
         response_list = self.__communication_layer.do_get_request(url_to_resource, request_parameters)
         return algorithm_platform_json_to_aidm_converter.convert_list(
             algorithm_platform_json_to_aidm_converter.convert_json_to_algorithm_node,
@@ -73,25 +73,25 @@ class AlgorithmInterface:
 
     def get_section_tracks_from(self, from_node_id: int) -> List[AlgorithmSectionTrack]:
         url_to_resource = 'section-tracks'
-        request_parameters = dict(FromNodeID=from_node_id)
+        request_parameters = dict(fromNodeId=from_node_id)
         response_list = self.__communication_layer.do_get_request(url_to_resource, request_parameters)
         return algorithm_platform_json_to_aidm_converter.convert_list(AlgorithmSectionTrack, response_list)
 
     def get_section_tracks_to(self, to_node_id: int) -> List[AlgorithmSectionTrack]:
         url_to_resource = 'section-tracks'
-        request_parameters = dict(ToNodeID=to_node_id)
+        request_parameters = dict(toNodeId=to_node_id)
         response_list = self.__communication_layer.do_get_request(url_to_resource, request_parameters)
         return algorithm_platform_json_to_aidm_converter.convert_list(AlgorithmSectionTrack, response_list)
 
     def get_section_tracks_between(self, from_node_id: int, to_node_id: int) -> List[AlgorithmSectionTrack]:
         url_to_resource = 'section-tracks'
-        request_parameters = dict(FromNodeID=from_node_id, ToNodeID=to_node_id)
+        request_parameters = dict(fromNodeId=from_node_id, toNodeId=to_node_id)
         response_list = self.__communication_layer.do_get_request(url_to_resource, request_parameters)
         return algorithm_platform_json_to_aidm_converter.convert_list(AlgorithmSectionTrack, response_list)
 
     def get_parallel_section_tracks(self, section_track_id: int) -> List[AlgorithmSectionTrack]:
         url_to_resource = 'section-tracks'
-        request_parameters = dict(ParallelToSectionTrackID=section_track_id)
+        request_parameters = dict(parallelToSectionTrackId=section_track_id)
         response_list = self.__communication_layer.do_get_request(url_to_resource, request_parameters)
         return algorithm_platform_json_to_aidm_converter.convert_list(AlgorithmSectionTrack, response_list)
 
@@ -141,7 +141,7 @@ class AlgorithmInterface:
             node_ids: List[int]
     ) -> List[AlgorithmTrain]:
         url_to_resource = "trains"
-        manual_converted_query_parameters = dict(NodeFilter=node_ids)
+        manual_converted_query_parameters = dict(nodeFilter=node_ids)
         query_parameters = merge_query_parameters(
             [
                 manual_converted_query_parameters,
@@ -156,7 +156,7 @@ class AlgorithmInterface:
 
     def get_trains_cut_to_time_range(self, time_window: TimeWindow) -> List[AlgorithmTrain]:
         url_to_resource = "trains"
-        cut_train_query_parameters = dict(CutTrain=True)
+        cut_train_query_parameters = dict(cutTrain=True)
         query_parameters = merge_query_parameters(
             [
                 cut_train_query_parameters,
@@ -176,7 +176,7 @@ class AlgorithmInterface:
             node_ids: List[int]
     ) -> List[AlgorithmTrain]:
         url_to_resource = "trains"
-        manual_converted_query_parameters = dict(CutTrain=True, NodeFilter=node_ids)
+        manual_converted_query_parameters = dict(cutTrain=True, nodeFilter=node_ids)
         query_parameters = merge_query_parameters(
             [
                 manual_converted_query_parameters,
@@ -217,7 +217,7 @@ class AlgorithmInterface:
 
     def set_section_track(self, train_path_node_id: int, section_track_id: int) -> AlgorithmTrain:
         url_to_resource = 'set-section-track'
-        post_request_body = dict(TrainPathNodeID=train_path_node_id, SectionTrackID=section_track_id)
+        post_request_body = dict(trainPathNodeId=train_path_node_id, sectionTrackId=section_track_id)
         response_dict = self.__communication_layer.do_post_request(url_to_resource, request_body=post_request_body)
         return algorithm_platform_json_to_aidm_converter.convert_json_to_algorithm_train(response_dict)
 
@@ -249,8 +249,8 @@ class AlgorithmInterface:
     ) -> Optional[datetime.timedelta]:
         url_to_resource = 'nodes/{0}/separation-times'.format(node_id)
         query_parameters = dict(
-            PrecedingTrainPathNodeID=preceding_train_path_node_id,
-            SucceedingTrainPathNodeID=succeeding_train_path_node_id)
+            precedingTrainPathNodeId=preceding_train_path_node_id,
+            succeedingTrainPathNodeId=succeeding_train_path_node_id)
         response_dict = self.__communication_layer.do_get_request(url_to_resource, query_parameters)
         return converter_helpers.parse_to_timedelta_or_none(response_dict["separationTime"])
 
@@ -261,10 +261,10 @@ class AlgorithmInterface:
     ) -> Optional[datetime.timedelta]:
         url_to_resource = 'nodes/{0}/separation-times'.format(preceding_routing_edge.node_id)
         query_parameters = dict(
-            PrecedingFromSectionTrackID=preceding_routing_edge.start_section_track_id,
-            PrecedingToSectionTrackID=preceding_routing_edge.end_section_track_id,
-            SucceedingFromSectionTrackID=succeeding_routing_edge.start_section_track_id,
-            SucceedingToSectionTrackID=succeeding_routing_edge.end_section_track_id)
+            precedingFromSectionTrackId=preceding_routing_edge.start_section_track_id,
+            precedingToSectionTrackId=preceding_routing_edge.end_section_track_id,
+            succeedingFromSectionTrackId=succeeding_routing_edge.start_section_track_id,
+            succeedingToSectionTrackId=succeeding_routing_edge.end_section_track_id)
 
         response_dict = self.__communication_layer.do_get_request(url_to_resource, query_parameters)
         return converter_helpers.parse_to_timedelta_or_none(response_dict["separationTime"])
@@ -274,7 +274,7 @@ class AlgorithmInterface:
             node_id: int,
             node_track_id: int) -> datetime.timedelta:
         url_to_resource = 'nodes/{0}/separation-times'.format(node_id)
-        query_parameters = dict(NodeTrackID=node_track_id)
+        query_parameters = dict(nodeTrackId=node_track_id)
         response_dict = self.__communication_layer.do_get_request(url_to_resource, query_parameters)
         return converter_helpers.parse_to_timedelta(response_dict["separationTime"])
 
@@ -297,16 +297,16 @@ class AlgorithmInterface:
             succeeding_station_entry_or_exit)
 
         query_parameters = dict(
-            PrecedingTrainPathNodeID=preceding_train_path_node_id,
-            PrecedingEntryOrExit=preceding_entry_or_exit,
-            SucceedingTrainPathNodeID=succeeding_train_path_node_id,
-            SucceedingEntryOrExit=succeeding_entry_or_exit)
+            precedingTrainPathNodeId=preceding_train_path_node_id,
+            precedingEntryOrExit=preceding_entry_or_exit,
+            succeedingTrainPathNodeId=succeeding_train_path_node_id,
+            succeedingEntryOrExit=succeeding_entry_or_exit)
 
         if preceding_train_stop_status is not None:
-            query_parameters['PrecedingStopStatus'] = object_to_algorithm_platform_json_converter \
+            query_parameters['precedingStopStatus'] = object_to_algorithm_platform_json_converter \
                 .convert_any_object(preceding_train_stop_status)
         if succeeding_train_stop_status is not None:
-            query_parameters['SucceedingStopStatus'] = object_to_algorithm_platform_json_converter \
+            query_parameters['succeedingStopStatus'] = object_to_algorithm_platform_json_converter \
                 .convert_any_object(succeeding_train_stop_status)
 
         response_dict = self.__communication_layer.do_get_request(url_to_resource, query_parameters)
@@ -324,9 +324,9 @@ class AlgorithmInterface:
         query_parameters = create_query_parameters_from_preceding_and_succeeding_routing_edge(
             preceding_train_routing_edge,
             succeeding_train_routing_edge)
-        query_parameters['PrecedingStopStatus'] = object_to_algorithm_platform_json_converter \
+        query_parameters['precedingStopStatus'] = object_to_algorithm_platform_json_converter \
             .convert_any_object(preceding_stop_status)
-        query_parameters['SucceedingStopStatus'] = object_to_algorithm_platform_json_converter \
+        query_parameters['succeedingStopStatus'] = object_to_algorithm_platform_json_converter \
             .convert_any_object(succeeding_stop_status)
 
         response_dict = self.__communication_layer.do_get_request(url_to_resource, query_parameters)
@@ -343,9 +343,9 @@ class AlgorithmInterface:
         url_to_resource = "section-tracks/{0}/headway-times".format(section_track_id)
         headway_query_parameters = dict()
         if from_node_id is not None:
-            headway_query_parameters['FromNodeID'] = from_node_id
+            headway_query_parameters['fromNodeId'] = from_node_id
         if to_node_id is not None:
-            headway_query_parameters['ToNodeID'] = to_node_id
+            headway_query_parameters['toNodeId'] = to_node_id
 
         response_dict = self.__communication_layer.do_get_request(url_to_resource, headway_query_parameters)
         return converter_helpers.parse_to_timedelta(response_dict["headwayTime"])
@@ -361,12 +361,12 @@ class AlgorithmInterface:
 
         url_to_resource = "section-tracks/{0}/headway-times".format(section_track_id)
         headway_query_parameters = dict(
-            PrecedingTrainPathNodeID=preceding_train_path_node_id,
-            SucceedingTrainPathNodeID=succeeding_train_path_node_id)
+            precedingTrainPathNodeId=preceding_train_path_node_id,
+            succeedingTrainPathNodeId=succeeding_train_path_node_id)
         if from_node_id is not None:
-            headway_query_parameters['FromNodeID'] = from_node_id
+            headway_query_parameters['fromNodeId'] = from_node_id
         if to_node_id is not None:
-            headway_query_parameters['ToNodeID'] = to_node_id
+            headway_query_parameters['toNodeId'] = to_node_id
 
         response_dict = self.__communication_layer.do_get_request(url_to_resource, headway_query_parameters)
         return converter_helpers.parse_to_timedelta(response_dict["headwayTime"])
@@ -408,7 +408,7 @@ class AlgorithmInterface:
     ) -> List[AlgorithmNodeTrack]:
         url_to_resource = "assignable-station-tracks-in-algorithm-node"
         stop_status_value = object_to_algorithm_platform_json_converter.convert_any_object(stop_status)
-        get_request_params = dict(NodeID=node_id, TrainPathNodeID=train_path_node_id, StopStatus=stop_status_value)
+        get_request_params = dict(nodeId=node_id, trainPathNodeId=train_path_node_id, stopStatus=stop_status_value)
         response_list = self.__communication_layer.do_get_request(url_to_resource, get_request_params)
         return algorithm_platform_json_to_aidm_converter.convert_list(AlgorithmNodeTrack, response_list)
 
@@ -417,7 +417,7 @@ class AlgorithmInterface:
             train_path_node_id: int
     ) -> List[AlgorithmNodeTrack]:
         url_to_resource = "assignable-station-tracks-on-train-path-node"
-        get_request_params = dict(TrainPathNodeID=train_path_node_id)
+        get_request_params = dict(trainPathNodeId=train_path_node_id)
         response_list = self.__communication_layer.do_get_request(url_to_resource, get_request_params)
         return algorithm_platform_json_to_aidm_converter.convert_list(AlgorithmNodeTrack, response_list)
 
@@ -427,14 +427,14 @@ class AlgorithmInterface:
             station_track_id_or_none: Optional[int] = None
     ) -> AlgorithmTrain:
         url_to_resource = "assign-station-track"
-        post_request_body = dict(TrainPathNodeID=train_path_node_id, NodeTrackID=str(station_track_id_or_none))
+        post_request_body = dict(trainPathNodeId=train_path_node_id, nodeTrackId=str(station_track_id_or_none))
         response_dict = self.__communication_layer.do_post_request(url_to_resource, post_request_body)
         return algorithm_platform_json_to_aidm_converter.convert_json_to_algorithm_train(response_dict)
 
     def get_incoming_routing_edges(self, routing_point: RoutingPoint) -> IncomingRoutingEdgeSet:
         url_to_resource = "nodes/{0}/incoming-routing-edges".format(routing_point.node_id)
         if routing_point.node_track_id is not None:
-            get_request_params = dict(EndNodeTrackID=routing_point.node_track_id)
+            get_request_params = dict(endNodeTrackId=routing_point.node_track_id)
         else:
             get_request_params = dict()
         response_dict = self.__communication_layer.do_get_request(url_to_resource, get_request_params)
@@ -443,7 +443,7 @@ class AlgorithmInterface:
     def get_outgoing_routing_edges(self, routing_point: RoutingPoint) -> OutgoingRoutingEdgeSet:
         url_to_resource = "nodes/{0}/outgoing-routing-edges".format(routing_point.node_id)
         if routing_point.node_track_id is not None:
-            get_request_params = dict(StartNodeTrackID=routing_point.node_track_id)
+            get_request_params = dict(startNodeTrackId=routing_point.node_track_id)
         else:
             get_request_params = dict()
         response_dict = self.__communication_layer.do_get_request(url_to_resource, get_request_params)
@@ -492,7 +492,7 @@ class AlgorithmInterface:
         dict
     ]:
         url_to_resource = "parameters/{0}".format(key)
-        return self.__communication_layer.do_get_request(url_to_resource)["Value"]
+        return self.__communication_layer.do_get_request(url_to_resource)["value"]
 
     def get_bool_algorithm_parameter(self, key: str) -> bool:
         return self.__delegate_get_any_parameter(key)

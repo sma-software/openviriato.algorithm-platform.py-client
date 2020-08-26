@@ -15,15 +15,15 @@ class TestGetSeparationTimeInJunctionForRoutes(unittest.TestCase):
             self.__last_request = request
 
             one_day_case_parameters = dict(
-                PrecedingFromSectionTrackID=80,
-                PrecedingToSectionTrackID=324,
-                SucceedingFromSectionTrackID=178,
-                SucceedingToSectionTrackID=12740)
+                precedingFromSectionTrackId=80,
+                precedingToSectionTrackId=324,
+                succeedingFromSectionTrackId=178,
+                succeedingToSectionTrackId=12740)
             null_case_parameters = dict(
-                PrecedingFromSectionTrackID=1,
-                PrecedingToSectionTrackID=1,
-                SucceedingFromSectionTrackID=1,
-                SucceedingToSectionTrackID=1)
+                precedingFromSectionTrackId=1,
+                precedingToSectionTrackId=1,
+                succeedingFromSectionTrackId=1,
+                succeedingToSectionTrackId=1)
 
             if self.__last_body == one_day_case_parameters:
                 json_string = """{ "separationTime": "P1D"}"""
@@ -49,10 +49,10 @@ class TestGetSeparationTimeInJunctionForRoutes(unittest.TestCase):
             get_api_url() + "/nodes/123/separation-times")
 
         expected_query_parameters = dict(
-            PrecedingFromSectionTrackID=80,
-            PrecedingToSectionTrackID=324,
-            SucceedingFromSectionTrackID=178,
-            SucceedingToSectionTrackID=12740)
+            precedingFromSectionTrackId=80,
+            precedingToSectionTrackId=324,
+            succeedingFromSectionTrackId=178,
+            succeedingToSectionTrackId=12740)
         self.assertDictEqual(
             session_obj._GetSeparationTimeInJunctionForRoutesTestMockSession__last_body,
             expected_query_parameters)

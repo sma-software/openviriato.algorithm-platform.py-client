@@ -14,8 +14,8 @@ class TestGetBoolAlgorithmParameter(unittest.TestCase):
             self.__last_body = params
 
             json__string = ("{\n"
-                            "  \"Key\": \"someBoolParameterKey\",\n"
-                            "  \"Value\": true\n"
+                            "  \"key\": \"someBoolParameterKey\",\n"
+                            "  \"value\": true\n"
                             "}")
             return APISessionMock.create_response_mock(json__string, 200)
 

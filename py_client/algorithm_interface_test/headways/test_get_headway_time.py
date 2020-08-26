@@ -35,7 +35,7 @@ class TestGetHeadwayTime(unittest.TestCase):
             preceding_train_path_node_id,
             succeeding_train_path_node_id)
 
-        expected_parameter_dict = dict(PrecedingTrainPathNodeID=12, SucceedingTrainPathNodeID=13)
+        expected_parameter_dict = dict(precedingTrainPathNodeId=12, succeedingTrainPathNodeId=13)
         session_obj = self.interface_to_viriato._AlgorithmInterface__communication_layer.currentSession
         self.assertEqual(session_obj._GetHeadwayTimeTestMockSession__last_request,
                          get_api_url() + "/section-tracks/5332/headway-times")
@@ -57,9 +57,9 @@ class TestGetHeadwayTime(unittest.TestCase):
             succeeding_train_path_node_id)
 
         expected_parameter_dict = dict(
-            FromNodeID=99,
-            PrecedingTrainPathNodeID=12,
-            SucceedingTrainPathNodeID=13)
+            fromNodeId=99,
+            precedingTrainPathNodeId=12,
+            succeedingTrainPathNodeId=13)
         session_obj = self.interface_to_viriato._AlgorithmInterface__communication_layer.currentSession
         self.assertEqual(session_obj._GetHeadwayTimeTestMockSession__last_request,
                          get_api_url() + "/section-tracks/5332/headway-times")
@@ -81,9 +81,9 @@ class TestGetHeadwayTime(unittest.TestCase):
             succeeding_train_path_node_id)
 
         expected_parameter_dict = dict(
-            ToNodeID=270,
-            PrecedingTrainPathNodeID=12,
-            SucceedingTrainPathNodeID=13)
+            toNodeId=270,
+            precedingTrainPathNodeId=12,
+            succeedingTrainPathNodeId=13)
         session_obj = self.interface_to_viriato._AlgorithmInterface__communication_layer.currentSession
         self.assertEqual(session_obj._GetHeadwayTimeTestMockSession__last_request,
                          get_api_url() + "/section-tracks/5332/headway-times")
@@ -105,10 +105,10 @@ class TestGetHeadwayTime(unittest.TestCase):
             succeeding_train_path_node_id)
 
         expected_parameter_dict = dict(
-            FromNodeID=99,
-            ToNodeID=270,
-            PrecedingTrainPathNodeID=12,
-            SucceedingTrainPathNodeID=13)
+            fromNodeId=99,
+            toNodeId=270,
+            precedingTrainPathNodeId=12,
+            succeedingTrainPathNodeId=13)
         session_obj = self.interface_to_viriato._AlgorithmInterface__communication_layer.currentSession
         self.assertEqual(session_obj._GetHeadwayTimeTestMockSession__last_request,
                          get_api_url() + "/section-tracks/5332/headway-times")

@@ -16,10 +16,10 @@ class TestGetTimeWindowParameter(unittest.TestCase):
             self.__last_body = params
 
             json__string = ("{\n"
-                            "  \"Key\": \"someTimeWindowParameterKey\",\n"
-                            "  \"Value\": {\n"
-                            "    \"from_time\": \"2003-01-01T10:20:30\",\n"
-                            "    \"to_time\": \"2003-01-01T11:00:00\"\n"
+                            "  \"key\": \"someTimeWindowParameterKey\",\n"
+                            "  \"value\": {\n"
+                            "    \"fromTime\": \"2003-01-01T10:20:30\",\n"
+                            "    \"toTime\": \"2003-01-01T11:00:00\"\n"
                             "  }\n"
                             "}")
             return APISessionMock.create_response_mock(json__string, 200)

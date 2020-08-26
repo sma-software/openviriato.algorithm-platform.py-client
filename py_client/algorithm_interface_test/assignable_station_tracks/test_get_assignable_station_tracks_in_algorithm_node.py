@@ -17,9 +17,9 @@ class TestGetAssignableStationTracksInAlgorithmNode(unittest.TestCase):
 
             json__string = ("[\n"
                             "  {\n"
-                            "    \"ID\": 163,\n"
-                            "    \"Code\": \"2\",\n"
-                            "    \"DebugString\": \"stationtrack:85AR_{StationTrack SID = 34140}\"\n"
+                            "    \"id\": 163,\n"
+                            "    \"code\": \"2\",\n"
+                            "    \"debugString\": \"stationtrack:85AR_{StationTrack SID = 34140}\"\n"
                             "  }\n"
                             "]")
 
@@ -44,7 +44,7 @@ class TestGetAssignableStationTracksInAlgorithmNode(unittest.TestCase):
         self.assertEqual(session_obj._GetAssignableStationTracksInAlgorithmNodeTestSessionMock__last_request,
                          get_api_url() + '/assignable-station-tracks-in-algorithm-node')
         self.assertDictEqual(session_obj._GetAssignableStationTracksInAlgorithmNodeTestSessionMock__last_body,
-                             dict(NodeID=1, TrainPathNodeID=1, StopStatus="CommercialStop"))
+                             dict(nodeId=1, trainPathNodeId=1, stopStatus="commercialStop"))
 
     @mock.patch('requests.Session', side_effect=GetAssignableStationTracksInAlgorithmNodeTestSessionMock)
     def test_get_assignable_station_tracks_in_algorithm_node_response(self, mocked_get_obj):

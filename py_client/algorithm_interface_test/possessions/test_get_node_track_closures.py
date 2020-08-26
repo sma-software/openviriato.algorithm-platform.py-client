@@ -19,21 +19,21 @@ class TestGetNodeTrackClosures(unittest.TestCase):
             self.__last_request = request
             json_string = ("[\n"
                            "  {\n"
-                           "    \"DebugString\": \"nodetrackclosure:85ZMUS 24\",\n"
-                           "    \"node_id\": 621,\n"
-                           "    \"node_track_id\": 622,\n"
-                           "    \"closure_time_window\": {\n"
-                           "      \"from_time\": \"2003-05-01T08:00:00\",\n"
-                           "      \"to_time\": \"2003-05-02T10:00:00\"\n"
+                           "    \"debugString\": \"nodetrackclosure:85ZMUS 24\",\n"
+                           "    \"nodeId\": 621,\n"
+                           "    \"nodeTrackId\": 622,\n"
+                           "    \"closureTimeWindow\": {\n"
+                           "      \"fromTime\": \"2003-05-01T08:00:00\",\n"
+                           "      \"toTime\": \"2003-05-02T10:00:00\"\n"
                            "    }\n"
                            "  },\n"
                            "  {\n"
-                           "    \"DebugString\": \"nodetrackclosure:85ZMUS 23\",\n"
-                           "    \"node_id\": 621,\n"
-                           "    \"node_track_id\": 623,\n"
-                           "    \"closure_time_window\": {\n"
-                           "      \"from_time\": \"2003-05-01T08:00:00\",\n"
-                           "      \"to_time\": \"2003-05-02T10:00:00\"\n"
+                           "    \"debugString\": \"nodetrackclosure:85ZMUS 23\",\n"
+                           "    \"nodeId\": 621,\n"
+                           "    \"nodeTrackId\": 623,\n"
+                           "    \"closureTimeWindow\": {\n"
+                           "      \"fromTime\": \"2003-05-01T08:00:00\",\n"
+                           "      \"toTime\": \"2003-05-02T10:00:00\"\n"
                            "    }\n"
                            "  }\n"
                            "]")
@@ -58,7 +58,7 @@ class TestGetNodeTrackClosures(unittest.TestCase):
         self.assertEqual(session_obj._GetNodeTrackClosuresTestMockSession__last_request,
                          get_api_url() + "/possessions/node-track-closures")
         self.assertDictEqual(session_obj._GetNodeTrackClosuresTestMockSession__last_body,
-                             dict(FromTime='2003-05-01T00:00:00', ToTime='2003-05-12T00:00:00'))
+                             dict(fromTime='2003-05-01T00:00:00', toTime='2003-05-12T00:00:00'))
 
     @mock.patch('requests.Session', side_effect=GetNodeTrackClosuresTestMockSession)
     def test_get_node_track_closures_response(self, mocked_get_obj):

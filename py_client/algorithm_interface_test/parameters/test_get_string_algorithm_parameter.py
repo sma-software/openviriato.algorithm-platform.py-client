@@ -14,8 +14,8 @@ class TestGetStringAlgorithmParameter(unittest.TestCase):
             self.__last_body = params
 
             json__string = ("{\n"
-                            "  \"Key\": \"someStringParameterKey\",\n"
-                            "  \"Value\": \"input of string text field\"\n"
+                            "  \"key\": \"someStringParameterKey\",\n"
+                            "  \"value\": \"input of string text field\"\n"
                             "}")
             return APISessionMock.create_response_mock(json__string, 200)
 

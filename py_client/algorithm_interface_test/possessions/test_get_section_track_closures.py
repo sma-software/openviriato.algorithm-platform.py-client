@@ -18,31 +18,31 @@ class TestGetSectionTrackClosures(unittest.TestCase):
             self.__last_body = params
             self.__last_request = request
             json_string = ("[{\n"
-                           "    \"DebugString\": \"sectiontrackclosure:s_70011 1 n_85ZMUS 85ZLSTA\",\n"
-                           "    \"SectionTrackID\": 1080,\n"
-                           "    \"FromNodeID\": 621,\n"
-                           "    \"ToNodeID\": 620,\n"
-                           "    \"closure_time_window_from_node\": {\n"
-                           "      \"from_time\": \"2003-05-01T08:00:00\",\n"
-                           "      \"to_time\": \"2003-05-01T09:00:00\"\n"
+                           "    \"debugString\": \"sectiontrackclosure:s_70011 1 n_85ZMUS 85ZLSTA\",\n"
+                           "    \"sectionTrackId\": 1080,\n"
+                           "    \"FromNodeId\": 621,\n"
+                           "    \"toNodeId\": 620,\n"
+                           "    \"closureTimeWindowFromNode\": {\n"
+                           "      \"fromTime\": \"2003-05-01T08:00:00\",\n"
+                           "      \"toTime\": \"2003-05-01T09:00:00\"\n"
                            "    },\n"
-                           "    \"ClosureTimeWindowToNode\": {\n"
-                           "      \"from_time\": \"2003-05-01T08:30:00\",\n"
-                           "      \"to_time\": \"2003-05-01T09:30:00\"\n"
+                           "    \"closureTimeWindowToNode\": {\n"
+                           "      \"fromTime\": \"2003-05-01T08:30:00\",\n"
+                           "      \"toTime\": \"2003-05-01T09:30:00\"\n"
                            "    }\n"
                            "  },\n"
                            "  {\n"
-                           "    \"DebugString\": \"sectiontrackclosure:s_70011 0 n_85ZMUS 85ZLST A\",\n"
-                           "    \"SectionTrackID\": 1079,\n"
-                           "    \"FromNodeID\": 621,\n"
-                           "    \"ToNodeID\": 620,\n"
-                           "    \"closure_time_window_from_node\": {\n"
-                           "      \"from_time\": \"2003-05-01T08:00:00\",\n"
-                           "      \"to_time\": \"2003-05-01T09:00:00\"\n"
+                           "    \"debugString\": \"sectiontrackclosure:s_70011 0 n_85ZMUS 85ZLST A\",\n"
+                           "    \"sectionTrackId\": 1079,\n"
+                           "    \"FromNodeId\": 621,\n"
+                           "    \"toNodeId\": 620,\n"
+                           "    \"closureTimeWindowFromNode\": {\n"
+                           "      \"fromTime\": \"2003-05-01T08:00:00\",\n"
+                           "      \"toTime\": \"2003-05-01T09:00:00\"\n"
                            "    },\n"
-                           "    \"ClosureTimeWindowToNode\": {\n"
-                           "      \"from_time\": \"2003-05-01T08:30:00\",\n"
-                           "      \"to_time\": \"2003-05-01T09:30:00\"\n"
+                           "    \"closureTimeWindowToNode\": {\n"
+                           "      \"fromTime\": \"2003-05-01T08:30:00\",\n"
+                           "      \"toTime\": \"2003-05-01T09:30:00\"\n"
                            "    }\n"
                            "  }\n"
                            "]"
@@ -68,7 +68,7 @@ class TestGetSectionTrackClosures(unittest.TestCase):
         self.assertEqual(session_obj._GetSectionTrackClosuresTestMockSession__last_request,
                          get_api_url() + "/possessions/section-track-closures")
         self.assertDictEqual(session_obj._GetSectionTrackClosuresTestMockSession__last_body,
-                             dict(FromTime='2003-05-01T00:00:00', ToTime='2003-05-12T00:00:00'))
+                             dict(fromTime='2003-05-01T00:00:00', toTime='2003-05-12T00:00:00'))
 
     @mock.patch('requests.Session', side_effect=GetSectionTrackClosuresTestMockSession)
     def test_get_section_track_closures_response(self, mocked_get_obj):

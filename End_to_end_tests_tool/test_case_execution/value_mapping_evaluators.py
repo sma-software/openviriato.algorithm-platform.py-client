@@ -25,7 +25,7 @@ def _get_parameter_value_from_algorithm_platform(parameter_name: str,
             "status code {0}, could not get value for parameter {1}:{2} from algorithm platform".format(
                 response.status_code, parameter_name, path_expression_to_parameter))
     else:
-        return _try_extract_value_from_jpath_expression(response.json()["Value"], path_expression_to_parameter)
+        return _try_extract_value_from_jpath_expression(response.json()["value"], path_expression_to_parameter)
 
 
 def _try_extract_value_from_jpath_expression(call_json: dict, path_expression: str) -> result.Result:

@@ -1,7 +1,7 @@
 ﻿{
-    "restResource": "/trains/{trainID}:clone",
+    "restResource": "/trains/{trainId}:clone",
     "httpMethod": "POST",
-    "urlParameters": [ "=shortTrain:ID=" ],
+    "urlParameters": [ "=shortTrain:id=" ],
     "requestBody": null,
     "CSharpMethodName": "CloneTrain(trainID)",
     "CSharpMethodParameterTypes": [ "System.Int64" ],

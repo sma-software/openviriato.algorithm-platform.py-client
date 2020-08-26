@@ -1,7 +1,7 @@
 ﻿{
-    "restResource": "/trains/{trainID}/train-path-nodes/{trainPathNodeID}:cancel-after",
+    "restResource": "/trains/{trainId}/train-path-nodes/{trainPathNodeId}:cancel-after",
     "httpMethod": "PUT",
-    "urlParameters": [ "=cancelTrainFrom:ID=", "=cancelTrainFrom:TrainPathNodes[1].ID=" ],
+    "urlParameters": [ "=cancelTrainFrom:id=", "=cancelTrainFrom:trainPathNodes[1].id=" ],
     "requestBody": null,
     "CSharpMethodName": "CancelTrainAfter(trainID, trainPathNodeID)",
     "CSharpMethodParameterTypes": [ "System.Int64", "System.Int64" ],

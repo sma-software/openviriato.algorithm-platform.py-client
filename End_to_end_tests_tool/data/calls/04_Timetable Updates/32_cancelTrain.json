@@ -1,7 +1,7 @@
 ﻿{
-    "restResource": "/trains/{trainID}",
+    "restResource": "/trains/{trainId}",
     "httpMethod": "DELETE",
-    "urlParameters": [ "=cancelTrain:ID=" ],
+    "urlParameters": [ "=cancelTrain:id=" ],
     "requestBody": null,
     "CSharpMethodName": "CancelTrain(trainID)",
     "CSharpMethodParameterTypes": [ "System.Int64" ],

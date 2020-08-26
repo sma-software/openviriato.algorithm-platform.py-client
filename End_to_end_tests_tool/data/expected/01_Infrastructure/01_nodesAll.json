@@ -1,3864 +1,3864 @@
 ﻿[
   {
-    "ID": 1,
-    "Code": "45ADW",
-    "DebugString": "station:45ADW",
-    "NodeTracks": []
+    "id": 1,
+    "code": "45ADW",
+    "nodeTracks": [],
+    "debugString": "station:45ADW"
   },
   {
-    "ID": 2,
-    "Code": "45LNG",
-    "DebugString": "station:45LNG",
-    "NodeTracks": []
+    "id": 2,
+    "code": "45LNG",
+    "nodeTracks": [],
+    "debugString": "station:45LNG"
   },
   {
-    "ID": 3,
-    "Code": "45SIA",
-    "DebugString": "station:45SIA",
-    "NodeTracks": []
+    "id": 3,
+    "code": "45SIA",
+    "nodeTracks": [],
+    "debugString": "station:45SIA"
   },
   {
-    "ID": 4,
-    "Code": "45SIW",
-    "DebugString": "station:45SIW",
-    "NodeTracks": []
+    "id": 4,
+    "code": "45SIW",
+    "nodeTracks": [],
+    "debugString": "station:45SIW"
   },
   {
-    "ID": 5,
-    "Code": "45SOOD",
-    "DebugString": "station:45SOOD",
-    "NodeTracks": []
+    "id": 5,
+    "code": "45SOOD",
+    "nodeTracks": [],
+    "debugString": "station:45SOOD"
   },
   {
-    "ID": 6,
-    "Code": "45WP",
-    "DebugString": "station:45WP",
-    "NodeTracks": []
+    "id": 6,
+    "code": "45WP",
+    "nodeTracks": [],
+    "debugString": "station:45WP"
   },
   {
-    "ID": 7,
-    "Code": "45ZBRU",
-    "DebugString": "station:45ZBRU",
-    "NodeTracks": [
+    "id": 7,
+    "code": "45ZBRU",
+    "nodeTracks": [
       {
-        "ID": 8,
-        "Code": "1",
-        "DebugString": "stationtrack:45ZBRU_1"
+        "id": 8,
+        "code": "1",
+        "debugString": "stationtrack:45ZBRU_1"
       },
       {
-        "ID": 9,
-        "Code": "2",
-        "DebugString": "stationtrack:45ZBRU_2"
+        "id": 9,
+        "code": "2",
+        "debugString": "stationtrack:45ZBRU_2"
       }
-    ]
+    ],
+    "debugString": "station:45ZBRU"
   },
   {
-    "ID": 10,
-    "Code": "45ZGH",
-    "DebugString": "station:45ZGH",
-    "NodeTracks": [
+    "id": 10,
+    "code": "45ZGH",
+    "nodeTracks": [
       {
-        "ID": 11,
-        "Code": "1",
-        "DebugString": "stationtrack:45ZGH_1"
+        "id": 11,
+        "code": "1",
+        "debugString": "stationtrack:45ZGH_1"
       },
       {
-        "ID": 12,
-        "Code": "2",
-        "DebugString": "stationtrack:45ZGH_2"
+        "id": 12,
+        "code": "2",
+        "debugString": "stationtrack:45ZGH_2"
       }
-    ]
+    ],
+    "debugString": "station:45ZGH"
   },
   {
-    "ID": 13,
-    "Code": "45ZLE",
-    "DebugString": "station:45ZLE",
-    "NodeTracks": []
+    "id": 13,
+    "code": "45ZLE",
+    "nodeTracks": [],
+    "debugString": "station:45ZLE"
   },
   {
-    "ID": 14,
-    "Code": "45ZMA",
-    "DebugString": "station:45ZMA",
-    "NodeTracks": []
+    "id": 14,
+    "code": "45ZMA",
+    "nodeTracks": [],
+    "debugString": "station:45ZMA"
   },
   {
-    "ID": 15,
-    "Code": "45ZSAA",
-    "DebugString": "station:45ZSAA",
-    "NodeTracks": [
+    "id": 15,
+    "code": "45ZSAA",
+    "nodeTracks": [
       {
-        "ID": 16,
-        "Code": "1",
-        "DebugString": "stationtrack:45ZSAA_1"
+        "id": 16,
+        "code": "1",
+        "debugString": "stationtrack:45ZSAA_1"
       },
       {
-        "ID": 17,
-        "Code": "2",
-        "DebugString": "stationtrack:45ZSAA_2"
+        "id": 17,
+        "code": "2",
+        "debugString": "stationtrack:45ZSAA_2"
       }
-    ]
+    ],
+    "debugString": "station:45ZSAA"
   },
   {
-    "ID": 18,
-    "Code": "45ZSEL",
-    "DebugString": "station:45ZSEL",
-    "NodeTracks": [
+    "id": 18,
+    "code": "45ZSEL",
+    "nodeTracks": [
       {
-        "ID": 19,
-        "Code": "1",
-        "DebugString": "stationtrack:45ZSEL_1"
+        "id": 19,
+        "code": "1",
+        "debugString": "stationtrack:45ZSEL_1"
       },
       {
-        "ID": 20,
-        "Code": "2",
-        "DebugString": "stationtrack:45ZSEL_2"
+        "id": 20,
+        "code": "2",
+        "debugString": "stationtrack:45ZSEL_2"
       }
-    ]
+    ],
+    "debugString": "station:45ZSEL"
   },
   {
-    "ID": 21,
-    "Code": "45ZSZU",
-    "DebugString": "station:45ZSZU",
-    "NodeTracks": [
+    "id": 21,
+    "code": "45ZSZU",
+    "nodeTracks": [
       {
-        "ID": 22,
-        "Code": "1",
-        "DebugString": "stationtrack:45ZSZU_1"
+        "id": 22,
+        "code": "1",
+        "debugString": "stationtrack:45ZSZU_1"
       },
       {
-        "ID": 23,
-        "Code": "2",
-        "DebugString": "stationtrack:45ZSZU_2"
+        "id": 23,
+        "code": "2",
+        "debugString": "stationtrack:45ZSZU_2"
       }
-    ]
+    ],
+    "debugString": "station:45ZSZU"
   },
   {
-    "ID": 24,
-    "Code": "45ZWAA",
-    "DebugString": "station:45ZWAA",
-    "NodeTracks": [
+    "id": 24,
+    "code": "45ZWAA",
+    "nodeTracks": [
       {
-        "ID": 25,
-        "Code": "1",
-        "DebugString": "stationtrack:45ZWAA_1"
+        "id": 25,
+        "code": "1",
+        "debugString": "stationtrack:45ZWAA_1"
       },
       {
-        "ID": 26,
-        "Code": "2",
-        "DebugString": "stationtrack:45ZWAA_2"
+        "id": 26,
+        "code": "2",
+        "debugString": "stationtrack:45ZWAA_2"
       }
-    ]
+    ],
+    "debugString": "station:45ZWAA"
   },
   {
-    "ID": 27,
-    "Code": "49ADZ",
-    "DebugString": "station:49ADZ",
-    "NodeTracks": []
+    "id": 27,
+    "code": "49ADZ",
+    "nodeTracks": [],
+    "debugString": "station:49ADZ"
   },
   {
-    "ID": 28,
-    "Code": "49ALGR",
-    "DebugString": "station:49ALGR",
-    "NodeTracks": []
+    "id": 28,
+    "code": "49ALGR",
+    "nodeTracks": [],
+    "debugString": "station:49ALGR"
   },
   {
-    "ID": 29,
-    "Code": "49ALV",
-    "DebugString": "station:49ALV",
-    "NodeTracks": []
+    "id": 29,
+    "code": "49ALV",
+    "nodeTracks": [],
+    "debugString": "station:49ALV"
   },
   {
-    "ID": 30,
-    "Code": "49AROS",
-    "DebugString": "station:49AROS",
-    "NodeTracks": []
+    "id": 30,
+    "code": "49AROS",
+    "nodeTracks": [],
+    "debugString": "station:49AROS"
   },
   {
-    "ID": 31,
-    "Code": "49BEBR",
-    "DebugString": "station:49BEBR",
-    "NodeTracks": []
+    "id": 31,
+    "code": "49BEBR",
+    "nodeTracks": [],
+    "debugString": "station:49BEBR"
   },
   {
-    "ID": 32,
-    "Code": "49BEDI",
-    "DebugString": "station:49BEDI",
-    "NodeTracks": []
+    "id": 32,
+    "code": "49BEDI",
+    "nodeTracks": [],
+    "debugString": "station:49BEDI"
   },
   {
-    "ID": 33,
-    "Code": "49BELA",
-    "DebugString": "station:49BELA",
-    "NodeTracks": []
+    "id": 33,
+    "code": "49BELA",
+    "nodeTracks": [],
+    "debugString": "station:49BELA"
   },
   {
-    "ID": 34,
-    "Code": "49BESU",
-    "DebugString": "station:49BESU",
-    "NodeTracks": []
+    "id": 34,
+    "code": "49BESU",
+    "nodeTracks": [],
+    "debugString": "station:49BESU"
   },
   {
-    "ID": 35,
-    "Code": "49BEV",
-    "DebugString": "station:49BEV",
-    "NodeTracks": [
+    "id": 35,
+    "code": "49BEV",
+    "nodeTracks": [
       {
-        "ID": 36,
-        "Code": "1",
-        "DebugString": "stationtrack:49BEV_1"
+        "id": 36,
+        "code": "1",
+        "debugString": "stationtrack:49BEV_1"
       },
       {
-        "ID": 37,
-        "Code": "2",
-        "DebugString": "stationtrack:49BEV_2"
+        "id": 37,
+        "code": "2",
+        "debugString": "stationtrack:49BEV_2"
       },
       {
-        "ID": 38,
-        "Code": "3",
-        "DebugString": "stationtrack:49BEV_3"
+        "id": 38,
+        "code": "3",
+        "debugString": "stationtrack:49BEV_3"
       }
-    ]
+    ],
+    "debugString": "station:49BEV"
   },
   {
-    "ID": 39,
-    "Code": "49BONA",
-    "DebugString": "station:49BONA",
-    "NodeTracks": []
+    "id": 39,
+    "code": "49BONA",
+    "nodeTracks": [],
+    "debugString": "station:49BONA"
   },
   {
-    "ID": 40,
-    "Code": "49BRIO",
-    "DebugString": "station:49BRIO",
-    "NodeTracks": []
+    "id": 40,
+    "code": "49BRIO",
+    "nodeTracks": [],
+    "debugString": "station:49BRIO"
   },
   {
-    "ID": 41,
-    "Code": "49CADE",
-    "DebugString": "station:49CADE",
-    "NodeTracks": []
+    "id": 41,
+    "code": "49CADE",
+    "nodeTracks": [],
+    "debugString": "station:49CADE"
   },
   {
-    "ID": 42,
-    "Code": "49CAIO",
-    "DebugString": "station:49CAIO",
-    "NodeTracks": []
+    "id": 42,
+    "code": "49CAIO",
+    "nodeTracks": [],
+    "debugString": "station:49CAIO"
   },
   {
-    "ID": 43,
-    "Code": "49CAMP",
-    "DebugString": "station:49CAMP",
-    "NodeTracks": []
+    "id": 43,
+    "code": "49CAMP",
+    "nodeTracks": [],
+    "debugString": "station:49CAMP"
   },
   {
-    "ID": 44,
-    "Code": "49CARO",
-    "DebugString": "station:49CARO",
-    "NodeTracks": []
+    "id": 44,
+    "code": "49CARO",
+    "nodeTracks": [],
+    "debugString": "station:49CARO"
   },
   {
-    "ID": 45,
-    "Code": "49CASR",
-    "DebugString": "station:49CASR",
-    "NodeTracks": []
+    "id": 45,
+    "code": "49CASR",
+    "nodeTracks": [],
+    "debugString": "station:49CASR"
   },
   {
-    "ID": 46,
-    "Code": "49CAVA",
-    "DebugString": "station:49CAVA",
-    "NodeTracks": []
+    "id": 46,
+    "code": "49CAVA",
+    "nodeTracks": [],
+    "debugString": "station:49CAVA"
   },
   {
-    "ID": 47,
-    "Code": "49CAZI",
-    "DebugString": "station:49CAZI",
-    "NodeTracks": []
+    "id": 47,
+    "code": "49CAZI",
+    "nodeTracks": [],
+    "debugString": "station:49CAZI"
   },
   {
-    "ID": 48,
-    "Code": "49CDUE",
-    "DebugString": "station:49CDUE",
-    "NodeTracks": []
+    "id": 48,
+    "code": "49CDUE",
+    "nodeTracks": [],
+    "debugString": "station:49CDUE"
   },
   {
-    "ID": 49,
-    "Code": "49CELE",
-    "DebugString": "station:49CELE",
-    "NodeTracks": []
+    "id": 49,
+    "code": "49CELE",
+    "nodeTracks": [],
+    "debugString": "station:49CELE"
   },
   {
-    "ID": 50,
-    "Code": "49CELS",
-    "DebugString": "station:49CELS",
-    "NodeTracks": []
+    "id": 50,
+    "code": "49CELS",
+    "nodeTracks": [],
+    "debugString": "station:49CELS"
   },
   {
-    "ID": 51,
-    "Code": "49CH",
-    "DebugString": "station:49CH",
-    "NodeTracks": []
+    "id": 51,
+    "code": "49CH",
+    "nodeTracks": [],
+    "debugString": "station:49CH"
   },
   {
-    "ID": 52,
-    "Code": "49CHSA",
-    "DebugString": "station:49CHSA",
-    "NodeTracks": []
+    "id": 52,
+    "code": "49CHSA",
+    "nodeTracks": [],
+    "debugString": "station:49CHSA"
   },
   {
-    "ID": 53,
-    "Code": "49CIN",
-    "DebugString": "station:49CIN",
-    "NodeTracks": []
+    "id": 53,
+    "code": "49CIN",
+    "nodeTracks": [],
+    "debugString": "station:49CIN"
   },
   {
-    "ID": 54,
-    "Code": "49CURT",
-    "DebugString": "station:49CURT",
-    "NodeTracks": []
+    "id": 54,
+    "code": "49CURT",
+    "nodeTracks": [],
+    "debugString": "station:49CURT"
   },
   {
-    "ID": 55,
-    "Code": "49DAD",
-    "DebugString": "station:49DAD",
-    "NodeTracks": []
+    "id": 55,
+    "code": "49DAD",
+    "nodeTracks": [],
+    "debugString": "station:49DAD"
   },
   {
-    "ID": 56,
-    "Code": "49DAF",
-    "DebugString": "station:49DAF",
-    "NodeTracks": []
+    "id": 56,
+    "code": "49DAF",
+    "nodeTracks": [],
+    "debugString": "station:49DAF"
   },
   {
-    "ID": 57,
-    "Code": "49DAGL",
-    "DebugString": "station:49DAGL",
-    "NodeTracks": []
+    "id": 57,
+    "code": "49DAGL",
+    "nodeTracks": [],
+    "debugString": "station:49DAGL"
   },
   {
-    "ID": 58,
-    "Code": "49DAI",
-    "DebugString": "station:49DAI",
-    "NodeTracks": []
+    "id": 58,
+    "code": "49DAI",
+    "nodeTracks": [],
+    "debugString": "station:49DAI"
   },
   {
-    "ID": 59,
-    "Code": "49DALT",
-    "DebugString": "station:49DALT",
-    "NodeTracks": []
+    "id": 59,
+    "code": "49DALT",
+    "nodeTracks": [],
+    "debugString": "station:49DALT"
   },
   {
-    "ID": 60,
-    "Code": "49DAM",
-    "DebugString": "station:49DAM",
-    "NodeTracks": []
+    "id": 60,
+    "code": "49DAM",
+    "nodeTracks": [],
+    "debugString": "station:49DAM"
   },
   {
-    "ID": 61,
-    "Code": "49DAV",
-    "DebugString": "station:49DAV",
-    "NodeTracks": []
+    "id": 61,
+    "code": "49DAV",
+    "nodeTracks": [],
+    "debugString": "station:49DAV"
   },
   {
-    "ID": 62,
-    "Code": "49DAW",
-    "DebugString": "station:49DAW",
-    "NodeTracks": []
+    "id": 62,
+    "code": "49DAW",
+    "nodeTracks": [],
+    "debugString": "station:49DAW"
   },
   {
-    "ID": 63,
-    "Code": "49DE",
-    "DebugString": "station:49DE",
-    "NodeTracks": []
+    "id": 63,
+    "code": "49DE",
+    "nodeTracks": [],
+    "debugString": "station:49DE"
   },
   {
-    "ID": 64,
-    "Code": "49DEPS",
-    "DebugString": "station:49DEPS",
-    "NodeTracks": []
+    "id": 64,
+    "code": "49DEPS",
+    "nodeTracks": [],
+    "debugString": "station:49DEPS"
   },
   {
-    "ID": 65,
-    "Code": "49DIS",
-    "DebugString": "station:49DIS",
-    "NodeTracks": []
+    "id": 65,
+    "code": "49DIS",
+    "nodeTracks": [],
+    "debugString": "station:49DIS"
   },
   {
-    "ID": 66,
-    "Code": "49EMSW",
-    "DebugString": "station:49EMSW",
-    "NodeTracks": []
+    "id": 66,
+    "code": "49EMSW",
+    "nodeTracks": [],
+    "debugString": "station:49EMSW"
   },
   {
-    "ID": 67,
-    "Code": "49FBG",
-    "DebugString": "station:49FBG",
-    "NodeTracks": []
+    "id": 67,
+    "code": "49FBG",
+    "nodeTracks": [],
+    "debugString": "station:49FBG"
   },
   {
-    "ID": 68,
-    "Code": "49FID",
-    "DebugString": "station:49FID",
-    "NodeTracks": []
+    "id": 68,
+    "code": "49FID",
+    "nodeTracks": [],
+    "debugString": "station:49FID"
   },
   {
-    "ID": 69,
-    "Code": "49FILI",
-    "DebugString": "station:49FILI",
-    "NodeTracks": []
+    "id": 69,
+    "code": "49FILI",
+    "nodeTracks": [],
+    "debugString": "station:49FILI"
   },
   {
-    "ID": 70,
-    "Code": "49FTAN",
-    "DebugString": "station:49FTAN",
-    "NodeTracks": []
+    "id": 70,
+    "code": "49FTAN",
+    "nodeTracks": [],
+    "debugString": "station:49FTAN"
   },
   {
-    "ID": 71,
-    "Code": "49FURN",
-    "DebugString": "station:49FURN",
-    "NodeTracks": []
+    "id": 71,
+    "code": "49FURN",
+    "nodeTracks": [],
+    "debugString": "station:49FURN"
   },
   {
-    "ID": 72,
-    "Code": "49GRUS",
-    "DebugString": "station:49GRUS",
-    "NodeTracks": []
+    "id": 72,
+    "code": "49GRUS",
+    "nodeTracks": [],
+    "debugString": "station:49GRUS"
   },
   {
-    "ID": 73,
-    "Code": "49GUA",
-    "DebugString": "station:49GUA",
-    "NodeTracks": []
+    "id": 73,
+    "code": "49GUA",
+    "nodeTracks": [],
+    "debugString": "station:49GUA"
   },
   {
-    "ID": 74,
-    "Code": "49HALD",
-    "DebugString": "station:49HALD",
-    "NodeTracks": []
+    "id": 74,
+    "code": "49HALD",
+    "nodeTracks": [],
+    "debugString": "station:49HALD"
   },
   {
-    "ID": 75,
-    "Code": "49HGR",
-    "DebugString": "station:49HGR",
-    "NodeTracks": []
+    "id": 75,
+    "code": "49HGR",
+    "nodeTracks": [],
+    "debugString": "station:49HGR"
   },
   {
-    "ID": 76,
-    "Code": "49IGIS",
-    "DebugString": "station:49IGIS",
-    "NodeTracks": []
+    "id": 76,
+    "code": "49IGIS",
+    "nodeTracks": [],
+    "debugString": "station:49IGIS"
   },
   {
-    "ID": 77,
-    "Code": "49ILZ",
-    "DebugString": "station:49ILZ",
-    "NodeTracks": []
+    "id": 77,
+    "code": "49ILZ",
+    "nodeTracks": [],
+    "debugString": "station:49ILZ"
   },
   {
-    "ID": 78,
-    "Code": "49JAZ",
-    "DebugString": "station:49JAZ",
-    "NodeTracks": []
+    "id": 78,
+    "code": "49JAZ",
+    "nodeTracks": [],
+    "debugString": "station:49JAZ"
   },
   {
-    "ID": 79,
-    "Code": "49KLO",
-    "DebugString": "station:49KLO",
-    "NodeTracks": []
+    "id": 79,
+    "code": "49KLO",
+    "nodeTracks": [],
+    "debugString": "station:49KLO"
   },
   {
-    "ID": 80,
-    "Code": "49KLOD",
-    "DebugString": "station:49KLOD",
-    "NodeTracks": []
+    "id": 80,
+    "code": "49KLOD",
+    "nodeTracks": [],
+    "debugString": "station:49KLOD"
   },
   {
-    "ID": 81,
-    "Code": "49KLOS",
-    "DebugString": "station:49KLOS",
-    "NodeTracks": []
+    "id": 81,
+    "code": "49KLOS",
+    "nodeTracks": [],
+    "debugString": "station:49KLOS"
   },
   {
-    "ID": 82,
-    "Code": "49KUEB",
-    "DebugString": "station:49KUEB",
-    "NodeTracks": []
+    "id": 82,
+    "code": "49KUEB",
+    "nodeTracks": [],
+    "debugString": "station:49KUEB"
   },
   {
-    "ID": 83,
-    "Code": "49LAPU",
-    "DebugString": "station:49LAPU",
-    "NodeTracks": []
+    "id": 83,
+    "code": "49LAPU",
+    "nodeTracks": [],
+    "debugString": "station:49LAPU"
   },
   {
-    "ID": 84,
-    "Code": "49LAVI",
-    "DebugString": "station:49LAVI",
-    "NodeTracks": []
+    "id": 84,
+    "code": "49LAVI",
+    "nodeTracks": [],
+    "debugString": "station:49LAVI"
   },
   {
-    "ID": 85,
-    "Code": "49LAWI",
-    "DebugString": "station:49LAWI",
-    "NodeTracks": []
+    "id": 85,
+    "code": "49LAWI",
+    "nodeTracks": [],
+    "debugString": "station:49LAWI"
   },
   {
-    "ID": 86,
-    "Code": "49LITZ",
-    "DebugString": "station:49LITZ",
-    "NodeTracks": []
+    "id": 86,
+    "code": "49LITZ",
+    "nodeTracks": [],
+    "debugString": "station:49LITZ"
   },
   {
-    "ID": 87,
-    "Code": "49LQ",
-    "DebugString": "station:49LQ",
-    "NodeTracks": []
+    "id": 87,
+    "code": "49LQ",
+    "nodeTracks": [],
+    "debugString": "station:49LQ"
   },
   {
-    "ID": 88,
-    "Code": "49LQRI",
-    "DebugString": "station:49LQRI",
-    "NodeTracks": []
+    "id": 88,
+    "code": "49LQRI",
+    "nodeTracks": [],
+    "debugString": "station:49LQRI"
   },
   {
-    "ID": 89,
-    "Code": "49LUCA",
-    "DebugString": "station:49LUCA",
-    "NodeTracks": []
+    "id": 89,
+    "code": "49LUCA",
+    "nodeTracks": [],
+    "debugString": "station:49LUCA"
   },
   {
-    "ID": 90,
-    "Code": "49MADU",
-    "DebugString": "station:49MADU",
-    "NodeTracks": []
+    "id": 90,
+    "code": "49MADU",
+    "nodeTracks": [],
+    "debugString": "station:49MADU"
   },
   {
-    "ID": 91,
-    "Code": "49MALA",
-    "DebugString": "station:49MALA",
-    "NodeTracks": []
+    "id": 91,
+    "code": "49MALA",
+    "nodeTracks": [],
+    "debugString": "station:49MALA"
   },
   {
-    "ID": 92,
-    "Code": "49MIRA",
-    "DebugString": "station:49MIRA",
-    "NodeTracks": []
+    "id": 92,
+    "code": "49MIRA",
+    "nodeTracks": [],
+    "debugString": "station:49MIRA"
   },
   {
-    "ID": 93,
-    "Code": "49MOTA",
-    "DebugString": "station:49MOTA",
-    "NodeTracks": []
+    "id": 93,
+    "code": "49MOTA",
+    "nodeTracks": [],
+    "debugString": "station:49MOTA"
   },
   {
-    "ID": 94,
-    "Code": "49MUOT",
-    "DebugString": "station:49MUOT",
-    "NodeTracks": []
+    "id": 94,
+    "code": "49MUOT",
+    "nodeTracks": [],
+    "debugString": "station:49MUOT"
   },
   {
-    "ID": 95,
-    "Code": "49OSBE",
-    "DebugString": "station:49OSBE",
-    "NodeTracks": []
+    "id": 95,
+    "code": "49OSBE",
+    "nodeTracks": [],
+    "debugString": "station:49OSBE"
   },
   {
-    "ID": 96,
-    "Code": "49PEI",
-    "DebugString": "station:49PEI",
-    "NodeTracks": []
+    "id": 96,
+    "code": "49PEI",
+    "nodeTracks": [],
+    "debugString": "station:49PEI"
   },
   {
-    "ID": 97,
-    "Code": "49PORE",
-    "DebugString": "station:49PORE",
-    "NodeTracks": []
+    "id": 97,
+    "code": "49PORE",
+    "nodeTracks": [],
+    "debugString": "station:49PORE"
   },
   {
-    "ID": 98,
-    "Code": "49POS",
-    "DebugString": "station:49POS",
-    "NodeTracks": []
+    "id": 98,
+    "code": "49POS",
+    "nodeTracks": [],
+    "debugString": "station:49POS"
   },
   {
-    "ID": 99,
-    "Code": "49PRED",
-    "DebugString": "station:49PRED",
-    "NodeTracks": []
+    "id": 99,
+    "code": "49PRED",
+    "nodeTracks": [],
+    "debugString": "station:49PRED"
   },
   {
-    "ID": 100,
-    "Code": "49PRES",
-    "DebugString": "station:49PRES",
-    "NodeTracks": []
+    "id": 100,
+    "code": "49PRES",
+    "nodeTracks": [],
+    "debugString": "station:49PRES"
   },
   {
-    "ID": 101,
-    "Code": "49PRET",
-    "DebugString": "station:49PRET",
-    "NodeTracks": []
+    "id": 101,
+    "code": "49PRET",
+    "nodeTracks": [],
+    "debugString": "station:49PRET"
   },
   {
-    "ID": 102,
-    "Code": "49PRI",
-    "DebugString": "station:49PRI",
-    "NodeTracks": []
+    "id": 102,
+    "code": "49PRI",
+    "nodeTracks": [],
+    "debugString": "station:49PRI"
   },
   {
-    "ID": 103,
-    "Code": "49PTM",
-    "DebugString": "station:49PTM",
-    "NodeTracks": []
+    "id": 103,
+    "code": "49PTM",
+    "nodeTracks": [],
+    "debugString": "station:49PTM"
   },
   {
-    "ID": 104,
-    "Code": "49PTMS",
-    "DebugString": "station:49PTMS",
-    "NodeTracks": []
+    "id": 104,
+    "code": "49PTMS",
+    "nodeTracks": [],
+    "debugString": "station:49PTMS"
   },
   {
-    "ID": 105,
-    "Code": "49RASU",
-    "DebugString": "station:49RASU",
-    "NodeTracks": []
+    "id": 105,
+    "code": "49RASU",
+    "nodeTracks": [],
+    "debugString": "station:49RASU"
   },
   {
-    "ID": 106,
-    "Code": "49REIT",
-    "DebugString": "station:49REIT",
-    "NodeTracks": []
+    "id": 106,
+    "code": "49REIT",
+    "nodeTracks": [],
+    "debugString": "station:49REIT"
   },
   {
-    "ID": 107,
-    "Code": "49RHAE",
-    "DebugString": "station:49RHAE",
-    "NodeTracks": []
+    "id": 107,
+    "code": "49RHAE",
+    "nodeTracks": [],
+    "debugString": "station:49RHAE"
   },
   {
-    "ID": 108,
-    "Code": "49RORE",
-    "DebugString": "station:49RORE",
-    "NodeTracks": []
+    "id": 108,
+    "code": "49RORE",
+    "nodeTracks": [],
+    "debugString": "station:49RORE"
   },
   {
-    "ID": 109,
-    "Code": "49ROTH",
-    "DebugString": "station:49ROTH",
-    "NodeTracks": []
+    "id": 109,
+    "code": "49ROTH",
+    "nodeTracks": [],
+    "debugString": "station:49ROTH"
   },
   {
-    "ID": 110,
-    "Code": "49RUEU",
-    "DebugString": "station:49RUEU",
-    "NodeTracks": []
+    "id": 110,
+    "code": "49RUEU",
+    "nodeTracks": [],
+    "debugString": "station:49RUEU"
   },
   {
-    "ID": 111,
-    "Code": "49SAAS",
-    "DebugString": "station:49SAAS",
-    "NodeTracks": []
+    "id": 111,
+    "code": "49SAAS",
+    "nodeTracks": [],
+    "debugString": "station:49SAAS"
   },
   {
-    "ID": 112,
-    "Code": "49SAGL",
-    "DebugString": "station:49SAGL",
-    "NodeTracks": []
+    "id": 112,
+    "code": "49SAGL",
+    "nodeTracks": [],
+    "debugString": "station:49SAGL"
   },
   {
-    "ID": 113,
-    "Code": "49SAME",
-    "DebugString": "station:49SAME",
-    "NodeTracks": []
+    "id": 113,
+    "code": "49SAME",
+    "nodeTracks": [],
+    "debugString": "station:49SAME"
   },
   {
-    "ID": 114,
-    "Code": "49SASA",
-    "DebugString": "station:49SASA",
-    "NodeTracks": []
+    "id": 114,
+    "code": "49SASA",
+    "nodeTracks": [],
+    "debugString": "station:49SASA"
   },
   {
-    "ID": 115,
-    "Code": "49SASN",
-    "DebugString": "station:49SASN",
-    "NodeTracks": []
+    "id": 115,
+    "code": "49SASN",
+    "nodeTracks": [],
+    "debugString": "station:49SASN"
   },
   {
-    "ID": 116,
-    "Code": "49SASW",
-    "DebugString": "station:49SASW",
-    "NodeTracks": []
+    "id": 116,
+    "code": "49SASW",
+    "nodeTracks": [],
+    "debugString": "station:49SASW"
   },
   {
-    "ID": 117,
-    "Code": "49SCAN",
-    "DebugString": "station:49SCAN",
-    "NodeTracks": []
+    "id": 117,
+    "code": "49SCAN",
+    "nodeTracks": [],
+    "debugString": "station:49SCAN"
   },
   {
-    "ID": 118,
-    "Code": "49SCRS",
-    "DebugString": "station:49SCRS",
-    "NodeTracks": []
+    "id": 118,
+    "code": "49SCRS",
+    "nodeTracks": [],
+    "debugString": "station:49SCRS"
   },
   {
-    "ID": 119,
-    "Code": "49SCTA",
-    "DebugString": "station:49SCTA",
-    "NodeTracks": []
+    "id": 119,
+    "code": "49SCTA",
+    "nodeTracks": [],
+    "debugString": "station:49SCTA"
   },
   {
-    "ID": 120,
-    "Code": "49SEEV",
-    "DebugString": "station:49SEEV",
-    "NodeTracks": []
+    "id": 120,
+    "code": "49SEEV",
+    "nodeTracks": [],
+    "debugString": "station:49SEEV"
   },
   {
-    "ID": 121,
-    "Code": "49SERN",
-    "DebugString": "station:49SERN",
-    "NodeTracks": []
+    "id": 121,
+    "code": "49SERN",
+    "nodeTracks": [],
+    "debugString": "station:49SERN"
   },
   {
-    "ID": 122,
-    "Code": "49SILS",
-    "DebugString": "station:49SILS",
-    "NodeTracks": []
+    "id": 122,
+    "code": "49SILS",
+    "nodeTracks": [],
+    "debugString": "station:49SILS"
   },
   {
-    "ID": 123,
-    "Code": "49SMOR",
-    "DebugString": "station:49SMOR",
-    "NodeTracks": []
+    "id": 123,
+    "code": "49SMOR",
+    "nodeTracks": [],
+    "debugString": "station:49SMOR"
   },
   {
-    "ID": 124,
-    "Code": "49SOLI",
-    "DebugString": "station:49SOLI",
-    "NodeTracks": []
+    "id": 124,
+    "code": "49SOLI",
+    "nodeTracks": [],
+    "debugString": "station:49SOLI"
   },
   {
-    "ID": 125,
-    "Code": "49SPIN",
-    "DebugString": "station:49SPIN",
-    "NodeTracks": []
+    "id": 125,
+    "code": "49SPIN",
+    "nodeTracks": [],
+    "debugString": "station:49SPIN"
   },
   {
-    "ID": 126,
-    "Code": "49STGL",
-    "DebugString": "station:49STGL",
-    "NodeTracks": []
+    "id": 126,
+    "code": "49STGL",
+    "nodeTracks": [],
+    "debugString": "station:49STGL"
   },
   {
-    "ID": 127,
-    "Code": "49STPM",
-    "DebugString": "station:49STPM",
-    "NodeTracks": []
+    "id": 127,
+    "code": "49STPM",
+    "nodeTracks": [],
+    "debugString": "station:49STPM"
   },
   {
-    "ID": 128,
-    "Code": "49SUCU",
-    "DebugString": "station:49SUCU",
-    "NodeTracks": []
+    "id": 128,
+    "code": "49SUCU",
+    "nodeTracks": [],
+    "debugString": "station:49SUCU"
   },
   {
-    "ID": 129,
-    "Code": "49SURA",
-    "DebugString": "station:49SURA",
-    "NodeTracks": []
+    "id": 129,
+    "code": "49SURA",
+    "nodeTracks": [],
+    "debugString": "station:49SURA"
   },
   {
-    "ID": 130,
-    "Code": "49SURO",
-    "DebugString": "station:49SURO",
-    "NodeTracks": []
+    "id": 130,
+    "code": "49SURO",
+    "nodeTracks": [],
+    "debugString": "station:49SURO"
   },
   {
-    "ID": 131,
-    "Code": "49SUS",
-    "DebugString": "station:49SUS",
-    "NodeTracks": []
+    "id": 131,
+    "code": "49SUS",
+    "nodeTracks": [],
+    "debugString": "station:49SUS"
   },
   {
-    "ID": 132,
-    "Code": "49TABR",
-    "DebugString": "station:49TABR",
-    "NodeTracks": []
+    "id": 132,
+    "code": "49TABR",
+    "nodeTracks": [],
+    "debugString": "station:49TABR"
   },
   {
-    "ID": 133,
-    "Code": "49THS",
-    "DebugString": "station:49THS",
-    "NodeTracks": []
+    "id": 133,
+    "code": "49THS",
+    "nodeTracks": [],
+    "debugString": "station:49THS"
   },
   {
-    "ID": 134,
-    "Code": "49TICA",
-    "DebugString": "station:49TICA",
-    "NodeTracks": []
+    "id": 134,
+    "code": "49TICA",
+    "nodeTracks": [],
+    "debugString": "station:49TICA"
   },
   {
-    "ID": 135,
-    "Code": "49TIR",
-    "DebugString": "station:49TIR",
-    "NodeTracks": []
+    "id": 135,
+    "code": "49TIR",
+    "nodeTracks": [],
+    "debugString": "station:49TIR"
   },
   {
-    "ID": 136,
-    "Code": "49TRIN",
-    "DebugString": "station:49TRIN",
-    "NodeTracks": []
+    "id": 136,
+    "code": "49TRIN",
+    "nodeTracks": [],
+    "debugString": "station:49TRIN"
   },
   {
-    "ID": 137,
-    "Code": "49TRIS",
-    "DebugString": "station:49TRIS",
-    "NodeTracks": []
+    "id": 137,
+    "code": "49TRIS",
+    "nodeTracks": [],
+    "debugString": "station:49TRIS"
   },
   {
-    "ID": 138,
-    "Code": "49TRUN",
-    "DebugString": "station:49TRUN",
-    "NodeTracks": []
+    "id": 138,
+    "code": "49TRUN",
+    "nodeTracks": [],
+    "debugString": "station:49TRUN"
   },
   {
-    "ID": 139,
-    "Code": "49USAX",
-    "DebugString": "station:49USAX",
-    "NodeTracks": []
+    "id": 139,
+    "code": "49USAX",
+    "nodeTracks": [],
+    "debugString": "station:49USAX"
   },
   {
-    "ID": 140,
-    "Code": "49UVAZ",
-    "DebugString": "station:49UVAZ",
-    "NodeTracks": []
+    "id": 140,
+    "code": "49UVAZ",
+    "nodeTracks": [],
+    "debugString": "station:49UVAZ"
   },
   {
-    "ID": 141,
-    "Code": "49VASA",
-    "DebugString": "station:49VASA",
-    "NodeTracks": []
+    "id": 141,
+    "code": "49VASA",
+    "nodeTracks": [],
+    "debugString": "station:49VASA"
   },
   {
-    "ID": 142,
-    "Code": "49VER1",
-    "DebugString": "station:49VER1",
-    "NodeTracks": []
+    "id": 142,
+    "code": "49VER1",
+    "nodeTracks": [],
+    "debugString": "station:49VER1"
   },
   {
-    "ID": 143,
-    "Code": "49VER2",
-    "DebugString": "station:49VER2",
-    "NodeTracks": []
+    "id": 143,
+    "code": "49VER2",
+    "nodeTracks": [],
+    "debugString": "station:49VER2"
   },
   {
-    "ID": 144,
-    "Code": "49VER3",
-    "DebugString": "station:49VER3",
-    "NodeTracks": []
+    "id": 144,
+    "code": "49VER3",
+    "nodeTracks": [],
+    "debugString": "station:49VER3"
   },
   {
-    "ID": 145,
-    "Code": "49VER4",
-    "DebugString": "station:49VER4",
-    "NodeTracks": []
+    "id": 145,
+    "code": "49VER4",
+    "nodeTracks": [],
+    "debugString": "station:49VER4"
   },
   {
-    "ID": 146,
-    "Code": "49VESA",
-    "DebugString": "station:49VESA",
-    "NodeTracks": [
+    "id": 146,
+    "code": "49VESA",
+    "nodeTracks": [
       {
-        "ID": 147,
-        "Code": "1",
-        "DebugString": "stationtrack:49VESA_{StationTrack SID = 1}"
+        "id": 147,
+        "code": "1",
+        "debugString": "stationtrack:49VESA_{StationTrack SID = 1}"
       },
       {
-        "ID": 148,
-        "Code": "2",
-        "DebugString": "stationtrack:49VESA_{StationTrack SID = 3}"
+        "id": 148,
+        "code": "2",
+        "debugString": "stationtrack:49VESA_{StationTrack SID = 3}"
       }
-    ]
+    ],
+    "debugString": "station:49VESA"
   },
   {
-    "ID": 149,
-    "Code": "49WAVU",
-    "DebugString": "station:49WAVU",
-    "NodeTracks": []
+    "id": 149,
+    "code": "49WAVU",
+    "nodeTracks": [],
+    "debugString": "station:49WAVU"
   },
   {
-    "ID": 150,
-    "Code": "49WIES",
-    "DebugString": "station:49WIES",
-    "NodeTracks": []
+    "id": 150,
+    "code": "49WIES",
+    "nodeTracks": [],
+    "debugString": "station:49WIES"
   },
   {
-    "ID": 151,
-    "Code": "49ZEZ",
-    "DebugString": "station:49ZEZ",
-    "NodeTracks": []
+    "id": 151,
+    "code": "49ZEZ",
+    "nodeTracks": [],
+    "debugString": "station:49ZEZ"
   },
   {
-    "ID": 152,
-    "Code": "49ZIZ",
-    "DebugString": "station:49ZIZ",
-    "NodeTracks": []
+    "id": 152,
+    "code": "49ZIZ",
+    "nodeTracks": [],
+    "debugString": "station:49ZIZ"
   },
   {
-    "ID": 153,
-    "Code": "49ZUOZ",
-    "DebugString": "station:49ZUOZ",
-    "NodeTracks": []
+    "id": 153,
+    "code": "49ZUOZ",
+    "nodeTracks": [],
+    "debugString": "station:49ZUOZ"
   },
   {
-    "ID": 154,
-    "Code": "85AAT",
-    "DebugString": "station:85AAT",
-    "NodeTracks": [
+    "id": 154,
+    "code": "85AAT",
+    "nodeTracks": [
       {
-        "ID": 155,
-        "Code": "1",
-        "DebugString": "stationtrack:85AAT_1"
+        "id": 155,
+        "code": "1",
+        "debugString": "stationtrack:85AAT_1"
       },
       {
-        "ID": 156,
-        "Code": "2",
-        "DebugString": "stationtrack:85AAT_2"
+        "id": 156,
+        "code": "2",
+        "debugString": "stationtrack:85AAT_2"
       }
-    ]
+    ],
+    "debugString": "station:85AAT"
   },
   {
-    "ID": 157,
-    "Code": "85ALTD",
-    "DebugString": "station:85ALTD",
-    "NodeTracks": [
+    "id": 157,
+    "code": "85ALTD",
+    "nodeTracks": [
       {
-        "ID": 158,
-        "Code": "1",
-        "DebugString": "stationtrack:85ALTD_1"
+        "id": 158,
+        "code": "1",
+        "debugString": "stationtrack:85ALTD_1"
       },
       {
-        "ID": 159,
-        "Code": "2",
-        "DebugString": "stationtrack:85ALTD_2"
+        "id": 159,
+        "code": "2",
+        "debugString": "stationtrack:85ALTD_2"
       }
-    ]
+    ],
+    "debugString": "station:85ALTD"
   },
   {
-    "ID": 160,
-    "Code": "85AN",
-    "DebugString": "station:85AN",
-    "NodeTracks": []
+    "id": 160,
+    "code": "85AN",
+    "nodeTracks": [],
+    "debugString": "station:85AN"
   },
   {
-    "ID": 161,
-    "Code": "85AR",
-    "DebugString": "station:85AR",
-    "NodeTracks": [
+    "id": 161,
+    "code": "85AR",
+    "nodeTracks": [
       {
-        "ID": 162,
-        "Code": "1",
-        "DebugString": "stationtrack:85AR_{StationTrack SID = 34138}"
+        "id": 162,
+        "code": "1",
+        "debugString": "stationtrack:85AR_{StationTrack SID = 34138}"
       },
       {
-        "ID": 163,
-        "Code": "2",
-        "DebugString": "stationtrack:85AR_{StationTrack SID = 34140}"
+        "id": 163,
+        "code": "2",
+        "debugString": "stationtrack:85AR_{StationTrack SID = 34140}"
       }
-    ]
+    ],
+    "debugString": "station:85AR"
   },
   {
-    "ID": 164,
-    "Code": "85AU",
-    "DebugString": "station:85AU",
-    "NodeTracks": [
+    "id": 164,
+    "code": "85AU",
+    "nodeTracks": [
       {
-        "ID": 165,
-        "Code": "1",
-        "DebugString": "stationtrack:85AU_1"
+        "id": 165,
+        "code": "1",
+        "debugString": "stationtrack:85AU_1"
       },
       {
-        "ID": 166,
-        "Code": "2",
-        "DebugString": "stationtrack:85AU_2"
+        "id": 166,
+        "code": "2",
+        "debugString": "stationtrack:85AU_2"
       },
       {
-        "ID": 167,
-        "Code": "3",
-        "DebugString": "stationtrack:85AU_3"
+        "id": 167,
+        "code": "3",
+        "debugString": "stationtrack:85AU_3"
       }
-    ]
+    ],
+    "debugString": "station:85AU"
   },
   {
-    "ID": 168,
-    "Code": "85BAE",
-    "DebugString": "station:85BAE",
-    "NodeTracks": [
+    "id": 168,
+    "code": "85BAE",
+    "nodeTracks": [
       {
-        "ID": 169,
-        "Code": "1",
-        "DebugString": "stationtrack:85BAE_1"
+        "id": 169,
+        "code": "1",
+        "debugString": "stationtrack:85BAE_1"
       },
       {
-        "ID": 170,
-        "Code": "2",
-        "DebugString": "stationtrack:85BAE_2"
+        "id": 170,
+        "code": "2",
+        "debugString": "stationtrack:85BAE_2"
       }
-    ]
+    ],
+    "debugString": "station:85BAE"
   },
   {
-    "ID": 171,
-    "Code": "85BD",
-    "DebugString": "station:85BD",
-    "NodeTracks": []
+    "id": 171,
+    "code": "85BD",
+    "nodeTracks": [],
+    "debugString": "station:85BD"
   },
   {
-    "ID": 172,
-    "Code": "85BG",
-    "DebugString": "station:85BG",
-    "NodeTracks": []
+    "id": 172,
+    "code": "85BG",
+    "nodeTracks": [],
+    "debugString": "station:85BG"
   },
   {
-    "ID": 173,
-    "Code": "85BIL",
-    "DebugString": "station:85BIL",
-    "NodeTracks": [
+    "id": 173,
+    "code": "85BIL",
+    "nodeTracks": [
       {
-        "ID": 174,
-        "Code": "1",
-        "DebugString": "stationtrack:85BIL_1"
+        "id": 174,
+        "code": "1",
+        "debugString": "stationtrack:85BIL_1"
       },
       {
-        "ID": 175,
-        "Code": "2",
-        "DebugString": "stationtrack:85BIL_2"
+        "id": 175,
+        "code": "2",
+        "debugString": "stationtrack:85BIL_2"
       },
       {
-        "ID": 176,
-        "Code": "3",
-        "DebugString": "stationtrack:85BIL_3"
+        "id": 176,
+        "code": "3",
+        "debugString": "stationtrack:85BIL_3"
       }
-    ]
+    ],
+    "debugString": "station:85BIL"
   },
   {
-    "ID": 177,
-    "Code": "85BMA",
-    "DebugString": "station:85BMA",
-    "NodeTracks": []
+    "id": 177,
+    "code": "85BMA",
+    "nodeTracks": [],
+    "debugString": "station:85BMA"
   },
   {
-    "ID": 178,
-    "Code": "85BRAG",
-    "DebugString": "station:85BRAG",
-    "NodeTracks": []
+    "id": 178,
+    "code": "85BRAG",
+    "nodeTracks": [],
+    "debugString": "station:85BRAG"
   },
   {
-    "ID": 179,
-    "Code": "85BSD",
-    "DebugString": "station:85BSD",
-    "NodeTracks": [
+    "id": 179,
+    "code": "85BSD",
+    "nodeTracks": [
       {
-        "ID": 180,
-        "Code": "1",
-        "DebugString": "stationtrack:85BSD_1"
+        "id": 180,
+        "code": "1",
+        "debugString": "stationtrack:85BSD_1"
       },
       {
-        "ID": 181,
-        "Code": "2",
-        "DebugString": "stationtrack:85BSD_2"
+        "id": 181,
+        "code": "2",
+        "debugString": "stationtrack:85BSD_2"
       },
       {
-        "ID": 182,
-        "Code": "3",
-        "DebugString": "stationtrack:85BSD_3"
+        "id": 182,
+        "code": "3",
+        "debugString": "stationtrack:85BSD_3"
       },
       {
-        "ID": 183,
-        "Code": "4",
-        "DebugString": "stationtrack:85BSD_4"
+        "id": 183,
+        "code": "4",
+        "debugString": "stationtrack:85BSD_4"
       }
-    ]
+    ],
+    "debugString": "station:85BSD"
   },
   {
-    "ID": 184,
-    "Code": "85BUB",
-    "DebugString": "station:85BUB",
-    "NodeTracks": [
+    "id": 184,
+    "code": "85BUB",
+    "nodeTracks": [
       {
-        "ID": 185,
-        "Code": "1",
-        "DebugString": "stationtrack:85BUB_1"
+        "id": 185,
+        "code": "1",
+        "debugString": "stationtrack:85BUB_1"
       },
       {
-        "ID": 186,
-        "Code": "2",
-        "DebugString": "stationtrack:85BUB_2"
+        "id": 186,
+        "code": "2",
+        "debugString": "stationtrack:85BUB_2"
       }
-    ]
+    ],
+    "debugString": "station:85BUB"
   },
   {
-    "ID": 187,
-    "Code": "85BUD",
-    "DebugString": "station:85BUD",
-    "NodeTracks": [
+    "id": 187,
+    "code": "85BUD",
+    "nodeTracks": [
       {
-        "ID": 188,
-        "Code": "1",
-        "DebugString": "stationtrack:85BUD_1"
+        "id": 188,
+        "code": "1",
+        "debugString": "stationtrack:85BUD_1"
       },
       {
-        "ID": 189,
-        "Code": "2",
-        "DebugString": "stationtrack:85BUD_2"
+        "id": 189,
+        "code": "2",
+        "debugString": "stationtrack:85BUD_2"
       }
-    ]
+    ],
+    "debugString": "station:85BUD"
   },
   {
-    "ID": 190,
-    "Code": "85BUE",
-    "DebugString": "station:85BUE",
-    "NodeTracks": [
+    "id": 190,
+    "code": "85BUE",
+    "nodeTracks": [
       {
-        "ID": 191,
-        "Code": "1",
-        "DebugString": "stationtrack:85BUE_{StationTrack SID = 7}"
+        "id": 191,
+        "code": "1",
+        "debugString": "stationtrack:85BUE_{StationTrack SID = 7}"
       },
       {
-        "ID": 192,
-        "Code": "2",
-        "DebugString": "stationtrack:85BUE_{StationTrack SID = 8}"
+        "id": 192,
+        "code": "2",
+        "debugString": "stationtrack:85BUE_{StationTrack SID = 8}"
       },
       {
-        "ID": 193,
-        "Code": "3",
-        "DebugString": "stationtrack:85BUE_{StationTrack SID = 9}"
+        "id": 193,
+        "code": "3",
+        "debugString": "stationtrack:85BUE_{StationTrack SID = 9}"
       },
       {
-        "ID": 194,
-        "Code": "4",
-        "DebugString": "stationtrack:85BUE_{StationTrack SID = 11}"
+        "id": 194,
+        "code": "4",
+        "debugString": "stationtrack:85BUE_{StationTrack SID = 11}"
       },
       {
-        "ID": 195,
-        "Code": "5",
-        "DebugString": "stationtrack:85BUE_{StationTrack SID = 12}"
+        "id": 195,
+        "code": "5",
+        "debugString": "stationtrack:85BUE_{StationTrack SID = 12}"
       },
       {
-        "ID": 196,
-        "Code": "6",
-        "DebugString": "stationtrack:85BUE_{StationTrack SID = 14}"
+        "id": 196,
+        "code": "6",
+        "debugString": "stationtrack:85BUE_{StationTrack SID = 14}"
       }
-    ]
+    ],
+    "debugString": "station:85BUE"
   },
   {
-    "ID": 197,
-    "Code": "85CHRI",
-    "DebugString": "station:85CHRI",
-    "NodeTracks": []
+    "id": 197,
+    "code": "85CHRI",
+    "nodeTracks": [],
+    "debugString": "station:85CHRI"
   },
   {
-    "ID": 198,
-    "Code": "85DA",
-    "DebugString": "station:85DA",
-    "NodeTracks": []
+    "id": 198,
+    "code": "85DA",
+    "nodeTracks": [],
+    "debugString": "station:85DA"
   },
   {
-    "ID": 199,
-    "Code": "85DI",
-    "DebugString": "station:85DI",
-    "NodeTracks": [
+    "id": 199,
+    "code": "85DI",
+    "nodeTracks": [
       {
-        "ID": 200,
-        "Code": "1",
-        "DebugString": "stationtrack:85DI_{StationTrack SID = 15}"
+        "id": 200,
+        "code": "1",
+        "debugString": "stationtrack:85DI_{StationTrack SID = 15}"
       },
       {
-        "ID": 201,
-        "Code": "2",
-        "DebugString": "stationtrack:85DI_{StationTrack SID = 16}"
+        "id": 201,
+        "code": "2",
+        "debugString": "stationtrack:85DI_{StationTrack SID = 16}"
       }
-    ]
+    ],
+    "debugString": "station:85DI"
   },
   {
-    "ID": 202,
-    "Code": "85DORF",
-    "DebugString": "station:85DORF",
-    "NodeTracks": []
+    "id": 202,
+    "code": "85DORF",
+    "nodeTracks": [],
+    "debugString": "station:85DORF"
   },
   {
-    "ID": 203,
-    "Code": "85DT",
-    "DebugString": "station:85DT",
-    "NodeTracks": [
+    "id": 203,
+    "code": "85DT",
+    "nodeTracks": [
       {
-        "ID": 204,
-        "Code": "6",
-        "DebugString": "stationtrack:85DT_{StationTrack SID = 25}"
+        "id": 204,
+        "code": "6",
+        "debugString": "stationtrack:85DT_{StationTrack SID = 25}"
       },
       {
-        "ID": 205,
-        "Code": "5",
-        "DebugString": "stationtrack:85DT_{StationTrack SID = 23}"
+        "id": 205,
+        "code": "5",
+        "debugString": "stationtrack:85DT_{StationTrack SID = 23}"
       },
       {
-        "ID": 206,
-        "Code": "4",
-        "DebugString": "stationtrack:85DT_{StationTrack SID = 22}"
+        "id": 206,
+        "code": "4",
+        "debugString": "stationtrack:85DT_{StationTrack SID = 22}"
       },
       {
-        "ID": 207,
-        "Code": "3",
-        "DebugString": "stationtrack:85DT_{StationTrack SID = 20}"
+        "id": 207,
+        "code": "3",
+        "debugString": "stationtrack:85DT_{StationTrack SID = 20}"
       },
       {
-        "ID": 208,
-        "Code": "2",
-        "DebugString": "stationtrack:85DT_{StationTrack SID = 19}"
+        "id": 208,
+        "code": "2",
+        "debugString": "stationtrack:85DT_{StationTrack SID = 19}"
       },
       {
-        "ID": 209,
-        "Code": "1",
-        "DebugString": "stationtrack:85DT_{StationTrack SID = 18}"
+        "id": 209,
+        "code": "1",
+        "debugString": "stationtrack:85DT_{StationTrack SID = 18}"
       }
-    ]
+    ],
+    "debugString": "station:85DT"
   },
   {
-    "ID": 210,
-    "Code": "85DTL",
-    "DebugString": "station:85DTL",
-    "NodeTracks": [
+    "id": 210,
+    "code": "85DTL",
+    "nodeTracks": [
       {
-        "ID": 211,
-        "Code": "1",
-        "DebugString": "stationtrack:85DTL_1"
+        "id": 211,
+        "code": "1",
+        "debugString": "stationtrack:85DTL_1"
       },
       {
-        "ID": 212,
-        "Code": "2",
-        "DebugString": "stationtrack:85DTL_2"
+        "id": 212,
+        "code": "2",
+        "debugString": "stationtrack:85DTL_2"
       },
       {
-        "ID": 213,
-        "Code": "3",
-        "DebugString": "stationtrack:85DTL_3"
+        "id": 213,
+        "code": "3",
+        "debugString": "stationtrack:85DTL_3"
       }
-    ]
+    ],
+    "debugString": "station:85DTL"
   },
   {
-    "ID": 214,
-    "Code": "85DUE",
-    "DebugString": "station:85DUE",
-    "NodeTracks": [
+    "id": 214,
+    "code": "85DUE",
+    "nodeTracks": [
       {
-        "ID": 215,
-        "Code": "1",
-        "DebugString": "stationtrack:85DUE_1"
+        "id": 215,
+        "code": "1",
+        "debugString": "stationtrack:85DUE_1"
       },
       {
-        "ID": 216,
-        "Code": "2",
-        "DebugString": "stationtrack:85DUE_2"
+        "id": 216,
+        "code": "2",
+        "debugString": "stationtrack:85DUE_2"
       },
       {
-        "ID": 217,
-        "Code": "3",
-        "DebugString": "stationtrack:85DUE_3"
+        "id": 217,
+        "code": "3",
+        "debugString": "stationtrack:85DUE_3"
       }
-    ]
+    ],
+    "debugString": "station:85DUE"
   },
   {
-    "ID": 218,
-    "Code": "85EF",
-    "DebugString": "station:85EF",
-    "NodeTracks": [
+    "id": 218,
+    "code": "85EF",
+    "nodeTracks": [
       {
-        "ID": 219,
-        "Code": "1",
-        "DebugString": "stationtrack:85EF_{StationTrack SID = 27}"
+        "id": 219,
+        "code": "1",
+        "debugString": "stationtrack:85EF_{StationTrack SID = 27}"
       },
       {
-        "ID": 220,
-        "Code": "2",
-        "DebugString": "stationtrack:85EF_{StationTrack SID = 28}"
+        "id": 220,
+        "code": "2",
+        "debugString": "stationtrack:85EF_{StationTrack SID = 28}"
       },
       {
-        "ID": 221,
-        "Code": "3",
-        "DebugString": "stationtrack:85EF_{StationTrack SID = 30}"
+        "id": 221,
+        "code": "3",
+        "debugString": "stationtrack:85EF_{StationTrack SID = 30}"
       },
       {
-        "ID": 222,
-        "Code": "4",
-        "DebugString": "stationtrack:85EF_{StationTrack SID = 31}"
+        "id": 222,
+        "code": "4",
+        "debugString": "stationtrack:85EF_{StationTrack SID = 31}"
       },
       {
-        "ID": 223,
-        "Code": "5",
-        "DebugString": "stationtrack:85EF_{StationTrack SID = 32}"
+        "id": 223,
+        "code": "5",
+        "debugString": "stationtrack:85EF_{StationTrack SID = 32}"
       },
       {
-        "ID": 224,
-        "Code": "6",
-        "DebugString": "stationtrack:85EF_{StationTrack SID = 34}"
+        "id": 224,
+        "code": "6",
+        "debugString": "stationtrack:85EF_{StationTrack SID = 34}"
       },
       {
-        "ID": 225,
-        "Code": "7",
-        "DebugString": "stationtrack:85EF_{StationTrack SID = 35}"
+        "id": 225,
+        "code": "7",
+        "debugString": "stationtrack:85EF_{StationTrack SID = 35}"
       }
-    ]
+    ],
+    "debugString": "station:85EF"
   },
   {
-    "ID": 226,
-    "Code": "85EGL",
-    "DebugString": "station:85EGL",
-    "NodeTracks": [
+    "id": 226,
+    "code": "85EGL",
+    "nodeTracks": [
       {
-        "ID": 227,
-        "Code": "3",
-        "DebugString": "stationtrack:85EGL_{StationTrack SID = 36}"
+        "id": 227,
+        "code": "3",
+        "debugString": "stationtrack:85EGL_{StationTrack SID = 36}"
       },
       {
-        "ID": 228,
-        "Code": "2",
-        "DebugString": "stationtrack:85EGL_{StationTrack SID = 38}"
+        "id": 228,
+        "code": "2",
+        "debugString": "stationtrack:85EGL_{StationTrack SID = 38}"
       },
       {
-        "ID": 229,
-        "Code": "1",
-        "DebugString": "stationtrack:85EGL_{StationTrack SID = 39}"
+        "id": 229,
+        "code": "1",
+        "debugString": "stationtrack:85EGL_{StationTrack SID = 39}"
       }
-    ]
+    ],
+    "debugString": "station:85EGL"
   },
   {
-    "ID": 230,
-    "Code": "85EINF",
-    "DebugString": "station:85EINF",
-    "NodeTracks": []
+    "id": 230,
+    "code": "85EINF",
+    "nodeTracks": [],
+    "debugString": "station:85EINF"
   },
   {
-    "ID": 231,
-    "Code": "85EMB",
-    "DebugString": "station:85EMB",
-    "NodeTracks": []
+    "id": 231,
+    "code": "85EMB",
+    "nodeTracks": [],
+    "debugString": "station:85EMB"
   },
   {
-    "ID": 232,
-    "Code": "85ERLB",
-    "DebugString": "station:85ERLB",
-    "NodeTracks": [
+    "id": 232,
+    "code": "85ERLB",
+    "nodeTracks": [
       {
-        "ID": 233,
-        "Code": "1",
-        "DebugString": "stationtrack:85ERLB_1"
+        "id": 233,
+        "code": "1",
+        "debugString": "stationtrack:85ERLB_1"
       },
       {
-        "ID": 234,
-        "Code": "2",
-        "DebugString": "stationtrack:85ERLB_2"
+        "id": 234,
+        "code": "2",
+        "debugString": "stationtrack:85ERLB_2"
       }
-    ]
+    ],
+    "debugString": "station:85ERLB"
   },
   {
-    "ID": 235,
-    "Code": "85FB",
-    "DebugString": "station:85FB",
-    "NodeTracks": [
+    "id": 235,
+    "code": "85FB",
+    "nodeTracks": [
       {
-        "ID": 236,
-        "Code": "1",
-        "DebugString": "stationtrack:85FB_{StationTrack SID = 41}"
+        "id": 236,
+        "code": "1",
+        "debugString": "stationtrack:85FB_{StationTrack SID = 41}"
       },
       {
-        "ID": 237,
-        "Code": "2",
-        "DebugString": "stationtrack:85FB_{StationTrack SID = 43}"
+        "id": 237,
+        "code": "2",
+        "debugString": "stationtrack:85FB_{StationTrack SID = 43}"
       }
-    ]
+    ],
+    "debugString": "station:85FB"
   },
   {
-    "ID": 238,
-    "Code": "85FET",
-    "DebugString": "station:85FET",
-    "NodeTracks": [
+    "id": 238,
+    "code": "85FET",
+    "nodeTracks": [
       {
-        "ID": 239,
-        "Code": "1",
-        "DebugString": "stationtrack:85FET_1"
+        "id": 239,
+        "code": "1",
+        "debugString": "stationtrack:85FET_1"
       },
       {
-        "ID": 240,
-        "Code": "2",
-        "DebugString": "stationtrack:85FET_2"
+        "id": 240,
+        "code": "2",
+        "debugString": "stationtrack:85FET_2"
       }
-    ]
+    ],
+    "debugString": "station:85FET"
   },
   {
-    "ID": 241,
-    "Code": "85FI",
-    "DebugString": "station:85FI",
-    "NodeTracks": []
+    "id": 241,
+    "code": "85FI",
+    "nodeTracks": [],
+    "debugString": "station:85FI"
   },
   {
-    "ID": 242,
-    "Code": "85FMS",
-    "DebugString": "station:85FMS",
-    "NodeTracks": []
+    "id": 242,
+    "code": "85FMS",
+    "nodeTracks": [],
+    "debugString": "station:85FMS"
   },
   {
-    "ID": 243,
-    "Code": "85FORA",
-    "DebugString": "station:85FORA",
-    "NodeTracks": []
+    "id": 243,
+    "code": "85FORA",
+    "nodeTracks": [],
+    "debugString": "station:85FORA"
   },
   {
-    "ID": 244,
-    "Code": "85FRB",
-    "DebugString": "station:85FRB",
-    "NodeTracks": [
+    "id": 244,
+    "code": "85FRB",
+    "nodeTracks": [
       {
-        "ID": 245,
-        "Code": "1",
-        "DebugString": "stationtrack:85FRB_1"
+        "id": 245,
+        "code": "1",
+        "debugString": "stationtrack:85FRB_1"
       },
       {
-        "ID": 246,
-        "Code": "2",
-        "DebugString": "stationtrack:85FRB_2"
+        "id": 246,
+        "code": "2",
+        "debugString": "stationtrack:85FRB_2"
       }
-    ]
+    ],
+    "debugString": "station:85FRB"
   },
   {
-    "ID": 247,
-    "Code": "85FRBS",
-    "DebugString": "station:85FRBS",
-    "NodeTracks": [
+    "id": 247,
+    "code": "85FRBS",
+    "nodeTracks": [
       {
-        "ID": 248,
-        "Code": "1",
-        "DebugString": "stationtrack:85FRBS_1"
+        "id": 248,
+        "code": "1",
+        "debugString": "stationtrack:85FRBS_1"
       }
-    ]
+    ],
+    "debugString": "station:85FRBS"
   },
   {
-    "ID": 249,
-    "Code": "85GF",
-    "DebugString": "station:85GF",
-    "NodeTracks": []
+    "id": 249,
+    "code": "85GF",
+    "nodeTracks": [],
+    "debugString": "station:85GF"
   },
   {
-    "ID": 250,
-    "Code": "85GIB",
-    "DebugString": "station:85GIB",
-    "NodeTracks": []
+    "id": 250,
+    "code": "85GIB",
+    "nodeTracks": [],
+    "debugString": "station:85GIB"
   },
   {
-    "ID": 251,
-    "Code": "85GLB",
-    "DebugString": "station:85GLB",
-    "NodeTracks": [
+    "id": 251,
+    "code": "85GLB",
+    "nodeTracks": [
       {
-        "ID": 252,
-        "Code": "1",
-        "DebugString": "stationtrack:85GLB_{StationTrack SID = 44}"
+        "id": 252,
+        "code": "1",
+        "debugString": "stationtrack:85GLB_{StationTrack SID = 44}"
       },
       {
-        "ID": 253,
-        "Code": "2",
-        "DebugString": "stationtrack:85GLB_{StationTrack SID = 45}"
+        "id": 253,
+        "code": "2",
+        "debugString": "stationtrack:85GLB_{StationTrack SID = 45}"
       },
       {
-        "ID": 254,
-        "Code": "3",
-        "DebugString": "stationtrack:85GLB_{StationTrack SID = 47}"
+        "id": 254,
+        "code": "3",
+        "debugString": "stationtrack:85GLB_{StationTrack SID = 47}"
       }
-    ]
+    ],
+    "debugString": "station:85GLB"
   },
   {
-    "ID": 255,
-    "Code": "85GLZB",
-    "DebugString": "station:85GLZB",
-    "NodeTracks": [
+    "id": 255,
+    "code": "85GLZB",
+    "nodeTracks": [
       {
-        "ID": 256,
-        "Code": "1",
-        "DebugString": "stationtrack:85GLZB_1"
+        "id": 256,
+        "code": "1",
+        "debugString": "stationtrack:85GLZB_1"
       },
       {
-        "ID": 257,
-        "Code": "2",
-        "DebugString": "stationtrack:85GLZB_2"
+        "id": 257,
+        "code": "2",
+        "debugString": "stationtrack:85GLZB_2"
       },
       {
-        "ID": 258,
-        "Code": "3",
-        "DebugString": "stationtrack:85GLZB_3"
+        "id": 258,
+        "code": "3",
+        "debugString": "stationtrack:85GLZB_3"
       },
       {
-        "ID": 259,
-        "Code": "4",
-        "DebugString": "stationtrack:85GLZB_4"
+        "id": 259,
+        "code": "4",
+        "debugString": "stationtrack:85GLZB_4"
       }
-    ]
+    ],
+    "debugString": "station:85GLZB"
   },
   {
-    "ID": 260,
-    "Code": "85HAF",
-    "DebugString": "station:85HAF",
-    "NodeTracks": []
+    "id": 260,
+    "code": "85HAF",
+    "nodeTracks": [],
+    "debugString": "station:85HAF"
   },
   {
-    "ID": 261,
-    "Code": "85HERL",
-    "DebugString": "station:85HERL",
-    "NodeTracks": [
+    "id": 261,
+    "code": "85HERL",
+    "nodeTracks": [
       {
-        "ID": 262,
-        "Code": "1",
-        "DebugString": "stationtrack:85HERL_1"
+        "id": 262,
+        "code": "1",
+        "debugString": "stationtrack:85HERL_1"
       },
       {
-        "ID": 263,
-        "Code": "2",
-        "DebugString": "stationtrack:85HERL_2"
+        "id": 263,
+        "code": "2",
+        "debugString": "stationtrack:85HERL_2"
       }
-    ]
+    ],
+    "debugString": "station:85HERL"
   },
   {
-    "ID": 264,
-    "Code": "85HET",
-    "DebugString": "station:85HET",
-    "NodeTracks": []
+    "id": 264,
+    "code": "85HET",
+    "nodeTracks": [],
+    "debugString": "station:85HET"
   },
   {
-    "ID": 265,
-    "Code": "85HG",
-    "DebugString": "station:85HG",
-    "NodeTracks": [
+    "id": 265,
+    "code": "85HG",
+    "nodeTracks": [
       {
-        "ID": 266,
-        "Code": "1",
-        "DebugString": "stationtrack:85HG_1"
+        "id": 266,
+        "code": "1",
+        "debugString": "stationtrack:85HG_1"
       },
       {
-        "ID": 267,
-        "Code": "2",
-        "DebugString": "stationtrack:85HG_2"
+        "id": 267,
+        "code": "2",
+        "debugString": "stationtrack:85HG_2"
       },
       {
-        "ID": 268,
-        "Code": "3",
-        "DebugString": "stationtrack:85HG_3"
+        "id": 268,
+        "code": "3",
+        "debugString": "stationtrack:85HG_3"
       }
-    ]
+    ],
+    "debugString": "station:85HG"
   },
   {
-    "ID": 269,
-    "Code": "85HGO",
-    "DebugString": "station:85HGO",
-    "NodeTracks": []
+    "id": 269,
+    "code": "85HGO",
+    "nodeTracks": [],
+    "debugString": "station:85HGO"
   },
   {
-    "ID": 270,
-    "Code": "85HGT",
-    "DebugString": "station:85HGT",
-    "NodeTracks": []
+    "id": 270,
+    "code": "85HGT",
+    "nodeTracks": [],
+    "debugString": "station:85HGT"
   },
   {
-    "ID": 271,
-    "Code": "85HI",
-    "DebugString": "station:85HI",
-    "NodeTracks": [
+    "id": 271,
+    "code": "85HI",
+    "nodeTracks": [
       {
-        "ID": 272,
-        "Code": "1",
-        "DebugString": "stationtrack:85HI_1"
+        "id": 272,
+        "code": "1",
+        "debugString": "stationtrack:85HI_1"
       },
       {
-        "ID": 273,
-        "Code": "2",
-        "DebugString": "stationtrack:85HI_2"
+        "id": 273,
+        "code": "2",
+        "debugString": "stationtrack:85HI_2"
       }
-    ]
+    ],
+    "debugString": "station:85HI"
   },
   {
-    "ID": 274,
-    "Code": "85HRD",
-    "DebugString": "station:85HRD",
-    "NodeTracks": []
+    "id": 274,
+    "code": "85HRD",
+    "nodeTracks": [],
+    "debugString": "station:85HRD"
   },
   {
-    "ID": 275,
-    "Code": "85HUER",
-    "DebugString": "station:85HUER",
-    "NodeTracks": []
+    "id": 275,
+    "code": "85HUER",
+    "nodeTracks": [],
+    "debugString": "station:85HUER"
   },
   {
-    "ID": 276,
-    "Code": "85HUEW",
-    "DebugString": "station:85HUEW",
-    "NodeTracks": []
+    "id": 276,
+    "code": "85HUEW",
+    "nodeTracks": [],
+    "debugString": "station:85HUEW"
   },
   {
-    "ID": 277,
-    "Code": "85HUR",
-    "DebugString": "station:85HUR",
-    "NodeTracks": []
+    "id": 277,
+    "code": "85HUR",
+    "nodeTracks": [],
+    "debugString": "station:85HUR"
   },
   {
-    "ID": 278,
-    "Code": "85IL",
-    "DebugString": "station:85IL",
-    "NodeTracks": [
+    "id": 278,
+    "code": "85IL",
+    "nodeTracks": [
       {
-        "ID": 279,
-        "Code": "1",
-        "DebugString": "stationtrack:85IL_1"
+        "id": 279,
+        "code": "1",
+        "debugString": "stationtrack:85IL_1"
       },
       {
-        "ID": 280,
-        "Code": "2",
-        "DebugString": "stationtrack:85IL_2"
+        "id": 280,
+        "code": "2",
+        "debugString": "stationtrack:85IL_2"
       }
-    ]
+    ],
+    "debugString": "station:85IL"
   },
   {
-    "ID": 281,
-    "Code": "85JE",
-    "DebugString": "station:85JE",
-    "NodeTracks": []
+    "id": 281,
+    "code": "85JE",
+    "nodeTracks": [],
+    "debugString": "station:85JE"
   },
   {
-    "ID": 282,
-    "Code": "85JO",
-    "DebugString": "station:85JO",
-    "NodeTracks": [
+    "id": 282,
+    "code": "85JO",
+    "nodeTracks": [
       {
-        "ID": 283,
-        "Code": "1",
-        "DebugString": "stationtrack:85JO_1"
+        "id": 283,
+        "code": "1",
+        "debugString": "stationtrack:85JO_1"
       },
       {
-        "ID": 284,
-        "Code": "2",
-        "DebugString": "stationtrack:85JO_2"
+        "id": 284,
+        "code": "2",
+        "debugString": "stationtrack:85JO_2"
       }
-    ]
+    ],
+    "debugString": "station:85JO"
   },
   {
-    "ID": 285,
-    "Code": "85KE",
-    "DebugString": "station:85KE",
-    "NodeTracks": [
+    "id": 285,
+    "code": "85KE",
+    "nodeTracks": [
       {
-        "ID": 286,
-        "Code": "1",
-        "DebugString": "stationtrack:85KE_1"
+        "id": 286,
+        "code": "1",
+        "debugString": "stationtrack:85KE_1"
       },
       {
-        "ID": 287,
-        "Code": "2",
-        "DebugString": "stationtrack:85KE_2"
+        "id": 287,
+        "code": "2",
+        "debugString": "stationtrack:85KE_2"
       }
-    ]
+    ],
+    "debugString": "station:85KE"
   },
   {
-    "ID": 288,
-    "Code": "85KGO",
-    "DebugString": "station:85KGO",
-    "NodeTracks": [
+    "id": 288,
+    "code": "85KGO",
+    "nodeTracks": [
       {
-        "ID": 289,
-        "Code": "1",
-        "DebugString": "stationtrack:85KGO_1"
+        "id": 289,
+        "code": "1",
+        "debugString": "stationtrack:85KGO_1"
       },
       {
-        "ID": 290,
-        "Code": "2",
-        "DebugString": "stationtrack:85KGO_2"
+        "id": 290,
+        "code": "2",
+        "debugString": "stationtrack:85KGO_2"
       }
-    ]
+    ],
+    "debugString": "station:85KGO"
   },
   {
-    "ID": 291,
-    "Code": "85KIL",
-    "DebugString": "station:85KIL",
-    "NodeTracks": [
+    "id": 291,
+    "code": "85KIL",
+    "nodeTracks": [
       {
-        "ID": 292,
-        "Code": "1",
-        "DebugString": "stationtrack:85KIL_1"
+        "id": 292,
+        "code": "1",
+        "debugString": "stationtrack:85KIL_1"
       },
       {
-        "ID": 293,
-        "Code": "2",
-        "DebugString": "stationtrack:85KIL_2"
+        "id": 293,
+        "code": "2",
+        "debugString": "stationtrack:85KIL_2"
       }
-    ]
+    ],
+    "debugString": "station:85KIL"
   },
   {
-    "ID": 294,
-    "Code": "85KL",
-    "DebugString": "station:85KL",
-    "NodeTracks": []
+    "id": 294,
+    "code": "85KL",
+    "nodeTracks": [],
+    "debugString": "station:85KL"
   },
   {
-    "ID": 295,
-    "Code": "85KLB",
-    "DebugString": "station:85KLB",
-    "NodeTracks": []
+    "id": 295,
+    "code": "85KLB",
+    "nodeTracks": [],
+    "debugString": "station:85KLB"
   },
   {
-    "ID": 296,
-    "Code": "85KLW",
-    "DebugString": "station:85KLW",
-    "NodeTracks": [
+    "id": 296,
+    "code": "85KLW",
+    "nodeTracks": [
       {
-        "ID": 297,
-        "Code": "1",
-        "DebugString": "stationtrack:85KLW_1"
+        "id": 297,
+        "code": "1",
+        "debugString": "stationtrack:85KLW_1"
       },
       {
-        "ID": 298,
-        "Code": "2",
-        "DebugString": "stationtrack:85KLW_2"
+        "id": 298,
+        "code": "2",
+        "debugString": "stationtrack:85KLW_2"
       },
       {
-        "ID": 299,
-        "Code": "3",
-        "DebugString": "stationtrack:85KLW_3"
+        "id": 299,
+        "code": "3",
+        "debugString": "stationtrack:85KLW_3"
       },
       {
-        "ID": 300,
-        "Code": "4",
-        "DebugString": "stationtrack:85KLW_4"
+        "id": 300,
+        "code": "4",
+        "debugString": "stationtrack:85KLW_4"
       },
       {
-        "ID": 301,
-        "Code": "5",
-        "DebugString": "stationtrack:85KLW_5"
+        "id": 301,
+        "code": "5",
+        "debugString": "stationtrack:85KLW_5"
       },
       {
-        "ID": 302,
-        "Code": "6",
-        "DebugString": "stationtrack:85KLW_6"
+        "id": 302,
+        "code": "6",
+        "debugString": "stationtrack:85KLW_6"
       },
       {
-        "ID": 303,
-        "Code": "7",
-        "DebugString": "stationtrack:85KLW_7"
+        "id": 303,
+        "code": "7",
+        "debugString": "stationtrack:85KLW_7"
       }
-    ]
+    ],
+    "debugString": "station:85KLW"
   },
   {
-    "ID": 304,
-    "Code": "85KM8",
-    "DebugString": "station:85KM8",
-    "NodeTracks": []
+    "id": 304,
+    "code": "85KM8",
+    "nodeTracks": [],
+    "debugString": "station:85KM8"
   },
   {
-    "ID": 305,
-    "Code": "85KN",
-    "DebugString": "station:85KN",
-    "NodeTracks": [
+    "id": 305,
+    "code": "85KN",
+    "nodeTracks": [
       {
-        "ID": 306,
-        "Code": "1",
-        "DebugString": "stationtrack:85KN_1"
+        "id": 306,
+        "code": "1",
+        "debugString": "stationtrack:85KN_1"
       },
       {
-        "ID": 307,
-        "Code": "2",
-        "DebugString": "stationtrack:85KN_2"
+        "id": 307,
+        "code": "2",
+        "debugString": "stationtrack:85KN_2"
       }
-    ]
+    ],
+    "debugString": "station:85KN"
   },
   {
-    "ID": 308,
-    "Code": "85KOL",
-    "DebugString": "station:85KOL",
-    "NodeTracks": []
+    "id": 308,
+    "code": "85KOL",
+    "nodeTracks": [],
+    "debugString": "station:85KOL"
   },
   {
-    "ID": 309,
-    "Code": "85KPT",
-    "DebugString": "station:85KPT",
-    "NodeTracks": [
+    "id": 309,
+    "code": "85KPT",
+    "nodeTracks": [
       {
-        "ID": 310,
-        "Code": "1",
-        "DebugString": "stationtrack:85KPT_1"
+        "id": 310,
+        "code": "1",
+        "debugString": "stationtrack:85KPT_1"
       }
-    ]
+    ],
+    "debugString": "station:85KPT"
   },
   {
-    "ID": 311,
-    "Code": "85KUES",
-    "DebugString": "station:85KUES",
-    "NodeTracks": [
+    "id": 311,
+    "code": "85KUES",
+    "nodeTracks": [
       {
-        "ID": 312,
-        "Code": "1",
-        "DebugString": "stationtrack:85KUES_1"
+        "id": 312,
+        "code": "1",
+        "debugString": "stationtrack:85KUES_1"
       },
       {
-        "ID": 313,
-        "Code": "2",
-        "DebugString": "stationtrack:85KUES_2"
+        "id": 313,
+        "code": "2",
+        "debugString": "stationtrack:85KUES_2"
       },
       {
-        "ID": 314,
-        "Code": "3",
-        "DebugString": "stationtrack:85KUES_3"
+        "id": 314,
+        "code": "3",
+        "debugString": "stationtrack:85KUES_3"
       }
-    ]
+    ],
+    "debugString": "station:85KUES"
   },
   {
-    "ID": 315,
-    "Code": "85LA",
-    "DebugString": "station:85LA",
-    "NodeTracks": [
+    "id": 315,
+    "code": "85LA",
+    "nodeTracks": [
       {
-        "ID": 316,
-        "Code": "1",
-        "DebugString": "stationtrack:85LA_1"
+        "id": 316,
+        "code": "1",
+        "debugString": "stationtrack:85LA_1"
       },
       {
-        "ID": 317,
-        "Code": "2",
-        "DebugString": "stationtrack:85LA_2"
+        "id": 317,
+        "code": "2",
+        "debugString": "stationtrack:85LA_2"
       },
       {
-        "ID": 318,
-        "Code": "3",
-        "DebugString": "stationtrack:85LA_3"
+        "id": 318,
+        "code": "3",
+        "debugString": "stationtrack:85LA_3"
       }
-    ]
+    ],
+    "debugString": "station:85LA"
   },
   {
-    "ID": 319,
-    "Code": "85LANG",
-    "DebugString": "station:85LANG",
-    "NodeTracks": []
+    "id": 319,
+    "code": "85LANG",
+    "nodeTracks": [],
+    "debugString": "station:85LANG"
   },
   {
-    "ID": 320,
-    "Code": "85LANT",
-    "DebugString": "station:85LANT",
-    "NodeTracks": []
+    "id": 320,
+    "code": "85LANT",
+    "nodeTracks": [],
+    "debugString": "station:85LANT"
   },
   {
-    "ID": 321,
-    "Code": "85LOT",
-    "DebugString": "station:85LOT",
-    "NodeTracks": [
+    "id": 321,
+    "code": "85LOT",
+    "nodeTracks": [
       {
-        "ID": 322,
-        "Code": "3",
-        "DebugString": "stationtrack:85LOT_{StationTrack SID = 52}"
+        "id": 322,
+        "code": "3",
+        "debugString": "stationtrack:85LOT_{StationTrack SID = 52}"
       },
       {
-        "ID": 323,
-        "Code": "2",
-        "DebugString": "stationtrack:85LOT_{StationTrack SID = 50}"
+        "id": 323,
+        "code": "2",
+        "debugString": "stationtrack:85LOT_{StationTrack SID = 50}"
       },
       {
-        "ID": 324,
-        "Code": "1",
-        "DebugString": "stationtrack:85LOT_{StationTrack SID = 48}"
+        "id": 324,
+        "code": "1",
+        "debugString": "stationtrack:85LOT_{StationTrack SID = 48}"
       }
-    ]
+    ],
+    "debugString": "station:85LOT"
   },
   {
-    "ID": 325,
-    "Code": "85MAEN",
-    "DebugString": "station:85MAEN",
-    "NodeTracks": [
+    "id": 325,
+    "code": "85MAEN",
+    "nodeTracks": [
       {
-        "ID": 326,
-        "Code": "1",
-        "DebugString": "stationtrack:85MAEN_1"
+        "id": 326,
+        "code": "1",
+        "debugString": "stationtrack:85MAEN_1"
       }
-    ]
+    ],
+    "debugString": "station:85MAEN"
   },
   {
-    "ID": 327,
-    "Code": "85MEDE",
-    "DebugString": "station:85MEDE",
-    "NodeTracks": []
+    "id": 327,
+    "code": "85MEDE",
+    "nodeTracks": [],
+    "debugString": "station:85MEDE"
   },
   {
-    "ID": 328,
-    "Code": "85MEIB",
-    "DebugString": "station:85MEIB",
-    "NodeTracks": []
+    "id": 328,
+    "code": "85MEIB",
+    "nodeTracks": [],
+    "debugString": "station:85MEIB"
   },
   {
-    "ID": 329,
-    "Code": "85MELS",
-    "DebugString": "station:85MELS",
-    "NodeTracks": []
+    "id": 329,
+    "code": "85MELS",
+    "nodeTracks": [],
+    "debugString": "station:85MELS"
   },
   {
-    "ID": 330,
-    "Code": "85MF",
-    "DebugString": "station:85MF",
-    "NodeTracks": []
+    "id": 330,
+    "code": "85MF",
+    "nodeTracks": [],
+    "debugString": "station:85MF"
   },
   {
-    "ID": 331,
-    "Code": "85MG",
-    "DebugString": "station:85MG",
-    "NodeTracks": []
+    "id": 331,
+    "code": "85MG",
+    "nodeTracks": [],
+    "debugString": "station:85MG"
   },
   {
-    "ID": 332,
-    "Code": "85MH",
-    "DebugString": "station:85MH",
-    "NodeTracks": []
+    "id": 332,
+    "code": "85MH",
+    "nodeTracks": [],
+    "debugString": "station:85MH"
   },
   {
-    "ID": 333,
-    "Code": "85ML",
-    "DebugString": "station:85ML",
-    "NodeTracks": [
+    "id": 333,
+    "code": "85ML",
+    "nodeTracks": [
       {
-        "ID": 334,
-        "Code": "3",
-        "DebugString": "stationtrack:85ML_{StationTrack SID = 56}"
+        "id": 334,
+        "code": "3",
+        "debugString": "stationtrack:85ML_{StationTrack SID = 56}"
       },
       {
-        "ID": 335,
-        "Code": "2",
-        "DebugString": "stationtrack:85ML_{StationTrack SID = 54}"
+        "id": 335,
+        "code": "2",
+        "debugString": "stationtrack:85ML_{StationTrack SID = 54}"
       },
       {
-        "ID": 336,
-        "Code": "1",
-        "DebugString": "stationtrack:85ML_{StationTrack SID = 53}"
+        "id": 336,
+        "code": "1",
+        "debugString": "stationtrack:85ML_{StationTrack SID = 53}"
       }
-    ]
+    ],
+    "debugString": "station:85ML"
   },
   {
-    "ID": 337,
-    "Code": "85MOLS",
-    "DebugString": "station:85MOLS",
-    "NodeTracks": []
+    "id": 337,
+    "code": "85MOLS",
+    "nodeTracks": [],
+    "debugString": "station:85MOLS"
   },
   {
-    "ID": 338,
-    "Code": "85MTL",
-    "DebugString": "station:85MTL",
-    "NodeTracks": []
+    "id": 338,
+    "code": "85MTL",
+    "nodeTracks": [],
+    "debugString": "station:85MTL"
   },
   {
-    "ID": 339,
-    "Code": "85NAEN",
-    "DebugString": "station:85NAEN",
-    "NodeTracks": [
+    "id": 339,
+    "code": "85NAEN",
+    "nodeTracks": [
       {
-        "ID": 340,
-        "Code": "1",
-        "DebugString": "stationtrack:85NAEN_1"
+        "id": 340,
+        "code": "1",
+        "debugString": "stationtrack:85NAEN_1"
       },
       {
-        "ID": 341,
-        "Code": "2",
-        "DebugString": "stationtrack:85NAEN_2"
+        "id": 341,
+        "code": "2",
+        "debugString": "stationtrack:85NAEN_2"
       }
-    ]
+    ],
+    "debugString": "station:85NAEN"
   },
   {
-    "ID": 342,
-    "Code": "85NG",
-    "DebugString": "station:85NG",
-    "NodeTracks": [
+    "id": 342,
+    "code": "85NG",
+    "nodeTracks": [
       {
-        "ID": 343,
-        "Code": "1",
-        "DebugString": "stationtrack:85NG_1"
+        "id": 343,
+        "code": "1",
+        "debugString": "stationtrack:85NG_1"
       },
       {
-        "ID": 344,
-        "Code": "2",
-        "DebugString": "stationtrack:85NG_2"
+        "id": 344,
+        "code": "2",
+        "debugString": "stationtrack:85NG_2"
       },
       {
-        "ID": 345,
-        "Code": "3",
-        "DebugString": "stationtrack:85NG_3"
+        "id": 345,
+        "code": "3",
+        "debugString": "stationtrack:85NG_3"
       },
       {
-        "ID": 346,
-        "Code": "4",
-        "DebugString": "stationtrack:85NG_4"
+        "id": 346,
+        "code": "4",
+        "debugString": "stationtrack:85NG_4"
       }
-    ]
+    ],
+    "debugString": "station:85NG"
   },
   {
-    "ID": 347,
-    "Code": "85NGUT",
-    "DebugString": "station:85NGUT",
-    "NodeTracks": []
+    "id": 347,
+    "code": "85NGUT",
+    "nodeTracks": [],
+    "debugString": "station:85NGUT"
   },
   {
-    "ID": 348,
-    "Code": "85NH",
-    "DebugString": "station:85NH",
-    "NodeTracks": [
+    "id": 348,
+    "code": "85NH",
+    "nodeTracks": [
       {
-        "ID": 349,
-        "Code": "1",
-        "DebugString": "stationtrack:85NH_1"
+        "id": 349,
+        "code": "1",
+        "debugString": "stationtrack:85NH_1"
       },
       {
-        "ID": 350,
-        "Code": "2",
-        "DebugString": "stationtrack:85NH_2"
+        "id": 350,
+        "code": "2",
+        "debugString": "stationtrack:85NH_2"
       }
-    ]
+    ],
+    "debugString": "station:85NH"
   },
   {
-    "ID": 351,
-    "Code": "85NHOF",
-    "DebugString": "station:85NHOF",
-    "NodeTracks": [
+    "id": 351,
+    "code": "85NHOF",
+    "nodeTracks": [
       {
-        "ID": 352,
-        "Code": "1",
-        "DebugString": "stationtrack:85NHOF_1"
+        "id": 352,
+        "code": "1",
+        "debugString": "stationtrack:85NHOF_1"
       },
       {
-        "ID": 353,
-        "Code": "2",
-        "DebugString": "stationtrack:85NHOF_2"
+        "id": 353,
+        "code": "2",
+        "debugString": "stationtrack:85NHOF_2"
       }
-    ]
+    ],
+    "debugString": "station:85NHOF"
   },
   {
-    "ID": 354,
-    "Code": "85NIDB",
-    "DebugString": "station:85NIDB",
-    "NodeTracks": []
+    "id": 354,
+    "code": "85NIDB",
+    "nodeTracks": [],
+    "debugString": "station:85NIDB"
   },
   {
-    "ID": 355,
-    "Code": "85NIE",
-    "DebugString": "station:85NIE",
-    "NodeTracks": [
+    "id": 355,
+    "code": "85NIE",
+    "nodeTracks": [
       {
-        "ID": 356,
-        "Code": "1",
-        "DebugString": "stationtrack:85NIE_1"
+        "id": 356,
+        "code": "1",
+        "debugString": "stationtrack:85NIE_1"
       }
-    ]
+    ],
+    "debugString": "station:85NIE"
   },
   {
-    "ID": 357,
-    "Code": "85NW",
-    "DebugString": "station:85NW",
-    "NodeTracks": [
+    "id": 357,
+    "code": "85NW",
+    "nodeTracks": [
       {
-        "ID": 358,
-        "Code": "1",
-        "DebugString": "stationtrack:85NW_{StationTrack SID = 60}"
+        "id": 358,
+        "code": "1",
+        "debugString": "stationtrack:85NW_{StationTrack SID = 60}"
       },
       {
-        "ID": 359,
-        "Code": "2",
-        "DebugString": "stationtrack:85NW_{StationTrack SID = 61}"
+        "id": 359,
+        "code": "2",
+        "debugString": "stationtrack:85NW_{StationTrack SID = 61}"
       }
-    ]
+    ],
+    "debugString": "station:85NW"
   },
   {
-    "ID": 360,
-    "Code": "85NWD",
-    "DebugString": "station:85NWD",
-    "NodeTracks": [
+    "id": 360,
+    "code": "85NWD",
+    "nodeTracks": [
       {
-        "ID": 361,
-        "Code": "1",
-        "DebugString": "stationtrack:85NWD_1"
+        "id": 361,
+        "code": "1",
+        "debugString": "stationtrack:85NWD_1"
       }
-    ]
+    ],
+    "debugString": "station:85NWD"
   },
   {
-    "ID": 362,
-    "Code": "85OF",
-    "DebugString": "station:85OF",
-    "NodeTracks": [
+    "id": 362,
+    "code": "85OF",
+    "nodeTracks": [
       {
-        "ID": 363,
-        "Code": "1",
-        "DebugString": "stationtrack:85OF_1"
+        "id": 363,
+        "code": "1",
+        "debugString": "stationtrack:85OF_1"
       },
       {
-        "ID": 364,
-        "Code": "2",
-        "DebugString": "stationtrack:85OF_2"
+        "id": 364,
+        "code": "2",
+        "debugString": "stationtrack:85OF_2"
       }
-    ]
+    ],
+    "debugString": "station:85OF"
   },
   {
-    "ID": 365,
-    "Code": "85OFR",
-    "DebugString": "station:85OFR",
-    "NodeTracks": [
+    "id": 365,
+    "code": "85OFR",
+    "nodeTracks": [
       {
-        "ID": 366,
-        "Code": "1",
-        "DebugString": "stationtrack:85OFR_1"
+        "id": 366,
+        "code": "1",
+        "debugString": "stationtrack:85OFR_1"
       }
-    ]
+    ],
+    "debugString": "station:85OFR"
   },
   {
-    "ID": 367,
-    "Code": "85OGL",
-    "DebugString": "station:85OGL",
-    "NodeTracks": [
+    "id": 367,
+    "code": "85OGL",
+    "nodeTracks": [
       {
-        "ID": 368,
-        "Code": "1",
-        "DebugString": "stationtrack:85OGL_1"
+        "id": 368,
+        "code": "1",
+        "debugString": "stationtrack:85OGL_1"
       },
       {
-        "ID": 369,
-        "Code": "2",
-        "DebugString": "stationtrack:85OGL_2"
+        "id": 369,
+        "code": "2",
+        "debugString": "stationtrack:85OGL_2"
       },
       {
-        "ID": 370,
-        "Code": "3",
-        "DebugString": "stationtrack:85OGL_3"
+        "id": 370,
+        "code": "3",
+        "debugString": "stationtrack:85OGL_3"
       }
-    ]
+    ],
+    "debugString": "station:85OGL"
   },
   {
-    "ID": 371,
-    "Code": "85OP",
-    "DebugString": "station:85OP",
-    "NodeTracks": [
+    "id": 371,
+    "code": "85OP",
+    "nodeTracks": [
       {
-        "ID": 372,
-        "Code": "1",
-        "DebugString": "stationtrack:85OP_1"
+        "id": 372,
+        "code": "1",
+        "debugString": "stationtrack:85OP_1"
       },
       {
-        "ID": 373,
-        "Code": "2",
-        "DebugString": "stationtrack:85OP_2"
+        "id": 373,
+        "code": "2",
+        "debugString": "stationtrack:85OP_2"
       }
-    ]
+    ],
+    "debugString": "station:85OP"
   },
   {
-    "ID": 374,
-    "Code": "85OPSW",
-    "DebugString": "station:85OPSW",
-    "NodeTracks": []
+    "id": 374,
+    "code": "85OPSW",
+    "nodeTracks": [],
+    "debugString": "station:85OPSW"
   },
   {
-    "ID": 375,
-    "Code": "85ORD",
-    "DebugString": "station:85ORD",
-    "NodeTracks": [
+    "id": 375,
+    "code": "85ORD",
+    "nodeTracks": [
       {
-        "ID": 376,
-        "Code": "1",
-        "DebugString": "stationtrack:85ORD_1"
+        "id": 376,
+        "code": "1",
+        "debugString": "stationtrack:85ORD_1"
       },
       {
-        "ID": 377,
-        "Code": "2",
-        "DebugString": "stationtrack:85ORD_2"
+        "id": 377,
+        "code": "2",
+        "debugString": "stationtrack:85ORD_2"
       }
-    ]
+    ],
+    "debugString": "station:85ORD"
   },
   {
-    "ID": 378,
-    "Code": "85ORDD",
-    "DebugString": "station:85ORDD",
-    "NodeTracks": [
+    "id": 378,
+    "code": "85ORDD",
+    "nodeTracks": [
       {
-        "ID": 379,
-        "Code": "1",
-        "DebugString": "stationtrack:85ORDD_1"
+        "id": 379,
+        "code": "1",
+        "debugString": "stationtrack:85ORDD_1"
       },
       {
-        "ID": 380,
-        "Code": "2",
-        "DebugString": "stationtrack:85ORDD_2"
+        "id": 380,
+        "code": "2",
+        "debugString": "stationtrack:85ORDD_2"
       }
-    ]
+    ],
+    "debugString": "station:85ORDD"
   },
   {
-    "ID": 381,
-    "Code": "85OWT",
-    "DebugString": "station:85OWT",
-    "NodeTracks": []
+    "id": 381,
+    "code": "85OWT",
+    "nodeTracks": [],
+    "debugString": "station:85OWT"
   },
   {
-    "ID": 382,
-    "Code": "85PF",
-    "DebugString": "station:85PF",
-    "NodeTracks": [
+    "id": 382,
+    "code": "85PF",
+    "nodeTracks": [
       {
-        "ID": 383,
-        "Code": "7",
-        "DebugString": "stationtrack:85PF_{StationTrack SID = 70}"
+        "id": 383,
+        "code": "7",
+        "debugString": "stationtrack:85PF_{StationTrack SID = 70}"
       },
       {
-        "ID": 384,
-        "Code": "6",
-        "DebugString": "stationtrack:85PF_{StationTrack SID = 69}"
+        "id": 384,
+        "code": "6",
+        "debugString": "stationtrack:85PF_{StationTrack SID = 69}"
       },
       {
-        "ID": 385,
-        "Code": "5",
-        "DebugString": "stationtrack:85PF_{StationTrack SID = 67}"
+        "id": 385,
+        "code": "5",
+        "debugString": "stationtrack:85PF_{StationTrack SID = 67}"
       },
       {
-        "ID": 386,
-        "Code": "4",
-        "DebugString": "stationtrack:85PF_{StationTrack SID = 66}"
+        "id": 386,
+        "code": "4",
+        "debugString": "stationtrack:85PF_{StationTrack SID = 66}"
       },
       {
-        "ID": 387,
-        "Code": "3",
-        "DebugString": "stationtrack:85PF_{StationTrack SID = 65}"
+        "id": 387,
+        "code": "3",
+        "debugString": "stationtrack:85PF_{StationTrack SID = 65}"
       },
       {
-        "ID": 388,
-        "Code": "2",
-        "DebugString": "stationtrack:85PF_{StationTrack SID = 63}"
+        "id": 388,
+        "code": "2",
+        "debugString": "stationtrack:85PF_{StationTrack SID = 63}"
       },
       {
-        "ID": 389,
-        "Code": "1",
-        "DebugString": "stationtrack:85PF_{StationTrack SID = 62}"
+        "id": 389,
+        "code": "1",
+        "debugString": "stationtrack:85PF_{StationTrack SID = 62}"
       }
-    ]
+    ],
+    "debugString": "station:85PF"
   },
   {
-    "ID": 390,
-    "Code": "85PFU",
-    "DebugString": "station:85PFU",
-    "NodeTracks": [
+    "id": 390,
+    "code": "85PFU",
+    "nodeTracks": [
       {
-        "ID": 391,
-        "Code": "1",
-        "DebugString": "stationtrack:85PFU_{StationTrack SID = 72}"
+        "id": 391,
+        "code": "1",
+        "debugString": "stationtrack:85PFU_{StationTrack SID = 72}"
       },
       {
-        "ID": 392,
-        "Code": "2",
-        "DebugString": "stationtrack:85PFU_{StationTrack SID = 74}"
+        "id": 392,
+        "code": "2",
+        "debugString": "stationtrack:85PFU_{StationTrack SID = 74}"
       },
       {
-        "ID": 393,
-        "Code": "3",
-        "DebugString": "stationtrack:85PFU_{StationTrack SID = 76}"
+        "id": 393,
+        "code": "3",
+        "debugString": "stationtrack:85PFU_{StationTrack SID = 76}"
       }
-    ]
+    ],
+    "debugString": "station:85PFU"
   },
   {
-    "ID": 394,
-    "Code": "85PFZ",
-    "DebugString": "station:85PFZ",
-    "NodeTracks": [
+    "id": 394,
+    "code": "85PFZ",
+    "nodeTracks": [
       {
-        "ID": 395,
-        "Code": "1",
-        "DebugString": "stationtrack:85PFZ_1"
+        "id": 395,
+        "code": "1",
+        "debugString": "stationtrack:85PFZ_1"
       },
       {
-        "ID": 396,
-        "Code": "2",
-        "DebugString": "stationtrack:85PFZ_2"
+        "id": 396,
+        "code": "2",
+        "debugString": "stationtrack:85PFZ_2"
       }
-    ]
+    ],
+    "debugString": "station:85PFZ"
   },
   {
-    "ID": 397,
-    "Code": "85RAET",
-    "DebugString": "station:85RAET",
-    "NodeTracks": []
+    "id": 397,
+    "code": "85RAET",
+    "nodeTracks": [],
+    "debugString": "station:85RAET"
   },
   {
-    "ID": 398,
-    "Code": "85REG",
-    "DebugString": "station:85REG",
-    "NodeTracks": [
+    "id": 398,
+    "code": "85REG",
+    "nodeTracks": [
       {
-        "ID": 399,
-        "Code": "1",
-        "DebugString": "stationtrack:85REG_1"
+        "id": 399,
+        "code": "1",
+        "debugString": "stationtrack:85REG_1"
       },
       {
-        "ID": 400,
-        "Code": "2",
-        "DebugString": "stationtrack:85REG_2"
+        "id": 400,
+        "code": "2",
+        "debugString": "stationtrack:85REG_2"
       },
       {
-        "ID": 401,
-        "Code": "3",
-        "DebugString": "stationtrack:85REG_3"
+        "id": 401,
+        "code": "3",
+        "debugString": "stationtrack:85REG_3"
       },
       {
-        "ID": 402,
-        "Code": "4",
-        "DebugString": "stationtrack:85REG_4"
+        "id": 402,
+        "code": "4",
+        "debugString": "stationtrack:85REG_4"
       }
-    ]
+    ],
+    "debugString": "station:85REG"
   },
   {
-    "ID": 403,
-    "Code": "85REUT",
-    "DebugString": "station:85REUT",
-    "NodeTracks": []
+    "id": 403,
+    "code": "85REUT",
+    "nodeTracks": [],
+    "debugString": "station:85REUT"
   },
   {
-    "ID": 404,
-    "Code": "85RG",
-    "DebugString": "station:85RG",
-    "NodeTracks": [
+    "id": 404,
+    "code": "85RG",
+    "nodeTracks": [
       {
-        "ID": 405,
-        "Code": "1",
-        "DebugString": "stationtrack:85RG_1"
+        "id": 405,
+        "code": "1",
+        "debugString": "stationtrack:85RG_1"
       },
       {
-        "ID": 406,
-        "Code": "2",
-        "DebugString": "stationtrack:85RG_2"
+        "id": 406,
+        "code": "2",
+        "debugString": "stationtrack:85RG_2"
       },
       {
-        "ID": 407,
-        "Code": "3",
-        "DebugString": "stationtrack:85RG_3"
+        "id": 407,
+        "code": "3",
+        "debugString": "stationtrack:85RG_3"
       }
-    ]
+    ],
+    "debugString": "station:85RG"
   },
   {
-    "ID": 408,
-    "Code": "85RI",
-    "DebugString": "station:85RI",
-    "NodeTracks": [
+    "id": 408,
+    "code": "85RI",
+    "nodeTracks": [
       {
-        "ID": 409,
-        "Code": "1",
-        "DebugString": "stationtrack:85RI_1"
+        "id": 409,
+        "code": "1",
+        "debugString": "stationtrack:85RI_1"
       },
       {
-        "ID": 410,
-        "Code": "2",
-        "DebugString": "stationtrack:85RI_2"
+        "id": 410,
+        "code": "2",
+        "debugString": "stationtrack:85RI_2"
       }
-    ]
+    ],
+    "debugString": "station:85RI"
   },
   {
-    "ID": 411,
-    "Code": "85RMZ",
-    "DebugString": "station:85RMZ",
-    "NodeTracks": []
+    "id": 411,
+    "code": "85RMZ",
+    "nodeTracks": [],
+    "debugString": "station:85RMZ"
   },
   {
-    "ID": 412,
-    "Code": "85RN",
-    "DebugString": "station:85RN",
-    "NodeTracks": []
+    "id": 412,
+    "code": "85RN",
+    "nodeTracks": [],
+    "debugString": "station:85RN"
   },
   {
-    "ID": 413,
-    "Code": "85ROR",
-    "DebugString": "station:85ROR",
-    "NodeTracks": []
+    "id": 413,
+    "code": "85ROR",
+    "nodeTracks": [],
+    "debugString": "station:85ROR"
   },
   {
-    "ID": 414,
-    "Code": "85RT",
-    "DebugString": "station:85RT",
-    "NodeTracks": []
+    "id": 414,
+    "code": "85RT",
+    "nodeTracks": [],
+    "debugString": "station:85RT"
   },
   {
-    "ID": 415,
-    "Code": "85RUE",
-    "DebugString": "station:85RUE",
-    "NodeTracks": [
+    "id": 415,
+    "code": "85RUE",
+    "nodeTracks": [
       {
-        "ID": 416,
-        "Code": "3",
-        "DebugString": "stationtrack:85RUE_{StationTrack SID = 81}"
+        "id": 416,
+        "code": "3",
+        "debugString": "stationtrack:85RUE_{StationTrack SID = 81}"
       },
       {
-        "ID": 417,
-        "Code": "2",
-        "DebugString": "stationtrack:85RUE_{StationTrack SID = 79}"
+        "id": 417,
+        "code": "2",
+        "debugString": "stationtrack:85RUE_{StationTrack SID = 79}"
       },
       {
-        "ID": 418,
-        "Code": "1",
-        "DebugString": "stationtrack:85RUE_{StationTrack SID = 78}"
+        "id": 418,
+        "code": "1",
+        "debugString": "stationtrack:85RUE_{StationTrack SID = 78}"
       }
-    ]
+    ],
+    "debugString": "station:85RUE"
   },
   {
-    "ID": 419,
-    "Code": "85RUEKM",
-    "DebugString": "station:85RUEKM",
-    "NodeTracks": []
+    "id": 419,
+    "code": "85RUEKM",
+    "nodeTracks": [],
+    "debugString": "station:85RUEKM"
   },
   {
-    "ID": 420,
-    "Code": "85RUEM",
-    "DebugString": "station:85RUEM",
-    "NodeTracks": [
+    "id": 420,
+    "code": "85RUEM",
+    "nodeTracks": [
       {
-        "ID": 421,
-        "Code": "1",
-        "DebugString": "stationtrack:85RUEM_1"
+        "id": 421,
+        "code": "1",
+        "debugString": "stationtrack:85RUEM_1"
       },
       {
-        "ID": 422,
-        "Code": "2",
-        "DebugString": "stationtrack:85RUEM_2"
+        "id": 422,
+        "code": "2",
+        "debugString": "stationtrack:85RUEM_2"
       },
       {
-        "ID": 423,
-        "Code": "3",
-        "DebugString": "stationtrack:85RUEM_3"
+        "id": 423,
+        "code": "3",
+        "debugString": "stationtrack:85RUEM_3"
       }
-    ]
+    ],
+    "debugString": "station:85RUEM"
   },
   {
-    "ID": 424,
-    "Code": "85RUES",
-    "DebugString": "station:85RUES",
-    "NodeTracks": [
+    "id": 424,
+    "code": "85RUES",
+    "nodeTracks": [
       {
-        "ID": 425,
-        "Code": "1",
-        "DebugString": "stationtrack:85RUES_1"
+        "id": 425,
+        "code": "1",
+        "debugString": "stationtrack:85RUES_1"
       },
       {
-        "ID": 426,
-        "Code": "2",
-        "DebugString": "stationtrack:85RUES_2"
+        "id": 426,
+        "code": "2",
+        "debugString": "stationtrack:85RUES_2"
       }
-    ]
+    ],
+    "debugString": "station:85RUES"
   },
   {
-    "ID": 427,
-    "Code": "85RW",
-    "DebugString": "station:85RW",
-    "NodeTracks": [
+    "id": 427,
+    "code": "85RW",
+    "nodeTracks": [
       {
-        "ID": 428,
-        "Code": "1",
-        "DebugString": "stationtrack:85RW_{StationTrack SID = 83}"
+        "id": 428,
+        "code": "1",
+        "debugString": "stationtrack:85RW_{StationTrack SID = 83}"
       },
       {
-        "ID": 429,
-        "Code": "2",
-        "DebugString": "stationtrack:85RW_{StationTrack SID = 84}"
+        "id": 429,
+        "code": "2",
+        "debugString": "stationtrack:85RW_{StationTrack SID = 84}"
       },
       {
-        "ID": 430,
-        "Code": "3",
-        "DebugString": "stationtrack:85RW_{StationTrack SID = 86}"
+        "id": 430,
+        "code": "3",
+        "debugString": "stationtrack:85RW_{StationTrack SID = 86}"
       },
       {
-        "ID": 431,
-        "Code": "4",
-        "DebugString": "stationtrack:85RW_{StationTrack SID = 87}"
+        "id": 431,
+        "code": "4",
+        "debugString": "stationtrack:85RW_{StationTrack SID = 87}"
       },
       {
-        "ID": 432,
-        "Code": "5",
-        "DebugString": "stationtrack:85RW_{StationTrack SID = 89}"
+        "id": 432,
+        "code": "5",
+        "debugString": "stationtrack:85RW_{StationTrack SID = 89}"
       },
       {
-        "ID": 433,
-        "Code": "6",
-        "DebugString": "stationtrack:85RW_{StationTrack SID = 90}"
+        "id": 433,
+        "code": "6",
+        "debugString": "stationtrack:85RW_{StationTrack SID = 90}"
       },
       {
-        "ID": 434,
-        "Code": "7",
-        "DebugString": "stationtrack:85RW_{StationTrack SID = 92}"
+        "id": 434,
+        "code": "7",
+        "debugString": "stationtrack:85RW_{StationTrack SID = 92}"
       }
-    ]
+    ],
+    "debugString": "station:85RW"
   },
   {
-    "ID": 435,
-    "Code": "85RZ",
-    "DebugString": "station:85RZ",
-    "NodeTracks": []
+    "id": 435,
+    "code": "85RZ",
+    "nodeTracks": [],
+    "debugString": "station:85RZ"
   },
   {
-    "ID": 436,
-    "Code": "85SA",
-    "DebugString": "station:85SA",
-    "NodeTracks": []
+    "id": 436,
+    "code": "85SA",
+    "nodeTracks": [],
+    "debugString": "station:85SA"
   },
   {
-    "ID": 437,
-    "Code": "85SBG",
-    "DebugString": "station:85SBG",
-    "NodeTracks": []
+    "id": 437,
+    "code": "85SBG",
+    "nodeTracks": [],
+    "debugString": "station:85SBG"
   },
   {
-    "ID": 438,
-    "Code": "85SCBU",
-    "DebugString": "station:85SCBU",
-    "NodeTracks": [
+    "id": 438,
+    "code": "85SCBU",
+    "nodeTracks": [
       {
-        "ID": 439,
-        "Code": "1",
-        "DebugString": "stationtrack:85SCBU_1"
+        "id": 439,
+        "code": "1",
+        "debugString": "stationtrack:85SCBU_1"
       },
       {
-        "ID": 440,
-        "Code": "2",
-        "DebugString": "stationtrack:85SCBU_2"
+        "id": 440,
+        "code": "2",
+        "debugString": "stationtrack:85SCBU_2"
       },
       {
-        "ID": 441,
-        "Code": "3",
-        "DebugString": "stationtrack:85SCBU_3"
+        "id": 441,
+        "code": "3",
+        "debugString": "stationtrack:85SCBU_3"
       }
-    ]
+    ],
+    "debugString": "station:85SCBU"
   },
   {
-    "ID": 442,
-    "Code": "85SCHL",
-    "DebugString": "station:85SCHL",
-    "NodeTracks": [
+    "id": 442,
+    "code": "85SCHL",
+    "nodeTracks": [
       {
-        "ID": 443,
-        "Code": "1",
-        "DebugString": "stationtrack:85SCHL_1"
+        "id": 443,
+        "code": "1",
+        "debugString": "stationtrack:85SCHL_1"
       },
       {
-        "ID": 444,
-        "Code": "2",
-        "DebugString": "stationtrack:85SCHL_2"
+        "id": 444,
+        "code": "2",
+        "debugString": "stationtrack:85SCHL_2"
       },
       {
-        "ID": 445,
-        "Code": "3",
-        "DebugString": "stationtrack:85SCHL_3"
+        "id": 445,
+        "code": "3",
+        "debugString": "stationtrack:85SCHL_3"
       },
       {
-        "ID": 446,
-        "Code": "4",
-        "DebugString": "stationtrack:85SCHL_4"
+        "id": 446,
+        "code": "4",
+        "debugString": "stationtrack:85SCHL_4"
       },
       {
-        "ID": 447,
-        "Code": "5",
-        "DebugString": "stationtrack:85SCHL_5"
+        "id": 447,
+        "code": "5",
+        "debugString": "stationtrack:85SCHL_5"
       }
-    ]
+    ],
+    "debugString": "station:85SCHL"
   },
   {
-    "ID": 448,
-    "Code": "85SCHO",
-    "DebugString": "station:85SCHO",
-    "NodeTracks": [
+    "id": 448,
+    "code": "85SCHO",
+    "nodeTracks": [
       {
-        "ID": 449,
-        "Code": "1",
-        "DebugString": "stationtrack:85SCHO_1"
+        "id": 449,
+        "code": "1",
+        "debugString": "stationtrack:85SCHO_1"
       }
-    ]
+    ],
+    "debugString": "station:85SCHO"
   },
   {
-    "ID": 450,
-    "Code": "85SCWE",
-    "DebugString": "station:85SCWE",
-    "NodeTracks": [
+    "id": 450,
+    "code": "85SCWE",
+    "nodeTracks": [
       {
-        "ID": 451,
-        "Code": "1",
-        "DebugString": "stationtrack:85SCWE_1"
+        "id": 451,
+        "code": "1",
+        "debugString": "stationtrack:85SCWE_1"
       },
       {
-        "ID": 452,
-        "Code": "2",
-        "DebugString": "stationtrack:85SCWE_2"
+        "id": 452,
+        "code": "2",
+        "debugString": "stationtrack:85SCWE_2"
       },
       {
-        "ID": 453,
-        "Code": "3",
-        "DebugString": "stationtrack:85SCWE_3"
+        "id": 453,
+        "code": "3",
+        "debugString": "stationtrack:85SCWE_3"
       }
-    ]
+    ],
+    "debugString": "station:85SCWE"
   },
   {
-    "ID": 454,
-    "Code": "85SD",
-    "DebugString": "station:85SD",
-    "NodeTracks": []
+    "id": 454,
+    "code": "85SD",
+    "nodeTracks": [],
+    "debugString": "station:85SD"
   },
   {
-    "ID": 455,
-    "Code": "85SEU",
-    "DebugString": "station:85SEU",
-    "NodeTracks": []
+    "id": 455,
+    "code": "85SEU",
+    "nodeTracks": [],
+    "debugString": "station:85SEU"
   },
   {
-    "ID": 456,
-    "Code": "85SH",
-    "DebugString": "station:85SH",
-    "NodeTracks": [
+    "id": 456,
+    "code": "85SH",
+    "nodeTracks": [
       {
-        "ID": 457,
-        "Code": "6",
-        "DebugString": "stationtrack:85SH_{StationTrack SID = 93}"
+        "id": 457,
+        "code": "6",
+        "debugString": "stationtrack:85SH_{StationTrack SID = 93}"
       },
       {
-        "ID": 458,
-        "Code": "5",
-        "DebugString": "stationtrack:85SH_{StationTrack SID = 94}"
+        "id": 458,
+        "code": "5",
+        "debugString": "stationtrack:85SH_{StationTrack SID = 94}"
       },
       {
-        "ID": 459,
-        "Code": "4",
-        "DebugString": "stationtrack:85SH_{StationTrack SID = 96}"
+        "id": 459,
+        "code": "4",
+        "debugString": "stationtrack:85SH_{StationTrack SID = 96}"
       },
       {
-        "ID": 460,
-        "Code": "3",
-        "DebugString": "stationtrack:85SH_{StationTrack SID = 97}"
+        "id": 460,
+        "code": "3",
+        "debugString": "stationtrack:85SH_{StationTrack SID = 97}"
       },
       {
-        "ID": 461,
-        "Code": "2",
-        "DebugString": "stationtrack:85SH_{StationTrack SID = 99}"
+        "id": 461,
+        "code": "2",
+        "debugString": "stationtrack:85SH_{StationTrack SID = 99}"
       },
       {
-        "ID": 462,
-        "Code": "1",
-        "DebugString": "stationtrack:85SH_{StationTrack SID = 100}"
+        "id": 462,
+        "code": "1",
+        "debugString": "stationtrack:85SH_{StationTrack SID = 100}"
       }
-    ]
+    ],
+    "debugString": "station:85SH"
   },
   {
-    "ID": 463,
-    "Code": "85SIB",
-    "DebugString": "station:85SIB",
-    "NodeTracks": [
+    "id": 463,
+    "code": "85SIB",
+    "nodeTracks": [
       {
-        "ID": 464,
-        "Code": "1",
-        "DebugString": "stationtrack:85SIB_1"
+        "id": 464,
+        "code": "1",
+        "debugString": "stationtrack:85SIB_1"
       },
       {
-        "ID": 465,
-        "Code": "2",
-        "DebugString": "stationtrack:85SIB_2"
+        "id": 465,
+        "code": "2",
+        "debugString": "stationtrack:85SIB_2"
       },
       {
-        "ID": 466,
-        "Code": "3",
-        "DebugString": "stationtrack:85SIB_3"
+        "id": 466,
+        "code": "3",
+        "debugString": "stationtrack:85SIB_3"
       }
-    ]
+    ],
+    "debugString": "station:85SIB"
   },
   {
-    "ID": 467,
-    "Code": "85SKY",
-    "DebugString": "station:85SKY",
-    "NodeTracks": []
+    "id": 467,
+    "code": "85SKY",
+    "nodeTracks": [],
+    "debugString": "station:85SKY"
   },
   {
-    "ID": 468,
-    "Code": "85SLF",
-    "DebugString": "station:85SLF",
-    "NodeTracks": []
+    "id": 468,
+    "code": "85SLF",
+    "nodeTracks": [],
+    "debugString": "station:85SLF"
   },
   {
-    "ID": 469,
-    "Code": "85STAE",
-    "DebugString": "station:85STAE",
-    "NodeTracks": [
+    "id": 469,
+    "code": "85STAE",
+    "nodeTracks": [
       {
-        "ID": 470,
-        "Code": "1",
-        "DebugString": "stationtrack:85STAE_{StationTrack SID = 105}"
+        "id": 470,
+        "code": "1",
+        "debugString": "stationtrack:85STAE_{StationTrack SID = 105}"
       },
       {
-        "ID": 471,
-        "Code": "2",
-        "DebugString": "stationtrack:85STAE_{StationTrack SID = 103}"
+        "id": 471,
+        "code": "2",
+        "debugString": "stationtrack:85STAE_{StationTrack SID = 103}"
       },
       {
-        "ID": 472,
-        "Code": "3",
-        "DebugString": "stationtrack:85STAE_{StationTrack SID = 102}"
+        "id": 472,
+        "code": "3",
+        "debugString": "stationtrack:85STAE_{StationTrack SID = 102}"
       }
-    ]
+    ],
+    "debugString": "station:85STAE"
   },
   {
-    "ID": 473,
-    "Code": "85STET",
-    "DebugString": "station:85STET",
-    "NodeTracks": [
+    "id": 473,
+    "code": "85STET",
+    "nodeTracks": [
       {
-        "ID": 474,
-        "Code": "1",
-        "DebugString": "stationtrack:85STET_1"
+        "id": 474,
+        "code": "1",
+        "debugString": "stationtrack:85STET_1"
       },
       {
-        "ID": 475,
-        "Code": "2",
-        "DebugString": "stationtrack:85STET_2"
+        "id": 475,
+        "code": "2",
+        "debugString": "stationtrack:85STET_2"
       }
-    ]
+    ],
+    "debugString": "station:85STET"
   },
   {
-    "ID": 476,
-    "Code": "85STG",
-    "DebugString": "station:85STG",
-    "NodeTracks": []
+    "id": 476,
+    "code": "85STG",
+    "nodeTracks": [],
+    "debugString": "station:85STG"
   },
   {
-    "ID": 477,
-    "Code": "85STMR",
-    "DebugString": "station:85STMR",
-    "NodeTracks": [
+    "id": 477,
+    "code": "85STMR",
+    "nodeTracks": [
       {
-        "ID": 478,
-        "Code": "1",
-        "DebugString": "stationtrack:85STMR_{StationTrack SID = 106}"
+        "id": 478,
+        "code": "1",
+        "debugString": "stationtrack:85STMR_{StationTrack SID = 106}"
       }
-    ]
+    ],
+    "debugString": "station:85STMR"
   },
   {
-    "ID": 479,
-    "Code": "85TALR",
-    "DebugString": "station:85TALR",
-    "NodeTracks": []
+    "id": 479,
+    "code": "85TALR",
+    "nodeTracks": [],
+    "debugString": "station:85TALR"
   },
   {
-    "ID": 480,
-    "Code": "85TD",
-    "DebugString": "station:85TD",
-    "NodeTracks": []
+    "id": 480,
+    "code": "85TD",
+    "nodeTracks": [],
+    "debugString": "station:85TD"
   },
   {
-    "ID": 481,
-    "Code": "85TG",
-    "DebugString": "station:85TG",
-    "NodeTracks": []
+    "id": 481,
+    "code": "85TG",
+    "nodeTracks": [],
+    "debugString": "station:85TG"
   },
   {
-    "ID": 482,
-    "Code": "85TIEF",
-    "DebugString": "station:85TIEF",
-    "NodeTracks": []
+    "id": 482,
+    "code": "85TIEF",
+    "nodeTracks": [],
+    "debugString": "station:85TIEF"
   },
   {
-    "ID": 483,
-    "Code": "85TOEM",
-    "DebugString": "station:85TOEM",
-    "NodeTracks": []
+    "id": 483,
+    "code": "85TOEM",
+    "nodeTracks": [],
+    "debugString": "station:85TOEM"
   },
   {
-    "ID": 484,
-    "Code": "85TRIM",
-    "DebugString": "station:85TRIM",
-    "NodeTracks": []
+    "id": 484,
+    "code": "85TRIM",
+    "nodeTracks": [],
+    "debugString": "station:85TRIM"
   },
   {
-    "ID": 485,
-    "Code": "85TU",
-    "DebugString": "station:85TU",
-    "NodeTracks": []
+    "id": 485,
+    "code": "85TU",
+    "nodeTracks": [],
+    "debugString": "station:85TU"
   },
   {
-    "ID": 486,
-    "Code": "85TW",
-    "DebugString": "station:85TW",
-    "NodeTracks": [
+    "id": 486,
+    "code": "85TW",
+    "nodeTracks": [
       {
-        "ID": 487,
-        "Code": "1",
-        "DebugString": "stationtrack:85TW_{StationTrack SID = 108}"
+        "id": 487,
+        "code": "1",
+        "debugString": "stationtrack:85TW_{StationTrack SID = 108}"
       },
       {
-        "ID": 488,
-        "Code": "2",
-        "DebugString": "stationtrack:85TW_{StationTrack SID = 109}"
+        "id": 488,
+        "code": "2",
+        "debugString": "stationtrack:85TW_{StationTrack SID = 109}"
       },
       {
-        "ID": 489,
-        "Code": "3",
-        "DebugString": "stationtrack:85TW_{StationTrack SID = 110}"
+        "id": 489,
+        "code": "3",
+        "debugString": "stationtrack:85TW_{StationTrack SID = 110}"
       },
       {
-        "ID": 490,
-        "Code": "4",
-        "DebugString": "stationtrack:85TW_{StationTrack SID = 112}"
+        "id": 490,
+        "code": "4",
+        "debugString": "stationtrack:85TW_{StationTrack SID = 112}"
       },
       {
-        "ID": 491,
-        "Code": "5",
-        "DebugString": "stationtrack:85TW_{StationTrack SID = 113}"
+        "id": 491,
+        "code": "5",
+        "debugString": "stationtrack:85TW_{StationTrack SID = 113}"
       },
       {
-        "ID": 492,
-        "Code": "6",
-        "DebugString": "stationtrack:85TW_{StationTrack SID = 115}"
+        "id": 492,
+        "code": "6",
+        "debugString": "stationtrack:85TW_{StationTrack SID = 115}"
       },
       {
-        "ID": 493,
-        "Code": "7",
-        "DebugString": "stationtrack:85TW_{StationTrack SID = 116}"
+        "id": 493,
+        "code": "7",
+        "debugString": "stationtrack:85TW_{StationTrack SID = 116}"
       },
       {
-        "ID": 494,
-        "Code": "8",
-        "DebugString": "stationtrack:85TW_{StationTrack SID = 117}"
+        "id": 494,
+        "code": "8",
+        "debugString": "stationtrack:85TW_{StationTrack SID = 117}"
       }
-    ]
+    ],
+    "debugString": "station:85TW"
   },
   {
-    "ID": 495,
-    "Code": "85TWNO",
-    "DebugString": "station:85TWNO",
-    "NodeTracks": []
+    "id": 495,
+    "code": "85TWNO",
+    "nodeTracks": [],
+    "debugString": "station:85TWNO"
   },
   {
-    "ID": 496,
-    "Code": "85UER",
-    "DebugString": "station:85UER",
-    "NodeTracks": [
+    "id": 496,
+    "code": "85UER",
+    "nodeTracks": [
       {
-        "ID": 497,
-        "Code": "1",
-        "DebugString": "stationtrack:85UER_{StationTrack SID = 118}"
+        "id": 497,
+        "code": "1",
+        "debugString": "stationtrack:85UER_{StationTrack SID = 118}"
       },
       {
-        "ID": 498,
-        "Code": "2",
-        "DebugString": "stationtrack:85UER_{StationTrack SID = 120}"
+        "id": 498,
+        "code": "2",
+        "debugString": "stationtrack:85UER_{StationTrack SID = 120}"
       }
-    ]
+    ],
+    "debugString": "station:85UER"
   },
   {
-    "ID": 499,
-    "Code": "85UET",
-    "DebugString": "station:85UET",
-    "NodeTracks": [
+    "id": 499,
+    "code": "85UET",
+    "nodeTracks": [
       {
-        "ID": 500,
-        "Code": "1",
-        "DebugString": "stationtrack:85UET_1"
+        "id": 500,
+        "code": "1",
+        "debugString": "stationtrack:85UET_1"
       },
       {
-        "ID": 501,
-        "Code": "2",
-        "DebugString": "stationtrack:85UET_2"
+        "id": 501,
+        "code": "2",
+        "debugString": "stationtrack:85UET_2"
       },
       {
-        "ID": 502,
-        "Code": "3",
-        "DebugString": "stationtrack:85UET_3"
+        "id": 502,
+        "code": "3",
+        "debugString": "stationtrack:85UET_3"
       }
-    ]
+    ],
+    "debugString": "station:85UET"
   },
   {
-    "ID": 503,
-    "Code": "85UNT",
-    "DebugString": "station:85UNT",
-    "NodeTracks": []
+    "id": 503,
+    "code": "85UNT",
+    "nodeTracks": [],
+    "debugString": "station:85UNT"
   },
   {
-    "ID": 504,
-    "Code": "85URD",
-    "DebugString": "station:85URD",
-    "NodeTracks": []
+    "id": 504,
+    "code": "85URD",
+    "nodeTracks": [],
+    "debugString": "station:85URD"
   },
   {
-    "ID": 505,
-    "Code": "85UST",
-    "DebugString": "station:85UST",
-    "NodeTracks": [
+    "id": 505,
+    "code": "85UST",
+    "nodeTracks": [
       {
-        "ID": 506,
-        "Code": "1",
-        "DebugString": "stationtrack:85UST_1"
+        "id": 506,
+        "code": "1",
+        "debugString": "stationtrack:85UST_1"
       },
       {
-        "ID": 507,
-        "Code": "2",
-        "DebugString": "stationtrack:85UST_2"
+        "id": 507,
+        "code": "2",
+        "debugString": "stationtrack:85UST_2"
       },
       {
-        "ID": 508,
-        "Code": "3",
-        "DebugString": "stationtrack:85UST_3"
+        "id": 508,
+        "code": "3",
+        "debugString": "stationtrack:85UST_3"
       }
-    ]
+    ],
+    "debugString": "station:85UST"
   },
   {
-    "ID": 509,
-    "Code": "85W",
-    "DebugString": "station:85W",
-    "NodeTracks": [
+    "id": 509,
+    "code": "85W",
+    "nodeTracks": [
       {
-        "ID": 510,
-        "Code": "1",
-        "DebugString": "stationtrack:85W_{StationTrack SID = 121}"
+        "id": 510,
+        "code": "1",
+        "debugString": "stationtrack:85W_{StationTrack SID = 121}"
       },
       {
-        "ID": 511,
-        "Code": "2",
-        "DebugString": "stationtrack:85W_{StationTrack SID = 122}"
+        "id": 511,
+        "code": "2",
+        "debugString": "stationtrack:85W_{StationTrack SID = 122}"
       },
       {
-        "ID": 512,
-        "Code": "3",
-        "DebugString": "stationtrack:85W_{StationTrack SID = 123}"
+        "id": 512,
+        "code": "3",
+        "debugString": "stationtrack:85W_{StationTrack SID = 123}"
       },
       {
-        "ID": 513,
-        "Code": "4",
-        "DebugString": "stationtrack:85W_{StationTrack SID = 124}"
+        "id": 513,
+        "code": "4",
+        "debugString": "stationtrack:85W_{StationTrack SID = 124}"
       },
       {
-        "ID": 514,
-        "Code": "5",
-        "DebugString": "stationtrack:85W_{StationTrack SID = 125}"
+        "id": 514,
+        "code": "5",
+        "debugString": "stationtrack:85W_{StationTrack SID = 125}"
       },
       {
-        "ID": 515,
-        "Code": "6",
-        "DebugString": "stationtrack:85W_{StationTrack SID = 126}"
+        "id": 515,
+        "code": "6",
+        "debugString": "stationtrack:85W_{StationTrack SID = 126}"
       },
       {
-        "ID": 516,
-        "Code": "7",
-        "DebugString": "stationtrack:85W_{StationTrack SID = 127}"
+        "id": 516,
+        "code": "7",
+        "debugString": "stationtrack:85W_{StationTrack SID = 127}"
       },
       {
-        "ID": 517,
-        "Code": "8",
-        "DebugString": "stationtrack:85W_{StationTrack SID = 128}"
+        "id": 517,
+        "code": "8",
+        "debugString": "stationtrack:85W_{StationTrack SID = 128}"
       },
       {
-        "ID": 518,
-        "Code": "9",
-        "DebugString": "stationtrack:85W_{StationTrack SID = 195}"
+        "id": 518,
+        "code": "9",
+        "debugString": "stationtrack:85W_{StationTrack SID = 195}"
       }
-    ]
+    ],
+    "debugString": "station:85W"
   },
   {
-    "ID": 519,
-    "Code": "85WAE",
-    "DebugString": "station:85WAE",
-    "NodeTracks": [
+    "id": 519,
+    "code": "85WAE",
+    "nodeTracks": [
       {
-        "ID": 520,
-        "Code": "4",
-        "DebugString": "stationtrack:85WAE_{StationTrack SID = 129}"
+        "id": 520,
+        "code": "4",
+        "debugString": "stationtrack:85WAE_{StationTrack SID = 129}"
       },
       {
-        "ID": 521,
-        "Code": "3",
-        "DebugString": "stationtrack:85WAE_{StationTrack SID = 130}"
+        "id": 521,
+        "code": "3",
+        "debugString": "stationtrack:85WAE_{StationTrack SID = 130}"
       },
       {
-        "ID": 522,
-        "Code": "2",
-        "DebugString": "stationtrack:85WAE_{StationTrack SID = 132}"
+        "id": 522,
+        "code": "2",
+        "debugString": "stationtrack:85WAE_{StationTrack SID = 132}"
       },
       {
-        "ID": 523,
-        "Code": "1",
-        "DebugString": "stationtrack:85WAE_{StationTrack SID = 133}"
+        "id": 523,
+        "code": "1",
+        "debugString": "stationtrack:85WAE_{StationTrack SID = 133}"
       }
-    ]
+    ],
+    "debugString": "station:85WAE"
   },
   {
-    "ID": 524,
-    "Code": "85WAL",
-    "DebugString": "station:85WAL",
-    "NodeTracks": []
+    "id": 524,
+    "code": "85WAL",
+    "nodeTracks": [],
+    "debugString": "station:85WAL"
   },
   {
-    "ID": 525,
-    "Code": "85WD",
-    "DebugString": "station:85WD",
-    "NodeTracks": []
+    "id": 525,
+    "code": "85WD",
+    "nodeTracks": [],
+    "debugString": "station:85WD"
   },
   {
-    "ID": 526,
-    "Code": "85WE",
-    "DebugString": "station:85WE",
-    "NodeTracks": [
+    "id": 526,
+    "code": "85WE",
+    "nodeTracks": [
       {
-        "ID": 527,
-        "Code": "1",
-        "DebugString": "stationtrack:85WE_1"
+        "id": 527,
+        "code": "1",
+        "debugString": "stationtrack:85WE_1"
       },
       {
-        "ID": 528,
-        "Code": "2",
-        "DebugString": "stationtrack:85WE_2"
+        "id": 528,
+        "code": "2",
+        "debugString": "stationtrack:85WE_2"
       },
       {
-        "ID": 529,
-        "Code": "3",
-        "DebugString": "stationtrack:85WE_3"
+        "id": 529,
+        "code": "3",
+        "debugString": "stationtrack:85WE_3"
       },
       {
-        "ID": 530,
-        "Code": "4",
-        "DebugString": "stationtrack:85WE_4"
+        "id": 530,
+        "code": "4",
+        "debugString": "stationtrack:85WE_4"
       }
-    ]
+    ],
+    "debugString": "station:85WE"
   },
   {
-    "ID": 531,
-    "Code": "85WGR",
-    "DebugString": "station:85WGR",
-    "NodeTracks": [
+    "id": 531,
+    "code": "85WGR",
+    "nodeTracks": [
       {
-        "ID": 532,
-        "Code": "1",
-        "DebugString": "stationtrack:85WGR_1"
+        "id": 532,
+        "code": "1",
+        "debugString": "stationtrack:85WGR_1"
       },
       {
-        "ID": 533,
-        "Code": "2",
-        "DebugString": "stationtrack:85WGR_2"
+        "id": 533,
+        "code": "2",
+        "debugString": "stationtrack:85WGR_2"
       },
       {
-        "ID": 534,
-        "Code": "3",
-        "DebugString": "stationtrack:85WGR_3"
+        "id": 534,
+        "code": "3",
+        "debugString": "stationtrack:85WGR_3"
       },
       {
-        "ID": 535,
-        "Code": "4",
-        "DebugString": "stationtrack:85WGR_4"
+        "id": 535,
+        "code": "4",
+        "debugString": "stationtrack:85WGR_4"
       }
-    ]
+    ],
+    "debugString": "station:85WGR"
   },
   {
-    "ID": 536,
-    "Code": "85WILA",
-    "DebugString": "station:85WILA",
-    "NodeTracks": []
+    "id": 536,
+    "code": "85WILA",
+    "nodeTracks": [],
+    "debugString": "station:85WILA"
   },
   {
-    "ID": 537,
-    "Code": "85WIN",
-    "DebugString": "station:85WIN",
-    "NodeTracks": [
+    "id": 537,
+    "code": "85WIN",
+    "nodeTracks": [
       {
-        "ID": 538,
-        "Code": "1",
-        "DebugString": "stationtrack:85WIN_1"
+        "id": 538,
+        "code": "1",
+        "debugString": "stationtrack:85WIN_1"
       },
       {
-        "ID": 539,
-        "Code": "2",
-        "DebugString": "stationtrack:85WIN_2"
+        "id": 539,
+        "code": "2",
+        "debugString": "stationtrack:85WIN_2"
       }
-    ]
+    ],
+    "debugString": "station:85WIN"
   },
   {
-    "ID": 540,
-    "Code": "85WKM",
-    "DebugString": "station:85WKM",
-    "NodeTracks": []
+    "id": 540,
+    "code": "85WKM",
+    "nodeTracks": [],
+    "debugString": "station:85WKM"
   },
   {
-    "ID": 541,
-    "Code": "85WL",
-    "DebugString": "station:85WL",
-    "NodeTracks": [
+    "id": 541,
+    "code": "85WL",
+    "nodeTracks": [
       {
-        "ID": 542,
-        "Code": "5",
-        "DebugString": "stationtrack:85WL_{StationTrack SID = 140}"
+        "id": 542,
+        "code": "5",
+        "debugString": "stationtrack:85WL_{StationTrack SID = 140}"
       },
       {
-        "ID": 543,
-        "Code": "4",
-        "DebugString": "stationtrack:85WL_{StationTrack SID = 139}"
+        "id": 543,
+        "code": "4",
+        "debugString": "stationtrack:85WL_{StationTrack SID = 139}"
       },
       {
-        "ID": 544,
-        "Code": "3",
-        "DebugString": "stationtrack:85WL_{StationTrack SID = 138}"
+        "id": 544,
+        "code": "3",
+        "debugString": "stationtrack:85WL_{StationTrack SID = 138}"
       },
       {
-        "ID": 545,
-        "Code": "2",
-        "DebugString": "stationtrack:85WL_{StationTrack SID = 137}"
+        "id": 545,
+        "code": "2",
+        "debugString": "stationtrack:85WL_{StationTrack SID = 137}"
       },
       {
-        "ID": 546,
-        "Code": "1",
-        "DebugString": "stationtrack:85WL_{StationTrack SID = 136}"
+        "id": 546,
+        "code": "1",
+        "debugString": "stationtrack:85WL_{StationTrack SID = 136}"
       },
       {
-        "ID": 547,
-        "Code": "0",
-        "DebugString": "stationtrack:85WL_{StationTrack SID = 135}"
+        "id": 547,
+        "code": "0",
+        "debugString": "stationtrack:85WL_{StationTrack SID = 135}"
       }
-    ]
+    ],
+    "debugString": "station:85WL"
   },
   {
-    "ID": 548,
-    "Code": "85WN",
-    "DebugString": "station:85WN",
-    "NodeTracks": []
+    "id": 548,
+    "code": "85WN",
+    "nodeTracks": [],
+    "debugString": "station:85WN"
   },
   {
-    "ID": 549,
-    "Code": "85WS",
-    "DebugString": "station:85WS",
-    "NodeTracks": [
+    "id": 549,
+    "code": "85WS",
+    "nodeTracks": [
       {
-        "ID": 550,
-        "Code": "3",
-        "DebugString": "stationtrack:85WS_{StationTrack SID = 141}"
+        "id": 550,
+        "code": "3",
+        "debugString": "stationtrack:85WS_{StationTrack SID = 141}"
       },
       {
-        "ID": 551,
-        "Code": "4",
-        "DebugString": "stationtrack:85WS_{StationTrack SID = 143}"
+        "id": 551,
+        "code": "4",
+        "debugString": "stationtrack:85WS_{StationTrack SID = 143}"
       },
       {
-        "ID": 552,
-        "Code": "5",
-        "DebugString": "stationtrack:85WS_{StationTrack SID = 144}"
+        "id": 552,
+        "code": "5",
+        "debugString": "stationtrack:85WS_{StationTrack SID = 144}"
       }
-    ]
+    ],
+    "debugString": "station:85WS"
   },
   {
-    "ID": 553,
-    "Code": "85WSEE",
-    "DebugString": "station:85WSEE",
-    "NodeTracks": [
+    "id": 553,
+    "code": "85WSEE",
+    "nodeTracks": [
       {
-        "ID": 554,
-        "Code": "1",
-        "DebugString": "stationtrack:85WSEE_1"
+        "id": 554,
+        "code": "1",
+        "debugString": "stationtrack:85WSEE_1"
       },
       {
-        "ID": 555,
-        "Code": "2",
-        "DebugString": "stationtrack:85WSEE_2"
+        "id": 555,
+        "code": "2",
+        "debugString": "stationtrack:85WSEE_2"
       }
-    ]
+    ],
+    "debugString": "station:85WSEE"
   },
   {
-    "ID": 556,
-    "Code": "85WSPH",
-    "DebugString": "station:85WSPH",
-    "NodeTracks": [
+    "id": 556,
+    "code": "85WSPH",
+    "nodeTracks": [
       {
-        "ID": 557,
-        "Code": "1",
-        "DebugString": "stationtrack:85WSPH_1"
+        "id": 557,
+        "code": "1",
+        "debugString": "stationtrack:85WSPH_1"
       },
       {
-        "ID": 558,
-        "Code": "2",
-        "DebugString": "stationtrack:85WSPH_2"
+        "id": 558,
+        "code": "2",
+        "debugString": "stationtrack:85WSPH_2"
       },
       {
-        "ID": 559,
-        "Code": "3",
-        "DebugString": "stationtrack:85WSPH_3"
+        "id": 559,
+        "code": "3",
+        "debugString": "stationtrack:85WSPH_3"
       }
-    ]
+    ],
+    "debugString": "station:85WSPH"
   },
   {
-    "ID": 560,
-    "Code": "85WTOE",
-    "DebugString": "station:85WTOE",
-    "NodeTracks": [
+    "id": 560,
+    "code": "85WTOE",
+    "nodeTracks": [
       {
-        "ID": 561,
-        "Code": "1",
-        "DebugString": "stationtrack:85WTOE_{StationTrack SID = 147}"
+        "id": 561,
+        "code": "1",
+        "debugString": "stationtrack:85WTOE_{StationTrack SID = 147}"
       },
       {
-        "ID": 562,
-        "Code": "2",
-        "DebugString": "stationtrack:85WTOE_{StationTrack SID = 149}"
+        "id": 562,
+        "code": "2",
+        "debugString": "stationtrack:85WTOE_{StationTrack SID = 149}"
       }
-    ]
+    ],
+    "debugString": "station:85WTOE"
   },
   {
-    "ID": 563,
-    "Code": "85WUER",
-    "DebugString": "station:85WUER",
-    "NodeTracks": [
+    "id": 563,
+    "code": "85WUER",
+    "nodeTracks": [
       {
-        "ID": 564,
-        "Code": "1",
-        "DebugString": "stationtrack:85WUER_1"
+        "id": 564,
+        "code": "1",
+        "debugString": "stationtrack:85WUER_1"
       },
       {
-        "ID": 565,
-        "Code": "2",
-        "DebugString": "stationtrack:85WUER_2"
+        "id": 565,
+        "code": "2",
+        "debugString": "stationtrack:85WUER_2"
       }
-    ]
+    ],
+    "debugString": "station:85WUER"
   },
   {
-    "ID": 566,
-    "Code": "85WWAL",
-    "DebugString": "station:85WWAL",
-    "NodeTracks": []
+    "id": 566,
+    "code": "85WWAL",
+    "nodeTracks": [],
+    "debugString": "station:85WWAL"
   },
   {
-    "ID": 567,
-    "Code": "85WWE",
-    "DebugString": "station:85WWE",
-    "NodeTracks": []
+    "id": 567,
+    "code": "85WWE",
+    "nodeTracks": [],
+    "debugString": "station:85WWE"
   },
   {
-    "ID": 568,
-    "Code": "85WWUE",
-    "DebugString": "station:85WWUE",
-    "NodeTracks": []
+    "id": 568,
+    "code": "85WWUE",
+    "nodeTracks": [],
+    "debugString": "station:85WWUE"
   },
   {
-    "ID": 569,
-    "Code": "85WZ",
-    "DebugString": "station:85WZ",
-    "NodeTracks": [
+    "id": 569,
+    "code": "85WZ",
+    "nodeTracks": [
       {
-        "ID": 570,
-        "Code": "1",
-        "DebugString": "stationtrack:85WZ_{StationTrack SID = 151}"
+        "id": 570,
+        "code": "1",
+        "debugString": "stationtrack:85WZ_{StationTrack SID = 151}"
       },
       {
-        "ID": 571,
-        "Code": "2",
-        "DebugString": "stationtrack:85WZ_{StationTrack SID = 152}"
+        "id": 571,
+        "code": "2",
+        "debugString": "stationtrack:85WZ_{StationTrack SID = 152}"
       },
       {
-        "ID": 572,
-        "Code": "3",
-        "DebugString": "stationtrack:85WZ_{StationTrack SID = 154}"
+        "id": 572,
+        "code": "3",
+        "debugString": "stationtrack:85WZ_{StationTrack SID = 154}"
       },
       {
-        "ID": 573,
-        "Code": "4",
-        "DebugString": "stationtrack:85WZ_{StationTrack SID = 155}"
+        "id": 573,
+        "code": "4",
+        "debugString": "stationtrack:85WZ_{StationTrack SID = 155}"
       },
       {
-        "ID": 574,
-        "Code": "5",
-        "DebugString": "stationtrack:85WZ_{StationTrack SID = 157}"
+        "id": 574,
+        "code": "5",
+        "debugString": "stationtrack:85WZ_{StationTrack SID = 157}"
       }
-    ]
+    ],
+    "debugString": "station:85WZ"
   },
   {
-    "ID": 575,
-    "Code": "85ZAF",
-    "DebugString": "station:85ZAF",
-    "NodeTracks": [
+    "id": 575,
+    "code": "85ZAF",
+    "nodeTracks": [
       {
-        "ID": 576,
-        "Code": "1",
-        "DebugString": "stationtrack:85ZAF_1"
+        "id": 576,
+        "code": "1",
+        "debugString": "stationtrack:85ZAF_1"
       },
       {
-        "ID": 577,
-        "Code": "2",
-        "DebugString": "stationtrack:85ZAF_2"
+        "id": 577,
+        "code": "2",
+        "debugString": "stationtrack:85ZAF_2"
       }
-    ]
+    ],
+    "debugString": "station:85ZAF"
   },
   {
-    "ID": 578,
-    "Code": "85ZAS",
-    "DebugString": "station:85ZAS",
-    "NodeTracks": [
+    "id": 578,
+    "code": "85ZAS",
+    "nodeTracks": [
       {
-        "ID": 579,
-        "Code": "7",
-        "DebugString": "stationtrack:85ZAS_{StationTrack SID = 166}"
+        "id": 579,
+        "code": "7",
+        "debugString": "stationtrack:85ZAS_{StationTrack SID = 166}"
       },
       {
-        "ID": 580,
-        "Code": "6",
-        "DebugString": "stationtrack:85ZAS_{StationTrack SID = 164}"
+        "id": 580,
+        "code": "6",
+        "debugString": "stationtrack:85ZAS_{StationTrack SID = 164}"
       },
       {
-        "ID": 581,
-        "Code": "5",
-        "DebugString": "stationtrack:85ZAS_{StationTrack SID = 163}"
+        "id": 581,
+        "code": "5",
+        "debugString": "stationtrack:85ZAS_{StationTrack SID = 163}"
       },
       {
-        "ID": 582,
-        "Code": "4",
-        "DebugString": "stationtrack:85ZAS_{StationTrack SID = 162}"
+        "id": 582,
+        "code": "4",
+        "debugString": "stationtrack:85ZAS_{StationTrack SID = 162}"
       },
       {
-        "ID": 583,
-        "Code": "3",
-        "DebugString": "stationtrack:85ZAS_{StationTrack SID = 160}"
+        "id": 583,
+        "code": "3",
+        "debugString": "stationtrack:85ZAS_{StationTrack SID = 160}"
       },
       {
-        "ID": 584,
-        "Code": "2",
-        "DebugString": "stationtrack:85ZAS_{StationTrack SID = 159}"
+        "id": 584,
+        "code": "2",
+        "debugString": "stationtrack:85ZAS_{StationTrack SID = 159}"
       }
-    ]
+    ],
+    "debugString": "station:85ZAS"
   },
   {
-    "ID": 585,
-    "Code": "85ZAU",
-    "DebugString": "station:85ZAU",
-    "NodeTracks": []
+    "id": 585,
+    "code": "85ZAU",
+    "nodeTracks": [],
+    "debugString": "station:85ZAU"
   },
   {
-    "ID": 586,
-    "Code": "85ZB",
-    "DebugString": "station:85ZB",
-    "NodeTracks": [
+    "id": 586,
+    "code": "85ZB",
+    "nodeTracks": [
       {
-        "ID": 587,
-        "Code": "12",
-        "DebugString": "stationtrack:85ZB_{StationTrack SID = 167}"
+        "id": 587,
+        "code": "12",
+        "debugString": "stationtrack:85ZB_{StationTrack SID = 167}"
       },
       {
-        "ID": 588,
-        "Code": "11",
-        "DebugString": "stationtrack:85ZB_{StationTrack SID = 168}"
+        "id": 588,
+        "code": "11",
+        "debugString": "stationtrack:85ZB_{StationTrack SID = 168}"
       },
       {
-        "ID": 589,
-        "Code": "10",
-        "DebugString": "stationtrack:85ZB_{StationTrack SID = 169}"
+        "id": 589,
+        "code": "10",
+        "debugString": "stationtrack:85ZB_{StationTrack SID = 169}"
       },
       {
-        "ID": 590,
-        "Code": "9",
-        "DebugString": "stationtrack:85ZB_{StationTrack SID = 171}"
+        "id": 590,
+        "code": "9",
+        "debugString": "stationtrack:85ZB_{StationTrack SID = 171}"
       },
       {
-        "ID": 591,
-        "Code": "8",
-        "DebugString": "stationtrack:85ZB_{StationTrack SID = 172}"
+        "id": 591,
+        "code": "8",
+        "debugString": "stationtrack:85ZB_{StationTrack SID = 172}"
       },
       {
-        "ID": 592,
-        "Code": "7",
-        "DebugString": "stationtrack:85ZB_{StationTrack SID = 174}"
+        "id": 592,
+        "code": "7",
+        "debugString": "stationtrack:85ZB_{StationTrack SID = 174}"
       },
       {
-        "ID": 593,
-        "Code": "6",
-        "DebugString": "stationtrack:85ZB_{StationTrack SID = 175}"
+        "id": 593,
+        "code": "6",
+        "debugString": "stationtrack:85ZB_{StationTrack SID = 175}"
       },
       {
-        "ID": 594,
-        "Code": "5",
-        "DebugString": "stationtrack:85ZB_{StationTrack SID = 177}"
+        "id": 594,
+        "code": "5",
+        "debugString": "stationtrack:85ZB_{StationTrack SID = 177}"
       },
       {
-        "ID": 595,
-        "Code": "4",
-        "DebugString": "stationtrack:85ZB_{StationTrack SID = 178}"
+        "id": 595,
+        "code": "4",
+        "debugString": "stationtrack:85ZB_{StationTrack SID = 178}"
       },
       {
-        "ID": 596,
-        "Code": "3",
-        "DebugString": "stationtrack:85ZB_{StationTrack SID = 179}"
+        "id": 596,
+        "code": "3",
+        "debugString": "stationtrack:85ZB_{StationTrack SID = 179}"
       },
       {
-        "ID": 597,
-        "Code": "2",
-        "DebugString": "stationtrack:85ZB_{StationTrack SID = 180}"
+        "id": 597,
+        "code": "2",
+        "debugString": "stationtrack:85ZB_{StationTrack SID = 180}"
       },
       {
-        "ID": 598,
-        "Code": "1",
-        "DebugString": "stationtrack:85ZB_{StationTrack SID = 196}"
+        "id": 598,
+        "code": "1",
+        "debugString": "stationtrack:85ZB_{StationTrack SID = 196}"
       }
-    ]
+    ],
+    "debugString": "station:85ZB"
   },
   {
-    "ID": 599,
-    "Code": "85ZEN",
-    "DebugString": "station:85ZEN",
-    "NodeTracks": [
+    "id": 599,
+    "code": "85ZEN",
+    "nodeTracks": [
       {
-        "ID": 600,
-        "Code": "1",
-        "DebugString": "stationtrack:85ZEN_1"
+        "id": 600,
+        "code": "1",
+        "debugString": "stationtrack:85ZEN_1"
       },
       {
-        "ID": 601,
-        "Code": "2",
-        "DebugString": "stationtrack:85ZEN_2"
+        "id": 601,
+        "code": "2",
+        "debugString": "stationtrack:85ZEN_2"
       }
-    ]
+    ],
+    "debugString": "station:85ZEN"
   },
   {
-    "ID": 602,
-    "Code": "85ZFH",
-    "DebugString": "station:85ZFH",
-    "NodeTracks": [
+    "id": 602,
+    "code": "85ZFH",
+    "nodeTracks": [
       {
-        "ID": 603,
-        "Code": "1",
-        "DebugString": "stationtrack:85ZFH_1"
+        "id": 603,
+        "code": "1",
+        "debugString": "stationtrack:85ZFH_1"
       },
       {
-        "ID": 604,
-        "Code": "2",
-        "DebugString": "stationtrack:85ZFH_2"
+        "id": 604,
+        "code": "2",
+        "debugString": "stationtrack:85ZFH_2"
       },
       {
-        "ID": 605,
-        "Code": "3",
-        "DebugString": "stationtrack:85ZFH_3"
+        "id": 605,
+        "code": "3",
+        "debugString": "stationtrack:85ZFH_3"
       },
       {
-        "ID": 606,
-        "Code": "4",
-        "DebugString": "stationtrack:85ZFH_4"
+        "id": 606,
+        "code": "4",
+        "debugString": "stationtrack:85ZFH_4"
       }
-    ]
+    ],
+    "debugString": "station:85ZFH"
   },
   {
-    "ID": 607,
-    "Code": "85ZHDB",
-    "DebugString": "station:85ZHDB",
-    "NodeTracks": [
+    "id": 607,
+    "code": "85ZHDB",
+    "nodeTracks": [
       {
-        "ID": 608,
-        "Code": "1",
-        "DebugString": "stationtrack:85ZHDB_{StationTrack SID = 182}"
+        "id": 608,
+        "code": "1",
+        "debugString": "stationtrack:85ZHDB_{StationTrack SID = 182}"
       },
       {
-        "ID": 609,
-        "Code": "2",
-        "DebugString": "stationtrack:85ZHDB_{StationTrack SID = 183}"
+        "id": 609,
+        "code": "2",
+        "debugString": "stationtrack:85ZHDB_{StationTrack SID = 183}"
       },
       {
-        "ID": 610,
-        "Code": "3",
-        "DebugString": "stationtrack:85ZHDB_{StationTrack SID = 185}"
+        "id": 610,
+        "code": "3",
+        "debugString": "stationtrack:85ZHDB_{StationTrack SID = 185}"
       },
       {
-        "ID": 611,
-        "Code": "4",
-        "DebugString": "stationtrack:85ZHDB_{StationTrack SID = 186}"
+        "id": 611,
+        "code": "4",
+        "debugString": "stationtrack:85ZHDB_{StationTrack SID = 186}"
       },
       {
-        "ID": 612,
-        "Code": "5FV",
-        "DebugString": "stationtrack:85ZHDB_{StationTrack SID = 188}"
+        "id": 612,
+        "code": "5FV",
+        "debugString": "stationtrack:85ZHDB_{StationTrack SID = 188}"
       },
       {
-        "ID": 613,
-        "Code": "6FV",
-        "DebugString": "stationtrack:85ZHDB_{StationTrack SID = 189}"
+        "id": 613,
+        "code": "6FV",
+        "debugString": "stationtrack:85ZHDB_{StationTrack SID = 189}"
       }
-    ]
+    ],
+    "debugString": "station:85ZHDB"
   },
   {
-    "ID": 614,
-    "Code": "85ZHDW",
-    "DebugString": "station:85ZHDW",
-    "NodeTracks": []
+    "id": 614,
+    "code": "85ZHDW",
+    "nodeTracks": [],
+    "debugString": "station:85ZHDW"
   },
   {
-    "ID": 615,
-    "Code": "85ZIZS",
-    "DebugString": "station:85ZIZS",
-    "NodeTracks": []
+    "id": 615,
+    "code": "85ZIZS",
+    "nodeTracks": [],
+    "debugString": "station:85ZIZS"
   },
   {
-    "ID": 616,
-    "Code": "85ZK",
-    "DebugString": "station:85ZK",
-    "NodeTracks": [
+    "id": 616,
+    "code": "85ZK",
+    "nodeTracks": [
       {
-        "ID": 617,
-        "Code": "1",
-        "DebugString": "stationtrack:85ZK_1"
+        "id": 617,
+        "code": "1",
+        "debugString": "stationtrack:85ZK_1"
       },
       {
-        "ID": 618,
-        "Code": "2",
-        "DebugString": "stationtrack:85ZK_2"
+        "id": 618,
+        "code": "2",
+        "debugString": "stationtrack:85ZK_2"
       }
-    ]
+    ],
+    "debugString": "station:85ZK"
   },
   {
-    "ID": 619,
-    "Code": "85ZKOL",
-    "DebugString": "station:85ZKOL",
-    "NodeTracks": []
+    "id": 619,
+    "code": "85ZKOL",
+    "nodeTracks": [],
+    "debugString": "station:85ZKOL"
   },
   {
-    "ID": 620,
-    "Code": "85ZLST",
-    "DebugString": "station:85ZLST",
-    "NodeTracks": []
+    "id": 620,
+    "code": "85ZLST",
+    "nodeTracks": [],
+    "debugString": "station:85ZLST"
   },
   {
-    "ID": 621,
-    "Code": "85ZMUS",
-    "DebugString": "station:85ZMUS",
-    "NodeTracks": [
+    "id": 621,
+    "code": "85ZMUS",
+    "nodeTracks": [
       {
-        "ID": 622,
-        "Code": "24",
-        "DebugString": "stationtrack:85ZMUS_{StationTrack SID = 190}"
+        "id": 622,
+        "code": "24",
+        "debugString": "stationtrack:85ZMUS_{StationTrack SID = 190}"
       },
       {
-        "ID": 623,
-        "Code": "23",
-        "DebugString": "stationtrack:85ZMUS_{StationTrack SID = 192}"
+        "id": 623,
+        "code": "23",
+        "debugString": "stationtrack:85ZMUS_{StationTrack SID = 192}"
       },
       {
-        "ID": 624,
-        "Code": "22",
-        "DebugString": "stationtrack:85ZMUS_{StationTrack SID = 193}"
+        "id": 624,
+        "code": "22",
+        "debugString": "stationtrack:85ZMUS_{StationTrack SID = 193}"
       },
       {
-        "ID": 625,
-        "Code": "21",
-        "DebugString": "stationtrack:85ZMUS_{StationTrack SID = 197}"
+        "id": 625,
+        "code": "21",
+        "debugString": "stationtrack:85ZMUS_{StationTrack SID = 197}"
       }
-    ]
+    ],
+    "debugString": "station:85ZMUS"
   },
   {
-    "ID": 626,
-    "Code": "85ZOER",
-    "DebugString": "station:85ZOER",
-    "NodeTracks": [
+    "id": 626,
+    "code": "85ZOER",
+    "nodeTracks": [
       {
-        "ID": 627,
-        "Code": "6",
-        "DebugString": "stationtrack:85ZOER_{StationTrack SID = 206}"
+        "id": 627,
+        "code": "6",
+        "debugString": "stationtrack:85ZOER_{StationTrack SID = 206}"
       },
       {
-        "ID": 628,
-        "Code": "5",
-        "DebugString": "stationtrack:85ZOER_{StationTrack SID = 205}"
+        "id": 628,
+        "code": "5",
+        "debugString": "stationtrack:85ZOER_{StationTrack SID = 205}"
       },
       {
-        "ID": 629,
-        "Code": "4",
-        "DebugString": "stationtrack:85ZOER_{StationTrack SID = 203}"
+        "id": 629,
+        "code": "4",
+        "debugString": "stationtrack:85ZOER_{StationTrack SID = 203}"
       },
       {
-        "ID": 630,
-        "Code": "3",
-        "DebugString": "stationtrack:85ZOER_{StationTrack SID = 202}"
+        "id": 630,
+        "code": "3",
+        "debugString": "stationtrack:85ZOER_{StationTrack SID = 202}"
       },
       {
-        "ID": 631,
-        "Code": "2",
-        "DebugString": "stationtrack:85ZOER_{StationTrack SID = 200}"
+        "id": 631,
+        "code": "2",
+        "debugString": "stationtrack:85ZOER_{StationTrack SID = 200}"
       },
       {
-        "ID": 632,
-        "Code": "1",
-        "DebugString": "stationtrack:85ZOER_{StationTrack SID = 199}"
+        "id": 632,
+        "code": "1",
+        "debugString": "stationtrack:85ZOER_{StationTrack SID = 199}"
       }
-    ]
+    ],
+    "debugString": "station:85ZOER"
   },
   {
-    "ID": 633,
-    "Code": "85ZSEB",
-    "DebugString": "station:85ZSEB",
-    "NodeTracks": [
+    "id": 633,
+    "code": "85ZSEB",
+    "nodeTracks": [
       {
-        "ID": 634,
-        "Code": "1",
-        "DebugString": "stationtrack:85ZSEB_1"
+        "id": 634,
+        "code": "1",
+        "debugString": "stationtrack:85ZSEB_1"
       },
       {
-        "ID": 635,
-        "Code": "2",
-        "DebugString": "stationtrack:85ZSEB_2"
+        "id": 635,
+        "code": "2",
+        "debugString": "stationtrack:85ZSEB_2"
       },
       {
-        "ID": 636,
-        "Code": "3",
-        "DebugString": "stationtrack:85ZSEB_3"
+        "id": 636,
+        "code": "3",
+        "debugString": "stationtrack:85ZSEB_3"
       },
       {
-        "ID": 637,
-        "Code": "4",
-        "DebugString": "stationtrack:85ZSEB_4"
+        "id": 637,
+        "code": "4",
+        "debugString": "stationtrack:85ZSEB_4"
       }
-    ]
+    ],
+    "debugString": "station:85ZSEB"
   },
   {
-    "ID": 638,
-    "Code": "85ZSTH",
-    "DebugString": "station:85ZSTH",
-    "NodeTracks": [
+    "id": 638,
+    "code": "85ZSTH",
+    "nodeTracks": [
       {
-        "ID": 639,
-        "Code": "3",
-        "DebugString": "stationtrack:85ZSTH_{StationTrack SID = 212}"
+        "id": 639,
+        "code": "3",
+        "debugString": "stationtrack:85ZSTH_{StationTrack SID = 212}"
       },
       {
-        "ID": 640,
-        "Code": "2",
-        "DebugString": "stationtrack:85ZSTH_{StationTrack SID = 210}"
+        "id": 640,
+        "code": "2",
+        "debugString": "stationtrack:85ZSTH_{StationTrack SID = 210}"
       },
       {
-        "ID": 641,
-        "Code": "1",
-        "DebugString": "stationtrack:85ZSTH_{StationTrack SID = 209}"
+        "id": 641,
+        "code": "1",
+        "debugString": "stationtrack:85ZSTH_{StationTrack SID = 209}"
       }
-    ]
+    ],
+    "debugString": "station:85ZSTH"
   },
   {
-    "ID": 642,
-    "Code": "85ZSTW1",
-    "DebugString": "station:85ZSTW1",
-    "NodeTracks": []
+    "id": 642,
+    "code": "85ZSTW1",
+    "nodeTracks": [],
+    "debugString": "station:85ZSTW1"
   },
   {
-    "ID": 643,
-    "Code": "85ZSTW2",
-    "DebugString": "station:85ZSTW2",
-    "NodeTracks": []
+    "id": 643,
+    "code": "85ZSTW2",
+    "nodeTracks": [],
+    "debugString": "station:85ZSTW2"
   },
   {
-    "ID": 644,
-    "Code": "85ZTB",
-    "DebugString": "station:85ZTB",
-    "NodeTracks": [
+    "id": 644,
+    "code": "85ZTB",
+    "nodeTracks": [
       {
-        "ID": 645,
-        "Code": "3",
-        "DebugString": "stationtrack:85ZTB_{StationTrack SID = 217}"
+        "id": 645,
+        "code": "3",
+        "debugString": "stationtrack:85ZTB_{StationTrack SID = 217}"
       },
       {
-        "ID": 646,
-        "Code": "2",
-        "DebugString": "stationtrack:85ZTB_{StationTrack SID = 215}"
+        "id": 646,
+        "code": "2",
+        "debugString": "stationtrack:85ZTB_{StationTrack SID = 215}"
       },
       {
-        "ID": 647,
-        "Code": "1",
-        "DebugString": "stationtrack:85ZTB_{StationTrack SID = 214}"
+        "id": 647,
+        "code": "1",
+        "debugString": "stationtrack:85ZTB_{StationTrack SID = 214}"
       }
-    ]
+    ],
+    "debugString": "station:85ZTB"
   },
   {
-    "ID": 648,
-    "Code": "85ZUE",
-    "DebugString": "station:85ZUE",
-    "NodeTracks": [
+    "id": 648,
+    "code": "85ZUE",
+    "nodeTracks": [
       {
-        "ID": 649,
-        "Code": "18",
-        "DebugString": "stationtrack:85ZUE_{StationTrack SID = 219}"
+        "id": 649,
+        "code": "18",
+        "debugString": "stationtrack:85ZUE_{StationTrack SID = 219}"
       },
       {
-        "ID": 650,
-        "Code": "17",
-        "DebugString": "stationtrack:85ZUE_{StationTrack SID = 220}"
+        "id": 650,
+        "code": "17",
+        "debugString": "stationtrack:85ZUE_{StationTrack SID = 220}"
       },
       {
-        "ID": 651,
-        "Code": "16",
-        "DebugString": "stationtrack:85ZUE_{StationTrack SID = 222}"
+        "id": 651,
+        "code": "16",
+        "debugString": "stationtrack:85ZUE_{StationTrack SID = 222}"
       },
       {
-        "ID": 652,
-        "Code": "15",
-        "DebugString": "stationtrack:85ZUE_{StationTrack SID = 223}"
+        "id": 652,
+        "code": "15",
+        "debugString": "stationtrack:85ZUE_{StationTrack SID = 223}"
       },
       {
-        "ID": 653,
-        "Code": "14",
-        "DebugString": "stationtrack:85ZUE_{StationTrack SID = 225}"
+        "id": 653,
+        "code": "14",
+        "debugString": "stationtrack:85ZUE_{StationTrack SID = 225}"
       },
       {
-        "ID": 654,
-        "Code": "13",
-        "DebugString": "stationtrack:85ZUE_{StationTrack SID = 226}"
+        "id": 654,
+        "code": "13",
+        "debugString": "stationtrack:85ZUE_{StationTrack SID = 226}"
       },
       {
-        "ID": 655,
-        "Code": "12",
-        "DebugString": "stationtrack:85ZUE_{StationTrack SID = 228}"
+        "id": 655,
+        "code": "12",
+        "debugString": "stationtrack:85ZUE_{StationTrack SID = 228}"
       },
       {
-        "ID": 656,
-        "Code": "11",
-        "DebugString": "stationtrack:85ZUE_{StationTrack SID = 229}"
+        "id": 656,
+        "code": "11",
+        "debugString": "stationtrack:85ZUE_{StationTrack SID = 229}"
       },
       {
-        "ID": 657,
-        "Code": "10",
-        "DebugString": "stationtrack:85ZUE_{StationTrack SID = 231}"
+        "id": 657,
+        "code": "10",
+        "debugString": "stationtrack:85ZUE_{StationTrack SID = 231}"
       },
       {
-        "ID": 658,
-        "Code": "9",
-        "DebugString": "stationtrack:85ZUE_{StationTrack SID = 232}"
+        "id": 658,
+        "code": "9",
+        "debugString": "stationtrack:85ZUE_{StationTrack SID = 232}"
       },
       {
-        "ID": 659,
-        "Code": "8",
-        "DebugString": "stationtrack:85ZUE_{StationTrack SID = 234}"
+        "id": 659,
+        "code": "8",
+        "debugString": "stationtrack:85ZUE_{StationTrack SID = 234}"
       },
       {
-        "ID": 660,
-        "Code": "7",
-        "DebugString": "stationtrack:85ZUE_{StationTrack SID = 235}"
+        "id": 660,
+        "code": "7",
+        "debugString": "stationtrack:85ZUE_{StationTrack SID = 235}"
       },
       {
-        "ID": 661,
-        "Code": "6",
-        "DebugString": "stationtrack:85ZUE_{StationTrack SID = 237}"
+        "id": 661,
+        "code": "6",
+        "debugString": "stationtrack:85ZUE_{StationTrack SID = 237}"
       },
       {
-        "ID": 662,
-        "Code": "5",
-        "DebugString": "stationtrack:85ZUE_{StationTrack SID = 238}"
+        "id": 662,
+        "code": "5",
+        "debugString": "stationtrack:85ZUE_{StationTrack SID = 238}"
       },
       {
-        "ID": 663,
-        "Code": "4",
-        "DebugString": "stationtrack:85ZUE_{StationTrack SID = 240}"
+        "id": 663,
+        "code": "4",
+        "debugString": "stationtrack:85ZUE_{StationTrack SID = 240}"
       },
       {
-        "ID": 664,
-        "Code": "3",
-        "DebugString": "stationtrack:85ZUE_{StationTrack SID = 241}"
+        "id": 664,
+        "code": "3",
+        "debugString": "stationtrack:85ZUE_{StationTrack SID = 241}"
       },
       {
-        "ID": 665,
-        "Code": "51",
-        "DebugString": "stationtrack:85ZUE_{StationTrack SID = 243}"
+        "id": 665,
+        "code": "51",
+        "debugString": "stationtrack:85ZUE_{StationTrack SID = 243}"
       },
       {
-        "ID": 666,
-        "Code": "52",
-        "DebugString": "stationtrack:85ZUE_{StationTrack SID = 244}"
+        "id": 666,
+        "code": "52",
+        "debugString": "stationtrack:85ZUE_{StationTrack SID = 244}"
       },
       {
-        "ID": 667,
-        "Code": "53",
-        "DebugString": "stationtrack:85ZUE_{StationTrack SID = 246}"
+        "id": 667,
+        "code": "53",
+        "debugString": "stationtrack:85ZUE_{StationTrack SID = 246}"
       },
       {
-        "ID": 668,
-        "Code": "54",
-        "DebugString": "stationtrack:85ZUE_{StationTrack SID = 247}"
+        "id": 668,
+        "code": "54",
+        "debugString": "stationtrack:85ZUE_{StationTrack SID = 247}"
       }
-    ]
+    ],
+    "debugString": "station:85ZUE"
   },
   {
-    "ID": 669,
-    "Code": "85ZVB",
-    "DebugString": "station:85ZVB",
-    "NodeTracks": []
+    "id": 669,
+    "code": "85ZVB",
+    "nodeTracks": [],
+    "debugString": "station:85ZVB"
   },
   {
-    "ID": 670,
-    "Code": "85ZVBHF1",
-    "DebugString": "station:85ZVBHF1",
-    "NodeTracks": []
+    "id": 670,
+    "code": "85ZVBHF1",
+    "nodeTracks": [],
+    "debugString": "station:85ZVBHF1"
   },
   {
-    "ID": 671,
-    "Code": "85ZVBHF2",
-    "DebugString": "station:85ZVBHF2",
-    "NodeTracks": []
+    "id": 671,
+    "code": "85ZVBHF2",
+    "nodeTracks": [],
+    "debugString": "station:85ZVBHF2"
   },
   {
-    "ID": 672,
-    "Code": "85ZVBO",
-    "DebugString": "station:85ZVBO",
-    "NodeTracks": []
+    "id": 672,
+    "code": "85ZVBO",
+    "nodeTracks": [],
+    "debugString": "station:85ZVBO"
   },
   {
-    "ID": 673,
-    "Code": "85ZVIA",
-    "DebugString": "station:85ZVIA",
-    "NodeTracks": []
+    "id": 673,
+    "code": "85ZVIA",
+    "nodeTracks": [],
+    "debugString": "station:85ZVIA"
   },
   {
-    "ID": 674,
-    "Code": "85ZWIE",
-    "DebugString": "station:85ZWIE",
-    "NodeTracks": [
+    "id": 674,
+    "code": "85ZWIE",
+    "nodeTracks": [
       {
-        "ID": 675,
-        "Code": "1",
-        "DebugString": "stationtrack:85ZWIE_{StationTrack SID = 249}"
+        "id": 675,
+        "code": "1",
+        "debugString": "stationtrack:85ZWIE_{StationTrack SID = 249}"
       },
       {
-        "ID": 676,
-        "Code": "2",
-        "DebugString": "stationtrack:85ZWIE_{StationTrack SID = 250}"
+        "id": 676,
+        "code": "2",
+        "debugString": "stationtrack:85ZWIE_{StationTrack SID = 250}"
       },
       {
-        "ID": 677,
-        "Code": "3",
-        "DebugString": "stationtrack:85ZWIE_{StationTrack SID = 251}"
+        "id": 677,
+        "code": "3",
+        "debugString": "stationtrack:85ZWIE_{StationTrack SID = 251}"
       }
-    ]
+    ],
+    "debugString": "station:85ZWIE"
   },
   {
-    "ID": 678,
-    "Code": "85ZWIP",
-    "DebugString": "station:85ZWIP",
-    "NodeTracks": [
+    "id": 678,
+    "code": "85ZWIP",
+    "nodeTracks": [
       {
-        "ID": 679,
-        "Code": "1",
-        "DebugString": "stationtrack:85ZWIP_1"
+        "id": 679,
+        "code": "1",
+        "debugString": "stationtrack:85ZWIP_1"
       },
       {
-        "ID": 680,
-        "Code": "2",
-        "DebugString": "stationtrack:85ZWIP_2"
+        "id": 680,
+        "code": "2",
+        "debugString": "stationtrack:85ZWIP_2"
       }
-    ]
+    ],
+    "debugString": "station:85ZWIP"
   },
   {
-    "ID": 681,
-    "Code": "85ZWOL",
-    "DebugString": "station:85ZWOL",
-    "NodeTracks": [
+    "id": 681,
+    "code": "85ZWOL",
+    "nodeTracks": [
       {
-        "ID": 682,
-        "Code": "1",
-        "DebugString": "stationtrack:85ZWOL_1"
+        "id": 682,
+        "code": "1",
+        "debugString": "stationtrack:85ZWOL_1"
       },
       {
-        "ID": 683,
-        "Code": "2",
-        "DebugString": "stationtrack:85ZWOL_2"
+        "id": 683,
+        "code": "2",
+        "debugString": "stationtrack:85ZWOL_2"
       },
       {
-        "ID": 684,
-        "Code": "3",
-        "DebugString": "stationtrack:85ZWOL_3"
+        "id": 684,
+        "code": "3",
+        "debugString": "stationtrack:85ZWOL_3"
       },
       {
-        "ID": 685,
-        "Code": "4",
-        "DebugString": "stationtrack:85ZWOL_4"
+        "id": 685,
+        "code": "4",
+        "debugString": "stationtrack:85ZWOL_4"
       }
-    ]
+    ],
+    "debugString": "station:85ZWOL"
   }
 ]

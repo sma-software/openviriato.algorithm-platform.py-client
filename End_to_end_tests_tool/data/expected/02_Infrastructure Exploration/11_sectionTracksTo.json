@@ -1,1 +1,37 @@
-[{"ID":883,"Code":"955","SectionCode":"61005","Weight":22260,"DebugString":"sectiontrack:s_61005 n_85NH 955"},{"ID":884,"Code":"855","SectionCode":"61005","Weight":22260,"DebugString":"sectiontrack:s_61005 n_85NH 855"},{"ID":1157,"Code":"752","SectionCode":"73000","Weight":13440,"DebugString":"sectiontrack:s_73000 n_85NH 752"},{"ID":885,"Code":"838","SectionCode":"61010","Weight":37040,"DebugString":"sectiontrack:s_61010 n_85AR 838"},{"ID":886,"Code":"2","SectionCode":"61010","Weight":37040,"DebugString":"sectiontrack:s_61010 n_85AR 2"}]
+[
+  {
+    "id": 883,
+    "code": "955",
+    "sectionCode": "61005",
+    "weight": 22260,
+    "debugString": "sectiontrack:s_61005 n_85NH 955"
+  },
+  {
+    "id": 884,
+    "code": "855",
+    "sectionCode": "61005",
+    "weight": 22260,
+    "debugString": "sectiontrack:s_61005 n_85NH 855"
+  },
+  {
+    "id": 1157,
+    "code": "752",
+    "sectionCode": "73000",
+    "weight": 13440,
+    "debugString": "sectiontrack:s_73000 n_85NH 752"
+  },
+  {
+    "id": 885,
+    "code": "838",
+    "sectionCode": "61010",
+    "weight": 37040,
+    "debugString": "sectiontrack:s_61010 n_85AR 838"
+  },
+  {
+    "id": 886,
+    "code": "2",
+    "sectionCode": "61010",
+    "weight": 37040,
+    "debugString": "sectiontrack:s_61010 n_85AR 2"
+  }
+]

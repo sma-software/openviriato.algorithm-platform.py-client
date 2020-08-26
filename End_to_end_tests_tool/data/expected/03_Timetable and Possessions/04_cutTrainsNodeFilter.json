@@ -1,1 +1,21 @@
-[{"ID":2060,"TrainPathNodes":[{"ID":1696,"SectionTrackID":null,"NodeID":10,"NodeTrackID":null,"FormationID":null,"ArrivalTime":"2003-05-01T00:10:00","DepartureTime":"2003-05-01T00:10:00","MinimumRunTime":null,"MinimumStopTime":"P0D","StopStatus":"CommercialStop","SequenceNumber":1}],"DebugString":"RVZH_1_1_J03 tt_(G)"}]
+[
+  {
+    "id": 2060,
+    "trainPathNodes": [
+      {
+        "id": 1696,
+        "sectionTrackId": null,
+        "nodeId": 10,
+        "nodeTrackId": null,
+        "formationId": null,
+        "arrivalTime": "2003-05-01T00:10:00",
+        "departureTime": "2003-05-01T00:10:00",
+        "minimumRunTime": null,
+        "minimumStopTime": "P0D",
+        "stopStatus": "commercialStop",
+        "sequenceNumber": 1
+      }
+    ],
+    "debugString": "RVZH_1_1_J03 tt_(G)"
+  }
+]

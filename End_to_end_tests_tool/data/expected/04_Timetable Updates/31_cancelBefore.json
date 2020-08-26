@@ -1,1 +1,32 @@
-{"ID":8120,"TrainPathNodes":[{"ID":8118,"SectionTrackID":null,"NodeID":15,"NodeTrackID":16,"FormationID":1187,"ArrivalTime":"2003-09-01T00:14:00","DepartureTime":"2003-09-01T00:14:00","MinimumRunTime":null,"MinimumStopTime":"P0D","StopStatus":"Passing","SequenceNumber":0},{"ID":8119,"SectionTrackID":1174,"NodeID":10,"NodeTrackID":12,"FormationID":null,"ArrivalTime":"2003-09-01T00:19:00","DepartureTime":"2003-09-01T00:19:00","MinimumRunTime":"PT5M","MinimumStopTime":"P0D","StopStatus":"CommercialStop","SequenceNumber":1}],"DebugString":"RVZH_13_1_J03 tt_(S)"}
+{
+  "id": 8120,
+  "trainPathNodes": [
+    {
+      "id": 8118,
+      "sectionTrackId": null,
+      "nodeId": 15,
+      "nodeTrackId": 16,
+      "formationId": 1187,
+      "arrivalTime": "2003-09-01T00:14:00",
+      "departureTime": "2003-09-01T00:14:00",
+      "minimumRunTime": null,
+      "minimumStopTime": "P0D",
+      "stopStatus": "passing",
+      "sequenceNumber": 0
+    },
+    {
+      "id": 8119,
+      "sectionTrackId": 1174,
+      "nodeId": 10,
+      "nodeTrackId": 12,
+      "formationId": null,
+      "arrivalTime": "2003-09-01T00:19:00",
+      "departureTime": "2003-09-01T00:19:00",
+      "minimumRunTime": "PT5M",
+      "minimumStopTime": "P0D",
+      "stopStatus": "commercialStop",
+      "sequenceNumber": 1
+    }
+  ],
+  "debugString": "RVZH_13_1_J03 tt_(S)"
+}

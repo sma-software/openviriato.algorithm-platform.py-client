@@ -1,1 +1,7 @@
-{"ID":1082,"Code":"900","SectionCode":"70015","Weight":10000,"DebugString":"sectiontrack:s_70015 n_85ZHDB 900"}
+{
+  "id": 1082,
+  "code": "900",
+  "sectionCode": "70015",
+  "weight": 10000,
+  "debugString": "sectiontrack:s_70015 n_85ZHDB 900"
+}

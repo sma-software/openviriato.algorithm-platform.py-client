@@ -1,1 +1,36 @@
-[{"ID":15,"Code":"45ZSAA","NodeTracks":[{"ID":16,"Code":"1","DebugString":"stationtrack:45ZSAA_1"},{"ID":17,"Code":"2","DebugString":"stationtrack:45ZSAA_2"}],"DebugString":"station:45ZSAA"},{"ID":24,"Code":"45ZWAA","NodeTracks":[{"ID":25,"Code":"1","DebugString":"stationtrack:45ZWAA_1"},{"ID":26,"Code":"2","DebugString":"stationtrack:45ZWAA_2"}],"DebugString":"station:45ZWAA"}]
+[
+  {
+    "id": 15,
+    "code": "45ZSAA",
+    "nodeTracks": [
+      {
+        "id": 16,
+        "code": "1",
+        "debugString": "stationtrack:45ZSAA_1"
+      },
+      {
+        "id": 17,
+        "code": "2",
+        "debugString": "stationtrack:45ZSAA_2"
+      }
+    ],
+    "debugString": "station:45ZSAA"
+  },
+  {
+    "id": 24,
+    "code": "45ZWAA",
+    "nodeTracks": [
+      {
+        "id": 25,
+        "code": "1",
+        "debugString": "stationtrack:45ZWAA_1"
+      },
+      {
+        "id": 26,
+        "code": "2",
+        "debugString": "stationtrack:45ZWAA_2"
+      }
+    ],
+    "debugString": "station:45ZWAA"
+  }
+]

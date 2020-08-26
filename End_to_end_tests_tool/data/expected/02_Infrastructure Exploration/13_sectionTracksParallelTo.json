@@ -1,1 +1,16 @@
-[{"ID":885,"Code":"838","SectionCode":"61010","Weight":37040,"DebugString":"sectiontrack:s_61010 n_85AR 838"},{"ID":886,"Code":"2","SectionCode":"61010","Weight":37040,"DebugString":"sectiontrack:s_61010 n_85AR 2"}]
+[
+  {
+    "id": 885,
+    "code": "838",
+    "sectionCode": "61010",
+    "weight": 37040,
+    "debugString": "sectiontrack:s_61010 n_85AR 838"
+  },
+  {
+    "id": 886,
+    "code": "2",
+    "sectionCode": "61010",
+    "weight": 37040,
+    "debugString": "sectiontrack:s_61010 n_85AR 2"
+  }
+]

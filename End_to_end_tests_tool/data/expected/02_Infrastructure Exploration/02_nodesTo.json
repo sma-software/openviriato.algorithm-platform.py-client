@@ -1,1 +1,25 @@
-[{"ID":348,"Code":"85NH","NodeTracks":[{"ID":349,"Code":"1","DebugString":"stationtrack:85NH_1"},{"ID":350,"Code":"2","DebugString":"stationtrack:85NH_2"}],"DebugString":"station:85NH"},{"ID":281,"Code":"85JE","NodeTracks":[],"DebugString":"station:85JE"}]
+[
+  {
+    "id": 348,
+    "code": "85NH",
+    "nodeTracks": [
+      {
+        "id": 349,
+        "code": "1",
+        "debugString": "stationtrack:85NH_1"
+      },
+      {
+        "id": 350,
+        "code": "2",
+        "debugString": "stationtrack:85NH_2"
+      }
+    ],
+    "debugString": "station:85NH"
+  },
+  {
+    "id": 281,
+    "code": "85JE",
+    "nodeTracks": [],
+    "debugString": "station:85JE"
+  }
+]

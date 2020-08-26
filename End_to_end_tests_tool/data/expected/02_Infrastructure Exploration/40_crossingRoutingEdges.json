@@ -1,15 +1,14 @@
 {
-  "RoutingEdges":
-  [
+  "routingEdges": [
     {
-      "StartSectionTrackID":887,
-      "EndSectionTrackID":888,
-      "NodeID":281
+      "startSectionTrackId": 887,
+      "endSectionTrackId": 888,
+      "nodeId": 281
     },
     {
-      "StartSectionTrackID":888,
-      "EndSectionTrackID":887,
-      "NodeID":281
+      "startSectionTrackId": 888,
+      "endSectionTrackId": 887,
+      "nodeId": 281
     }
   ]
 }

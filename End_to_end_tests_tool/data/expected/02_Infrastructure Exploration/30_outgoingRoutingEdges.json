@@ -1,34 +1,34 @@
 {
-  "RoutingEdges":
-  [
-    {"StartNodeTrackID":162,
-      "EndSectionTrackID":885,
-      "NodeID":161
+  "routingEdges": [
+    {
+      "startNodeTrackId": 162,
+      "endSectionTrackId": 885,
+      "nodeId": 161
     },
     {
-      "StartNodeTrackID":162,
-      "EndSectionTrackID":886,
-      "NodeID":161
+      "startNodeTrackId": 162,
+      "endSectionTrackId": 886,
+      "nodeId": 161
     },
     {
-      "StartNodeTrackID":162,
-      "EndSectionTrackID":887,
-      "NodeID":161
+      "startNodeTrackId": 162,
+      "endSectionTrackId": 887,
+      "nodeId": 161
     },
     {
-      "StartNodeTrackID":163,
-      "EndSectionTrackID":885,
-      "NodeID":161
+      "startNodeTrackId": 163,
+      "endSectionTrackId": 885,
+      "nodeId": 161
     },
     {
-      "StartNodeTrackID":163,
-      "EndSectionTrackID":886,
-      "NodeID":161
+      "startNodeTrackId": 163,
+      "endSectionTrackId": 886,
+      "nodeId": 161
     },
     {
-      "StartNodeTrackID":163,
-      "EndSectionTrackID":887,
-      "NodeID":161
+      "startNodeTrackId": 163,
+      "endSectionTrackId": 887,
+      "nodeId": 161
     }
   ]
 }

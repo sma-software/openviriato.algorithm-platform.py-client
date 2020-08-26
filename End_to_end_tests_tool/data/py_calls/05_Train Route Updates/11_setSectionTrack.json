@@ -1,0 +1,7 @@
+﻿{
+    "PythonParameterMapping": {
+        "train_id" : "$.urlParameters.[0]",
+        "train_path_node_id" : "$.urlParameters.[1]",
+        "section_track_id" : "$.requestBody.sectionTrackId"
+    }
+}

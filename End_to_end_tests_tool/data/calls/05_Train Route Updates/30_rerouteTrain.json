@@ -1,0 +1,34 @@
+﻿{
+    "restResource": "/trains/{trainId}/train-path-nodes:reroute",
+    "httpMethod": "PUT",
+    "urlParameters": [ "=rerouteTrain:id=" ],
+    "requestBody": {
+        "startTrainPathNodeId": "=rerouteTrain:trainPathNodes[0].id=",
+        "endTrainPathNodeId": "=rerouteTrain:trainPathNodes[2].id=",
+        "routingEdges": [
+            {
+                "nodeId": "=rerouteTrain:trainPathNodes[0].nodeId=",
+                "startNodeTrackId": "=rerouteTrain:trainPathNodes[0].nodeTrackId=",
+                "endSectionTrackId": 1165
+            },
+            {
+                "nodeId": 24,
+                "startSectionTrackId": 1165,
+                "endNodeTrackId": 25
+            },
+            {
+                "nodeId": 24,
+                "startNodeTrackId": 25,
+                "endSectionTrackId": 1166
+            },
+            {
+                "nodeId": "=rerouteTrain:trainPathNodes[2].nodeId=",
+                "startSectionTrackId": 1166,
+                "endNodeTrackId": "=rerouteTrain:trainPathNodes[2].nodeTrackId="
+            }
+        ]
+    },
+    "CSharpMethodName": "RerouteTrain(trainID, updateTrainRoute)",
+    "CSharpMethodParameterTypes": [ "System.Int64", "SMA.AlgorithmPlatform.AlgorithmInterface.AIDM.IUpdateTrainRoute" ],
+    "subcategory": "Reroute Train"
+}

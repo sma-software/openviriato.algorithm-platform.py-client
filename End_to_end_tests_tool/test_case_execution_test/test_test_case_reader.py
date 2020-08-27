@@ -2,7 +2,7 @@ import os
 import unittest
 from datetime import datetime
 
-from End_to_end_tests_tool.test_case_execution import test_case_reader
+from End_to_end_tests_tool.test_case_execution.test_case_reader import TestCaseReader
 from End_to_end_tests_tool.test_case_execution.test_case import EndToEndTestCase
 from py_client.aidm.aidm_update_classes import UpdateTrainTimesNode
 
@@ -17,11 +17,16 @@ def assemble_test_file_names(json_file_name: str):
 
 
 class TestCase(unittest.TestCase):
+    __test_case_reader: TestCaseReader
+
+    def setUp(self) -> None:
+        self.__test_case_reader = TestCaseReader("dummyUrl")
+
     def test_test_case_reader_without_arguments(self):
         call_path, py_call_file_path, expected_file_path = assemble_test_file_names(
             '00_TestWithNoArguments.json')
 
-        test_case = test_case_reader.read_test_cases_from_calls_py_calls_and_expected(
+        test_case = self.__test_case_reader.read_test_cases_from_calls_py_calls_and_expected(
             call_path=call_path,
             py_call_file_path=py_call_file_path,
             expected_file_path=expected_file_path)
@@ -54,7 +59,7 @@ class TestCase(unittest.TestCase):
         call_path, py_call_file_path, expected_file_path = assemble_test_file_names(
             '01_TestWithOneArgumentPythonParameterMapping.json')
 
-        test_case = test_case_reader.read_test_cases_from_calls_py_calls_and_expected(
+        test_case = self.__test_case_reader.read_test_cases_from_calls_py_calls_and_expected(
             call_path=call_path,
             py_call_file_path=py_call_file_path,
             expected_file_path=expected_file_path)
@@ -76,7 +81,7 @@ class TestCase(unittest.TestCase):
         call_path, py_call_file_path, expected_file_path = assemble_test_file_names(
             '02_TestWithTwoArgumentsInPythonParameterMapping.json')
 
-        test_case = test_case_reader.read_test_cases_from_calls_py_calls_and_expected(
+        test_case = self.__test_case_reader.read_test_cases_from_calls_py_calls_and_expected(
             call_path=call_path,
             py_call_file_path=py_call_file_path,
             expected_file_path=expected_file_path)
@@ -98,7 +103,7 @@ class TestCase(unittest.TestCase):
         call_path, py_call_file_path, expected_file_path = assemble_test_file_names(
             '03_TestWithOneArgumentAndOneExtraMappingInPythonParameterMapping.json')
 
-        test_case = test_case_reader.read_test_cases_from_calls_py_calls_and_expected(
+        test_case = self.__test_case_reader.read_test_cases_from_calls_py_calls_and_expected(
             call_path=call_path,
             py_call_file_path=py_call_file_path,
             expected_file_path=expected_file_path)
@@ -122,7 +127,7 @@ class TestCase(unittest.TestCase):
         call_path, py_call_file_path, expected_file_path = assemble_test_file_names(
             '04_TestUnmappedPathExpressionsInPythonParameterMapping.json')
 
-        test_case = test_case_reader.read_test_cases_from_calls_py_calls_and_expected(
+        test_case = self.__test_case_reader.read_test_cases_from_calls_py_calls_and_expected(
             call_path=call_path,
             py_call_file_path=py_call_file_path,
             expected_file_path=expected_file_path)
@@ -141,7 +146,7 @@ class TestCase(unittest.TestCase):
         call_path, py_call_file_path, expected_file_path = assemble_test_file_names(
             '05_TestDefectivePathExpressionsInPythonParameterMapping.json')
 
-        test_case = test_case_reader.read_test_cases_from_calls_py_calls_and_expected(
+        test_case = self.__test_case_reader.read_test_cases_from_calls_py_calls_and_expected(
             call_path=call_path,
             py_call_file_path=py_call_file_path,
             expected_file_path=expected_file_path)
@@ -166,7 +171,7 @@ class TestCase(unittest.TestCase):
         call_path, py_call_file_path, expected_file_path = assemble_test_file_names(
             '06_TestAmbiguousPathExpressionsInPythonParameterMapping.json')
 
-        test_case = test_case_reader.read_test_cases_from_calls_py_calls_and_expected(
+        test_case = self.__test_case_reader.read_test_cases_from_calls_py_calls_and_expected(
             call_path=call_path,
             py_call_file_path=py_call_file_path,
             expected_file_path=expected_file_path)
@@ -190,7 +195,7 @@ class TestCase(unittest.TestCase):
     def test_test_case_reader_with_python_object_mapping(self):
         call_path, py_call_file_path, expected_file_path = assemble_test_file_names('07_TestWithRoutingPoint.json')
 
-        test_case = test_case_reader.read_test_cases_from_calls_py_calls_and_expected(
+        test_case = self.__test_case_reader.read_test_cases_from_calls_py_calls_and_expected(
             call_path=call_path,
             py_call_file_path=py_call_file_path,
             expected_file_path=expected_file_path)
@@ -220,7 +225,7 @@ class TestCase(unittest.TestCase):
         call_path, py_call_file_path, expected_file_path = assemble_test_file_names(
             '08_TestUnmappedPathExpressionInPythonObjectMapping.json')
 
-        test_case = test_case_reader.read_test_cases_from_calls_py_calls_and_expected(
+        test_case = self.__test_case_reader.read_test_cases_from_calls_py_calls_and_expected(
             call_path=call_path,
             py_call_file_path=py_call_file_path,
             expected_file_path=expected_file_path)
@@ -239,7 +244,7 @@ class TestCase(unittest.TestCase):
         call_path, py_call_file_path, expected_file_path = assemble_test_file_names(
             '09_TestDefectivePathExpressionInPythonObjectMapping.json')
 
-        test_case = test_case_reader.read_test_cases_from_calls_py_calls_and_expected(
+        test_case = self.__test_case_reader.read_test_cases_from_calls_py_calls_and_expected(
             call_path=call_path,
             py_call_file_path=py_call_file_path,
             expected_file_path=expected_file_path)
@@ -258,7 +263,7 @@ class TestCase(unittest.TestCase):
         call_path, py_call_file_path, expected_file_path = assemble_test_file_names(
             '10_TestAmbiguousPathExpressionInPythonObjectMapping.json')
 
-        test_case = test_case_reader.read_test_cases_from_calls_py_calls_and_expected(
+        test_case = self.__test_case_reader.read_test_cases_from_calls_py_calls_and_expected(
             call_path=call_path,
             py_call_file_path=py_call_file_path,
             expected_file_path=expected_file_path)
@@ -277,7 +282,7 @@ class TestCase(unittest.TestCase):
         call_path, py_call_file_path, expected_file_path = assemble_test_file_names(
             '11_TestMissingClassNameInPythonObjectMapping.json')
 
-        test_case = test_case_reader.read_test_cases_from_calls_py_calls_and_expected(
+        test_case = self.__test_case_reader.read_test_cases_from_calls_py_calls_and_expected(
             call_path=call_path,
             py_call_file_path=py_call_file_path,
             expected_file_path=expected_file_path)
@@ -296,7 +301,7 @@ class TestCase(unittest.TestCase):
         call_path, py_call_file_path, expected_file_path = assemble_test_file_names(
             '12_TestNonConvertibleClassInPythonObjectMapping.json')
 
-        test_case = test_case_reader.read_test_cases_from_calls_py_calls_and_expected(
+        test_case = self.__test_case_reader.read_test_cases_from_calls_py_calls_and_expected(
             call_path=call_path,
             py_call_file_path=py_call_file_path,
             expected_file_path=expected_file_path)
@@ -315,7 +320,7 @@ class TestCase(unittest.TestCase):
         call_path, py_call_file_path, expected_file_path = assemble_test_file_names(
             '13_TestMissingMappingForRoutingPointInPythonObjectMapping.json')
 
-        test_case = test_case_reader.read_test_cases_from_calls_py_calls_and_expected(
+        test_case = self.__test_case_reader.read_test_cases_from_calls_py_calls_and_expected(
             call_path=call_path,
             py_call_file_path=py_call_file_path,
             expected_file_path=expected_file_path)
@@ -334,7 +339,7 @@ class TestCase(unittest.TestCase):
         call_path, py_call_file_path, expected_file_path = assemble_test_file_names(
             '14_TestMultipleMappingsForRoutingPointInPythonObjectMapping.json')
 
-        test_case = test_case_reader.read_test_cases_from_calls_py_calls_and_expected(
+        test_case = self.__test_case_reader.read_test_cases_from_calls_py_calls_and_expected(
             call_path=call_path,
             py_call_file_path=py_call_file_path,
             expected_file_path=expected_file_path)
@@ -353,7 +358,7 @@ class TestCase(unittest.TestCase):
         call_path, py_call_file_path, expected_file_path = assemble_test_file_names(
             '15_TestConversionFailsInMappingForRoutingPointInPythonObjectMapping.json')
 
-        test_case = test_case_reader.read_test_cases_from_calls_py_calls_and_expected(
+        test_case = self.__test_case_reader.read_test_cases_from_calls_py_calls_and_expected(
             call_path=call_path,
             py_call_file_path=py_call_file_path,
             expected_file_path=expected_file_path)
@@ -372,7 +377,7 @@ class TestCase(unittest.TestCase):
         call_path, py_call_file_path, expected_file_path = assemble_test_file_names(
             '16_TestPythonParameterFromJson.json')
 
-        test_case = test_case_reader.read_test_cases_from_calls_py_calls_and_expected(
+        test_case = self.__test_case_reader.read_test_cases_from_calls_py_calls_and_expected(
             call_path=call_path,
             py_call_file_path=py_call_file_path,
             expected_file_path=expected_file_path)
@@ -431,7 +436,7 @@ class TestCase(unittest.TestCase):
         call_path, py_call_file_path, expected_file_path = assemble_test_file_names(
             '17_TestPythonParameterFromJsonInvalidClass.json')
 
-        test_case = test_case_reader.read_test_cases_from_calls_py_calls_and_expected(
+        test_case = self.__test_case_reader.read_test_cases_from_calls_py_calls_and_expected(
             call_path=call_path,
             py_call_file_path=py_call_file_path,
             expected_file_path=expected_file_path)
@@ -447,7 +452,7 @@ class TestCase(unittest.TestCase):
         call_path, py_call_file_path, expected_file_path = assemble_test_file_names(
             '18_TestPythonParameterFromJsonMisspelledProperty.json')
 
-        test_case = test_case_reader.read_test_cases_from_calls_py_calls_and_expected(
+        test_case = self.__test_case_reader.read_test_cases_from_calls_py_calls_and_expected(
             call_path=call_path,
             py_call_file_path=py_call_file_path,
             expected_file_path=expected_file_path)
@@ -466,7 +471,7 @@ class TestCase(unittest.TestCase):
         call_path, py_call_file_path, expected_file_path = assemble_test_file_names(
             '20_TestPythonParameterFromJsonMissingObjectJson.json')
 
-        test_case = test_case_reader.read_test_cases_from_calls_py_calls_and_expected(
+        test_case = self.__test_case_reader.read_test_cases_from_calls_py_calls_and_expected(
             call_path=call_path,
             py_call_file_path=py_call_file_path,
             expected_file_path=expected_file_path)
@@ -482,7 +487,7 @@ class TestCase(unittest.TestCase):
         call_path, py_call_file_path, expected_file_path = assemble_test_file_names(
             '21_TestPythonParameterFromJsonMissingAIDMFactory.json')
 
-        test_case = test_case_reader.read_test_cases_from_calls_py_calls_and_expected(
+        test_case = self.__test_case_reader.read_test_cases_from_calls_py_calls_and_expected(
             call_path=call_path,
             py_call_file_path=py_call_file_path,
             expected_file_path=expected_file_path)
@@ -498,7 +503,7 @@ class TestCase(unittest.TestCase):
         call_path, py_call_file_path, expected_file_path = assemble_test_file_names(
             '22_TestPythonParameterFromJsonNonConvertibleClass.json')
 
-        test_case = test_case_reader.read_test_cases_from_calls_py_calls_and_expected(
+        test_case = self.__test_case_reader.read_test_cases_from_calls_py_calls_and_expected(
             call_path=call_path,
             py_call_file_path=py_call_file_path,
             expected_file_path=expected_file_path)

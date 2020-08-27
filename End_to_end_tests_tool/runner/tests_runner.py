@@ -5,7 +5,7 @@ from End_to_end_tests_tool.runner import tests_runner_config_file_reader, headle
 from End_to_end_tests_tool.runner.tests_runner_config import TestsRunnerConfig
 from End_to_end_tests_tool.test_case_execution.test_case_result import EndToEndTestCaseResult
 from End_to_end_tests_tool.test_case_execution.test_case_executor import execute_test_case
-from End_to_end_tests_tool.test_case_execution.test_case_reader import read_test_cases_from_calls_py_calls_and_expected
+from End_to_end_tests_tool.test_case_execution.test_case_reader import TestCaseReader
 
 TEST_CALL_DIRECTORY = 'calls'
 PY_CALL_DIRECTORY = 'py_calls'
@@ -77,9 +77,10 @@ def run_end_to_end_tests_with_headless(
             TEST_EXPECTED_DIRECTORY)
 
         performed_tests = []
+        test_case_reader = TestCaseReader(base_url)
         for examples_file_path, py_call_file_path, expected_file_path, in \
                 zip(examples_json_files_with_path, py_call_json_files_with_path, expected_json_files_with_path):
-            end_to_end_test_case = read_test_cases_from_calls_py_calls_and_expected(
+            end_to_end_test_case = test_case_reader.read_test_cases_from_calls_py_calls_and_expected(
                 examples_file_path,
                 py_call_file_path,
                 expected_file_path)

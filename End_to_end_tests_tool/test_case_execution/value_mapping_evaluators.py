@@ -17,8 +17,9 @@ def _get_parameter_names_for_test_method(c_sharp_method_signature: str) -> List[
 
 
 def _get_parameter_value_from_algorithm_platform(parameter_name: str,
-                                                 path_expression_to_parameter: str) -> result.Result:
-    response = get("http://localhost:8089/parameters/{0}".format(parameter_name))
+                                                 path_expression_to_parameter: str,
+                                                 headless_base_url: str) -> result.Result:
+    response = get("{0}/parameters/{1}".format(headless_base_url, parameter_name))
 
     if response.status_code != 200:
         return result.from_error(
@@ -47,7 +48,8 @@ def _try_extract_value_from_jpath_expression(call_json: dict, path_expression: s
 def determine_python_arguments_from_python_parameter_mapping(
         python_parameter_names: List[str],
         jpath_expressions_by_python_parameter_names: Dict[str, str],
-        call_json: Dict[str, str]) -> result.Result:
+        call_json: Dict[str, str],
+        headless_base_url: str) -> result.Result:
     python_parameter_values_for_python_parameters = []
 
     extra_mapping_keys = [key for key in jpath_expressions_by_python_parameter_names.keys()
@@ -80,7 +82,7 @@ def determine_python_arguments_from_python_parameter_mapping(
             python_parameter_values_for_python_parameters.append(evaluated_jpath_expression.result_value)
         else:
             mapped_parameter_value_result = _try_extract_value_from_algorithm_platform_parameter(
-                evaluated_jpath_expression.result_value)
+                evaluated_jpath_expression.result_value, headless_base_url)
             if mapped_parameter_value_result.is_success:
                 python_parameter_values_for_python_parameters.append(mapped_parameter_value_result.result_value)
             else:
@@ -89,11 +91,11 @@ def determine_python_arguments_from_python_parameter_mapping(
     return result.from_result(python_parameter_values_for_python_parameters)
 
 
-def _try_extract_value_from_algorithm_platform_parameter(result_value):
+def _try_extract_value_from_algorithm_platform_parameter(result_value: object, headless_base_url: str):
     parameter_with_path_expression: str = result_value.strip("=")
     parameter_name = parameter_with_path_expression.split(":")[0]
     path_expression = parameter_with_path_expression[len(parameter_name) + 1:]
-    parameter_value = _get_parameter_value_from_algorithm_platform(parameter_name, path_expression)
+    parameter_value = _get_parameter_value_from_algorithm_platform(parameter_name, path_expression, headless_base_url)
     return parameter_value
 
 
@@ -108,9 +110,12 @@ def _value_is_a_parameter_from_algorithm_platform(result_value: object):
         return True
 
 
-def determine_python_arguments_from_python_object_mapping(py_method_parameter_names,
-                                                          py_object_path_expressions,
-                                                          call_json) -> result.Result:
+def determine_python_arguments_from_python_object_mapping(
+        py_method_parameter_names: List[str],
+        py_object_path_expressions: List[dict],
+        call_json: dict,
+        headless_base_url: str) -> result.Result:
+
     object_arguments = []
     for py_method_parameter_name in py_method_parameter_names:
         found_mappings = [
@@ -126,7 +131,8 @@ def determine_python_arguments_from_python_object_mapping(py_method_parameter_na
         primitive_values = determine_python_arguments_from_python_parameter_mapping(
             parameter_mapping_for_object.keys(),
             parameter_mapping_for_object,
-            call_json)
+            call_json,
+            headless_base_url)
 
         if "ClassName" not in found_mappings[0].keys():
             return result.from_error('Missing class name for parameter: {0}'.format(py_method_parameter_name))

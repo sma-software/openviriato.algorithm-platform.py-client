@@ -52,11 +52,14 @@ def determine_python_arguments_from_python_parameter_mapping(
         headless_base_url: str) -> result.Result:
     python_parameter_values_for_python_parameters = []
 
-    extra_mapping_keys = [key for key in jpath_expressions_by_python_parameter_names.keys()
-                          if key not in python_parameter_names]
+    extra_parameter_names_not_on_python_method = [key for key in jpath_expressions_by_python_parameter_names.keys()
+                                                  if key not in python_parameter_names]
 
-    if len(extra_mapping_keys) > 0:
-        return result.from_error('Extra mapping python_parameter_names: {0}'.format(", ".join(extra_mapping_keys)))
+    if len(extra_parameter_names_not_on_python_method) > 0:
+        return result.from_error(
+            'Extra mapping python_parameter_names. '
+            'The following keys are not parameter names of the given py_client method: {0}'.format(", ".join(
+                extra_parameter_names_not_on_python_method)))
 
     for python_parameter_name in python_parameter_names:
         exists_jpath_for_python_parameter = python_parameter_name in jpath_expressions_by_python_parameter_names.keys()
@@ -115,7 +118,6 @@ def determine_python_arguments_from_python_object_mapping(
         py_object_path_expressions: List[dict],
         call_json: dict,
         headless_base_url: str) -> result.Result:
-
     object_arguments = []
     for py_method_parameter_name in py_method_parameter_names:
         found_mappings = [

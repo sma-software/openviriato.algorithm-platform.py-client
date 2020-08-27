@@ -119,7 +119,8 @@ class TestCase(unittest.TestCase):
         self.assertFalse(test_case.arguments_for_py_client_method_result.is_success)
         self.assertEqual(
             test_case.arguments_for_py_client_method_result.error_message,
-            'Extra mapping python_parameter_names: to_node_id')
+            "Extra mapping python_parameter_names. "
+            "The following keys are not parameter names of the given py_client method: to_node_id")
         self.assertEqual(test_case.name_of_method_to_test, "test_one_mapping_extra")
         self.assertDictEqual(test_case.expected_response_as_json, expected_json)
 

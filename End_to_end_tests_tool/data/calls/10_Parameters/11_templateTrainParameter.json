@@ -1,0 +1,9 @@
+﻿{
+    "restResource": "/parameters/{key}",
+    "urlParameters": [ "templateTrainParameter" ],
+    "httpMethod": "GET",
+    "requestBody": null,
+    "CSharpMethodName": "GetAlgorithmTrainParameter(key)",
+    "CSharpMethodParameterTypes": [ "System.String" ],
+    "subcategory": "Get Parameters"
+}

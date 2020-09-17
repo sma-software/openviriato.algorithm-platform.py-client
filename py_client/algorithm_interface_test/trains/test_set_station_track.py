@@ -11,8 +11,7 @@ from py_client.algorithm_interface_test.test_helper.SessionMockTestBase import \
 
 class TestSetSectionTrack(TestCase):
     class SetSectionTrackTestMockSession(SessionMockTestBase):
-        # to replace session.get:
-        def post(self, request, json):
+        def put(self, request, json):
             self.__last_body = json
             self.__last_request = request
             json_string = ('{\n'
@@ -57,26 +56,29 @@ class TestSetSectionTrack(TestCase):
 
     @mock.patch('requests.Session', side_effect=SetSectionTrackTestMockSession)
     def test_set_section_track_request(self, mocked_get_obj) -> None:
-        test_dict = dict(trainPathNodeId=1696, sectionTrackId=1172)
+        train_id = 1587
+        train_path_node_id = 1696
+        section_track_id = 1172
 
-        self.interface_to_viriato.set_section_track(test_dict['trainPathNodeId'], test_dict['sectionTrackId'])
+        self.interface_to_viriato.update_section_track(train_id, train_path_node_id, section_track_id)
 
         session_obj = self.interface_to_viriato._AlgorithmInterface__communication_layer.currentSession
-
-        self.assertEqual(session_obj._SetSectionTrackTestMockSession__last_request,
-                         get_api_url() + '/set-section-track')
-        self.assertDictEqual(session_obj._SetSectionTrackTestMockSession__last_body, test_dict)
+        self.assertEqual(
+            session_obj._SetSectionTrackTestMockSession__last_request,
+            get_api_url() + '/trains/1587/train-path-nodes/1696:update-section-track')
+        self.assertDictEqual(session_obj._SetSectionTrackTestMockSession__last_body, dict(sectionTrackId=1172))
 
     @mock.patch('requests.Session', side_effect=SetSectionTrackTestMockSession)
     def test_set_section_track_response(self, mocked_get_obj):
+        train_id = 1587
         train_path_node_id = 1
         section_track_id = 1
 
-        test_algorithm_train = self.interface_to_viriato.set_section_track(train_path_node_id, section_track_id)
+        algorithm_train = self.interface_to_viriato.update_section_track(train_id, train_path_node_id, section_track_id)
 
-        self.assertIsInstance(test_algorithm_train, py_client.aidm.aidm_algorithm_classes.AlgorithmTrain)
-        self.assertEqual(2060, test_algorithm_train.id)
-        self.assertEqual(test_algorithm_train.debug_string, 'SetSectionTrackTestMockSessionString')
+        self.assertIsInstance(algorithm_train, py_client.aidm.aidm_algorithm_classes.AlgorithmTrain)
+        self.assertEqual(2060, algorithm_train.id)
+        self.assertEqual(algorithm_train.debug_string, 'SetSectionTrackTestMockSessionString')
 
     @mock.patch('requests.Session', side_effect=SetSectionTrackTestMockSession)
     def tearDown(self, mocked_get_obj) -> None:

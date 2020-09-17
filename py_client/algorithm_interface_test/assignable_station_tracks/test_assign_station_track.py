@@ -11,7 +11,7 @@ from py_client.algorithm_interface_test.test_helper.SessionMockTestBase import \
 
 class TestSetStationTracksNode(unittest.TestCase):
     class SetStationTracksNodeTestSessionMock(SessionMockTestBase):
-        def post(self, request, json):
+        def put(self, request, json):
             self.__last_request = request
             self.__last_body = json
 
@@ -69,24 +69,37 @@ class TestSetStationTracksNode(unittest.TestCase):
 
     @mock.patch('requests.Session', side_effect=SetStationTracksNodeTestSessionMock)
     def test_assign_station_track_request(self, mocked_get_obj):
+        train_id = 2017
         train_path_node_id = 50
-        station_track_id = 162
+        node_track_id = 162
 
-        self.interface_to_viriato.assign_station_track(train_path_node_id=train_path_node_id,
-                                                       station_track_id_or_none=station_track_id)
+        self.interface_to_viriato.update_node_track(train_id, train_path_node_id, node_track_id)
 
         session_obj = self.interface_to_viriato._AlgorithmInterface__communication_layer.currentSession
         self.assertEqual(session_obj._SetStationTracksNodeTestSessionMock__last_request,
-                         get_api_url() + '/assign-station-track')
-        self.assertDictEqual(
-            session_obj._SetStationTracksNodeTestSessionMock__last_body,
-            dict(trainPathNodeId=50, nodeTrackId="162"))
+                         get_api_url() + '/trains/2017/train-path-nodes/50:update-node-track')
+        self.assertDictEqual(session_obj._SetStationTracksNodeTestSessionMock__last_body, dict(nodeTrackId=162))
+
+    @mock.patch('requests.Session', side_effect=SetStationTracksNodeTestSessionMock)
+    def test_assign_station_track_request_node_track_is_none(self, mocked_get_obj):
+        train_id = 2017
+        train_path_node_id = 50
+        node_track_id = None
+
+        self.interface_to_viriato.update_node_track(train_id, train_path_node_id, node_track_id)
+
+        session_obj = self.interface_to_viriato._AlgorithmInterface__communication_layer.currentSession
+        self.assertEqual(session_obj._SetStationTracksNodeTestSessionMock__last_request,
+                         get_api_url() + '/trains/2017/train-path-nodes/50:update-node-track')
+        self.assertDictEqual(session_obj._SetStationTracksNodeTestSessionMock__last_body, dict(nodeTrackId=None))
 
     @mock.patch('requests.Session', side_effect=SetStationTracksNodeTestSessionMock)
     def test_assign_station_track_response(self, mocked_get_obj):
-        train_path_node_id = 1
+        train_id = 2017
+        train_path_node_id = 50
+        node_track_id = None
 
-        test_train = self.interface_to_viriato.assign_station_track(train_path_node_id=train_path_node_id)
+        test_train = self.interface_to_viriato.update_node_track(train_id, train_path_node_id, node_track_id)
 
         self.assertIsInstance(test_train, py_client.aidm.aidm_algorithm_classes.AlgorithmTrain)
         self.assertIsInstance(test_train.train_path_nodes[0], aidm_train_path_node_classes.AlgorithmTrainPathNode)

@@ -209,16 +209,16 @@ class AlgorithmInterface:
         response_dict = self.__communication_layer.do_post_request(url_to_resource)
         return algorithm_platform_json_to_aidm_converter.convert_json_to_algorithm_train(response_dict)
 
-    def reroute_train(self, route: UpdateTrainRoute):
-        url_to_resource = "reroute-train"
-        post_request_body = object_to_algorithm_platform_json_converter.convert_any_object(route)
-        response_dict = self.__communication_layer.do_post_request(url_to_resource, request_body=post_request_body)
+    def reroute_train(self, train_id: int, route: UpdateTrainRoute):
+        url_to_resource = "trains/{0}/train-path-nodes:reroute".format(train_id)
+        put_request_body = object_to_algorithm_platform_json_converter.convert_any_object(route)
+        response_dict = self.__communication_layer.do_put_request(url_to_resource, request_body=put_request_body)
         return algorithm_platform_json_to_aidm_converter.convert_json_to_algorithm_train(response_dict)
 
-    def set_section_track(self, train_path_node_id: int, section_track_id: int) -> AlgorithmTrain:
-        url_to_resource = 'set-section-track'
-        post_request_body = dict(trainPathNodeId=train_path_node_id, sectionTrackId=section_track_id)
-        response_dict = self.__communication_layer.do_post_request(url_to_resource, request_body=post_request_body)
+    def update_section_track(self, train_id: int, train_path_node_id: int, section_track_id: int) -> AlgorithmTrain:
+        url_to_resource = 'trains/{0}/train-path-nodes/{1}:update-section-track'.format(train_id, train_path_node_id)
+        put_request_body = dict(sectionTrackId=section_track_id)
+        response_dict = self.__communication_layer.do_put_request(url_to_resource, request_body=put_request_body)
         return algorithm_platform_json_to_aidm_converter.convert_json_to_algorithm_train(response_dict)
 
     def update_train_times(
@@ -400,15 +400,18 @@ class AlgorithmInterface:
         response_dict = self.__communication_layer.do_get_request(url_to_resource)
         return converter_helpers.parse_to_timedelta(response_dict["headwayTime"])
 
-    def get_assignable_station_tracks_in_algorithm_node(
+    def get_assignable_node_tracks_for_train_path_node(
             self,
             node_id: int,
             train_path_node_id: int,
-            stop_status: StopStatus
+            stop_status: Optional[StopStatus]
     ) -> List[AlgorithmNodeTrack]:
-        url_to_resource = "assignable-station-tracks-in-algorithm-node"
-        stop_status_value = object_to_algorithm_platform_json_converter.convert_any_object(stop_status)
-        get_request_params = dict(nodeId=node_id, trainPathNodeId=train_path_node_id, stopStatus=stop_status_value)
+        url_to_resource = "nodes/{0}/node-tracks".format(node_id)
+        if stop_status is not None:
+            stop_status_value = object_to_algorithm_platform_json_converter.convert_any_object(stop_status)
+            get_request_params = dict(assignableForTrainPathNodeId=train_path_node_id, stopStatus=stop_status_value)
+        else:
+            get_request_params = dict(assignableForTrainPathNodeId=train_path_node_id)
         response_list = self.__communication_layer.do_get_request(url_to_resource, get_request_params)
         return algorithm_platform_json_to_aidm_converter.convert_list(AlgorithmNodeTrack, response_list)
 
@@ -421,14 +424,16 @@ class AlgorithmInterface:
         response_list = self.__communication_layer.do_get_request(url_to_resource, get_request_params)
         return algorithm_platform_json_to_aidm_converter.convert_list(AlgorithmNodeTrack, response_list)
 
-    def assign_station_track(
+    def update_node_track(
             self,
+            train_id: int,
             train_path_node_id: int,
             station_track_id_or_none: Optional[int] = None
     ) -> AlgorithmTrain:
-        url_to_resource = "assign-station-track"
-        post_request_body = dict(trainPathNodeId=train_path_node_id, nodeTrackId=str(station_track_id_or_none))
-        response_dict = self.__communication_layer.do_post_request(url_to_resource, post_request_body)
+        url_to_resource = "trains/{0}/train-path-nodes/{1}:update-node-track".format(train_id, train_path_node_id)
+        put_request_body = dict(
+            nodeTrackId=object_to_algorithm_platform_json_converter.convert_any_object(station_track_id_or_none))
+        response_dict = self.__communication_layer.do_put_request(url_to_resource, put_request_body)
         return algorithm_platform_json_to_aidm_converter.convert_json_to_algorithm_train(response_dict)
 
     def get_incoming_routing_edges(self, routing_point: RoutingPoint) -> IncomingRoutingEdgeSet:

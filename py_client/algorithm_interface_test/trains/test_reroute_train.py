@@ -9,7 +9,7 @@ from py_client.algorithm_interface_test.test_helper.SessionMockTestBase import g
 
 class TestRerouteTrain(unittest.TestCase):
     class RerouteTrainTestMockSession(SessionMockTestBase):
-        def post(self, request, json):
+        def put(self, request, json):
             self.__last_body = json
             self.__last_request = request
             json_string = (
@@ -80,15 +80,15 @@ class TestRerouteTrain(unittest.TestCase):
                                       start_train_path_node_id=start_train_path_node_id,
                                       routing_edges=routing_edges)
 
-        self.interface_to_viriato.reroute_train(test_route)
+        self.interface_to_viriato.reroute_train(train_id, test_route)
 
         session_obj = self.interface_to_viriato._AlgorithmInterface__communication_layer.currentSession
-        expected_routing_edge_body = [dict(nodeId=7,  startNodeTrackId=8, endSectionTrackId=1165),
+        expected_routing_edge_body = [dict(nodeId=7, startNodeTrackId=8, endSectionTrackId=1165),
                                       dict(nodeId=24, startSectionTrackId=1165, endNodeTrackId=25),
                                       dict(nodeId=24, startNodeTrackId=25, endSectionTrackId=1166),
                                       dict(nodeId=10, startSectionTrackId=1166, endNodeTrackId=12)]
 
-        self.assertEqual(get_api_url() + "/reroute-train",
+        self.assertEqual(get_api_url() + "/trains/{0}/train-path-nodes:reroute".format(train_id),
                          session_obj._RerouteTrainTestMockSession__last_request)
         self.assertListEqual(session_obj._RerouteTrainTestMockSession__last_body['routingEdges'],
                              expected_routing_edge_body)
@@ -112,7 +112,7 @@ class TestRerouteTrain(unittest.TestCase):
                                       start_train_path_node_id=start_train_path_node_id,
                                       routing_edges=routing_edges)
 
-        rerouted_algorithm_train = self.interface_to_viriato.reroute_train(test_route)
+        rerouted_algorithm_train = self.interface_to_viriato.reroute_train(train_id, test_route)
 
         self.assertEqual(rerouted_algorithm_train.id, 3516)
         self.assertEqual(rerouted_algorithm_train.debug_string, "RVZH_3_1_J03 tt_(S)")

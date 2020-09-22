@@ -1,0 +1,21 @@
+﻿{
+    "restResource": "/nodes/{nodeId}/separation-times",
+    "httpMethod": "GET",
+    "urlParameters": [ "=multiTrain:trainPathNodes[1].nodeId=" ],
+    "queryParameters": [
+        {
+            "key": "precedingTrainPathNodeId",
+            "value": "=multiTrain:trainPathNodes[1].id=",
+            "optional": true
+        },
+        {
+            "key": "succeedingTrainPathNodeId",
+            "value": "=sepTrain:trainPathNodes[1].id=",
+            "optional": true
+        }
+    ],
+    "requestBody": null,
+    "CSharpMethodName": "GetSeparationTimeInJunctionForPlannedTrainPaths(nodeID, precedingTrainPathNodeID, succeedingTrainPathNodeID)",
+    "CSharpMethodParameterTypes": [ "System.Int64", "System.Int64", "System.Int64" ],
+    "subcategory": "Get Separation Time in Junction for Planned Train Paths"
+}

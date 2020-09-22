@@ -1,0 +1,22 @@
+﻿{
+  "PythonObjectMapping": [
+    {
+      "ParameterName": "preceding_routing_edge",
+      "ClassName": "CrossingRoutingEdge",
+      "PythonParameterMapping": {
+        "node_id": "$.urlParameters.[0]",
+        "start_section_track_id": "$.queryParameters.[0].value",
+        "end_section_track_id": "$.queryParameters.[1].value"
+      }
+    },
+    {
+      "ParameterName": "succeeding_routing_edge",
+      "ClassName": "CrossingRoutingEdge",
+      "PythonParameterMapping": {
+        "node_id": "$.urlParameters.[0]",
+        "start_section_track_id": "$.queryParameters.[2].value",
+        "end_section_track_id": "$.queryParameters.[3].value"
+      }
+    }
+  ]
+}

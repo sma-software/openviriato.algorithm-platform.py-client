@@ -1,0 +1,31 @@
+﻿{
+    "restResource": "/nodes/{nodeId}/separation-times",
+    "httpMethod": "GET",
+    "urlParameters": [ "274" ],
+    "queryParameters": [
+        {
+            "key": "precedingFromSectionTrackId",
+            "value": "1083",
+            "optional": true
+        },
+        {
+            "key": "precedingToSectionTrackId",
+            "value": "1085",
+            "optional": true
+        },
+        {
+            "key": "succeedingFromSectionTrackId",
+            "value": "1086",
+            "optional": true
+        },
+        {
+            "key": "succeedingToSectionTrackId",
+            "value": "727",
+            "optional": true
+        }
+    ],
+    "requestBody": null,
+    "CSharpMethodName": "GetSeparationTimeInJunctionForRoutes(precedingRoutingEdge, succeedingRoutingEdge)",
+    "CSharpMethodParameterTypes": [ "SMA.AlgorithmPlatform.AlgorithmInterface.AIDM.CrossingRoutingEdge,SMA.AlgorithmPlatform.AlgorithmInterface.AIDM.CrossingRoutingEdge" ],
+    "subcategory": "Get Separation Time in Junction for Routes"
+}

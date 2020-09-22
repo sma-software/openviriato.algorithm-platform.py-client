@@ -1,0 +1,42 @@
+﻿{
+    "restResource": "/nodes/{nodeId}/separation-times",
+    "httpMethod": "GET",
+    "urlParameters": [ "=sepTimeInStation1:trainPathNodes[1].nodeId=" ],
+    "queryParameters": [
+        {
+            "key": "precedingFromSectionTrackId",
+            "value": "=sepTimeInStation1:trainPathNodes[1].sectionTrackId=",
+            "optional": true
+        },
+        {
+            "key": "precedingToNodeTrackId",
+            "value": "=sepTimeInStation1:trainPathNodes[1].nodeTrackId=",
+            "optional": true
+        },
+        {
+            "key": "precedingStopStatus",
+            "value": "passing",
+            "optional": true
+        },
+        {
+            "key": "succeedingFromSectionTrackId",
+            "value": "=sepTimeInStation2:trainPathNodes[1].sectionTrackId=",
+            "optional": true
+        },
+        {
+            "key": "succeedingToNodeTrackId",
+            "value": "=sepTimeInStation2:trainPathNodes[1].nodeTrackId=",
+            "optional": true
+        },
+        {
+            "key": "succeedingStopStatus",
+            "value": "operationalStop",
+            "optional": true
+        }
+    ],
+    "requestBody": null,
+    "CSharpMethodName": "GetSeparationTimeInStationForRoutes(precedingTrainRoutingEdge,precedingTrainStopStatus,succeedingTrainRoutingEdge,succeedingTrainStopStatus)",
+    "overridenParameterNames": [ "precedingSectionTrackID", "precedingNodeTrackID", "precedingTrainStopStatus", "succeedingSectionTrackID", "succeedingNodeTrackID", "succeedingTrainStopStatus" ],
+    "CSharpMethodParameterTypes": [ "SMA.AlgorithmPlatform.AlgorithmInterface.AIDM.IRoutingEdge", "SMA.AlgorithmPlatform.AlgorithmInterface.AIDM.StopStatus", "SMA.AlgorithmPlatform.AlgorithmInterface.AIDM.IRoutingEdge", "SMA.AlgorithmPlatform.AlgorithmInterface.AIDM.StopStatus" ],
+    "subcategory": "Get Separation Time in Station for Routes"
+}

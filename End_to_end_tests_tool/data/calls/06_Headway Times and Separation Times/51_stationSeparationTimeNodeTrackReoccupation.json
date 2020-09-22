@@ -1,0 +1,16 @@
+﻿{
+    "restResource": "/nodes/{nodeId}/separation-times",
+    "httpMethod": "GET",
+    "urlParameters": [ "=multiTrain:trainPathNodes[2].nodeId=" ],
+    "queryParameters": [
+        {
+            "key": "nodeTrackId",
+            "value": "322",
+            "optional": true
+        }
+    ],
+    "requestBody": null,
+    "CSharpMethodName": "GetSeparationTimeInStationForNodeTrackReoccupation(nodeID, nodeTrackID)",
+    "CSharpMethodParameterTypes": [ "System.Int64", "System.Int64" ],
+    "subcategory": "Get Separation Time in Station For Node Track Reoccupation"
+}

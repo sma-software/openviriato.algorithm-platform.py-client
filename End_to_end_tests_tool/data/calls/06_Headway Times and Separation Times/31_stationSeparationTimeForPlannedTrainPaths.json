@@ -1,0 +1,41 @@
+﻿{
+    "restResource": "/nodes/{nodeId}/separation-times",
+    "httpMethod": "GET",
+    "urlParameters": [ "=multiTrain:trainPathNodes[2].nodeId=" ],
+    "queryParameters": [
+        {
+            "key": "precedingTrainPathNodeId",
+            "value": "=multiTrain:trainPathNodes[2].id=",
+            "optional": true
+        },
+        {
+            "key": "precedingStopStatus",
+            "value": "passing",
+            "optional": true
+        },
+        {
+            "key": "precedingEntryOrExit",
+            "value": "entry",
+            "optional": true
+        },
+        {
+            "key": "succeedingTrainPathNodeId",
+            "value": "=sepTrain:trainPathNodes[0].id=",
+            "optional": true
+        },
+        {
+            "key": "succeedingStopStatus",
+            "value": "passing",
+            "optional": true
+        },
+        {
+            "key": "succeedingEntryOrExit",
+            "value": "exit",
+            "optional": true
+        }
+    ],
+    "requestBody": null,
+    "CSharpMethodName": "GetSeparationTimeInStationForPlannedTrainPaths(nodeID, precedingTrainPathNodeID, precedingTrainStopStatus, precedingStationEntryOrExit, succeedingTrainPathNodeID, succeedingTrainStopStatus, succeedingStationEntryOrExit)",
+    "CSharpMethodParameterTypes": [ "System.Int64", "System.Int64", "System.Nullable{SMA.AlgorithmPlatform.AlgorithmInterface.AIDM.StopStatus}", "SMA.AlgorithmPlatform.AlgorithmInterface.AIDM.StationEntryOrExit", "System.Int64", "System.Nullable{SMA.AlgorithmPlatform.AlgorithmInterface.AIDM.StopStatus}", "SMA.AlgorithmPlatform.AlgorithmInterface.AIDM.StationEntryOrExit" ],
+    "subcategory": "Get Separation Time in Station for Planned Train Paths"
+}

@@ -1,6 +1,12 @@
 import os
-from setuptools import setup
 from typing import TypeVar, List
+
+from setuptools import setup
+
+import py_client.aidm
+import py_client.algorithm_interface
+import py_client.communication
+import py_client.conversion
 from jenkins.packaging.setup_tools_arguments import SetupToolsArguments
 
 SELF = TypeVar('SELF', bound="PackagingManager")
@@ -35,7 +41,10 @@ class SetupToolsRunner:
             name=PACKAGE_BASENAME,
             version=setup_tools_arguments.py_client_version,
             packages=[
-                'py_client.aidm', 'py_client.Conversion', 'py_client.Communication', 'py_client.algorithm_interface'],
+                py_client.aidm.__name__,
+                py_client.conversion.__name__,
+                py_client.communication.__name__,
+                py_client.algorithm_interface.__name__],
             url='https://www.sma-partner.com',
             license='',
             author='',

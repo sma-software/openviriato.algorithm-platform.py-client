@@ -1,11 +1,12 @@
 import os
 from typing import List
-from py_client.algorithm_interface import algorithm_interface_factory
+
 from End_to_end_tests_tool.runner import tests_runner_config_file_reader, headless_runner
 from End_to_end_tests_tool.runner.tests_runner_config import TestsRunnerConfig
-from End_to_end_tests_tool.test_case_execution.test_case_result import EndToEndTestCaseResult
 from End_to_end_tests_tool.test_case_execution.test_case_executor import execute_test_case
 from End_to_end_tests_tool.test_case_execution.test_case_reader import TestCaseReader
+from End_to_end_tests_tool.test_case_execution.test_case_result import EndToEndTestCaseResult
+from py_client.algorithm_interface import algorithm_interface_factory
 
 TEST_CALL_DIRECTORY = 'calls'
 PY_CALL_DIRECTORY = 'py_calls'
@@ -38,7 +39,7 @@ def run_end_to_end_tests(root_directory: str, configuration_file_path: str) -> L
         configuration_file_path)
 
     with headless_runner.ViriatoHeadlessRunner(headless_runner_config) as running_headless:
-        return run_end_to_end_tests_with_headless(root_directory, configuration_file_path, running_headless)
+        return run_end_to_end_tests_with_headless(headless_runner_config, running_headless)
 
 
 def run_end_to_end_test_with_viriato():
@@ -48,19 +49,19 @@ def run_end_to_end_test_with_viriato():
             pass
 
     os.chdir(os.path.dirname(os.path.dirname(__file__)))
-    run_end_to_end_tests_with_headless(".",
-                                       "runner/tests_runner_config.json",
-                                       HeadLessRunnerMock())
+
+    headless_runner_config = tests_runner_config_file_reader.read_headless_runner_config_from_config_file(
+        "../",
+        "runner/tests_runner_config.json")
+
+    run_end_to_end_tests_with_headless(
+        headless_runner_config,
+        HeadLessRunnerMock())
 
 
 def run_end_to_end_tests_with_headless(
-        root_directory: str,
-        configuration_file_path: str,
+        headless_runner_config: TestsRunnerConfig,
         running_headless: headless_runner.ViriatoHeadlessRunner) -> List[EndToEndTestCaseResult]:
-    headless_runner_config = tests_runner_config_file_reader.read_headless_runner_config_from_config_file(
-        root_directory,
-        configuration_file_path)
-
     base_url = 'http://localhost:{0}'.format(headless_runner_config.algorithm_interface_port_nr)
 
     with algorithm_interface_factory.create(base_url) as algorithm_interface:

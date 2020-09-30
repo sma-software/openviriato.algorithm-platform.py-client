@@ -2,7 +2,7 @@ import json
 import os
 from typing import Optional
 
-from End_to_end_tests_tool.runner.tests_runner_config import TestsRunnerConfig
+from end_to_end_tests_tool.runner.tests_runner_config import TestsRunnerConfig
 
 
 def read_headless_runner_config_from_config_file(

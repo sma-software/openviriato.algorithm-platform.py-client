@@ -22,7 +22,7 @@ def main():
 
     absolute_project_root_dir = os.path.abspath(os.path.join(os.getcwd(), sys.argv[1]))
     make_this_file_executable_from_command_line_without_breaking_module_imports(absolute_project_root_dir)
-    from End_to_end_tests_tool.runner import tests_runner
+    from end_to_end_tests_tool.runner import tests_runner
 
     with open(file=sys.argv[5], mode='w') as log_file:
         tests_runner.run_end_to_end_tests(

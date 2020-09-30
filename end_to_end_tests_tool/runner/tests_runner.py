@@ -1,11 +1,11 @@
 import os
 from typing import List, Optional, Type
 
-from End_to_end_tests_tool.runner import tests_runner_config_file_reader, headless_runner
-from End_to_end_tests_tool.runner.tests_runner_config import TestsRunnerConfig
-from End_to_end_tests_tool.test_case_execution.test_case_executor import execute_test_case
-from End_to_end_tests_tool.test_case_execution.test_case_reader import TestCaseReader
-from End_to_end_tests_tool.test_case_execution.test_case_result import EndToEndTestCaseResult
+from end_to_end_tests_tool.runner import tests_runner_config_file_reader, headless_runner
+from end_to_end_tests_tool.runner.tests_runner_config import TestsRunnerConfig
+from end_to_end_tests_tool.test_case_execution.test_case_executor import execute_test_case
+from end_to_end_tests_tool.test_case_execution.test_case_reader import TestCaseReader
+from end_to_end_tests_tool.test_case_execution.test_case_result import EndToEndTestCaseResult
 from py_client.algorithm_interface import algorithm_interface_factory
 
 TEST_CALL_DIRECTORY = 'calls'

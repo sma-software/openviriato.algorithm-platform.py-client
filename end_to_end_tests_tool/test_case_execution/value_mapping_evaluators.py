@@ -4,7 +4,7 @@ from jsonpath_ng import parse
 from jsonpath_ng.lexer import JsonPathLexerError
 from requests import get
 
-from End_to_end_tests_tool import result
+from end_to_end_tests_tool import result
 from py_client.conversion.algorithm_platform_json_to_aidm_converter import *
 from py_client.conversion.convert_json_to_aidm_for_end_to_end_test_tools import *
 from py_client.conversion.converter_helpers import _translate_key

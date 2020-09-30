@@ -1,5 +1,5 @@
 from typing import Union, List
-from End_to_end_tests_tool.result import Result
+from end_to_end_tests_tool.result import Result
 
 
 class EndToEndTestCase:

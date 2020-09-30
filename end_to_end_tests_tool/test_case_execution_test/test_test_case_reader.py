@@ -2,8 +2,8 @@ import os
 import unittest
 from datetime import datetime
 
-from End_to_end_tests_tool.test_case_execution.test_case_reader import TestCaseReader
-from End_to_end_tests_tool.test_case_execution.test_case import EndToEndTestCase
+from end_to_end_tests_tool.test_case_execution.test_case_reader import TestCaseReader
+from end_to_end_tests_tool.test_case_execution.test_case import EndToEndTestCase
 from py_client.aidm.aidm_update_classes import UpdateTrainTimesNode
 
 

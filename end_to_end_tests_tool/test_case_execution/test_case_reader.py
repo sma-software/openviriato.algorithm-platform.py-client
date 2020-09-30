@@ -1,10 +1,10 @@
 import json
-from End_to_end_tests_tool.test_case_execution.test_case import EndToEndTestCase
-from End_to_end_tests_tool.test_case_execution.value_mapping_evaluators import _get_parameter_names_for_test_method, \
+from end_to_end_tests_tool.test_case_execution.test_case import EndToEndTestCase
+from end_to_end_tests_tool.test_case_execution.value_mapping_evaluators import _get_parameter_names_for_test_method, \
     determine_python_arguments_from_python_parameter_mapping, determine_python_arguments_from_python_object_mapping, \
     determine_python_arguments_from_json
 from py_client.conversion.converter_helpers import _translate_key
-from End_to_end_tests_tool import result
+from end_to_end_tests_tool import result
 
 
 class TestCaseReader:

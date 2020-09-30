@@ -6,7 +6,7 @@ from typing import Optional
 
 import requests
 
-from End_to_end_tests_tool.runner.tests_runner_config import TestsRunnerConfig
+from end_to_end_tests_tool.runner.tests_runner_config import TestsRunnerConfig
 from py_client.algorithm_interface.algorithm_interface_factory import AlgorithmInterface
 from py_client.communication.response_processing import AlgorithmPlatformError
 

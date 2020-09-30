@@ -1,0 +1,9 @@
+﻿{
+    "restResource": "/train-classifications",
+    "httpMethod": "GET",
+    "urlParameters":  null, 
+    "requestBody": null,
+    "CSharpMethodName": "GetTrainClassifications()",
+    "CSharpMethodParameterTypes": [],
+    "subcategory":  "Get Train Classifications" 
+}

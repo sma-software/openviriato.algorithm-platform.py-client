@@ -474,9 +474,9 @@ class AlgorithmInterface:
         response_dict = self.__communication_layer.do_get_request(url_to_resource)
         return algorithm_platform_json_to_aidm_converter.convert_json_to_update_train_times(response_dict)
 
-    def notify_user(self, message_level_1: str, message_level_2: str) -> None:
-        url_to_resource = 'notifications'
-        request_body = dict(messageLevel1=message_level_1, messageLevel2=message_level_2)
+    def notify_user(self, title: str, description: str) -> None:
+        url_to_resource = 'user-outputs/notifications'
+        request_body = dict(title=title, description=description)
         self.__communication_layer.do_post_request(url_to_resource, request_body)
 
     def show_status_message(self, short_message: str, long_message: Optional[str] = None) -> None:

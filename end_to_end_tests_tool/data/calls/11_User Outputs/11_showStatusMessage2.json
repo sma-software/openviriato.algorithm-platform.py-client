@@ -3,9 +3,9 @@
   "httpMethod": "POST",
   "requestBody": {
     "statusMessage": "text to progress bar",
-    "logMessage": "text to console"
+    "logMessage": null
   },
-  "CSharpMethodName": "ShowStatusMessage(statusMessage, logMessage)",
+  "CSharpMethodName": "ShowStatusMessage(statusMessage, null)",
   "CSharpMethodParameterTypes": [
     "System.String",
     "System.String"

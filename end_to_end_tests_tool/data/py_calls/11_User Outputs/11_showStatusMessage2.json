@@ -1,0 +1,5 @@
+﻿{
+  "PythonParameterMapping": {
+    "status_message": "$.requestBody.statusMessage"
+  }
+}

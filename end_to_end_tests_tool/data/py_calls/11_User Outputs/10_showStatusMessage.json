@@ -1,6 +1,6 @@
 ﻿{
-    "PythonParameterMapping": {
-      "status_message" : "$.requestBody.statusMessage",
-        "log_message": "$.requestBody.logMessage"
-    }
+  "PythonParameterMapping": {
+    "status_message": "$.requestBody.statusMessage",
+    "log_message": "$.requestBody.logMessage"
+  }
 }

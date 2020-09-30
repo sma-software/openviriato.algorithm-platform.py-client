@@ -1,0 +1,9 @@
+﻿{
+    "restResource": "/vehicles/formations/{formationId}",
+    "httpMethod": "GET",
+    "urlParameters": [ "=multiTrain:trainPathNodes[0].formationId=" ],
+    "requestBody": null,
+    "CSharpMethodName": "GetFormation(formationID)",
+    "CSharpMethodParameterTypes": [ "System.Int64" ],
+    "subcategory" : "Get Formation" 
+}

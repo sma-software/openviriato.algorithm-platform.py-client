@@ -14,13 +14,17 @@ class TestGetFormation(unittest.TestCase):
             self.__last_request = request
             self.__last_body = params
 
-            json__string = ("{\n"
-                            "  \"ID\": 1828,\n"
-                            "  \"VehicleTypeIDs\": [\n"
-                            "    4107\n"
-                            "  ],\n"
-                            "  \"DebugString\": \"train configuration: \"\n"
-                            "}")
+            json__string = (
+                "{\n"
+                "        \"id\": 4108,\n"
+                "        \"vehicleTypeIds\": [\n"
+                "             4107\n"
+                "        ],\n"
+                "        \"placesFirstClass\": 125,\n"
+                "        \"placesSecondClass\": 326,\n"
+                "        \"debugString\": \"train configuration:  seats 125 326\"\n"
+                "}"
+            )
             return APISessionMock.create_response_mock(json__string, 200)
 
     @mock.patch('requests.Session', side_effect=GetGetFormationTestSessionMock)
@@ -45,10 +49,12 @@ class TestGetFormation(unittest.TestCase):
         test_algorithm_formation = self.interface_to_viriato.get_formation(key)
 
         self.assertIsInstance(test_algorithm_formation, py_client.aidm.aidm_algorithm_classes.AlgorithmFormation)
-        self.assertEqual(test_algorithm_formation.debug_string, "train configuration: ")
-        self.assertEqual(test_algorithm_formation.id, 1828)
+        self.assertEqual(test_algorithm_formation.debug_string, "train configuration:  seats 125 326")
+        self.assertEqual(test_algorithm_formation.id, 4108)
         self.assertIsInstance(test_algorithm_formation.vehicle_type_ids[0], int)
         self.assertEqual(test_algorithm_formation.vehicle_type_ids[0], 4107)
+        self.assertEqual(test_algorithm_formation.places_first_class, 125)
+        self.assertEqual(test_algorithm_formation.places_second_class, 326)
 
     @mock.patch('requests.Session', side_effect=GetGetFormationTestSessionMock)
     def tearDown(self, mocked_get_obj) -> None:

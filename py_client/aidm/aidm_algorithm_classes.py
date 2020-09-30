@@ -60,12 +60,29 @@ class AlgorithmTrain(_HasID, _HasDebugString):
 
 
 class AlgorithmFormation(_HasID, _HasDebugString):
+    __places_first_class: int
+    __places_second_class: int
     __vehicle_type_ids: List[int]
 
-    def __init__(self, id: int, debug_string: str, vehicle_type_ids: List[int]):
+    def __init__(self,
+                 id: int,
+                 debug_string: str,
+                 places_first_class: int,
+                 places_second_class: int,
+                 vehicle_type_ids: List[int]):
         _HasID.__init__(self, id)
         _HasDebugString.__init__(self, debug_string)
+        self.__places_first_class = places_first_class
+        self.__places_second_class = places_second_class
         self.__vehicle_type_ids = vehicle_type_ids
+
+    @property
+    def places_first_class(self) -> int:
+        return self.__places_first_class
+
+    @property
+    def places_second_class(self) -> int:
+        return self.__places_second_class
 
     @property
     def vehicle_type_ids(self) -> List[int]:

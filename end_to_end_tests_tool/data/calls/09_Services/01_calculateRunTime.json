@@ -1,0 +1,9 @@
+﻿{
+    "restResource": "/services/trains/{trainId}:run-time-calculation",
+    "httpMethod": "GET",
+    "urlParameters": [ "=multiTrain:id=" ],
+    "requestBody": null,
+    "CSharpMethodName": "CalculateRunTimes(trainID)",
+    "CSharpMethodParameterTypes": [ "System.Int64" ],
+    "subcategory": "Calculate Running Times"
+}

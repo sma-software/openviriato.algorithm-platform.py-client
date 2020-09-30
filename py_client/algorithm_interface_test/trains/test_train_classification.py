@@ -25,7 +25,7 @@ class TestGetTrainClassification(TestCase):
         session_obj = self.interface_to_viriato._AlgorithmInterface__communication_layer.currentSession
 
         self.assertEqual(session_obj._GetTrainClassificationTestMockSession__last_request,
-                         get_api_url() + '/train-classification/99')
+                         get_api_url() + '/train-classifications/99')
         self.assertDictEqual(session_obj._GetTrainClassificationTestMockSession__last_body, {})
 
     @mock.patch('requests.Session', side_effect=GetTrainClassificationTestMockSession)

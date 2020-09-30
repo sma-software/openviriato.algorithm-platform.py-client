@@ -114,7 +114,7 @@ class AlgorithmInterface:
         )
 
     def get_train_classification(self, train_id: int) -> AlgorithmTrainClassification:
-        url_to_resource = 'train-classification/{0}'.format(train_id)
+        url_to_resource = 'train-classifications/{0}'.format(train_id)
         response_dict = self.__communication_layer.do_get_request(url_to_resource)
         return algorithm_platform_json_to_aidm_converter.convert(AlgorithmTrainClassification,
                                                                  response_dict)

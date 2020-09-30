@@ -91,12 +91,24 @@ class AlgorithmFormation(_HasID, _HasDebugString):
 
 class AlgorithmVehicleType(_HasID, _HasDebugString):
     __is_engine: bool
+    __places_first_class: int
+    __places_second_class: int
 
-    def __init__(self, id: int, debug_string: str, is_engine: bool):
+    def __init__(self, id: int, debug_string: str, is_engine: bool, places_first_class: int, places_second_class: int):
         _HasID.__init__(self, id)
         _HasDebugString.__init__(self, debug_string)
+        self.__places_first_class = places_first_class
+        self.__places_second_class = places_second_class
         self.__is_engine = is_engine
 
     @property
     def is_engine(self) -> bool:
         return self.__is_engine
+
+    @property
+    def places_first_class(self) -> int:
+        return self.__places_first_class
+
+    @property
+    def places_second_class(self) -> int:
+        return self.__places_second_class

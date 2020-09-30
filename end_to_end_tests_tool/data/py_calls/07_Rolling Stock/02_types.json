@@ -1,0 +1,5 @@
+﻿{
+  "PythonParameterMapping": {
+    "vehicle_type_id": "$.urlParameters.[0]"
+  }
+}

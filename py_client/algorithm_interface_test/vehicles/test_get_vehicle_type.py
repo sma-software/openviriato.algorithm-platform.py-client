@@ -14,11 +14,14 @@ class TestGetVehicleType(unittest.TestCase):
             self.__last_request = request
             self.__last_body = params
 
-            json__string = ("{\n"
-                            "  \"ID\": 1828,\n"
-                            "  \"DebugString\": \"vehicle isEngine: True, model: ICN, series: 1, velMax: 200\",\n"
-                            "  \"IsEngine\": true\n"
-                            "}")
+            json__string = (
+                "{\n"
+                "  \"id\": 4107,\n"
+                " \"debugString\": \"vehicle isEngine: True, model: ICN, series: 1, velMax: 200, seats: 125 326\",\n"
+                " \"isEngine\": true,\n"
+                " \"placesFirstClass\": 125,\n"
+                " \"placesSecondClass\": 326\n"
+                " }")
             return APISessionMock.create_response_mock(json__string, 200)
 
     @mock.patch('requests.Session', side_effect=GetVehicleTypeTestSessionMock)
@@ -43,10 +46,13 @@ class TestGetVehicleType(unittest.TestCase):
         test_algorithm_vehicle_type = self.interface_to_viriato.get_vehicle_type(vehicle_type_id)
 
         self.assertIsInstance(test_algorithm_vehicle_type, py_client.aidm.aidm_algorithm_classes.AlgorithmVehicleType)
-        self.assertEqual(test_algorithm_vehicle_type.debug_string,
-                         "vehicle isEngine: True, model: ICN, series: 1, velMax: 200")
+        self.assertEqual(
+            test_algorithm_vehicle_type.debug_string,
+            "vehicle isEngine: True, model: ICN, series: 1, velMax: 200, seats: 125 326")
         self.assertEqual(test_algorithm_vehicle_type.is_engine, True)
-        self.assertEqual(test_algorithm_vehicle_type.id, 1828)
+        self.assertEqual(test_algorithm_vehicle_type.id, 4107)
+        self.assertEqual(test_algorithm_vehicle_type.places_first_class, 125)
+        self.assertEqual(test_algorithm_vehicle_type.places_second_class, 326)
 
     @mock.patch('requests.Session', side_effect=GetVehicleTypeTestSessionMock)
     def tearDown(self, mocked_get_obj) -> None:

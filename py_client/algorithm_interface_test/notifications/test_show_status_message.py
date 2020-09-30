@@ -24,9 +24,9 @@ class TestShowStatusMessage(unittest.TestCase):
 
             session_obj = interface_to_viriato._AlgorithmInterface__communication_layer.currentSession
             self.assertEqual(session_obj._ShowStatusMessageSessionTestMock__last_request,
-                             get_api_url() + '/status-message')
+                             get_api_url() + '/user-outputs/status-messages')
             self.assertEqual(session_obj._ShowStatusMessageSessionTestMock__last_body,
-                             {'shortMessage': 'Only One Message Sent', 'longMessage': None})
+                             {'statusMessage': 'Only One Message Sent', 'logMessage': None})
 
     @mock.patch('requests.Session', side_effect=ShowStatusMessageSessionTestMock)
     def test_show_status_message_two_str(self, mocked_requests_session):
@@ -38,9 +38,9 @@ class TestShowStatusMessage(unittest.TestCase):
 
             session_obj = interface_to_viriato._AlgorithmInterface__communication_layer.currentSession
             self.assertEqual(session_obj._ShowStatusMessageSessionTestMock__last_request,
-                             get_api_url() + '/status-message')
+                             get_api_url() + '/user-outputs/status-messages')
             self.assertDictEqual(session_obj._ShowStatusMessageSessionTestMock__last_body,
-                                 {'shortMessage': 'this is the short one', 'longMessage': 'long one'})
+                                 {'statusMessage': 'this is the short one', 'logMessage': 'long one'})
 
 
 if __name__ == '__main__':

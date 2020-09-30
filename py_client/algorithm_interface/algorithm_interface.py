@@ -479,9 +479,9 @@ class AlgorithmInterface:
         request_body = dict(title=title, description=description)
         self.__communication_layer.do_post_request(url_to_resource, request_body)
 
-    def show_status_message(self, short_message: str, long_message: Optional[str] = None) -> None:
-        url_to_resource = 'status-message'
-        request_body = dict(shortMessage=short_message, longMessage=long_message)
+    def show_status_message(self, status_message: str, log_message: Optional[str] = None) -> None:
+        url_to_resource = 'user-outputs/status-messages'
+        request_body = dict(statusMessage=status_message, logMessage=log_message)
         self.__communication_layer.do_post_request(url_to_resource, request_body)
 
     def __delegate_get_any_parameter(

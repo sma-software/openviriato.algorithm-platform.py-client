@@ -60,7 +60,7 @@ class TestUpdateTrainTimes(unittest.TestCase):
     def test_update_train_times_request(self, mocked_get_obj):
         train_id = 2060
         update_train_time_nodes = [
-            py_client.aidm.aidm_update_classes.UpdateTrainTimesNode(
+            py_client.aidm.aidm_update_classes.UpdateTimesTrainPathNode(
                 train_path_node_id=1332,
                 arrival_time=datetime.datetime(2003, 5, 1, 0, 4),
                 departure_time=datetime.datetime(2003, 5, 1, 0, 5))]
@@ -85,7 +85,7 @@ class TestUpdateTrainTimes(unittest.TestCase):
     def test_update_train_times_response(self, mocked_get_obj):
         train_id = 2060
         update_train_time_nodes = [
-            py_client.aidm.aidm_update_classes.UpdateTrainTimesNode(
+            py_client.aidm.aidm_update_classes.UpdateTimesTrainPathNode(
                 train_path_node_id=1332,
                 arrival_time=datetime.datetime(2003, 5, 1, 0, 4),
                 departure_time=datetime.datetime(2003, 5, 1, 0, 5)

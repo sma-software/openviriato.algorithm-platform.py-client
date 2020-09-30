@@ -224,7 +224,7 @@ class AlgorithmInterface:
     def update_train_times(
             self,
             train_id: int,
-            update_train_times_nodes: List[UpdateTrainTimesNode]
+            update_train_times_nodes: List[UpdateTimesTrainPathNode]
     ) -> AlgorithmTrain:
         url_to_resource = 'trains/{0}/train-path-nodes:update-times'.format(train_id)
         put_body_list = object_to_algorithm_platform_json_converter.convert_any_object(update_train_times_nodes)
@@ -469,8 +469,8 @@ class AlgorithmInterface:
         response_dict = self.__communication_layer.do_get_request(url_to_resource)
         return algorithm_platform_json_to_aidm_converter.convert(AlgorithmVehicleType, response_dict)
 
-    def calculate_run_times(self, train_id: int) -> (UpdateTrainTimes, None):
-        url_to_resource = "calculate-run-times/{0}".format(train_id)
+    def calculate_run_times(self, train_id: int) -> (UpdateTimesTrain, None):
+        url_to_resource = "services/trains/{0}:run-time-calculation".format(train_id)
         response_dict = self.__communication_layer.do_get_request(url_to_resource)
         return algorithm_platform_json_to_aidm_converter.convert_json_to_update_train_times(response_dict)
 

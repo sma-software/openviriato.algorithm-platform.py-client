@@ -35,7 +35,7 @@ class UpdateTrainRoute(_UpdateTrain):
         return self.__start_train_path_node_id
 
 
-class UpdateTrainTimesNode:
+class UpdateTimesTrainPathNode:
     __arrival_time: datetime.datetime
     __departure_time: datetime.datetime
     __minimum_run_time: Optional[datetime.timedelta] = None
@@ -84,16 +84,16 @@ class UpdateTrainTimesNode:
         return self.__stop_status
 
 
-class UpdateTrainTimes(_UpdateTrain):
-    __times: List[UpdateTrainTimesNode]
+class UpdateTimesTrain(_UpdateTrain):
+    __update_times_train_path_nodes: List[UpdateTimesTrainPathNode]
 
-    def __init__(self, train_id: int, times: List[UpdateTrainTimesNode]):
+    def __init__(self, train_id: int, update_times_train_path_nodes: List[UpdateTimesTrainPathNode]):
         _UpdateTrain.__init__(self, train_id)
-        self.__times = times
+        self.__update_times_train_path_nodes = update_times_train_path_nodes
 
     @property
-    def times(self) -> List[UpdateTrainTimesNode]:
-        return self.__times
+    def update_times_train_path_nodes(self) -> List[UpdateTimesTrainPathNode]:
+        return self.__update_times_train_path_nodes
 
 
 class UpdateTrainStopTimesNode:

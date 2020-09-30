@@ -219,7 +219,7 @@ class TestToAIDMConverter(unittest.TestCase):
         self.assertEqual(test_crossing_routing_edge_set.routing_edges[0].node_id, 281)
 
     def test_convert_json_to_update_train_times(self):
-        param_dict = dict(TrainID=1012, Times=[
+        param_dict = dict(TrainID=1012, UpdateTimesTrainPathNodes=[
             dict(TrainPathNodeID=3880, ArrivalTime="2003-05-01T07:00:00", DepartureTime="2003-05-01T07:00:00",
                  MinimumRunTime=None, MinimumStopTime="P0D", StopStatus="commercialStop"),
             dict(TrainPathNodeID=4246, ArrivalTime="2003-05-01T07:01:42", DepartureTime="2003-05-01T07:01:42",
@@ -228,11 +228,11 @@ class TestToAIDMConverter(unittest.TestCase):
         test_update_train_times = algorithm_platform_json_to_aidm_converter.convert_json_to_update_train_times(
             param_dict)
 
-        self.assertIsInstance(test_update_train_times, UpdateTrainTimes)
+        self.assertIsInstance(test_update_train_times, UpdateTimesTrain)
         self.assertEqual(test_update_train_times.train_id, 1012)
-        self.assertIsInstance(test_update_train_times.times[0], UpdateTrainTimesNode)
-        self.assertEqual(test_update_train_times.times[0].train_path_node_id, 3880)
-        self.assertEqual(test_update_train_times.times[0].arrival_time,
+        self.assertIsInstance(test_update_train_times.update_times_train_path_nodes[0], UpdateTimesTrainPathNode)
+        self.assertEqual(test_update_train_times.update_times_train_path_nodes[0].train_path_node_id, 3880)
+        self.assertEqual(test_update_train_times.update_times_train_path_nodes[0].arrival_time,
                          datetime.datetime(year=2003, month=5, day=1, hour=7, minute=0))
 
     def test_convert_json_to_update_train_times_node(self):
@@ -242,7 +242,7 @@ class TestToAIDMConverter(unittest.TestCase):
         update_train_times_node = algorithm_platform_json_to_aidm_converter.convert_json_to_update_train_times_node(
             param_dict)
 
-        self.assertIsInstance(update_train_times_node, UpdateTrainTimesNode)
+        self.assertIsInstance(update_train_times_node, UpdateTimesTrainPathNode)
         self.assertEqual(update_train_times_node.train_path_node_id, 3880)
         self.assertEqual(update_train_times_node.arrival_time,
                          datetime.datetime(year=2003, month=5, day=1, hour=7, minute=0))

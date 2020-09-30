@@ -80,13 +80,15 @@ def convert_json_to_crossing_routing_edge_set(attribute_dict: dict) -> CrossingR
     return convert(CrossingRoutingEdgeSet, snake_case_dict)
 
 
-def convert_json_to_update_train_times(attribute_dict: dict) -> UpdateTrainTimes:
+def convert_json_to_update_train_times(attribute_dict: dict) -> UpdateTimesTrain:
     snake_case_dict = convert_keys_to_snake_case(attribute_dict)
-    snake_case_dict["times"] = convert_list(convert_json_to_update_train_times_node, snake_case_dict["times"])
-    return convert(UpdateTrainTimes, snake_case_dict)
+    snake_case_dict["update_times_train_path_nodes"] = convert_list(
+        convert_json_to_update_train_times_node,
+        snake_case_dict["update_times_train_path_nodes"])
+    return convert(UpdateTimesTrain, snake_case_dict)
 
 
-def convert_json_to_update_train_times_node(attribute_dict: dict) -> UpdateTrainTimesNode:
+def convert_json_to_update_train_times_node(attribute_dict: dict) -> UpdateTimesTrainPathNode:
     snake_case_dict = convert_keys_to_snake_case(attribute_dict)
     for key in ['arrival_time', 'departure_time']:
         snake_case_dict[key] = parse_to_datetime(snake_case_dict[key])
@@ -95,4 +97,4 @@ def convert_json_to_update_train_times_node(attribute_dict: dict) -> UpdateTrain
     if snake_case_dict['stop_status'] is not None:
         stop_status_value = snake_case_dict['stop_status']
         snake_case_dict['stop_status'] = StopStatus[convert_to_snake_case(stop_status_value)]
-    return convert(UpdateTrainTimesNode, snake_case_dict)
+    return convert(UpdateTimesTrainPathNode, snake_case_dict)

@@ -4,7 +4,7 @@ from datetime import datetime
 
 from end_to_end_tests_tool.test_case_execution.test_case_reader import TestCaseReader
 from end_to_end_tests_tool.test_case_execution.test_case import EndToEndTestCase
-from py_client.aidm.aidm_update_classes import UpdateTrainTimesNode
+from py_client.aidm.aidm_update_classes import UpdateTimesTrainPathNode
 
 
 def assemble_test_file_names(json_file_name: str):
@@ -422,7 +422,7 @@ class TestCase(unittest.TestCase):
         self.assertEqual(test_case.arguments_for_py_client_method_result.result_value[0], "2060")
         self.assertIsInstance(test_case.arguments_for_py_client_method_result.result_value[1], list)
         self.assertEqual(len(test_case.arguments_for_py_client_method_result.result_value[1]), 1)
-        self.assertIsInstance(test_case.arguments_for_py_client_method_result.result_value[1][0], UpdateTrainTimesNode)
+        self.assertIsInstance(test_case.arguments_for_py_client_method_result.result_value[1][0], UpdateTimesTrainPathNode)
         self.assertEqual(test_case.arguments_for_py_client_method_result.result_value[1][0].train_path_node_id, 1332)
         self.assertEqual(
             test_case.arguments_for_py_client_method_result.result_value[1][0].arrival_time,

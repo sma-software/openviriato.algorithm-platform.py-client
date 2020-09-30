@@ -16,7 +16,7 @@ class TestCalculateRunTimes(unittest.TestCase):
             self.__last_request = request
             json_string = ("{\n"
                            "  \"trainId\": 2060,\n"
-                           "  \"times\": [\n"
+                           "  \"update_times_train_path_nodes\": [\n"
                            "    {\n"
                            "      \"trainPathNodeId\": 3880,\n"
                            "      \"arrivalTime\": \"2003-05-01T07:00:00\",\n"
@@ -60,7 +60,7 @@ class TestCalculateRunTimes(unittest.TestCase):
 
         session_obj = self.interface_to_viriato._AlgorithmInterface__communication_layer.currentSession
         self.assertEqual(session_obj._CalculateRunTimesTestMockSession__last_request,
-                         get_api_url() + '/calculate-run-times/2060')
+                         get_api_url() + '/services/trains/2060:run-time-calculation')
         self.assertDictEqual(session_obj._CalculateRunTimesTestMockSession__last_body, {})
 
     @mock.patch('requests.Session', side_effect=CalculateRunTimesTestMockSession)
@@ -69,10 +69,10 @@ class TestCalculateRunTimes(unittest.TestCase):
 
         updated_train_times = self.interface_to_viriato.calculate_run_times(train_id)
 
-        self.assertIsInstance(updated_train_times, py_client.aidm.aidm_update_classes.UpdateTrainTimes)
+        self.assertIsInstance(updated_train_times, py_client.aidm.aidm_update_classes.UpdateTimesTrain)
         self.assertEqual(updated_train_times.train_id, 2060)
-        self.assertIsInstance(updated_train_times.times, list)
-        self.assertIsInstance(updated_train_times.times[0], py_client.aidm.aidm_update_classes.UpdateTrainTimesNode)
+        self.assertIsInstance(updated_train_times.update_times_train_path_nodes, list)
+        self.assertIsInstance(updated_train_times.update_times_train_path_nodes[0], py_client.aidm.aidm_update_classes.UpdateTimesTrainPathNode)
 
     @mock.patch('requests.Session', side_effect=CalculateRunTimesTestMockSession)
     def tearDown(self, mocked_get_obj) -> None:

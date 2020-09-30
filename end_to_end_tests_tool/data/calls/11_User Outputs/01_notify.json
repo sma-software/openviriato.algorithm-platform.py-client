@@ -1,0 +1,14 @@
+﻿{
+  "restResource": "/user-outputs/notifications",
+  "httpMethod": "POST",
+  "requestBody": {
+    "title": "Example Generation Algorithm",
+    "description": "Example message"
+  },
+  "CSharpMethodName": "NotifyUser(title, description)",
+  "CSharpMethodParameterTypes": [
+    "System.String",
+    "System.String"
+  ],
+  "subcategory": "Send Notification"
+}

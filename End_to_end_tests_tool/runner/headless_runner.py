@@ -2,8 +2,10 @@ import os
 import signal
 import subprocess
 import time
-import requests
 from typing import Optional
+
+import requests
+
 from End_to_end_tests_tool.runner.tests_runner_config import TestsRunnerConfig
 from py_client.algorithm_interface.algorithm_interface_factory import AlgorithmInterface
 from py_client.communication.response_processing import AlgorithmPlatformError
@@ -74,7 +76,7 @@ class ViriatoHeadlessRunner:
                 self.__subprocess_running_headless.send_signal(signal.CTRL_C_EVENT)
                 print('shutting down Headless')
                 while self.check_if_headless_is_still_running():
-                    print('shutdown in progress')
                     time.sleep(1)
             except KeyboardInterrupt:
                 pass
+            print('Headless has been shut down successfully')

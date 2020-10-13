@@ -1,5 +1,0 @@
-﻿{
-    "PythonParameterMapping": {
-      "train_id" : "$.urlParameters.[0]"
-    }
-}

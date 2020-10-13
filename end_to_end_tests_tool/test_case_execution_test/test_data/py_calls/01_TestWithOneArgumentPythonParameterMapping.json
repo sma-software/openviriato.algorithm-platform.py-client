@@ -1,5 +1,0 @@
-﻿{
-    "PythonParameterMapping": {
-      "node_id" : "$.urlParameters.[0]"
-    }
-}

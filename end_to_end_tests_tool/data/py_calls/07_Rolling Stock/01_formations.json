@@ -1,5 +1,0 @@
-﻿{
-  "PythonParameterMapping": {
-    "formation_id": "$.urlParameters.[0]"
-  }
-}

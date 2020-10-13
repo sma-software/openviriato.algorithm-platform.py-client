@@ -1,9 +1,0 @@
-﻿{
-    "restResource": "/section-tracks",
-    "httpMethod": "GET",
-    "urlParameters": null,
-    "requestBody": null,
-    "CSharpMethodName": "GetAllSectionTracks()",
-    "CSharpMethodParameterTypes": [],
-    "subcategory": "Get All Section Tracks"
-}

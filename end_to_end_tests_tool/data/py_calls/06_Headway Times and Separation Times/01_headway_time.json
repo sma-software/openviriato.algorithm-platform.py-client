@@ -1,9 +1,0 @@
-﻿{
-  "PythonParameterMapping": {
-    "section_track_id": "$.urlParameters.[0]",
-    "from_node_id": "$.queryParameters.[0].value",
-    "to_node_id": "$.queryParameters.[1].value",
-    "preceding_train_path_node_id": "$.queryParameters.[2].value",
-    "succeeding_train_path_node_id": "$.queryParameters.[3].value"
-  }
-}

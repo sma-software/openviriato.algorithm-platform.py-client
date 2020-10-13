@@ -1,9 +1,0 @@
-﻿{
-    "restResource": "/train-classifications/{trainId}",
-    "httpMethod": "GET",
-    "urlParameters": [ "=timetableTrainParameter:id=" ],
-    "requestBody": null,
-    "CSharpMethodName": "GetTrainClassification(trainID)",
-    "CSharpMethodParameterTypes": [ "System.Int64" ],
-    "subcategory": "Get Train Classification"
-}

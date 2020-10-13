@@ -1,6 +1,0 @@
-﻿{
-  "PythonParameterMapping": {
-    "node_id": "$.urlParameters.[0]",
-    "node_track_id": "$.queryParameters.[0].value"
-  }
-}

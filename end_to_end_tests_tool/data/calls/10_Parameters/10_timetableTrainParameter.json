@@ -1,9 +1,0 @@
-﻿{
-    "restResource": "/parameters/{key}",
-    "urlParameters": [ "timetableTrainParameter" ],
-    "httpMethod": "GET",
-    "requestBody": null,
-    "CSharpMethodName": "GetAlgorithmTrainParameter(key)",
-    "CSharpMethodParameterTypes": [ "System.String" ],
-    "subcategory": "Get Parameters"
-}

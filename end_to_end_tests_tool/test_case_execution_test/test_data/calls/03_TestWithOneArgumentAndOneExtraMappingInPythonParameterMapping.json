@@ -1,9 +1,0 @@
-﻿{
-    "restResource": "/nodes/{nodeId}",
-    "httpMethod": "GET",
-    "urlParameters": [ "161" ],
-    "requestBody": null,
-    "CSharpMethodName": "TestOneMappingExtra(nodeId)",
-    "CSharpMethodParameterTypes": [ "System.Int64" ],
-    "subcategory": "Get Node"
-}

@@ -1,9 +1,0 @@
-﻿{
-    "PythonParameterMapping": {
-        "node_id" : "$.urlParameters.[0]",
-        "train_path_node_id" : "$.queryParameters.[0].value",
-        "stop_status" : "$.queryParameters.[1].value"
-    }
-}
-
-

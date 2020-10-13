@@ -1,9 +1,0 @@
-﻿{
-    "restResource": "/nodes/{id}/crossing-routing-edges",
-    "httpMethod": "GET",
-    "urlParameters": [ "281" ],
-    "requestBody": null,
-    "CSharpMethodName": "GetCrossingRoutingEdges(routingPoint)",
-    "CSharpMethodParameterTypes": [ "SMA.AlgorithmPlatform.AlgorithmInterface.AIDM.RoutingPoint" ],
-    "subcategory": "Get Crossing Routing Edges"
-}

@@ -1,9 +1,0 @@
-﻿{
-    "restResource": "/vehicles/types/{vehicleTypeId}",
-    "httpMethod": "GET",
-    "urlParameters": [ "4107" ],
-    "requestBody": null,
-    "CSharpMethodName": "GetVehicleType(vehicleTypeID)",
-    "CSharpMethodParameterTypes": [ "System.Int64" ],
-    "subcategory" : "Get Vehicle Type" 
-}

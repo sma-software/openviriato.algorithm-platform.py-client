@@ -1,9 +1,0 @@
-{
-  "id": 4108,
-  "vehicleTypeIds": [
-    4107
-  ],
-  "placesFirstClass": 125,
-  "placesSecondClass": 326,
-  "debugString": "train configuration:  seats 125 326"
-}

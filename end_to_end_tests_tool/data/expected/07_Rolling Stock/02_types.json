@@ -1,7 +1,0 @@
-{
-  "id": 4107,
-  "debugString": "vehicle isEngine: True, model: ICN, series: 1, velMax: 200, seats: 125 326",
-  "isEngine": true,
-  "placesFirstClass": 125,
-  "placesSecondClass": 326
-}

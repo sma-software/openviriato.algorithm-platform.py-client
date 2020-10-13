@@ -1,6 +1,0 @@
-﻿{
-  "PythonParameterMapping": {
-    "title": "$.requestBody.title",
-    "description": "$.requestBody.description"
-  }
-}

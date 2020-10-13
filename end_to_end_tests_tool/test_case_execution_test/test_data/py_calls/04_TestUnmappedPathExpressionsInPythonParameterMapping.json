@@ -1,5 +1,0 @@
-﻿{
-    "PythonParameterMapping": {
-        "section_track_id" : "$.queryParameters.[0].value"
-    }
-}

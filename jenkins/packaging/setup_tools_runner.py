@@ -11,7 +11,7 @@ from jenkins.packaging.setup_tools_arguments import SetupToolsArguments
 
 SELF = TypeVar('SELF', bound="PackagingManager")
 
-PACKAGE_BASENAME: str = "algorithmplatform"
+PACKAGE_BASENAME: str = "sma.algorithm_platform.py_client"
 PACKAGE_OUTPUT_SUFFIX: str = "py3-none-any"
 
 

@@ -493,6 +493,12 @@ class AlgorithmInterface:
         response_dict = self.__communication_layer.do_post_request(url_to_resource, table_definition_as_json)
         return converter_helpers.convert_keys_to_snake_case(response_dict)["table_id"]
 
+    def add_rows_to_table(self, table_id: int, table_rows: List[TableRow]):
+        url_to_resource = 'user-outputs/tables/{0}/rows'.format(table_id)
+        list_of_cells_per_row = object_to_algorithm_platform_json_converter.convert_any_object(table_rows)
+        request_body = [dict(row=row["cells"]) for row in list_of_cells_per_row]
+        self.__communication_layer.do_post_request(url_to_resource, request_body)
+
     def __delegate_get_any_parameter(
             self,
             key: str

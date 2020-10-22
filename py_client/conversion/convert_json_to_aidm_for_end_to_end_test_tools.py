@@ -2,7 +2,7 @@ from typing import List, Union, Dict, Type
 
 from py_client.aidm import StopStatus, UpdateTimesTrainPathNode, UpdateTrainStopTimesNode, IncomingRoutingEdge, \
     OutgoingRoutingEdge, CrossingRoutingEdge, UpdateTrainRoute, StationEntryOrExit, TableDefinition, TableCellDataType, \
-    TableTextCell, TableColumnDefinition
+    TableTextCell, TableColumnDefinition, TableAlgorithmNodeCell, TableRow, TableAlgorithmTrainCell
 from py_client.conversion.algorithm_platform_json_to_aidm_converter import convert
 from py_client.conversion.converter_helpers import convert_keys_to_snake_case, parse_to_datetime, convert_to_snake_case
 
@@ -67,6 +67,24 @@ def create_table_definition_for_end_to_end_to_test(object_as_json: dict) -> Tabl
             TableCellDataType)
         columns.append(TableColumnDefinition(key, header, header_data_type, column_data_type))
     return TableDefinition(table_name, columns)
+
+
+def create_table_rows_for_end_to_end_to_test(rows_as_json: dict) -> List[TableRow]:
+    table_rows = []
+    for row_as_json in rows_as_json["rows"]:
+        list_of_cells_to_add = convert_keys_to_snake_case(row_as_json)["row"]
+        cells = []
+        for cell in list_of_cells_to_add:
+            cell_with_camel_case_keys = convert_keys_to_snake_case(cell)
+            column_key = cell_with_camel_case_keys['column_key']
+            if "value" in cell_with_camel_case_keys.keys():
+                cells.append(TableTextCell(column_key, cell_with_camel_case_keys['value']))
+            elif "node_id" in cell_with_camel_case_keys.keys():
+                cells.append(TableAlgorithmNodeCell(column_key, cell_with_camel_case_keys['node_id']))
+            elif "train_id" in cell_with_camel_case_keys.keys():
+                cells.append(TableAlgorithmTrainCell(column_key, cell_with_camel_case_keys['train_id']))
+        table_rows.append(TableRow(cells))
+    return table_rows
 
 
 def convert_to_aidm_enum_from_string(

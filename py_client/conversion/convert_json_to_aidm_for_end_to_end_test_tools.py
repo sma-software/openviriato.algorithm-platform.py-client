@@ -1,7 +1,8 @@
-from typing import List, Union, Dict
+from typing import List, Union, Dict, Type
 
 from py_client.aidm import StopStatus, UpdateTimesTrainPathNode, UpdateTrainStopTimesNode, IncomingRoutingEdge, \
-    OutgoingRoutingEdge, CrossingRoutingEdge, UpdateTrainRoute, StationEntryOrExit
+    OutgoingRoutingEdge, CrossingRoutingEdge, UpdateTrainRoute, StationEntryOrExit, TableDefinition, TableCellDataType, \
+    TableTextCell, TableColumnDefinition
 from py_client.conversion.algorithm_platform_json_to_aidm_converter import convert
 from py_client.conversion.converter_helpers import convert_keys_to_snake_case, parse_to_datetime, convert_to_snake_case
 
@@ -50,21 +51,43 @@ def create_update_train_route_for_end_to_end_test(object_as_json: dict) -> Updat
     return UpdateTrainRoute(train_id, end_train_path_node_id, converted_routing_edges, start_train_path_node_id)
 
 
+def create_table_definition_for_end_to_end_to_test(object_as_json: dict) -> TableDefinition:
+    json_with_snake_case_keys = convert_keys_to_snake_case(object_as_json)["table_definition"]
+    table_name = json_with_snake_case_keys["name"]
+    columns = []
+    for cell_definition in json_with_snake_case_keys["columns"]:
+        cell_definition_with_snake_case_keys = convert_keys_to_snake_case(cell_definition)
+        key = cell_definition_with_snake_case_keys["key"]
+        header = TableTextCell(key, cell_definition_with_snake_case_keys["header"])
+        header_data_type = convert_to_aidm_enum_from_string(
+            cell_definition_with_snake_case_keys["header_data_type"],
+            TableCellDataType)
+        column_data_type = convert_to_aidm_enum_from_string(
+            cell_definition_with_snake_case_keys["column_data_type"],
+            TableCellDataType)
+        columns.append(TableColumnDefinition(key, header, header_data_type, column_data_type))
+    return TableDefinition(table_name, columns)
+
+
+def convert_to_aidm_enum_from_string(
+        enum_as_string: str,
+        enum_to_convert_to: Type[Union[StopStatus, StationEntryOrExit, TableCellDataType]]) -> \
+        Union[StopStatus, StationEntryOrExit, TableCellDataType]:
+    enum_as_snake_case_string = convert_to_snake_case(enum_as_string)
+    for member in enum_to_convert_to:
+        if member.name == enum_as_snake_case_string:
+            return member
+
+    raise TypeError("{0} is not defined as member of {1}".format(enum_as_string, str(enum_to_convert_to)))
+
+
 def convert_string_to_stop_status(dict_with_stop_status_as_string) -> StopStatus:
     stop_status_as_string = convert_to_snake_case(dict_with_stop_status_as_string["stop_status_as_string"])
-    for status in StopStatus:
-        if status.name == stop_status_as_string:
-            return StopStatus[stop_status_as_string]
-
-    raise TypeError("{0} is not defined as a Stop Status".format(stop_status_as_string))
+    return convert_to_aidm_enum_from_string(stop_status_as_string, StopStatus)
 
 
 def convert_string_to_station_entry_or_exit(
-        dict__with_station_entry_or_exit_as_string: Dict[str, str]) -> StationEntryOrExit:
+        dict_with_station_entry_or_exit_as_string: Dict[str, str]) -> StationEntryOrExit:
     station_entry_or_exit_as_string = convert_to_snake_case(
-        dict__with_station_entry_or_exit_as_string["station_entry_or_exit_as_string"])
-    for status in StationEntryOrExit:
-        if status.name == station_entry_or_exit_as_string:
-            return StationEntryOrExit[station_entry_or_exit_as_string]
-
-    raise TypeError("{0} is not defined as a EntryOrExit".format(station_entry_or_exit_as_string))
+        dict_with_station_entry_or_exit_as_string["station_entry_or_exit_as_string"])
+    return convert_to_aidm_enum_from_string(station_entry_or_exit_as_string, StationEntryOrExit)

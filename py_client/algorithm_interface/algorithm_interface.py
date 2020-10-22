@@ -484,6 +484,15 @@ class AlgorithmInterface:
         request_body = dict(statusMessage=status_message, logMessage=log_message)
         self.__communication_layer.do_post_request(url_to_resource, request_body)
 
+    def create_table(self, table_definition: TableDefinition) -> int:
+        url_to_resource = 'user-outputs/tables'
+        table_definition_as_json = object_to_algorithm_platform_json_converter.convert_any_object(table_definition)
+        for column_index in range(len(table_definition_as_json["columns"])):
+            table_definition_as_json["columns"][column_index]["header"] = \
+                table_definition_as_json["columns"][column_index]["header"]["value"]
+        response_dict = self.__communication_layer.do_post_request(url_to_resource, table_definition_as_json)
+        return converter_helpers.convert_keys_to_snake_case(response_dict)["table_id"]
+
     def __delegate_get_any_parameter(
             self,
             key: str

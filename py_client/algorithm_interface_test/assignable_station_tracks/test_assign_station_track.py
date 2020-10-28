@@ -17,6 +17,7 @@ class TestSetStationTracksNode(unittest.TestCase):
 
             json__string = ("{\n"
                             "  \"id\": 6430,\n"
+                            "  \"code\": \"TestCode\",\n"
                             "  \"trainPathNodes\": [\n"
                             "    {\n"
                             "      \"id\": 5338,\n"
@@ -104,6 +105,7 @@ class TestSetStationTracksNode(unittest.TestCase):
         self.assertIsInstance(test_train, py_client.aidm.aidm_algorithm_classes.AlgorithmTrain)
         self.assertIsInstance(test_train.train_path_nodes[0], aidm_train_path_node_classes.AlgorithmTrainPathNode)
         self.assertEqual(test_train.debug_string, "FV_9_J03 tt_(SZ)")
+        self.assertEqual(test_train.code, "TestCode")
 
     @mock.patch('requests.Session', side_effect=SetStationTracksNodeTestSessionMock)
     def tearDown(self, mocked_get_obj) -> None:

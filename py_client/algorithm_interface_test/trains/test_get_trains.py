@@ -16,6 +16,7 @@ class TestGetTrains(unittest.TestCase):
             json_string = ("[\n"
                            "  {\n"
                            "    \"id\": 3516,\n"
+                           "    \"code\": \"3516\",\n"
                            "    \"trainPathNodes\": [\n"
                            "      {\n"
                            "        \"id\": 2424,\n"
@@ -61,9 +62,10 @@ class TestGetTrains(unittest.TestCase):
                            "  },\n"
                            "  {\n"
                            "    \"id\": 2060,\n"
+                           "    \"code\": \"213\",\n"
                            "    \"trainPathNodes\": [\n"
                            "      {\n"
-                           "        \"id\": 1332,\n"
+                           "        \"id\": 1332,\n"      
                            "        \"sectionTrackId\": null,\n"
                            "        \"nodeId\": 18,\n"
                            "        \"nodeTrackId\": null,\n"
@@ -125,6 +127,7 @@ class TestGetTrains(unittest.TestCase):
         self.assertIsInstance(listed_algorithm_trains[0], AlgorithmTrain)
         self.assertEqual(listed_algorithm_trains[0].id, 3516)
         self.assertEqual(listed_algorithm_trains[0].debug_string, 'RVZH_3_1_J03 tt_(S)')
+        self.assertEqual(listed_algorithm_trains[0].code, "3516")
         self.assertIsInstance(listed_algorithm_trains[0].train_path_nodes, list)
         self.assertEqual(listed_algorithm_trains[0].train_path_nodes.__len__(), 3)
 

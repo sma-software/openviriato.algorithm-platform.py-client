@@ -19,6 +19,7 @@ class TestUpdateTrainTimes(unittest.TestCase):
             self.__last_request = request
             json_string = ("{\n"
                            "                \"ID\": 2060,\n"
+                           "                \"code\": \"TestUpdateTrainTimes\","
                            "                \"TrainPathNodes\": [\n"
                            "                    {\n"
                            "                        \"ID\": 1332,\n"

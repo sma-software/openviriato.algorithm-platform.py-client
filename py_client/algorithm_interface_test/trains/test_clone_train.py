@@ -16,7 +16,7 @@ class TestCloneTrain(unittest.TestCase):
         def post(self, request, json):
             self.__last_body = json
             self.__last_request = request
-            json_string = ('{  "ID": 11037,  "TrainPathNodes": [\n'
+            json_string = ('{  "ID": 11037, "code": "Test",  "TrainPathNodes": [\n'
                            '    {\n'
                            '      "ID": 11038,\n'
                            '      "SectionTrackID": null,\n'
@@ -71,6 +71,7 @@ class TestCloneTrain(unittest.TestCase):
         self.assertIsInstance(test_cloned_algorithm_train, py_client.aidm.aidm_algorithm_classes.AlgorithmTrain)
         self.assertEqual(11037, test_cloned_algorithm_train.id)
         self.assertEqual('CloneTrainTestMockSession', test_cloned_algorithm_train.debug_string)
+        self.assertEqual('Test', test_cloned_algorithm_train.code)
         self.assertIsInstance(
             test_cloned_algorithm_train.train_path_nodes[0],
             aidm_train_path_node_classes.AlgorithmTrainPathNode)

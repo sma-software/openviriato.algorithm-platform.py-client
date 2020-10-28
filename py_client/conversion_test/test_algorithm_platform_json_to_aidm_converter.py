@@ -120,7 +120,7 @@ class TestToAIDMConverter(unittest.TestCase):
         self.assertEqual(test_train_path_node.minimum_stop_time, datetime.timedelta(0))
 
     def test_convert_json_to_algorithm_train(self):
-        test_train_as_dict = dict(ID=3516, TrainPathNodes=[
+        test_train_as_dict = dict(ID=3516, Code="123", TrainPathNodes=[
             dict(ID=2424, SectionTrackID=None, NodeID=7, NodeTrackID=8, FormationID=1187,
                  ArrivalTime="2003-05-01T00:10:00", DepartureTime="2003-05-01T00:10:00", MinimumRunTime=None,
                  MinimumStopTime="P0D", StopStatus="commercialStop", SequenceNumber=0),
@@ -135,6 +135,7 @@ class TestToAIDMConverter(unittest.TestCase):
         test_train = algorithm_platform_json_to_aidm_converter.convert_json_to_algorithm_train(test_train_as_dict)
 
         self.assertIsInstance(test_train, AlgorithmTrain)
+        self.assertEqual(test_train.code, "123")
         self.assertIsInstance(test_train.train_path_nodes[0], AlgorithmTrainPathNode)
         self.assertEqual(test_train.train_path_nodes[0].minimum_run_time, None)
         self.assertEqual(test_train.train_path_nodes[0].minimum_stop_time, datetime.timedelta(0))

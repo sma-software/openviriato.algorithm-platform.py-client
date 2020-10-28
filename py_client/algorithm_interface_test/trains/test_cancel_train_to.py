@@ -16,7 +16,7 @@ class TestCancelTrainTo(unittest.TestCase):
         def put(self, request, json):
             self.__last_body = json
             self.__last_request = request
-            json_string = (' {  "ID": 8120,  "TrainPathNodes": [\n'
+            json_string = (' {  "ID": 8120, "code":"123", "TrainPathNodes": [\n'
                            '                {\n'
                            '                  "ID": 8118,\n'
                            '                  "SectionTrackID": null,\n'
@@ -77,6 +77,7 @@ class TestCancelTrainTo(unittest.TestCase):
         self.assertIsInstance(test_algorithm_train, py_client.aidm.AlgorithmTrain)
         self.assertEqual(test_algorithm_train.id, 8120)
         self.assertEqual(test_algorithm_train.debug_string, 'CancelTrainToTestMockSession')
+        self.assertEqual(test_algorithm_train.code, '123')
 
         self.assertIsInstance(test_algorithm_train.train_path_nodes, list)
         self.assertIsInstance(test_algorithm_train.train_path_nodes[0], py_client.aidm.AlgorithmTrainPathNode)

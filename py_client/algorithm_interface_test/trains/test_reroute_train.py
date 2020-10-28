@@ -15,6 +15,7 @@ class TestRerouteTrain(unittest.TestCase):
             json_string = (
                 "             {\n"
                 "                    \"id\": 3516,\n"
+                "                    \"code\": \"TestRerouteTrain\",\n"
                 "                    \"trainPathNodes\": [\n"
                 "                        {\n"
                 "                            \"id\": 2424,\n"
@@ -116,6 +117,7 @@ class TestRerouteTrain(unittest.TestCase):
 
         self.assertEqual(rerouted_algorithm_train.id, 3516)
         self.assertEqual(rerouted_algorithm_train.debug_string, "RVZH_3_1_J03 tt_(S)")
+        self.assertEqual(rerouted_algorithm_train.code, "TestRerouteTrain")
         self.assertIsInstance(rerouted_algorithm_train.train_path_nodes, list)
         self.assertIsInstance(rerouted_algorithm_train.train_path_nodes[0], AlgorithmTrainPathNode)
         self.assertEqual(rerouted_algorithm_train.train_path_nodes[0].id, 2424)

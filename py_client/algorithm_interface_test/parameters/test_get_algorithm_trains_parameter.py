@@ -20,6 +20,7 @@ class TestGetAlgorithmTrainsParameter(unittest.TestCase):
                             "  \"value\": [\n"
                             "    {\n"
                             "      \"id\": 1190,\n"
+                            "      \"code\": \"FirstTemplateTrain\",\n" 
                             "      \"trainPathNodes\": [\n"
                             "        {\n"
                             "          \"id\": 1186,\n"
@@ -65,6 +66,7 @@ class TestGetAlgorithmTrainsParameter(unittest.TestCase):
                             "    },\n"
                             "    {\n"
                             "      \"id\": 1194,\n"
+                            "      \"code\": \"SecondTemplateTrain\",\n" 
                             "      \"trainPathNodes\": [\n"
                             "        {\n"
                             "          \"id\": 1191,\n"
@@ -137,11 +139,13 @@ class TestGetAlgorithmTrainsParameter(unittest.TestCase):
         self.assertIsInstance(test_algorithm_trains, list)
         self.assertIsInstance(test_algorithm_trains[0], py_client.aidm.aidm_algorithm_classes.AlgorithmTrain)
         self.assertEqual(test_algorithm_trains[0].debug_string, "GV_9_J05 tt_()")
+        self.assertEqual(test_algorithm_trains[0].code, "FirstTemplateTrain")
         self.assertEqual(test_algorithm_trains[0].id, 1190)
         self.assertIsInstance(
             test_algorithm_trains[0].train_path_nodes[0],
             aidm_train_path_node_classes.AlgorithmTrainPathNode)
         self.assertEqual(test_algorithm_trains[0].train_path_nodes[0].id, 1186)
+        self.assertEqual(test_algorithm_trains[1].code, "SecondTemplateTrain")
 
     @mock.patch('requests.Session', side_effect=GetAlgorithmTrainsParameterTestSessionMock)
     def tearDown(self, mocked_get_obj) -> None:

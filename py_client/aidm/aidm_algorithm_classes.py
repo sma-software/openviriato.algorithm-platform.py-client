@@ -46,11 +46,12 @@ class AlgorithmSectionTrack(_HasID, _HasCode, _HasDebugString):
         return self.__section_code
 
 
-class AlgorithmTrain(_HasID, _HasDebugString):
+class AlgorithmTrain(_HasID, _HasCode, _HasDebugString):
     __train_path_nodes: List[AlgorithmTrainPathNode]
 
-    def __init__(self, id: int, debug_string: str, train_path_nodes: List[AlgorithmTrainPathNode]):
+    def __init__(self, id: int, code: str, debug_string: str, train_path_nodes: List[AlgorithmTrainPathNode]):
         _HasID.__init__(self, id)
+        _HasCode.__init__(self, code)
         _HasDebugString.__init__(self, debug_string)
         self.__train_path_nodes = train_path_nodes
 

@@ -16,6 +16,7 @@ class TestSetSectionTrack(TestCase):
             self.__last_request = request
             json_string = ('{\n'
                            '  "id": 2060,\n'
+                           '  "code": "TestSetSectionTrack",\n'
                            '  "trainPathNodes": [\n'
                            '    {\n'
                            '      "id": 1332,\n'
@@ -78,6 +79,7 @@ class TestSetSectionTrack(TestCase):
 
         self.assertIsInstance(algorithm_train, py_client.aidm.aidm_algorithm_classes.AlgorithmTrain)
         self.assertEqual(2060, algorithm_train.id)
+        self.assertEqual(algorithm_train.code, "TestSetSectionTrack")
         self.assertEqual(algorithm_train.debug_string, 'SetSectionTrackTestMockSessionString')
 
     @mock.patch('requests.Session', side_effect=SetSectionTrackTestMockSession)

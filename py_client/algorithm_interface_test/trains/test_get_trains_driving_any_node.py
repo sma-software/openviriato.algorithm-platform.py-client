@@ -17,6 +17,7 @@ class TestGetTrainsDrivingAnyNode(unittest.TestCase):
                 "[\n"
                 "  {\n"
                 "    \"id\": 2060,\n"
+                "    \"code\": \"TestGetTrainsDrivingAnyNode\",\n"
                 "    \"trainPathNodes\": [\n"
                 "      {\n"
                 "        \"id\": 1332,\n"
@@ -84,6 +85,7 @@ class TestGetTrainsDrivingAnyNode(unittest.TestCase):
         self.assertIsInstance(listed_algorithm_trains[0], AlgorithmTrain)
         self.assertEqual(listed_algorithm_trains[0].id, 2060)
         self.assertEqual(listed_algorithm_trains[0].debug_string, 'RVZH_1_1_J03 tt_(G)')
+        self.assertEqual(listed_algorithm_trains[0].code, "TestGetTrainsDrivingAnyNode")
         self.assertIsInstance(listed_algorithm_trains[0].train_path_nodes, list)
         self.assertEqual(listed_algorithm_trains[0].train_path_nodes.__len__(), 2)
 

@@ -17,6 +17,7 @@ class TestGetTrainsCutToTimeRangeDrivingAnyNode(unittest.TestCase):
                 "[\n"
                 "  {\n"
                 "    \"ID\": 2060,\n"
+                "    \"code\": \"TestGetTrainsCutToTimeRangeDrivingAnyNode\",\n"
                 "    \"train_path_nodes\": [\n"
                 "      {\n"
                 "        \"ID\": 1332,\n"
@@ -88,6 +89,7 @@ class TestGetTrainsCutToTimeRangeDrivingAnyNode(unittest.TestCase):
         self.assertIsInstance(listed_algorithm_trains[0], AlgorithmTrain)
         self.assertEqual(listed_algorithm_trains[0].id, 2060)
         self.assertEqual(listed_algorithm_trains[0].debug_string, 'RVZH_1_1_J03 tt_(G)')
+        self.assertEqual(listed_algorithm_trains[0].code, "TestGetTrainsCutToTimeRangeDrivingAnyNode")
         self.assertIsInstance(listed_algorithm_trains[0].train_path_nodes, list)
         self.assertEqual(listed_algorithm_trains[0].train_path_nodes.__len__(), 2)
 

@@ -15,7 +15,8 @@ class TestUpdateTrajectory(unittest.TestCase):
             self.__last_request = request
             json_string = ("{ \n"
                            "  \"id\": 2060,\n"
-                           "  \"TrainPathNodes\": [\n"
+                           "  \"code\": \"TestUpdateTrajectory\","
+                           "  \"trainPathNodes\": [\n"
                            "    {\n"
                            "      \"id\": 1332,\n"
                            "      \"sectionTrackId\": null,\n"
@@ -86,6 +87,7 @@ class TestUpdateTrajectory(unittest.TestCase):
 
         self.assertIsInstance(updated_algorithm_train, AlgorithmTrain)
         self.assertEqual(updated_algorithm_train.debug_string, 'Mocked RVZH_1_1_J03 tt_(G)')
+        self.assertEqual(updated_algorithm_train.code, "TestUpdateTrajectory")
         self.assertEqual(updated_algorithm_train.id, 2060)
         self.assertIsInstance(updated_algorithm_train.train_path_nodes, list)
         self.assertIsInstance(updated_algorithm_train.train_path_nodes[0], AlgorithmTrainPathNode)

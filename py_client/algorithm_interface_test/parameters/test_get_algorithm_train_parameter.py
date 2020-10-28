@@ -19,6 +19,7 @@ class TestGetAlgorithmTrainParameter(unittest.TestCase):
                             "   \"key\": \"templateTrainParameter\",\n"
                             "   \"value\": {\n"
                             "       \"id\": 2060,\n"
+                            "       \"code\": \"templateTrain\",\n" 
                             "       \"trainPathNodes\": [\n"
                             "           {\n"
                             "                \"id\": 1332,\n"
@@ -75,6 +76,7 @@ class TestGetAlgorithmTrainParameter(unittest.TestCase):
 
         self.assertIsInstance(test_algorithm_train, py_client.aidm.aidm_algorithm_classes.AlgorithmTrain)
         self.assertEqual(test_algorithm_train.debug_string, "RVZH_1_1_J03 tt_(G)")
+        self.assertEqual(test_algorithm_train.code, "templateTrain")
         self.assertEqual(test_algorithm_train.id, 2060)
         self.assertIsInstance(
             test_algorithm_train.train_path_nodes[0],

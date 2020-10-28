@@ -20,10 +20,10 @@ class TestCommunicationLayerToRaiseAlgorithmPlatformError(unittest.TestCase):
             status=400
         ))
 
-        with self.assertRaises(response_processing.AlgorithmPlatformError) as algorithm_platform_error:
+        with self.assertRaises(response_processing.AlgorithmPlatformHTTPError) as algorithm_platform_error:
             self.CommunicationLayer.do_get_request('get_request_to_raise_AlgorithmPlatformError')
 
-        self.assertIsInstance(algorithm_platform_error.exception, response_processing.AlgorithmPlatformError)
+        self.assertIsInstance(algorithm_platform_error.exception, response_processing.AlgorithmPlatformHTTPError)
         self.assertEqual(algorithm_platform_error.exception.message, "test_to_raise_AlgorithmPlatformError")
 
     @responses.activate
@@ -35,10 +35,10 @@ class TestCommunicationLayerToRaiseAlgorithmPlatformError(unittest.TestCase):
             status=400
         ))
 
-        with self.assertRaises(response_processing.AlgorithmPlatformError) as algorithm_platform_error:
+        with self.assertRaises(response_processing.AlgorithmPlatformHTTPError) as algorithm_platform_error:
             self.CommunicationLayer.do_post_request('post_request_to_raise_AlgorithmPlatformError')
 
-        self.assertIsInstance(algorithm_platform_error.exception, response_processing.AlgorithmPlatformError)
+        self.assertIsInstance(algorithm_platform_error.exception, response_processing.AlgorithmPlatformHTTPError)
         self.assertEqual(algorithm_platform_error.exception.message, "test_to_raise_AlgorithmPlatformError")
 
     @responses.activate
@@ -50,10 +50,10 @@ class TestCommunicationLayerToRaiseAlgorithmPlatformError(unittest.TestCase):
             status=400
         ))
 
-        with self.assertRaises(response_processing.AlgorithmPlatformError) as algorithm_platform_error:
+        with self.assertRaises(response_processing.AlgorithmPlatformHTTPError) as algorithm_platform_error:
             self.CommunicationLayer.do_put_request('put_request_to_raise_AlgorithmPlatformError')
 
-        self.assertIsInstance(algorithm_platform_error.exception, response_processing.AlgorithmPlatformError)
+        self.assertIsInstance(algorithm_platform_error.exception, response_processing.AlgorithmPlatformHTTPError)
         self.assertEqual(algorithm_platform_error.exception.message, "test_to_raise_AlgorithmPlatformError")
 
     def tearDown(self) -> None:

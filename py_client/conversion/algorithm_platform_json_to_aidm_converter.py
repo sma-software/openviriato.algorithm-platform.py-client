@@ -1,6 +1,7 @@
 import inspect
 
 from py_client.aidm import *
+from py_client.communication.response_processing import AlgorithmPlatformConversionError
 from py_client.conversion.converter_helpers import parse_to_datetime, parse_to_timedelta, parse_to_timedelta_or_none, \
     convert_keys_to_snake_case, convert_to_snake_case
 
@@ -11,7 +12,12 @@ def convert(aidm_class_or_aidm_class_factory, attribute_dict: dict):
     if is_factory_method:
         return aidm_class_or_aidm_class_factory(snake_case_attribute_dict)
     else:
-        return aidm_class_or_aidm_class_factory(**snake_case_attribute_dict)
+        try:
+            return aidm_class_or_aidm_class_factory(**snake_case_attribute_dict)
+        except TypeError as error_instance:
+            raise AlgorithmPlatformConversionError(
+                "Could not populate AIDM object, client AIDM class deviates from server AIDM class",
+                error_instance)
 
 
 def convert_list(aidm_class, list_of_dict: list) -> list:

@@ -35,10 +35,10 @@ class TestResponseProcessing(unittest.TestCase):
         ))
 
         response = requests.get('http://notanurl/')
-        with self.assertRaises(response_processing.AlgorithmPlatformError) as algorithm_platform_error:
+        with self.assertRaises(response_processing.AlgorithmPlatformHTTPError) as algorithm_platform_error:
             response_processing.extract_json_if_possible(response)
 
-        self.assertIsInstance(algorithm_platform_error.exception, response_processing.AlgorithmPlatformError)
+        self.assertIsInstance(algorithm_platform_error.exception, response_processing.AlgorithmPlatformHTTPError)
         self.assertEqual(algorithm_platform_error.exception.message, "test_reason_to_raise_AlgorithmPlatformError")
 
     @responses.activate

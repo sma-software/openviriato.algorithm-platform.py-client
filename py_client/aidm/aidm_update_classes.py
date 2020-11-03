@@ -136,3 +136,33 @@ class UpdateStopTimesTrainPathNode:
     @property
     def stop_status(self) -> Optional[StopStatus]:
         return self.__stop_status
+
+
+class UpdateRunTimesTrainPathSegment:
+    __from_node_departure_time: datetime.datetime
+    __minimum_run_time: Optional[datetime.timedelta]
+    __to_node_arrival_time: datetime.datetime
+    __to_train_path_node_id: int
+
+    def __init__(self, from_node_departure_time: datetime.datetime, to_node_arrival_time: datetime.datetime,
+                 to_train_path_node_id: int, minimum_run_time: Optional[datetime.timedelta]):
+        self.__from_node_departure_time = from_node_departure_time
+        self.__to_node_arrival_time = to_node_arrival_time
+        self.__to_train_path_node_id = to_train_path_node_id
+        self.__minimum_run_time = minimum_run_time
+
+    @property
+    def from_node_departure_time(self) -> datetime.datetime:
+        return self.__from_node_departure_time
+
+    @property
+    def to_node_arrival_time(self) -> datetime.datetime:
+        return self.__to_node_arrival_time
+
+    @property
+    def to_train_path_node_id(self) -> int:
+        return self.__to_train_path_node_id
+
+    @property
+    def minimum_run_time(self) -> Optional[int]:
+        return self.__minimum_run_time

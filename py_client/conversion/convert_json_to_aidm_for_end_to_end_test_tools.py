@@ -2,9 +2,11 @@ from typing import List, Union, Dict, Type
 
 from py_client.aidm import StopStatus, UpdateTimesTrainPathNode, UpdateStopTimesTrainPathNode, IncomingRoutingEdge, \
     OutgoingRoutingEdge, CrossingRoutingEdge, UpdateTrainRoute, StationEntryOrExit, TableDefinition, TableCellDataType, \
-    TableTextCell, TableColumnDefinition, TableAlgorithmNodeCell, TableRow, TableAlgorithmTrainCell
+    TableTextCell, TableColumnDefinition, TableAlgorithmNodeCell, TableRow, TableAlgorithmTrainCell, \
+    UpdateRunTimesTrainPathSegment
 from py_client.conversion.algorithm_platform_json_to_aidm_converter import convert
-from py_client.conversion.converter_helpers import convert_keys_to_snake_case, parse_to_datetime, convert_to_snake_case
+from py_client.conversion.converter_helpers import convert_keys_to_snake_case, parse_to_datetime, convert_to_snake_case, \
+    parse_to_timedelta_or_none
 
 
 def convert_list_of_json_to_update_train_times_node(attribute_dict: dict) -> List[UpdateTimesTrainPathNode]:
@@ -25,6 +27,14 @@ def convert_json_to_update_stop_times_train_path_node(attribute: dict) -> Update
         snake_case_dict[key] = parse_to_datetime(snake_case_dict[key])
     snake_case_dict["stop_status"] = convert_to_aidm_enum_from_string(snake_case_dict["stop_status"], StopStatus)
     return convert(UpdateStopTimesTrainPathNode, snake_case_dict)
+
+
+def convert_json_to_update_run_times_train_path_segment(attribute: dict) -> UpdateRunTimesTrainPathSegment:
+    snake_case_dict = convert_keys_to_snake_case(attribute)
+    for key in ['to_node_arrival_time', 'from_node_departure_time']:
+        snake_case_dict[key] = parse_to_datetime(snake_case_dict[key])
+    snake_case_dict["minimum_run_time"] = parse_to_timedelta_or_none(snake_case_dict["minimum_run_time"])
+    return convert(UpdateRunTimesTrainPathSegment, snake_case_dict)
 
 
 def extract_first_dict_value(attribute_dict: dict) -> object:

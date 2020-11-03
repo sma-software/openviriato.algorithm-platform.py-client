@@ -1,4 +1,5 @@
 from typing import Union
+from multipledispatch import dispatch
 
 from py_client.aidm import *
 from py_client.algorithm_interface.algorithm_interface_helpers import merge_query_parameters, \
@@ -231,6 +232,7 @@ class AlgorithmInterface:
         response_dict = self.__communication_layer.do_put_request(url_to_resource, request_body=put_body_list)
         return algorithm_platform_json_to_aidm_converter.convert_json_to_algorithm_train(response_dict)
 
+    @dispatch(object, UpdateStopTimesTrainPathNode)
     def update_trajectory(
             self,
             train_id: int,
@@ -239,6 +241,18 @@ class AlgorithmInterface:
         url_to_resource = "trains/{0}/train-path-nodes:update-trajectory-stop-times".format(train_id)
         put_body_list = object_to_algorithm_platform_json_converter.convert_any_object(update_train_stop_times_node)
         response_dict = self.__communication_layer.do_put_request(url_to_resource, request_body=put_body_list)
+        return algorithm_platform_json_to_aidm_converter.convert_json_to_algorithm_train(response_dict)
+
+    @dispatch(object, UpdateRunTimesTrainPathSegment)
+    def update_trajectory(
+            self,
+            train_id: int,
+            update_run_times_train_path_segment: UpdateRunTimesTrainPathSegment
+    ) -> AlgorithmTrain:
+        url_to_resource = "trains/{0}/train-path-nodes:update-trajectory-run-times".format(train_id)
+        put_body_dict = object_to_algorithm_platform_json_converter.convert_any_object(
+            update_run_times_train_path_segment)
+        response_dict = self.__communication_layer.do_put_request(url_to_resource, request_body=put_body_dict)
         return algorithm_platform_json_to_aidm_converter.convert_json_to_algorithm_train(response_dict)
 
     def get_separation_time_in_junction_for_planned_train_paths(

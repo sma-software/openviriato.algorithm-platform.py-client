@@ -96,7 +96,7 @@ class UpdateTimesTrain(_UpdateTrain):
         return self.__update_times_train_path_nodes
 
 
-class UpdateTrainStopTimesNode:
+class UpdateStopTimesTrainPathNode:
     __arrival_time: datetime.datetime
     __departure_time: datetime.datetime
     __minimum_stop_time: Optional[datetime.timedelta] = None

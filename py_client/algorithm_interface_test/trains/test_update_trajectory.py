@@ -3,7 +3,7 @@ import unittest
 from unittest import mock
 
 import py_client.algorithm_interface_test.test_helper.SessionMockFactory as SessionMockFactory
-from py_client.aidm import UpdateTrainStopTimesNode, AlgorithmTrain, AlgorithmTrainPathNode, StopStatus
+from py_client.aidm import UpdateStopTimesTrainPathNode, AlgorithmTrain, AlgorithmTrainPathNode, StopStatus
 from py_client.algorithm_interface import algorithm_interface_factory
 from py_client.algorithm_interface_test.test_helper.SessionMockTestBase import get_api_url, SessionMockTestBase
 
@@ -56,11 +56,11 @@ class TestUpdateTrajectory(unittest.TestCase):
     @mock.patch('requests.Session', side_effect=UpdateTrajectoryTestMockSession)
     def test_update_trajectory_request(self, mocked_get_obj):
         train_id = 2060
-        update_train_stop_time_node = UpdateTrainStopTimesNode(train_path_node_id=1332,
-                                                               arrival_time=datetime.datetime(2003, 5, 1, 0, 4),
-                                                               departure_time=datetime.datetime(2003, 5, 1, 0, 5),
-                                                               stop_status=StopStatus.operational_stop,
-                                                               minimum_stop_time=datetime.timedelta(seconds=30))
+        update_train_stop_time_node = UpdateStopTimesTrainPathNode(train_path_node_id=1332,
+                                                                   arrival_time=datetime.datetime(2003, 5, 1, 0, 4),
+                                                                   departure_time=datetime.datetime(2003, 5, 1, 0, 5),
+                                                                   stop_status=StopStatus.operational_stop,
+                                                                   minimum_stop_time=datetime.timedelta(seconds=30))
 
         self.interface_to_viriato.update_trajectory(train_id, update_train_stop_time_node)
 
@@ -77,11 +77,11 @@ class TestUpdateTrajectory(unittest.TestCase):
     @mock.patch('requests.Session', side_effect=UpdateTrajectoryTestMockSession)
     def test_update_trajectory_response(self, mocked_get_obj):
         train_id = 2060
-        update_train_stop_time_node = UpdateTrainStopTimesNode(train_path_node_id=1332,
-                                                               arrival_time=datetime.datetime(2003, 5, 1, 0, 4),
-                                                               departure_time=datetime.datetime(2003, 5, 1, 0, 5),
-                                                               stop_status=StopStatus.operational_stop,
-                                                               minimum_stop_time=datetime.timedelta(seconds=30))
+        update_train_stop_time_node = UpdateStopTimesTrainPathNode(train_path_node_id=1332,
+                                                                   arrival_time=datetime.datetime(2003, 5, 1, 0, 4),
+                                                                   departure_time=datetime.datetime(2003, 5, 1, 0, 5),
+                                                                   stop_status=StopStatus.operational_stop,
+                                                                   minimum_stop_time=datetime.timedelta(seconds=30))
 
         updated_algorithm_train = self.interface_to_viriato.update_trajectory(train_id, update_train_stop_time_node)
 

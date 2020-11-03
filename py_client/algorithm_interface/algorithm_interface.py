@@ -234,7 +234,7 @@ class AlgorithmInterface:
     def update_trajectory(
             self,
             train_id: int,
-            update_train_stop_times_node: UpdateTrainStopTimesNode
+            update_train_stop_times_node: UpdateStopTimesTrainPathNode
     ) -> AlgorithmTrain:
         url_to_resource = "trains/{0}/train-path-nodes:update-trajectory-stop-times".format(train_id)
         put_body_list = object_to_algorithm_platform_json_converter.convert_any_object(update_train_stop_times_node)

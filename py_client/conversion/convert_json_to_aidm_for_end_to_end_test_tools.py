@@ -1,6 +1,6 @@
 from typing import List, Union, Dict, Type
 
-from py_client.aidm import StopStatus, UpdateTimesTrainPathNode, UpdateTrainStopTimesNode, IncomingRoutingEdge, \
+from py_client.aidm import StopStatus, UpdateTimesTrainPathNode, UpdateStopTimesTrainPathNode, IncomingRoutingEdge, \
     OutgoingRoutingEdge, CrossingRoutingEdge, UpdateTrainRoute, StationEntryOrExit, TableDefinition, TableCellDataType, \
     TableTextCell, TableColumnDefinition, TableAlgorithmNodeCell, TableRow, TableAlgorithmTrainCell
 from py_client.conversion.algorithm_platform_json_to_aidm_converter import convert
@@ -19,12 +19,12 @@ def convert_json_to_update_train_times_node(attribute_dict: dict) -> UpdateTimes
     return convert(UpdateTimesTrainPathNode, snake_case_dict)
 
 
-def convert_json_to_update_train_stop_times_node(attribute: dict) -> UpdateTrainStopTimesNode:
+def convert_json_to_update_stop_times_train_path_node(attribute: dict) -> UpdateStopTimesTrainPathNode:
     snake_case_dict = convert_keys_to_snake_case(attribute)
     for key in ['arrival_time', 'departure_time']:
         snake_case_dict[key] = parse_to_datetime(snake_case_dict[key])
-    snake_case_dict["stop_status"] = StopStatus[snake_case_dict["stop_status"]]
-    return convert(UpdateTimesTrainPathNode, snake_case_dict)
+    snake_case_dict["stop_status"] = convert_to_aidm_enum_from_string(snake_case_dict["stop_status"], StopStatus)
+    return convert(UpdateStopTimesTrainPathNode, snake_case_dict)
 
 
 def extract_first_dict_value(attribute_dict: dict) -> object:

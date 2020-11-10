@@ -483,6 +483,13 @@ class AlgorithmInterface:
         response_dict = self.__communication_layer.do_get_request(url_to_resource)
         return algorithm_platform_json_to_aidm_converter.convert(AlgorithmVehicleType, response_dict)
 
+    def get_links(self, time_window: TimeWindow) -> List[AlgorithmLink]:
+        url_to_resource = "links"
+        query_parameters = object_to_algorithm_platform_json_converter.convert_any_object(time_window)
+        response_dict = self.__communication_layer.do_get_request(url_to_resource, query_parameters)
+        return algorithm_platform_json_to_aidm_converter.convert_list(
+            algorithm_platform_json_to_aidm_converter.convert_json_to_algorithm_link, response_dict)
+
     def calculate_run_times(self, train_id: int) -> (UpdateTimesTrain, None):
         url_to_resource = "services/trains/{0}:run-time-calculation".format(train_id)
         response_dict = self.__communication_layer.do_get_request(url_to_resource)

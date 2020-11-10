@@ -3,7 +3,7 @@ from typing import List, Union, Dict, Type
 from py_client.aidm import StopStatus, UpdateTimesTrainPathNode, UpdateStopTimesTrainPathNode, IncomingRoutingEdge, \
     OutgoingRoutingEdge, CrossingRoutingEdge, UpdateTrainRoute, StationEntryOrExit, TableDefinition, TableCellDataType, \
     TableTextCell, TableColumnDefinition, TableAlgorithmNodeCell, TableRow, TableAlgorithmTrainCell, \
-    UpdateRunTimesTrainPathSegment
+    UpdateRunTimesTrainPathSegment, TimeWindow
 from py_client.conversion.algorithm_platform_json_to_aidm_converter import convert
 from py_client.conversion.converter_helpers import convert_keys_to_snake_case, parse_to_datetime, convert_to_snake_case, \
     parse_to_timedelta_or_none
@@ -119,3 +119,9 @@ def convert_string_to_station_entry_or_exit(
     station_entry_or_exit_as_string = convert_to_snake_case(
         dict_with_station_entry_or_exit_as_string["station_entry_or_exit_as_string"])
     return convert_to_aidm_enum_from_string(station_entry_or_exit_as_string, StationEntryOrExit)
+
+
+def convert_json_with_url_encoding_to_time_window(url_encoded_time_window_dict: Dict[str, object]) -> TimeWindow:
+    for key in url_encoded_time_window_dict.keys():
+        url_encoded_time_window_dict[key] = str(url_encoded_time_window_dict[key]).replace("%3A", ":")
+    return convert(TimeWindow, url_encoded_time_window_dict)

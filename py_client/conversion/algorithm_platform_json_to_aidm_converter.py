@@ -1,4 +1,5 @@
 import inspect
+from typing import Union
 
 from py_client.aidm import *
 from py_client.communication.response_processing import AlgorithmPlatformConversionError
@@ -104,3 +105,18 @@ def convert_json_to_update_train_times_node(attribute_dict: dict) -> UpdateTimes
         stop_status_value = snake_case_dict['stop_status']
         snake_case_dict['stop_status'] = StopStatus[convert_to_snake_case(stop_status_value)]
     return convert(UpdateTimesTrainPathNode, snake_case_dict)
+
+
+def convert_json_to_algorithm_link(attribute_dict: dict) -> Union[AlgorithmConnectionLink, AlgorithmAwaitArrivalLink]:
+    snake_case_dict = convert_keys_to_snake_case(attribute_dict)
+    snake_case_dict['link_type'] = LinkType[convert_to_snake_case(snake_case_dict['link_type'])]
+    if snake_case_dict['link_type'] == LinkType.await_arrival:
+        snake_case_dict['minimum_dwell_time'] = parse_to_timedelta(snake_case_dict['minimum_dwell_time'])
+        return convert(AlgorithmAwaitArrivalLink, snake_case_dict)
+    elif snake_case_dict['link_type'] == LinkType.connection:
+        snake_case_dict['minimum_dwell_time'] = parse_to_timedelta(snake_case_dict['minimum_dwell_time'])
+        snake_case_dict['maximum_dwell_time'] = parse_to_timedelta_or_none(snake_case_dict['maximum_dwell_time'])
+        return convert(AlgorithmConnectionLink, snake_case_dict)
+    else:
+        raise NotImplemented(
+            "{0} can not be converted to an {1}".format(snake_case_dict['link_type'], AlgorithmLink.__name__))

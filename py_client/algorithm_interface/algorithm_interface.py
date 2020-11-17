@@ -510,6 +510,18 @@ class AlgorithmInterface:
         return algorithm_platform_json_to_aidm_converter.convert_list(
             algorithm_platform_json_to_aidm_converter.convert_json_to_algorithm_link, response_dict)
 
+    def get_connection_links_containing_any_node(self, time_window: TimeWindow, node_ids: List[int]
+                                                 ) -> List[AlgorithmConnectionLink]:
+        url_to_resource = "links"
+        manual_converted_query_parameters = dict(nodeFilter=node_ids)
+        query_parameters = merge_query_parameters(
+            [manual_converted_query_parameters,
+             dict(linkType=object_to_algorithm_platform_json_converter.convert_any_object(LinkType.connection)),
+             object_to_algorithm_platform_json_converter.convert_any_object(time_window)])
+        response_dict = self.__communication_layer.do_get_request(url_to_resource, query_parameters)
+        return algorithm_platform_json_to_aidm_converter.convert_list(
+            algorithm_platform_json_to_aidm_converter.convert_json_to_algorithm_link, response_dict)
+
     def calculate_run_times(self, train_id: int) -> (UpdateTimesTrain, None):
         url_to_resource = "services/trains/{0}:run-time-calculation".format(train_id)
         response_dict = self.__communication_layer.do_get_request(url_to_resource)

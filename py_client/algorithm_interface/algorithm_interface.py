@@ -1,4 +1,5 @@
 from typing import Union
+
 from multipledispatch import dispatch
 
 from py_client.aidm import *
@@ -486,6 +487,16 @@ class AlgorithmInterface:
     def get_links(self, time_window: TimeWindow) -> List[AlgorithmLink]:
         url_to_resource = "links"
         query_parameters = object_to_algorithm_platform_json_converter.convert_any_object(time_window)
+        response_dict = self.__communication_layer.do_get_request(url_to_resource, query_parameters)
+        return algorithm_platform_json_to_aidm_converter.convert_list(
+            algorithm_platform_json_to_aidm_converter.convert_json_to_algorithm_link, response_dict)
+
+    def get_links_containing_any_node(self, time_window: TimeWindow, node_ids: List[int]) -> List[AlgorithmLink]:
+        url_to_resource = "links"
+        manual_converted_query_parameters = dict(nodeFilter=node_ids)
+        query_parameters = merge_query_parameters(
+            [manual_converted_query_parameters,
+             object_to_algorithm_platform_json_converter.convert_any_object(time_window)])
         response_dict = self.__communication_layer.do_get_request(url_to_resource, query_parameters)
         return algorithm_platform_json_to_aidm_converter.convert_list(
             algorithm_platform_json_to_aidm_converter.convert_json_to_algorithm_link, response_dict)

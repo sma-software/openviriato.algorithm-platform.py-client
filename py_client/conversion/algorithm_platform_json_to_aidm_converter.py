@@ -111,11 +111,11 @@ def convert_json_to_algorithm_link(attribute_dict: dict) -> Union[AlgorithmConne
     snake_case_dict = convert_keys_to_snake_case(attribute_dict)
     snake_case_dict['link_type'] = LinkType[convert_to_snake_case(snake_case_dict['link_type'])]
     if snake_case_dict['link_type'] == LinkType.await_arrival:
-        snake_case_dict['minimum_dwell_time'] = parse_to_timedelta(snake_case_dict['minimum_dwell_time'])
+        snake_case_dict['minimum_duration'] = parse_to_timedelta(snake_case_dict['minimum_duration'])
         return convert(AlgorithmAwaitArrivalLink, snake_case_dict)
     elif snake_case_dict['link_type'] == LinkType.connection:
-        snake_case_dict['minimum_dwell_time'] = parse_to_timedelta(snake_case_dict['minimum_dwell_time'])
-        snake_case_dict['maximum_dwell_time'] = parse_to_timedelta_or_none(snake_case_dict['maximum_dwell_time'])
+        snake_case_dict['minimum_duration'] = parse_to_timedelta(snake_case_dict['minimum_duration'])
+        snake_case_dict['maximum_deviation'] = parse_to_timedelta_or_none(snake_case_dict['maximum_deviation'])
         return convert(AlgorithmConnectionLink, snake_case_dict)
     else:
         raise NotImplemented(

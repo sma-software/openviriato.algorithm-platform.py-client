@@ -18,7 +18,7 @@ class TestGetAwaitArrivalLinks(unittest.TestCase):
             else:
                 json_string = ("[\n"
                                "{\n"
-                               "  \"minimumDwellTime\": \"PT10M\",\n"
+                               "  \"MinimumDuration\": \"PT10M\",\n"
                                "  \"fromNodeId\": 161,\n"
                                "  \"fromTrainId\": 5329,\n"
                                "  \"fromTrainPathNodeId\": 4965,\n"
@@ -70,7 +70,7 @@ class TestGetAwaitArrivalLinks(unittest.TestCase):
         self.assertEqual(algorithm_connection_link.to_train_id, 2417)
         self.assertEqual(algorithm_connection_link.to_train_path_node_id, 1323)
         self.assertEqual(algorithm_connection_link.link_type, LinkType.await_arrival)
-        self.assertEqual(algorithm_connection_link.minimum_dwell_time, datetime.timedelta(seconds=600))
+        self.assertEqual(algorithm_connection_link.minimum_duration, datetime.timedelta(seconds=600))
 
     @mock.patch('requests.Session', side_effect=GetAwaitArrivalLinksTestMockSession)
     def test_get_await_arrival_links_empty_list_as_response(self, mocked_get_obj):

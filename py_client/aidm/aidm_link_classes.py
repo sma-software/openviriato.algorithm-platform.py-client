@@ -68,8 +68,8 @@ class AlgorithmLink(_HasDebugString):
 
 
 class AlgorithmConnectionLink(AlgorithmLink):
-    __minimum_dwell_time: datetime.timedelta
-    __maximum_dwell_time: Optional[datetime.timedelta]
+    __minimum_duration: datetime.timedelta
+    __maximum_deviation: Optional[datetime.timedelta]
     __weight: Optional[int]
 
     def __init__(self,
@@ -81,8 +81,8 @@ class AlgorithmConnectionLink(AlgorithmLink):
                  to_node_id: int,
                  to_train_id: int,
                  to_train_path_node_id: int,
-                 minimum_dwell_time: datetime.timedelta,
-                 maximum_dwell_time: Optional[datetime.timedelta],
+                 minimum_duration: datetime.timedelta,
+                 maximum_deviation: Optional[datetime.timedelta],
                  weight: Optional[int]):
         AlgorithmLink.__init__(self,
                                debug_string,
@@ -94,17 +94,17 @@ class AlgorithmConnectionLink(AlgorithmLink):
                                to_train_id,
                                to_train_path_node_id)
 
-        self.__minimum_dwell_time = minimum_dwell_time
-        self.__maximum_dwell_time = maximum_dwell_time
+        self.__minimum_duration = minimum_duration
+        self.__maximum_deviation = maximum_deviation
         self.__weight = weight
 
     @property
-    def minimum_dwell_time(self) -> datetime.timedelta:
-        return self.__minimum_dwell_time
+    def minimum_duration(self) -> datetime.timedelta:
+        return self.__minimum_duration
 
     @property
-    def maximum_dwell_time(self) -> Optional[datetime.timedelta]:
-        return self.__maximum_dwell_time
+    def maximum_deviation(self) -> Optional[datetime.timedelta]:
+        return self.__maximum_deviation
 
     @property
     def weight(self) -> Optional[int]:
@@ -112,7 +112,7 @@ class AlgorithmConnectionLink(AlgorithmLink):
 
 
 class AlgorithmAwaitArrivalLink(AlgorithmLink):
-    __minimum_dwell_time: datetime.timedelta
+    __minimum_duration: datetime.timedelta
 
     def __init__(self,
                  debug_string: str,
@@ -123,7 +123,7 @@ class AlgorithmAwaitArrivalLink(AlgorithmLink):
                  to_node_id: int,
                  to_train_id: int,
                  to_train_path_node_id: int,
-                 minimum_dwell_time: datetime.timedelta):
+                 minimum_duration: datetime.timedelta):
         AlgorithmLink.__init__(self,
                                debug_string,
                                from_node_id,
@@ -133,8 +133,8 @@ class AlgorithmAwaitArrivalLink(AlgorithmLink):
                                to_node_id,
                                to_train_id,
                                to_train_path_node_id)
-        self.__minimum_dwell_time = minimum_dwell_time
+        self.__minimum_duration = minimum_duration
 
     @property
-    def minimum_dwell_time(self) -> datetime.timedelta:
-        return self.__minimum_dwell_time
+    def minimum_duration(self) -> datetime.timedelta:
+        return self.__minimum_duration

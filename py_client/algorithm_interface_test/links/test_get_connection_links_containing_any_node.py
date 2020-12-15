@@ -18,8 +18,8 @@ class TestGetConnectionLinksContainingAnyNode(unittest.TestCase):
             else:
                 json_string = ("[\n"
                                "{\n"
-                               "  \"minimumDwellTime\": \"PT6M\",\n"
-                               "  \"maximumDwellTime\": \"PT13M\",\n"
+                               "  \"minimumDuration\": \"PT6M\",\n"
+                               "  \"maximumDeviation\": \"PT13M\",\n"
                                "  \"weight\": 1,\n"
                                "  \"fromNodeId\": 281,\n"
                                "  \"fromTrainId\": 2417,\n"
@@ -32,8 +32,8 @@ class TestGetConnectionLinksContainingAnyNode(unittest.TestCase):
                                "07:01.2 - FV_10_J03, 85JE, planned departure: 01.05.2003 07:31.2\"\n"
                                "},\n"
                                "{\n"
-                               "  \"minimumDwellTime\": \"PT6M\",\n"
-                               "  \"maximumDwellTime\": null,\n"
+                               "  \"minimumDuration\": \"PT6M\",\n"
+                               "  \"maximumDeviation\": null,\n"
                                "  \"weight\": null,\n"
                                "  \"fromNodeId\": 281,\n"
                                "  \"fromTrainId\": 2417,\n"
@@ -94,8 +94,8 @@ class TestGetConnectionLinksContainingAnyNode(unittest.TestCase):
         self.assertEqual(algorithm_connection_link.to_train_path_node_id, 3145)
         self.assertEqual(algorithm_connection_link.weight, 1)
         self.assertEqual(algorithm_connection_link.link_type, LinkType.connection)
-        self.assertEqual(algorithm_connection_link.minimum_dwell_time, datetime.timedelta(minutes=6))
-        self.assertEqual(algorithm_connection_link.maximum_dwell_time, datetime.timedelta(minutes=13))
+        self.assertEqual(algorithm_connection_link.minimum_duration, datetime.timedelta(minutes=6))
+        self.assertEqual(algorithm_connection_link.maximum_deviation, datetime.timedelta(minutes=13))
 
         algorithm_connection_link: AlgorithmConnectionLink = connection_links[1]
         self.assertIsInstance(algorithm_connection_link, AlgorithmConnectionLink)
@@ -110,9 +110,9 @@ class TestGetConnectionLinksContainingAnyNode(unittest.TestCase):
         self.assertEqual(algorithm_connection_link.to_train_id, 3873)
         self.assertEqual(algorithm_connection_link.to_train_path_node_id, 3145)
         self.assertEqual(algorithm_connection_link.link_type, LinkType.connection)
-        self.assertEqual(algorithm_connection_link.minimum_dwell_time, datetime.timedelta(minutes=6))
+        self.assertEqual(algorithm_connection_link.minimum_duration, datetime.timedelta(minutes=6))
         self.assertEqual(algorithm_connection_link.weight, None)
-        self.assertIsNone(algorithm_connection_link.maximum_dwell_time, None)
+        self.assertIsNone(algorithm_connection_link.maximum_deviation, None)
 
     @mock.patch('requests.Session', side_effect=GetConnectionLinksContainingAnyNodeTestMockSession)
     def get_links_containing_any_node_empty_list_as_response(self, mocked_get_obj):

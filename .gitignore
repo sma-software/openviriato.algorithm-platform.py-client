@@ -153,3 +153,7 @@ pyvenv.cfg
 .venv
 pip-selfcheck.json
 
+/.idea/*.gitignore
+/.idea/*.iml
+/.idea/inspectionProfiles/*.xml
+/.idea/*.xml

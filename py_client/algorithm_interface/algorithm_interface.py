@@ -600,6 +600,10 @@ class AlgorithmInterface:
     def get_int_algorithm_parameter(self, key: str) -> int:
         return self.__delegate_get_any_parameter(key)
 
+    def get_floating_point_algorithm_parameter(self, key: str) -> FloatingPoint:
+        response_dict = self.__delegate_get_any_parameter(key)
+        return algorithm_platform_json_to_aidm_converter.convert(FloatingPoint, response_dict)
+
     def get_string_algorithm_parameter(self, key: str) -> str:
         return self.__delegate_get_any_parameter(key)
 

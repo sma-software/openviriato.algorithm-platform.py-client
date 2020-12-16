@@ -211,6 +211,12 @@ class AlgorithmInterface:
         response_dict = self.__communication_layer.do_post_request(url_to_resource)
         return algorithm_platform_json_to_aidm_converter.convert_json_to_algorithm_train(response_dict)
 
+    def create_from_train(self, train_id: int, node_ids: List[int]):
+        url_to_resource = 'trains/{0}:create-from-train'.format(train_id)
+        post_request_body = dict(routeViaNodeIds=node_ids)
+        response_dict = self.__communication_layer.do_post_request(url_to_resource, post_request_body)
+        return algorithm_platform_json_to_aidm_converter.convert_json_to_algorithm_train(response_dict)
+
     def reroute_train(self, train_id: int, route: UpdateTrainRoute):
         url_to_resource = "trains/{0}/train-path-nodes:reroute".format(train_id)
         put_request_body = object_to_algorithm_platform_json_converter.convert_any_object(route)

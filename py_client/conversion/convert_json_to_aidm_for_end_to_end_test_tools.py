@@ -41,22 +41,23 @@ def extract_first_dict_value(attribute_dict: dict) -> object:
     return attribute_dict[list(attribute_dict.keys())[0]]
 
 
-def create_update_train_route_for_end_to_end_test(object_as_json: dict) -> UpdateTrainRoute:
-    train_id: int = object_as_json["train_id"]
-    start_train_path_node_id: int = object_as_json["start_train_path_node_id"]
-    end_train_path_node_id: int = object_as_json["end_train_path_node_id"]
-    routing_edges: List[Dict[str, Union[str, dict]]] = object_as_json["routing_edges"]
+def create_update_train_route_for_end_to_end_test(evaluated_parameter_mapping: dict) -> UpdateTrainRoute:
+    train_id: int = evaluated_parameter_mapping["train_id"]
+    start_train_path_node_id: int = evaluated_parameter_mapping["start_train_path_node_id"]
+    end_train_path_node_id: int = evaluated_parameter_mapping["end_train_path_node_id"]
+    routing_edges: List[Dict[str, Union[str, dict]]] = evaluated_parameter_mapping["routing_edges"]
+
     converted_routing_edges = []
     for edge_as_dict in routing_edges:
-        class_fields_as_dict = convert_keys_to_snake_case(edge_as_dict["fields"])
-        if edge_as_dict["class"] == OutgoingRoutingEdge.__name__:
+        class_fields_as_dict = convert_keys_to_snake_case(edge_as_dict)
+        if all(key in class_fields_as_dict.keys() for key in {"start_node_track_id", "end_section_track_id"}):
             converted_routing_edges.append(OutgoingRoutingEdge(**class_fields_as_dict))
-        elif edge_as_dict["class"] == IncomingRoutingEdge.__name__:
+        elif all(key in class_fields_as_dict.keys() for key in {"start_section_track_id", "end_node_track_id"}):
             converted_routing_edges.append(IncomingRoutingEdge(**class_fields_as_dict))
-        elif edge_as_dict["class"] == CrossingRoutingEdge.__name__:
+        elif all(key in class_fields_as_dict.keys() for key in {"start_section_track_id", "end_section_track_id"}):
             converted_routing_edges.append(CrossingRoutingEdge(**class_fields_as_dict))
         else:
-            raise TypeError("{0} is not defined as a routing edge".format(edge_as_dict["class"]))
+            raise TypeError("{0} is not defined as a routing edge".format(class_fields_as_dict))
 
     return UpdateTrainRoute(train_id, end_train_path_node_id, converted_routing_edges, start_train_path_node_id)
 

@@ -192,6 +192,27 @@ class AlgorithmInterface:
             response_list
         )
 
+    @dispatch(int, int, int, int)
+    def update_formation(self,
+                         train_id: int,
+                         from_train_path_node_id: int,
+                         to_train_path_node_id: int,
+                         formation_id: int) -> AlgorithmTrain:
+        url_to_resource = 'trains/{0}/train-path-nodes:update-formation'.format(train_id)
+        manually_converted_put_body = dict(
+            formationID=formation_id,
+            fromTrainPathNodeID=from_train_path_node_id,
+            toTrainPathNodeID=to_train_path_node_id)
+        response_dict = self.__communication_layer.do_put_request(url_to_resource, manually_converted_put_body)
+        return algorithm_platform_json_to_aidm_converter.convert_json_to_algorithm_train(response_dict)
+
+    @dispatch(int, int, int)
+    def update_formation(self, train_id: int, from_train_path_node_id: int, formation_id: int) -> AlgorithmTrain:
+        url_to_resource = 'trains/{0}/train-path-nodes:update-formation'.format(train_id)
+        manually_converted_put_body = dict(formationID=formation_id, fromTrainPathNodeID=from_train_path_node_id)
+        response_dict = self.__communication_layer.do_put_request(url_to_resource, manually_converted_put_body)
+        return algorithm_platform_json_to_aidm_converter.convert_json_to_algorithm_train(response_dict)
+
     def cancel_train(self, train_id: int) -> int:
         url_to_resource = 'trains/{0}'.format(train_id)
         return self.__communication_layer.do_delete_request(url_to_resource)

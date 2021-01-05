@@ -1,2 +1,2 @@
-responses~=0.10.8
+responses~=0.12.1
 html-testRunner~=1.2.1

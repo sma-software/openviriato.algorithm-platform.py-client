@@ -2,7 +2,7 @@ import datetime
 import unittest
 from unittest import mock
 
-from py_client.aidm import TimeWindow, AlgorithmConnectionLink, LinkType
+from py_client.aidm import TimeWindow, AlgorithmConnectionLink
 from py_client.algorithm_interface import algorithm_interface_factory
 from py_client.algorithm_interface_test.test_helper import SessionMockFactory
 from py_client.algorithm_interface_test.test_helper.SessionMockTestBase import SessionMockTestBase, get_api_url
@@ -93,7 +93,6 @@ class TestGetConnectionLinksContainingAnyNode(unittest.TestCase):
         self.assertEqual(algorithm_connection_link.to_train_id, 3873)
         self.assertEqual(algorithm_connection_link.to_train_path_node_id, 3145)
         self.assertEqual(algorithm_connection_link.weight, 1)
-        self.assertEqual(algorithm_connection_link.link_type, LinkType.connection)
         self.assertEqual(algorithm_connection_link.minimum_duration, datetime.timedelta(minutes=6))
         self.assertEqual(algorithm_connection_link.maximum_deviation, datetime.timedelta(minutes=13))
 
@@ -109,7 +108,6 @@ class TestGetConnectionLinksContainingAnyNode(unittest.TestCase):
         self.assertEqual(algorithm_connection_link.to_node_id, 281)
         self.assertEqual(algorithm_connection_link.to_train_id, 3873)
         self.assertEqual(algorithm_connection_link.to_train_path_node_id, 3145)
-        self.assertEqual(algorithm_connection_link.link_type, LinkType.connection)
         self.assertEqual(algorithm_connection_link.minimum_duration, datetime.timedelta(minutes=6))
         self.assertEqual(algorithm_connection_link.weight, None)
         self.assertIsNone(algorithm_connection_link.maximum_deviation, None)

@@ -7,15 +7,14 @@ from py_client.aidm.aidm_base_classes import _HasDebugString
 
 @unique
 class LinkType(Enum):
-    await_arrival = 1
-    connection = 2
+    await_arrival = "awaitArrival"
+    connection = "connection"
 
 
 class AlgorithmLink(_HasDebugString):
     __from_node_id: int
     __from_train_id: int
     __from_train_path_node_id: int
-    __link_type: LinkType
     __to_node_id: int
     __to_train_id: int
     __to_train_path_node_id: int
@@ -25,7 +24,6 @@ class AlgorithmLink(_HasDebugString):
                  from_node_id: int,
                  from_train_id: int,
                  from_train_path_node_id: int,
-                 link_type: LinkType,
                  to_node_id: int,
                  to_train_id: int,
                  to_train_path_node_id: int):
@@ -33,7 +31,6 @@ class AlgorithmLink(_HasDebugString):
         self.__from_node_id = from_node_id
         self.__from_train_id = from_train_id
         self.__from_train_path_node_id = from_train_path_node_id
-        self.__link_type = link_type
         self.__to_node_id = to_node_id
         self.__to_train_id = to_train_id
         self.__to_train_path_node_id = to_train_path_node_id
@@ -49,10 +46,6 @@ class AlgorithmLink(_HasDebugString):
     @property
     def from_train_path_node_id(self) -> int:
         return self.__from_train_path_node_id
-
-    @property
-    def link_type(self) -> LinkType:
-        return self.__link_type
 
     @property
     def to_node_id(self) -> int:
@@ -77,7 +70,6 @@ class AlgorithmConnectionLink(AlgorithmLink):
                  from_node_id: int,
                  from_train_id: int,
                  from_train_path_node_id: int,
-                 link_type: LinkType,
                  to_node_id: int,
                  to_train_id: int,
                  to_train_path_node_id: int,
@@ -89,7 +81,6 @@ class AlgorithmConnectionLink(AlgorithmLink):
                                from_node_id,
                                from_train_id,
                                from_train_path_node_id,
-                               link_type,
                                to_node_id,
                                to_train_id,
                                to_train_path_node_id)
@@ -119,7 +110,6 @@ class AlgorithmAwaitArrivalLink(AlgorithmLink):
                  from_node_id: int,
                  from_train_id: int,
                  from_train_path_node_id: int,
-                 link_type: LinkType,
                  to_node_id: int,
                  to_train_id: int,
                  to_train_path_node_id: int,
@@ -129,7 +119,6 @@ class AlgorithmAwaitArrivalLink(AlgorithmLink):
                                from_node_id,
                                from_train_id,
                                from_train_path_node_id,
-                               link_type,
                                to_node_id,
                                to_train_id,
                                to_train_path_node_id)

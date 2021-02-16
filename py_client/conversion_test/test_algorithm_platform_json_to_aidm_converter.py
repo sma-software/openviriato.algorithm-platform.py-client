@@ -1,6 +1,7 @@
 import unittest
 
 from py_client.aidm import *
+from py_client.communication.response_processing import AlgorithmPlatformConversionError
 from py_client.conversion import algorithm_platform_json_to_aidm_converter
 
 
@@ -250,6 +251,90 @@ class TestToAIDMConverter(unittest.TestCase):
         self.assertEqual(update_train_times_node.minimum_run_time, None)
         self.assertEqual(update_train_times_node.minimum_stop_time, datetime.timedelta(0))
         self.assertEqual(update_train_times_node.stop_status, StopStatus.commercial_stop)
+
+    def test_convert_json_to_algorithm_link_with_await_arrival_link(self):
+        link_as_dictionary = dict(
+            minimum_duration="PT10M",
+            from_node_id=161,
+            from_train_id=5361,
+            from_train_path_node_id=4997,
+            to_node_id=161,
+            to_train_id=2449,
+            to_train_path_node_id=1356,
+            link_type="awaitArrival",
+            debug_string="DebugString")
+
+        await_arrival_link = algorithm_platform_json_to_aidm_converter.convert_json_to_algorithm_link(
+            link_as_dictionary)
+
+        self.assertIsInstance(await_arrival_link, AlgorithmAwaitArrivalLink)
+        self.assertEqual(await_arrival_link.minimum_duration, datetime.timedelta(minutes=10))
+        self.assertEqual(await_arrival_link.from_node_id, 161)
+        self.assertEqual(await_arrival_link.to_node_id, 161)
+        self.assertEqual(await_arrival_link.debug_string, "DebugString")
+
+    def test_convert_json_to_algorithm_link_with_connection_link(self):
+        link_as_dictionary = dict(
+            minimum_duration="PT6M",
+            maximum_deviation="PT13M",
+            weight=1,
+            from_node_id=281,
+            from_train_id=2449,
+            from_train_path_node_id=1721,
+            to_node_id=281,
+            to_train_id=3905,
+            to_train_path_node_id=3177,
+            link_type="connection",
+            debug_string="DebugString")
+
+        connection_link = algorithm_platform_json_to_aidm_converter.convert_json_to_algorithm_link(link_as_dictionary)
+
+        self.assertIsInstance(connection_link, AlgorithmConnectionLink)
+        self.assertEqual(connection_link.minimum_duration, datetime.timedelta(minutes=6))
+        self.assertEqual(connection_link.maximum_deviation, datetime.timedelta(minutes=13))
+        self.assertEqual(connection_link.from_node_id, 281)
+        self.assertEqual(connection_link.to_train_id, 3905)
+        self.assertEqual(connection_link.debug_string, "DebugString")
+
+    def test_convert_json_to_algorithm_link_unknown_link_type_defined(self):
+        link_as_dictionary = dict(
+            minimum_duration="PT6M",
+            maximum_deviation="PT13M",
+            weight=1,
+            from_node_id=281,
+            from_train_id=2449,
+            from_train_path_node_id=1721,
+            to_node_id=281,
+            to_train_id=3905,
+            to_train_path_node_id=3177,
+            link_type="not_a_valid_LinkType",
+            debug_string="DebugString")
+
+        with self.assertRaises(AlgorithmPlatformConversionError) as raised_error:
+            algorithm_platform_json_to_aidm_converter.convert_json_to_algorithm_link(link_as_dictionary)
+
+        self.assertEqual(
+            raised_error.exception.message,
+            "not_a_valid__link_type can not be converted to an AlgorithmLink. Extend convert_json_to_algorithm_link")
+
+    def test_convert_json_to_algorithm_link_non_convertible_durations_defined(self):
+        link_as_dictionary = dict(
+            minimum_duration=123,
+            maximum_deviation=1,
+            weight=1,
+            from_node_id=281,
+            from_train_id=2449,
+            from_train_path_node_id=1721,
+            to_node_id=281,
+            to_train_id=3905,
+            to_train_path_node_id=3177,
+            link_type="connection",
+            debug_string="DebugString")
+
+        with self.assertRaises(TypeError) as raised_error:
+            algorithm_platform_json_to_aidm_converter.convert_json_to_algorithm_link(link_as_dictionary)
+
+        self.assertEqual(raised_error.exception.args[0], "Expecting a string 123")
 
 
 class TestClassInner:

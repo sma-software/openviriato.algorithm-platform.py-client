@@ -2,7 +2,7 @@ import datetime
 import unittest
 from unittest import mock
 
-from py_client.aidm import TimeWindow, AlgorithmAwaitArrivalLink, AlgorithmConnectionLink, LinkType
+from py_client.aidm import TimeWindow, AlgorithmAwaitArrivalLink
 from py_client.algorithm_interface import algorithm_interface_factory
 from py_client.algorithm_interface_test.test_helper import SessionMockFactory
 from py_client.algorithm_interface_test.test_helper.SessionMockTestBase import SessionMockTestBase, get_api_url
@@ -69,7 +69,6 @@ class TestGetAwaitArrivalLinks(unittest.TestCase):
         self.assertEqual(algorithm_connection_link.to_node_id, 161)
         self.assertEqual(algorithm_connection_link.to_train_id, 2417)
         self.assertEqual(algorithm_connection_link.to_train_path_node_id, 1323)
-        self.assertEqual(algorithm_connection_link.link_type, LinkType.await_arrival)
         self.assertEqual(algorithm_connection_link.minimum_duration, datetime.timedelta(seconds=600))
 
     @mock.patch('requests.Session', side_effect=GetAwaitArrivalLinksTestMockSession)

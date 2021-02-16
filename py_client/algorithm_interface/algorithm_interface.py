@@ -536,7 +536,7 @@ class AlgorithmInterface:
     def get_connection_links(self, time_window: TimeWindow) -> List[AlgorithmConnectionLink]:
         url_to_resource = "links"
         query_parameters = merge_query_parameters(
-            [dict(linkType=object_to_algorithm_platform_json_converter.convert_any_object(LinkType.connection)),
+            [dict(linkType=LinkType.connection.value),
              object_to_algorithm_platform_json_converter.convert_any_object(time_window)])
         response_dict = self.__communication_layer.do_get_request(url_to_resource, query_parameters)
         return algorithm_platform_json_to_aidm_converter.convert_list(
@@ -548,7 +548,7 @@ class AlgorithmInterface:
         manual_converted_query_parameters = dict(nodeFilter=node_ids)
         query_parameters = merge_query_parameters(
             [manual_converted_query_parameters,
-             dict(linkType=object_to_algorithm_platform_json_converter.convert_any_object(LinkType.connection)),
+             dict(linkType=LinkType.connection.value),
              object_to_algorithm_platform_json_converter.convert_any_object(time_window)])
         response_dict = self.__communication_layer.do_get_request(url_to_resource, query_parameters)
         return algorithm_platform_json_to_aidm_converter.convert_list(
@@ -557,7 +557,7 @@ class AlgorithmInterface:
     def get_await_arrival_links(self, time_window: TimeWindow) -> List[AlgorithmAwaitArrivalLink]:
         url_to_resource = "links"
         query_parameters = merge_query_parameters(
-            [dict(linkType=object_to_algorithm_platform_json_converter.convert_any_object(LinkType.await_arrival)),
+            [dict(linkType=LinkType.await_arrival.value),
              object_to_algorithm_platform_json_converter.convert_any_object(time_window)])
         response_dict = self.__communication_layer.do_get_request(url_to_resource, query_parameters)
         return algorithm_platform_json_to_aidm_converter.convert_list(
@@ -569,7 +569,7 @@ class AlgorithmInterface:
         manual_converted_query_parameters = dict(nodeFilter=node_ids)
         query_parameters = merge_query_parameters(
             [manual_converted_query_parameters,
-             dict(linkType=object_to_algorithm_platform_json_converter.convert_any_object(LinkType.await_arrival)),
+             dict(linkType=LinkType.await_arrival.value),
              object_to_algorithm_platform_json_converter.convert_any_object(time_window)])
         response_dict = self.__communication_layer.do_get_request(url_to_resource, query_parameters)
         return algorithm_platform_json_to_aidm_converter.convert_list(

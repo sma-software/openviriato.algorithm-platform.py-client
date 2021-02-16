@@ -1,15 +1,15 @@
 class FloatingPoint:
     __decimal_places: int
-    __value: int
+    __mantissa: int
 
-    def __init__(self, decimal_places: int, value: int):
+    def __init__(self, decimal_places: int, mantissa: int):
         self.__decimal_places = decimal_places
-        self.__value = value
+        self.__mantissa = mantissa
 
     @property
     def decimal_places(self) -> int:
         return self.__decimal_places
 
     @property
-    def value(self) -> int:
-        return self.__value
+    def mantissa(self) -> int:
+        return self.__mantissa

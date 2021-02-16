@@ -17,7 +17,7 @@ class TestGetFloatingPointAlgorithmParameter(unittest.TestCase):
             json__string = ("{\n"
                             "  \"value\": {\n"
                             "    \"decimalPlaces\": 2,\n"
-                            "    \"value\": 4711\n"
+                            "    \"mantissa\": 4711\n"
                             "  },\n"
                             "  \"key\": \"floatingPointParameter\"\n"
                             "}")
@@ -46,7 +46,7 @@ class TestGetFloatingPointAlgorithmParameter(unittest.TestCase):
 
         self.assertIsInstance(floating_point, FloatingPoint)
         self.assertEqual(floating_point.decimal_places, 2)
-        self.assertEqual(floating_point.value, 4711)
+        self.assertEqual(floating_point.mantissa, 4711)
 
     @mock.patch('requests.Session', side_effect=GetFloatingPointAlgorithmParameterTestSessionMock)
     def tearDown(self, mocked_get_obj) -> None:

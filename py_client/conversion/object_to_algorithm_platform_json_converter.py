@@ -1,7 +1,8 @@
 import enum
 
 import py_client
-from py_client.conversion.converter_helpers import convert_to_datetime_format_or_return_self, _convert_to_camel_case
+from py_client.conversion.converter_helpers import convert_to_datetime_format_or_return_self, _convert_to_camel_case, \
+    convert_to_snake_case
 
 
 def get_attribute_name_without_class_prefix(attribute_name_with_prefix):
@@ -23,7 +24,7 @@ def convert_any_object(obj):
         return [convert_any_object(el) for el in obj]
 
     if isinstance(obj, enum.Enum):
-        return _convert_to_camel_case(obj.name)
+        return _convert_to_camel_case(convert_to_snake_case(obj.name))
 
     is_from_aidm_package = hasattr(obj, "__module__") and obj.__module__.split('.')[0] == py_client.__name__
     if is_from_aidm_package:

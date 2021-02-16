@@ -1,10 +1,12 @@
 import inspect
-from typing import Union
+from typing import Union, TypeVar, Type
 
 from py_client.aidm import *
 from py_client.communication.response_processing import AlgorithmPlatformConversionError
 from py_client.conversion.converter_helpers import parse_to_datetime, parse_to_timedelta, parse_to_timedelta_or_none, \
     convert_keys_to_snake_case, convert_to_snake_case
+
+EnumType = TypeVar("EnumType", bound=Enum)
 
 
 def convert(aidm_class_or_aidm_class_factory, attribute_dict: dict):
@@ -122,3 +124,17 @@ def convert_json_to_algorithm_link(attribute_dict: dict) -> Union[AlgorithmConne
             "{0} can not be converted to an {1}. Extend convert_json_to_algorithm_link".format(
                 link_type_as_str,
                 AlgorithmLink.__name__), None)
+
+
+def convert_algorithm_parameter_value_to_enum(
+        enum_type: Type[EnumType],
+        enum_algorithm_parameter_value: object) -> EnumType:
+    enum_has_value_provided_by_algorithm_platform = \
+        enum_algorithm_parameter_value in set(item.name for item in enum_type)
+    if enum_has_value_provided_by_algorithm_platform:
+        return enum_type[enum_algorithm_parameter_value]
+    else:
+        error_message = "{0} does not have a value {1}".format(
+            enum_type,
+            enum_algorithm_parameter_value)
+        raise AlgorithmPlatformConversionError(error_message, None)

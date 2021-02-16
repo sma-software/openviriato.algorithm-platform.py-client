@@ -1,3 +1,4 @@
+from enum import Enum
 from typing import List, Union, Dict, Type
 
 from py_client.aidm import StopStatus, UpdateTimesTrainPathNode, UpdateStopTimesTrainPathNode, IncomingRoutingEdge, \
@@ -126,3 +127,11 @@ def convert_json_with_url_encoding_to_time_window(url_encoded_time_window_dict: 
     for key in url_encoded_time_window_dict.keys():
         url_encoded_time_window_dict[key] = str(url_encoded_time_window_dict[key]).replace("%3A", ":")
     return convert(TimeWindow, url_encoded_time_window_dict)
+
+
+class _EndToEndTestParameterEnum(Enum):
+    optionValue3 = 3
+
+
+def get_test_request_enum_class(_) -> Type[_EndToEndTestParameterEnum]:
+    return _EndToEndTestParameterEnum

@@ -1,4 +1,4 @@
-from typing import Union
+from typing import Union, Type
 
 from multipledispatch import dispatch
 
@@ -8,6 +8,7 @@ from py_client.algorithm_interface.algorithm_interface_helpers import merge_quer
 from py_client.communication import communication_layer
 from py_client.conversion import object_to_algorithm_platform_json_converter, converter_helpers, \
     algorithm_platform_json_to_aidm_converter
+from py_client.conversion.algorithm_platform_json_to_aidm_converter import EnumType
 
 
 class AlgorithmInterface:
@@ -625,6 +626,12 @@ class AlgorithmInterface:
 
     def get_int_algorithm_parameter(self, key: str) -> int:
         return self.__delegate_get_any_parameter(key)
+
+    def get_enum_algorithm_parameter(self, enum_type: Type[EnumType], key: str) -> EnumType:
+        response_value = self.__delegate_get_any_parameter(key)
+        return algorithm_platform_json_to_aidm_converter.convert_algorithm_parameter_value_to_enum(
+            enum_type,
+            response_value)
 
     def get_floating_point_algorithm_parameter(self, key: str) -> FloatingPoint:
         response_dict = self.__delegate_get_any_parameter(key)

@@ -506,6 +506,11 @@ class AlgorithmInterface:
         response_dict = self.__communication_layer.do_get_request(url_to_resource)
         return algorithm_platform_json_to_aidm_converter.convert(AlgorithmFormation, response_dict)
 
+    def get_all_vehicle_types(self) -> List[AlgorithmVehicleType]:
+        url_to_resource = "vehicles/types"
+        response_list = self.__communication_layer.do_get_request(url_to_resource)
+        return algorithm_platform_json_to_aidm_converter.convert_list(AlgorithmVehicleType, response_list)
+
     def get_vehicle_type(self, vehicle_type_id: int) -> AlgorithmVehicleType:
         url_to_resource = "vehicles/types/{0}".format(vehicle_type_id)
         response_dict = self.__communication_layer.do_get_request(url_to_resource)

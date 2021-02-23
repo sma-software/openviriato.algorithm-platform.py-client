@@ -9,9 +9,9 @@ from py_client.algorithm_interface_test.test_helper.SessionMockTestBase import \
 
 
 class TestRequestEnum(Enum):
-    optionValue1 = 1
-    optionValue2 = 2
-    optionValue3 = 3
+    optionValue1 = "optionValue1"
+    optionValue2 = "optionValue2"
+    optionValue3 = "optionValue3"
 
 
 class TestGetEnumPointAlgorithmParameter(unittest.TestCase):

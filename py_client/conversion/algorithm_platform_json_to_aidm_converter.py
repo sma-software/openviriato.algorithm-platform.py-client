@@ -128,9 +128,9 @@ def convert_algorithm_parameter_value_to_enum(
         enum_type: Type[EnumType],
         enum_algorithm_parameter_value: object) -> EnumType:
     enum_has_value_provided_by_algorithm_platform = \
-        enum_algorithm_parameter_value in set(item.name for item in enum_type)
+        enum_algorithm_parameter_value in set(item.value for item in enum_type)
     if enum_has_value_provided_by_algorithm_platform:
-        return enum_type[enum_algorithm_parameter_value]
+        return enum_type(enum_algorithm_parameter_value)
     else:
         error_message = "{0} does not have a value {1}".format(
             enum_type,

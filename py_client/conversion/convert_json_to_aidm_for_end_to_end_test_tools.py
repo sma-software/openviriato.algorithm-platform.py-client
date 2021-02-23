@@ -127,9 +127,5 @@ def convert_json_with_url_encoding_to_time_window(url_encoded_time_window_dict: 
     return convert(TimeWindow, url_encoded_time_window_dict)
 
 
-class _EndToEndTestParameterEnum(Enum):
-    optionValue3 = 3
-
-
-def get_test_request_enum_class(_) -> Type[_EndToEndTestParameterEnum]:
-    return _EndToEndTestParameterEnum
+class EndToEndTestParameterEnum(Enum):
+    optionValue3 = "optionValue3"

@@ -26,10 +26,10 @@ class TestGetSeparationTimeInStationForEntryOrExit(unittest.TestCase):
         node_id = 123
         preceding_train_path_node_id = 80
         preceding_train_stop_status = None
-        preceding_station_entry_or_exit = StationEntryOrExit['exit']
+        preceding_station_entry_or_exit = StationEntryOrExit('exit')
         succeeding_train_path_node_id = 123
         succeeding_train_stop_status = None
-        succeeding_station_entry_or_exit = StationEntryOrExit['entry']
+        succeeding_station_entry_or_exit = StationEntryOrExit('entry')
 
         self.interface_to_viriato.get_separation_time_in_station_for_planned_train_paths(
             node_id,
@@ -58,11 +58,11 @@ class TestGetSeparationTimeInStationForEntryOrExit(unittest.TestCase):
     def test_get_separation_time_in_station_for_planned_train_paths_request_one_stop_status(self, mocked_get_obj):
         node_id = 123
         preceding_train_path_node_id = 80
-        preceding_train_stop_status = StopStatus['passing']
-        preceding_station_entry_or_exit = StationEntryOrExit['exit']
+        preceding_train_stop_status = StopStatus('passing')
+        preceding_station_entry_or_exit = StationEntryOrExit('exit')
         succeeding_train_path_node_id = 123
         succeeding_train_stop_status = None
-        succeeding_station_entry_or_exit = StationEntryOrExit['entry']
+        succeeding_station_entry_or_exit = StationEntryOrExit('entry')
 
         self.interface_to_viriato.get_separation_time_in_station_for_planned_train_paths(
             node_id,
@@ -91,11 +91,11 @@ class TestGetSeparationTimeInStationForEntryOrExit(unittest.TestCase):
     def test_get_separation_time_in_station_for_planned_train_paths_request_both_stop_status(self, mocked_get_obj):
         node_id = 123
         preceding_train_path_node_id = 80
-        preceding_train_stop_status = StopStatus['commercial_stop']
-        preceding_station_entry_or_exit = StationEntryOrExit['exit']
+        preceding_train_stop_status = StopStatus('commercialStop')
+        preceding_station_entry_or_exit = StationEntryOrExit('exit')
         succeeding_train_path_node_id = 123
-        succeeding_train_stop_status = StopStatus['passing']
-        succeeding_station_entry_or_exit = StationEntryOrExit['entry']
+        succeeding_train_stop_status = StopStatus('passing')
+        succeeding_station_entry_or_exit = StationEntryOrExit('entry')
 
         self.interface_to_viriato.get_separation_time_in_station_for_planned_train_paths(
             node_id,
@@ -126,11 +126,11 @@ class TestGetSeparationTimeInStationForEntryOrExit(unittest.TestCase):
     def test_get_separation_time_in_station_for_planned_train_paths_response(self, mocked_get_obj):
         node_id = 123
         preceding_train_path_node_id = 80
-        preceding_train_stop_status = StopStatus['passing']
-        preceding_station_entry_or_exit = StationEntryOrExit['exit']
+        preceding_train_stop_status = StopStatus('passing')
+        preceding_station_entry_or_exit = StationEntryOrExit('exit')
         succeeding_train_path_node_id = 123
-        succeeding_train_stop_status = StopStatus['commercial_stop']
-        succeeding_station_entry_or_exit = StationEntryOrExit['entry']
+        succeeding_train_stop_status = StopStatus('commercialStop')
+        succeeding_station_entry_or_exit = StationEntryOrExit('entry')
 
         separation_time = self.interface_to_viriato.get_separation_time_in_station_for_planned_train_paths(
             node_id,

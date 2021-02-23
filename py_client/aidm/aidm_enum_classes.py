@@ -1,12 +1,14 @@
-from enum import Enum
+from enum import Enum, unique
 
 
+@unique
 class StopStatus(Enum):
-    commercial_stop = 0
-    operational_stop = 1
-    passing = 2
+    commercial_stop = "commercialStop"
+    operational_stop = "operationalStop"
+    passing = "passing"
 
 
+@unique
 class StationEntryOrExit(Enum):
-    entry = 0
-    exit = 1
+    entry = "entry"
+    exit = "exit"

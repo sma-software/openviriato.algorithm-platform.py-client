@@ -334,23 +334,16 @@ class AlgorithmInterface:
 
         url_to_resource = "nodes/{0}/separation-times".format(node_id)
 
-        preceding_entry_or_exit = object_to_algorithm_platform_json_converter.convert_any_object(
-            preceding_station_entry_or_exit)
-        succeeding_entry_or_exit = object_to_algorithm_platform_json_converter.convert_any_object(
-            succeeding_station_entry_or_exit)
-
         query_parameters = dict(
             precedingTrainPathNodeId=preceding_train_path_node_id,
-            precedingEntryOrExit=preceding_entry_or_exit,
+            precedingEntryOrExit=preceding_station_entry_or_exit.value,
             succeedingTrainPathNodeId=succeeding_train_path_node_id,
-            succeedingEntryOrExit=succeeding_entry_or_exit)
+            succeedingEntryOrExit=succeeding_station_entry_or_exit.value)
 
         if preceding_train_stop_status is not None:
-            query_parameters['precedingStopStatus'] = object_to_algorithm_platform_json_converter \
-                .convert_any_object(preceding_train_stop_status)
+            query_parameters['precedingStopStatus'] = preceding_train_stop_status.value
         if succeeding_train_stop_status is not None:
-            query_parameters['succeedingStopStatus'] = object_to_algorithm_platform_json_converter \
-                .convert_any_object(succeeding_train_stop_status)
+            query_parameters['succeedingStopStatus'] = succeeding_train_stop_status.value
 
         response_dict = self.__communication_layer.do_get_request(url_to_resource, query_parameters)
         return converter_helpers.parse_to_timedelta_or_none(response_dict['separationTime'])
@@ -367,10 +360,8 @@ class AlgorithmInterface:
         query_parameters = create_query_parameters_from_preceding_and_succeeding_routing_edge(
             preceding_train_routing_edge,
             succeeding_train_routing_edge)
-        query_parameters['precedingStopStatus'] = object_to_algorithm_platform_json_converter \
-            .convert_any_object(preceding_stop_status)
-        query_parameters['succeedingStopStatus'] = object_to_algorithm_platform_json_converter \
-            .convert_any_object(succeeding_stop_status)
+        query_parameters['precedingStopStatus'] = preceding_stop_status.value
+        query_parameters['succeedingStopStatus'] = succeeding_stop_status.value
 
         response_dict = self.__communication_layer.do_get_request(url_to_resource, query_parameters)
 
@@ -451,8 +442,7 @@ class AlgorithmInterface:
     ) -> List[AlgorithmNodeTrack]:
         url_to_resource = "nodes/{0}/node-tracks".format(node_id)
         if stop_status is not None:
-            stop_status_value = object_to_algorithm_platform_json_converter.convert_any_object(stop_status)
-            get_request_params = dict(assignableForTrainPathNodeId=train_path_node_id, stopStatus=stop_status_value)
+            get_request_params = dict(assignableForTrainPathNodeId=train_path_node_id, stopStatus=stop_status.value)
         else:
             get_request_params = dict(assignableForTrainPathNodeId=train_path_node_id)
         response_list = self.__communication_layer.do_get_request(url_to_resource, get_request_params)

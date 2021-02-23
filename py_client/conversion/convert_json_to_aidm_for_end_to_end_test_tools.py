@@ -6,7 +6,7 @@ from py_client.aidm import StopStatus, UpdateTimesTrainPathNode, UpdateStopTimes
     TableTextCell, TableColumnDefinition, TableAlgorithmNodeCell, TableRow, TableAlgorithmTrainCell, \
     UpdateRunTimesTrainPathSegment, TimeWindow
 from py_client.conversion.algorithm_platform_json_to_aidm_converter import convert
-from py_client.conversion.converter_helpers import convert_keys_to_snake_case, parse_to_datetime, convert_to_snake_case, \
+from py_client.conversion.converter_helpers import convert_keys_to_snake_case, parse_to_datetime, \
     parse_to_timedelta_or_none
 
 
@@ -103,23 +103,21 @@ def convert_to_aidm_enum_from_string(
         enum_as_string: str,
         enum_to_convert_to: Type[Union[StopStatus, StationEntryOrExit, TableCellDataType]]) -> \
         Union[StopStatus, StationEntryOrExit, TableCellDataType]:
-    enum_as_snake_case_string = convert_to_snake_case(enum_as_string)
     for member in enum_to_convert_to:
-        if member.name == enum_as_snake_case_string:
+        if member.value == enum_as_string:
             return member
 
     raise TypeError("{0} is not defined as member of {1}".format(enum_as_string, str(enum_to_convert_to)))
 
 
 def convert_string_to_stop_status(dict_with_stop_status_as_string) -> StopStatus:
-    stop_status_as_string = convert_to_snake_case(dict_with_stop_status_as_string["stop_status_as_string"])
+    stop_status_as_string = dict_with_stop_status_as_string["stop_status_as_string"]
     return convert_to_aidm_enum_from_string(stop_status_as_string, StopStatus)
 
 
 def convert_string_to_station_entry_or_exit(
         dict_with_station_entry_or_exit_as_string: Dict[str, str]) -> StationEntryOrExit:
-    station_entry_or_exit_as_string = convert_to_snake_case(
-        dict_with_station_entry_or_exit_as_string["station_entry_or_exit_as_string"])
+    station_entry_or_exit_as_string = dict_with_station_entry_or_exit_as_string["station_entry_or_exit_as_string"]
     return convert_to_aidm_enum_from_string(station_entry_or_exit_as_string, StationEntryOrExit)
 
 

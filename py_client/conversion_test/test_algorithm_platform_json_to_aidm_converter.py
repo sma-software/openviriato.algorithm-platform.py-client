@@ -109,7 +109,7 @@ class TestToAIDMConverter(unittest.TestCase):
     def test_convert_pascal_case_json_to_train_path_node(self):
         test_node_as_dict = dict(ID=1332, SectionTrackID=None, NodeID=18, NodeTrackID=None, FormationID=1187,
                                  ArrivalTime="2003-05-01T00:04:00", DepartureTime="2003-05-01T00:05:00",
-                                 MinimumRunTime=None, MinimumStopTime="P0D", StopStatus="CommercialStop",
+                                 MinimumRunTime=None, MinimumStopTime="P0D", StopStatus="commercialStop",
                                  SequenceNumber=0)
 
         test_train_path_node = algorithm_platform_json_to_aidm_converter.convert_json_to_algorithm_train_path_node(
@@ -239,7 +239,7 @@ class TestToAIDMConverter(unittest.TestCase):
 
     def test_convert_json_to_update_train_times_node(self):
         param_dict = dict(TrainPathNodeID=3880, ArrivalTime="2003-05-01T07:00:00", DepartureTime="2003-05-01T07:00:00",
-                          MinimumRunTime=None, MinimumStopTime="P0D", StopStatus="CommercialStop")
+                          MinimumRunTime=None, MinimumStopTime="P0D", StopStatus="commercialStop")
 
         update_train_times_node = algorithm_platform_json_to_aidm_converter.convert_json_to_update_train_times_node(
             param_dict)

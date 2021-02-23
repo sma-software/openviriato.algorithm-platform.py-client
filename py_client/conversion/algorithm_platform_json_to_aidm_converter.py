@@ -35,8 +35,7 @@ def convert_json_to_algorithm_node(attribute_dict: dict) -> AlgorithmNode:
 
 def convert_json_to_algorithm_train_path_node(attribute_dict: dict) -> AlgorithmTrainPathNode:
     snake_case_dict = convert_keys_to_snake_case(attribute_dict)
-    stop_status_value = snake_case_dict['stop_status']
-    snake_case_dict['stop_status'] = StopStatus[convert_to_snake_case(stop_status_value)]
+    snake_case_dict['stop_status'] = StopStatus(snake_case_dict['stop_status'])
     for key in ['arrival_time', 'departure_time']:
         snake_case_dict[key] = parse_to_datetime(snake_case_dict[key])
     snake_case_dict['minimum_run_time'] = parse_to_timedelta_or_none(snake_case_dict['minimum_run_time'])
@@ -104,8 +103,7 @@ def convert_json_to_update_train_times_node(attribute_dict: dict) -> UpdateTimes
     for key in ['minimum_run_time', 'minimum_stop_time']:
         snake_case_dict[key] = parse_to_timedelta_or_none(snake_case_dict[key])
     if snake_case_dict['stop_status'] is not None:
-        stop_status_value = snake_case_dict['stop_status']
-        snake_case_dict['stop_status'] = StopStatus[convert_to_snake_case(stop_status_value)]
+        snake_case_dict['stop_status'] = StopStatus(snake_case_dict['stop_status'])
     return convert(UpdateTimesTrainPathNode, snake_case_dict)
 
 

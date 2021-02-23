@@ -1,6 +1,7 @@
 import enum
 
 import py_client
+from py_client.aidm import Maybe
 from py_client.conversion.converter_helpers import convert_to_datetime_format_or_return_self, _convert_to_camel_case
 
 
@@ -24,6 +25,10 @@ def convert_any_object(obj):
 
     if isinstance(obj, enum.Enum):
         return obj.value
+
+    # The following is used at the moment only for end-to-end testing, for sake of simplicity it is here
+    if isinstance(obj, Maybe):
+        return convert_any_object(obj.get_value) if obj.has_value else None
 
     is_from_aidm_package = hasattr(obj, "__module__") and obj.__module__.split('.')[0] == py_client.__name__
     if is_from_aidm_package:

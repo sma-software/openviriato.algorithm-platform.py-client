@@ -20,10 +20,16 @@ class TestGetEnumPointAlgorithmParameter(unittest.TestCase):
             self._last_request = request
             self._last_body = params
 
-            json__string = ("{\n"
-                            "  \"value\": \"optionValue3\",\n"
-                            "  \"key\": \"enumParameter\"\n"
-                            "}")
+            if "noneEnumParameter" in self._last_request:
+                json__string = ("{\n"
+                                "  \"value\": null,\n"
+                                "  \"key\": \"noneEnumParameter\"\n"
+                                "}")
+            else:
+                json__string = ("{\n"
+                                "  \"value\": \"optionValue3\",\n"
+                                "  \"key\": \"enumParameter\"\n"
+                                "}")
 
             return APISessionMock.create_response_mock(json__string, 200)
 
@@ -42,13 +48,21 @@ class TestGetEnumPointAlgorithmParameter(unittest.TestCase):
         self.assertDictEqual(session_obj.last_body, {})
 
     @mock.patch('requests.Session', side_effect=GetEnumAlgorithmParameterTestSessionMock)
-    def test_get_enum_algorithm_parameter_response(self, mocked_get_obj):
+    def test_get_enum_algorithm_parameter_response_with_value(self, mocked_get_obj):
         key = "enumParameter"
 
-        populated_enum = self.interface_to_viriato.get_enum_algorithm_parameter(TestRequestEnum, key)
+        value_with_populated_enum = self.interface_to_viriato.get_enum_algorithm_parameter(TestRequestEnum, key)
 
-        self.assertIsInstance(populated_enum, TestRequestEnum)
-        self.assertEqual(populated_enum.optionValue3, TestRequestEnum.optionValue3)
+        self.assertIsInstance(value_with_populated_enum.get_value, TestRequestEnum)
+        self.assertEqual(value_with_populated_enum.get_value.optionValue3, TestRequestEnum.optionValue3)
+
+    @mock.patch('requests.Session', side_effect=GetEnumAlgorithmParameterTestSessionMock)
+    def test_get_enum_algorithm_parameter_response_with_none(self, mocked_get_obj):
+        key = "noneEnumParameter"
+
+        value_with_none = self.interface_to_viriato.get_enum_algorithm_parameter(TestRequestEnum, key)
+
+        self.assertFalse(value_with_none.has_value)
 
     @mock.patch('requests.Session', side_effect=GetEnumAlgorithmParameterTestSessionMock)
     def tearDown(self, mocked_get_obj) -> None:

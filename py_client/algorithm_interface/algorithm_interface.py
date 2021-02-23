@@ -598,34 +598,35 @@ class AlgorithmInterface:
 
     def __delegate_get_any_parameter(
             self,
-            key: str
-    ) -> Union[
-        AlgorithmTrain,
-        TimeWindow,
-        bool,
-        int,
-        str,
-        list,
-        dict
-    ]:
+            key: str) -> Optional[
+        Union[
+            AlgorithmTrain,
+            TimeWindow,
+            bool,
+            int,
+            str,
+            list,
+            dict]]:
         url_to_resource = "parameters/{0}".format(key)
         return self.__communication_layer.do_get_request(url_to_resource)["value"]
 
     def get_bool_algorithm_parameter(self, key: str) -> bool:
         return self.__delegate_get_any_parameter(key)
 
-    def get_int_algorithm_parameter(self, key: str) -> int:
-        return self.__delegate_get_any_parameter(key)
+    def get_int_algorithm_parameter(self, key: str) -> Maybe[int]:
+        response_value: Optional[int] = self.__delegate_get_any_parameter(key)
+        return Maybe(response_value)
 
-    def get_enum_algorithm_parameter(self, enum_type: Type[EnumType], key: str) -> EnumType:
+    def get_enum_algorithm_parameter(self, enum_type: Type[EnumType], key: str) -> Maybe[EnumType]:
         response_value = self.__delegate_get_any_parameter(key)
-        return algorithm_platform_json_to_aidm_converter.convert_algorithm_parameter_value_to_enum(
-            enum_type,
-            response_value)
+        return Maybe.create_from_json(
+            response_value,
+            algorithm_platform_json_to_aidm_converter.convert_algorithm_parameter_value_to_enum,
+            enum_type)
 
     def get_floating_point_algorithm_parameter(self, key: str) -> FloatingPoint:
         response_dict = self.__delegate_get_any_parameter(key)
-        return algorithm_platform_json_to_aidm_converter.convert(FloatingPoint, response_dict)
+        return algorithm_platform_json_to_aidm_converter.convert_json_to_floating_point(response_dict)
 
     def get_string_algorithm_parameter(self, key: str) -> str:
         return self.__delegate_get_any_parameter(key)

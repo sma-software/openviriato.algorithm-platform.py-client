@@ -14,13 +14,22 @@ class TestGetFloatingPointAlgorithmParameter(unittest.TestCase):
             self._last_request = request
             self._last_body = params
 
-            json__string = ("{\n"
-                            "  \"value\": {\n"
-                            "    \"decimalPlaces\": 2,\n"
-                            "    \"mantissa\": 4711\n"
-                            "  },\n"
-                            "  \"key\": \"floatingPointParameter\"\n"
-                            "}")
+            if "floatingPointParameterWithNoneValueKey" in self._last_request:
+                json__string = ("{\n"
+                                "  \"value\": {\n"
+                                "    \"decimalPlaces\": 2,\n"
+                                "    \"mantissa\": null\n"
+                                "  },\n"
+                                "  \"key\": \"floatingPointParameterWithNoneValueKey\"\n"
+                                "}")
+            else:
+                json__string = ("{\n"
+                                "  \"value\": {\n"
+                                "    \"decimalPlaces\": 2,\n"
+                                "    \"mantissa\": 4711\n"
+                                "  },\n"
+                                "  \"key\": \"floatingPointParameter\"\n"
+                                "}")
 
             return APISessionMock.create_response_mock(json__string, 200)
 
@@ -30,23 +39,33 @@ class TestGetFloatingPointAlgorithmParameter(unittest.TestCase):
 
     @mock.patch('requests.Session', side_effect=GetFloatingPointAlgorithmParameterTestSessionMock)
     def test_get_floating_point_algorithm_parameter_request(self, mocked_get_obj):
-        key = "someIntParameterKey"
+        key = "floatingPointParameterKey"
 
         self.interface_to_viriato.get_floating_point_algorithm_parameter(key)
 
         session_obj = self.interface_to_viriato._AlgorithmInterface__communication_layer.currentSession
-        self.assertEqual(session_obj.last_request, get_api_url() + '/parameters/someIntParameterKey')
+        self.assertEqual(session_obj.last_request, get_api_url() + '/parameters/floatingPointParameterKey')
         self.assertDictEqual(session_obj.last_body, {})
 
     @mock.patch('requests.Session', side_effect=GetFloatingPointAlgorithmParameterTestSessionMock)
-    def test_get_floating_point_algorithm_parameter_response(self, mocked_get_obj):
-        key = "someIntParameterKey"
+    def test_get_floating_point_algorithm_parameter_response_with_value(self, mocked_get_obj):
+        key = "floatingPointParameterKey"
 
         floating_point = self.interface_to_viriato.get_floating_point_algorithm_parameter(key)
 
         self.assertIsInstance(floating_point, FloatingPoint)
         self.assertEqual(floating_point.decimal_places, 2)
-        self.assertEqual(floating_point.mantissa, 4711)
+        self.assertEqual(floating_point.mantissa.get_value, 4711)
+
+    @mock.patch('requests.Session', side_effect=GetFloatingPointAlgorithmParameterTestSessionMock)
+    def test_get_floating_point_algorithm_parameter_response_with_none_value(self, mocked_get_obj):
+        key = "floatingPointParameterWithNoneValueKey"
+
+        floating_point = self.interface_to_viriato.get_floating_point_algorithm_parameter(key)
+
+        self.assertIsInstance(floating_point, FloatingPoint)
+        self.assertEqual(floating_point.decimal_places, 2)
+        self.assertFalse(floating_point.mantissa.has_value)
 
     @mock.patch('requests.Session', side_effect=GetFloatingPointAlgorithmParameterTestSessionMock)
     def tearDown(self, mocked_get_obj) -> None:

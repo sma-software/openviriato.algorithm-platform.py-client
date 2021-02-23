@@ -136,3 +136,9 @@ def convert_algorithm_parameter_value_to_enum(
             enum_type,
             enum_algorithm_parameter_value)
         raise AlgorithmPlatformConversionError(error_message, None)
+
+
+def convert_json_to_floating_point(attribute_dict: dict) -> FloatingPoint:
+    snake_case_dict = convert_keys_to_snake_case(attribute_dict)
+    snake_case_dict["mantissa"] = Maybe(snake_case_dict["mantissa"])
+    return convert(FloatingPoint, snake_case_dict)

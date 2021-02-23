@@ -10,13 +10,20 @@ from py_client.algorithm_interface_test.test_helper.SessionMockTestBase import \
 class TestGetIntAlgorithmParameter(unittest.TestCase):
     class GetIntAlgorithmParameterTestSessionMock(SessionMockTestBase):
         def get(self, request, params):
-            self.__last_request = request
-            self.__last_body = params
+            self._last_request = request
+            self._last_body = params
 
-            json__string = ("{\n"
-                            "  \"key\": \"someIntParameterKey\",\n"
-                            "  \"value\": 125\n"
-                            "}")
+            if "someNullValueIntParameterKey" in request:
+                json__string = ("{\n"
+                                "  \"key\": \"someNullValueIntParameterKey\",\n"
+                                "  \"value\": null\n"
+                                "}")
+
+            else:
+                json__string = ("{\n"
+                                "  \"key\": \"someIntParameterKey\",\n"
+                                "  \"value\": 125\n"
+                                "}")
             return APISessionMock.create_response_mock(json__string, 200)
 
     @mock.patch('requests.Session', side_effect=GetIntAlgorithmParameterTestSessionMock)
@@ -30,18 +37,25 @@ class TestGetIntAlgorithmParameter(unittest.TestCase):
         self.interface_to_viriato.get_int_algorithm_parameter(key)
 
         session_obj = self.interface_to_viriato._AlgorithmInterface__communication_layer.currentSession
-        self.assertEqual(session_obj._GetIntAlgorithmParameterTestSessionMock__last_request, get_api_url() +
-                         '/parameters/someIntParameterKey')
-        self.assertDictEqual(session_obj._GetIntAlgorithmParameterTestSessionMock__last_body, {})
+        self.assertEqual(session_obj.last_request, get_api_url() + '/parameters/someIntParameterKey')
+        self.assertDictEqual(session_obj.last_body, {})
 
     @mock.patch('requests.Session', side_effect=GetIntAlgorithmParameterTestSessionMock)
-    def test_get_int_algorithm_parameter_response(self, mocked_get_obj):
+    def test_get_int_algorithm_parameter_response_with_value(self, mocked_get_obj):
         key = "someIntParameterKey"
 
-        int_param = self.interface_to_viriato.get_int_algorithm_parameter(key)
+        maybe_with_int_param = self.interface_to_viriato.get_int_algorithm_parameter(key)
 
-        self.assertIsInstance(int_param, int)
-        self.assertEqual(int_param, 125)
+        self.assertIsInstance(maybe_with_int_param.get_value, int)
+        self.assertEqual(maybe_with_int_param.get_value, 125)
+
+    @mock.patch('requests.Session', side_effect=GetIntAlgorithmParameterTestSessionMock)
+    def test_get_int_algorithm_parameter_response_with_none(self, mocked_get_obj):
+        key = "someNullValueIntParameterKey"
+
+        maybe_with_no_value = self.interface_to_viriato.get_int_algorithm_parameter(key)
+
+        self.assertFalse(maybe_with_no_value.has_value)
 
     @mock.patch('requests.Session', side_effect=GetIntAlgorithmParameterTestSessionMock)
     def tearDown(self, mocked_get_obj) -> None:

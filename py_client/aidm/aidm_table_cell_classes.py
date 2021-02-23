@@ -89,9 +89,9 @@ class TableAlgorithmTrainCell(_TableCell):
 
 @unique
 class TableCellDataType(Enum):
-    algorithm_node = 1
-    algorithm_train = 2
-    duration = 3
-    integer = 4
-    local_date_time = 5
-    string = 6
+    algorithm_node = "algorithmNode"
+    algorithm_train = "algorithmTrain"
+    duration = "duration"
+    integer = "integer"
+    local_date_time = "localDateTime"
+    string = "string"

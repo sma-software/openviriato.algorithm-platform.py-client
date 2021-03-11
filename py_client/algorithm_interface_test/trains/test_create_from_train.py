@@ -56,10 +56,10 @@ class TestCreateFromTrain(unittest.TestCase):
         train_id = 2060
         node_ids = [11039]
 
-        self.interface_to_viriato.create_from_train(train_id, node_ids)
+        self.interface_to_viriato.copy_train_and_replace_route(train_id, node_ids)
 
         session_obj = self.interface_to_viriato._AlgorithmInterface__communication_layer.currentSession
-        self.assertEqual(session_obj.last_request, get_api_url() + '/trains/2060:create-from-train')
+        self.assertEqual(session_obj.last_request, get_api_url() + '/trains/2060:copy-and-replace-route')
         self.assertDictEqual(session_obj.last_body, dict(routeViaNodeIds=[11039]))
 
     @mock.patch('requests.Session', side_effect=CreateFromTrainTestMockSession)
@@ -67,7 +67,7 @@ class TestCreateFromTrain(unittest.TestCase):
         train_id = 2060
         node_ids = [11039]
 
-        created_algorithm_train = self.interface_to_viriato.create_from_train(train_id, node_ids)
+        created_algorithm_train = self.interface_to_viriato.copy_train_and_replace_route(train_id, node_ids)
 
         self.assertIsInstance(created_algorithm_train, py_client.aidm.aidm_algorithm_classes.AlgorithmTrain)
         self.assertEqual(11037, created_algorithm_train.id)

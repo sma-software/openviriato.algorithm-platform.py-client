@@ -228,13 +228,13 @@ class AlgorithmInterface:
         response_dict = self.__communication_layer.do_put_request(url_to_resource)
         return algorithm_platform_json_to_aidm_converter.convert_json_to_algorithm_train(response_dict)
 
-    def clone_train(self, train_id: int) -> AlgorithmTrain:
-        url_to_resource = 'trains/{0}:clone'.format(train_id)
+    def copy_train(self, train_id: int) -> AlgorithmTrain:
+        url_to_resource = 'trains/{0}:copy'.format(train_id)
         response_dict = self.__communication_layer.do_post_request(url_to_resource)
         return algorithm_platform_json_to_aidm_converter.convert_json_to_algorithm_train(response_dict)
 
-    def create_from_train(self, train_id: int, node_ids: List[int]):
-        url_to_resource = 'trains/{0}:create-from-train'.format(train_id)
+    def copy_train_and_replace_route(self, train_id: int, node_ids: List[int]):
+        url_to_resource = 'trains/{0}:copy-and-replace-route'.format(train_id)
         post_request_body = dict(routeViaNodeIds=node_ids)
         response_dict = self.__communication_layer.do_post_request(url_to_resource, post_request_body)
         return algorithm_platform_json_to_aidm_converter.convert_json_to_algorithm_train(response_dict)

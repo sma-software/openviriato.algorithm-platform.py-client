@@ -56,17 +56,17 @@ class TestCloneTrain(unittest.TestCase):
     def test_clone_train_request(self, mocked_get_obj):
         train_id = 2060
 
-        self.interface_to_viriato.clone_train(train_id)
+        self.interface_to_viriato.copy_train(train_id)
 
         session_obj = self.interface_to_viriato._AlgorithmInterface__communication_layer.currentSession
-        self.assertEqual(session_obj._CloneTrainTestMockSession__last_request, get_api_url() + '/trains/2060:clone')
+        self.assertEqual(session_obj._CloneTrainTestMockSession__last_request, get_api_url() + '/trains/2060:copy')
         self.assertDictEqual(session_obj._CloneTrainTestMockSession__last_body, {})
 
     @mock.patch('requests.Session', side_effect=CloneTrainTestMockSession)
     def test_clone_train_response(self, mocked_get_obj):
         train_id = 0
 
-        test_cloned_algorithm_train = self.interface_to_viriato.clone_train(train_id)
+        test_cloned_algorithm_train = self.interface_to_viriato.copy_train(train_id)
 
         self.assertIsInstance(test_cloned_algorithm_train, py_client.aidm.aidm_algorithm_classes.AlgorithmTrain)
         self.assertEqual(11037, test_cloned_algorithm_train.id)

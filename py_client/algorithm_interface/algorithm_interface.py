@@ -214,9 +214,9 @@ class AlgorithmInterface:
         response_dict = self.__communication_layer.do_put_request(url_to_resource, manually_converted_put_body)
         return algorithm_platform_json_to_aidm_converter.convert_json_to_algorithm_train(response_dict)
 
-    def cancel_train(self, train_id: int) -> int:
+    def cancel_train(self, train_id: int) -> None:
         url_to_resource = 'trains/{0}'.format(train_id)
-        return self.__communication_layer.do_delete_request(url_to_resource)
+        self.__communication_layer.do_delete_request(url_to_resource)
 
     def cancel_train_after(self, train_id: int, train_path_node_id: int) -> AlgorithmTrain:
         url_to_resource = 'trains/{0}/train-path-nodes/{1}:cancel-after'.format(train_id, train_path_node_id)

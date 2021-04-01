@@ -63,7 +63,7 @@ class TestUpdateTrajectory(unittest.TestCase):
                                                                    stop_status=StopStatus.operational_stop,
                                                                    minimum_stop_time=datetime.timedelta(seconds=30))
 
-        self.interface_to_viriato.update_trajectory(train_id, update_train_stop_time_node)
+        self.interface_to_viriato.update_train_trajectory_stop_times(train_id, update_train_stop_time_node)
 
         session_obj = self.interface_to_viriato._AlgorithmInterface__communication_layer.currentSession
         self.assertEqual(session_obj.last_request,
@@ -84,7 +84,7 @@ class TestUpdateTrajectory(unittest.TestCase):
                                                                    stop_status=StopStatus.operational_stop,
                                                                    minimum_stop_time=datetime.timedelta(seconds=30))
 
-        updated_algorithm_train = self.interface_to_viriato.update_trajectory(train_id, update_train_stop_time_node)
+        updated_algorithm_train = self.interface_to_viriato.update_train_trajectory_stop_times(train_id, update_train_stop_time_node)
 
         self.assertIsInstance(updated_algorithm_train, AlgorithmTrain)
         self.assertEqual(updated_algorithm_train.debug_string, 'Mocked RVZH_1_1_J03 tt_(G)')
@@ -113,7 +113,7 @@ class TestUpdateTrajectory(unittest.TestCase):
             from_node_departure_time=datetime.datetime(2003, 5, 1, 0, 5),
             minimum_run_time=datetime.timedelta(seconds=120))
 
-        self.interface_to_viriato.update_trajectory(train_id, update_train_path_segment)
+        self.interface_to_viriato.update_train_trajectory_run_times(train_id, update_train_path_segment)
 
         session_obj = self.interface_to_viriato._AlgorithmInterface__communication_layer.currentSession
         self.assertEqual(session_obj.last_request,
@@ -133,7 +133,7 @@ class TestUpdateTrajectory(unittest.TestCase):
             from_node_departure_time=datetime.datetime(2003, 5, 1, 0, 5),
             minimum_run_time=None)
 
-        self.interface_to_viriato.update_trajectory(train_id, update_train_path_segment)
+        self.interface_to_viriato.update_train_trajectory_run_times(train_id, update_train_path_segment)
 
         session_obj = self.interface_to_viriato._AlgorithmInterface__communication_layer.currentSession
         self.assertEqual(session_obj.last_request,
@@ -153,7 +153,9 @@ class TestUpdateTrajectory(unittest.TestCase):
             from_node_departure_time=datetime.datetime(2003, 5, 1, 0, 5),
             minimum_run_time=None)
 
-        updated_algorithm_train = self.interface_to_viriato.update_trajectory(train_id, update_train_path_segment)
+        updated_algorithm_train = self.interface_to_viriato.update_train_trajectory_run_times(
+            train_id,
+            update_train_path_segment)
 
         self.assertIsInstance(updated_algorithm_train, AlgorithmTrain)
         self.assertEqual(updated_algorithm_train.debug_string, 'Mocked RVZH_1_1_J03 tt_(G)')

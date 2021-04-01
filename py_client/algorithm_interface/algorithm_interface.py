@@ -261,8 +261,8 @@ class AlgorithmInterface:
         response_dict = self.__communication_layer.do_put_request(url_to_resource, request_body=put_body_list)
         return algorithm_platform_json_to_aidm_converter.convert_json_to_algorithm_train(response_dict)
 
-    @dispatch(object, UpdateStopTimesTrainPathNode)
-    def update_trajectory(
+    @dispatch(int, UpdateStopTimesTrainPathNode)
+    def update_train_trajectory_stop_times(
             self,
             train_id: int,
             update_train_stop_times_node: UpdateStopTimesTrainPathNode
@@ -272,8 +272,8 @@ class AlgorithmInterface:
         response_dict = self.__communication_layer.do_put_request(url_to_resource, request_body=put_body_list)
         return algorithm_platform_json_to_aidm_converter.convert_json_to_algorithm_train(response_dict)
 
-    @dispatch(object, UpdateRunTimesTrainPathSegment)
-    def update_trajectory(
+    @dispatch(int, UpdateRunTimesTrainPathSegment)
+    def update_train_trajectory_run_times(
             self,
             train_id: int,
             update_run_times_train_path_segment: UpdateRunTimesTrainPathSegment

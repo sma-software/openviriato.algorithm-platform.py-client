@@ -5,19 +5,16 @@ from py_client.aidm import StopStatus
 from py_client.aidm.aidm_base_classes import _UpdateTrain, _RoutingEdge
 
 
-class UpdateTrainRoute(_UpdateTrain):
+class UpdateTrainRoute:
     __end_train_path_node_id: int
     __routing_edges: List[_RoutingEdge]
     __start_train_path_node_id: int
 
     def __init__(
             self,
-            train_id: int,
+            start_train_path_node_id: int,
             end_train_path_node_id: int,
-            routing_edges: List[_RoutingEdge],
-            start_train_path_node_id: int
-    ):
-        _UpdateTrain.__init__(self, train_id)
+            routing_edges: List[_RoutingEdge]):
         self.__end_train_path_node_id = end_train_path_node_id
         self.__routing_edges = routing_edges
         self.__start_train_path_node_id = start_train_path_node_id

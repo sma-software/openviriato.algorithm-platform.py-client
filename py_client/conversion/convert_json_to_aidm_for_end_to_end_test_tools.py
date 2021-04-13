@@ -43,7 +43,6 @@ def extract_first_dict_value(attribute_dict: dict) -> object:
 
 
 def create_update_train_route_for_end_to_end_test(evaluated_parameter_mapping: dict) -> UpdateTrainRoute:
-    train_id: int = evaluated_parameter_mapping["train_id"]
     start_train_path_node_id: int = evaluated_parameter_mapping["start_train_path_node_id"]
     end_train_path_node_id: int = evaluated_parameter_mapping["end_train_path_node_id"]
     routing_edges: List[Dict[str, Union[str, dict]]] = evaluated_parameter_mapping["routing_edges"]
@@ -60,7 +59,7 @@ def create_update_train_route_for_end_to_end_test(evaluated_parameter_mapping: d
         else:
             raise TypeError("{0} is not defined as a routing edge".format(class_fields_as_dict))
 
-    return UpdateTrainRoute(train_id, end_train_path_node_id, converted_routing_edges, start_train_path_node_id)
+    return UpdateTrainRoute(start_train_path_node_id, end_train_path_node_id, converted_routing_edges)
 
 
 def create_table_definition_for_end_to_end_to_test(object_as_json: dict) -> TableDefinition:

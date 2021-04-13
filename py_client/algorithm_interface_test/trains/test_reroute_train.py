@@ -76,10 +76,10 @@ class TestRerouteTrain(unittest.TestCase):
                          OutgoingRoutingEdge(node_id=24, start_node_track_id=25, end_section_track_id=1166),
                          IncomingRoutingEdge(node_id=10, start_section_track_id=1166, end_node_track_id=12)]
 
-        test_route = UpdateTrainRoute(train_id=train_id,
-                                      end_train_path_node_id=end_train_path_node_id,
-                                      start_train_path_node_id=start_train_path_node_id,
-                                      routing_edges=routing_edges)
+        test_route = UpdateTrainRoute(
+            end_train_path_node_id=end_train_path_node_id,
+            start_train_path_node_id=start_train_path_node_id,
+            routing_edges=routing_edges)
 
         self.interface_to_viriato.reroute_train(train_id, test_route)
 
@@ -108,10 +108,10 @@ class TestRerouteTrain(unittest.TestCase):
                          OutgoingRoutingEdge(node_id=24, start_node_track_id=25, end_section_track_id=1166),
                          IncomingRoutingEdge(node_id=10, start_section_track_id=1166, end_node_track_id=12)]
 
-        test_route = UpdateTrainRoute(train_id=train_id,
-                                      end_train_path_node_id=end_train_path_node_id,
-                                      start_train_path_node_id=start_train_path_node_id,
-                                      routing_edges=routing_edges)
+        test_route = UpdateTrainRoute(
+            end_train_path_node_id=end_train_path_node_id,
+            start_train_path_node_id=start_train_path_node_id,
+            routing_edges=routing_edges)
 
         rerouted_algorithm_train = self.interface_to_viriato.reroute_train(train_id, test_route)
 

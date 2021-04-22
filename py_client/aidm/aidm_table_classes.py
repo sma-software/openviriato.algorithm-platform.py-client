@@ -4,10 +4,10 @@ from py_client.aidm.aidm_table_cell_classes import TableCellDataType, _TableCell
 
 
 class TableColumnDefinition:
-    __column_data_type: TableCellDataType
+    __key: str
     __header: _TableCell
     __header_data_type: TableCellDataType
-    __key: str
+    __column_data_type: TableCellDataType
 
     def __init__(self,
                  key: str,
@@ -20,8 +20,8 @@ class TableColumnDefinition:
         self.__header_data_type = header_data_type
 
     @property
-    def column_data_type(self) -> TableCellDataType:
-        return self.__column_data_type
+    def key(self) -> str:
+        return self.__key
 
     @property
     def header(self) -> _TableCell:
@@ -32,8 +32,8 @@ class TableColumnDefinition:
         return self.__header_data_type
 
     @property
-    def key(self) -> str:
-        return self.__key
+    def column_data_type(self) -> TableCellDataType:
+        return self.__column_data_type
 
 
 class TableDefinition:

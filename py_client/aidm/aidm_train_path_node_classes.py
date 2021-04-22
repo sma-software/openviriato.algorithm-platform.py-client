@@ -20,24 +20,24 @@ class AlgorithmTrainPathNode(_HasID):
     def __init__(
             self,
             id: int,
-            arrival_time: datetime.datetime,
-            departure_time: datetime.datetime,
             section_track_id: Optional[int],
             node_id: int,
             node_track_id: Optional[int],
             formation_id: Optional[int],
+            arrival_time: datetime.datetime,
+            departure_time: datetime.datetime,
             minimum_run_time: Optional[datetime.timedelta],
             minimum_stop_time: datetime.timedelta,
             stop_status: StopStatus,
             sequence_number: int
     ):
         _HasID.__init__(self, id)
-        self.__arrival_time = arrival_time
-        self.__departure_time = departure_time
         self.__section_track_id = section_track_id
         self.__node_id = node_id
         self.__node_track_id = node_track_id
         self.__formation_id = formation_id
+        self.__arrival_time = arrival_time
+        self.__departure_time = departure_time
         self.__minimum_run_time = minimum_run_time
         self.__minimum_stop_time = minimum_stop_time
         self.__stop_status = stop_status

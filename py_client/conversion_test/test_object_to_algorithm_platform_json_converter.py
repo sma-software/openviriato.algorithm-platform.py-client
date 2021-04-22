@@ -36,11 +36,10 @@ class TestFromAIDMConverter(unittest.TestCase):
             test_train_path_node)
         test_node_as_json = json.dumps(test_node_as_dict)
 
-        expected_json_string = '{"id": 11038, "arrivalTime": "0001-05-01T01:01:00", ' \
-                               '"departureTime": "0001-05-01T01:01:00", "sectionTrackId": null, "nodeId": 18, ' \
-                               '"nodeTrackId": null, "formationId": 1187, "minimumRunTime": null, ' \
+        expected_json_string = '{"id": 11038, "sectionTrackId": null, "nodeId": 18, "nodeTrackId": null, ' \
+                               '"formationId": 1187, "arrivalTime": "0001-05-01T01:01:00", ' \
+                               '"departureTime": "0001-05-01T01:01:00", "minimumRunTime": null, ' \
                                '"minimumStopTime": "P0D", "stopStatus": "passing", "sequenceNumber": 0}'
-
         self.assertEqual(test_node_as_json, expected_json_string)
 
     def test_convert_list_empty(self):

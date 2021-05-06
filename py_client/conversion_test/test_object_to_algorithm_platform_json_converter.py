@@ -53,7 +53,7 @@ class TestFromAIDMConverter(unittest.TestCase):
         self.assertListEqual(test_section_list, [])
 
     def test_convert_list(self):
-        algorithm_section_track = AlgorithmSectionTrack(id=12, code='ATest', debug_string='str', weight=8,
+        algorithm_section_track = AlgorithmSectionTrack(id=12, code='ATest', debug_string='str', distance_units=8,
                                                         section_code='TestSection')
         test_list_of_algorithm_section_track = [algorithm_section_track, algorithm_section_track]
 

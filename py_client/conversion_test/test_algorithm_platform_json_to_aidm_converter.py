@@ -8,7 +8,7 @@ from py_client.conversion import algorithm_platform_json_to_aidm_converter
 class TestToAIDMConverter(unittest.TestCase):
 
     def test_convert_json_to_aidm_class_from_constructor(self):
-        test_section_as_dict = dict(ID=12, Code='ATest', DebugString='str', Weight=8, SectionCode='TestSection')
+        test_section_as_dict = dict(ID=12, Code='ATest', DebugString='str', DistanceUnits=8, SectionCode='TestSection')
 
         test_section = algorithm_platform_json_to_aidm_converter.convert(
             AlgorithmSectionTrack, test_section_as_dict)
@@ -17,7 +17,7 @@ class TestToAIDMConverter(unittest.TestCase):
         self.assertEqual(test_section.id, 12)
         self.assertEqual(test_section.code, 'ATest')
         self.assertEqual(test_section.debug_string, 'str')
-        self.assertEqual(test_section.weight, 8)
+        self.assertEqual(test_section.distance_units, 8)
         self.assertEqual(test_section.section_code, 'TestSection')
 
     def test_convert_json_to_aidm_class_populated_from_factory_method(self):
@@ -34,7 +34,7 @@ class TestToAIDMConverter(unittest.TestCase):
         self.assertEqual(test_class_outer_object.inner.id, result.inner.id)
 
     def test_convert_list_of_dict_to_list_of_aidm(self):
-        test_section_as_dict = dict(ID=12, Code='ATest', DebugString='str', Weight=8, SectionCode='TestSection')
+        test_section_as_dict = dict(ID=12, Code='ATest', DebugString='str', DistanceUnits=8, SectionCode='TestSection')
         test_section_dict_in_list = [test_section_as_dict, test_section_as_dict, test_section_as_dict]
 
         test_section_list = algorithm_platform_json_to_aidm_converter.convert_list(AlgorithmSectionTrack,

@@ -27,19 +27,19 @@ class AlgorithmNode(_HasID, _HasCode, _HasDebugString):
 
 
 class AlgorithmSectionTrack(_HasID, _HasCode, _HasDebugString):
-    __weight: int
+    __distance_units: int
     __section_code: str
 
-    def __init__(self, id: int, code: str, debug_string: str, weight: int, section_code: str):
+    def __init__(self, id: int, code: str, debug_string: str, distance_units: int, section_code: str):
         _HasID.__init__(self, id)
         _HasCode.__init__(self, code)
         _HasDebugString.__init__(self, debug_string)
-        self.__weight = weight
+        self.__distance_units = distance_units
         self.__section_code = section_code
 
     @property
-    def weight(self) -> int:
-        return self.__weight
+    def distance_units(self) -> int:
+        return self.__distance_units
 
     @property
     def section_code(self) -> str:

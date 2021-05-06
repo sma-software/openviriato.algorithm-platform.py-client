@@ -13,14 +13,14 @@ class TestGetSectionTrack(unittest.TestCase):
             super().__init__()
 
         def get(self, request: str, params: dict):
-            self.__last_body = params
-            self.__last_request = request
+            self._last_body = params
+            self._last_request = request
 
             json_string = ('{\n'
                            ' "id": 1082,\n'
                            ' "code": "900",\n'
                            ' "sectionCode": "70015",\n'
-                           ' "weight": 10000,\n'
+                           ' "distanceUnits": 10000,\n'
                            ' "debugString": "GetSectionTrackSessionTestMock"\n'
                            '}')
 
@@ -37,9 +37,8 @@ class TestGetSectionTrack(unittest.TestCase):
 
         session_obj = self.interface_to_viriato._AlgorithmInterface__communication_layer.currentSession
 
-        self.assertEqual(session_obj._GetSectionTrackSessionTestMock__last_request,
-                         get_api_url() + '/section-tracks/1082')
-        self.assertEqual(session_obj._GetSectionTrackSessionTestMock__last_body, {})
+        self.assertEqual(session_obj.last_request, get_api_url() + '/section-tracks/1082')
+        self.assertEqual(session_obj.last_body, {})
 
     @mock.patch('requests.Session', side_effect=GetSectionTrackSessionTestMock)
     def test_get_section_track_return(self, mocked_get_obj):
@@ -52,7 +51,7 @@ class TestGetSectionTrack(unittest.TestCase):
         self.assertEqual(test_section_track.code, '900')
         self.assertEqual(test_section_track.debug_string, 'GetSectionTrackSessionTestMock')
         self.assertEqual(test_section_track.section_code, '70015')
-        self.assertEqual(test_section_track.weight, 10000)
+        self.assertEqual(test_section_track.distance_units, 10000)
 
     @mock.patch('requests.Session', side_effect=GetSectionTrackSessionTestMock)
     def tearDown(self, mocked_get_obj) -> None:

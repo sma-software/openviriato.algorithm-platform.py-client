@@ -15,22 +15,22 @@ class TestGetParallelSectionTracks(unittest.TestCase):
             super().__init__()
 
         def get(self, request: str, params: dict):
-            self.__last_body = params
-            self.__last_request = request
+            self._last_body = params
+            self._last_request = request
 
             json_string = ("[\n"
                            "  {\n"
                            "    \"id\": 885,\n"
                            "    \"code\": \"838\",\n"
                            "    \"sectionCode\": \"61010\",\n"
-                           "    \"weight\": 37040,\n"
+                           "    \"distanceUnits\": 37040,\n"
                            "    \"debugString\": \"sectiontrack:s_61010 n_85AR 838\"\n"
                            "  },\n"
                            "  {\n"
                            "    \"id\": 886,\n"
                            "    \"code\": \"2\",\n"
                            "    \"sectionCode\": \"61010\",\n"
-                           "    \"weight\": 37040,\n"
+                           "    \"distanceUnits\": 37040,\n"
                            "    \"debugString\": \"sectiontrack:s_61010 n_85AR 2\"\n"
                            "  }\n"
                            "]")
@@ -48,12 +48,8 @@ class TestGetParallelSectionTracks(unittest.TestCase):
         self.interface_to_viriato.get_parallel_section_tracks(track_id)
 
         session_obj = self.interface_to_viriato._AlgorithmInterface__communication_layer.currentSession
-        self.assertEqual(
-            session_obj._GetParallelSectionTracksSessionTestMock__last_request,
-            get_api_url() + '/section-tracks')
-        self.assertEqual(
-            session_obj._GetParallelSectionTracksSessionTestMock__last_body,
-            dict(parallelToSectionTrackId=885))
+        self.assertEqual(session_obj.last_request, get_api_url() + '/section-tracks')
+        self.assertEqual(session_obj.last_body, dict(parallelToSectionTrackId=885))
 
     @mock.patch('requests.Session', side_effect=GetParallelSectionTracksSessionTestMock)
     def test_get_parallel_section_tracks_return(self, mocked_get_obj):
@@ -68,7 +64,7 @@ class TestGetParallelSectionTracks(unittest.TestCase):
         self.assertEqual(parallel_section_tracks[0].id, 885)
         self.assertEqual(parallel_section_tracks[0].code, '838')
         self.assertEqual(parallel_section_tracks[0].section_code, '61010')
-        self.assertEqual(parallel_section_tracks[0].weight, 37040)
+        self.assertEqual(parallel_section_tracks[0].distance_units, 37040)
         self.assertEqual(parallel_section_tracks[0].debug_string, 'sectiontrack:s_61010 n_85AR 838')
 
     @mock.patch('requests.Session', side_effect=GetParallelSectionTracksSessionTestMock)

@@ -59,7 +59,7 @@ class TestUpdateFormation(unittest.TestCase):
                                "  \"code\": \"RVZH_15_1_J03\",\n"
                                "  \"debugString\": \"RVZH_15_1_J03xxxx tt_(S)\"\n"
                                "}")
-            elif json == {"formationID": 1551, "fromTrainPathNodeID": 11037}:
+            elif json == {"formationID": 1551, "fromTrainPathNodeID": 11037, "toTrainPathNodeID": None}:
                 json_string = ("{\n"
                                "  \"id\": 11040,\n"
                                "  \"trainPathNodes\": [\n"
@@ -133,7 +133,8 @@ class TestUpdateFormation(unittest.TestCase):
         self.assertEqual(session_obj.last_request, get_api_url() + '/trains/1234/train-path-nodes:update-formation')
         self.assertDictEqual(
             session_obj.last_body,
-            dict(formationID=1551, fromTrainPathNodeID=11037, toTrainPathNodeID=11038))
+            dict(formationID=1551, fromTrainPathNodeID=11037, toTrainPathNodeID=11038)
+        )
 
     @mock.patch('requests.Session', side_effect=UpdateFormationTestMockSession)
     def test_update_formation_request_with_with_three_parameters(self, mocked_get_obj):
@@ -145,7 +146,10 @@ class TestUpdateFormation(unittest.TestCase):
 
         session_obj = self.interface_to_viriato._AlgorithmInterface__communication_layer.currentSession
         self.assertEqual(session_obj.last_request, get_api_url() + '/trains/999/train-path-nodes:update-formation')
-        self.assertDictEqual(session_obj.last_body, dict(formationID=1551, fromTrainPathNodeID=11037))
+        self.assertDictEqual(
+            session_obj.last_body,
+            dict(formationID=1551, fromTrainPathNodeID=11037, toTrainPathNodeID=None)
+        )
 
     @mock.patch('requests.Session', side_effect=UpdateFormationTestMockSession)
     def test_update_formation_response_with_with_four_parameters(self, mocked_get_obj):

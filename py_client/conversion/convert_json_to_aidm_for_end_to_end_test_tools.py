@@ -127,5 +127,9 @@ def convert_json_with_url_encoding_to_time_window(url_encoded_time_window_dict: 
     return convert(TimeWindow, url_encoded_time_window_dict)
 
 
+def concatenate_argument_values_to_list(*kwargs) -> list:
+    return list(dict(*kwargs).values())
+
+
 class EndToEndTestParameterEnum(Enum):
     optionValue3 = "optionValue3"

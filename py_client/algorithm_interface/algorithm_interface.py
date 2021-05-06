@@ -203,10 +203,9 @@ class AlgorithmInterface:
         url_to_resource = 'trains/{0}/train-path-nodes:update-formation'.format(train_id)
         manually_converted_put_body = dict(
             formationID=formation_id,
-            fromTrainPathNodeID=from_train_path_node_id
+            fromTrainPathNodeID=from_train_path_node_id,
+            toTrainPathNodeID=to_train_path_node_id,
         )
-        if to_train_path_node_id is not None:
-            manually_converted_put_body["toTrainPathNodeID"] = to_train_path_node_id
         response_dict = self.__communication_layer.do_put_request(url_to_resource, manually_converted_put_body)
         return algorithm_platform_json_to_aidm_converter.convert_json_to_algorithm_train(response_dict)
 
@@ -465,32 +464,43 @@ class AlgorithmInterface:
         response_dict = self.__communication_layer.do_put_request(url_to_resource, put_request_body)
         return algorithm_platform_json_to_aidm_converter.convert_json_to_algorithm_train(response_dict)
 
-    def get_incoming_routing_edges(self, routing_point: RoutingPoint) -> IncomingRoutingEdgeSet:
-        url_to_resource = "nodes/{0}/incoming-routing-edges".format(routing_point.node_id)
-        if routing_point.node_track_id is not None:
-            get_request_params = dict(endNodeTrackId=routing_point.node_track_id)
-        else:
-            get_request_params = dict()
-        response_dict = self.__communication_layer.do_get_request(url_to_resource, get_request_params)
-        return algorithm_platform_json_to_aidm_converter.convert_json_to_incoming_routing_edge_set(response_dict)
+    def __get_routing_edges_delegate(
+            self,
+            routing_point: RoutingPoint,
+            routing_edge_type: Optional[RoutingEdgeType]
+    ) -> List[Union[IncomingRoutingEdge, OutgoingRoutingEdge, CrossingRoutingEdge]]:
+        url_to_resource = "nodes/{0}/routing-edges".format(routing_point.node_id)
+        get_request_params = dict(
+            routingEdgeType=None if routing_edge_type is None else routing_edge_type.value,
+            nodeTrackId=routing_point.node_track_id,
+        )
+        response_list = self.__communication_layer.do_get_request(url_to_resource, get_request_params)
+        return algorithm_platform_json_to_aidm_converter.convert_to_routing_edges(response_list)
 
-    def get_outgoing_routing_edges(self, routing_point: RoutingPoint) -> OutgoingRoutingEdgeSet:
-        url_to_resource = "nodes/{0}/outgoing-routing-edges".format(routing_point.node_id)
-        if routing_point.node_track_id is not None:
-            get_request_params = dict(startNodeTrackId=routing_point.node_track_id)
-        else:
-            get_request_params = dict()
-        response_dict = self.__communication_layer.do_get_request(url_to_resource, get_request_params)
-        return algorithm_platform_json_to_aidm_converter.convert_json_to_outgoing_routing_edge_set(response_dict)
+    def get_incoming_routing_edges(self, routing_point: RoutingPoint) -> List[IncomingRoutingEdge]:
+        return self.__get_routing_edges_delegate(routing_point, RoutingEdgeType.incoming)
 
-    def get_crossing_routing_edges(self, routing_point: RoutingPoint) -> CrossingRoutingEdgeSet:
-        url_to_resource = "nodes/{0}/crossing-routing-edges".format(routing_point.node_id)
-        response_dict = self.__communication_layer.do_get_request(url_to_resource)
-        return algorithm_platform_json_to_aidm_converter.convert_json_to_crossing_routing_edge_set(response_dict)
+    def get_outgoing_routing_edges(self, routing_point: RoutingPoint) -> List[OutgoingRoutingEdge]:
+        return self.__get_routing_edges_delegate(routing_point, RoutingEdgeType.outgoing)
+
+    def get_crossing_routing_edges(self, routing_point: RoutingPoint) -> List[CrossingRoutingEdge]:
+        return self.__get_routing_edges_delegate(routing_point, RoutingEdgeType.crossing)
+
+    def get_routing_edges(
+            self,
+            routing_point: RoutingPoint
+    ) -> List[Union[IncomingRoutingEdge, OutgoingRoutingEdge, CrossingRoutingEdge]]:
+        return self.__get_routing_edges_delegate(routing_point, None)
 
     def get_formation(self, formation_id: int) -> AlgorithmFormation:
         url_to_resource = "vehicles/formations/{0}".format(formation_id)
         response_dict = self.__communication_layer.do_get_request(url_to_resource)
+        return algorithm_platform_json_to_aidm_converter.convert(AlgorithmFormation, response_dict)
+
+    def get_or_create_formation(self, vehicle_type_ids: List[int]) -> AlgorithmFormation:
+        url_to_resource = "vehicles/formations"
+        request_body = dict(vehicleTypeIDs=vehicle_type_ids)
+        response_dict = self.__communication_layer.do_put_request(url_to_resource, request_body)
         return algorithm_platform_json_to_aidm_converter.convert(AlgorithmFormation, response_dict)
 
     def get_all_vehicle_types(self) -> List[AlgorithmVehicleType]:

@@ -1,5 +1,5 @@
 import inspect
-from typing import Union, TypeVar, Type
+from typing import Union, TypeVar, Type, Dict
 
 from py_client.aidm import *
 from py_client.communication.response_processing import AlgorithmPlatformConversionError
@@ -70,22 +70,21 @@ def convert_json_to_algorithm_node_track_closure(attribute_dict: dict) -> Algori
     return convert(AlgorithmNodeTrackClosure, snake_case_dict)
 
 
-def convert_json_to_incoming_routing_edge_set(attribute_dict: dict) -> IncomingRoutingEdgeSet:
-    snake_case_dict = convert_keys_to_snake_case(attribute_dict)
-    snake_case_dict["incoming_edges"] = convert_list(IncomingRoutingEdge, snake_case_dict["incoming_edges"])
-    return convert(IncomingRoutingEdgeSet, snake_case_dict)
-
-
-def convert_json_to_outgoing_routing_edge_set(attribute_dict: dict) -> OutgoingRoutingEdgeSet:
-    snake_case_dict = convert_keys_to_snake_case(attribute_dict)
-    snake_case_dict["outgoing_edges"] = convert_list(OutgoingRoutingEdge, snake_case_dict["outgoing_edges"])
-    return convert(OutgoingRoutingEdgeSet, snake_case_dict)
-
-
-def convert_json_to_crossing_routing_edge_set(attribute_dict: dict) -> CrossingRoutingEdgeSet:
-    snake_case_dict = convert_keys_to_snake_case(attribute_dict)
-    snake_case_dict["crossing_edges"] = convert_list(CrossingRoutingEdge, snake_case_dict["crossing_edges"])
-    return convert(CrossingRoutingEdgeSet, snake_case_dict)
+def convert_to_routing_edges(
+        json_edge_list: List[Dict[str, Union[str, int]]]
+) -> List[Union[IncomingRoutingEdge, OutgoingRoutingEdge, CrossingRoutingEdge]]:
+    edges = []
+    for edge_as_dict in json_edge_list:
+        edge_type = edge_as_dict.pop("type")
+        if edge_type == RoutingEdgeType.incoming.name:
+            edges.append(convert(IncomingRoutingEdge, edge_as_dict))
+        elif edge_type == RoutingEdgeType.outgoing.name:
+            edges.append(convert(OutgoingRoutingEdge, edge_as_dict))
+        elif edge_type == RoutingEdgeType.crossing.name:
+            edges.append(convert(CrossingRoutingEdge, edge_as_dict))
+        else:
+            raise AlgorithmPlatformConversionError(f"Cannot convert edge type {edge_type}")
+    return edges
 
 
 def convert_json_to_update_train_times(attribute_dict: dict) -> UpdateTimesTrain:

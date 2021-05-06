@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import Optional
 
 
 class _HasID:
@@ -55,14 +55,3 @@ class _RoutingEdge:
     @property
     def node_id(self) -> int:
         return self.__node_id
-
-
-class _RoutingEdgeSet:
-    __routing_edges = List[_RoutingEdge]
-
-    def __init__(self, routing_edges: List[_RoutingEdge]):
-        self.__routing_edges = routing_edges
-
-    @property
-    def routing_edges(self) -> List[_RoutingEdge]:
-        return self.__routing_edges

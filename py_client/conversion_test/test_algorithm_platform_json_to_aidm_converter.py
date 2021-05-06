@@ -179,46 +179,70 @@ class TestToAIDMConverter(unittest.TestCase):
         self.assertEqual(test_closure.debug_string, "nodetrackclosure:85ZMUS 24")
 
     def test_convert_json_to_incoming_routing_edge_set(self):
-        param_dict = dict(IncomingEdges=[
-            dict(StartSectionTrackID=887, EndNodeTrackID=888, NodeID=281),
-            dict(StartSectionTrackID=888, EndNodeTrackID=887, NodeID=281)])
+        raw_json = [
+            dict(StartSectionTrackID=887, EndNodeTrackID=888, NodeID=281, type="incoming"),
+            dict(StartSectionTrackID=888, EndNodeTrackID=887, NodeID=281, type="incoming"),
+        ]
 
-        test_incoming_routing_edge_set = \
-            algorithm_platform_json_to_aidm_converter.convert_json_to_incoming_routing_edge_set(param_dict)
+        routing_edges = algorithm_platform_json_to_aidm_converter.convert_to_routing_edges(raw_json)
 
-        self.assertIsInstance(test_incoming_routing_edge_set, IncomingRoutingEdgeSet)
-        self.assertIsInstance(test_incoming_routing_edge_set.routing_edges[0], IncomingRoutingEdge)
-        self.assertEqual(test_incoming_routing_edge_set.routing_edges[0].start_section_track_id, 887)
-        self.assertEqual(test_incoming_routing_edge_set.routing_edges[0].end_node_track_id, 888)
-        self.assertEqual(test_incoming_routing_edge_set.routing_edges[0].node_id, 281)
+        self.assertIsInstance(routing_edges, list)
+        self.assertIsInstance(routing_edges[0], IncomingRoutingEdge)
+        self.assertEqual(routing_edges[0].start_section_track_id, 887)
+        self.assertEqual(routing_edges[0].end_node_track_id, 888)
+        self.assertEqual(routing_edges[0].node_id, 281)
+        self.assertEqual(len(routing_edges), 2)
 
-    def test_convert_json_to_outgoing_routing_edge_set(self):
-        param_dict = dict(OutgoingEdges=[
-            dict(StartNodeTrackID=887, EndSectionTrackID=888, NodeID=281),
-            dict(StartNodeTrackID=888, EndSectionTrackID=887, NodeID=281)])
+    def test_convert_json_to_outgoing_routing_edges(self):
+        raw_json = [
+            dict(StartNodeTrackID=887, EndSectionTrackID=888, NodeID=281, type="outgoing"),
+            dict(StartNodeTrackID=888, EndSectionTrackID=887, NodeID=281, type="outgoing"),
+        ]
 
-        test_outgoing_routing_edge_set = \
-            algorithm_platform_json_to_aidm_converter.convert_json_to_outgoing_routing_edge_set(param_dict)
+        routing_edges = algorithm_platform_json_to_aidm_converter.convert_to_routing_edges(raw_json)
 
-        self.assertIsInstance(test_outgoing_routing_edge_set, OutgoingRoutingEdgeSet)
-        self.assertIsInstance(test_outgoing_routing_edge_set.routing_edges[0], OutgoingRoutingEdge)
-        self.assertEqual(test_outgoing_routing_edge_set.routing_edges[0].start_node_track_id, 887)
-        self.assertEqual(test_outgoing_routing_edge_set.routing_edges[0].end_section_track_id, 888)
-        self.assertEqual(test_outgoing_routing_edge_set.routing_edges[0].node_id, 281)
+        self.assertIsInstance(routing_edges, list)
+        self.assertIsInstance(routing_edges[0], OutgoingRoutingEdge)
+        self.assertEqual(routing_edges[0].start_node_track_id, 887)
+        self.assertEqual(routing_edges[0].end_section_track_id, 888)
+        self.assertEqual(routing_edges[0].node_id, 281)
+        self.assertEqual(len(routing_edges), 2)
 
-    def test_convert_json_to_crossing_routing_edge_set(self):
-        param_dict = dict(CrossingEdges=[
-            dict(StartSectionTrackID=887, EndSectionTrackID=888, NodeID=281),
-            dict(StartSectionTrackID=888, EndSectionTrackID=887, NodeID=281)])
+    def test_convert_json_to_crossing_routing_edges(self):
+        raw_json = [
+            dict(StartSectionTrackID=887, EndSectionTrackID=888, NodeID=281, type="crossing"),
+            dict(StartSectionTrackID=888, EndSectionTrackID=887, NodeID=281, type="crossing"),
+        ]
 
-        test_crossing_routing_edge_set = \
-            algorithm_platform_json_to_aidm_converter.convert_json_to_crossing_routing_edge_set(param_dict)
+        routing_edges = algorithm_platform_json_to_aidm_converter.convert_to_routing_edges(raw_json)
 
-        self.assertIsInstance(test_crossing_routing_edge_set, CrossingRoutingEdgeSet)
-        self.assertIsInstance(test_crossing_routing_edge_set.routing_edges[0], CrossingRoutingEdge)
-        self.assertEqual(test_crossing_routing_edge_set.routing_edges[0].start_section_track_id, 887)
-        self.assertEqual(test_crossing_routing_edge_set.routing_edges[0].end_section_track_id, 888)
-        self.assertEqual(test_crossing_routing_edge_set.routing_edges[0].node_id, 281)
+        self.assertIsInstance(routing_edges, list)
+        self.assertIsInstance(routing_edges[0], CrossingRoutingEdge)
+        self.assertEqual(routing_edges[0].start_section_track_id, 887)
+        self.assertEqual(routing_edges[0].end_section_track_id, 888)
+        self.assertEqual(routing_edges[0].node_id, 281)
+        self.assertEqual(len(routing_edges), 2)
+
+    def test_convert_json_to_mixed_routing_edges(self):
+        raw_json = [
+            dict(StartNodeTrackID=887, EndSectionTrackID=888, NodeID=281, type="outgoing"),
+            dict(StartSectionTrackID=887, EndNodeTrackID=888, NodeID=281, type="incoming"),
+            dict(StartSectionTrackID=887, EndSectionTrackID=888, NodeID=281, type="crossing"),
+            dict(StartSectionTrackID=888, EndSectionTrackID=887, NodeID=281, type="crossing"),
+            dict(StartSectionTrackID=887, EndNodeTrackID=888, NodeID=281, type="incoming"),
+            dict(StartNodeTrackID=888, EndSectionTrackID=887, NodeID=281, type="outgoing"),
+        ]
+
+        routing_edges = algorithm_platform_json_to_aidm_converter.convert_to_routing_edges(raw_json)
+
+        self.assertIsInstance(routing_edges, list)
+        self.assertIsInstance(routing_edges[0], OutgoingRoutingEdge)
+        self.assertIsInstance(routing_edges[1], IncomingRoutingEdge)
+        self.assertIsInstance(routing_edges[2], CrossingRoutingEdge)
+        self.assertIsInstance(routing_edges[3], CrossingRoutingEdge)
+        self.assertIsInstance(routing_edges[4], IncomingRoutingEdge)
+        self.assertIsInstance(routing_edges[5], OutgoingRoutingEdge)
+        self.assertEqual(len(routing_edges), 6)
 
     def test_convert_json_to_update_train_times(self):
         param_dict = dict(TrainID=1012, UpdateTimesTrainPathNodes=[
@@ -261,7 +285,7 @@ class TestToAIDMConverter(unittest.TestCase):
             to_node_id=161,
             to_train_id=2449,
             to_train_path_node_id=1356,
-            link_type="awaitArrival",
+            type="awaitArrival",
             debug_string="DebugString")
 
         await_arrival_link = algorithm_platform_json_to_aidm_converter.convert_json_to_algorithm_link(
@@ -284,7 +308,7 @@ class TestToAIDMConverter(unittest.TestCase):
             to_node_id=281,
             to_train_id=3905,
             to_train_path_node_id=3177,
-            link_type="connection",
+            type="connection",
             debug_string="DebugString")
 
         connection_link = algorithm_platform_json_to_aidm_converter.convert_json_to_algorithm_link(link_as_dictionary)
@@ -296,7 +320,7 @@ class TestToAIDMConverter(unittest.TestCase):
         self.assertEqual(connection_link.to_train_id, 3905)
         self.assertEqual(connection_link.debug_string, "DebugString")
 
-    def test_convert_json_to_algorithm_link_unknown_link_type_defined(self):
+    def test_convert_json_to_algorithm_link_unknown_type_defined(self):
         link_as_dictionary = dict(
             minimum_duration="PT6M",
             maximum_deviation="PT13M",
@@ -307,7 +331,7 @@ class TestToAIDMConverter(unittest.TestCase):
             to_node_id=281,
             to_train_id=3905,
             to_train_path_node_id=3177,
-            link_type="not_a_valid_LinkType",
+            type="not_a_valid_LinkType",
             debug_string="DebugString")
 
         with self.assertRaises(AlgorithmPlatformConversionError) as raised_error:
@@ -328,7 +352,7 @@ class TestToAIDMConverter(unittest.TestCase):
             to_node_id=281,
             to_train_id=3905,
             to_train_path_node_id=3177,
-            link_type="connection",
+            type="connection",
             debug_string="DebugString")
 
         with self.assertRaises(TypeError) as raised_error:

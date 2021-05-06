@@ -4,7 +4,7 @@ from typing import List, Union, Dict, Type
 from py_client.aidm import StopStatus, UpdateTimesTrainPathNode, UpdateStopTimesTrainPathNode, IncomingRoutingEdge, \
     OutgoingRoutingEdge, CrossingRoutingEdge, UpdateTrainRoute, StationEntryOrExit, TableDefinition, TableCellDataType, \
     TableTextCell, TableColumnDefinition, TableAlgorithmNodeCell, TableRow, TableAlgorithmTrainCell, \
-    UpdateRunTimesTrainPathSegment, TimeWindow
+    UpdateRunTimesTrainPathSegment, TimeWindow, RoutingEdgeType
 from py_client.conversion.algorithm_platform_json_to_aidm_converter import convert
 from py_client.conversion.converter_helpers import convert_keys_to_snake_case, parse_to_datetime, \
     parse_to_timedelta_or_none
@@ -50,14 +50,15 @@ def create_update_train_route_for_end_to_end_test(evaluated_parameter_mapping: d
     converted_routing_edges = []
     for edge_as_dict in routing_edges:
         class_fields_as_dict = convert_keys_to_snake_case(edge_as_dict)
-        if all(key in class_fields_as_dict.keys() for key in {"start_node_track_id", "end_section_track_id"}):
+        edge_type = class_fields_as_dict.pop("type")
+        if edge_type == RoutingEdgeType.outgoing.name:
             converted_routing_edges.append(OutgoingRoutingEdge(**class_fields_as_dict))
-        elif all(key in class_fields_as_dict.keys() for key in {"start_section_track_id", "end_node_track_id"}):
+        elif edge_type == RoutingEdgeType.incoming.name:
             converted_routing_edges.append(IncomingRoutingEdge(**class_fields_as_dict))
-        elif all(key in class_fields_as_dict.keys() for key in {"start_section_track_id", "end_section_track_id"}):
+        elif edge_type == RoutingEdgeType.crossing.name:
             converted_routing_edges.append(CrossingRoutingEdge(**class_fields_as_dict))
         else:
-            raise TypeError("{0} is not defined as a routing edge".format(class_fields_as_dict))
+            raise TypeError(f"{edge_type} is not defined as a routing edge")
 
     return UpdateTrainRoute(start_train_path_node_id, end_train_path_node_id, converted_routing_edges)
 

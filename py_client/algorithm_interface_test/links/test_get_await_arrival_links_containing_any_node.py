@@ -25,7 +25,7 @@ class TestGetAwaitArrivalLinksContainingAnyNode(unittest.TestCase):
                                "  \"toNodeId\": 161,\n"
                                "  \"toTrainId\": 2417,\n"
                                "  \"toTrainPathNodeId\": 1323,\n"
-                               "  \"linkType\": \"awaitArrival\",\n"
+                               "  \"type\": \"awaitArrival\",\n"
                                "  \"debugString\": \"link: FV_9_J03, 85AR, planned arrival: 01.05.2003 "
                                "06:03.9 - FV_8_J03, 85AR, planned departure: 01.05.2003 07:00.0\"\n"
                                "}\n"

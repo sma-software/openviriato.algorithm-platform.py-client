@@ -108,7 +108,7 @@ def convert_json_to_update_train_times_node(attribute_dict: dict) -> UpdateTimes
 
 
 def convert_json_to_algorithm_link(attribute_dict: dict) -> Union[AlgorithmConnectionLink, AlgorithmAwaitArrivalLink]:
-    link_type_as_str = convert_to_snake_case(attribute_dict.pop('link_type'))
+    link_type_as_str = convert_to_snake_case(attribute_dict.pop('type'))
     snake_case_dict = convert_keys_to_snake_case(attribute_dict)
     if link_type_as_str == "await_arrival":
         snake_case_dict['minimum_duration'] = parse_to_timedelta(snake_case_dict['minimum_duration'])

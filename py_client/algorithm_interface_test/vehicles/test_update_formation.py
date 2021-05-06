@@ -123,10 +123,11 @@ class TestUpdateFormation(unittest.TestCase):
         formation_id = 1551
 
         self.interface_to_viriato.update_train_formation(
+            formation_id,
             train_id,
             from_train_path_node_id,
-            to_train_path_node_id,
-            formation_id)
+            to_train_path_node_id
+        )
 
         session_obj = self.interface_to_viriato._AlgorithmInterface__communication_layer.currentSession
         self.assertEqual(session_obj.last_request, get_api_url() + '/trains/1234/train-path-nodes:update-formation')
@@ -140,7 +141,7 @@ class TestUpdateFormation(unittest.TestCase):
         from_train_path_node_id = 11037
         formation_id = 1551
 
-        self.interface_to_viriato.update_train_formation(train_id, from_train_path_node_id, formation_id)
+        self.interface_to_viriato.update_train_formation(formation_id, train_id, from_train_path_node_id)
 
         session_obj = self.interface_to_viriato._AlgorithmInterface__communication_layer.currentSession
         self.assertEqual(session_obj.last_request, get_api_url() + '/trains/999/train-path-nodes:update-formation')
@@ -154,10 +155,11 @@ class TestUpdateFormation(unittest.TestCase):
         formation_id = 1551
 
         updated_train = self.interface_to_viriato.update_train_formation(
+            formation_id,
             train_id,
             from_train_path_node_id,
-            to_train_path_node_id,
-            formation_id)
+            to_train_path_node_id
+        )
 
         self.assertIsInstance(updated_train, AlgorithmTrain)
         self.assertEqual(updated_train.id, 11040)
@@ -177,7 +179,11 @@ class TestUpdateFormation(unittest.TestCase):
         from_train_path_node_id = 11037
         formation_id = 1551
 
-        updated_train = self.interface_to_viriato.update_train_formation(train_id, from_train_path_node_id, formation_id)
+        updated_train = self.interface_to_viriato.update_train_formation(
+            formation_id,
+            train_id,
+            from_train_path_node_id
+        )
 
         self.assertIsInstance(updated_train, AlgorithmTrain)
         self.assertEqual(updated_train.debug_string, "RVZH_15_1_J03 tt_(S)")

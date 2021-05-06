@@ -15,7 +15,7 @@ class AlgorithmNodeTrack(_HasID, _HasCode, _HasDebugString):
 class AlgorithmNode(_HasID, _HasCode, _HasDebugString):
     __node_tracks: [AlgorithmNodeTrack]
 
-    def __init__(self, id: int, code: str, debug_string: str, node_tracks: List[AlgorithmNodeTrack] = []):
+    def __init__(self, id: int, code: str, debug_string: str, node_tracks: List[AlgorithmNodeTrack]):
         _HasID.__init__(self, id)
         _HasCode.__init__(self, code)
         _HasDebugString.__init__(self, debug_string)

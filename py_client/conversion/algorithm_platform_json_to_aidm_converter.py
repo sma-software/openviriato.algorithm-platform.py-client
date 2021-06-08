@@ -157,3 +157,11 @@ def convert_to_routing_edge_pair(attribute_dict: dict) -> RoutingEdgePair:
         outgoing_routing_edge.pop("type")
         outgoing_node_track_routing_edge = convert(OutgoingNodeTrackRoutingEdge, outgoing_routing_edge)
     return RoutingEdgePair(incoming_node_track_routing_edge, outgoing_node_track_routing_edge)
+
+
+def convert_to_termination_request(attribute_dict: dict) -> TerminationRequest:
+    snake_case_dict = convert_keys_to_snake_case(attribute_dict)
+    if snake_case_dict["termination_requested_timestamp"] is None:
+        return TerminationRequest(None)
+    else:
+        return TerminationRequest(parse_to_datetime(snake_case_dict["termination_requested_timestamp"]))

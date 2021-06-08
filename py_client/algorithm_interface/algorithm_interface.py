@@ -657,6 +657,12 @@ class AlgorithmInterface:
         request_body = [dict(row=row["cells"]) for row in list_of_cells_per_row]
         self.__communication_layer.do_post_request(url_to_resource, request_body)
 
+    def get_termination_request(self) -> TerminationRequest:
+        url_to_resource = "user-inputs/signals"
+        request_parameters = dict(signalType=SignalType.termination.value)
+        response_dict = self.__communication_layer.do_get_request(url_to_resource, request_parameters)
+        return algorithm_platform_json_to_aidm_converter.convert_to_termination_request(response_dict)
+
     def __delegate_get_any_parameter(
             self,
             key: str) -> Optional[

@@ -85,6 +85,19 @@ class AlgorithmInterface:
             response_list
         )
 
+    def get_preferred_ending_routes_for_node(
+            self,
+            node_id: int,
+            start_section_track_id: Optional[int]
+    ) -> List[RoutingEdgePair]:
+        url_to_resource = 'nodes/{0}/preferred-routes'.format(node_id)
+        request_parameters = dict(startSectionTrackID=start_section_track_id, endInNode=True, startInNode=False)
+        response_list = self.__communication_layer.do_get_request(url_to_resource, request_parameters)
+        return algorithm_platform_json_to_aidm_converter.convert_list(
+            algorithm_platform_json_to_aidm_converter.convert_to_routing_edge_pair,
+            response_list
+        )
+
     def get_all_section_tracks(self) -> List[AlgorithmSectionTrack]:
         url_to_resource = 'section-tracks'
         response_list = self.__communication_layer.do_get_request(url_to_resource)

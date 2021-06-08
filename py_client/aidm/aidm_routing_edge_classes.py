@@ -1,3 +1,4 @@
+from dataclasses import dataclass
 from enum import unique, Enum
 
 from py_client.aidm.aidm_base_classes import _RoutingEdge
@@ -62,3 +63,33 @@ class OutgoingRoutingEdge(_RoutingEdge):
     @property
     def start_node_track_id(self) -> int:
         return self.__start_node_track_id
+
+
+class IncomingNodeTrackRoutingEdge(IncomingRoutingEdge):
+    pass
+
+
+class OutgoingNodeTrackRoutingEdge(OutgoingRoutingEdge):
+    pass
+
+
+class RoutingEdgePair:
+    __incoming_routing_edge: IncomingNodeTrackRoutingEdge
+    __outgoing_routing_edge: OutgoingNodeTrackRoutingEdge
+
+    def __init__(
+            self,
+            incoming_routing_edge: IncomingNodeTrackRoutingEdge,
+            outgoing_routing_edge: OutgoingNodeTrackRoutingEdge
+    ):
+        self.__incoming_routing_edge = incoming_routing_edge
+        self.__outgoing_routing_edge = outgoing_routing_edge
+
+    @property
+    def incoming_routing_edge(self) -> IncomingNodeTrackRoutingEdge:
+        return self.__incoming_routing_edge
+
+    @property
+    def outgoing_routing_edge(self) -> OutgoingNodeTrackRoutingEdge:
+        return self.__outgoing_routing_edge
+

@@ -141,3 +141,19 @@ def convert_json_to_floating_point(attribute_dict: dict) -> FloatingPoint:
     snake_case_dict = convert_keys_to_snake_case(attribute_dict)
     snake_case_dict["mantissa"] = Maybe(snake_case_dict["mantissa"])
     return convert(FloatingPoint, snake_case_dict)
+
+
+def convert_to_routing_edge_pair(attribute_dict: dict) -> RoutingEdgePair:
+    incoming_routing_edge: dict = attribute_dict["incoming_routing_edge"]
+    if incoming_routing_edge is None:
+        incoming_node_track_routing_edge = None
+    else:
+        incoming_routing_edge.pop("type")
+        incoming_node_track_routing_edge = convert(IncomingNodeTrackRoutingEdge, incoming_routing_edge)
+    outgoing_routing_edge: dict = attribute_dict["outgoing_routing_edge"]
+    if outgoing_routing_edge is None:
+        outgoing_node_track_routing_edge = None
+    else:
+        outgoing_routing_edge.pop("type")
+        outgoing_node_track_routing_edge = convert(OutgoingNodeTrackRoutingEdge, outgoing_routing_edge)
+    return RoutingEdgePair(incoming_node_track_routing_edge, outgoing_node_track_routing_edge)

@@ -72,6 +72,19 @@ class AlgorithmInterface:
             response_list
         )
 
+    def get_preferred_starting_routes_for_node(
+            self,
+            node_id: int,
+            end_section_track_id: Optional[int]
+    ) -> List[RoutingEdgePair]:
+        url_to_resource = 'nodes/{0}/preferred-routes'.format(node_id)
+        request_parameters = dict(endSectionTrackID=end_section_track_id, endInNode=False, startInNode=True)
+        response_list = self.__communication_layer.do_get_request(url_to_resource, request_parameters)
+        return algorithm_platform_json_to_aidm_converter.convert_list(
+            algorithm_platform_json_to_aidm_converter.convert_to_routing_edge_pair,
+            response_list
+        )
+
     def get_all_section_tracks(self) -> List[AlgorithmSectionTrack]:
         url_to_resource = 'section-tracks'
         response_list = self.__communication_layer.do_get_request(url_to_resource)
@@ -359,7 +372,6 @@ class AlgorithmInterface:
             succeeding_train_stop_status: Optional[StopStatus],
             succeeding_station_entry_or_exit: StationEntryOrExit
     ) -> Optional[datetime.timedelta]:
-
         url_to_resource = "nodes/{0}/separation-times".format(node_id)
 
         query_parameters = dict(
@@ -383,7 +395,6 @@ class AlgorithmInterface:
             succeeding_train_routing_edge: Union[IncomingRoutingEdge, OutgoingRoutingEdge],
             succeeding_stop_status: StopStatus
     ) -> Optional[datetime.timedelta]:
-
         url_to_resource = 'nodes/{0}/separation-times'.format(preceding_train_routing_edge.node_id)
         query_parameters = create_query_parameters_from_preceding_and_succeeding_routing_edge(
             preceding_train_routing_edge,
@@ -401,7 +412,6 @@ class AlgorithmInterface:
             from_node_id: Optional[int],
             to_node_id: Optional[int]
     ) -> datetime.timedelta:
-
         url_to_resource = "section-tracks/{0}/headway-times".format(section_track_id)
         headway_query_parameters = dict()
         if from_node_id is not None:
@@ -420,7 +430,6 @@ class AlgorithmInterface:
             preceding_train_path_node_id: int,
             succeeding_train_path_node_id: int
     ) -> datetime.timedelta:
-
         url_to_resource = "section-tracks/{0}/headway-times".format(section_track_id)
         headway_query_parameters = dict(
             precedingTrainPathNodeId=preceding_train_path_node_id,

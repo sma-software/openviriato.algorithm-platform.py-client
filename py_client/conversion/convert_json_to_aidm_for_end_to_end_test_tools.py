@@ -4,10 +4,11 @@ from typing import List, Union, Dict, Type
 from py_client.aidm import StopStatus, UpdateTimesTrainPathNode, UpdateStopTimesTrainPathNode, IncomingRoutingEdge, \
     OutgoingRoutingEdge, CrossingRoutingEdge, UpdateTrainRoute, StationEntryOrExit, TableDefinition, TableCellDataType, \
     TableTextCell, TableColumnDefinition, TableAlgorithmNodeCell, TableRow, TableAlgorithmTrainCell, \
-    UpdateRunTimesTrainPathSegment, TimeWindow, RoutingEdgeType
+    UpdateRunTimesTrainPathSegment, TimeWindow, OutgoingNodeTrackRoutingEdge, \
+    IncomingNodeTrackRoutingEdge
 from py_client.conversion.algorithm_platform_json_to_aidm_converter import convert
 from py_client.conversion.converter_helpers import convert_keys_to_snake_case, parse_to_datetime, \
-    parse_to_timedelta_or_none
+    parse_to_timedelta_or_none, RoutingEdgeType
 
 
 def convert_list_of_json_to_update_train_times_node(attribute_dict: dict) -> List[UpdateTimesTrainPathNode]:
@@ -48,14 +49,18 @@ def create_update_train_route_for_end_to_end_test(evaluated_parameter_mapping: d
     routing_edges: List[Dict[str, Union[str, dict]]] = evaluated_parameter_mapping["routing_edges"]
 
     converted_routing_edges = []
-    for edge_as_dict in routing_edges:
+    for i, edge_as_dict in enumerate(routing_edges):
         class_fields_as_dict = convert_keys_to_snake_case(edge_as_dict)
         edge_type = class_fields_as_dict.pop("type")
-        if edge_type == RoutingEdgeType.outgoing.name:
+        if edge_type == RoutingEdgeType.outgoing.value:
             converted_routing_edges.append(OutgoingRoutingEdge(**class_fields_as_dict))
-        elif edge_type == RoutingEdgeType.incoming.name:
+        elif edge_type == RoutingEdgeType.outgoing_node_track.value:
+            converted_routing_edges.append(OutgoingNodeTrackRoutingEdge(**class_fields_as_dict))
+        elif edge_type == RoutingEdgeType.incoming.value:
             converted_routing_edges.append(IncomingRoutingEdge(**class_fields_as_dict))
-        elif edge_type == RoutingEdgeType.crossing.name:
+        elif edge_type == RoutingEdgeType.incoming_node_track.value:
+            converted_routing_edges.append(IncomingNodeTrackRoutingEdge(**class_fields_as_dict))
+        elif edge_type == RoutingEdgeType.crossing.value:
             converted_routing_edges.append(CrossingRoutingEdge(**class_fields_as_dict))
         else:
             raise TypeError(f"{edge_type} is not defined as a routing edge")

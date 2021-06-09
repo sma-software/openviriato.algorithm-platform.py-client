@@ -4,7 +4,7 @@ from typing import Union, TypeVar, Type, Dict
 from py_client.aidm import *
 from py_client.communication.response_processing import AlgorithmPlatformConversionError
 from py_client.conversion.converter_helpers import parse_to_datetime, parse_to_timedelta, parse_to_timedelta_or_none, \
-    convert_keys_to_snake_case, convert_to_snake_case
+    convert_keys_to_snake_case, convert_to_snake_case, RoutingEdgeType
 
 EnumType = TypeVar("EnumType", bound=Enum)
 
@@ -72,18 +72,24 @@ def convert_json_to_algorithm_node_track_closure(attribute_dict: dict) -> Algori
 
 def convert_to_routing_edges(
         json_edge_list: List[Dict[str, Union[str, int]]]
-) -> List[Union[IncomingRoutingEdge, OutgoingRoutingEdge, CrossingRoutingEdge]]:
+) -> List[Union[IncomingNodeTrackRoutingEdge, OutgoingNodeTrackRoutingEdge, CrossingRoutingEdge]]:
     edges = []
     for edge_as_dict in json_edge_list:
         edge_type = edge_as_dict.pop("type")
-        if edge_type == RoutingEdgeType.incoming.name:
+        if edge_type == RoutingEdgeType.incoming.value:
             edges.append(convert(IncomingRoutingEdge, edge_as_dict))
-        elif edge_type == RoutingEdgeType.outgoing.name:
+        elif edge_type == RoutingEdgeType.incoming_node_track.value:
+            edges.append(convert(IncomingNodeTrackRoutingEdge, edge_as_dict))
+        elif edge_type == RoutingEdgeType.outgoing.value:
             edges.append(convert(OutgoingRoutingEdge, edge_as_dict))
-        elif edge_type == RoutingEdgeType.crossing.name:
+        elif edge_type == RoutingEdgeType.outgoing_node_track.value:
+            edges.append(convert(OutgoingNodeTrackRoutingEdge, edge_as_dict))
+        elif edge_type == RoutingEdgeType.crossing.value:
             edges.append(convert(CrossingRoutingEdge, edge_as_dict))
         else:
-            raise AlgorithmPlatformConversionError(f"Cannot convert edge type {edge_type}")
+            raise AlgorithmPlatformConversionError(
+                f"Cannot convert edge type {edge_type}", NotImplementedError(edge_as_dict)
+            )
     return edges
 
 

@@ -1,4 +1,5 @@
 import datetime
+from enum import unique, Enum
 
 import isodate
 
@@ -62,3 +63,12 @@ def convert_to_datetime_format_or_return_self(obj):
         return isodate.duration_isoformat(obj)
     else:
         return obj
+
+
+@unique
+class RoutingEdgeType(Enum):
+    incoming = "incoming"
+    incoming_node_track = "incomingNodeTrack"
+    outgoing = "outgoing"
+    outgoing_node_track = "outgoingNodeTrack"
+    crossing = "crossing"

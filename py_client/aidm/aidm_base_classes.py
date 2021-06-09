@@ -46,12 +46,3 @@ class _UpdateTrain:
         return self.__train_id
 
 
-class _RoutingEdge:
-    __node_id: int
-
-    def __init__(self, node_id):
-        self.__node_id = node_id
-
-    @property
-    def node_id(self) -> int:
-        return self.__node_id

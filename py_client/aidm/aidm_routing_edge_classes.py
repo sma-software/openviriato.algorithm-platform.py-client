@@ -1,24 +1,43 @@
-from dataclasses import dataclass
-from enum import unique, Enum
-
-from py_client.aidm.aidm_base_classes import _RoutingEdge
+from abc import ABC, abstractmethod
 
 
-@unique
-class RoutingEdgeType(Enum):
-    incoming = "incoming"
-    outgoing = "outgoing"
-    crossing = "crossing"
+class ABCRoutingEdge:
+    __node_id: int
+
+    @property
+    @abstractmethod
+    def node_id(self) -> int:
+        pass
 
 
-class CrossingRoutingEdge(_RoutingEdge):
+class ABCCrossingRoutingEdge(ABCRoutingEdge):
+    __start_section_track_id: int
+    __end_section_track_id: int
+
+    @property
+    @abstractmethod
+    def start_section_track_id(self) -> int:
+        pass
+
+    @property
+    @abstractmethod
+    def end_section_track_id(self) -> int:
+        pass
+
+
+class CrossingRoutingEdge(ABCCrossingRoutingEdge):
+    __node_id: int
     __start_section_track_id: int
     __end_section_track_id: int
 
     def __init__(self, node_id: int, start_section_track_id: int, end_section_track_id: int):
-        _RoutingEdge.__init__(self, node_id)
+        self.__node_id = node_id
         self.__start_section_track_id = start_section_track_id
         self.__end_section_track_id = end_section_track_id
+
+    @property
+    def node_id(self) -> int:
+        return self.__node_id
 
     @property
     def start_section_track_id(self) -> int:
@@ -29,48 +48,102 @@ class CrossingRoutingEdge(_RoutingEdge):
         return self.__end_section_track_id
 
 
-class IncomingRoutingEdge(_RoutingEdge):
-    __end_node_track_id: int
+class ABCIncomingRoutingEdge(ABC, ABCRoutingEdge):
     __start_section_track_id: int
 
-    def __init__(self, node_id: int, start_section_track_id: int, end_node_track_id: int):
-        _RoutingEdge.__init__(self, node_id)
-        self.__end_node_track_id = end_node_track_id
+    @property
+    @abstractmethod
+    def start_section_track_id(self) -> int:
+        pass
+
+
+class ABCOutgoingRoutingEdge(ABC, ABCRoutingEdge):
+    __end_section_track_id: int
+
+    @property
+    @abstractmethod
+    def end_section_track_id(self) -> int:
+        pass
+
+
+class IncomingRoutingEdge(ABCIncomingRoutingEdge):
+    __node_id: int
+    __start_section_track_id: int
+
+    def __init__(self, node_id: int, start_section_track_id: int):
+        self.__node_id = node_id
         self.__start_section_track_id = start_section_track_id
+
+    @property
+    def node_id(self) -> int:
+        return self.__node_id
+
+    @property
+    def start_section_track_id(self) -> int:
+        return self.__start_section_track_id
+
+
+class OutgoingRoutingEdge(ABCOutgoingRoutingEdge):
+    __node_id: int
+    __end_section_track_id: int
+
+    def __init__(self, node_id: int, end_section_track_id: int):
+        self.__node_id = node_id
+        self.__end_section_track_id = end_section_track_id
+
+    @property
+    def node_id(self) -> int:
+        return self.__node_id
+
+    @property
+    def end_section_track_id(self) -> int:
+        return self.__end_section_track_id
+
+
+class IncomingNodeTrackRoutingEdge(ABCIncomingRoutingEdge):
+    __node_id: int
+    __start_section_track_id: int
+    __end_node_track_id: int
+
+    def __init__(self, node_id: int, start_section_track_id: int, end_node_track_id: int):
+        self.__node_id = node_id
+        self.__start_section_track_id = start_section_track_id
+        self.__end_node_track_id = end_node_track_id
+
+    @property
+    def node_id(self) -> int:
+        return self.__node_id
+
+    @property
+    def start_section_track_id(self) -> int:
+        return self.__start_section_track_id
 
     @property
     def end_node_track_id(self) -> int:
         return self.__end_node_track_id
 
-    @property
-    def start_section_track_id(self) -> int:
-        return self.__start_section_track_id
 
-
-class OutgoingRoutingEdge(_RoutingEdge):
-    __end_section_track_id: int
+class OutgoingNodeTrackRoutingEdge(ABCOutgoingRoutingEdge):
+    __node_id: int
     __start_node_track_id: int
+    __end_section_track_id: int
 
     def __init__(self, node_id: int, start_node_track_id: int, end_section_track_id: int):
-        _RoutingEdge.__init__(self, node_id)
-        self.__end_section_track_id = end_section_track_id
+        self.__node_id = node_id
         self.__start_node_track_id = start_node_track_id
+        self.__end_section_track_id = end_section_track_id
 
     @property
-    def end_section_track_id(self) -> int:
-        return self.__end_section_track_id
+    def node_id(self) -> int:
+        return self.__node_id
 
     @property
     def start_node_track_id(self) -> int:
         return self.__start_node_track_id
 
-
-class IncomingNodeTrackRoutingEdge(IncomingRoutingEdge):
-    pass
-
-
-class OutgoingNodeTrackRoutingEdge(OutgoingRoutingEdge):
-    pass
+    @property
+    def end_section_track_id(self) -> int:
+        return self.__end_section_track_id
 
 
 class RoutingEdgePair:
@@ -92,4 +165,3 @@ class RoutingEdgePair:
     @property
     def outgoing_routing_edge(self) -> OutgoingNodeTrackRoutingEdge:
         return self.__outgoing_routing_edge
-

@@ -3,12 +3,13 @@ from typing import Union, Type
 from multipledispatch import dispatch
 
 from py_client.aidm import *
-from py_client.algorithm_interface.algorithm_interface_helpers import merge_query_parameters, \
-    create_query_parameters_from_preceding_and_succeeding_routing_edge
+from py_client.algorithm_interface._algorithm_interface_helpers import merge_query_parameters, \
+    create_query_parameters_from_preceding_and_succeeding_routing_edge, do_get_routing_edges_request
 from py_client.communication import communication_layer
 from py_client.conversion import object_to_algorithm_platform_json_converter, converter_helpers, \
     algorithm_platform_json_to_aidm_converter
 from py_client.conversion.algorithm_platform_json_to_aidm_converter import EnumType
+from py_client.conversion.converter_helpers import RoutingEdgeType
 
 
 class AlgorithmInterface:
@@ -403,15 +404,16 @@ class AlgorithmInterface:
 
     def get_separation_time_in_station_for_routes(
             self,
-            preceding_train_routing_edge: Union[IncomingRoutingEdge, OutgoingRoutingEdge],
+            preceding_train_routing_edge: Union[ABCIncomingRoutingEdge, ABCOutgoingRoutingEdge],
             preceding_stop_status: StopStatus,
-            succeeding_train_routing_edge: Union[IncomingRoutingEdge, OutgoingRoutingEdge],
+            succeeding_train_routing_edge: Union[ABCIncomingRoutingEdge, ABCOutgoingRoutingEdge],
             succeeding_stop_status: StopStatus
     ) -> Optional[datetime.timedelta]:
         url_to_resource = 'nodes/{0}/separation-times'.format(preceding_train_routing_edge.node_id)
         query_parameters = create_query_parameters_from_preceding_and_succeeding_routing_edge(
             preceding_train_routing_edge,
-            succeeding_train_routing_edge)
+            succeeding_train_routing_edge
+        )
         query_parameters['precedingStopStatus'] = preceding_stop_status.value
         query_parameters['succeedingStopStatus'] = succeeding_stop_status.value
 
@@ -519,33 +521,32 @@ class AlgorithmInterface:
         response_dict = self.__communication_layer.do_put_request(url_to_resource, put_request_body)
         return algorithm_platform_json_to_aidm_converter.convert_json_to_algorithm_train(response_dict)
 
-    def __get_routing_edges_delegate(
-            self,
-            routing_point: RoutingPoint,
-            routing_edge_type: Optional[RoutingEdgeType]
-    ) -> List[Union[IncomingRoutingEdge, OutgoingRoutingEdge, CrossingRoutingEdge]]:
-        url_to_resource = "nodes/{0}/routing-edges".format(routing_point.node_id)
-        get_request_params = dict(
-            routingEdgeType=None if routing_edge_type is None else routing_edge_type.value,
-            nodeTrackId=routing_point.node_track_id,
+    def get_incoming_routing_edges(self, routing_point: RoutingPoint) -> List[IncomingNodeTrackRoutingEdge]:
+        return do_get_routing_edges_request(
+            self.__communication_layer,
+            routing_point,
+            RoutingEdgeType.incoming_node_track
         )
-        response_list = self.__communication_layer.do_get_request(url_to_resource, get_request_params)
-        return algorithm_platform_json_to_aidm_converter.convert_to_routing_edges(response_list)
 
-    def get_incoming_routing_edges(self, routing_point: RoutingPoint) -> List[IncomingRoutingEdge]:
-        return self.__get_routing_edges_delegate(routing_point, RoutingEdgeType.incoming)
-
-    def get_outgoing_routing_edges(self, routing_point: RoutingPoint) -> List[OutgoingRoutingEdge]:
-        return self.__get_routing_edges_delegate(routing_point, RoutingEdgeType.outgoing)
+    def get_outgoing_routing_edges(self, routing_point: RoutingPoint) -> List[OutgoingNodeTrackRoutingEdge]:
+        return do_get_routing_edges_request(
+            self.__communication_layer,
+            routing_point,
+            RoutingEdgeType.outgoing_node_track
+        )
 
     def get_crossing_routing_edges(self, routing_point: RoutingPoint) -> List[CrossingRoutingEdge]:
-        return self.__get_routing_edges_delegate(routing_point, RoutingEdgeType.crossing)
+        return do_get_routing_edges_request(
+            self.__communication_layer,
+            routing_point,
+            RoutingEdgeType.crossing
+        )
 
     def get_routing_edges(
             self,
             routing_point: RoutingPoint
-    ) -> List[Union[IncomingRoutingEdge, OutgoingRoutingEdge, CrossingRoutingEdge]]:
-        return self.__get_routing_edges_delegate(routing_point, None)
+    ) -> List[Union[IncomingNodeTrackRoutingEdge, OutgoingNodeTrackRoutingEdge, CrossingRoutingEdge]]:
+        return do_get_routing_edges_request(self.__communication_layer, routing_point, None)
 
     def get_formation(self, formation_id: int) -> AlgorithmFormation:
         url_to_resource = "vehicles/formations/{0}".format(formation_id)

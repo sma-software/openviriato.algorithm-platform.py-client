@@ -1,8 +1,8 @@
 from abc import ABC
 from typing import Type, Tuple
 
-from py_client.aidm import IncomingRoutingEdge, CrossingRoutingEdge, OutgoingRoutingEdge, RoutingEdgeType
-from py_client.aidm.aidm_base_classes import _RoutingEdge
+from py_client.aidm import IncomingRoutingEdge, OutgoingRoutingEdge, ABCRoutingEdge, IncomingNodeTrackRoutingEdge, CrossingRoutingEdge, OutgoingNodeTrackRoutingEdge
+from py_client.conversion.converter_helpers import RoutingEdgeType
 
 
 class ABCAIDMToJSONPostProcessor(ABC):
@@ -18,19 +18,25 @@ class ABCAIDMToJSONPostProcessor(ABC):
 
 
 class RoutingEdgeProcessor(ABCAIDMToJSONPostProcessor):
-    __aidm_class = _RoutingEdge
+    __aidm_class = ABCRoutingEdge
 
     @classmethod
     def is_applicable(cls, aidm_class: Type[object]) -> bool:
-        return isinstance(aidm_class, _RoutingEdge)
+        return isinstance(aidm_class, ABCRoutingEdge)
 
     @classmethod
     def process(cls, aidm_class: Type[object], attribute_dictionary: dict) -> dict:
         if isinstance(aidm_class, IncomingRoutingEdge):
             attribute_dictionary["type"] = RoutingEdgeType.incoming.value
             return attribute_dictionary
+        elif isinstance(aidm_class, IncomingNodeTrackRoutingEdge):
+            attribute_dictionary["type"] = RoutingEdgeType.incoming_node_track.value
+            return attribute_dictionary
         elif isinstance(aidm_class, OutgoingRoutingEdge):
             attribute_dictionary["type"] = RoutingEdgeType.outgoing.value
+            return attribute_dictionary
+        elif isinstance(aidm_class, OutgoingNodeTrackRoutingEdge):
+            attribute_dictionary["type"] = RoutingEdgeType.outgoing_node_track.value
             return attribute_dictionary
         elif isinstance(aidm_class, CrossingRoutingEdge):
             attribute_dictionary["type"] = RoutingEdgeType.crossing.value
@@ -40,8 +46,7 @@ class RoutingEdgeProcessor(ABCAIDMToJSONPostProcessor):
 
 
 class AIDMToJSONPostProcessorChain:
-    __processors: Tuple[ABCAIDMToJSONPostProcessor, ...] = (
-        RoutingEdgeProcessor,)
+    __processors: Tuple[ABCAIDMToJSONPostProcessor, ...] = (RoutingEdgeProcessor,)
 
     @classmethod
     def post_process_aidm_as_json(cls, attribute_dict: dict, aidm_class: Type[object]) -> dict:

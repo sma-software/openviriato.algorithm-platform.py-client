@@ -2,7 +2,7 @@ import unittest
 from unittest import mock
 
 import py_client.algorithm_interface_test.test_helper.SessionMockFactory as APISessionMock
-from py_client.aidm import RoutingPoint, CrossingRoutingEdge, IncomingRoutingEdge, OutgoingRoutingEdge
+from py_client.aidm import RoutingPoint, CrossingRoutingEdge, IncomingNodeTrackRoutingEdge, OutgoingNodeTrackRoutingEdge
 from py_client.algorithm_interface import algorithm_interface_factory
 from py_client.algorithm_interface_test.test_helper.SessionMockTestBase import get_api_url, SessionMockTestBase
 
@@ -25,7 +25,7 @@ class TestRoutingEdges(unittest.TestCase):
                 "    \"startNodeTrackId\": 162,\n"
                 "    \"endSectionTrackId\": 885,\n"
                 "    \"nodeId\": 281,\n"
-                "    \"type\": \"outgoing\"\n"
+                "    \"type\": \"outgoingNodeTrack\"\n"
                 "  },\n"
                 "  {\n"
                 "    \"startSectionTrackId\": 888,\n"
@@ -37,19 +37,19 @@ class TestRoutingEdges(unittest.TestCase):
                 "    \"startSectionTrackId\": 885,\n"
                 "    \"endNodeTrackId\": 162,\n"
                 "    \"nodeId\": 281,\n"
-                "    \"type\": \"incoming\"\n"
+                "    \"type\": \"incomingNodeTrack\"\n"
                 "  },\n"
                 "  {\n"
                 "    \"startSectionTrackId\": 885,\n"
                 "    \"endNodeTrackId\": 163,\n"
                 "    \"nodeId\": 281,\n"
-                "    \"type\": \"incoming\"\n"
+                "    \"type\": \"incomingNodeTrack\"\n"
                 "  },\n"
                 "  {\n"
                 "    \"startSectionTrackId\": 886,\n"
                 "    \"endNodeTrackId\": 162,\n"
                 "    \"nodeId\": 281,\n"
-                "    \"type\": \"incoming\"\n"
+                "    \"type\": \"incomingNodeTrack\"\n"
                 "  }\n"
                 "]"
             )
@@ -78,11 +78,11 @@ class TestRoutingEdges(unittest.TestCase):
 
         self.assertIsInstance(routing_edges, list)
         self.assertIsInstance(routing_edges[0], CrossingRoutingEdge)
-        self.assertIsInstance(routing_edges[1], OutgoingRoutingEdge)
+        self.assertIsInstance(routing_edges[1], OutgoingNodeTrackRoutingEdge)
         self.assertIsInstance(routing_edges[2], CrossingRoutingEdge)
-        self.assertIsInstance(routing_edges[3], IncomingRoutingEdge)
-        self.assertIsInstance(routing_edges[4], IncomingRoutingEdge)
-        self.assertIsInstance(routing_edges[5], IncomingRoutingEdge)
+        self.assertIsInstance(routing_edges[3], IncomingNodeTrackRoutingEdge)
+        self.assertIsInstance(routing_edges[4], IncomingNodeTrackRoutingEdge)
+        self.assertIsInstance(routing_edges[5], IncomingNodeTrackRoutingEdge)
 
         self.assertEqual(len(routing_edges), 6)
 

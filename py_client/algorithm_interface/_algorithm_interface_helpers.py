@@ -58,3 +58,11 @@ def do_get_routing_edges_request(
     )
     response_list = communication_layer.do_get_request(url_to_resource, get_request_params)
     return algorithm_platform_json_to_aidm_converter.convert_to_routing_edges(response_list)
+
+
+def do_get_any_parameter(
+        communication_layer: CommunicationLayer,
+        key: str
+) -> Optional[Union[bool, dict, int, list, str]]:
+    url_to_resource = "parameters/{0}".format(key)
+    return communication_layer.do_get_request(url_to_resource)["value"]

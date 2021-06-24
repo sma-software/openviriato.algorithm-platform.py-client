@@ -4,7 +4,8 @@ from multipledispatch import dispatch
 
 from py_client.aidm import *
 from py_client.algorithm_interface._algorithm_interface_helpers import merge_query_parameters, \
-    create_query_parameters_from_preceding_and_succeeding_routing_edge, do_get_routing_edges_request
+    create_query_parameters_from_preceding_and_succeeding_routing_edge, do_get_routing_edges_request, \
+    do_get_any_parameter
 from py_client.communication import communication_layer
 from py_client.conversion import object_to_algorithm_platform_json_converter, converter_helpers, \
     algorithm_platform_json_to_aidm_converter
@@ -664,55 +665,41 @@ class AlgorithmInterface:
         response_dict = self.__communication_layer.do_get_request(url_to_resource, query_parameters)
         return algorithm_platform_json_to_aidm_converter.convert_to_termination_request(response_dict)
 
-    def __delegate_get_any_parameter(
-            self,
-            key: str) -> Optional[
-        Union[
-            AlgorithmTrain,
-            TimeWindow,
-            bool,
-            int,
-            str,
-            list,
-            dict]]:
-        url_to_resource = "parameters/{0}".format(key)
-        return self.__communication_layer.do_get_request(url_to_resource)["value"]
-
     def get_bool_algorithm_parameter(self, key: str) -> bool:
-        return self.__delegate_get_any_parameter(key)
+        return do_get_any_parameter(self.__communication_layer, key)
 
     def get_int_algorithm_parameter(self, key: str) -> Maybe[int]:
-        response_value: Optional[int] = self.__delegate_get_any_parameter(key)
+        response_value: Optional[int] = do_get_any_parameter(self.__communication_layer, key)
         return Maybe(response_value)
 
     def get_enum_algorithm_parameter(self, enum_type: Type[EnumType], key: str) -> Maybe[EnumType]:
-        response_value = self.__delegate_get_any_parameter(key)
+        response_value = do_get_any_parameter(self.__communication_layer, key)
         return Maybe.create_from_json(
             response_value,
             algorithm_platform_json_to_aidm_converter.convert_algorithm_parameter_value_to_enum,
-            enum_type)
+            enum_type
+        )
 
     def get_floating_point_algorithm_parameter(self, key: str) -> FloatingPoint:
-        response_dict = self.__delegate_get_any_parameter(key)
+        response_dict = do_get_any_parameter(self.__communication_layer, key)
         return algorithm_platform_json_to_aidm_converter.convert_json_to_floating_point(response_dict)
 
     def get_string_algorithm_parameter(self, key: str) -> str:
-        return self.__delegate_get_any_parameter(key)
+        return do_get_any_parameter(self.__communication_layer, key)
 
     def get_algorithm_train_parameter(self, key: str) -> AlgorithmTrain:
-        response_dict = self.__delegate_get_any_parameter(key)
+        response_dict = do_get_any_parameter(self.__communication_layer, key)
         return algorithm_platform_json_to_aidm_converter.convert_json_to_algorithm_train(response_dict)
 
     def get_algorithm_trains_parameter(self, key: str) -> List[AlgorithmTrain]:
-        response_list = self.__delegate_get_any_parameter(key)
-
+        response_list = do_get_any_parameter(self.__communication_layer, key)
         return algorithm_platform_json_to_aidm_converter.convert_list(
             algorithm_platform_json_to_aidm_converter.convert_json_to_algorithm_train,
             response_list
         )
 
     def get_time_window_algorithm_parameter(self, key: str) -> TimeWindow:
-        response_dict = self.__delegate_get_any_parameter(key)
+        response_dict = do_get_any_parameter(self.__communication_layer, key)
         return algorithm_platform_json_to_aidm_converter.convert_json_to_time_window(response_dict)
 
     def get_node_track_closures(

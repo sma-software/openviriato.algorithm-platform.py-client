@@ -46,7 +46,7 @@ class SetupToolsRunner:
                 py_client.communication.__name__,
                 py_client.algorithm_interface.__name__],
             url='https://www.sma-partner.com',
-            license='',
+            license='Apache License 2.0',
             author='',
             author_email='',
             description='',

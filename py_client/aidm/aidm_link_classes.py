@@ -1,3 +1,4 @@
+import abc
 import datetime
 from enum import Enum, unique
 from typing import Optional
@@ -9,6 +10,7 @@ from py_client.aidm.aidm_base_classes import _HasDebugString
 class LinkType(Enum):
     await_arrival = "awaitArrival"
     connection = "connection"
+    roster = "roster"
 
 
 class AlgorithmLink(_HasDebugString):
@@ -19,14 +21,16 @@ class AlgorithmLink(_HasDebugString):
     __to_train_id: int
     __to_train_path_node_id: int
 
-    def __init__(self,
-                 debug_string: str,
-                 from_node_id: int,
-                 from_train_id: int,
-                 from_train_path_node_id: int,
-                 to_node_id: int,
-                 to_train_id: int,
-                 to_train_path_node_id: int):
+    def __init__(
+            self,
+            debug_string: str,
+            from_node_id: int,
+            from_train_id: int,
+            from_train_path_node_id: int,
+            to_node_id: int,
+            to_train_id: int,
+            to_train_path_node_id: int,
+    ):
         _HasDebugString.__init__(self, debug_string)
         self.__from_node_id = from_node_id
         self.__from_train_id = from_train_id
@@ -65,25 +69,29 @@ class AlgorithmConnectionLink(AlgorithmLink):
     __maximum_deviation: Optional[datetime.timedelta]
     __weight: Optional[int]
 
-    def __init__(self,
-                 debug_string: str,
-                 from_node_id: int,
-                 from_train_id: int,
-                 from_train_path_node_id: int,
-                 to_node_id: int,
-                 to_train_id: int,
-                 to_train_path_node_id: int,
-                 minimum_duration: datetime.timedelta,
-                 maximum_deviation: Optional[datetime.timedelta],
-                 weight: Optional[int]):
-        AlgorithmLink.__init__(self,
-                               debug_string,
-                               from_node_id,
-                               from_train_id,
-                               from_train_path_node_id,
-                               to_node_id,
-                               to_train_id,
-                               to_train_path_node_id)
+    def __init__(
+            self,
+            debug_string: str,
+            from_node_id: int,
+            from_train_id: int,
+            from_train_path_node_id: int,
+            to_node_id: int,
+            to_train_id: int,
+            to_train_path_node_id: int,
+            minimum_duration: datetime.timedelta,
+            maximum_deviation: Optional[datetime.timedelta],
+            weight: Optional[int],
+    ):
+        AlgorithmLink.__init__(
+            self,
+            debug_string,
+            from_node_id,
+            from_train_id,
+            from_train_path_node_id,
+            to_node_id,
+            to_train_id,
+            to_train_path_node_id,
+        )
 
         self.__minimum_duration = minimum_duration
         self.__maximum_deviation = maximum_deviation
@@ -105,25 +113,124 @@ class AlgorithmConnectionLink(AlgorithmLink):
 class AlgorithmAwaitArrivalLink(AlgorithmLink):
     __minimum_duration: datetime.timedelta
 
-    def __init__(self,
-                 debug_string: str,
-                 from_node_id: int,
-                 from_train_id: int,
-                 from_train_path_node_id: int,
-                 to_node_id: int,
-                 to_train_id: int,
-                 to_train_path_node_id: int,
-                 minimum_duration: datetime.timedelta):
-        AlgorithmLink.__init__(self,
-                               debug_string,
-                               from_node_id,
-                               from_train_id,
-                               from_train_path_node_id,
-                               to_node_id,
-                               to_train_id,
-                               to_train_path_node_id)
+    def __init__(
+            self,
+            debug_string: str,
+            from_node_id: int,
+            from_train_id: int,
+            from_train_path_node_id: int,
+            to_node_id: int,
+            to_train_id: int,
+            to_train_path_node_id: int,
+            minimum_duration: datetime.timedelta,
+    ):
+        AlgorithmLink.__init__(
+            self,
+            debug_string,
+            from_node_id,
+            from_train_id,
+            from_train_path_node_id,
+            to_node_id,
+            to_train_id,
+            to_train_path_node_id,
+        )
         self.__minimum_duration = minimum_duration
 
     @property
     def minimum_duration(self) -> datetime.timedelta:
         return self.__minimum_duration
+
+
+class AlgorithmRosterLink(AlgorithmLink):
+    __from_vehicle_position_in_formation: int
+    __to_vehicle_position_in_formation: int
+
+    def __init__(
+            self,
+            debug_string: str,
+            from_node_id: int,
+            from_train_id: int,
+            from_train_path_node_id: int,
+            to_node_id: int,
+            to_train_id: int,
+            to_train_path_node_id: int,
+            to_vehicle_position_in_formation: int,
+            from_vehicle_position_in_formation: int,
+    ):
+        AlgorithmLink.__init__(
+            self,
+            debug_string,
+            from_node_id,
+            from_train_id,
+            from_train_path_node_id,
+            to_node_id,
+            to_train_id,
+            to_train_path_node_id,
+        )
+        self.__to_vehicle_position_in_formation = to_vehicle_position_in_formation
+        self.__from_vehicle_position_in_formation = from_vehicle_position_in_formation
+
+    @property
+    def to_vehicle_position_in_formation(self) -> int:
+        return self.__to_vehicle_position_in_formation
+
+    @property
+    def from_vehicle_position_in_formation(self) -> int:
+        return self.__from_vehicle_position_in_formation
+
+
+class ABCAlgorithmLinkDefinition(abc.ABC):
+    @property
+    @abc.abstractmethod
+    def from_train_path_node_id(self) -> int:
+        pass
+
+    @property
+    @abc.abstractmethod
+    def to_train_path_node_id(self) -> int:
+        pass
+
+    @property
+    @abc.abstractmethod
+    def link_type(self) -> LinkType:
+        pass
+
+
+class AlgorithmRosterLinkDefinition(ABCAlgorithmLinkDefinition):
+    __from_train_path_node_id: int
+    __to_train_path_node_id: int
+    __from_vehicle_position_in_formation: int
+    __to_vehicle_position_in_formation: int
+    __link_type: LinkType.roster
+
+    def __init__(
+            self,
+            from_train_path_node_id: int,
+            to_train_path_node_id: int,
+            from_vehicle_position_in_formation: int,
+            to_vehicle_position_in_formation: int,
+    ):
+        self.__from_train_path_node_id = from_train_path_node_id
+        self.__to_train_path_node_id = to_train_path_node_id
+        self.__from_vehicle_position_in_formation = from_vehicle_position_in_formation
+        self.__to_vehicle_position_in_formation = to_vehicle_position_in_formation
+
+    @property
+    def from_train_path_node_id(self) -> int:
+        return self.__from_train_path_node_id
+
+    @property
+    def to_train_path_node_id(self) -> int:
+        return self.__to_train_path_node_id
+
+    @property
+    def link_type(self) -> LinkType:
+        return self.__link_type
+
+    @property
+    def to_vehicle_position_in_formation(self) -> int:
+        return self.__to_vehicle_position_in_formation
+
+    @property
+    def from_vehicle_position_in_formation(self) -> int:
+        return self.__from_vehicle_position_in_formation

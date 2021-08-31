@@ -592,6 +592,14 @@ class AlgorithmInterface:
     ) -> List[AlgorithmAwaitArrivalLink]:
         return do_get_any_link(self.__communication_layer, time_window, LinkType.await_arrival, node_ids)
 
+    def get_roster_links(self, time_window: TimeWindow) -> List[AlgorithmRosterLink]:
+        return do_get_any_link(self.__communication_layer, time_window, LinkType.roster, None)
+
+    def get_roster_links_containing_any_node(
+            self, time_window: TimeWindow, node_ids: List[int]
+    ) -> List[AlgorithmRosterLink]:
+        return do_get_any_link(self.__communication_layer, time_window, LinkType.roster, node_ids)
+
     def calculate_run_times(self, train_id: int) -> (UpdateTimesTrain, None):
         url_to_resource = "services/trains/{0}:run-time-calculation".format(train_id)
         response_dict = self.__communication_layer.do_get_request(url_to_resource)

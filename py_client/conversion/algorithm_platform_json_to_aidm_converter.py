@@ -115,18 +115,21 @@ def convert_json_to_update_train_times_node(attribute_dict: dict) -> UpdateTimes
 def convert_json_to_algorithm_link(attribute_dict: dict) -> Union[AlgorithmConnectionLink, AlgorithmAwaitArrivalLink]:
     link_type_as_str = convert_to_snake_case(attribute_dict.pop('type'))
     snake_case_dict = convert_keys_to_snake_case(attribute_dict)
-    if link_type_as_str == "await_arrival":
+    if link_type_as_str == LinkType.await_arrival.name:
         snake_case_dict['minimum_duration'] = parse_to_timedelta(snake_case_dict['minimum_duration'])
         return convert(AlgorithmAwaitArrivalLink, snake_case_dict)
-    elif link_type_as_str == "connection":
+    elif link_type_as_str == LinkType.connection.name:
         snake_case_dict['minimum_duration'] = parse_to_timedelta(snake_case_dict['minimum_duration'])
         snake_case_dict['maximum_deviation'] = parse_to_timedelta_or_none(snake_case_dict['maximum_deviation'])
         return convert(AlgorithmConnectionLink, snake_case_dict)
+    elif link_type_as_str == LinkType.roster.name:
+        return convert(AlgorithmRosterLink, snake_case_dict)
     else:
-        raise AlgorithmPlatformConversionError(
-            "{0} can not be converted to an {1}. Extend convert_json_to_algorithm_link".format(
-                link_type_as_str,
-                AlgorithmLink.__name__), None)
+        error_message = (
+            f"{link_type_as_str} can not be converted to an {AlgorithmLink.__name__}. "
+            f"Extend convert_json_to_algorithm_link"
+        )
+        raise AlgorithmPlatformConversionError(error_message, None)
 
 
 def convert_algorithm_parameter_value_to_enum(

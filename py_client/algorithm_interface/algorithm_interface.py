@@ -600,6 +600,16 @@ class AlgorithmInterface:
     ) -> List[AlgorithmRosterLink]:
         return do_get_any_link(self.__communication_layer, time_window, LinkType.roster, node_ids)
 
+    def create_roster_links(
+            self, roster_links: List[AlgorithmRosterLinkDefinition]
+    ) -> List[AlgorithmRosterLink]:
+        url_to_resource = "links"
+        request_body = object_to_algorithm_platform_json_converter.convert_any_object(roster_links)
+        response_dict = self.__communication_layer.do_post_request(url_to_resource, request_body)
+        return algorithm_platform_json_to_aidm_converter.convert_list(
+            algorithm_platform_json_to_aidm_converter.convert_json_to_algorithm_link, response_dict
+        )
+
     def calculate_run_times(self, train_id: int) -> (UpdateTimesTrain, None):
         url_to_resource = "services/trains/{0}:run-time-calculation".format(train_id)
         response_dict = self.__communication_layer.do_get_request(url_to_resource)

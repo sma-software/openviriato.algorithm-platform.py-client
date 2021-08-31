@@ -5,7 +5,7 @@ from py_client.aidm import StopStatus, UpdateTimesTrainPathNode, UpdateStopTimes
     OutgoingRoutingEdge, CrossingRoutingEdge, UpdateTrainRoute, StationEntryOrExit, TableDefinition, TableCellDataType, \
     TableTextCell, TableColumnDefinition, TableAlgorithmNodeCell, TableRow, TableAlgorithmTrainCell, \
     UpdateRunTimesTrainPathSegment, TimeWindow, OutgoingNodeTrackRoutingEdge, \
-    IncomingNodeTrackRoutingEdge
+    IncomingNodeTrackRoutingEdge, AlgorithmRosterLinkDefinition
 from py_client.conversion.algorithm_platform_json_to_aidm_converter import convert
 from py_client.conversion.converter_helpers import convert_keys_to_snake_case, parse_to_datetime, \
     parse_to_timedelta_or_none, RoutingEdgeType
@@ -138,3 +138,14 @@ def concatenate_argument_values_to_list(*kwargs) -> list:
 
 class EndToEndTestParameterEnum(Enum):
     optionValue3 = "optionValue3"
+
+
+def convert_request_body_to_algorithm_roster_link_definitions(
+        request_body: Dict[str, List[Dict[str, Union[int, str]]]]
+) -> List[AlgorithmRosterLinkDefinition]:
+    definitions_as_json = request_body["algorithm_roster_link_definitions"]
+    for definition in definitions_as_json:
+        definition.pop("type")
+    return [
+        AlgorithmRosterLinkDefinition(**convert_keys_to_snake_case(definition)) for definition in definitions_as_json
+    ]

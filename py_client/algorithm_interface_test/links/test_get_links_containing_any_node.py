@@ -67,23 +67,25 @@ class TestGetLinksContainingAnyNode(unittest.TestCase):
 
     @mock.patch('requests.Session', side_effect=GetLinksContainingAnyNodeTestMockSession)
     def test_get_links_containing_any_node_request(self, mocked_get_obj):
-        time_window = TimeWindow(from_time=datetime.datetime(2000, 1, 1, 1, 1),
-                                 to_time=datetime.datetime(2004, 1, 1, 0, 0))
+        time_window = TimeWindow(
+            from_time=datetime.datetime(2000, 1, 1, 1, 1), to_time=datetime.datetime(2004, 1, 1, 0, 0)
+        )
         node_ids = [12]
 
         self.interface_to_viriato.get_links_containing_any_node(time_window, node_ids)
 
         session_obj = self.interface_to_viriato._AlgorithmInterface__communication_layer.currentSession
         self.assertEqual(session_obj.last_request, get_api_url() + '/links')
-        self.assertDictEqual(session_obj.last_body,
-                             dict(fromTime="2000-01-01T01:01:00",
-                                  toTime="2004-01-01T00:00:00",
-                                  nodeFilter=[12]))
+        self.assertDictEqual(
+            session_obj.last_body,
+            dict(fromTime="2000-01-01T01:01:00", toTime="2004-01-01T00:00:00", nodeFilter=[12], linkType=None)
+        )
 
     @mock.patch('requests.Session', side_effect=GetLinksContainingAnyNodeTestMockSession)
     def test_get_links_containing_any_node_two_links_as_response(self, mocked_get_obj):
-        time_window = TimeWindow(from_time=datetime.datetime(2000, 1, 1, 1, 1),
-                                 to_time=datetime.datetime(2004, 1, 1, 0, 0))
+        time_window = TimeWindow(
+            from_time=datetime.datetime(2000, 1, 1, 1, 1), to_time=datetime.datetime(2004, 1, 1, 0, 0)
+        )
         node_ids = [12]
 
         listed_algorithm_links = self.interface_to_viriato.get_links_containing_any_node(time_window, node_ids)
@@ -135,8 +137,9 @@ class TestGetLinksContainingAnyNode(unittest.TestCase):
 
     @mock.patch('requests.Session', side_effect=GetLinksContainingAnyNodeTestMockSession)
     def get_links_containing_any_node_empty_list_as_response(self, mocked_get_obj):
-        time_window = TimeWindow(from_time=datetime.datetime(2000, 1, 1, 1, 1),
-                                 to_time=datetime.datetime(2000, 1, 1, 1, 1))
+        time_window = TimeWindow(
+            from_time=datetime.datetime(2000, 1, 1, 1, 1), to_time=datetime.datetime(2000, 1, 1, 1, 1)
+        )
         node_ids = [12]
 
         listed_algorithm_links = self.interface_to_viriato.get_links_containing_any_node(time_window, node_ids)

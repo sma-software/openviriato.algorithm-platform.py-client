@@ -5,7 +5,7 @@ from multipledispatch import dispatch
 from py_client.aidm import *
 from py_client.algorithm_interface._algorithm_interface_helpers import merge_query_parameters, \
     create_query_parameters_from_preceding_and_succeeding_routing_edge, do_get_routing_edges_request, \
-    do_get_any_parameter
+    do_get_any_parameter, do_get_any_link
 from py_client.communication import communication_layer
 from py_client.conversion import object_to_algorithm_platform_json_converter, converter_helpers, \
     algorithm_platform_json_to_aidm_converter
@@ -571,63 +571,26 @@ class AlgorithmInterface:
         return algorithm_platform_json_to_aidm_converter.convert(AlgorithmVehicleType, response_dict)
 
     def get_links(self, time_window: TimeWindow) -> List[AlgorithmLink]:
-        url_to_resource = "links"
-        query_parameters = object_to_algorithm_platform_json_converter.convert_any_object(time_window)
-        response_dict = self.__communication_layer.do_get_request(url_to_resource, query_parameters)
-        return algorithm_platform_json_to_aidm_converter.convert_list(
-            algorithm_platform_json_to_aidm_converter.convert_json_to_algorithm_link, response_dict)
+        return do_get_any_link(self.__communication_layer, time_window, None, None)
 
     def get_links_containing_any_node(self, time_window: TimeWindow, node_ids: List[int]) -> List[AlgorithmLink]:
-        url_to_resource = "links"
-        manual_converted_query_parameters = dict(nodeFilter=node_ids)
-        query_parameters = merge_query_parameters(
-            [manual_converted_query_parameters,
-             object_to_algorithm_platform_json_converter.convert_any_object(time_window)])
-        response_dict = self.__communication_layer.do_get_request(url_to_resource, query_parameters)
-        return algorithm_platform_json_to_aidm_converter.convert_list(
-            algorithm_platform_json_to_aidm_converter.convert_json_to_algorithm_link, response_dict)
+        return do_get_any_link(self.__communication_layer, time_window, None, node_ids)
 
     def get_connection_links(self, time_window: TimeWindow) -> List[AlgorithmConnectionLink]:
-        url_to_resource = "links"
-        query_parameters = merge_query_parameters(
-            [dict(linkType=LinkType.connection.value),
-             object_to_algorithm_platform_json_converter.convert_any_object(time_window)])
-        response_dict = self.__communication_layer.do_get_request(url_to_resource, query_parameters)
-        return algorithm_platform_json_to_aidm_converter.convert_list(
-            algorithm_platform_json_to_aidm_converter.convert_json_to_algorithm_link, response_dict)
+        return do_get_any_link(self.__communication_layer, time_window, LinkType.connection, None)
 
-    def get_connection_links_containing_any_node(self, time_window: TimeWindow, node_ids: List[int]
-                                                 ) -> List[AlgorithmConnectionLink]:
-        url_to_resource = "links"
-        manual_converted_query_parameters = dict(nodeFilter=node_ids)
-        query_parameters = merge_query_parameters(
-            [manual_converted_query_parameters,
-             dict(linkType=LinkType.connection.value),
-             object_to_algorithm_platform_json_converter.convert_any_object(time_window)])
-        response_dict = self.__communication_layer.do_get_request(url_to_resource, query_parameters)
-        return algorithm_platform_json_to_aidm_converter.convert_list(
-            algorithm_platform_json_to_aidm_converter.convert_json_to_algorithm_link, response_dict)
+    def get_connection_links_containing_any_node(
+            self, time_window: TimeWindow, node_ids: List[int]
+    ) -> List[AlgorithmConnectionLink]:
+        return do_get_any_link(self.__communication_layer, time_window, LinkType.connection, node_ids)
 
     def get_await_arrival_links(self, time_window: TimeWindow) -> List[AlgorithmAwaitArrivalLink]:
-        url_to_resource = "links"
-        query_parameters = merge_query_parameters(
-            [dict(linkType=LinkType.await_arrival.value),
-             object_to_algorithm_platform_json_converter.convert_any_object(time_window)])
-        response_dict = self.__communication_layer.do_get_request(url_to_resource, query_parameters)
-        return algorithm_platform_json_to_aidm_converter.convert_list(
-            algorithm_platform_json_to_aidm_converter.convert_json_to_algorithm_link, response_dict)
+        return do_get_any_link(self.__communication_layer, time_window, LinkType.await_arrival, None)
 
-    def get_await_arrival_links_containing_any_node(self, time_window: TimeWindow, node_ids: List[int]
-                                                    ) -> List[AlgorithmAwaitArrivalLink]:
-        url_to_resource = "links"
-        manual_converted_query_parameters = dict(nodeFilter=node_ids)
-        query_parameters = merge_query_parameters(
-            [manual_converted_query_parameters,
-             dict(linkType=LinkType.await_arrival.value),
-             object_to_algorithm_platform_json_converter.convert_any_object(time_window)])
-        response_dict = self.__communication_layer.do_get_request(url_to_resource, query_parameters)
-        return algorithm_platform_json_to_aidm_converter.convert_list(
-            algorithm_platform_json_to_aidm_converter.convert_json_to_algorithm_link, response_dict)
+    def get_await_arrival_links_containing_any_node(
+            self, time_window: TimeWindow, node_ids: List[int]
+    ) -> List[AlgorithmAwaitArrivalLink]:
+        return do_get_any_link(self.__communication_layer, time_window, LinkType.await_arrival, node_ids)
 
     def calculate_run_times(self, train_id: int) -> (UpdateTimesTrain, None):
         url_to_resource = "services/trains/{0}:run-time-calculation".format(train_id)

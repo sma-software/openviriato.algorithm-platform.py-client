@@ -661,9 +661,12 @@ class AlgorithmInterface:
             enum_type
         )
 
-    def get_floating_point_algorithm_parameter(self, key: str) -> FloatingPoint:
-        response_dict = do_get_any_parameter(self.__communication_layer, key)
-        return algorithm_platform_json_to_aidm_converter.convert_json_to_floating_point(response_dict)
+    def get_floating_point_algorithm_parameter(self, key: str) -> Optional[FloatingPoint]:
+        response_dict_or_none = do_get_any_parameter(self.__communication_layer, key)
+        if response_dict_or_none is None:
+            return None
+        else:
+            return algorithm_platform_json_to_aidm_converter.convert_json_to_floating_point(response_dict_or_none)
 
     def get_string_algorithm_parameter(self, key: str) -> str:
         response_string_or_none = do_get_any_parameter(self.__communication_layer, key)
@@ -680,9 +683,12 @@ class AlgorithmInterface:
             response_list
         )
 
-    def get_time_window_algorithm_parameter(self, key: str) -> TimeWindow:
-        response_dict = do_get_any_parameter(self.__communication_layer, key)
-        return algorithm_platform_json_to_aidm_converter.convert_json_to_time_window(response_dict)
+    def get_time_window_algorithm_parameter(self, key: str) -> Optional[TimeWindow]:
+        response_dict_or_none = do_get_any_parameter(self.__communication_layer, key)
+        if response_dict_or_none is None:
+            return None
+        else:
+            return algorithm_platform_json_to_aidm_converter.convert_json_to_time_window(response_dict_or_none)
 
     def get_node_track_closures(
             self,

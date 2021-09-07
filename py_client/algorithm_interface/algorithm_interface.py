@@ -666,7 +666,8 @@ class AlgorithmInterface:
         return algorithm_platform_json_to_aidm_converter.convert_json_to_floating_point(response_dict)
 
     def get_string_algorithm_parameter(self, key: str) -> str:
-        return do_get_any_parameter(self.__communication_layer, key)
+        response_string_or_none = do_get_any_parameter(self.__communication_layer, key)
+        return "" if response_string_or_none is None else response_string_or_none
 
     def get_algorithm_train_parameter(self, key: str) -> AlgorithmTrain:
         response_dict = do_get_any_parameter(self.__communication_layer, key)

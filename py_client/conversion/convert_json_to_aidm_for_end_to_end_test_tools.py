@@ -11,6 +11,8 @@ from py_client.conversion.converter_helpers import convert_keys_to_snake_case, p
     parse_to_timedelta_or_none, RoutingEdgeType
 
 
+# TODO: VPLAT-8570: Remove this module from py_client (used only for End-to-End-Test)
+
 def convert_list_of_json_to_update_train_times_node(attribute_dict: dict) -> List[UpdateTimesTrainPathNode]:
     return [convert_json_to_update_train_times_node(node_attributes)
             for node_attributes in attribute_dict["train_path_nodes"]]

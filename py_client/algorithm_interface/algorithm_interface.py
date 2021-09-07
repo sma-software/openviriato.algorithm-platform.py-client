@@ -570,10 +570,14 @@ class AlgorithmInterface:
         response_dict = self.__communication_layer.do_get_request(url_to_resource)
         return algorithm_platform_json_to_aidm_converter.convert(AlgorithmVehicleType, response_dict)
 
-    def get_links(self, time_window: TimeWindow) -> List[AlgorithmLink]:
+    def get_links(
+            self, time_window: TimeWindow
+    ) -> List[Union[AlgorithmConnectionLink, AlgorithmAwaitArrivalLink, AlgorithmRosterLink]]:
         return do_get_any_link(self.__communication_layer, time_window, None, None)
 
-    def get_links_containing_any_node(self, time_window: TimeWindow, node_ids: List[int]) -> List[AlgorithmLink]:
+    def get_links_containing_any_node(
+            self, time_window: TimeWindow, node_ids: List[int]
+    ) -> List[Union[AlgorithmConnectionLink, AlgorithmAwaitArrivalLink, AlgorithmRosterLink]]:
         return do_get_any_link(self.__communication_layer, time_window, None, node_ids)
 
     def get_connection_links(self, time_window: TimeWindow) -> List[AlgorithmConnectionLink]:

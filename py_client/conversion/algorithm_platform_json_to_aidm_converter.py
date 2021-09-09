@@ -143,12 +143,6 @@ def convert_algorithm_parameter_value_to_enum(
         raise AlgorithmPlatformConversionError(error_message, None)
 
 
-def convert_json_to_floating_point(attribute_dict: dict) -> FloatingPoint:
-    snake_case_dict = convert_keys_to_snake_case(attribute_dict)
-    snake_case_dict["mantissa"] = Maybe(snake_case_dict["mantissa"])
-    return convert(FloatingPoint, snake_case_dict)
-
-
 def convert_to_routing_edge_pair(attribute_dict: dict) -> RoutingEdgePair:
     incoming_routing_edge: dict = attribute_dict["incoming_routing_edge"]
     if incoming_routing_edge is None:

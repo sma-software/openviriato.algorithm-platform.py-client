@@ -670,7 +670,7 @@ class AlgorithmInterface:
         if response_dict_or_none is None:
             return None
         else:
-            return algorithm_platform_json_to_aidm_converter.convert_json_to_floating_point(response_dict_or_none)
+            return algorithm_platform_json_to_aidm_converter.convert(FloatingPoint, response_dict_or_none)
 
     def get_string_algorithm_parameter(self, key: str) -> str:
         response_string_or_none = do_get_any_parameter(self.__communication_layer, key)

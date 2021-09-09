@@ -15,23 +15,24 @@ class TestGetFloatingPointAlgorithmParameter(unittest.TestCase):
             self._last_body = params
 
             if "floatingPointParameterWithNoneValueKey" in self._last_request:
-                json__string = ("{\n"
-                                "  \"value\": {\n"
-                                "    \"decimalPlaces\": 2,\n"
-                                "    \"mantissa\": null\n"
-                                "  },\n"
-                                "  \"key\": \"floatingPointParameterWithNoneValueKey\"\n"
-                                "}")
+                json_string = (
+                    "{\n"
+                    "  \"value\": null,\n"
+                    "  \"key\": \"floatingPointParameter\"\n"
+                    "}"
+                )
             else:
-                json__string = ("{\n"
-                                "  \"value\": {\n"
-                                "    \"decimalPlaces\": 2,\n"
-                                "    \"mantissa\": 4711\n"
-                                "  },\n"
-                                "  \"key\": \"floatingPointParameter\"\n"
-                                "}")
+                json_string = (
+                    "{\n"
+                    "  \"value\": {\n"
+                    "    \"decimalPlaces\": 2,\n"
+                    "    \"mantissa\": 4711\n"
+                    "  },\n"
+                    "  \"key\": \"floatingPointParameter\"\n"
+                    "}"
+                )
 
-            return APISessionMock.create_response_mock(json__string, 200)
+            return APISessionMock.create_response_mock(json_string, 200)
 
     @mock.patch('requests.Session', side_effect=GetFloatingPointAlgorithmParameterTestSessionMock)
     def setUp(self, mocked_get_obj):
@@ -55,17 +56,15 @@ class TestGetFloatingPointAlgorithmParameter(unittest.TestCase):
 
         self.assertIsInstance(floating_point, FloatingPoint)
         self.assertEqual(floating_point.decimal_places, 2)
-        self.assertEqual(floating_point.mantissa.get_value, 4711)
+        self.assertEqual(floating_point.mantissa, 4711)
 
     @mock.patch('requests.Session', side_effect=GetFloatingPointAlgorithmParameterTestSessionMock)
     def test_get_floating_point_algorithm_parameter_response_with_none_value(self, mocked_get_obj):
         key = "floatingPointParameterWithNoneValueKey"
 
-        floating_point = self.interface_to_viriato.get_floating_point_algorithm_parameter(key)
+        none_floating_point = self.interface_to_viriato.get_floating_point_algorithm_parameter(key)
 
-        self.assertIsInstance(floating_point, FloatingPoint)
-        self.assertEqual(floating_point.decimal_places, 2)
-        self.assertFalse(floating_point.mantissa.has_value)
+        self.assertIsNone(none_floating_point)
 
     @mock.patch('requests.Session', side_effect=GetFloatingPointAlgorithmParameterTestSessionMock)
     def tearDown(self, mocked_get_obj) -> None:

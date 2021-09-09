@@ -125,10 +125,7 @@ def convert_json_to_algorithm_link(attribute_dict: dict) -> Union[AlgorithmConne
     elif link_type_as_str == LinkType.roster.name:
         return convert(AlgorithmRosterLink, snake_case_dict)
     else:
-        error_message = (
-            f"{link_type_as_str} can not be converted to an {AlgorithmLink.__name__}. "
-            f"Extend convert_json_to_algorithm_link"
-        )
+        error_message = f"{link_type_as_str} can not be converted. Extend converter"
         raise AlgorithmPlatformConversionError(error_message, None)
 
 

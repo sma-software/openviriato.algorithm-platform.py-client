@@ -379,7 +379,7 @@ class TestToAIDMConverter(unittest.TestCase):
 
         self.assertEqual(
             raised_error.exception.message,
-            "not_a_valid__link_type can not be converted to an AlgorithmLink. Extend convert_json_to_algorithm_link"
+            "not_a_valid__link_type can not be converted. Extend converter"
         )
 
     def test_convert_json_to_algorithm_link_non_convertible_durations_defined(self):

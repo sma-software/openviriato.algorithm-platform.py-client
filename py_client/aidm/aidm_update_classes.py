@@ -1,20 +1,21 @@
 import datetime
 from typing import List, Optional
 
-from py_client.aidm import StopStatus, ABCRoutingEdge
+from py_client.aidm import StopStatus, AnyRoutingEdgeIncomingOrCrossingOrOutgoing
 from py_client.aidm.aidm_base_classes import _UpdateTrain
 
 
 class UpdateTrainRoute:
     __start_train_path_node_id: int
     __end_train_path_node_id: int
-    __routing_edges: List[ABCRoutingEdge]
+    __routing_edges: List[AnyRoutingEdgeIncomingOrCrossingOrOutgoing]
 
     def __init__(
             self,
             start_train_path_node_id: int,
             end_train_path_node_id: int,
-            routing_edges: List[ABCRoutingEdge]):
+            routing_edges: List[AnyRoutingEdgeIncomingOrCrossingOrOutgoing],
+    ):
         self.__start_train_path_node_id = start_train_path_node_id
         self.__end_train_path_node_id = end_train_path_node_id
         self.__routing_edges = routing_edges
@@ -28,7 +29,7 @@ class UpdateTrainRoute:
         return self.__end_train_path_node_id
 
     @property
-    def routing_edges(self) -> List[ABCRoutingEdge]:
+    def routing_edges(self) -> List[AnyRoutingEdgeIncomingOrCrossingOrOutgoing]:
         return self.__routing_edges
 
 

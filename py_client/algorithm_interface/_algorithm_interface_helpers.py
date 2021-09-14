@@ -1,8 +1,10 @@
 from typing import List, Union, Optional
 
-from py_client.aidm import IncomingNodeTrackRoutingEdge, \
-    OutgoingNodeTrackRoutingEdge, ABCIncomingRoutingEdge, ABCOutgoingRoutingEdge, RoutingPoint, CrossingRoutingEdge, \
-    TimeWindow, LinkType, AlgorithmRosterLink, AlgorithmAwaitArrivalLink, AlgorithmConnectionLink
+from py_client.aidm import IncomingNodeTrackRoutingEdge, OutgoingNodeTrackRoutingEdge, RoutingPoint, \
+    TimeWindow, LinkType, AlgorithmRosterLink, AlgorithmAwaitArrivalLink, \
+    AlgorithmConnectionLink, AnyRoutingEdgeIncomingOrOutgoing, AnyRoutingEdgeIncomingOrCrossingOrOutgoing, \
+    IncomingRoutingEdge, \
+    OutgoingRoutingEdge
 from py_client.communication.communication_layer import CommunicationLayer
 from py_client.conversion import algorithm_platform_json_to_aidm_converter
 from py_client.conversion.algorithm_platform_json_to_aidm_converter import convert_json_to_algorithm_link
@@ -17,35 +19,42 @@ def merge_query_parameters(query_parameter_dictionaries: List[dict]) -> dict:
 
 
 def create_query_parameters_from_preceding_and_succeeding_routing_edge(
-        preceding_routing_edge: Union[ABCIncomingRoutingEdge, ABCOutgoingRoutingEdge],
-        succeeding_routing_edge: Union[ABCIncomingRoutingEdge, ABCOutgoingRoutingEdge]
+        preceding_routing_edge: AnyRoutingEdgeIncomingOrOutgoing,
+        succeeding_routing_edge: AnyRoutingEdgeIncomingOrOutgoing
 ) -> dict:
-    if isinstance(preceding_routing_edge, ABCIncomingRoutingEdge):
+    if isinstance(preceding_routing_edge, IncomingRoutingEdge):
         preceding_query_parameters = dict(precedingFromSectionTrackId=preceding_routing_edge.start_section_track_id)
-        if isinstance(preceding_routing_edge, IncomingNodeTrackRoutingEdge):
-            preceding_query_parameters["precedingToNodeTrackId"] = preceding_routing_edge.end_node_track_id
-    elif isinstance(preceding_routing_edge, ABCOutgoingRoutingEdge):
+    elif isinstance(preceding_routing_edge, IncomingNodeTrackRoutingEdge):
+        preceding_query_parameters = dict(
+            precedingFromSectionTrackId=preceding_routing_edge.start_section_track_id,
+            precedingToNodeTrackId=preceding_routing_edge.end_node_track_id,
+        )
+    elif isinstance(preceding_routing_edge, OutgoingRoutingEdge):
         preceding_query_parameters = dict(precedingToSectionTrackId=preceding_routing_edge.end_section_track_id)
-        if isinstance(preceding_routing_edge, OutgoingNodeTrackRoutingEdge):
-            preceding_query_parameters["precedingFromNodeTrackId"] = preceding_routing_edge.start_node_track_id
-    else:
-        raise TypeError(
-            f"{preceding_routing_edge} is not an {ABCIncomingRoutingEdge.__name__} or {ABCIncomingRoutingEdge.__name__}"
+    elif isinstance(preceding_routing_edge, OutgoingNodeTrackRoutingEdge):
+        preceding_query_parameters = dict(
+            precedingToSectionTrackId=preceding_routing_edge.end_section_track_id,
+            precedingFromNodeTrackId=preceding_routing_edge.start_node_track_id,
         )
+    else:
+        raise TypeError(f"{preceding_routing_edge} is not an {AnyRoutingEdgeIncomingOrOutgoing}")
 
-    if isinstance(succeeding_routing_edge, ABCIncomingRoutingEdge):
+    if isinstance(succeeding_routing_edge, IncomingRoutingEdge):
         succeeding_query_parameters = dict(succeedingFromSectionTrackId=succeeding_routing_edge.start_section_track_id)
-        if isinstance(succeeding_routing_edge, IncomingNodeTrackRoutingEdge):
-            succeeding_query_parameters["succeedingToNodeTrackId"] = succeeding_routing_edge.end_node_track_id
-    elif isinstance(succeeding_routing_edge, ABCOutgoingRoutingEdge):
-        succeeding_query_parameters = dict(succeedingToSectionTrackId=succeeding_routing_edge.end_section_track_id)
-        if isinstance(succeeding_routing_edge, OutgoingNodeTrackRoutingEdge):
-            succeeding_query_parameters["succeedingFromNodeTrackId"] = succeeding_routing_edge.start_node_track_id
-    else:
-        raise TypeError(
-            f"{preceding_routing_edge} is not an {ABCIncomingRoutingEdge.__name__} or {ABCIncomingRoutingEdge.__name__}"
+    elif isinstance(succeeding_routing_edge, IncomingNodeTrackRoutingEdge):
+        succeeding_query_parameters = dict(
+            succeedingFromSectionTrackId=succeeding_routing_edge.start_section_track_id,
+            succeedingToNodeTrackId=succeeding_routing_edge.end_node_track_id,
         )
-
+    elif isinstance(succeeding_routing_edge, OutgoingRoutingEdge):
+        succeeding_query_parameters = dict(succeedingToSectionTrackId=succeeding_routing_edge.end_section_track_id)
+    elif isinstance(succeeding_routing_edge, OutgoingNodeTrackRoutingEdge):
+        succeeding_query_parameters = dict(
+            succeedingToSectionTrackId=succeeding_routing_edge.end_section_track_id,
+            succeedingFromNodeTrackId=succeeding_routing_edge.start_node_track_id,
+        )
+    else:
+        raise TypeError(f"{succeeding_routing_edge} is not an {AnyRoutingEdgeIncomingOrOutgoing}")
     return merge_query_parameters([preceding_query_parameters, succeeding_query_parameters])
 
 
@@ -53,7 +62,7 @@ def do_get_routing_edges_request(
         communication_layer: CommunicationLayer,
         routing_point: RoutingPoint,
         routing_edge_type: Optional[RoutingEdgeType]
-) -> List[Union[IncomingNodeTrackRoutingEdge, OutgoingNodeTrackRoutingEdge, CrossingRoutingEdge]]:
+) -> List[AnyRoutingEdgeIncomingOrCrossingOrOutgoing]:
     url_to_resource = "nodes/{0}/routing-edges".format(routing_point.node_id)
     get_request_params = dict(
         routingEdgeType=None if routing_edge_type is None else routing_edge_type.value,

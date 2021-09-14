@@ -1,4 +1,4 @@
-from typing import Union, Type
+from typing import Type
 
 from multipledispatch import dispatch
 
@@ -404,11 +404,11 @@ class AlgorithmInterface:
         return converter_helpers.parse_to_timedelta_or_none(response_dict['separationTime'])
 
     def get_separation_time_in_station_for_routes(
-            self,
-            preceding_train_routing_edge: Union[ABCIncomingRoutingEdge, ABCOutgoingRoutingEdge],
-            preceding_stop_status: StopStatus,
-            succeeding_train_routing_edge: Union[ABCIncomingRoutingEdge, ABCOutgoingRoutingEdge],
-            succeeding_stop_status: StopStatus
+        self,
+        preceding_train_routing_edge: AnyRoutingEdgeIncomingOrOutgoing,
+        preceding_stop_status: StopStatus,
+        succeeding_train_routing_edge: AnyRoutingEdgeIncomingOrOutgoing,
+        succeeding_stop_status: StopStatus,
     ) -> Optional[datetime.timedelta]:
         url_to_resource = 'nodes/{0}/separation-times'.format(preceding_train_routing_edge.node_id)
         query_parameters = create_query_parameters_from_preceding_and_succeeding_routing_edge(
@@ -543,10 +543,7 @@ class AlgorithmInterface:
             RoutingEdgeType.crossing
         )
 
-    def get_routing_edges(
-            self,
-            routing_point: RoutingPoint
-    ) -> List[Union[IncomingNodeTrackRoutingEdge, OutgoingNodeTrackRoutingEdge, CrossingRoutingEdge]]:
+    def get_routing_edges(self, routing_point: RoutingPoint) -> List[AnyRoutingEdgeIncomingOrCrossingOrOutgoing]:
         return do_get_routing_edges_request(self.__communication_layer, routing_point, None)
 
     def get_formation(self, formation_id: int) -> AlgorithmFormation:

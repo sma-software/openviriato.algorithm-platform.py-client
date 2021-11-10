@@ -27,6 +27,7 @@ class TestCreateRosterLinks(unittest.TestCase):
                     "        \"toTrainId\": 11083,\n"
                     "        \"toTrainPathNodeId\": 11079,\n"
                     "        \"type\": \"roster\",\n"
+                    "        \"id\": 6542,\n"
                     "        \"debugString\": \"DebugStringTest+-+asd\"\n"
                     "    }"
                     "]"

@@ -322,7 +322,8 @@ class TestToAIDMConverter(unittest.TestCase):
             to_train_id=2449,
             to_train_path_node_id=1356,
             type="awaitArrival",
-            debug_string="DebugString"
+            debug_string="DebugString",
+            id = 456
         )
 
         await_arrival_link = algorithm_platform_json_to_aidm_converter.convert_json_to_algorithm_link(
@@ -332,8 +333,13 @@ class TestToAIDMConverter(unittest.TestCase):
         self.assertIsInstance(await_arrival_link, AlgorithmAwaitArrivalLink)
         self.assertEqual(await_arrival_link.minimum_duration, datetime.timedelta(minutes=10))
         self.assertEqual(await_arrival_link.from_node_id, 161)
+        self.assertEqual(await_arrival_link.from_train_id, 5361)
+        self.assertEqual(await_arrival_link.from_train_path_node_id, 4997)
         self.assertEqual(await_arrival_link.to_node_id, 161)
+        self.assertEqual(await_arrival_link.to_train_id, 2449)
+        self.assertEqual(await_arrival_link.to_train_path_node_id, 1356)
         self.assertEqual(await_arrival_link.debug_string, "DebugString")
+        self.assertEqual(await_arrival_link.id, 456)
 
     def test_convert_json_to_algorithm_link_with_connection_link(self):
         link_as_dictionary = dict(
@@ -347,7 +353,8 @@ class TestToAIDMConverter(unittest.TestCase):
             to_train_id=3905,
             to_train_path_node_id=3177,
             type="connection",
-            debug_string="DebugString"
+            debug_string="DebugString",
+            id=350
         )
 
         connection_link = algorithm_platform_json_to_aidm_converter.convert_json_to_algorithm_link(link_as_dictionary)
@@ -355,9 +362,15 @@ class TestToAIDMConverter(unittest.TestCase):
         self.assertIsInstance(connection_link, AlgorithmConnectionLink)
         self.assertEqual(connection_link.minimum_duration, datetime.timedelta(minutes=6))
         self.assertEqual(connection_link.maximum_deviation, datetime.timedelta(minutes=13))
+        self.assertEqual(connection_link.weight, 1)
         self.assertEqual(connection_link.from_node_id, 281)
+        self.assertEqual(connection_link.from_train_id, 2449)
+        self.assertEqual(connection_link.from_train_path_node_id, 1721)
+        self.assertEqual(connection_link.to_node_id, 281)
         self.assertEqual(connection_link.to_train_id, 3905)
+        self.assertEqual(connection_link.to_train_path_node_id, 3177)
         self.assertEqual(connection_link.debug_string, "DebugString")
+        self.assertEqual(connection_link.id, 350)
 
     def test_convert_json_to_algorithm_link_unknown_type_defined(self):
         link_as_dictionary = dict(
@@ -371,7 +384,8 @@ class TestToAIDMConverter(unittest.TestCase):
             to_train_id=3905,
             to_train_path_node_id=3177,
             type="not_a_valid_LinkType",
-            debug_string="DebugString"
+            debug_string="DebugString",
+            id=789
         )
 
         with self.assertRaises(AlgorithmPlatformConversionError) as raised_error:
@@ -394,7 +408,8 @@ class TestToAIDMConverter(unittest.TestCase):
             to_train_id=3905,
             to_train_path_node_id=3177,
             type="connection",
-            debug_string="DebugString"
+            debug_string="DebugString",
+            id=245
         )
 
         with self.assertRaises(TypeError) as raised_error:

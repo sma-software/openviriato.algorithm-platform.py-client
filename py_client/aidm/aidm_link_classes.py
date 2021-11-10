@@ -2,6 +2,7 @@ import datetime
 from enum import Enum, unique
 from typing import Optional
 
+from py_client.aidm.aidm_base_classes import _HasID
 from py_client.aidm.aidm_base_classes import _HasDebugString
 
 
@@ -12,7 +13,7 @@ class LinkType(Enum):
     roster = "roster"
 
 
-class _AlgorithmLink(_HasDebugString):
+class _AlgorithmLink(_HasDebugString, _HasID):
     __from_node_id: int
     __from_train_id: int
     __from_train_path_node_id: int
@@ -29,8 +30,10 @@ class _AlgorithmLink(_HasDebugString):
             to_node_id: int,
             to_train_id: int,
             to_train_path_node_id: int,
+            id: int
     ):
         _HasDebugString.__init__(self, debug_string)
+        _HasID.__init__(self, id)
         self.__from_node_id = from_node_id
         self.__from_train_id = from_train_id
         self.__from_train_path_node_id = from_train_path_node_id
@@ -63,7 +66,7 @@ class _AlgorithmLink(_HasDebugString):
         return self.__to_train_path_node_id
 
 
-class AlgorithmConnectionLink(_AlgorithmLink):
+class AlgorithmConnectionLink(_AlgorithmLink, _HasID):
     __minimum_duration: datetime.timedelta
     __maximum_deviation: Optional[datetime.timedelta]
     __weight: Optional[int]
@@ -80,6 +83,7 @@ class AlgorithmConnectionLink(_AlgorithmLink):
             minimum_duration: datetime.timedelta,
             maximum_deviation: Optional[datetime.timedelta],
             weight: Optional[int],
+            id: int
     ):
         _AlgorithmLink.__init__(
             self,
@@ -90,7 +94,9 @@ class AlgorithmConnectionLink(_AlgorithmLink):
             to_node_id,
             to_train_id,
             to_train_path_node_id,
+            id
         )
+
 
         self.__minimum_duration = minimum_duration
         self.__maximum_deviation = maximum_deviation
@@ -109,7 +115,7 @@ class AlgorithmConnectionLink(_AlgorithmLink):
         return self.__weight
 
 
-class AlgorithmAwaitArrivalLink(_AlgorithmLink):
+class AlgorithmAwaitArrivalLink(_AlgorithmLink, _HasID):
     __minimum_duration: datetime.timedelta
 
     def __init__(
@@ -122,6 +128,7 @@ class AlgorithmAwaitArrivalLink(_AlgorithmLink):
             to_train_id: int,
             to_train_path_node_id: int,
             minimum_duration: datetime.timedelta,
+            id: int
     ):
         _AlgorithmLink.__init__(
             self,
@@ -132,6 +139,7 @@ class AlgorithmAwaitArrivalLink(_AlgorithmLink):
             to_node_id,
             to_train_id,
             to_train_path_node_id,
+            id
         )
         self.__minimum_duration = minimum_duration
 
@@ -140,7 +148,7 @@ class AlgorithmAwaitArrivalLink(_AlgorithmLink):
         return self.__minimum_duration
 
 
-class AlgorithmRosterLink(_AlgorithmLink):
+class AlgorithmRosterLink(_AlgorithmLink, _HasID):
     __from_vehicle_position_in_formation: int
     __to_vehicle_position_in_formation: int
 
@@ -155,6 +163,7 @@ class AlgorithmRosterLink(_AlgorithmLink):
             to_train_path_node_id: int,
             to_vehicle_position_in_formation: int,
             from_vehicle_position_in_formation: int,
+            id: int
     ):
         _AlgorithmLink.__init__(
             self,
@@ -165,6 +174,7 @@ class AlgorithmRosterLink(_AlgorithmLink):
             to_node_id,
             to_train_id,
             to_train_path_node_id,
+            id
         )
         self.__to_vehicle_position_in_formation = to_vehicle_position_in_formation
         self.__from_vehicle_position_in_formation = from_vehicle_position_in_formation

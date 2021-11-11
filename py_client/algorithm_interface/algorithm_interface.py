@@ -561,6 +561,11 @@ class AlgorithmInterface:
         response_dict = self.__communication_layer.do_post_request(url_to_resource, request_body)
         return from_json_converter.convert_list(from_json_converter.convert_json_to_algorithm_link, response_dict)
 
+    def delete_links(self, link_ids: List[int]):
+        url_to_resource = "links"
+        delete_request_body = dict(linkIDs=link_ids)
+        self.__communication_layer.do_delete_request(url_to_resource, delete_request_body)
+
     def calculate_run_times(self, train_id: int) -> (UpdateTimesTrain, None):
         url_to_resource = "services/trains/{0}:run-time-calculation".format(train_id)
         response_dict = self.__communication_layer.do_get_request(url_to_resource)

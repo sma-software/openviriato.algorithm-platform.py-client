@@ -165,3 +165,35 @@ def convert_to_termination_request(attribute_dict: dict) -> TerminationRequest:
         return TerminationRequest(None)
     else:
         return TerminationRequest(parse_to_datetime(snake_case_dict["termination_requested_timestamp"]))
+
+def convert_json_to_algorithm_section_running_time_penalty(attribute_dict: dict) -> List[AlgorithmSectionRunningTimePenalty]:
+    snake_case_dict = convert_keys_to_snake_case(attribute_dict)
+    snake_case_dict['total_penalty'] = parse_to_timedelta(snake_case_dict['total_penalty'])
+    snake_case_dict['affected_section_tracks'] = convert_list(
+        convert_json_to_algorithm_section_running_time_penalty_track,
+        snake_case_dict['affected_section_tracks'])
+    return convert(AlgorithmSectionRunningTimePenalty, snake_case_dict)
+
+def convert_json_to_algorithm_section_running_time_penalty_track(attribute_dict: dict) -> List[AlgorithmSectionRunningTimePenaltyTrack]:
+    snake_case_dict = convert_keys_to_snake_case(attribute_dict)
+    for key in ['from_node_time_window', 'to_node_time_window']:
+        snake_case_dict[key] = convert_json_to_time_window(snake_case_dict[key])
+    return convert(AlgorithmSectionRunningTimePenaltyTrack, snake_case_dict)
+
+def convert_json_to_algorithm_train_simulation_train(attribute_dict: dict) -> AlgorithmTrainSimulationTrain:
+    snake_case_dict = convert_keys_to_snake_case(attribute_dict)
+    snake_case_dict['train_path_nodes'] = convert_list(
+        convert_json_to_algorithm_train_simulation_path_node,
+        snake_case_dict['train_path_nodes'])
+    return convert(AlgorithmTrainSimulationTrain, snake_case_dict)
+
+def convert_json_to_algorithm_train_simulation_path_node(attribute_dict: dict) -> AlgorithmTrainSimulationTrainPathNode:
+    snake_case_dict = convert_keys_to_snake_case(attribute_dict)
+    for key in ['arrival_time', 'departure_time']:
+        snake_case_dict[key] = parse_to_datetime(snake_case_dict[key])
+    return convert(AlgorithmTrainSimulationTrainPathNode, snake_case_dict)
+
+def convert_json_to_algorithm_train_simulation_event(attribute_dict: dict) -> AlgorithmTrainSimulationEvent:
+    snake_case_dict = convert_keys_to_snake_case(attribute_dict)
+    snake_case_dict['absolute_time'] = parse_to_datetime(snake_case_dict['absolute_time'])
+    return convert(AlgorithmTrainSimulationEvent, snake_case_dict)

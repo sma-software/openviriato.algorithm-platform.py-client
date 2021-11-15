@@ -43,6 +43,9 @@ from py_client.aidm import (
     TableDefinition,
     AlgorithmNodeTrackClosure,
     AlgorithmSectionTrackClosure,
+    AlgorithmSectionRunningTimePenalty,
+    AlgorithmTrainSimulationTrain,
+    AlgorithmTrainSimulationEvent
 )
 from py_client.communication.communication_layer import CommunicationLayer
 
@@ -658,4 +661,39 @@ class AlgorithmInterface:
         response_list_of_dict = self.__communication_layer.do_get_request(url_to_resource, query_parameters)
         return from_json_converter.convert_list(
             from_json_converter.convert_json_to_algorithm_section_track_closure, response_list_of_dict
+        )
+
+    def get_section_running_time_penalties(self, time_window: TimeWindow)-> List[AlgorithmSectionRunningTimePenalty]:
+        query_parameters = to_json_converter.convert_any_object(time_window)
+        url_to_resource = "possessions/section-running-time-penalties"
+        response_list_of_dict = self.__communication_layer.do_get_request(url_to_resource, query_parameters)
+        return from_json_converter.convert_list(
+            from_json_converter.convert_json_to_algorithm_section_running_time_penalty, response_list_of_dict
+        )
+
+    def create_train_simulation(self, time_window: TimeWindow) -> None:
+        query_parameters = to_json_converter.convert_any_object(time_window)
+        url_to_resource = "services/trains/simulations"
+        response = self.__communication_layer.do_put_request(url_to_resource, query_parameters)
+
+
+    def get_train_simulation_trains(self) -> AlgorithmTrainSimulationTrain:
+        url_to_resource = "services/trains/simulations/trains"
+        response_list_of_dict = self.__communication_layer.do_get_request(url_to_resource)
+        return from_json_converter.convert_list(
+            from_json_converter.convert_json_to_algorithm_train_simulation_train, response_list_of_dict
+        )
+
+    def get_next_train_simulation_event(self) -> AlgorithmTrainSimulationEvent:
+        url_to_resource = "services/trains/simulations/events/next"
+        response_dict = self.__communication_layer.do_get_request(url_to_resource)
+        return from_json_converter.convert(
+            from_json_converter.convert_json_to_algorithm_train_simulation_event, response_dict
+        )
+
+    def realize_next_train_simulation_event(self) -> AlgorithmTrainSimulationEvent:
+        url_to_resource = "services/trains/simulations/events/next:realize"
+        response_dict = self.__communication_layer.do_post_request(url_to_resource)
+        return from_json_converter.convert(
+            from_json_converter.convert_json_to_algorithm_train_simulation_event, response_dict
         )

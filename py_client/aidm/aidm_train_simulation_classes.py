@@ -7,8 +7,8 @@ from py_client.aidm.aidm_train_path_node_classes import AlgorithmTrainPathNode
 
 @unique
 class AlgorithmTrainSimulationEventType(Enum):
-    arrival = "The event describes the arrival at a node."
-    departure = "The event describes a departure from a node."
+    arrival = 'arrival'#"The event describes the arrival at a node."
+    departure = 'departure'#"The event describes a departure from a node."
 
 
 class AlgorithmTrainSimulationTrain(_HasID):

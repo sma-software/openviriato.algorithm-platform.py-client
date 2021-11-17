@@ -193,14 +193,8 @@ def convert_json_to_algorithm_train_simulation_path_node(attribute_dict: dict) -
         snake_case_dict[key] = parse_to_datetime(snake_case_dict[key])
     return convert(AlgorithmTrainSimulationTrainPathNode, snake_case_dict)
 
-def convert_json_to_algorithm_train_simulation_event_type(algorithm_train_simulation_event_type_string) -> AlgorithmTrainSimulationEventType:
-    if algorithm_train_simulation_event_type_string == AlgorithmTrainSimulationEventType.arrival.name:
-        return AlgorithmTrainSimulationEventType.arrival
-    if algorithm_train_simulation_event_type_string == AlgorithmTrainSimulationEventType.departure.name:
-        return AlgorithmTrainSimulationEventType.departure
-
 def convert_json_to_algorithm_train_simulation_event(attribute_dict: dict) -> AlgorithmTrainSimulationEvent:
     snake_case_dict = convert_keys_to_snake_case(attribute_dict)
+    snake_case_dict['type'] = AlgorithmTrainSimulationEventType(snake_case_dict['type'])
     snake_case_dict['absolute_time'] = parse_to_datetime(snake_case_dict['absolute_time'])
-    snake_case_dict['type'] = convert_json_to_algorithm_train_simulation_event_type(snake_case_dict['type'])
     return convert(AlgorithmTrainSimulationEvent, snake_case_dict)

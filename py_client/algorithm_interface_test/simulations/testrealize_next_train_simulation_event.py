@@ -1,9 +1,10 @@
 
-import datetime
+from datetime import datetime
 import unittest
 from unittest import mock
 
-import py_client.aidm.aidm_train_simulation_classes
+from py_client.algorithm_interface.algorithm_interface import AlgorithmInterface
+from py_client.aidm.aidm_train_simulation_classes import AlgorithmTrainSimulationEventType, AlgorithmTrainSimulationEvent
 import py_client.algorithm_interface_test.test_helper.SessionMockFactory as SessionMockFactory
 from py_client import algorithm_interface
 from py_client.algorithm_interface import algorithm_interface_factory
@@ -28,7 +29,7 @@ class TestPostRealizeNextTrainSimulationEvent(unittest.TestCase):
 
             return SessionMockFactory.create_response_mock(json_string, 200)
 
-    interface_to_viriato: py_client.algorithm_interface.algorithm_interface.AlgorithmInterface
+    interface_to_viriato: AlgorithmInterface
 
     @mock.patch('requests.Session', side_effect=PostRealizeNextTrainSimulationEventMockSession)
     def setUp(self, mocked_get_obj):
@@ -40,10 +41,12 @@ class TestPostRealizeNextTrainSimulationEvent(unittest.TestCase):
         self.interface_to_viriato.realize_next_train_simulation_event()
 
         session_obj = self.interface_to_viriato._AlgorithmInterface__communication_layer.currentSession
-        self.assertEqual(session_obj._PostRealizeNextTrainSimulationEventMockSession__last_request,
-                         get_api_url() + "/services/trains/simulations/events/next:realize")
-        self.assertDictEqual(session_obj._PostRealizeNextTrainSimulationEventMockSession__last_body,
-                             dict())
+        self.assertEqual(
+            session_obj._PostRealizeNextTrainSimulationEventMockSession__last_request,
+            get_api_url() + "/services/trains/simulations/events/next:realize")
+        self.assertDictEqual(
+            session_obj._PostRealizeNextTrainSimulationEventMockSession__last_body,
+            dict())
 
     @mock.patch('requests.Session', side_effect=PostRealizeNextTrainSimulationEventMockSession)
     def test_get_train_simulation_trains_response(self, mocked_get_obj):
@@ -51,8 +54,9 @@ class TestPostRealizeNextTrainSimulationEvent(unittest.TestCase):
         response = self.interface_to_viriato.realize_next_train_simulation_event()
 
 
-        self.assertIsInstance(response,
-                              py_client.aidm.aidm_train_simulation_classes.AlgorithmTrainSimulationEvent)
+        self.assertIsInstance(
+            response,
+            AlgorithmTrainSimulationEvent)
         self.assertEqual(
             response.id,
             2000001
@@ -63,11 +67,11 @@ class TestPostRealizeNextTrainSimulationEvent(unittest.TestCase):
         )
         self.assertIsInstance(
             response.absolute_time,
-            datetime.datetime
+            datetime
         )
         self.assertIsInstance(
             response.type,
-            py_client.aidm.aidm_train_simulation_classes.AlgorithmTrainSimulationEventType
+            AlgorithmTrainSimulationEventType
         )
 
 

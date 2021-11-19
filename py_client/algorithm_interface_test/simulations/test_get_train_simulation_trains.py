@@ -1,7 +1,9 @@
-import datetime
+from datetime import datetime
 import unittest
 from unittest import mock
 
+from py_client.algorithm_interface.algorithm_interface import AlgorithmInterface
+from py_client.aidm.aidm_train_simulation_classes import AlgorithmTrainSimulationTrain, AlgorithmTrainSimulationTrainPathNode
 import py_client.aidm.aidm_train_simulation_classes
 import py_client.algorithm_interface_test.test_helper.SessionMockFactory as SessionMockFactory
 from py_client import algorithm_interface
@@ -46,7 +48,7 @@ class TestGetTrainSimulationTrains(unittest.TestCase):
 
             return SessionMockFactory.create_response_mock(json_string, 200)
 
-    interface_to_viriato: py_client.algorithm_interface.algorithm_interface.AlgorithmInterface
+    interface_to_viriato: AlgorithmInterface
 
     @mock.patch('requests.Session', side_effect=GetTrainSimulationTrainsMockSession)
     def setUp(self, mocked_get_obj):
@@ -58,10 +60,12 @@ class TestGetTrainSimulationTrains(unittest.TestCase):
         self.interface_to_viriato.get_train_simulation_trains()
 
         session_obj = self.interface_to_viriato._AlgorithmInterface__communication_layer.currentSession
-        self.assertEqual(session_obj._GetTrainSimulationTrainsMockSession__last_request,
-                         get_api_url() + "/services/trains/simulations/trains")
-        self.assertDictEqual(session_obj._GetTrainSimulationTrainsMockSession__last_body,
-                             dict())
+        self.assertEqual(
+            session_obj._GetTrainSimulationTrainsMockSession__last_request,
+            get_api_url() + "/services/trains/simulations/trains")
+        self.assertDictEqual(
+            session_obj._GetTrainSimulationTrainsMockSession__last_body,
+            dict())
 
     @mock.patch('requests.Session', side_effect=GetTrainSimulationTrainsMockSession)
     def test_get_train_simulation_trains_response(self, mocked_get_obj):
@@ -71,7 +75,7 @@ class TestGetTrainSimulationTrains(unittest.TestCase):
         self.assertIsInstance(response, list)
         self.assertIsInstance(
             response[0],
-            py_client.aidm.aidm_train_simulation_classes.AlgorithmTrainSimulationTrain)
+            AlgorithmTrainSimulationTrain)
         self.assertEqual(
             response[0].id,
             1000000
@@ -81,7 +85,7 @@ class TestGetTrainSimulationTrains(unittest.TestCase):
             list)
         self.assertIsInstance(
             response[0].train_path_nodes[0],
-            py_client.aidm.aidm_train_simulation_classes.AlgorithmTrainSimulationTrainPathNode)
+            AlgorithmTrainSimulationTrainPathNode)
         self.assertEqual(
             response[0].train_path_nodes[0].id,
             1000001
@@ -92,15 +96,15 @@ class TestGetTrainSimulationTrains(unittest.TestCase):
         )
         self.assertIsInstance(
             response[0].train_path_nodes[0].arrival_time,
-            datetime.datetime
+            datetime
             )
         self.assertIsInstance(
             response[0].train_path_nodes[0].departure_time,
-            datetime.datetime
+            datetime
         )
         self.assertIsInstance(
             response[0].train_path_nodes[1],
-            py_client.aidm.aidm_train_simulation_classes.AlgorithmTrainSimulationTrainPathNode)
+            AlgorithmTrainSimulationTrainPathNode)
         self.assertEqual(
             response[0].train_path_nodes[1].id,
             1000002
@@ -111,15 +115,15 @@ class TestGetTrainSimulationTrains(unittest.TestCase):
         )
         self.assertIsInstance(
             response[0].train_path_nodes[1].arrival_time,
-            datetime.datetime
+            datetime
         )
         self.assertIsInstance(
             response[0].train_path_nodes[1].departure_time,
-            datetime.datetime
+            datetime
         )
         self.assertIsInstance(
             response[0].train_path_nodes[2],
-            py_client.aidm.aidm_train_simulation_classes.AlgorithmTrainSimulationTrainPathNode)
+            AlgorithmTrainSimulationTrainPathNode)
         self.assertEqual(
             response[0].train_path_nodes[2].id,
             1000003
@@ -130,11 +134,11 @@ class TestGetTrainSimulationTrains(unittest.TestCase):
         )
         self.assertIsInstance(
             response[0].train_path_nodes[2].arrival_time,
-            datetime.datetime
+            datetime
         )
         self.assertIsInstance(
             response[0].train_path_nodes[2].departure_time,
-            datetime.datetime
+            datetime
         )
 
 

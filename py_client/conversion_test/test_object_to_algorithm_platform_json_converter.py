@@ -14,7 +14,7 @@ class TestFromAIDMConverter(unittest.TestCase):
             arrival_time=datetime.datetime(year=1, month=5, day=1, hour=1, minute=1),
             departure_time=datetime.datetime(year=1, month=5, day=1, hour=1, minute=1),
             minimum_run_time=None, minimum_stop_time=datetime.timedelta(0),
-            stop_status=StopStatus.operational_stop, sequence_number=0)
+            stop_status=StopStatus.operational_stop, sequence_number=0, movement_type_id=None)
 
         test_node_as_dict = py_client.conversion.object_to_algorithm_platform_json_converter.convert_any_object(
             test_train_path_node)
@@ -30,7 +30,7 @@ class TestFromAIDMConverter(unittest.TestCase):
             arrival_time=datetime.datetime(year=1, month=5, day=1, hour=1, minute=1),
             departure_time=datetime.datetime(year=1, month=5, day=1, hour=1, minute=1),
             minimum_run_time=None, minimum_stop_time=datetime.timedelta(0),
-            stop_status=StopStatus.passing, sequence_number=0)
+            stop_status=StopStatus.passing, sequence_number=0, movement_type_id=None)
 
         test_node_as_dict = py_client.conversion.object_to_algorithm_platform_json_converter.convert_any_object(
             test_train_path_node)
@@ -39,7 +39,7 @@ class TestFromAIDMConverter(unittest.TestCase):
         expected_json_string = '{"id": 11038, "sectionTrackId": null, "nodeId": 18, "nodeTrackId": null, ' \
                                '"formationId": 1187, "arrivalTime": "0001-05-01T01:01:00", ' \
                                '"departureTime": "0001-05-01T01:01:00", "minimumRunTime": null, ' \
-                               '"minimumStopTime": "P0D", "stopStatus": "passing", "sequenceNumber": 0}'
+                               '"minimumStopTime": "P0D", "stopStatus": "passing", "sequenceNumber": 0, "movementTypeId": null}'
         self.assertEqual(test_node_as_json, expected_json_string)
 
     def test_convert_list_empty(self):

@@ -16,6 +16,7 @@ class AlgorithmTrainPathNode(_HasID):
     __minimum_stop_time: datetime.timedelta
     __stop_status: StopStatus
     __sequence_number: int
+    __movement_type_id: int
 
     def __init__(
             self,
@@ -29,7 +30,8 @@ class AlgorithmTrainPathNode(_HasID):
             minimum_run_time: Optional[datetime.timedelta],
             minimum_stop_time: datetime.timedelta,
             stop_status: StopStatus,
-            sequence_number: int
+            sequence_number: int,
+            movement_type_id: int
     ):
         _HasID.__init__(self, id)
         self.__section_track_id = section_track_id
@@ -42,6 +44,7 @@ class AlgorithmTrainPathNode(_HasID):
         self.__minimum_stop_time = minimum_stop_time
         self.__stop_status = stop_status
         self.__sequence_number = sequence_number
+        self.__movement_type_id = movement_type_id
 
     @property
     def section_track_id(self) -> Optional[int]:
@@ -82,3 +85,7 @@ class AlgorithmTrainPathNode(_HasID):
     @property
     def sequence_number(self) -> int:
         return self.__sequence_number
+
+    @property
+    def movement_type_id(self) -> int:
+        return self.__movement_type_id

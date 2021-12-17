@@ -99,7 +99,7 @@ class TestToAIDMConverter(unittest.TestCase):
             ID=1332, sectionTrackID=None, nodeID=18, nodeTrackID=None, formationID=1187,
             arrivalTime="2003-05-01T00:04:00", departureTime="2003-05-01T00:05:00",
             minimumRunTime=None, minimumStopTime="P0D", stopStatus="commercialStop",
-            sequenceNumber=0
+            sequenceNumber=0, movementTypeId = None
         )
 
         test_train_path_node = algorithm_platform_json_to_aidm_converter.convert_json_to_algorithm_train_path_node(
@@ -115,7 +115,7 @@ class TestToAIDMConverter(unittest.TestCase):
             ID=1332, SectionTrackID=None, NodeID=18, NodeTrackID=None, FormationID=1187,
             ArrivalTime="2003-05-01T00:04:00", DepartureTime="2003-05-01T00:05:00",
             MinimumRunTime=None, MinimumStopTime="P0D", StopStatus="commercialStop",
-            SequenceNumber=0
+            SequenceNumber=0, movementTypeId = 2457
         )
 
         test_train_path_node = algorithm_platform_json_to_aidm_converter.convert_json_to_algorithm_train_path_node(
@@ -132,17 +132,17 @@ class TestToAIDMConverter(unittest.TestCase):
                 dict(
                     ID=2424, SectionTrackID=None, NodeID=7, NodeTrackID=8, FormationID=1187,
                     ArrivalTime="2003-05-01T00:10:00", DepartureTime="2003-05-01T00:10:00", MinimumRunTime=None,
-                    MinimumStopTime="P0D", StopStatus="commercialStop", SequenceNumber=0
+                    MinimumStopTime="P0D", StopStatus="commercialStop", SequenceNumber=0, MovementTypeId=None
                 ),
                 dict(
                     ID=11040, SectionTrackID=1165, NodeID=24, NodeTrackID=25, FormationID=1187,
                     ArrivalTime="2003-05-01T00:10:00", DepartureTime="2003-05-01T00:10:00", MinimumRunTime="P0D",
-                    MinimumStopTime="P0D", StopStatus="passing", SequenceNumber=1
+                    MinimumStopTime="P0D", StopStatus="passing", SequenceNumber=1, MovementTypeId=2457
                 ),
                 dict(
                     ID=3152, SectionTrackID=1166, NodeID=10, NodeTrackID=12, FormationID=None,
                     ArrivalTime="2003-05-01T00:19:00", DepartureTime="2003-05-01T00:19:00", MinimumRunTime="PT9M",
-                    MinimumStopTime="P0D", StopStatus="commercialStop", SequenceNumber=2
+                    MinimumStopTime="P0D", StopStatus="commercialStop", SequenceNumber=2, MovementTypeId=None
                 )
             ],
             DebugString="RVZH_3_1_J03 tt_(S)"

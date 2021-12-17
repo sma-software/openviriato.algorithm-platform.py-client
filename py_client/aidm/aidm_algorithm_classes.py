@@ -113,3 +113,27 @@ class AlgorithmVehicleType(_HasID, _HasDebugString):
     @property
     def places_second_class(self) -> int:
         return self.__places_second_class
+
+class AlgorithmMovementType(_HasID):
+    __description: str
+    __is_empty_train: bool
+    __name: str
+
+    def __init__(self, id: int, description: str, is_empty_train: bool, name: str):
+        _HasID.__init__(self, id)
+        self.__description = description
+        self.__is_empty_train = is_empty_train
+        self.__name = name
+
+    @property
+    def description(self):
+        return self.__description
+
+    @property
+    def is_empty_train(self):
+        return self.__is_empty_train
+
+    @property
+    def name(self):
+        return self.__name
+

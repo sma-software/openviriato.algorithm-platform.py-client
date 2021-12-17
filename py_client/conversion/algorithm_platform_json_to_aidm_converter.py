@@ -198,3 +198,13 @@ def convert_json_to_algorithm_train_simulation_event(attribute_dict: dict) -> Al
     snake_case_dict['type'] = AlgorithmTrainSimulationEventType(snake_case_dict['type'])
     snake_case_dict['absolute_time'] = parse_to_datetime(snake_case_dict['absolute_time'])
     return convert(AlgorithmTrainSimulationEvent, snake_case_dict)
+
+def convert_json_to_algorithm_movement_type(attribute_dict: dict) -> AlgorithmMovementType:
+    snake_case_dict = convert_keys_to_snake_case(attribute_dict)
+    return convert(AlgorithmMovementType, snake_case_dict)
+
+def convert_json_to_running_time_penalties_on_train_path(attribute_dict: dict) -> List[RunningTimePenaltyOnTrainPath]:
+    snake_case_dict = convert_keys_to_snake_case(attribute_dict)
+    snake_case_dict['required_running_time_penalty'] = parse_to_timedelta(snake_case_dict['required_running_time_penalty'])
+    return convert(RunningTimePenaltyOnTrainPath, snake_case_dict)
+

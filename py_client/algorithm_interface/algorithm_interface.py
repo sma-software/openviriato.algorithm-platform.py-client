@@ -45,7 +45,9 @@ from py_client.aidm import (
     AlgorithmSectionTrackClosure,
     AlgorithmSectionRunningTimePenalty,
     AlgorithmTrainSimulationTrain,
-    AlgorithmTrainSimulationEvent
+    AlgorithmTrainSimulationEvent,
+    AlgorithmMovementType,
+    RunningTimePenaltyOnTrainPath
 )
 from py_client.communication.communication_layer import CommunicationLayer
 
@@ -246,6 +248,14 @@ class AlgorithmInterface:
     def cancel_train(self, train_id: int) -> None:
         url_to_resource = "trains/{0}".format(train_id)
         self.__communication_layer.do_delete_request(url_to_resource)
+
+    def update_movement_type(self, movement_type_id: int, train_id: int, from_train_path_node_id: int, to_train_path_node_id: int) -> AlgorithmTrain:
+        url_to_resource = "trains/{0}/train-path-nodes:update-movement-type".format(train_id)
+        put_body_dict = dict(movementTypeId = movement_type_id,
+                             fromTrainPathNodeId = from_train_path_node_id,
+                             toTrainPathNodeId = to_train_path_node_id)
+        response_dict = self.__communication_layer.do_put_request(url_to_resource, request_body=put_body_dict)
+        return from_json_converter.convert_json_to_algorithm_train(response_dict)
 
     def cancel_train_after(self, train_id: int, train_path_node_id: int) -> AlgorithmTrain:
         url_to_resource = "trains/{0}/train-path-nodes/{1}:cancel-after".format(train_id, train_path_node_id)
@@ -674,6 +684,14 @@ class AlgorithmInterface:
             response_list_of_dict
         )
 
+    def get_movement_types(self) -> List[AlgorithmMovementType]:
+        url_to_resource = "movement-types"
+        response_list_of_dict = self.__communication_layer.do_get_request(url_to_resource)
+        return from_json_converter.convert_list(
+            from_json_converter.convert_json_to_algorithm_movement_type,
+            response_list_of_dict
+        )
+
     def create_train_simulation(self, time_window: TimeWindow) -> None:
         query_parameters = to_json_converter.convert_any_object(time_window)
         url_to_resource = "services/trains/simulations"
@@ -702,4 +720,12 @@ class AlgorithmInterface:
         return from_json_converter.convert(
             from_json_converter.convert_json_to_algorithm_train_simulation_event,
             response_dict
+        )
+
+    def calculate_running_time_penalties_on_train(self, train_id) -> List[RunningTimePenaltyOnTrainPath]:
+        url_to_resource = "services/trains/{0}:calculate-running-time-penalties".format(train_id)
+        response_list = self.__communication_layer.do_get_request(url_to_resource)
+        return from_json_converter.convert_list(
+            from_json_converter.convert_json_to_running_time_penalties_on_train_path,
+            response_list
         )

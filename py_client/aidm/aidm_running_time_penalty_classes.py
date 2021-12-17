@@ -61,3 +61,30 @@ class AlgorithmSectionRunningTimePenalty(_HasID, _HasDebugString):
     def total_penalty(self) -> datetime.timedelta:
         return self.__total_penalty
 
+class RunningTimePenaltyOnTrainPath:
+    __from_train_path_node_id: int
+    __possession_id: int
+    __required_running_time_penalty: datetime.timedelta
+    __to_train_path_node_id: int
+    def __init__(self, from_train_path_node_id: int, possession_id: int, required_running_time_penalty: datetime.timedelta, to_train_path_node_id: int):
+        self.__from_train_path_node_id = from_train_path_node_id
+        self.__possession_id = possession_id
+        self.__required_running_time_penalty = required_running_time_penalty
+        self.__to_train_path_node_id = to_train_path_node_id
+
+    @property
+    def from_train_path_node_id(self):
+        return self.__from_train_path_node_id
+
+    @property
+    def possession_id(self):
+        return self.__possession_id
+
+    @property
+    def required_running_time_penalty(self):
+        return self.__required_running_time_penalty
+
+    @property
+    def to_train_path_node_id(self):
+        return self.__to_train_path_node_id
+

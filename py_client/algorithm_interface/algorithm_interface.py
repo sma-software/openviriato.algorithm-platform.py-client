@@ -47,7 +47,8 @@ from py_client.aidm import (
     AlgorithmTrainSimulationTrain,
     AlgorithmTrainSimulationEvent,
     AlgorithmMovementType,
-    RunningTimePenaltyOnTrainPath
+    RunningTimePenaltyOnTrainPath,
+    AlgorithmConflict
 )
 from py_client.communication.communication_layer import CommunicationLayer
 
@@ -727,5 +728,13 @@ class AlgorithmInterface:
         response_list = self.__communication_layer.do_get_request(url_to_resource)
         return from_json_converter.convert_list(
             from_json_converter.convert_json_to_running_time_penalties_on_train_path,
+            response_list
+        )
+
+    def detect_conflicts(self, train_ids) -> List[AlgorithmConflict]:
+        url_to_resource = "services/trains:detect-conflicts?trainIds={}".format(','.join([str(train_id) for train_id in train_ids]))
+        response_list = self.__communication_layer.do_get_request(url_to_resource)
+        return from_json_converter.convert_list(
+            from_json_converter.convert_json_to_algorithm_conflict,
             response_list
         )

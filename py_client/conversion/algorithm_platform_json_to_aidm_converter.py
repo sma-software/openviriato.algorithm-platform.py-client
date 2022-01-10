@@ -208,3 +208,9 @@ def convert_json_to_running_time_penalties_on_train_path(attribute_dict: dict) -
     snake_case_dict['required_running_time_penalty'] = parse_to_timedelta(snake_case_dict['required_running_time_penalty'])
     return convert(RunningTimePenaltyOnTrainPath, snake_case_dict)
 
+def convert_json_to_algorithm_conflict(attribute_dict: dict) -> List[AlgorithmConflict]:
+    snake_case_dict = convert_keys_to_snake_case(attribute_dict)
+    snake_case_dict['time_window']  = convert_json_to_time_window(snake_case_dict["time_window"])
+    snake_case_dict['conflict_type'] = ConflictType(snake_case_dict['conflict_type'])
+    return convert(AlgorithmConflict, snake_case_dict)
+

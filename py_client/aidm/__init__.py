@@ -14,3 +14,4 @@ from py_client.aidm.aidm_update_classes import *
 from py_client.aidm.aidm_termination_request import TerminationRequest, SignalType
 from py_client.aidm.aidm_running_time_penalty_classes import *
 from py_client.aidm.aidm_train_simulation_classes import *
+from py_client.aidm.aidm_conflict import *

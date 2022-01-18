@@ -26,7 +26,7 @@ class TestGetTrainClassifications(unittest.TestCase):
         self.interface_to_viriato.cancel_train(train_id)
 
         session_obj = self.interface_to_viriato._AlgorithmInterface__communication_layer.currentSession
-        self.assertEqual(session_obj.last_request, get_api_url() + "/trains/8124")
+        self.assertEqual(session_obj.last_request, get_api_url() + "/trains/8124:cancel")
         self.assertDictEqual(session_obj.last_body, {})
 
     @mock.patch('requests.Session', side_effect=CancelTrainTestMockSession)

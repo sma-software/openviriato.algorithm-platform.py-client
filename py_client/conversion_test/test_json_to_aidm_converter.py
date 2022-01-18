@@ -1,4 +1,4 @@
-
+from __future__ import annotations
 import unittest
 
 from py_client.conversion.json_to_aidm_converter import JsonToAidmConverter
@@ -6,9 +6,7 @@ from py_client.aidm import AlgorithmSectionTrack
 from py_client.aidm.aidm_base_classes import _HasID, _HasCode, _HasDebugString
 from py_client.communication.response_processing import AlgorithmPlatformConversionError
 
-
 class TestJsonToAIDMConverter(unittest.TestCase):
-
     __converter: JsonToAidmConverter
 
     def setUp(self):
@@ -54,21 +52,15 @@ class TestJsonToAIDMConverter(unittest.TestCase):
         with self.assertRaises(AlgorithmPlatformConversionError):
             self.__converter.process_json_to_aidm(json_dict, AlgorithmSectionTrack)
 
-    def test_not_found_aidm_class(self):
-        class UnknownAidm(_HasID, _HasCode, _HasDebugString):
-            __unknownProperty: str
 
-            def __init__(self, id: int, code: str, debug_string: str, unknown_property: str):
-                _HasID.__init__(self, id)
-                _HasCode.__init__(self, code)
-                _HasDebugString.__init__(self, debug_string)
-                self._unknownProperty = unknown_property
-
-        json_dict = dict(
-            id=1082,
-            code="900",
-            debugString="sectiontrack:s_70015 n_85ZHDB 900",
-            unknownProperty = "unknown")
+    def test_unsupported_non_primitive_type(self):
+        json_dict = dict(someProperty = dict(someProperty = None))
 
         with self.assertRaises(AlgorithmPlatformConversionError):
-            self.__converter.process_json_to_aidm(json_dict, UnknownAidm)
+            self.__converter.process_json_to_aidm(json_dict, SomeClass)
+
+class SomeClass:
+    __some_property: SomeClass
+
+    def __init__(self, __some_property: SomeClass):
+        self.__some_property = __some_property

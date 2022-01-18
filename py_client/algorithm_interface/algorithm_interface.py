@@ -51,13 +51,16 @@ from py_client.aidm import (
     AlgorithmConflict
 )
 from py_client.communication.communication_layer import CommunicationLayer
+from py_client.conversion.json_to_aidm_converter import JsonToAidmConverter
 
 
 class AlgorithmInterface:
     __communication_layer: CommunicationLayer
+    __json_to_aidm_converter: JsonToAidmConverter
 
     def __init__(self, base_url: str):
         self.__communication_layer = CommunicationLayer(base_url)
+        self.__json_to_aidm_converter = JsonToAidmConverter()
 
     def __enter__(self):
         return self
@@ -130,7 +133,7 @@ class AlgorithmInterface:
     def get_section_track(self, section_track_id: int) -> AlgorithmSectionTrack:
         url_to_resource = "section-tracks/{0}".format(section_track_id)
         response_dict = self.__communication_layer.do_get_request(url_to_resource)
-        return from_json_converter.convert(AlgorithmSectionTrack, response_dict)
+        return self.__json_to_aidm_converter.process_json_to_aidm(response_dict, AlgorithmSectionTrack)
 
     def get_nodes_with_section_track_from(self, from_node_id: int) -> List[AlgorithmNode]:
         url_to_resource = "nodes"

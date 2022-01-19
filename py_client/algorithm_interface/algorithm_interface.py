@@ -56,11 +56,9 @@ from py_client.conversion.json_to_aidm_converter import JsonToAidmConverter
 
 class AlgorithmInterface:
     __communication_layer: CommunicationLayer
-    __json_to_aidm_converter: JsonToAidmConverter
 
     def __init__(self, base_url: str):
         self.__communication_layer = CommunicationLayer(base_url)
-        self.__json_to_aidm_converter = JsonToAidmConverter()
 
     def __enter__(self):
         return self
@@ -80,7 +78,7 @@ class AlgorithmInterface:
     def get_node(self, node_id: int) -> AlgorithmNode:
         url_to_resource = "nodes/{0}".format(node_id)
         response_dict = self.__communication_layer.do_get_request(url_to_resource)
-        return from_json_converter.convert_json_to_algorithm_node(response_dict)
+        return JsonToAidmConverter().process_json_to_aidm(response_dict, AlgorithmNode)
 
     def get_preferred_routes_for_node(
         self,
@@ -133,7 +131,7 @@ class AlgorithmInterface:
     def get_section_track(self, section_track_id: int) -> AlgorithmSectionTrack:
         url_to_resource = "section-tracks/{0}".format(section_track_id)
         response_dict = self.__communication_layer.do_get_request(url_to_resource)
-        return self.__json_to_aidm_converter.process_json_to_aidm(response_dict, AlgorithmSectionTrack)
+        return JsonToAidmConverter().process_json_to_aidm(response_dict, AlgorithmSectionTrack)
 
     def get_nodes_with_section_track_from(self, from_node_id: int) -> List[AlgorithmNode]:
         url_to_resource = "nodes"
@@ -516,7 +514,7 @@ class AlgorithmInterface:
     def get_formation(self, formation_id: int) -> AlgorithmFormation:
         url_to_resource = "vehicles/formations/{0}".format(formation_id)
         response_dict = self.__communication_layer.do_get_request(url_to_resource)
-        return self.__json_to_aidm_converter.process_json_to_aidm(response_dict, AlgorithmFormation)
+        return JsonToAidmConverter().process_json_to_aidm(response_dict, AlgorithmFormation)
 
     def get_or_create_formation(self, vehicle_type_ids: List[int]) -> AlgorithmFormation:
         url_to_resource = "vehicles/formations"
@@ -532,7 +530,7 @@ class AlgorithmInterface:
     def get_vehicle_type(self, vehicle_type_id: int) -> AlgorithmVehicleType:
         url_to_resource = "vehicles/types/{0}".format(vehicle_type_id)
         response_dict = self.__communication_layer.do_get_request(url_to_resource)
-        return self.__json_to_aidm_converter.process_json_to_aidm(response_dict, AlgorithmVehicleType)
+        return JsonToAidmConverter().process_json_to_aidm(response_dict, AlgorithmVehicleType)
 
     def get_links(
         self, time_window: TimeWindow

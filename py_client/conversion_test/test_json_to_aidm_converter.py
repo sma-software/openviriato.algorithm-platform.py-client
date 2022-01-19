@@ -2,9 +2,10 @@ from __future__ import annotations
 import unittest
 
 from py_client.conversion.json_to_aidm_converter import JsonToAidmConverter
-from py_client.aidm import AlgorithmSectionTrack, AlgorithmFormation
+from py_client.aidm import AlgorithmSectionTrack, AlgorithmFormation, AlgorithmNode, AlgorithmNodeTrack
 from py_client.aidm.aidm_base_classes import _HasID, _HasCode, _HasDebugString
 from py_client.communication.response_processing import AlgorithmPlatformConversionError
+from typing import List
 
 class TestJsonToAIDMConverter(unittest.TestCase):
     __converter: JsonToAidmConverter
@@ -66,6 +67,44 @@ class TestJsonToAIDMConverter(unittest.TestCase):
         self.assertIsInstance(test_formation, AlgorithmFormation)
         self.assertIsInstance(test_formation.vehicle_type_ids, list)
         self.assertEqual(test_formation.vehicle_type_ids[0], 689)
+
+    def test_json_to_aidm_containing_list_of_aidm(self):
+        json_dict = dict(
+            id = 162,
+            code = "85AR",
+            nodeTracks = [
+                dict(id = 163,
+                     code = "1",
+                     debugString = "stationtrack:85AR_{StationTrack SID = 34138}"
+                     ),
+                dict(
+                    id = 164,
+                    code = "2",
+                    debugString = "stationtrack:85AR_{StationTrack SID = 34140}"
+                )
+            ],
+            debugString = "station:85AR"
+        )
+
+        algorithm_node = self.__converter.process_json_to_aidm(json_dict, AlgorithmNode)
+        self.assertIsInstance(algorithm_node, AlgorithmNode)
+        self.assertIsInstance(algorithm_node.node_tracks, List)
+        self.assertEqual(len(algorithm_node.node_tracks), 2)
+        self.assertIsInstance(algorithm_node.node_tracks[0], AlgorithmNodeTrack)
+
+    def test_json_to_aidm_containing_empty_list_of_aidm(self):
+        json_dict = dict(
+            id = 162,
+            code = "85AR",
+            nodeTracks = [],
+            debugString = "station:85AR"
+        )
+
+        algorithm_node = self.__converter.process_json_to_aidm(json_dict, AlgorithmNode)
+        self.assertIsInstance(algorithm_node, AlgorithmNode)
+        self.assertIsInstance(algorithm_node.node_tracks, List)
+        self.assertEqual(len(algorithm_node.node_tracks), 0)
+
 
 
     def test_unsupported_non_primitive_type(self):

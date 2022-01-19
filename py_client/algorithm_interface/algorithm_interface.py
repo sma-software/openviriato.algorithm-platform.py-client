@@ -532,7 +532,7 @@ class AlgorithmInterface:
     def get_vehicle_type(self, vehicle_type_id: int) -> AlgorithmVehicleType:
         url_to_resource = "vehicles/types/{0}".format(vehicle_type_id)
         response_dict = self.__communication_layer.do_get_request(url_to_resource)
-        return from_json_converter.convert(AlgorithmVehicleType, response_dict)
+        return self.__json_to_aidm_converter.process_json_to_aidm(response_dict, AlgorithmVehicleType)
 
     def get_links(
         self, time_window: TimeWindow

@@ -516,7 +516,7 @@ class AlgorithmInterface:
     def get_formation(self, formation_id: int) -> AlgorithmFormation:
         url_to_resource = "vehicles/formations/{0}".format(formation_id)
         response_dict = self.__communication_layer.do_get_request(url_to_resource)
-        return from_json_converter.convert(AlgorithmFormation, response_dict)
+        return self.__json_to_aidm_converter.process_json_to_aidm(response_dict, AlgorithmFormation)
 
     def get_or_create_formation(self, vehicle_type_ids: List[int]) -> AlgorithmFormation:
         url_to_resource = "vehicles/formations"

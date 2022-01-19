@@ -6,19 +6,19 @@ from typing import get_type_hints, Optional, List
 
 class JsonToAidmProcessor:
     @abstractmethod
-    def is_applicable(cls, aidm_class: Type[object]) -> bool:
+    def is_applicable(self, aidm_class: Type[object]) -> bool:
         pass
 
     @abstractmethod
-    def process_attribute_dict(cls, attribute_dictionary: dict, aidm_class: Type[object]) -> None:
+    def process_attribute_dict(self, attribute_dictionary: dict, aidm_class: Type[object]) -> None:
         pass
 
 class AidmWithPrimitivesOrListOfPrimitivesProcessor(JsonToAidmProcessor):
-    def is_applicable(cls, aidm_class: Type[object]) -> bool:
+    def is_applicable(self, aidm_class: Type[object]) -> bool:
         attributeTypes = [attrType for _, attrType in get_type_hints(aidm_class).items()]
         builtInTypes = [str, int, bool, Optional[str], Optional[int], Optional[bool], List[str], List[int], List[bool]]
         return all([a in builtInTypes for a in attributeTypes])
 
-    def process_attribute_dict(cls, attribute_dictionary: dict, aidm_class: Type[_HasID]) -> _HasID:
+    def process_attribute_dict(self, attribute_dictionary: dict, aidm_class: Type[_HasID]) -> _HasID:
         snake_case_attribute_dict = convert_keys_to_snake_case(attribute_dictionary)
         return aidm_class(**snake_case_attribute_dict)

@@ -2,7 +2,7 @@ from __future__ import annotations
 import unittest
 
 from py_client.conversion.json_to_aidm_converter import JsonToAidmConverter
-from py_client.aidm import AlgorithmSectionTrack
+from py_client.aidm import AlgorithmSectionTrack, AlgorithmFormation
 from py_client.aidm.aidm_base_classes import _HasID, _HasCode, _HasDebugString
 from py_client.communication.response_processing import AlgorithmPlatformConversionError
 
@@ -51,6 +51,21 @@ class TestJsonToAIDMConverter(unittest.TestCase):
 
         with self.assertRaises(AlgorithmPlatformConversionError):
             self.__converter.process_json_to_aidm(json_dict, AlgorithmSectionTrack)
+
+    def test_json_to_aidm_containing_list_of_primitives(self):
+        json_dict = dict(
+            id=1223,
+            vehicleTypeIds=[689],
+            placesFirstClass=125,
+            placesSecondClass=326,
+            debugString="train configuration:  seats 125 326"
+        )
+
+        test_formation = self.__converter.process_json_to_aidm(json_dict, AlgorithmFormation)
+
+        self.assertIsInstance(test_formation, AlgorithmFormation)
+        self.assertIsInstance(test_formation.vehicle_type_ids, list)
+        self.assertEqual(test_formation.vehicle_type_ids[0], 689)
 
 
     def test_unsupported_non_primitive_type(self):

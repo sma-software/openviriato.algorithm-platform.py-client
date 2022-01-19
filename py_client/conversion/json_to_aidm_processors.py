@@ -13,10 +13,10 @@ class JsonToAidmProcessor:
     def process_attribute_dict(cls, aidm_class: Type[object], attribute_dictionary: dict) -> None:
         pass
 
-class AidmWithOnlyPrimitivesProcessor(JsonToAidmProcessor):
+class AidmWithPrimitivesOrListOfPrimitivesProcessor(JsonToAidmProcessor):
     def is_applicable(cls, aidm_class: Type[object]) -> bool:
         attributeTypes = [attrType for _, attrType in get_type_hints(aidm_class).items()]
-        builtInTypes = [str, int, bool, Optional[str], Optional[int], Optional[bool]]
+        builtInTypes = [str, int, bool, Optional[str], Optional[int], Optional[bool], List[str], List[int], List[bool]]
         return all([a in builtInTypes for a in attributeTypes])
 
     def process_attribute_dict(cls, aidm_class: Type[object], attribute_dictionary: dict) -> AlgorithmSectionTrack:

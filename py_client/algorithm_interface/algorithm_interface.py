@@ -73,7 +73,7 @@ class AlgorithmInterface:
     def get_all_nodes(self) -> List[AlgorithmNode]:
         url_to_resource = "nodes"
         response_list = self.__communication_layer.do_get_request(url_to_resource)
-        return from_json_converter.convert_list(from_json_converter.convert_json_to_algorithm_node, response_list)
+        return JsonToAidmConverter().process_json_to_aidm(response_list, List[AlgorithmNode])
 
     def get_node(self, node_id: int) -> AlgorithmNode:
         url_to_resource = "nodes/{0}".format(node_id)
@@ -126,7 +126,7 @@ class AlgorithmInterface:
     def get_all_section_tracks(self) -> List[AlgorithmSectionTrack]:
         url_to_resource = "section-tracks"
         response_list = self.__communication_layer.do_get_request(url_to_resource)
-        return from_json_converter.convert_list(AlgorithmSectionTrack, response_list)
+        return JsonToAidmConverter().process_json_to_aidm(response_list, List[AlgorithmSectionTrack])
 
     def get_section_track(self, section_track_id: int) -> AlgorithmSectionTrack:
         url_to_resource = "section-tracks/{0}".format(section_track_id)
@@ -137,54 +137,54 @@ class AlgorithmInterface:
         url_to_resource = "nodes"
         query_parameters = dict(hasSectionTrackFromNodeId=from_node_id)
         response_list = self.__communication_layer.do_get_request(url_to_resource, query_parameters)
-        return from_json_converter.convert_list(from_json_converter.convert_json_to_algorithm_node, response_list)
+        return JsonToAidmConverter().process_json_to_aidm(response_list, List[AlgorithmNode])
 
     def get_nodes_with_section_track_to(self, to_node_id: int) -> List[AlgorithmNode]:
         url_to_resource = "nodes"
         query_parameters = dict(hasSectionTrackToNodeId=to_node_id)
         response_list = self.__communication_layer.do_get_request(url_to_resource, query_parameters)
-        return from_json_converter.convert_list(from_json_converter.convert_json_to_algorithm_node, response_list)
+        return JsonToAidmConverter().process_json_to_aidm(response_list, List[AlgorithmNode])
 
     def get_neighboring_nodes_between(self, from_node_id: int, to_node_id: int) -> List[AlgorithmNode]:
         url_to_resource = "nodes"
         query_parameters = dict(hasSectionTrackFromNodeId=from_node_id, hasSectionTrackToNodeId=to_node_id)
         response_list = self.__communication_layer.do_get_request(url_to_resource, query_parameters)
-        return from_json_converter.convert_list(from_json_converter.convert_json_to_algorithm_node, response_list)
+        return JsonToAidmConverter().process_json_to_aidm(response_list, List[AlgorithmNode])
 
     def get_section_tracks_from(self, from_node_id: int) -> List[AlgorithmSectionTrack]:
         url_to_resource = "section-tracks"
         query_parameters = dict(fromNodeId=from_node_id)
         response_list = self.__communication_layer.do_get_request(url_to_resource, query_parameters)
-        return from_json_converter.convert_list(AlgorithmSectionTrack, response_list)
+        return JsonToAidmConverter().process_json_to_aidm(response_list, List[AlgorithmSectionTrack])
 
     def get_section_tracks_to(self, to_node_id: int) -> List[AlgorithmSectionTrack]:
         url_to_resource = "section-tracks"
         query_parameters = dict(toNodeId=to_node_id)
         response_list = self.__communication_layer.do_get_request(url_to_resource, query_parameters)
-        return from_json_converter.convert_list(AlgorithmSectionTrack, response_list)
+        return JsonToAidmConverter().process_json_to_aidm(response_list, List[AlgorithmSectionTrack])
 
     def get_section_tracks_between(self, from_node_id: int, to_node_id: int) -> List[AlgorithmSectionTrack]:
         url_to_resource = "section-tracks"
         query_parameters = dict(fromNodeId=from_node_id, toNodeId=to_node_id)
         response_list = self.__communication_layer.do_get_request(url_to_resource, query_parameters)
-        return from_json_converter.convert_list(AlgorithmSectionTrack, response_list)
+        return JsonToAidmConverter().process_json_to_aidm(response_list, List[AlgorithmSectionTrack])
 
     def get_parallel_section_tracks(self, section_track_id: int) -> List[AlgorithmSectionTrack]:
         url_to_resource = "section-tracks"
         query_parameters = dict(parallelToSectionTrackId=section_track_id)
         response_list = self.__communication_layer.do_get_request(url_to_resource, query_parameters)
-        return from_json_converter.convert_list(AlgorithmSectionTrack, response_list)
+        return JsonToAidmConverter().process_json_to_aidm(response_list, List[AlgorithmSectionTrack])
 
     def get_directed_section_tracks(self, first_node_id: int, second_node_id: int) -> List[AlgorithmSectionTrack]:
         url_to_resource = "section-tracks-between/{0}/{1}".format(first_node_id, second_node_id)
         response_list = self.__communication_layer.do_get_request(url_to_resource)
-        return from_json_converter.convert_list(AlgorithmSectionTrack, response_list)
+        return JsonToAidmConverter().process_json_to_aidm(response_list, List[AlgorithmSectionTrack])
 
     def get_neighbor_nodes(self, node_id: int) -> List[AlgorithmNode]:
         url_to_resource = "neighbor-nodes/{0}".format(node_id)
         response_list = self.__communication_layer.do_get_request(url_to_resource)
 
-        return from_json_converter.convert_list(from_json_converter.convert_json_to_algorithm_node, response_list)
+        return JsonToAidmConverter().process_json_to_aidm(response_list, List[AlgorithmNode])
 
     def get_train_classification(self, train_id: int) -> AlgorithmTrainClassification:
         url_to_resource = "train-classifications/{0}".format(train_id)

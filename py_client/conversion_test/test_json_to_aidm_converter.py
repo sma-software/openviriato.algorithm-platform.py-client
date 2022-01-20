@@ -105,6 +105,40 @@ class TestJsonToAIDMConverter(unittest.TestCase):
         self.assertIsInstance(algorithm_node.node_tracks, List)
         self.assertEqual(len(algorithm_node.node_tracks), 0)
 
+    def test_json_to_list_of_aidm(self):
+        json_dict = [
+            dict(id = 1,
+                 code = "45ADW",
+                 nodeTracks = [],
+                 debugString= "station:45ADW"
+                 ),
+            dict(id = 2,
+                 code = "45LNG",
+                 nodeTracks = [],
+                 debugString = "station:45LNG"
+                 ),
+            dict(
+                id = 3,
+                code = "45SIA",
+                nodeTracks = [],
+                debugString ="station:45SIA"
+            )
+        ]
+
+        algorithm_nodes = self.__converter.process_json_to_aidm(json_dict, List[AlgorithmNode])
+        self.assertIsInstance(algorithm_nodes, list)
+        self.assertEqual(len(algorithm_nodes), 3)
+        self.assertIsInstance(algorithm_nodes[0], AlgorithmNode)
+
+    def test_json_to_empty_list_of_aidm(self):
+        json_dict = []
+
+        algorithm_nodes = self.__converter.process_json_to_aidm(json_dict, List[AlgorithmNode])
+        self.assertIsInstance(algorithm_nodes, List)
+        self.assertEqual(len(algorithm_nodes), 0)
+
+
+
 
 
     def test_unsupported_non_primitive_type(self):

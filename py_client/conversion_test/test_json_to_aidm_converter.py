@@ -159,6 +159,28 @@ class TestJsonToAIDMConverter(unittest.TestCase):
         self.assertIsInstance(aidm.arrival_time, datetime.datetime)
         self.assertEqual(aidm.arrival_time, datetime.datetime(2003, 5, 1, hour=0, minute=5, second=0))
 
+    def test_json_to_aidm_containing_timedelta(self):
+        class AidmContainingTimedeltaTest(_HasID):
+            __minimum_stop_time: datetime.timedelta
+
+            def __init__(self, id: int, minimum_stop_time: datetime.datetime):
+                _HasID.__init__(self, id)
+                self.__minimum_stop_time = minimum_stop_time
+
+            @property
+            def minimum_stop_time(self) -> datetime.timedelta:
+                return self.__minimum_stop_time
+
+        json_dict = dict(
+            id=54,
+            minimumStopTime="PT6M"
+        )
+
+        aidm = self.__converter.process_json_to_aidm(json_dict, AidmContainingTimedeltaTest)
+        self.assertIsInstance(aidm, AidmContainingTimedeltaTest)
+        self.assertIsInstance(aidm.minimum_stop_time, datetime.timedelta)
+        self.assertEqual(aidm.minimum_stop_time, datetime.timedelta(minutes=6))
+
     def test_unsupported_non_primitive_type(self):
         json_dict = dict(someProperty = dict(someProperty = None))
 

@@ -5,6 +5,7 @@ from py_client.conversion.converter_helpers import convert_keys_to_snake_case
 from abc import ABC, abstractmethod
 from py_client.aidm.aidm_aliases import Primitive, is_primitive
 import datetime
+import isodate
 
 
 class JsonToAidmProcessor:
@@ -64,6 +65,15 @@ class DatetimeProcessor(JsonToAidmProcessor):
             return datetime_raw_str
         return datetime.datetime.fromisoformat(datetime_raw_str)
 
+class TimedeltaProcessor(JsonToAidmProcessor):
+    def is_applicable(self, aidm_class: Type[object]) -> bool:
+        return aidm_class in [datetime.timedelta, Optional[datetime.timedelta]]
+
+    def process_attribute_dict(self, timedelta_raw_str:str, aidm_class:datetime) -> datetime.timedelta:
+        if timedelta_raw_str is None:
+            return timedelta_raw_str
+        return isodate.parse_duration(timedelta_raw_str)
+
 class JsonToAidmConverter:
     __processors: List[JsonToAidmProcessor]
 
@@ -71,6 +81,7 @@ class JsonToAidmConverter:
         self.__processors = [
             ListOfAidmProcessor(),
             DatetimeProcessor(),
+            TimedeltaProcessor(),
             AidmProcessor()
         ]
 

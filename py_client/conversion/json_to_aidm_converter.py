@@ -15,6 +15,11 @@ class JsonToAidmProcessor:
     def process_attribute_dict(self, list:List[dict]) -> List[_HasID]:
         pass
 
+    @abstractmethod
+    def validate_that_is_optional_attribute(self, targeted_type: Type) -> None:
+        if not is_optional(targeted_type):
+            raise AlgorithmPlatformConversionError("The AIDM class got a None value for a non-optional field", None)
+
 class ListProcessor(JsonToAidmProcessor):
     def is_applicable(self, targeted_type: Type[object]) -> bool:
         return is_list_type(targeted_type)
@@ -29,7 +34,10 @@ class AtomicTypeProcessor(JsonToAidmProcessor):
         return not is_list_type(targeted_type)
 
     def process_attribute_dict(self, attribute_dict:[Primitive, dict], targeted_type:Union[_HasID, Primitive]) -> Union[_HasID, Primitive]:
-        if is_primitive(targeted_type) or attribute_dict is None:
+        if attribute_dict is None:
+            self.validate_that_is_optional_attribute(targeted_type)
+            return None
+        if is_primitive(targeted_type):
             return attribute_dict
 
         state = convert_keys_to_snake_case(attribute_dict)
@@ -61,7 +69,8 @@ class DatetimeProcessor(JsonToAidmProcessor):
 
     def process_attribute_dict(self, datetime_raw_str:str, targeted_type:datetime) -> datetime.datetime:
         if datetime_raw_str is None:
-            return datetime_raw_str
+            self.validate_that_is_optional_attribute(targeted_type)
+            return None
         return datetime.datetime.fromisoformat(datetime_raw_str)
 
 class TimedeltaProcessor(JsonToAidmProcessor):
@@ -70,7 +79,8 @@ class TimedeltaProcessor(JsonToAidmProcessor):
 
     def process_attribute_dict(self, timedelta_raw_str:str, targeted_type:datetime) -> datetime.timedelta:
         if timedelta_raw_str is None:
-            return timedelta_raw_str
+            self.validate_that_is_optional_attribute(targeted_type)
+            return None
         return isodate.parse_duration(timedelta_raw_str)
 
 class JsonToAidmConverter:

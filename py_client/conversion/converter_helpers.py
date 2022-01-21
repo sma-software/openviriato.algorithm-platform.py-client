@@ -1,6 +1,8 @@
 import datetime
+import typing
 from enum import unique, Enum
-
+from typing import List, Optional, Union, get_origin, get_args, Type
+from py_client.communication.response_processing import AlgorithmPlatformConversionError
 import isodate
 
 
@@ -64,6 +66,33 @@ def convert_to_datetime_format_or_return_self(obj):
     else:
         return obj
 
+def is_optional(actual_type: Type) -> bool:
+    return get_origin(actual_type) is Union and type(None) in get_args(actual_type)
+
+def is_list_type(type: Type) -> bool:
+    return get_origin(type) is list
+
+def get_type_of_list_element(type: Type) -> Type:
+    if not is_list_type(type):
+        raise TypeError("The targeted type is not a list.")
+    return get_args(type)[0]
+
+def get_type_of_optional_element(type: Type) -> Type:
+    if not is_optional(type):
+        raise TypeError("The targeted type is not optional.")
+    return get_args(type)[0]
+
+def is_of_type_or_optional_of_type(actual_type: Type, expected_type: Type) -> bool:
+    if actual_type is expected_type:
+        return True
+    if not is_optional(actual_type):
+        return False
+    return get_type_of_optional_element(actual_type) is expected_type
+
+Primitive = Union[int, str, bool]
+def is_primitive(value: object):
+    list_of_primitive = Primitive.__args__
+    return value in list_of_primitive or (is_optional(value) and get_type_of_optional_element(value) in list_of_primitive)
 
 @unique
 class RoutingEdgeType(Enum):

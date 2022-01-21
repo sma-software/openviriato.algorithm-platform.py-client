@@ -2,7 +2,7 @@ import datetime
 import unittest
 
 import isodate
-
+from typing import List, Optional
 import py_client.conversion.converter_helpers as converter_helpers
 
 
@@ -105,3 +105,47 @@ class TestAllConverterHelpers(unittest.TestCase):
 
         self.assertIsInstance(converted_dict, dict)
         self.assertDictEqual(converted_dict, expected_dict)
+
+    def test_is_optional(self):
+        self.assertTrue(converter_helpers.is_optional(Optional[str]))
+        self.assertFalse(converter_helpers.is_optional(str))
+        self.assertFalse(converter_helpers.is_optional(List[str]))
+
+    def test_is_list_type(self):
+        self.assertTrue(converter_helpers.is_list_type(List[int]))
+        self.assertFalse(converter_helpers.is_list_type(list))
+        self.assertFalse(converter_helpers.is_list_type(Optional[int]))
+        self.assertFalse(converter_helpers.is_list_type(int))
+
+    def test_get_type_of_list_element(self):
+        self.assertEqual(converter_helpers.get_type_of_list_element(List[int]), int)
+        self.assertEqual(converter_helpers.get_type_of_list_element(List[str]), str)
+
+        with self.assertRaises(TypeError) as type_error:
+            converter_helpers.get_type_of_list_element(str)
+        self.assertEqual(str(type_error.exception), "The targeted type is not a list.")
+
+        with self.assertRaises(TypeError) as type_error:
+            converter_helpers.get_type_of_list_element(Optional[str])
+        self.assertEqual(str(type_error.exception), "The targeted type is not a list.")
+
+    def test_get_type_of_optional_element(self):
+        self.assertEqual(converter_helpers.get_type_of_optional_element(Optional[bool]), bool)
+        self.assertEqual(converter_helpers.get_type_of_optional_element(Optional[str]), str)
+
+        with self.assertRaises(TypeError) as type_error:
+            converter_helpers.get_type_of_optional_element(List[str])
+        self.assertEqual(str(type_error.exception), "The targeted type is not optional.")
+
+        with self.assertRaises(TypeError) as type_error:
+            converter_helpers.get_type_of_optional_element(str)
+        self.assertEqual(str(type_error.exception), "The targeted type is not optional.")
+
+    def test_is_of_type_or_optional_of_type(self):
+        self.assertTrue(converter_helpers.is_of_type_or_optional_of_type(str, str))
+        self.assertTrue(converter_helpers.is_of_type_or_optional_of_type(Optional[str], str))
+
+        self.assertFalse(converter_helpers.is_of_type_or_optional_of_type(str, int))
+        self.assertFalse(converter_helpers.is_of_type_or_optional_of_type(Optional[str], bool))
+        self.assertFalse(converter_helpers.is_of_type_or_optional_of_type(List[str], bool))
+        self.assertFalse(converter_helpers.is_of_type_or_optional_of_type(List[str], str))

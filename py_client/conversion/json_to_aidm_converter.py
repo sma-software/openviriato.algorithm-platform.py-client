@@ -1,9 +1,8 @@
 from typing import Type, List, Optional, Union, get_type_hints, get_origin, get_args
 from py_client.communication.response_processing import AlgorithmPlatformConversionError
 from py_client.aidm.aidm_base_classes import _HasID
-from py_client.conversion.converter_helpers import convert_keys_to_snake_case
+from py_client.conversion.converter_helpers import *
 from abc import ABC, abstractmethod
-from py_client.aidm.aidm_aliases import Primitive, is_primitive
 import datetime
 import isodate
 
@@ -18,16 +17,16 @@ class JsonToAidmProcessor:
 
 class ListProcessor(JsonToAidmProcessor):
     def is_applicable(self, targeted_type: Type[object]) -> bool:
-        return get_origin(targeted_type) is list
+        return is_list_type(targeted_type)
 
     def process_attribute_dict(self, list:List[Union[Primitive, dict]], targeted_type:Type[Union[_HasID, Primitive]]) -> List[Union[_HasID, Primitive]]:
-        if is_primitive(get_args(targeted_type)[0]):
+        if is_primitive(get_type_of_list_element(targeted_type)):
             return list
-        return [JsonToAidmConverter().process_json_to_aidm(element, get_args(targeted_type)[0]) for element in list]
+        return [JsonToAidmConverter().process_json_to_aidm(element, get_type_of_list_element(targeted_type)) for element in list]
 
 class AtomicTypeProcessor(JsonToAidmProcessor):
     def is_applicable(self, targeted_type: Type[object]) -> bool:
-        return get_origin(targeted_type) is None
+        return not is_list_type(targeted_type)
 
     def process_attribute_dict(self, attribute_dict:[Primitive, dict], targeted_type:Union[_HasID, Primitive]) -> Union[_HasID, Primitive]:
         if is_primitive(targeted_type) or attribute_dict is None:
@@ -58,7 +57,7 @@ class AtomicTypeProcessor(JsonToAidmProcessor):
 
 class DatetimeProcessor(JsonToAidmProcessor):
     def is_applicable(self, targeted_type: Type[object]) -> bool:
-        return targeted_type in [datetime.datetime, Optional[datetime.datetime]]
+        return is_of_type_or_optional_of_type(targeted_type, datetime.datetime)
 
     def process_attribute_dict(self, datetime_raw_str:str, targeted_type:datetime) -> datetime.datetime:
         if datetime_raw_str is None:
@@ -67,7 +66,7 @@ class DatetimeProcessor(JsonToAidmProcessor):
 
 class TimedeltaProcessor(JsonToAidmProcessor):
     def is_applicable(self, targeted_type: Type[object]) -> bool:
-        return targeted_type in [datetime.timedelta, Optional[datetime.timedelta]]
+        return is_of_type_or_optional_of_type(targeted_type, datetime.timedelta)
 
     def process_attribute_dict(self, timedelta_raw_str:str, targeted_type:datetime) -> datetime.timedelta:
         if timedelta_raw_str is None:

@@ -71,7 +71,12 @@ class DatetimeProcessor(JsonToAidmProcessor):
         if datetime_raw_str is None:
             self.validate_that_is_optional_attribute(targeted_type)
             return None
-        return datetime.datetime.fromisoformat(datetime_raw_str)
+        try:
+            return datetime.datetime.fromisoformat(datetime_raw_str)
+        except Exception as e:
+            raise AlgorithmPlatformConversionError(
+                "Could not parse datetime, invalid datetime format: {}".format(datetime_raw_str),
+                e)
 
 class TimedeltaProcessor(JsonToAidmProcessor):
     def is_applicable(self, targeted_type: Type[object]) -> bool:
@@ -81,7 +86,12 @@ class TimedeltaProcessor(JsonToAidmProcessor):
         if timedelta_raw_str is None:
             self.validate_that_is_optional_attribute(targeted_type)
             return None
-        return isodate.parse_duration(timedelta_raw_str)
+        try:
+            return isodate.parse_duration(timedelta_raw_str)
+        except Exception as e:
+            raise AlgorithmPlatformConversionError(
+                "Could not parse duration, invalid duration format: {}".format(timedelta_raw_str),
+                e)
 
 class JsonToAidmConverter:
     __processors: List[JsonToAidmProcessor]

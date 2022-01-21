@@ -181,7 +181,6 @@ class TestJsonToAIDMConverter(unittest.TestCase):
             raised_exception.exception.message
         )
 
-
     def test_json_to_aidm_containing_optional_datetime(self):
         class AidmContainingDatetimeTest(_HasID):
             __arrival_time:  Optional[datetime.datetime]
@@ -223,6 +222,29 @@ class TestJsonToAIDMConverter(unittest.TestCase):
         self.assertIsInstance(aidm, AidmContainingDatetimeTest)
         self.assertIn(type(aidm.arrival_time), [type(None), datetime.datetime])
         self.assertEqual(aidm.arrival_time, None)
+
+    def test_json_to_aidm_containing_datetime_with_wrong_datetime_format(self):
+        class AidmContainingDatetimeTest(_HasID):
+            __arrival_time: datetime.datetime
+
+            def __init__(self, id: int, arrival_time: datetime.datetime):
+                _HasID.__init__(self, id)
+                self.__arrival_time = arrival_time
+
+            @property
+            def arrival_time(self) -> datetime.datetime:
+                return self.__arrival_time
+
+        json_dict = dict(
+            id=54,
+            arrivalTime="2003-05-01TZR00:05:00"
+        )
+
+        with self.assertRaises(AlgorithmPlatformConversionError) as conversion_error:
+            self.__converter.process_json_to_aidm(json_dict, AidmContainingDatetimeTest)
+        self.assertEqual(
+            conversion_error.exception.message,
+            "Could not parse datetime, invalid datetime format: {}".format(json_dict['arrivalTime']))
 
     def test_json_to_aidm_containing_timedelta(self):
         class AidmContainingTimedeltaTest(_HasID):
@@ -296,7 +318,7 @@ class TestJsonToAIDMConverter(unittest.TestCase):
         class AidmContainingTimedeltaTest(_HasID):
             __minimum_stop_time: Optional[datetime.timedelta]
 
-            def __init__(self, id: int, minimum_stop_time: Optional[datetime.datetime]):
+            def __init__(self, id: int, minimum_stop_time: Optional[datetime.timedelta]):
                 _HasID.__init__(self, id)
                 self.__minimum_stop_time = minimum_stop_time
 
@@ -313,6 +335,26 @@ class TestJsonToAIDMConverter(unittest.TestCase):
         self.assertIsInstance(aidm, AidmContainingTimedeltaTest)
         self.assertIn(type(aidm.minimum_stop_time), [type(None), datetime.timedelta])
         self.assertEqual(aidm.minimum_stop_time, None)
+
+    def test_json_to_aidm_containing_timedelta_with_conversion_error(self):
+        class AidmContainingTimedeltaTest(_HasID):
+            __minimum_stop_time: datetime.timedelta
+
+            def __init__(self, id: int, minimum_stop_time: datetime.timedelta):
+                _HasID.__init__(self, id)
+                self.__minimum_stop_time = minimum_stop_time
+
+            @property
+            def minimum_stop_time(self) -> datetime.timedelta:
+                return self.__minimum_stop_time
+
+        json_dict = dict(
+            id=54,
+            minimumStopTime="PT6Z"
+        )
+        with self.assertRaises(AlgorithmPlatformConversionError) as conversion_error:
+            self.__converter.process_json_to_aidm(json_dict, AidmContainingTimedeltaTest)
+        self.assertEqual(conversion_error.exception.message, "Could not parse duration, invalid duration format: {}".format(json_dict['minimumStopTime']))
 
     def test_json_to_aidm_containing_optional(self):
         class AidmContainingOptionalTest(_HasID):

@@ -4,6 +4,7 @@ from py_client.aidm.aidm_base_classes import _HasID
 from py_client.conversion.converter_helpers import convert_keys_to_snake_case
 from abc import ABC, abstractmethod
 from py_client.aidm.aidm_aliases import Primitive, is_primitive
+import datetime
 
 
 class JsonToAidmProcessor:
@@ -54,12 +55,22 @@ class AidmProcessor(JsonToAidmProcessor):
     def unmangle(attribute_name_with_class_name):
         return attribute_name_with_class_name.split("__")[-1]
 
+class DatetimeProcessor(JsonToAidmProcessor):
+    def is_applicable(self, aidm_class: Type[object]) -> bool:
+        return aidm_class in [datetime.datetime, Optional[datetime.datetime]]
+
+    def process_attribute_dict(self, datetime_raw_str:str, aidm_class:datetime) -> datetime.datetime:
+        if datetime_raw_str is None:
+            return datetime_raw_str
+        return datetime.datetime.fromisoformat(datetime_raw_str)
+
 class JsonToAidmConverter:
     __processors: List[JsonToAidmProcessor]
 
     def __init__(self):
         self.__processors = [
             ListOfAidmProcessor(),
+            DatetimeProcessor(),
             AidmProcessor()
         ]
 

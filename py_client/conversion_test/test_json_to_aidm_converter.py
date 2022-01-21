@@ -6,6 +6,7 @@ from py_client.aidm import AlgorithmSectionTrack, AlgorithmFormation, AlgorithmN
 from py_client.aidm.aidm_base_classes import _HasID, _HasCode, _HasDebugString
 from py_client.communication.response_processing import AlgorithmPlatformConversionError
 from typing import List
+import datetime
 
 class TestJsonToAIDMConverter(unittest.TestCase):
     __converter: JsonToAidmConverter
@@ -137,9 +138,26 @@ class TestJsonToAIDMConverter(unittest.TestCase):
         self.assertIsInstance(algorithm_nodes, List)
         self.assertEqual(len(algorithm_nodes), 0)
 
+    def test_json_to_aidm_containing_datetime(self):
+        class AidmContainingDatetimeTest(_HasID):
+            __arrival_time:  datetime.datetime
+            def __init__(self, id: int, arrival_time:  datetime.datetime):
+                _HasID.__init__(self, id)
+                self.__arrival_time = arrival_time
 
+            @property
+            def arrival_time(self) -> datetime.datetime:
+                return self.__arrival_time
 
+        json_dict = dict(
+            id=54,
+            arrivalTime = "2003-05-01T00:05:00"
+        )
 
+        aidm = self.__converter.process_json_to_aidm(json_dict, AidmContainingDatetimeTest)
+        self.assertIsInstance(aidm, AidmContainingDatetimeTest)
+        self.assertIsInstance(aidm.arrival_time, datetime.datetime)
+        self.assertEqual(aidm.arrival_time, datetime.datetime(2003, 5, 1, hour=0, minute=5, second=0))
 
     def test_unsupported_non_primitive_type(self):
         json_dict = dict(someProperty = dict(someProperty = None))

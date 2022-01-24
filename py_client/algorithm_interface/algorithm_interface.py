@@ -332,7 +332,7 @@ class AlgorithmInterface:
             succeedingTrainPathNodeId=succeeding_train_path_node_id,
         )
         response_dict = self.__communication_layer.do_get_request(url_to_resource, query_parameters)
-        return converter_helpers.parse_to_timedelta_or_none(response_dict["separationTime"])
+        return JsonToAidmConverter().process_json_to_aidm(response_dict["separationTime"], Optional[datetime.timedelta])
 
     def get_separation_time_in_junction_for_routes(
         self,
@@ -348,7 +348,7 @@ class AlgorithmInterface:
         )
 
         response_dict = self.__communication_layer.do_get_request(url_to_resource, query_parameters)
-        return converter_helpers.parse_to_timedelta_or_none(response_dict["separationTime"])
+        return JsonToAidmConverter().process_json_to_aidm(response_dict["separationTime"], Optional[datetime.timedelta])
 
     def get_separation_time_in_station_for_node_track_reoccupation(
         self, node_id: int, node_track_id: int
@@ -356,7 +356,7 @@ class AlgorithmInterface:
         url_to_resource = "nodes/{0}/separation-times".format(node_id)
         query_parameters = dict(nodeTrackId=node_track_id)
         response_dict = self.__communication_layer.do_get_request(url_to_resource, query_parameters)
-        return converter_helpers.parse_to_timedelta(response_dict["separationTime"])
+        return JsonToAidmConverter().process_json_to_aidm(response_dict["separationTime"], datetime.timedelta)
 
     def get_separation_time_in_station_for_planned_train_paths(
         self,
@@ -383,7 +383,7 @@ class AlgorithmInterface:
             query_parameters["succeedingStopStatus"] = succeeding_train_stop_status.value
 
         response_dict = self.__communication_layer.do_get_request(url_to_resource, query_parameters)
-        return converter_helpers.parse_to_timedelta_or_none(response_dict["separationTime"])
+        return JsonToAidmConverter().process_json_to_aidm(response_dict["separationTime"], Optional[datetime.timedelta])
 
     def get_separation_time_in_station_for_routes(
         self,
@@ -401,7 +401,7 @@ class AlgorithmInterface:
 
         response_dict = self.__communication_layer.do_get_request(url_to_resource, query_parameters)
 
-        return converter_helpers.parse_to_timedelta_or_none(response_dict["separationTime"])
+        return JsonToAidmConverter().process_json_to_aidm(response_dict["separationTime"], Optional[datetime.timedelta])
 
     def get_default_headway_time(
         self, section_track_id: int, from_node_id: Optional[int], to_node_id: Optional[int]
@@ -414,7 +414,7 @@ class AlgorithmInterface:
             headway_query_parameters["toNodeId"] = to_node_id
 
         response_dict = self.__communication_layer.do_get_request(url_to_resource, headway_query_parameters)
-        return converter_helpers.parse_to_timedelta(response_dict["headwayTime"])
+        return JsonToAidmConverter().process_json_to_aidm(response_dict["headwayTime"], datetime.timedelta)
 
     def get_headway_time(
         self,
@@ -435,7 +435,7 @@ class AlgorithmInterface:
             headway_query_parameters["toNodeId"] = to_node_id
 
         response_dict = self.__communication_layer.do_get_request(url_to_resource, headway_query_parameters)
-        return converter_helpers.parse_to_timedelta(response_dict["headwayTime"])
+        return JsonToAidmConverter().process_json_to_aidm(response_dict["headwayTime"], datetime.timedelta)
 
     def get_headway_time_for_train_path_nodes(
         self, preceding_train_path_node_id: int, succeeding_train_path_node_id: int
@@ -444,7 +444,7 @@ class AlgorithmInterface:
             preceding_train_path_node_id, succeeding_train_path_node_id
         )
         response_dict = self.__communication_layer.do_get_request(url_to_resource)
-        return converter_helpers.parse_to_timedelta(response_dict["separationTime"])
+        return JsonToAidmConverter().process_json_to_aidm(response_dict["separationTime"], datetime.timedelta)
 
     def get_headway_time_for_train_path_nodes_on_section_track(
         self,

@@ -2,7 +2,7 @@ from __future__ import annotations
 import unittest
 
 from py_client.conversion.json_to_aidm_converter import JsonToAidmConverter
-from py_client.aidm import AlgorithmSectionTrack, AlgorithmFormation, AlgorithmNode, AlgorithmNodeTrack, StopStatus
+from py_client.aidm import AlgorithmSectionTrack, AlgorithmFormation, AlgorithmNode, AlgorithmNodeTrack, StopStatus, AlgorithmTrainPathNode
 from py_client.aidm.aidm_base_classes import _HasID, _HasCode, _HasDebugString
 from py_client.communication.response_processing import AlgorithmPlatformConversionError
 from typing import Optional, List
@@ -464,6 +464,54 @@ class TestJsonToAIDMConverter(unittest.TestCase):
         with self.assertRaises(AlgorithmPlatformConversionError) as conversion_error:
             self.__converter.process_json_to_aidm(json_dict, AidmContainingEnumTest)
         self.assertEqual(conversion_error.exception.message, "Could not parse Enum {}, invalid enum format for expected class Enum {}".format(json_dict['enumField'], StopStatus))
+
+    def test_json_to_aimd_containing_datetime_timedelta_and_enum(self):
+        json_dict = dict(
+            id=4287,
+            sectionTrackId=None,
+            nodeId=18,
+            nodeTrackId=None,
+            formationId=4142,
+            movementTypeId=2222,
+            arrivalTime="2003-05-01T00:05:00",
+            departureTime="2003-05-01T00:05:00",
+            minimumRunTime="P3D",
+            minimumStopTime="P5D",
+            stopStatus="commercialStop",
+            sequenceNumber=0
+        )
+
+        algorithm_train_path_node = self.__converter.process_json_to_aidm(json_dict, AlgorithmTrainPathNode)
+
+        self.assertEqual(algorithm_train_path_node.id, 4287)
+
+        self.assertIn(type(algorithm_train_path_node.section_track_id), [int, type(None)])
+        self.assertEqual(algorithm_train_path_node.section_track_id, None)
+
+        self.assertEqual(algorithm_train_path_node.node_id, 18)
+
+        self.assertIn(type(algorithm_train_path_node.node_track_id), [int, type(None)])
+        self.assertEqual(algorithm_train_path_node.node_track_id, None)
+
+        self.assertEqual(algorithm_train_path_node.formation_id, 4142)
+        self.assertEqual(algorithm_train_path_node.movement_type_id, 2222)
+
+        self.assertIsInstance(algorithm_train_path_node.arrival_time, datetime.datetime)
+        self.assertEqual(algorithm_train_path_node.arrival_time, datetime.datetime(year=2003, month=5, day= 1, hour=0, minute=5))
+
+        self.assertIsInstance(algorithm_train_path_node.departure_time, datetime.datetime)
+        self.assertEqual(algorithm_train_path_node.departure_time, datetime.datetime(year=2003, month=5, day=1, hour=0, minute=5))
+
+        self.assertIsInstance(algorithm_train_path_node.minimum_run_time, datetime.timedelta)
+        self.assertEqual(algorithm_train_path_node.minimum_run_time, datetime.timedelta(days=3))
+
+        self.assertIsInstance(algorithm_train_path_node.minimum_stop_time, datetime.timedelta)
+        self.assertEqual(algorithm_train_path_node.minimum_stop_time, datetime.timedelta(days=5))
+
+        self.assertIsInstance(algorithm_train_path_node.stop_status, StopStatus)
+        self.assertEqual(algorithm_train_path_node.stop_status, StopStatus.commercial_stop)
+
+        self.assertEqual(algorithm_train_path_node.sequence_number, 0)
 
 
     def test_unsupported_non_primitive_type(self):

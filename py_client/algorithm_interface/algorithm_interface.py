@@ -200,7 +200,7 @@ class AlgorithmInterface:
         url_to_resource = "trains"
         query_parameters = to_json_converter.convert_any_object(time_window)
         response_list = self.__communication_layer.do_get_request(url_to_resource, query_parameters)
-        return from_json_converter.convert_list(from_json_converter.convert_json_to_algorithm_train, response_list)
+        return JsonToAidmConverter().process_json_to_aidm(response_list, List[AlgorithmTrain])
 
     def get_trains_driving_any_node(self, time_window: TimeWindow, node_ids: List[int]) -> List[AlgorithmTrain]:
         url_to_resource = "trains"
@@ -272,13 +272,13 @@ class AlgorithmInterface:
     def copy_train(self, train_id: int) -> AlgorithmTrain:
         url_to_resource = "trains/{0}:copy".format(train_id)
         response_dict = self.__communication_layer.do_post_request(url_to_resource)
-        return from_json_converter.convert_json_to_algorithm_train(response_dict)
+        return JsonToAidmConverter().process_json_to_aidm(response_dict, AlgorithmTrain)
 
-    def copy_train_and_replace_route(self, train_id: int, node_ids: List[int]):
+    def copy_train_and_replace_route(self, train_id: int, node_ids: List[int]) -> AlgorithmTrain:
         url_to_resource = "trains/{0}:copy-and-replace-route".format(train_id)
         post_request_body = dict(routeViaNodeIds=node_ids)
         response_dict = self.__communication_layer.do_post_request(url_to_resource, post_request_body)
-        return from_json_converter.convert_json_to_algorithm_train(response_dict)
+        return JsonToAidmConverter().process_json_to_aidm(response_dict, AlgorithmTrain)
 
     def reroute_train(self, train_id: int, route: UpdateTrainRoute):
         url_to_resource = "trains/{0}/train-path-nodes:reroute".format(train_id)

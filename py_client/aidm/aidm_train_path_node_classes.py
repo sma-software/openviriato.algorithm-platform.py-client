@@ -16,7 +16,7 @@ class AlgorithmTrainPathNode(_HasID):
     __minimum_stop_time: datetime.timedelta
     __stop_status: StopStatus
     __sequence_number: int
-    __movement_type_id: int
+    __movement_type_id: Optional[int]
 
     def __init__(
             self,

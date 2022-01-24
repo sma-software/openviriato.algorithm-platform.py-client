@@ -10,6 +10,7 @@ from py_client.conversion import algorithm_platform_json_to_aidm_converter
 from py_client.conversion.algorithm_platform_json_to_aidm_converter import convert_json_to_algorithm_link
 from py_client.conversion.converter_helpers import RoutingEdgeType
 from py_client.conversion.object_to_algorithm_platform_json_converter import convert_any_object
+from py_client.conversion.json_to_aidm_converter import JsonToAidmConverter
 
 
 def merge_query_parameters(query_parameter_dictionaries: List[dict]) -> dict:
@@ -93,4 +94,4 @@ def do_get_any_link(
         [convert_any_object(time_window), dict(linkType=link_type, nodeFilter=node_filter)]
     )
     response_dict = communication_layer.do_get_request(url_to_resource, query_parameters)
-    return algorithm_platform_json_to_aidm_converter.convert_list(convert_json_to_algorithm_link, response_dict)
+    return JsonToAidmConverter().process_json_to_aidm(response_dict, List[Union[AlgorithmAwaitArrivalLink, AlgorithmConnectionLink, AlgorithmRosterLink]])

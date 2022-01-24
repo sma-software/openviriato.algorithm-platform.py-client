@@ -2,10 +2,10 @@ from __future__ import annotations
 import unittest
 
 from py_client.conversion.json_to_aidm_converter import JsonToAidmConverter
-from py_client.aidm import AlgorithmSectionTrack, AlgorithmFormation, AlgorithmNode, AlgorithmNodeTrack, StopStatus, AlgorithmTrainPathNode
+from py_client.aidm import AlgorithmSectionTrack, AlgorithmFormation, AlgorithmNode, AlgorithmNodeTrack, StopStatus, AlgorithmTrainPathNode, AlgorithmConnectionLink, AlgorithmAwaitArrivalLink, AlgorithmRosterLink
 from py_client.aidm.aidm_base_classes import _HasID, _HasCode, _HasDebugString
 from py_client.communication.response_processing import AlgorithmPlatformConversionError
-from typing import Optional, List
+from typing import Optional, List, Union
 from enum import Enum
 import datetime
 
@@ -513,6 +513,76 @@ class TestJsonToAIDMConverter(unittest.TestCase):
 
         self.assertEqual(algorithm_train_path_node.sequence_number, 0)
 
+    def test_links(self):
+        json = [
+            dict(
+                minimumDuration = "PT6M",
+                maximumDeviation = "PT13M",
+                weight = 1,
+                id = 4139,
+                fromNodeId = 282,
+                fromTrainId = 1226,
+                fromTrainPathNodeId = 1224,
+                toNodeId = 282,
+                toTrainId = 3912,
+                toTrainPathNodeId = 3184,
+                type = "connection",
+                debugString = "link: FV_8_J03, 85JE, planned arrival: 01.05.2003 07:01.2 - FV_10_J03, 85JE, planned departure: 01.05.2003 07:31.2"
+            ),
+            dict(
+                minimumDuration = "PT10M",
+                id = 4140,
+                fromNodeId = 162,
+                fromTrainId = 2456,
+                fromTrainPathNodeId = 2092,
+                toNodeId = 162,
+                toTrainId = 1226,
+                toTrainPathNodeId = 1222,
+                type = "awaitArrival",
+                debugString = "link: FV_9_J03, 85AR, planned arrival: 01.05.2003 06:03.9 - FV_8_J03, 85AR, planned departure: 01.05.2003 07:00.0"
+            ),
+            dict(
+                fromVehiclePositionInFormation = 0,
+                toVehiclePositionInFormation = 5,
+                id = 6769,
+                fromNodeId = 622,
+                fromTrainId = 6726,
+                fromTrainPathNodeId = 6725,
+                toNodeId = 622,
+                toTrainId = 6731,
+                toTrainPathNodeId = 6727,
+                type = "roster",
+                debugString = "link: FV_31_J03, 85ZMUS, planned arrival: 30.04.2003 09:10.0 - FV_30_J03, 85ZMUS, planned departure: 30.04.2003 09:20.0, vehicles: from 693 to 693"
+            )
+        ]
+
+        algorithm_links = self.__converter.process_json_to_aidm(json, List[Union[AlgorithmAwaitArrivalLink, AlgorithmConnectionLink, AlgorithmRosterLink]])
+
+        self.assertIsInstance(algorithm_links, list)
+        self.assertIsInstance(algorithm_links[0], AlgorithmConnectionLink)
+        self.assertIsInstance(algorithm_links[1], AlgorithmAwaitArrivalLink)
+        self.assertIsInstance(algorithm_links[2], AlgorithmRosterLink)
+
+    def test_unexisting_links(self):
+        json = [
+            dict(
+                minimumDuration="PT6M",
+                maximumDeviation="PT13M",
+                weight=1,
+                id=4139,
+                fromNodeId=282,
+                fromTrainId=1226,
+                fromTrainPathNodeId=1224,
+                toNodeId=282,
+                toTrainId=3912,
+                toTrainPathNodeId=3184,
+                type="unexistingLink",
+                debugString="link: FV_8_J03, 85JE, planned arrival: 01.05.2003 07:01.2 - FV_10_J03, 85JE, planned departure: 01.05.2003 07:31.2"
+            )
+        ]
+        with self.assertRaises(AlgorithmPlatformConversionError) as converter_error:
+            self.__converter.process_json_to_aidm(json, List[Union[AlgorithmAwaitArrivalLink, AlgorithmConnectionLink, AlgorithmRosterLink]])
+        self.assertEqual(converter_error.exception.message, "unexisting_link can not be converted. Extend converter")
 
     def test_unsupported_non_primitive_type(self):
         json_dict = dict(someProperty = dict(someProperty = None))

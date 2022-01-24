@@ -2,6 +2,7 @@ from typing import Type, List, Optional, Union, get_type_hints, get_origin, get_
 from py_client.communication.response_processing import AlgorithmPlatformConversionError
 from py_client.aidm.aidm_base_classes import _HasID
 from py_client.conversion.converter_helpers import *
+from py_client.aidm.aidm_link_classes import AlgorithmConnectionLink, AlgorithmAwaitArrivalLink, AlgorithmRosterLink, LinkType
 from abc import ABC, abstractmethod
 import datetime
 import isodate
@@ -42,6 +43,7 @@ class AtomicTypeProcessor(JsonToAidmProcessor):
 
         state = convert_keys_to_snake_case(attribute_dict)
 
+        print(targeted_type)
         object_attribute_and_attribute_type = get_type_hints(targeted_type)
         for attribute_name_with_class_name, attribute_type in object_attribute_and_attribute_type.items():
             attribute_name = self.unmangle(attribute_name_with_class_name)
@@ -106,6 +108,26 @@ class EnumProcessor(JsonToAidmProcessor):
                 e
             )
 
+class AlgorithmLinkProcessor(JsonToAidmProcessor):
+    def is_applicable(self, targeted_type: Type[object]) -> bool:
+        return targeted_type is Union[AlgorithmAwaitArrivalLink, AlgorithmConnectionLink, AlgorithmRosterLink]
+
+    def process_attribute_dict(self, attribute_dict: dict, aidm_class: Type) -> Union[AlgorithmConnectionLink, AlgorithmAwaitArrivalLink, AlgorithmRosterLink]:
+        link_type_as_str = convert_to_snake_case(attribute_dict.pop('type'))
+        algorithm_link_type = self.get_link_type_from_link_type_as_str(link_type_as_str)
+        return JsonToAidmConverter().process_json_to_aidm(attribute_dict, algorithm_link_type)
+
+    def get_link_type_from_link_type_as_str(self, link_type_as_str: str):
+        if link_type_as_str == LinkType.await_arrival.name:
+            return AlgorithmAwaitArrivalLink
+        elif link_type_as_str == LinkType.connection.name:
+            return AlgorithmConnectionLink
+        elif link_type_as_str == LinkType.roster.name:
+            return AlgorithmRosterLink
+        else:
+            error_message = f"{link_type_as_str} can not be converted. Extend converter"
+            raise AlgorithmPlatformConversionError(error_message, None)
+
 class JsonToAidmConverter:
     __processors: List[JsonToAidmProcessor]
 
@@ -115,6 +137,7 @@ class JsonToAidmConverter:
             DatetimeProcessor(),
             TimedeltaProcessor(),
             EnumProcessor(),
+            AlgorithmLinkProcessor(),
             AtomicTypeProcessor()
         ]
 

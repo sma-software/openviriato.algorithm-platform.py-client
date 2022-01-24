@@ -2,10 +2,11 @@ from __future__ import annotations
 import unittest
 
 from py_client.conversion.json_to_aidm_converter import JsonToAidmConverter
-from py_client.aidm import AlgorithmSectionTrack, AlgorithmFormation, AlgorithmNode, AlgorithmNodeTrack
+from py_client.aidm import AlgorithmSectionTrack, AlgorithmFormation, AlgorithmNode, AlgorithmNodeTrack, StopStatus
 from py_client.aidm.aidm_base_classes import _HasID, _HasCode, _HasDebugString
 from py_client.communication.response_processing import AlgorithmPlatformConversionError
 from typing import Optional, List
+from enum import Enum
 import datetime
 
 class TestJsonToAIDMConverter(unittest.TestCase):
@@ -422,6 +423,48 @@ class TestJsonToAIDMConverter(unittest.TestCase):
             "The AIDM class got a None value for a non-optional field",
             raised_exception.exception.message
         )
+
+    def test_json_to_aidm_containing_enum(self):
+        class AidmContainingEnumTest(_HasID):
+            __enum_field: StopStatus
+
+            def __init__(self, id: int, enum_field: string):
+                _HasID.__init__(self, id)
+                self.__enum_field = enum_field
+
+            @property
+            def enum_field(self) -> StopStatus:
+                return self.__enum_field
+        json_dict = dict(
+            id=1223,
+            enumField="commercialStop"
+        )
+
+        test_enum = self.__converter.process_json_to_aidm(json_dict, AidmContainingEnumTest)
+        self.assertIsInstance(test_enum, AidmContainingEnumTest)
+        self.assertIsInstance(test_enum.enum_field, StopStatus)
+        self.assertEqual(test_enum.enum_field, StopStatus.commercial_stop)
+
+    def test_json_to_aidm_containing_enum_conversion_error(self):
+        class AidmContainingEnumTest(_HasID):
+            __enum_field: StopStatus
+
+            def __init__(self, id: int, enum_field: string):
+                _HasID.__init__(self, id)
+                self.__enum_field = enum_field
+
+            @property
+            def enum_field(self) -> StopStatus:
+                return self.__enum_field
+        json_dict = dict(
+            id=1223,
+            enumField="nonStopStatusValue"
+        )
+
+        with self.assertRaises(AlgorithmPlatformConversionError) as conversion_error:
+            self.__converter.process_json_to_aidm(json_dict, AidmContainingEnumTest)
+        self.assertEqual(conversion_error.exception.message, "Could not parse Enum {}, invalid enum format for expected class Enum {}".format(json_dict['enumField'], StopStatus))
+
 
     def test_unsupported_non_primitive_type(self):
         json_dict = dict(someProperty = dict(someProperty = None))

@@ -72,6 +72,9 @@ def is_optional(actual_type: Type) -> bool:
 def is_list_type(type: Type) -> bool:
     return get_origin(type) is list
 
+def is_enum_type(received_type: Type) -> bool:
+    return isinstance(received_type, type) and issubclass(received_type, Enum)
+
 def get_type_of_list_element(type: Type) -> Type:
     if not is_list_type(type):
         raise TypeError("The targeted type is not a list.")

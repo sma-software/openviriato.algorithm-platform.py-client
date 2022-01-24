@@ -93,6 +93,19 @@ class TimedeltaProcessor(JsonToAidmProcessor):
                 "Could not parse duration, invalid duration format: {}".format(timedelta_raw_str),
                 e)
 
+class EnumProcessor(JsonToAidmProcessor):
+    def is_applicable(self, targeted_type: Type[object]) -> bool:
+        return is_enum_type(targeted_type)
+
+    def process_attribute_dict(self, enum_value:str, aidm_class: Type[Enum]) -> Enum:
+        try:
+            return aidm_class(enum_value)
+        except Exception as e:
+            raise AlgorithmPlatformConversionError(
+                "Could not parse Enum {}, invalid enum format for expected class Enum {}".format(enum_value, aidm_class),
+                e
+            )
+
 class JsonToAidmConverter:
     __processors: List[JsonToAidmProcessor]
 
@@ -101,6 +114,7 @@ class JsonToAidmConverter:
             ListProcessor(),
             DatetimeProcessor(),
             TimedeltaProcessor(),
+            EnumProcessor(),
             AtomicTypeProcessor()
         ]
 

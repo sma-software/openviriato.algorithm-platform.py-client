@@ -85,13 +85,6 @@ def get_type_of_optional_element(type: Type) -> Type:
         raise TypeError("The targeted type is not optional.")
     return get_args(type)[0]
 
-def is_of_type_or_optional_of_type(actual_type: Type, expected_type: Type) -> bool:
-    if actual_type is expected_type:
-        return True
-    if not is_optional(actual_type):
-        return False
-    return get_type_of_optional_element(actual_type) is expected_type
-
 Primitive = Union[int, str, bool]
 def is_primitive(value: object):
     list_of_primitive = Primitive.__args__

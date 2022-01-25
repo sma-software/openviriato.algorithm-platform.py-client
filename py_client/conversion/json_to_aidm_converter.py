@@ -16,11 +16,6 @@ class JsonToAidmProcessor:
     def process_attribute_dict(self, list:List[dict]) -> List[_HasID]:
         pass
 
-    @abstractmethod
-    def validate_that_is_optional_attribute(self, targeted_type: Type) -> None:
-        if not is_optional(targeted_type):
-            raise AlgorithmPlatformConversionError("The AIDM class got a None value for a non-optional field", None)
-
 class ListProcessor(JsonToAidmProcessor):
     def is_applicable(self, targeted_type: Type[object]) -> bool:
         return is_list_type(targeted_type)
@@ -30,20 +25,27 @@ class ListProcessor(JsonToAidmProcessor):
             return list
         return [JsonToAidmConverter().process_json_to_aidm(element, get_type_of_list_element(targeted_type)) for element in list]
 
+class OptionalProcessor(JsonToAidmProcessor):
+    def is_applicable(self, targeted_type: Type[object]) -> bool:
+        return is_optional(targeted_type)
+
+    def process_attribute_dict(self, optional_value:Optional[Union[Primitive, dict]], targeted_type:Type[Union[_HasID, Primitive]]) -> Optional[object]:
+        if optional_value is None:
+            return None
+        return JsonToAidmConverter().process_json_to_aidm(optional_value, get_type_of_optional_element(targeted_type))
+
 class AtomicTypeProcessor(JsonToAidmProcessor):
     def is_applicable(self, targeted_type: Type[object]) -> bool:
         return not is_list_type(targeted_type)
 
     def process_attribute_dict(self, attribute_dict:[Primitive, dict], targeted_type:Union[_HasID, Primitive]) -> Union[_HasID, Primitive]:
         if attribute_dict is None:
-            self.validate_that_is_optional_attribute(targeted_type)
-            return None
+            raise AlgorithmPlatformConversionError("The AIDM class got a None value for a non-optional field", None)
         if is_primitive(targeted_type):
             return attribute_dict
 
         state = convert_keys_to_snake_case(attribute_dict)
 
-        print(targeted_type)
         object_attribute_and_attribute_type = get_type_hints(targeted_type)
         for attribute_name_with_class_name, attribute_type in object_attribute_and_attribute_type.items():
             attribute_name = self.unmangle(attribute_name_with_class_name)
@@ -67,12 +69,11 @@ class AtomicTypeProcessor(JsonToAidmProcessor):
 
 class DatetimeProcessor(JsonToAidmProcessor):
     def is_applicable(self, targeted_type: Type[object]) -> bool:
-        return is_of_type_or_optional_of_type(targeted_type, datetime.datetime)
+        return targeted_type is datetime.datetime
 
     def process_attribute_dict(self, datetime_raw_str:str, targeted_type:datetime) -> datetime.datetime:
         if datetime_raw_str is None:
-            self.validate_that_is_optional_attribute(targeted_type)
-            return None
+            raise AlgorithmPlatformConversionError("The AIDM class got a None value for a non-optional field", None)
         try:
             return datetime.datetime.fromisoformat(datetime_raw_str)
         except Exception as e:
@@ -82,12 +83,11 @@ class DatetimeProcessor(JsonToAidmProcessor):
 
 class TimedeltaProcessor(JsonToAidmProcessor):
     def is_applicable(self, targeted_type: Type[object]) -> bool:
-        return is_of_type_or_optional_of_type(targeted_type, datetime.timedelta)
+        return targeted_type is datetime.timedelta
 
     def process_attribute_dict(self, timedelta_raw_str:str, targeted_type:datetime) -> datetime.timedelta:
         if timedelta_raw_str is None:
-            self.validate_that_is_optional_attribute(targeted_type)
-            return None
+            raise AlgorithmPlatformConversionError("The AIDM class got a None value for a non-optional field", None)
         try:
             return isodate.parse_duration(timedelta_raw_str)
         except Exception as e:
@@ -134,6 +134,7 @@ class JsonToAidmConverter:
     def __init__(self):
         self.__processors = [
             ListProcessor(),
+            OptionalProcessor(),
             DatetimeProcessor(),
             TimedeltaProcessor(),
             EnumProcessor(),

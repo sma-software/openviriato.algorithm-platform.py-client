@@ -381,6 +381,28 @@ class TestJsonToAIDMConverter(unittest.TestCase):
 
     def test_json_to_aidm_containing_optional_with_none_value(self):
         class AidmContainingOptionalTest(_HasID):
+            __optional_field: Optional[int]
+
+            def __init__(self, id: int, optional_field: Optional[int]):
+                _HasID.__init__(self, id)
+                self.__optional_field = optional_field
+
+            @property
+            def optional_field(self) -> Optional[int]:
+                return self.__optional_field
+        json_dict = dict(
+            id=1223,
+            optionalField=None
+        )
+
+        test_optional = self.__converter.process_json_to_aidm(json_dict, AidmContainingOptionalTest)
+
+        self.assertIsInstance(test_optional, AidmContainingOptionalTest)
+        self.assertIn(type(test_optional.optional_field), [type(None), int])
+        self.assertEqual(test_optional.optional_field, None)
+
+    def test_json_to_aidm_containing_optional_with_none_value_str(self):
+        class AidmContainingOptionalTest(_HasID):
             __optional_field: Optional[str]
 
             def __init__(self, id: int, optional_field: Optional[str]):
@@ -589,6 +611,28 @@ class TestJsonToAIDMConverter(unittest.TestCase):
 
         with self.assertRaises(AlgorithmPlatformConversionError):
             self.__converter.process_json_to_aidm(json_dict, SomeClass)
+
+    def test_optional_non_primitive_none(self):
+        class aidm_optional_non_primitive:
+            __section_track:Optional[AlgorithmSectionTrack]
+            def __init__(self, section_track: Optional[AlgorithmSectionTrack]):
+                self.__section_track = section_track
+
+            @property
+            def section_track(self) -> Optional[AlgorithmSectionTrack]:
+                return self.__section_track
+
+        json_dict = dict(
+            sectionTrack = None
+        )
+
+        test_optional_non_primitive = self.__converter.process_json_to_aidm(json_dict, aidm_optional_non_primitive)
+        self.assertIsInstance(test_optional_non_primitive, aidm_optional_non_primitive)
+        self.assertIsInstance(test_optional_non_primitive.section_track, type(None))
+
+    
+
+
 
 class SomeClass:
     __some_property: SomeClass

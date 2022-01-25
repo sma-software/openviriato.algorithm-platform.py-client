@@ -140,12 +140,3 @@ class TestAllConverterHelpers(unittest.TestCase):
         with self.assertRaises(TypeError) as type_error:
             converter_helpers.get_type_of_optional_element(str)
         self.assertEqual(str(type_error.exception), "The targeted type is not optional.")
-
-    def test_is_of_type_or_optional_of_type(self):
-        self.assertTrue(converter_helpers.is_of_type_or_optional_of_type(str, str))
-        self.assertTrue(converter_helpers.is_of_type_or_optional_of_type(Optional[str], str))
-
-        self.assertFalse(converter_helpers.is_of_type_or_optional_of_type(str, int))
-        self.assertFalse(converter_helpers.is_of_type_or_optional_of_type(Optional[str], bool))
-        self.assertFalse(converter_helpers.is_of_type_or_optional_of_type(List[str], bool))
-        self.assertFalse(converter_helpers.is_of_type_or_optional_of_type(List[str], str))

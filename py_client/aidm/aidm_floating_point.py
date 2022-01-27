@@ -1,8 +1,5 @@
 from typing import Optional
 
-from py_client.aidm.maybe import Maybe
-
-
 class FloatingPoint:
     __mantissa: int
     __decimal_places: int

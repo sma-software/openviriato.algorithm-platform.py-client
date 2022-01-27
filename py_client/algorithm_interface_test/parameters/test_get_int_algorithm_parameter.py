@@ -46,16 +46,16 @@ class TestGetIntAlgorithmParameter(unittest.TestCase):
 
         maybe_with_int_param = self.interface_to_viriato.get_int_algorithm_parameter(key)
 
-        self.assertIsInstance(maybe_with_int_param.get_value, int)
-        self.assertEqual(maybe_with_int_param.get_value, 125)
+        self.assertIsInstance(maybe_with_int_param, int)
+        self.assertEqual(maybe_with_int_param, 125)
 
     @mock.patch('requests.Session', side_effect=GetIntAlgorithmParameterTestSessionMock)
     def test_get_int_algorithm_parameter_response_with_none(self, mocked_get_obj):
         key = "someNullValueIntParameterKey"
 
-        maybe_with_no_value = self.interface_to_viriato.get_int_algorithm_parameter(key)
+        no_value = self.interface_to_viriato.get_int_algorithm_parameter(key)
 
-        self.assertFalse(maybe_with_no_value.has_value)
+        self.assertEqual(no_value, None)
 
     @mock.patch('requests.Session', side_effect=GetIntAlgorithmParameterTestSessionMock)
     def tearDown(self, mocked_get_obj) -> None:

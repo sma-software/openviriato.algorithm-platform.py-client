@@ -53,8 +53,8 @@ class TestGetEnumPointAlgorithmParameter(unittest.TestCase):
 
         value_with_populated_enum = self.interface_to_viriato.get_enum_algorithm_parameter(TestRequestEnum, key)
 
-        self.assertIsInstance(value_with_populated_enum.get_value, TestRequestEnum)
-        self.assertEqual(value_with_populated_enum.get_value.optionValue3, TestRequestEnum.optionValue3)
+        self.assertIsInstance(value_with_populated_enum, TestRequestEnum)
+        self.assertEqual(value_with_populated_enum, TestRequestEnum.optionValue3)
 
     @mock.patch('requests.Session', side_effect=GetEnumAlgorithmParameterTestSessionMock)
     def test_get_enum_algorithm_parameter_response_with_none(self, mocked_get_obj):
@@ -62,7 +62,7 @@ class TestGetEnumPointAlgorithmParameter(unittest.TestCase):
 
         value_with_none = self.interface_to_viriato.get_enum_algorithm_parameter(TestRequestEnum, key)
 
-        self.assertFalse(value_with_none.has_value)
+        self.assertEqual(value_with_none, None)
 
     @mock.patch('requests.Session', side_effect=GetEnumAlgorithmParameterTestSessionMock)
     def tearDown(self, mocked_get_obj) -> None:

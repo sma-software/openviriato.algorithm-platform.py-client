@@ -1,12 +1,11 @@
 import inspect
-from typing import Union, TypeVar, Type, Dict
+from typing import Type, Dict
 
 from py_client.aidm import *
+from py_client.aidm import EnumType
 from py_client.communication.response_processing import AlgorithmPlatformConversionError
 from py_client.conversion.converter_helpers import parse_to_datetime, parse_to_timedelta, parse_to_timedelta_or_none, \
     convert_keys_to_snake_case, convert_to_snake_case, RoutingEdgeType
-
-EnumType = TypeVar("EnumType", bound=Enum)
 
 
 def convert(aidm_class_or_aidm_class_factory, attribute_dict: dict):

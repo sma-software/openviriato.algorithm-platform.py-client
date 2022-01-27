@@ -1,6 +1,7 @@
 import datetime
 from typing import Type, List, Optional, Union
 
+from py_client.aidm.aidm_enum_classes import EnumType
 from multipledispatch import dispatch
 
 import py_client.algorithm_interface._algorithm_interface_helpers as _interface_helpers
@@ -36,7 +37,6 @@ from py_client.aidm import (
     TerminationRequest,
     SignalType,
     TableRow,
-    Maybe,
     FloatingPoint,
     UpdateTimesTrain,
     AlgorithmRosterLinkDefinition,
@@ -621,19 +621,17 @@ class AlgorithmInterface:
     def get_bool_algorithm_parameter(self, key: str) -> bool:
         return _interface_helpers.do_get_any_parameter(self.__communication_layer, key)
 
-    def get_int_algorithm_parameter(self, key: str) -> Maybe[int]:
+    def get_int_algorithm_parameter(self, key: str) -> Optional[int]:
         response_value: Optional[int] = _interface_helpers.do_get_any_parameter(self.__communication_layer, key)
-        return Maybe(response_value)
+        return JsonToAidmConverter().process_json_to_aidm(response_value, Optional[int])
 
     def get_enum_algorithm_parameter(
-        self, enum_type: Type[from_json_converter.EnumType], key: str
-    ) -> Maybe[from_json_converter.EnumType]:
+        self, enum_type: Type[EnumType], key: str
+    ) -> Optional[EnumType]:
         response_value = _interface_helpers.do_get_any_parameter(self.__communication_layer, key)
-        return Maybe.create_from_json(
-            response_value, from_json_converter.convert_algorithm_parameter_value_to_enum, enum_type
-        )
+        return JsonToAidmConverter().process_json_to_aidm(response_value, Optional[enum_type])
 
-    def get_floating_point_algorithm_parameter(self, key: str) -> Optional[FloatingPoint]:
+    def get_floating_point_algorithm_parameter(self, key: str) -> FloatingPoint:
         response_dict_or_none = _interface_helpers.do_get_any_parameter(self.__communication_layer, key)
         if response_dict_or_none is None:
             return None
@@ -652,7 +650,7 @@ class AlgorithmInterface:
         response_list = _interface_helpers.do_get_any_parameter(self.__communication_layer, key)
         return from_json_converter.convert_list(from_json_converter.convert_json_to_algorithm_train, response_list)
 
-    def get_time_window_algorithm_parameter(self, key: str) -> Optional[TimeWindow]:
+    def get_time_window_algorithm_parameter(self, key: str) -> TimeWindow:
         response_dict_or_none = _interface_helpers.do_get_any_parameter(self.__communication_layer, key)
         if response_dict_or_none is None:
             return None

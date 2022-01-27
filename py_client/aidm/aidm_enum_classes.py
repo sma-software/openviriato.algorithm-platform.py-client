@@ -1,4 +1,5 @@
 from enum import Enum, unique
+from typing import TypeVar
 
 
 @unique
@@ -12,3 +13,6 @@ class StopStatus(Enum):
 class StationEntryOrExit(Enum):
     entry = "entry"
     exit = "exit"
+
+
+EnumType = TypeVar("EnumType", bound=Enum)

@@ -143,7 +143,7 @@ class JsonToAidmConverter:
         for processor in self.__processors:
             if (processor.is_applicable(targeted_type)):
                 return processor.process_attribute_dict(attribute_dict, targeted_type)
-        return attribute_dict
+        raise AlgorithmPlatformConversionError("Found no appropriate processor for the given response", None)
 
 
 

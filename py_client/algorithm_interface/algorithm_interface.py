@@ -581,8 +581,8 @@ class AlgorithmInterface:
         delete_request_body = dict(linkIDs=link_ids)
         self.__communication_layer.do_delete_request(url_to_resource, delete_request_body)
 
-    def calculate_run_times(self, train_id: int) -> (UpdateTimesTrain, None):
-        url_to_resource = "services/trains/{0}:run-time-calculation".format(train_id)
+    def calculate_running_times(self, train_id: int) -> (UpdateTimesTrain, None):
+        url_to_resource = "services/trains/{0}:calculate-running-times".format(train_id)
         response_dict = self.__communication_layer.do_get_request(url_to_resource)
         return from_json_converter.convert_json_to_update_train_times(response_dict)
 

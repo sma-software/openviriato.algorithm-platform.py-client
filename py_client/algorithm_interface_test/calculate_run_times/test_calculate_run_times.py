@@ -56,18 +56,18 @@ class TestCalculateRunTimes(unittest.TestCase):
     def test_calculate_run_times_request(self, mocked_get_obj):
         train_id = 2060
 
-        self.interface_to_viriato.calculate_run_times(train_id)
+        self.interface_to_viriato.calculate_running_times(train_id)
 
         session_obj = self.interface_to_viriato._AlgorithmInterface__communication_layer.currentSession
         self.assertEqual(session_obj._CalculateRunTimesTestMockSession__last_request,
-                         get_api_url() + '/services/trains/2060:run-time-calculation')
+                         get_api_url() + '/services/trains/2060:calculate-running-times')
         self.assertDictEqual(session_obj._CalculateRunTimesTestMockSession__last_body, {})
 
     @mock.patch('requests.Session', side_effect=CalculateRunTimesTestMockSession)
     def test_calculate_run_times_response(self, mocked_get_obj):
         train_id = 2060
 
-        updated_train_times = self.interface_to_viriato.calculate_run_times(train_id)
+        updated_train_times = self.interface_to_viriato.calculate_running_times(train_id)
 
         self.assertIsInstance(updated_train_times, py_client.aidm.aidm_update_classes.UpdateTimesTrain)
         self.assertEqual(updated_train_times.train_id, 2060)

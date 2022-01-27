@@ -39,8 +39,6 @@ class AtomicTypeProcessor(JsonToAidmProcessor):
         return not is_list_type(targeted_type)
 
     def process_attribute_dict(self, attribute_dict:[Primitive, dict], targeted_type:Union[_HasID, Primitive]) -> Union[_HasID, Primitive]:
-        if attribute_dict is None:
-            raise AlgorithmPlatformConversionError("The AIDM class got a None value for a non-optional field", None)
         if is_primitive(targeted_type):
             return attribute_dict
 
@@ -72,8 +70,6 @@ class DatetimeProcessor(JsonToAidmProcessor):
         return targeted_type is datetime.datetime
 
     def process_attribute_dict(self, datetime_raw_str:str, targeted_type:datetime) -> datetime.datetime:
-        if datetime_raw_str is None:
-            raise AlgorithmPlatformConversionError("The AIDM class got a None value for a non-optional field", None)
         try:
             return datetime.datetime.fromisoformat(datetime_raw_str)
         except Exception as e:
@@ -86,8 +82,6 @@ class TimedeltaProcessor(JsonToAidmProcessor):
         return targeted_type is datetime.timedelta
 
     def process_attribute_dict(self, timedelta_raw_str:str, targeted_type:datetime) -> datetime.timedelta:
-        if timedelta_raw_str is None:
-            raise AlgorithmPlatformConversionError("The AIDM class got a None value for a non-optional field", None)
         try:
             return isodate.parse_duration(timedelta_raw_str)
         except Exception as e:
@@ -143,6 +137,9 @@ class JsonToAidmConverter:
         ]
 
     def process_json_to_aidm(self, attribute_dict: dict, targeted_type: Type[object]) -> _HasID:
+        if attribute_dict is None:
+            if not is_optional(targeted_type) and not issubclass(targeted_type, _HasID):
+                raise AlgorithmPlatformConversionError("Got a None value for a non-optional type.", None)
         for processor in self.__processors:
             if (processor.is_applicable(targeted_type)):
                 return processor.process_attribute_dict(attribute_dict, targeted_type)

@@ -178,7 +178,7 @@ class TestJsonToAIDMConverter(unittest.TestCase):
         with self.assertRaises(AlgorithmPlatformConversionError) as raised_exception:
             self.__converter.process_json_to_aidm(json_dict, AidmContainingDatetimeTest)
         self.assertEqual(
-            "The AIDM class got a None value for a non-optional field",
+            "Got a None value for a non-optional type.",
             raised_exception.exception.message
         )
 
@@ -289,7 +289,7 @@ class TestJsonToAIDMConverter(unittest.TestCase):
         with self.assertRaises(AlgorithmPlatformConversionError) as raised_exception:
             self.__converter.process_json_to_aidm(json_dict, AidmContainingTimedeltaTest)
         self.assertEqual(
-            "The AIDM class got a None value for a non-optional field",
+            "Got a None value for a non-optional type.",
             raised_exception.exception.message
         )
 
@@ -442,7 +442,7 @@ class TestJsonToAIDMConverter(unittest.TestCase):
         with self.assertRaises(AlgorithmPlatformConversionError) as raised_exception:
             self.__converter.process_json_to_aidm(json_dict, AidmContainingNotOptionalTest)
         self.assertEqual(
-            "The AIDM class got a None value for a non-optional field",
+            "Got a None value for a non-optional type.",
             raised_exception.exception.message
         )
 

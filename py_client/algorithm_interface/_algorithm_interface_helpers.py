@@ -1,10 +1,10 @@
 from typing import List, Union, Optional
 
 from py_client.aidm import IncomingNodeTrackRoutingEdge, OutgoingNodeTrackRoutingEdge, RoutingPoint, \
-    TimeWindow, LinkType, AlgorithmRosterLink, AlgorithmAwaitArrivalLink, \
-    AlgorithmConnectionLink, AnyRoutingEdgeIncomingOrOutgoing, AnyRoutingEdgeIncomingOrCrossingOrOutgoing, \
+    TimeWindow, AnyRoutingEdgeIncomingOrOutgoing, AnyRoutingEdgeIncomingOrCrossingOrOutgoing, \
     IncomingRoutingEdge, \
     OutgoingRoutingEdge
+from py_client.aidm.aidm_link_classes import LinkType, AlgorithmRosterLink, AlgorithmAwaitArrivalLink, AlgorithmConnectionLink, _AlgorithmLink
 from py_client.communication.communication_layer import CommunicationLayer
 from py_client.conversion import algorithm_platform_json_to_aidm_converter
 from py_client.conversion.algorithm_platform_json_to_aidm_converter import convert_json_to_algorithm_link
@@ -94,4 +94,4 @@ def do_get_any_link(
         [convert_any_object(time_window), dict(linkType=link_type, nodeFilter=node_filter)]
     )
     response_dict = communication_layer.do_get_request(url_to_resource, query_parameters)
-    return JsonToAidmConverter().process_json_to_aidm(response_dict, List[Union[AlgorithmAwaitArrivalLink, AlgorithmConnectionLink, AlgorithmRosterLink]])
+    return JsonToAidmConverter().process_json_to_aidm(response_dict, List[_AlgorithmLink])

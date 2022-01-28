@@ -1,10 +1,12 @@
 from __future__ import annotations
 import unittest
 
-from py_client.conversion.json_to_aidm_converter import JsonToAidmConverter
-from py_client.aidm import AlgorithmSectionTrack, AlgorithmFormation, AlgorithmNode, AlgorithmNodeTrack, StopStatus, AlgorithmTrainPathNode, AlgorithmConnectionLink, AlgorithmAwaitArrivalLink, AlgorithmRosterLink
+from py_client.conversion.json_to_aidm_converter import JsonToAidmConverter, PolymorphicClassesProcessor
+from py_client.aidm import AlgorithmSectionTrack, AlgorithmFormation, AlgorithmNode, AlgorithmNodeTrack, StopStatus, AlgorithmTrainPathNode
 from py_client.aidm.aidm_base_classes import _HasID, _HasCode, _HasDebugString
 from py_client.communication.response_processing import AlgorithmPlatformConversionError
+from py_client.aidm.aidm_link_classes import AlgorithmConnectionLink, AlgorithmAwaitArrivalLink, AlgorithmRosterLink, _AlgorithmLink
+from py_client.aidm.aidm_routing_edge_classes import _RoutingEdge, CrossingRoutingEdge, IncomingRoutingEdge, OutgoingRoutingEdge, IncomingNodeTrackRoutingEdge, OutgoingNodeTrackRoutingEdge
 from typing import Optional, List, Union
 from enum import Enum
 import datetime
@@ -578,12 +580,16 @@ class TestJsonToAIDMConverter(unittest.TestCase):
             )
         ]
 
-        algorithm_links = self.__converter.process_json_to_aidm(json, List[Union[AlgorithmAwaitArrivalLink, AlgorithmConnectionLink, AlgorithmRosterLink]])
+        algorithm_links = self.__converter.process_json_to_aidm(json, List[_AlgorithmLink])
 
         self.assertIsInstance(algorithm_links, list)
         self.assertIsInstance(algorithm_links[0], AlgorithmConnectionLink)
         self.assertIsInstance(algorithm_links[1], AlgorithmAwaitArrivalLink)
         self.assertIsInstance(algorithm_links[2], AlgorithmRosterLink)
+
+        with self.assertRaises(AttributeError):
+            algorithm_links[0].type
+            algorithm_links[0]['type']
 
     def test_unexisting_links(self):
         json = [
@@ -598,13 +604,33 @@ class TestJsonToAIDMConverter(unittest.TestCase):
                 toNodeId=282,
                 toTrainId=3912,
                 toTrainPathNodeId=3184,
-                type="unexistingLink",
+                type="roster2",
                 debugString="link: FV_8_J03, 85JE, planned arrival: 01.05.2003 07:01.2 - FV_10_J03, 85JE, planned departure: 01.05.2003 07:31.2"
             )
         ]
         with self.assertRaises(AlgorithmPlatformConversionError) as converter_error:
-            self.__converter.process_json_to_aidm(json, List[Union[AlgorithmAwaitArrivalLink, AlgorithmConnectionLink, AlgorithmRosterLink]])
-        self.assertEqual(converter_error.exception.message, "unexisting_link can not be converted. Extend converter")
+            self.__converter.process_json_to_aidm(json, List[_AlgorithmLink])
+        self.assertEqual(converter_error.exception.message, "unexisting link roster2 can not be converted. Extend converter")
+
+    def test_no_type_in_link(self):
+        json = [
+            dict(
+                minimumDuration="PT6M",
+                maximumDeviation="PT13M",
+                weight=1,
+                id=4139,
+                fromNodeId=282,
+                fromTrainId=1226,
+                fromTrainPathNodeId=1224,
+                toNodeId=282,
+                toTrainId=3912,
+                toTrainPathNodeId=3184,
+                debugString="link: FV_8_J03, 85JE, planned arrival: 01.05.2003 07:01.2 - FV_10_J03, 85JE, planned departure: 01.05.2003 07:31.2"
+            )
+        ]
+        with self.assertRaises(AlgorithmPlatformConversionError) as converter_error:
+            self.__converter.process_json_to_aidm(json, List[_AlgorithmLink])
+        self.assertEqual(converter_error.exception.message, "Impossible to convert to {}. No attribute 'type' in the dictionary.".format(_AlgorithmLink))
 
     def test_unsupported_non_primitive_type(self):
         json_dict = dict(someProperty = dict(someProperty = None))
@@ -630,9 +656,57 @@ class TestJsonToAIDMConverter(unittest.TestCase):
         self.assertIsInstance(test_optional_non_primitive, aidm_optional_non_primitive)
         self.assertIsInstance(test_optional_non_primitive.section_track, type(None))
 
-    
+    def test_routing_edge(self):
+        json = [
+            dict(
+                startSectionTrackId=919,
+                endNodeTrackId=163,
+                type="incomingNodeTrack",
+                nodeId=162
+            ),
+            dict(
+                startNodeTrackId=21,
+                endSectionTrackId=1207,
+                type="outgoingNodeTrack",
+                nodeId=18
+            ),
+            dict(
+                type="incoming",
+                nodeId=25,
+                startSectionTrackId=1199
+            ),
+            dict(
+                type="outgoing",
+                nodeId=25,
+                endSectionTrackId=1200
+            )
+        ]
 
+        routing_edges = self.__converter.process_json_to_aidm(json, List[_RoutingEdge])
+        self.assertIsInstance(routing_edges, list)
+        self.assertIsInstance(routing_edges[0], IncomingNodeTrackRoutingEdge)
+        self.assertIsInstance(routing_edges[1], OutgoingNodeTrackRoutingEdge)
+        self.assertIsInstance(routing_edges[2], IncomingRoutingEdge)
+        self.assertIsInstance(routing_edges[3], OutgoingRoutingEdge)
+        with self.assertRaises(AttributeError):
+            routing_edges[0].type
+            routing_edges[0]['type']
 
+    def test_error_types_wrong_order_polymorphic_processor(self):
+        polymorphic_processor = PolymorphicClassesProcessor()
+        # Overwriting the aidm_types_to_create in the wrong order for testing purposes
+        polymorphic_processor.aidm_types_to_create = [
+            IncomingNodeTrackRoutingEdge,
+            IncomingRoutingEdge]
+
+        with self.assertRaises(AlgorithmPlatformConversionError) as conversion_error:
+            polymorphic_processor._validate_most_specific_name_are_at_start_of_list()
+        self.assertEqual(conversion_error.exception.message, "The types {} is less specific than {}. They must be in the reverse order in the types_to_process list to avoid conversion error".format(IncomingNodeTrackRoutingEdge, IncomingRoutingEdge))
+
+    def test_aidm_types_to_crreate_list_is_in_right_order_polymorphic_processor(self):
+        polymorphic_processor = PolymorphicClassesProcessor()
+
+        self.assertIsNone(polymorphic_processor._validate_most_specific_name_are_at_start_of_list())
 
 class SomeClass:
     __some_property: SomeClass

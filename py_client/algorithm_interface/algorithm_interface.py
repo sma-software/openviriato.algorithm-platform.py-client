@@ -48,7 +48,8 @@ from py_client.aidm import (
     AlgorithmTrainSimulationEvent,
     AlgorithmMovementType,
     RunningTimePenaltyOnTrainPath,
-    AlgorithmConflict
+    AlgorithmConflict,
+    RunningTimeCalculationResult
 )
 from py_client.communication.communication_layer import CommunicationLayer
 from py_client.conversion.json_to_aidm_converter import JsonToAidmConverter
@@ -584,7 +585,7 @@ class AlgorithmInterface:
     def calculate_running_times(self, train_id: int) -> (UpdateTimesTrain, None):
         url_to_resource = "services/trains/{0}:calculate-running-times".format(train_id)
         response_dict = self.__communication_layer.do_get_request(url_to_resource)
-        return from_json_converter.convert_json_to_update_train_times(response_dict)
+        return JsonToAidmConverter().process_json_to_aidm(response_dict, Optional[RunningTimeCalculationResult])
 
     def notify_user(self, title: str, description: str) -> None:
         url_to_resource = "user-outputs/notifications"

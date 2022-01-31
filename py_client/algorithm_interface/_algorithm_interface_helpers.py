@@ -1,13 +1,9 @@
 from typing import List, Union, Optional
 
-from py_client.aidm import IncomingNodeTrackRoutingEdge, OutgoingNodeTrackRoutingEdge, RoutingPoint, \
-    TimeWindow, AnyRoutingEdgeIncomingOrOutgoing, AnyRoutingEdgeIncomingOrCrossingOrOutgoing, \
-    IncomingRoutingEdge, \
-    OutgoingRoutingEdge
+from py_client.aidm import RoutingPoint, TimeWindow
+from py_client.aidm.aidm_routing_edge_classes import _RoutingEdge, IncomingNodeTrackRoutingEdge, OutgoingNodeTrackRoutingEdge, AnyRoutingEdgeIncomingOrOutgoing, AnyRoutingEdgeIncomingOrCrossingOrOutgoing, IncomingRoutingEdge, OutgoingRoutingEdge
 from py_client.aidm.aidm_link_classes import LinkType, AlgorithmRosterLink, AlgorithmAwaitArrivalLink, AlgorithmConnectionLink, _AlgorithmLink
 from py_client.communication.communication_layer import CommunicationLayer
-from py_client.conversion import algorithm_platform_json_to_aidm_converter
-from py_client.conversion.algorithm_platform_json_to_aidm_converter import convert_json_to_algorithm_link
 from py_client.conversion.converter_helpers import RoutingEdgeType
 from py_client.conversion.object_to_algorithm_platform_json_converter import convert_any_object
 from py_client.conversion.json_to_aidm_converter import JsonToAidmConverter
@@ -70,7 +66,7 @@ def do_get_routing_edges_request(
         nodeTrackId=routing_point.node_track_id,
     )
     response_list = communication_layer.do_get_request(url_to_resource, get_request_params)
-    return algorithm_platform_json_to_aidm_converter.convert_to_routing_edges(response_list)
+    return JsonToAidmConverter().process_json_to_aidm(response_list, List[_RoutingEdge])
 
 
 def do_get_any_parameter(

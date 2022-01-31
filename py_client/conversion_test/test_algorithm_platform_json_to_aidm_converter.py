@@ -1,8 +1,10 @@
 import unittest
 
 from py_client.aidm import *
+from py_client.aidm.aidm_routing_edge_classes import _RoutingEdge
+from py_client.aidm.aidm_link_classes import _AlgorithmLink
 from py_client.communication.response_processing import AlgorithmPlatformConversionError
-from py_client.conversion import algorithm_platform_json_to_aidm_converter
+from py_client.conversion.json_to_aidm_converter import JsonToAidmConverter
 
 
 class TestToAIDMConverter(unittest.TestCase):
@@ -10,8 +12,7 @@ class TestToAIDMConverter(unittest.TestCase):
     def test_convert_json_to_aidm_class_from_constructor(self):
         test_section_as_dict = dict(ID=12, Code='ATest', DebugString='str', DistanceUnits=8, SectionCode='TestSection')
 
-        test_section = algorithm_platform_json_to_aidm_converter.convert(
-            AlgorithmSectionTrack, test_section_as_dict)
+        test_section = JsonToAidmConverter().process_json_to_aidm(test_section_as_dict, AlgorithmSectionTrack)
 
         self.assertIsInstance(test_section, AlgorithmSectionTrack)
         self.assertEqual(test_section.id, 12)
@@ -26,7 +27,7 @@ class TestToAIDMConverter(unittest.TestCase):
 
         outer_test_object = dict(id=200, inner=dict(id=99))
 
-        result = algorithm_platform_json_to_aidm_converter.convert(convert_test_class_outer, outer_test_object)
+        result = JsonToAidmConverter().process_json_to_aidm(outer_test_object, TestClassOuter)
 
         self.assertIsInstance(result, TestClassOuter)
         self.assertEqual(test_class_outer_object.id, result.id)
@@ -37,8 +38,7 @@ class TestToAIDMConverter(unittest.TestCase):
         test_section_as_dict = dict(ID=12, Code='ATest', DebugString='str', DistanceUnits=8, SectionCode='TestSection')
         test_section_dict_in_list = [test_section_as_dict, test_section_as_dict, test_section_as_dict]
 
-        test_section_list = algorithm_platform_json_to_aidm_converter.convert_list(AlgorithmSectionTrack,
-                                                                                   test_section_dict_in_list)
+        test_section_list = JsonToAidmConverter().process_json_to_aidm(test_section_dict_in_list, List[AlgorithmSectionTrack])
 
         self.assertIsInstance(test_section_list, list)
         self.assertIsInstance(test_section_list[0], AlgorithmSectionTrack)
@@ -51,7 +51,7 @@ class TestToAIDMConverter(unittest.TestCase):
         ]
         test_node_as_dict = dict(ID=15, Code='A', DebugString='test123', NodeTracks=test_node_tracks_as_list)
 
-        test_node = algorithm_platform_json_to_aidm_converter.convert_json_to_algorithm_node(test_node_as_dict)
+        test_node = JsonToAidmConverter().process_json_to_aidm(test_node_as_dict, AlgorithmNode)
 
         self.assertIsInstance(test_node, AlgorithmNode)
         self.assertEqual(test_node.id, 15)
@@ -66,7 +66,7 @@ class TestToAIDMConverter(unittest.TestCase):
         test_node_tracks_as_list = []
         test_node_as_dict = dict(ID=15, Code='A', DebugString='test123', NodeTracks=test_node_tracks_as_list)
 
-        test_node = algorithm_platform_json_to_aidm_converter.convert_json_to_algorithm_node(test_node_as_dict)
+        test_node = JsonToAidmConverter().process_json_to_aidm(test_node_as_dict, AlgorithmNode)
 
         self.assertIsInstance(test_node, AlgorithmNode)
         self.assertEqual(test_node.id, 15)
@@ -83,9 +83,7 @@ class TestToAIDMConverter(unittest.TestCase):
         test_node_as_dict = dict(ID=15, Code='A', DebugString='test123', NodeTracks=test_node_tracks_as_list)
         test_node_as_list_of_dict = [test_node_as_dict, test_node_as_dict.copy(), test_node_as_dict.copy()]
 
-        test_node_list = algorithm_platform_json_to_aidm_converter.convert_list(
-            algorithm_platform_json_to_aidm_converter.convert_json_to_algorithm_node,
-            test_node_as_list_of_dict)
+        test_node_list = JsonToAidmConverter().process_json_to_aidm(test_node_as_list_of_dict, List[AlgorithmNode])
 
         self.assertIsInstance(test_node_list, list)
         self.assertIsInstance(test_node_list[0], AlgorithmNode)
@@ -102,8 +100,7 @@ class TestToAIDMConverter(unittest.TestCase):
             sequenceNumber=0, movementTypeId = None
         )
 
-        test_train_path_node = algorithm_platform_json_to_aidm_converter.convert_json_to_algorithm_train_path_node(
-            test_node_as_dict)
+        test_train_path_node =JsonToAidmConverter().process_json_to_aidm(test_node_as_dict, AlgorithmTrainPathNode)
 
         self.assertIsInstance(test_train_path_node, AlgorithmTrainPathNode)
         self.assertEqual(test_train_path_node.id, 1332)
@@ -118,8 +115,7 @@ class TestToAIDMConverter(unittest.TestCase):
             SequenceNumber=0, movementTypeId = 2457
         )
 
-        test_train_path_node = algorithm_platform_json_to_aidm_converter.convert_json_to_algorithm_train_path_node(
-            test_node_as_dict)
+        test_train_path_node = JsonToAidmConverter().process_json_to_aidm(test_node_as_dict, AlgorithmTrainPathNode)
 
         self.assertIsInstance(test_train_path_node, AlgorithmTrainPathNode)
         self.assertEqual(test_train_path_node.id, 1332)
@@ -148,7 +144,7 @@ class TestToAIDMConverter(unittest.TestCase):
             DebugString="RVZH_3_1_J03 tt_(S)"
         )
 
-        test_train = algorithm_platform_json_to_aidm_converter.convert_json_to_algorithm_train(test_train_as_dict)
+        test_train = JsonToAidmConverter().process_json_to_aidm(test_train_as_dict, AlgorithmTrain)
 
         self.assertIsInstance(test_train, AlgorithmTrain)
         self.assertEqual(test_train.code, "123")
@@ -159,9 +155,7 @@ class TestToAIDMConverter(unittest.TestCase):
     def test_convert_json_to_time_window(self):
         test_time_window_as_dict = dict(FromTime="2003-05-01T08:00:00", ToTime="2023-05-02T10:00:50")
 
-        test_time_window = algorithm_platform_json_to_aidm_converter.convert_json_to_time_window(
-            test_time_window_as_dict
-        )
+        test_time_window = JsonToAidmConverter().process_json_to_aidm(test_time_window_as_dict, TimeWindow)
 
         self.assertIsInstance(test_time_window, TimeWindow)
         self.assertIsInstance(test_time_window.from_time, datetime.datetime)
@@ -180,9 +174,7 @@ class TestToAIDMConverter(unittest.TestCase):
             ClosureTimeWindowToNode=dict(FromTime="2003-05-01T08:30:00", ToTime="2003-05-01T09:30:00")
         )
 
-        test_closure = algorithm_platform_json_to_aidm_converter.convert_json_to_algorithm_section_track_closure(
-            param_dict
-        )
+        test_closure = JsonToAidmConverter().process_json_to_aidm(param_dict, AlgorithmSectionTrackClosure)
 
         self.assertIsInstance(test_closure, AlgorithmSectionTrackClosure)
         self.assertIsInstance(test_closure.closure_time_window_from_node, TimeWindow)
@@ -194,9 +186,7 @@ class TestToAIDMConverter(unittest.TestCase):
             ClosureTimeWindow=dict(FromTime="2003-05-01T08:00:00", ToTime="2003-05-02T10:00:00")
         )
 
-        test_closure = algorithm_platform_json_to_aidm_converter.convert_json_to_algorithm_node_track_closure(
-            param_dict
-        )
+        test_closure = JsonToAidmConverter().process_json_to_aidm(param_dict, AlgorithmNodeTrackClosure)
 
         self.assertIsInstance(test_closure, AlgorithmNodeTrackClosure)
         self.assertIsInstance(test_closure.closure_time_window, TimeWindow)
@@ -208,7 +198,7 @@ class TestToAIDMConverter(unittest.TestCase):
             dict(StartSectionTrackID=888, EndNodeTrackID=887, NodeID=281, type="incomingNodeTrack"),
         ]
 
-        routing_edges = algorithm_platform_json_to_aidm_converter.convert_to_routing_edges(raw_json)
+        routing_edges = JsonToAidmConverter().process_json_to_aidm(raw_json, List[IncomingNodeTrackRoutingEdge])
 
         self.assertIsInstance(routing_edges, list)
         self.assertIsInstance(routing_edges[0], IncomingNodeTrackRoutingEdge)
@@ -223,7 +213,7 @@ class TestToAIDMConverter(unittest.TestCase):
             dict(StartNodeTrackID=888, EndSectionTrackID=887, NodeID=281, type="outgoingNodeTrack"),
         ]
 
-        routing_edges = algorithm_platform_json_to_aidm_converter.convert_to_routing_edges(raw_json)
+        routing_edges = JsonToAidmConverter().process_json_to_aidm(raw_json, List[OutgoingNodeTrackRoutingEdge])
 
         self.assertIsInstance(routing_edges, list)
         self.assertIsInstance(routing_edges[0], OutgoingNodeTrackRoutingEdge)
@@ -238,7 +228,7 @@ class TestToAIDMConverter(unittest.TestCase):
             dict(StartSectionTrackID=888, EndSectionTrackID=887, NodeID=281, type="crossing"),
         ]
 
-        routing_edges = algorithm_platform_json_to_aidm_converter.convert_to_routing_edges(raw_json)
+        routing_edges = JsonToAidmConverter().process_json_to_aidm(raw_json, List[CrossingRoutingEdge])
 
         self.assertIsInstance(routing_edges, list)
         self.assertIsInstance(routing_edges[0], CrossingRoutingEdge)
@@ -257,7 +247,7 @@ class TestToAIDMConverter(unittest.TestCase):
             dict(StartNodeTrackID=888, EndSectionTrackID=887, NodeID=281, type="outgoingNodeTrack"),
         ]
 
-        routing_edges = algorithm_platform_json_to_aidm_converter.convert_to_routing_edges(raw_json)
+        routing_edges = JsonToAidmConverter().process_json_to_aidm(raw_json, list[_RoutingEdge])
 
         self.assertIsInstance(routing_edges, list)
         self.assertIsInstance(routing_edges[0], OutgoingRoutingEdge)
@@ -283,9 +273,7 @@ class TestToAIDMConverter(unittest.TestCase):
             ]
         )
 
-        test_update_train_times = algorithm_platform_json_to_aidm_converter.convert_json_to_update_train_times(
-            param_dict
-        )
+        test_update_train_times = JsonToAidmConverter().process_json_to_aidm(param_dict, UpdateTimesTrain)
 
         self.assertIsInstance(test_update_train_times, UpdateTimesTrain)
         self.assertEqual(test_update_train_times.train_id, 1012)
@@ -300,9 +288,7 @@ class TestToAIDMConverter(unittest.TestCase):
             MinimumRunTime=None, MinimumStopTime="P0D", StopStatus="commercialStop"
         )
 
-        update_train_times_node = algorithm_platform_json_to_aidm_converter.convert_json_to_update_train_times_node(
-            param_dict
-        )
+        update_train_times_node = JsonToAidmConverter().process_json_to_aidm(param_dict, UpdateTimesTrainPathNode)
 
         self.assertIsInstance(update_train_times_node, UpdateTimesTrainPathNode)
         self.assertEqual(update_train_times_node.train_path_node_id, 3880)
@@ -326,9 +312,7 @@ class TestToAIDMConverter(unittest.TestCase):
             id = 456
         )
 
-        await_arrival_link = algorithm_platform_json_to_aidm_converter.convert_json_to_algorithm_link(
-            link_as_dictionary
-        )
+        await_arrival_link = JsonToAidmConverter().process_json_to_aidm(link_as_dictionary, AlgorithmAwaitArrivalLink)
 
         self.assertIsInstance(await_arrival_link, AlgorithmAwaitArrivalLink)
         self.assertEqual(await_arrival_link.minimum_duration, datetime.timedelta(minutes=10))
@@ -357,7 +341,7 @@ class TestToAIDMConverter(unittest.TestCase):
             id=350
         )
 
-        connection_link = algorithm_platform_json_to_aidm_converter.convert_json_to_algorithm_link(link_as_dictionary)
+        connection_link = JsonToAidmConverter().process_json_to_aidm(link_as_dictionary, AlgorithmConnectionLink)
 
         self.assertIsInstance(connection_link, AlgorithmConnectionLink)
         self.assertEqual(connection_link.minimum_duration, datetime.timedelta(minutes=6))
@@ -389,11 +373,11 @@ class TestToAIDMConverter(unittest.TestCase):
         )
 
         with self.assertRaises(AlgorithmPlatformConversionError) as raised_error:
-            algorithm_platform_json_to_aidm_converter.convert_json_to_algorithm_link(link_as_dictionary)
+            JsonToAidmConverter().process_json_to_aidm(link_as_dictionary, _AlgorithmLink)
 
         self.assertEqual(
             raised_error.exception.message,
-            "not_a_valid__link_type can not be converted. Extend converter"
+            "unexisting link not_a_valid__link_type can not be converted. Extend converter"
         )
 
     def test_convert_json_to_algorithm_link_non_convertible_durations_defined(self):
@@ -412,10 +396,10 @@ class TestToAIDMConverter(unittest.TestCase):
             id=245
         )
 
-        with self.assertRaises(TypeError) as raised_error:
-            algorithm_platform_json_to_aidm_converter.convert_json_to_algorithm_link(link_as_dictionary)
+        with self.assertRaises(AlgorithmPlatformConversionError) as raised_error:
+            JsonToAidmConverter().process_json_to_aidm(link_as_dictionary, _AlgorithmLink)
 
-        self.assertEqual(raised_error.exception.args[0], "Expecting a string 123")
+        self.assertEqual(raised_error.exception.message, "Could not parse duration, invalid duration format: 123")
 
 
 class TestClassInner:
@@ -428,6 +412,8 @@ class TestClassInner:
 
 
 class TestClassOuter:
+    __id: int
+    __inner: TestClassInner
     def __init__(self, inner: TestClassInner, id: int):
         self.__id = id
         self.__inner = inner

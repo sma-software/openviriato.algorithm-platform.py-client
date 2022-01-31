@@ -1,8 +1,6 @@
 import unittest
 
-from py_client.aidm import IncomingNodeTrackRoutingEdge, OutgoingNodeTrackRoutingEdge
-from py_client.conversion.algorithm_platform_json_to_aidm_converter import CrossingRoutingEdge, \
-    OutgoingRoutingEdge, IncomingRoutingEdge
+from py_client.aidm import IncomingNodeTrackRoutingEdge, OutgoingNodeTrackRoutingEdge, CrossingRoutingEdge, OutgoingRoutingEdge, IncomingRoutingEdge
 from py_client.conversion.object_to_algorithm_platform_json_converter import convert_any_object
 
 

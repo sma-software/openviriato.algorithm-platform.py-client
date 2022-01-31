@@ -3,24 +3,11 @@ from typing import List
 import datetime
 
 from py_client.aidm.aidm_base_classes import _HasID
-from py_client.aidm.aidm_train_path_node_classes import AlgorithmTrainPathNode
 
 @unique
 class AlgorithmTrainSimulationEventType(Enum):
     arrival = 'arrival'#"The event describes the arrival at a node."
     departure = 'departure'#"The event describes a departure from a node."
-
-
-class AlgorithmTrainSimulationTrain(_HasID):
-    __train_path_nodes: List[AlgorithmTrainPathNode]
-
-    def __init__(self, train_path_nodes: List[AlgorithmTrainPathNode], id: int):
-        _HasID.__init__(self, id)
-        self.__train_path_nodes = train_path_nodes
-
-    @property
-    def train_path_nodes(self) -> int:
-        return self.__train_path_nodes
 
 class AlgorithmTrainSimulationTrainPathNode(_HasID):
     __arrival_time: datetime.datetime
@@ -67,4 +54,15 @@ class AlgorithmTrainSimulationEvent(_HasID):
     @property
     def type(self) -> AlgorithmTrainSimulationEventType:
         return self.__type
+
+class AlgorithmTrainSimulationTrain(_HasID):
+    __train_path_nodes: List[AlgorithmTrainSimulationTrainPathNode]
+
+    def __init__(self, train_path_nodes: List[AlgorithmTrainSimulationTrainPathNode], id: int):
+        _HasID.__init__(self, id)
+        self.__train_path_nodes = train_path_nodes
+
+    @property
+    def train_path_nodes(self) -> List[AlgorithmTrainSimulationTrainPathNode]:
+        return self.__train_path_nodes
 

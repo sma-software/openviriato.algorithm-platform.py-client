@@ -19,7 +19,7 @@ class TestGetPreferredStartingRoutesForNode(TestCase):
                 "    \"outgoingRoutingEdge\": {\n"
                 "      \"startNodeTrackId\": 21,\n"
                 "      \"endSectionTrackId\": 1207,\n"
-                "      \"type\": \"outgoing\",\n"
+                "      \"type\": \"outgoingNodeTrack\",\n"
                 "      \"nodeId\": 18\n"
                 "    }\n"
                 "  }\n"

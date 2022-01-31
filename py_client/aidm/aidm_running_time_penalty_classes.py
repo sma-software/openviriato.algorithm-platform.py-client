@@ -3,6 +3,7 @@ import datetime
 from py_client.aidm.aidm_base_classes import _HasDebugString
 from py_client.aidm.aidm_base_classes import _HasID
 from py_client.aidm.aidm_time_window_classes import TimeWindow
+from typing import List
 
 class AlgorithmSectionRunningTimePenaltyTrack:
     __from_node_id: int
@@ -39,12 +40,12 @@ class AlgorithmSectionRunningTimePenaltyTrack:
         return self.__section_track_id
 
 class AlgorithmSectionRunningTimePenalty(_HasID, _HasDebugString):
-    __affected_section_tracks: AlgorithmSectionRunningTimePenaltyTrack
+    __affected_section_tracks: List[AlgorithmSectionRunningTimePenaltyTrack]
     __total_penalty: datetime.timedelta
 
     def __init__(
             self,
-            affected_section_tracks: AlgorithmSectionRunningTimePenaltyTrack,
+            affected_section_tracks: List[AlgorithmSectionRunningTimePenaltyTrack],
             total_penalty: datetime.timedelta,
             debug_string: str,
             id: int):
@@ -54,7 +55,7 @@ class AlgorithmSectionRunningTimePenalty(_HasID, _HasDebugString):
         self.__total_penalty = total_penalty
 
     @property
-    def affected_section_tracks(self) -> int:
+    def affected_section_tracks(self) -> List[AlgorithmSectionRunningTimePenaltyTrack]:
         return self.__affected_section_tracks
 
     @property

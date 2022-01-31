@@ -120,10 +120,16 @@ class PolymorphicClassesProcessor(JsonToAidmProcessor):
                             ]
 
     def is_applicable(self, attribute_dict: dict, targeted_type: Type[object]) -> bool:
-        if not targeted_type in self.types_to_process:
+        if not True in [ issubclass(targeted_type, x) for x in self.types_to_process ]:
             return False
         if not 'type' in attribute_dict:
-            raise AlgorithmPlatformConversionError("Impossible to convert to {}. No attribute 'type' in the dictionary.".format(targeted_type), None)
+            # we can come into this branch after popping the type attribute or when we first see a polymorphic type
+            # if we are for the first time here we have to have the type attribute
+            if targeted_type in self.types_to_process:
+                raise AlgorithmPlatformConversionError("Impossible to convert to {}. No attribute 'type' in the dictionary.".format(targeted_type), None)
+            else:
+                # otherwise the AtomicTypeProcessor does the conversion for us
+                return False
         return True
 
 
@@ -173,14 +179,19 @@ class JsonToAidmConverter:
             AtomicTypeProcessor()
         ]
 
-    def process_json_to_aidm(self, attribute_dict: dict, targeted_type: Type[object]) -> _HasID:
+    def process_json_to_aidm(self, attribute_dict: dict, targeted_type: Type[object]) -> object:
         if attribute_dict is None:
-            if not is_optional(targeted_type) and not issubclass(targeted_type, _HasID):
+            if self.targeted_type_cannot_have_none_value(targeted_type):
                 raise AlgorithmPlatformConversionError("Got a None value for a non-optional type.", None)
+            return None
         for processor in self.__processors:
             if (processor.is_applicable(attribute_dict, targeted_type)):
                 return processor.process_attribute_dict(attribute_dict, targeted_type)
         raise AlgorithmPlatformConversionError("Found no appropriate processor for the given response", None)
 
-
-
+    def targeted_type_cannot_have_none_value(self, targeted_type):
+        if is_optional(targeted_type):
+            return False
+        if is_primitive(targeted_type):
+            return True
+        return is_struct(targeted_type)

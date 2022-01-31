@@ -90,6 +90,11 @@ def is_primitive(value: object):
     list_of_primitive = Primitive.__args__
     return value in list_of_primitive or (is_optional(value) and get_type_of_optional_element(value) in list_of_primitive)
 
+Struct = Union[datetime.datetime, datetime.timedelta]
+def is_struct(value: object):
+    list_of_struct = Struct.__args__
+    return value in list_of_struct or (is_optional(value) and get_type_of_optional_element(value) in list_of_struct)
+
 @unique
 class RoutingEdgeType(Enum):
     incoming = "incoming"

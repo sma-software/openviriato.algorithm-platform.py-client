@@ -252,6 +252,10 @@ class AlgorithmInterface:
         url_to_resource = "trains/{0}:cancel".format(train_id)
         self.__communication_layer.do_delete_request(url_to_resource)
 
+    def delete_train(self, train_id: int) -> None:
+        url_to_resource = "trains/{0}:delete".format(train_id)
+        self.__communication_layer.do_delete_request(url_to_resource)
+
     def update_movement_type(self, movement_type_id: int, train_id: int, from_train_path_node_id: int, to_train_path_node_id: int) -> AlgorithmTrain:
         url_to_resource = "trains/{0}/train-path-nodes:update-movement-type".format(train_id)
         put_body_dict = dict(movementTypeId = movement_type_id,

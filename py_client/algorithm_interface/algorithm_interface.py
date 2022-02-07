@@ -48,7 +48,8 @@ from py_client.aidm import (
     AlgorithmMovementType,
     RunningTimePenaltyOnTrainPath,
     AlgorithmConflict,
-    RunningTimeCalculationResult
+    RunningTimeCalculationResult,
+    ConflictDetectionArguments
 )
 from py_client.aidm.aidm_link_classes import _AlgorithmLink
 from py_client.communication.communication_layer import CommunicationLayer
@@ -710,7 +711,26 @@ class AlgorithmInterface:
         response_list = self.__communication_layer.do_get_request(url_to_resource)
         return JsonToAidmConverter().process_json_to_aidm(response_list, List[RunningTimePenaltyOnTrainPath])
 
-    def detect_conflicts(self, train_ids) -> List[AlgorithmConflict]:
-        url_to_resource = "services/trains:detect-conflicts?trainIds={}".format(','.join([str(train_id) for train_id in train_ids]))
-        response_list = self.__communication_layer.do_get_request(url_to_resource)
+    def detect_conflicts(self, arguments: ConflictDetectionArguments) -> List[AlgorithmConflict]:
+
+        url_to_resource = "services/trains:detect-conflicts"
+
+        query_parameters = dict(trainIds = arguments.train_ids)
+
+        if len(arguments.filter_conflict_types) >  0:
+            query_parameters['types'] = to_json_converter.convert_any_object(arguments.filter_conflict_types)
+
+        if arguments.filter_train_id is not None:
+            query_parameters['trainId'] = arguments.filter_train_id
+
+        if arguments.time_window is not None:
+            query_parameters["timeWindow"] = to_json_converter.convert_any_object(arguments.time_window)
+
+        if len(arguments.filter_node_ids) > 0 :
+            query_parameters["nodeIds"] = arguments.filter_node_ids
+
+        if len(arguments.filter_section_track_ids) > 0:
+            query_parameters["sectionTrackIds"] = arguments.filter_section_track_ids
+
+        response_list = self.__communication_layer.do_get_request(url_to_resource, query_parameters)
         return JsonToAidmConverter().process_json_to_aidm(response_list, List[AlgorithmConflict])

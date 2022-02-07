@@ -1,3 +1,4 @@
+import datetime
 import unittest
 from unittest import mock
 
@@ -5,7 +6,7 @@ from py_client.algorithm_interface.algorithm_interface import AlgorithmInterface
 from py_client.algorithm_interface import algorithm_interface_factory
 import py_client.algorithm_interface_test.test_helper.SessionMockFactory as SessionMockFactory
 from py_client.algorithm_interface_test.test_helper.SessionMockTestBase import get_api_url, SessionMockTestBase
-from py_client.aidm import AlgorithmConflict, ConflictType
+from py_client.aidm import AlgorithmConflict, ConflictType, ConflictDetectionArguments
 from py_client.aidm.aidm_time_window_classes import TimeWindow
 
 class TestDetectConflicts(unittest.TestCase):
@@ -32,8 +33,6 @@ class TestDetectConflicts(unittest.TestCase):
 
             return SessionMockFactory.create_response_mock(json_string, 200)
 
-    interface_to_viriato: AlgorithmInterface
-
     @mock.patch('requests.Session', side_effect=DetectConflictsMockSession)
     def setUp(self, mocked_get_obj):
         self.interface_to_viriato = algorithm_interface_factory.create(get_api_url())
@@ -41,20 +40,21 @@ class TestDetectConflicts(unittest.TestCase):
     @mock.patch('requests.Session', side_effect=DetectConflictsMockSession)
     def test_detect_conflicts_mock_session(self, mocked_get_obj):
         train_ids = [6745, 6750]
-        self.interface_to_viriato.detect_conflicts(train_ids = train_ids)
+        arguments = ConflictDetectionArguments(train_ids = train_ids)
+
+        self.interface_to_viriato.detect_conflicts(arguments = arguments)
 
         session_obj = self.interface_to_viriato._AlgorithmInterface__communication_layer.currentSession
 
         self.assertEqual(session_obj._DetectConflictsMockSession__last_request,
-                         get_api_url() + "/services/trains:detect-conflicts?trainIds={}".format(','.join([str(train_id) for train_id in train_ids])))
+                         get_api_url() + "/services/trains:detect-conflicts")
 
-        self.assertDictEqual(session_obj._DetectConflictsMockSession__last_body,
-                             dict())
+        self.assertDictEqual(session_obj._DetectConflictsMockSession__last_body, {'trainIds': [6745, 6750]})
 
     @mock.patch('requests.Session', side_effect=DetectConflictsMockSession)
     def test_detect_conflicts_response(self, mocked_get_obj):
-        train_ids = [6745, 6750]
-        list_of_algorithm_conflicts = self.interface_to_viriato.detect_conflicts(train_ids = train_ids)
+        arguments = ConflictDetectionArguments(train_ids = [6745, 6750])
+        list_of_algorithm_conflicts = self.interface_to_viriato.detect_conflicts(arguments = arguments)
 
         self.assertIsInstance(
             list_of_algorithm_conflicts,
@@ -110,16 +110,15 @@ class TestDetectConflictsEmpty(unittest.TestCase):
 
             return SessionMockFactory.create_response_mock(json_string, 200)
 
-    interface_to_viriato: AlgorithmInterface
-
     @mock.patch('requests.Session', side_effect=DetectConflictsEmptyMockSession)
     def setUp(self, mocked_get_obj):
         self.interface_to_viriato = algorithm_interface_factory.create(get_api_url())
 
     @mock.patch('requests.Session', side_effect=DetectConflictsEmptyMockSession)
     def test_detect_conflicts_empty(self, mocked_get_obj):
-        train_ids = [6745, 6750]
-        list_of_algorithm_conflicts = self.interface_to_viriato.detect_conflicts(train_ids=train_ids)
+        arguments = ConflictDetectionArguments(train_ids = [6745, 6750])
+
+        list_of_algorithm_conflicts = self.interface_to_viriato.detect_conflicts(arguments = arguments)
 
         self.assertIsInstance(
             list_of_algorithm_conflicts,
@@ -128,5 +127,53 @@ class TestDetectConflictsEmpty(unittest.TestCase):
         self.assertEqual(len(list_of_algorithm_conflicts), 0)
 
     @mock.patch('requests.Session', side_effect=DetectConflictsEmptyMockSession)
+    def tearDown(self, mocked_get_obj) -> None:
+        self.interface_to_viriato.__exit__(None, None, None)
+
+class TestDetectConflictsWithNonMandatoryFilters(unittest.TestCase):
+    class DetectConflictsWithNonMandatoryFiltersMockSession(SessionMockTestBase):
+        def get(self, request, params):
+            self.__last_body = params
+            self.__last_request = request
+
+            json_string = "[]"
+
+            return SessionMockFactory.create_response_mock(json_string, 200)
+
+    @mock.patch('requests.Session', side_effect=DetectConflictsWithNonMandatoryFiltersMockSession)
+    def setUp(self, mocked_get_obj):
+        self.interface_to_viriato = algorithm_interface_factory.create(get_api_url())
+
+    @mock.patch('requests.Session', side_effect=DetectConflictsWithNonMandatoryFiltersMockSession)
+    def test_detect_conflicts_with_non_mandatory_filters_session(self, mocked_get_obj):
+        train_ids = [6745, 6750]
+        train_id = 1230
+        time_window = TimeWindow(datetime.datetime(year=2022, month=1, day=23, hour=23, minute=45), datetime.datetime(year=2022, month=1, day=24, hour=0, minute=15))
+        filter_node_ids = [4578, 2397]
+        filter_section_track_ids = [529, 735]
+        conflict_types = [ConflictType.Crossing]
+        arguments = ConflictDetectionArguments(train_ids=train_ids )\
+            .with_type_filter(conflict_types)\
+            .with_location_filter(filter_node_ids,filter_section_track_ids)\
+            .with_train_filter(train_id)\
+            .with_time_filter(time_window)
+
+        self.interface_to_viriato.detect_conflicts(arguments=arguments)
+
+        session_obj = self.interface_to_viriato._AlgorithmInterface__communication_layer.currentSession
+
+        self.assertEqual(session_obj._DetectConflictsWithNonMandatoryFiltersMockSession__last_request,
+                         get_api_url() + "/services/trains:detect-conflicts")
+
+        self.assertDictEqual(session_obj._DetectConflictsWithNonMandatoryFiltersMockSession__last_body,
+                             {'nodeIds':[4578, 2397],
+                              'sectionTrackIds': [529, 735],
+                              'trainIds': [6745, 6750],
+                              'trainId': 1230,
+                              'timeWindow': {'fromTime': '2022-01-23T23:45:00',
+                                             'toTime': '2022-01-24T00:15:00'},
+                              'types': ['crossing']})
+
+    @mock.patch('requests.Session', side_effect=DetectConflictsWithNonMandatoryFiltersMockSession)
     def tearDown(self, mocked_get_obj) -> None:
         self.interface_to_viriato.__exit__(None, None, None)

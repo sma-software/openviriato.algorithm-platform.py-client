@@ -222,10 +222,10 @@ class AlgorithmInterface:
         return JsonToAidmConverter().process_json_to_aidm(response_list, List[AlgorithmTrain])
 
     def get_trains_cut_to_time_range_driving_any_node(
-        self, time_window: TimeWindow, node_ids: List[int]
+        self, time_window: TimeWindow, filter_node_ids: List[int]
     ) -> List[AlgorithmTrain]:
         url_to_resource = "trains"
-        manual_converted_query_parameters = dict(cutTrain=True, nodeFilter=node_ids)
+        manual_converted_query_parameters = dict(cutTrain=True, filterNodeIds=filter_node_ids)
         query_parameters = _interface_helpers.merge_query_parameters(
             [manual_converted_query_parameters, to_json_converter.convert_any_object(time_window)]
         )

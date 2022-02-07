@@ -64,7 +64,7 @@ class TestGetTrainsCutToTimeRangeDrivingAnyNode(unittest.TestCase):
                                  to_time=datetime.datetime(2004, 1, 1, 0, 0))
         node_ids = [10, 11, 18]
 
-        self.interface_to_viriato.get_trains_cut_to_time_range_driving_any_node(time_window, node_ids=node_ids)
+        self.interface_to_viriato.get_trains_cut_to_time_range_driving_any_node(time_window, filter_node_ids=node_ids)
 
         session_obj = self.interface_to_viriato._AlgorithmInterface__communication_layer.currentSession
         self.assertEqual(session_obj._GetTrainsCutToTimeRangeDrivingAnyNodeTestMockSession__last_request,
@@ -73,7 +73,7 @@ class TestGetTrainsCutToTimeRangeDrivingAnyNode(unittest.TestCase):
                              dict(fromTime="2000-01-01T01:01:00",
                                   toTime="2004-01-01T00:00:00",
                                   cutTrain=True,
-                                  nodeFilter=[10, 11, 18]))
+                                  filterNodeIds=[10, 11, 18]))
 
     @mock.patch('requests.Session', side_effect=GetTrainsCutToTimeRangeDrivingAnyNodeTestMockSession)
     def test_get_trains_cut_to_time_range_driving_any_node_response(self, mocked_get_obj):
@@ -83,7 +83,7 @@ class TestGetTrainsCutToTimeRangeDrivingAnyNode(unittest.TestCase):
 
         listed_algorithm_trains = self.interface_to_viriato.get_trains_cut_to_time_range_driving_any_node(
             time_window,
-            node_ids=node_ids)
+            filter_node_ids=node_ids)
 
         self.assertIsInstance(listed_algorithm_trains, list)
         self.assertEqual(listed_algorithm_trains.__len__(), 1)

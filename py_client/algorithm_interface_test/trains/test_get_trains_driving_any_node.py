@@ -64,14 +64,14 @@ class TestGetTrainsDrivingAnyNode(unittest.TestCase):
                                  to_time=datetime.datetime(2004, 1, 1, 0, 0))
         node_ids = [10]
 
-        self.interface_to_viriato.get_trains_driving_any_node(time_window, node_ids=node_ids)
+        self.interface_to_viriato.get_trains_driving_any_node(time_window, filter_node_ids=node_ids)
 
         session_obj = self.interface_to_viriato._AlgorithmInterface__communication_layer.currentSession
         self.assertEqual(session_obj._GetTrainsDrivingAnyNodeTestMockSession__last_request, get_api_url() + '/trains')
         self.assertDictEqual(session_obj._GetTrainsDrivingAnyNodeTestMockSession__last_body,
                              dict(fromTime="2000-01-01T01:01:00",
                                   toTime="2004-01-01T00:00:00",
-                                  nodeFilter=[10]))
+                                  filterNodeIds=[10]))
 
     @mock.patch('requests.Session', side_effect=GetTrainsDrivingAnyNodeTestMockSession)
     def test_get_trains_driving_any_node_response(self, mocked_get_obj):
@@ -79,7 +79,7 @@ class TestGetTrainsDrivingAnyNode(unittest.TestCase):
                                  to_time=datetime.datetime(2004, 1, 1, 0, 0))
         node_ids = [10]
 
-        listed_algorithm_trains = self.interface_to_viriato.get_trains_driving_any_node(time_window, node_ids=node_ids)
+        listed_algorithm_trains = self.interface_to_viriato.get_trains_driving_any_node(time_window, filter_node_ids=node_ids)
 
         self.assertIsInstance(listed_algorithm_trains, list)
         self.assertEqual(listed_algorithm_trains.__len__(), 1)

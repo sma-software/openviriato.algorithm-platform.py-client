@@ -639,10 +639,7 @@ class AlgorithmInterface:
 
     def get_floating_point_algorithm_parameter(self, key: str) -> FloatingPoint:
         response_dict_or_none = _interface_helpers.do_get_any_parameter(self.__communication_layer, key)
-        if response_dict_or_none is None:
-            return None
-        else:
-            return JsonToAidmConverter().process_json_to_aidm(response_dict_or_none, FloatingPoint)
+        return JsonToAidmConverter().process_json_to_aidm(response_dict_or_none, FloatingPoint)
 
     def get_string_algorithm_parameter(self, key: str) -> str:
         response_string_or_none = _interface_helpers.do_get_any_parameter(self.__communication_layer, key)
@@ -658,10 +655,7 @@ class AlgorithmInterface:
 
     def get_time_window_algorithm_parameter(self, key: str) -> TimeWindow:
         response_dict_or_none = _interface_helpers.do_get_any_parameter(self.__communication_layer, key)
-        if response_dict_or_none is None:
-            return None
-        else:
-            return JsonToAidmConverter().process_json_to_aidm(response_dict_or_none, TimeWindow)
+        return JsonToAidmConverter().process_json_to_aidm(response_dict_or_none, TimeWindow)
 
     def get_node_track_closures(self, time_window: TimeWindow) -> List[AlgorithmNodeTrackClosure]:
         url_to_resource = "possessions/node-track-closures"
@@ -689,7 +683,7 @@ class AlgorithmInterface:
     def create_train_simulation(self, time_window: TimeWindow) -> None:
         query_parameters = to_json_converter.convert_any_object(time_window)
         url_to_resource = "services/trains/simulations"
-        response = self.__communication_layer.do_put_request(url_to_resource, query_parameters)
+        self.__communication_layer.do_put_request(url_to_resource, query_parameters)
 
     def get_train_simulation_trains(self) -> List[AlgorithmTrainSimulationTrain]:
         url_to_resource = "services/trains/simulations/trains"

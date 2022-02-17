@@ -6,6 +6,7 @@ from py_client.aidm.aidm_link_classes import _AlgorithmLink, AlgorithmAwaitArriv
 from py_client.aidm.aidm_routing_edge_classes import _RoutingEdge, CrossingRoutingEdge, IncomingRoutingEdge, OutgoingRoutingEdge, IncomingNodeTrackRoutingEdge, OutgoingNodeTrackRoutingEdge
 from py_client.aidm.aidm_routing_edge_classes import *
 from abc import ABC, abstractmethod
+from py_client.aidm.aidm_conflict import _AlgorithmConflict, AlgorithmNodeConflict, AlgorithmSectionTrackConflict
 import datetime
 import isodate
 
@@ -164,6 +165,16 @@ class PolymorphicClassesProcessor(JsonToAidmProcessor):
                     aidm_type,
                     aidm_type_later_in_list), None)
 
+# TODO VPLAT-9453: Remove this processor
+class ConflictProcessor(JsonToAidmProcessor):
+    def is_applicable(self, attribute_dict: dict, targeted_type: Type[object]) -> bool:
+        return targeted_type == _AlgorithmConflict
+
+    def process_attribute_dict(self, attribute_dict: dict, aidm_class: Type) -> object:
+        if "sectionTrackId" in attribute_dict.keys():
+            return JsonToAidmConverter().process_json_to_aidm(attribute_dict, AlgorithmSectionTrackConflict)
+        else:
+            return JsonToAidmConverter().process_json_to_aidm(attribute_dict, AlgorithmNodeConflict)
 
 class JsonToAidmConverter:
     __processors: List[JsonToAidmProcessor]
@@ -176,6 +187,7 @@ class JsonToAidmConverter:
             TimedeltaProcessor(),
             EnumProcessor(),
             PolymorphicClassesProcessor(),
+            ConflictProcessor(),
             AtomicTypeProcessor()
         ]
 

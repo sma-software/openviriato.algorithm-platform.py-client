@@ -7,19 +7,19 @@ from py_client.aidm.aidm_time_window_classes import TimeWindow
 class ConflictType(Enum):
     Crossing = "crossing"
     Trafficability = "trafficability"
+    SimultaneousArrival = "simultaneousArrival"
+    TravelDirectionChange = "travelDirectionChange"
 
 
-class AlgorithmConflict:
+class _AlgorithmConflict:
     __conflict_type: ConflictType
     __involved_train_ids: List[int]
     __time_window: TimeWindow
-    __section_track_id: int
 
-    def __init__(self, conflict_type: ConflictType, involved_train_ids: List[int], time_window: TimeWindow, section_track_id: int):
+    def __init__(self, conflict_type: ConflictType, involved_train_ids: List[int], time_window: TimeWindow):
         self.__conflict_type = conflict_type
         self.__involved_train_ids = involved_train_ids
         self.__time_window = time_window
-        self.__section_track_id = section_track_id
 
     @property
     def conflict_type(self) -> ConflictType:
@@ -33,9 +33,28 @@ class AlgorithmConflict:
     def time_window(self) -> TimeWindow:
         return self.__time_window
 
+class AlgorithmSectionTrackConflict(_AlgorithmConflict):
+    __section_track_id: int
+
+    def __init__(self, conflict_type: ConflictType, involved_train_ids: List[int], time_window: TimeWindow, section_track_id: int):
+        super().__init__(conflict_type, involved_train_ids, time_window)
+        self.__section_track_id = section_track_id
+
     @property
     def section_track_id(self) -> int:
         return self.__section_track_id
+
+class AlgorithmNodeConflict(_AlgorithmConflict):
+    __node_id: int
+
+    def __init__(self, conflict_type: ConflictType, involved_train_ids: List[int], time_window: TimeWindow, node_id: int):
+        super().__init__(conflict_type, involved_train_ids, time_window)
+        self.__node_id = node_id
+
+    @property
+    def node_id(self) -> int:
+        return self.__node_id
+
 
 class ConflictDetectionArguments:
     __filter_conflict_types: List[ConflictType]

@@ -1,4 +1,4 @@
-from typing import Type, List, Optional, Union, get_type_hints, get_origin, get_args
+from typing import Type, List, Optional, Union, Dict, get_type_hints, get_origin, get_args
 from py_client.communication.response_processing import AlgorithmPlatformConversionError
 from py_client.aidm.aidm_base_classes import _HasID
 from py_client.conversion.converter_helpers import *
@@ -6,7 +6,7 @@ from py_client.aidm.aidm_link_classes import _AlgorithmLink, AlgorithmAwaitArriv
 from py_client.aidm.aidm_routing_edge_classes import _RoutingEdge, CrossingRoutingEdge, IncomingRoutingEdge, OutgoingRoutingEdge, IncomingNodeTrackRoutingEdge, OutgoingNodeTrackRoutingEdge
 from py_client.aidm.aidm_routing_edge_classes import *
 from abc import ABC, abstractmethod
-from py_client.aidm.aidm_conflict import _AlgorithmConflict, AlgorithmNodeConflict, AlgorithmSectionTrackConflict
+from py_client.aidm.aidm_conflict import _AlgorithmConflict, _AlgorithmNodeConflict, _AlgorithmSectionTrackConflict, _InfrastructureConflict, _AlgorithmTrainConflict, ConflictType, _DoubleTrainConflict, SectionTrackDoubleTrainConflict
 import datetime
 import isodate
 
@@ -165,16 +165,27 @@ class PolymorphicClassesProcessor(JsonToAidmProcessor):
                     aidm_type,
                     aidm_type_later_in_list), None)
 
-# TODO VPLAT-9453: Remove this processor
+
+class ConflictTypeMappingLookup:
+    __lookup : Dict[ConflictType, _AlgorithmConflict] = dict()
+
+    def __init__(self):
+        self.__lookup[ConflictType.Crossing] = SectionTrackDoubleTrainConflict
+
+    def get_conflict_type_mapping(self, enumConflictype: ConflictType) -> Type[_AlgorithmConflict]:
+        return self.__lookup[enumConflictype]
+
 class ConflictProcessor(JsonToAidmProcessor):
-    def is_applicable(self, attribute_dict: dict, targeted_type: Type[object]) -> bool:
+    def is_applicable(self, attribute_dict: dict, targeted_type: Type[_AlgorithmConflict]) -> bool:
         return targeted_type == _AlgorithmConflict
 
-    def process_attribute_dict(self, attribute_dict: dict, aidm_class: Type) -> object:
-        if "sectionTrackId" in attribute_dict.keys():
-            return JsonToAidmConverter().process_json_to_aidm(attribute_dict, AlgorithmSectionTrackConflict)
-        else:
-            return JsonToAidmConverter().process_json_to_aidm(attribute_dict, AlgorithmNodeConflict)
+    def process_attribute_dict(self, attribute_dict: dict, aidm_class: Type) -> _AlgorithmConflict:
+        conflict_type_as_enum = JsonToAidmConverter().process_json_to_aidm(attribute_dict["conflictType"], ConflictType)
+        targeted_type = ConflictTypeMappingLookup().get_conflict_type_mapping(conflict_type_as_enum)
+        # TODO VPLAT-9618: remove this 2 lines and use the real value
+        attribute_dict['preceding_train_path_node_id'] = None
+        attribute_dict['succeeding_train_path_node_id'] = None
+        return JsonToAidmConverter().process_json_to_aidm(attribute_dict, targeted_type)
 
 class JsonToAidmConverter:
     __processors: List[JsonToAidmProcessor]

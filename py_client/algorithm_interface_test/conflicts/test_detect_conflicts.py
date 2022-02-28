@@ -6,7 +6,7 @@ from py_client.algorithm_interface.algorithm_interface import AlgorithmInterface
 from py_client.algorithm_interface import algorithm_interface_factory
 import py_client.algorithm_interface_test.test_helper.SessionMockFactory as SessionMockFactory
 from py_client.algorithm_interface_test.test_helper.SessionMockTestBase import get_api_url, SessionMockTestBase
-from py_client.aidm.aidm_conflict import _AlgorithmConflict, ConflictType, ConflictDetectionArguments, AlgorithmSectionTrackConflict, AlgorithmNodeConflict
+from py_client.aidm.aidm_conflict import _AlgorithmConflict, ConflictType, ConflictDetectionArguments, _AlgorithmSectionTrackConflict, _AlgorithmNodeConflict, _DoubleTrainConflict, SectionTrackDoubleTrainConflict
 from py_client.aidm.aidm_time_window_classes import TimeWindow
 
 class TestDetectConflicts(unittest.TestCase):
@@ -27,16 +27,7 @@ class TestDetectConflicts(unittest.TestCase):
                             "           6745, \n"
                             "           6750 \n"
                             "       ] \n"
-                            "   }, \n"
-                            "   {"
-                            "       \"nodeId\": 162, \n"
-                            "       \"conflictType\": \"simultaneousArrival\", \n"
-                            "       \"timeWindow\": { \n"
-                            "           \"fromTime\": \"2003-08-04T12:18:24\", \n"
-                            "           \"toTime\": \"2003-08-04T12:19:36\" \n"
-                            "       }, \n"
-                            "       \"involvedTrainIds\": [6749, 6754] \n"
-                            "       }"
+                            "   } \n"
                             "]"
                             )
 
@@ -68,9 +59,14 @@ class TestDetectConflicts(unittest.TestCase):
         self.assertIsInstance(
             list_of_algorithm_conflicts,
             list)
+
         self.assertIsInstance(
             list_of_algorithm_conflicts[0],
-            AlgorithmSectionTrackConflict)
+            _AlgorithmSectionTrackConflict)
+
+        self.assertIsInstance(
+            list_of_algorithm_conflicts[0],
+            SectionTrackDoubleTrainConflict)
 
         self.assertIsInstance(
             list_of_algorithm_conflicts[0].conflict_type,
@@ -103,22 +99,6 @@ class TestDetectConflicts(unittest.TestCase):
         self.assertEqual(
             list_of_algorithm_conflicts[0].section_track_id,
             921)
-
-        self.assertIsInstance(
-            list_of_algorithm_conflicts[1],
-            AlgorithmNodeConflict)
-
-        self.assertIsInstance(
-            list_of_algorithm_conflicts[1].conflict_type,
-            ConflictType)
-
-        self.assertEqual(
-            list_of_algorithm_conflicts[1].conflict_type,
-            ConflictType.SimultaneousArrival)
-
-        self.assertIsInstance(
-            list_of_algorithm_conflicts[1].time_window,
-            TimeWindow)
 
     @mock.patch('requests.Session', side_effect=DetectConflictsMockSession)
     def tearDown(self, mocked_get_obj) -> None:

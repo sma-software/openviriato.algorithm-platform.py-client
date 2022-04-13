@@ -6,7 +6,7 @@ from py_client.aidm.aidm_link_classes import _AlgorithmLink, AlgorithmAwaitArriv
 from py_client.aidm.aidm_routing_edge_classes import _RoutingEdge, CrossingRoutingEdge, IncomingRoutingEdge, OutgoingRoutingEdge, IncomingNodeTrackRoutingEdge, OutgoingNodeTrackRoutingEdge
 from py_client.aidm.aidm_routing_edge_classes import *
 from abc import ABC, abstractmethod
-from py_client.aidm.aidm_conflict import _AlgorithmConflict, _AlgorithmNodeConflict, _AlgorithmSectionTrackConflict, _InfrastructureConflict, _AlgorithmTrainConflict, ConflictType, _DoubleTrainConflict, SectionTrackDoubleTrainConflict
+from py_client.aidm.aidm_conflict import _AlgorithmConflict, _AlgorithmNodeConflict, _AlgorithmSectionTrackConflict, _AlgorithmInfrastructureConflict, _AlgorithmTrainConflict, ConflictType, _AlgorithmTwoTrainConflict, AlgorithmTwoTrainSectionTrackConflict
 import datetime
 import isodate
 
@@ -170,7 +170,7 @@ class ConflictTypeMappingLookup:
     __lookup : Dict[ConflictType, _AlgorithmConflict] = dict()
 
     def __init__(self):
-        self.__lookup[ConflictType.Crossing] = SectionTrackDoubleTrainConflict
+        self.__lookup[ConflictType.Crossing] = AlgorithmTwoTrainSectionTrackConflict
 
     def get_conflict_type_mapping(self, enumConflictype: ConflictType) -> Type[_AlgorithmConflict]:
         return self.__lookup[enumConflictype]
@@ -182,9 +182,6 @@ class ConflictProcessor(JsonToAidmProcessor):
     def process_attribute_dict(self, attribute_dict: dict, aidm_class: Type) -> _AlgorithmConflict:
         conflict_type_as_enum = JsonToAidmConverter().process_json_to_aidm(attribute_dict["conflictType"], ConflictType)
         targeted_type = ConflictTypeMappingLookup().get_conflict_type_mapping(conflict_type_as_enum)
-        # TODO VPLAT-9618: remove this 2 lines and use the real value
-        attribute_dict['preceding_train_path_node_id'] = None
-        attribute_dict['succeeding_train_path_node_id'] = None
         return JsonToAidmConverter().process_json_to_aidm(attribute_dict, targeted_type)
 
 class JsonToAidmConverter:

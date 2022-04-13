@@ -6,7 +6,7 @@ from py_client.algorithm_interface.algorithm_interface import AlgorithmInterface
 from py_client.algorithm_interface import algorithm_interface_factory
 import py_client.algorithm_interface_test.test_helper.SessionMockFactory as SessionMockFactory
 from py_client.algorithm_interface_test.test_helper.SessionMockTestBase import get_api_url, SessionMockTestBase
-from py_client.aidm.aidm_conflict import _AlgorithmConflict, ConflictType, ConflictDetectionArguments, _AlgorithmSectionTrackConflict, _AlgorithmNodeConflict, _DoubleTrainConflict, SectionTrackDoubleTrainConflict
+from py_client.aidm.aidm_conflict import _AlgorithmConflict, ConflictType, ConflictDetectionArguments, _AlgorithmSectionTrackConflict, _AlgorithmNodeConflict, AlgorithmTwoTrainSectionTrackConflict
 from py_client.aidm.aidm_time_window_classes import TimeWindow
 
 class TestDetectConflicts(unittest.TestCase):
@@ -17,17 +17,17 @@ class TestDetectConflicts(unittest.TestCase):
 
             json_string = ( "["
                             "   {"
-                            "       \"sectionTrackId\": 921, \n"
                             "       \"conflictType\": \"crossing\", \n"
                             "       \"timeWindow\": { \n"
-                            "           \"FromTime\": \"2003-08-04T12:17:36\", \n"
-                            "           \"ToTime\": \"2003-08-04T12:18:24\" \n"
-                            "       }, \n"
-                            "       \"involvedTrainIds\": [ \n"
-                            "           6745, \n"
-                            "           6750 \n"
-                            "       ] \n"
-                            "   } \n"
+                            "       \"fromTime\": \"2005-05-01T04:04:00\", \n"
+                            "       \"toTime\": \"2005-05-01T04:07:00\" \n"
+                            "   }, \n"
+                            "   \"sectionTrackId\": 725, \n"
+                            "   \"precedingTrainId\": 1238, \n"
+                            "   \"precedingTrainPathNodeId\": 1236, \n"
+                            "   \"succeedingTrainId\": 1226, \n"
+                            "   \"succeedingTrainPathNodeId\": 1225 \n"
+                            "    } \n"
                             "]"
                             )
 
@@ -39,7 +39,7 @@ class TestDetectConflicts(unittest.TestCase):
 
     @mock.patch('requests.Session', side_effect=DetectConflictsMockSession)
     def test_detect_conflicts_mock_session(self, mocked_get_obj):
-        train_ids = [6745, 6750]
+        train_ids = [1238, 1226]
         arguments = ConflictDetectionArguments(train_ids = train_ids)
 
         self.interface_to_viriato.detect_conflicts(arguments = arguments)
@@ -49,11 +49,11 @@ class TestDetectConflicts(unittest.TestCase):
         self.assertEqual(session_obj._DetectConflictsMockSession__last_request,
                          get_api_url() + "/services/trains:detect-conflicts")
 
-        self.assertDictEqual(session_obj._DetectConflictsMockSession__last_body, {'trainIds': [6745, 6750]})
+        self.assertDictEqual(session_obj._DetectConflictsMockSession__last_body, {'trainIds': [1238, 1226]})
 
     @mock.patch('requests.Session', side_effect=DetectConflictsMockSession)
     def test_detect_conflicts_response(self, mocked_get_obj):
-        arguments = ConflictDetectionArguments(train_ids = [6745, 6750])
+        arguments = ConflictDetectionArguments(train_ids = [1238, 1226])
         list_of_algorithm_conflicts = self.interface_to_viriato.detect_conflicts(arguments = arguments)
 
         self.assertIsInstance(
@@ -66,7 +66,7 @@ class TestDetectConflicts(unittest.TestCase):
 
         self.assertIsInstance(
             list_of_algorithm_conflicts[0],
-            SectionTrackDoubleTrainConflict)
+            AlgorithmTwoTrainSectionTrackConflict)
 
         self.assertIsInstance(
             list_of_algorithm_conflicts[0].conflict_type,
@@ -77,29 +77,37 @@ class TestDetectConflicts(unittest.TestCase):
             ConflictType.Crossing)
 
         self.assertIsInstance(
-            list_of_algorithm_conflicts[0].involved_train_ids,
-            list)
-
-        self.assertEqual(
-            list_of_algorithm_conflicts[0].involved_train_ids[0],
-            6745)
-
-        self.assertEqual(
-            list_of_algorithm_conflicts[0].involved_train_ids[1],
-            6750)
-
-        self.assertIsInstance(
             list_of_algorithm_conflicts[0].time_window,
             TimeWindow)
 
-        self.assertIsInstance(
-            list_of_algorithm_conflicts[0].section_track_id,
-            int)
+        self.assertEqual(
+            list_of_algorithm_conflicts[0].time_window.from_time,
+            datetime.datetime(day=1, month=5, year=2005, hour=4, minute=4, second=0))
+
+        self.assertEqual(
+            list_of_algorithm_conflicts[0].time_window.to_time,
+            datetime.datetime(day=1, month=5, year=2005, hour=4, minute=7, second=0))
 
         self.assertEqual(
             list_of_algorithm_conflicts[0].section_track_id,
-            921)
+            725)
 
+        self.assertEqual(
+            list_of_algorithm_conflicts[0].preceding_train_id,
+            1238)
+
+        self.assertEqual(
+            list_of_algorithm_conflicts[0].preceding_train_path_node_id,
+            1236)
+
+        self.assertEqual(
+            list_of_algorithm_conflicts[0].succeeding_train_id,
+            1226)
+
+        self.assertEqual(
+            list_of_algorithm_conflicts[0].succeeding_train_path_node_id,
+            1225)
+        
     @mock.patch('requests.Session', side_effect=DetectConflictsMockSession)
     def tearDown(self, mocked_get_obj) -> None:
         self.interface_to_viriato.__exit__(None, None, None)
@@ -121,7 +129,7 @@ class TestDetectConflictsEmpty(unittest.TestCase):
 
     @mock.patch('requests.Session', side_effect=DetectConflictsEmptyMockSession)
     def test_detect_conflicts_empty(self, mocked_get_obj):
-        arguments = ConflictDetectionArguments(train_ids = [6745, 6750])
+        arguments = ConflictDetectionArguments(train_ids = [1238, 1226])
 
         list_of_algorithm_conflicts = self.interface_to_viriato.detect_conflicts(arguments = arguments)
 

@@ -3,23 +3,19 @@ from typing import List, Optional
 from enum import unique, Enum
 from py_client.aidm.aidm_time_window_classes import TimeWindow
 from py_client.aidm.aidm_train_path_node_classes import AlgorithmTrainPathNode
+from py_client.aidm.aidm_algorithm_classes import AlgorithmTrain
 
 @unique
 class ConflictType(Enum):
     Crossing = "crossing"
-    Trafficability = "trafficability"
-    SimultaneousArrival = "simultaneousArrival"
-    TravelDirectionChange = "travelDirectionChange"
 
 
 class _AlgorithmConflict:
     __conflict_type: ConflictType
-    __involved_train_ids: List[int]
     __time_window: TimeWindow
 
-    def __init__(self, conflict_type: ConflictType, involved_train_ids: List[int], time_window: TimeWindow):
+    def __init__(self, conflict_type: ConflictType, time_window: TimeWindow):
         self.__conflict_type = conflict_type
-        self.__involved_train_ids = involved_train_ids
         self.__time_window = time_window
 
     @property
@@ -27,69 +23,121 @@ class _AlgorithmConflict:
         return self.__conflict_type
 
     @property
-    def involved_train_ids(self) -> List[int]:
-        return self.__involved_train_ids
-
-    @property
     def time_window(self) -> TimeWindow:
         return self.__time_window
 
-class _InfrastructureConflict(_AlgorithmConflict):
-    # TODO VPLAT-9618: Implement this class
-    pass
+class _AlgorithmInfrastructureConflict(_AlgorithmConflict):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
 
 class _AlgorithmTrainConflict(_AlgorithmConflict):
-    # TODO VPLAT-9618: Implement this class
-    pass
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
 
-class _AlgorithmSectionTrackConflict(_InfrastructureConflict):
+class _AlgorithmSectionTrackConflict(_AlgorithmInfrastructureConflict):
     __section_track_id: int
 
-    def __init__(self, conflict_type: ConflictType, involved_train_ids: List[int], time_window: TimeWindow, section_track_id: int):
-        super().__init__(conflict_type, involved_train_ids, time_window)
+    def __init__(self, section_track_id: int, **kwargs):
+        super().__init__(**kwargs)
         self.__section_track_id = section_track_id
 
     @property
     def section_track_id(self) -> int:
         return self.__section_track_id
 
-class _AlgorithmNodeConflict(_InfrastructureConflict):
+class _AlgorithmNodeConflict(_AlgorithmInfrastructureConflict):
     __node_id: int
 
-    def __init__(self, conflict_type: ConflictType, involved_train_ids: List[int], time_window: TimeWindow, node_id: int):
-        super().__init__(conflict_type, involved_train_ids, time_window)
+    def __init__(self, node_id: int, **kwargs):
+        super().__init__(**kwargs)
         self.__node_id = node_id
 
     @property
     def node_id(self) -> int:
         return self.__node_id
 
-class _DoubleTrainConflict(_AlgorithmTrainConflict):
-    __preceding_train_path_node_id: Optional[int]
-    __succeeding_train_path_node_id: Optional[int]
+class _AlgorithmTwoTrainConflict(_AlgorithmTrainConflict):
+    __preceding_train_id: int
+    __preceding_train_path_node_id: int
+    __succeeding_train_id: int
+    __succeeding_train_path_node_id: int
 
-    def __init__(self, preceding_train_path_node: AlgorithmTrainPathNode, succeding_train_path_node: AlgorithmTrainPathNode):
-        self.__succeeding_train_path_node_id = succeding_train_path_node
-        self.__preceding_train_path_node_id = preceding_train_path_node
+    # **kwargs is needed because operator ** cannot deal with double interheritance otherwise (as needed by json2Aidm conversion)
+    def __init__(self, preceding_train_id: int, preceding_train_path_node_id: int, succeeding_train_id: int, succeding_train_path_node_id: int, **kwargs):
+        super().__init__(**kwargs)
+        self.__succeeding_train_id = succeeding_train_id
+        self.__succeeding_train_path_node_id = succeding_train_path_node_id
+        self.__preceding_train_id = preceding_train_id
+        self.__preceding_train_path_node_id = preceding_train_path_node_id
 
     @property
-    def succeeding_train_path_node_id(self) -> Optional[int]:
+    def succeeding_train_id(self) -> int:
+        return self.__succeeding_train_id
+
+    @property
+    def succeeding_train_path_node_id(self) -> int:
         return self.__succeeding_train_path_node_id
 
     @property
-    def preceding_train_path_node_id(self) -> Optional[int]:
+    def preceding_train_id(self) -> int:
+        return self.__preceding_train_id
+
+    @property
+    def preceding_train_path_node_id(self) -> int:
         return self.__preceding_train_path_node_id
 
-class SectionTrackDoubleTrainConflict(_DoubleTrainConflict, _AlgorithmSectionTrackConflict):
+class _AlgorithmOneTrainConflict(_AlgorithmTrainConflict):
+    __train_id: int
+    __train_path_node_id: int
+
+    def __init__(self, train_id: int, train_path_node_id: int, **kwargs):
+        super().__init__(**kwargs)
+        self.__train_id = train_id
+        self.__train_path_node_id = train_path_node_id
+
+    @property
+    def train_id(self) -> int:
+        return self.__train_id
+
+    @property
+    def train_path_node_id(self) -> int:
+        return self.__train_path_node_id
+
+class _AlgorithmMultipleTrainsConflict(_AlgorithmTrainConflict):
+    __train_ids: List[int]
+    __train_path_node_ids: List[int]
+
+    def __init__(self, train_ids: List[int], train_path_node_ids: List[int], **kwargs):
+        super().__init__(**kwargs)
+        self.__train_ids = train_ids
+        self.__train_path_node_ids = train_path_node_ids
+
+    @property
+    def train_ids(self) -> List[int]:
+        return self.__train_ids
+
+    @property
+    def train_path_node_ids(self) -> List[int]:
+        return self.__train_path_node_ids
+
+class AlgorithmTwoTrainSectionTrackConflict(_AlgorithmTwoTrainConflict, _AlgorithmSectionTrackConflict):
     def __init__(self,
                  conflict_type: ConflictType,
-                 involved_train_ids: List[int],
                  time_window: TimeWindow,
                  section_track_id: int,
-                 preceding_train_path_node_id: Optional[int],
-                 succeeding_train_path_node_id: Optional[int]):
-        _AlgorithmSectionTrackConflict.__init__(self, conflict_type, involved_train_ids, time_window, section_track_id)
-        _DoubleTrainConflict.__init__(self, preceding_train_path_node_id, succeeding_train_path_node_id)
+                 preceding_train_id: int,
+                 preceding_train_path_node_id: int,
+                 succeeding_train_id: int,
+                 succeeding_train_path_node_id: int):
+        super().__init__(
+            conflict_type=conflict_type,
+            time_window=time_window,
+            preceding_train_id=preceding_train_id,
+            preceding_train_path_node_id=preceding_train_path_node_id,
+            succeeding_train_id=succeeding_train_id,
+            succeding_train_path_node_id=succeeding_train_path_node_id,
+            section_track_id=section_track_id)
+
 
 class ConflictDetectionArguments:
     __filter_conflict_types: List[ConflictType]

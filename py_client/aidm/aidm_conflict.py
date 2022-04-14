@@ -8,6 +8,7 @@ from py_client.aidm.aidm_algorithm_classes import AlgorithmTrain
 @unique
 class ConflictType(Enum):
     Crossing = "crossing"
+    WrongDrivingDirection = "wrongDrivingDirection"
 
 
 class _AlgorithmConflict:
@@ -136,6 +137,21 @@ class AlgorithmTwoTrainSectionTrackConflict(_AlgorithmTwoTrainConflict, _Algorit
             preceding_train_path_node_id=preceding_train_path_node_id,
             succeeding_train_id=succeeding_train_id,
             succeding_train_path_node_id=succeeding_train_path_node_id,
+            section_track_id=section_track_id)
+
+class AlgorithmOneTrainSectionTrackConflict(_AlgorithmOneTrainConflict, _AlgorithmSectionTrackConflict):
+    def __init__(self,
+                 conflict_type: ConflictType,
+                 time_window: TimeWindow,
+                 section_track_id: int,
+                 train_id: int,
+                 train_path_node_id: int
+                 ):
+        super().__init__(
+            conflict_type=conflict_type,
+            time_window=time_window,
+            train_id=train_id,
+            train_path_node_id=train_path_node_id,
             section_track_id=section_track_id)
 
 

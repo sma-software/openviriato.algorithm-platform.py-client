@@ -6,7 +6,7 @@ from py_client.aidm.aidm_link_classes import _AlgorithmLink, AlgorithmAwaitArriv
 from py_client.aidm.aidm_routing_edge_classes import _RoutingEdge, CrossingRoutingEdge, IncomingRoutingEdge, OutgoingRoutingEdge, IncomingNodeTrackRoutingEdge, OutgoingNodeTrackRoutingEdge
 from py_client.aidm.aidm_routing_edge_classes import *
 from abc import ABC, abstractmethod
-from py_client.aidm.aidm_conflict import _AlgorithmConflict, _AlgorithmNodeConflict, _AlgorithmSectionTrackConflict, _AlgorithmInfrastructureConflict, _AlgorithmTrainConflict, ConflictType, _AlgorithmTwoTrainConflict, AlgorithmTwoTrainSectionTrackConflict, AlgorithmOneTrainSectionTrackConflict
+from py_client.aidm.aidm_conflict import _AlgorithmConflict, _AlgorithmNodeConflict, _AlgorithmSectionTrackConflict, _AlgorithmInfrastructureConflict, _AlgorithmTrainConflict, ConflictType, _AlgorithmTwoTrainConflict, AlgorithmTwoTrainSectionTrackConflict, AlgorithmOneTrainSectionTrackConflict, AlgorithmOneTrainNodeConflict
 import datetime
 import isodate
 
@@ -172,6 +172,7 @@ class ConflictTypeMappingLookup:
     def __init__(self):
         self.__lookup[ConflictType.Crossing] = AlgorithmTwoTrainSectionTrackConflict
         self.__lookup[ConflictType.WrongDrivingDirection] = AlgorithmOneTrainSectionTrackConflict
+        self.__lookup[ConflictType.ChangeDirection] = AlgorithmOneTrainNodeConflict
 
     def get_conflict_type_mapping(self, enumConflictype: ConflictType) -> Type[_AlgorithmConflict]:
         return self.__lookup[enumConflictype]

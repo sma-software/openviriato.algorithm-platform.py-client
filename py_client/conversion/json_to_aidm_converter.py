@@ -6,7 +6,7 @@ from py_client.aidm.aidm_link_classes import _AlgorithmLink, AlgorithmAwaitArriv
 from py_client.aidm.aidm_routing_edge_classes import _RoutingEdge, CrossingRoutingEdge, IncomingRoutingEdge, OutgoingRoutingEdge, IncomingNodeTrackRoutingEdge, OutgoingNodeTrackRoutingEdge
 from py_client.aidm.aidm_routing_edge_classes import *
 from abc import ABC, abstractmethod
-from py_client.aidm.aidm_conflict import _AlgorithmConflict, _AlgorithmNodeConflict, _AlgorithmSectionTrackConflict, _AlgorithmInfrastructureConflict, _AlgorithmTrainConflict, ConflictType, _AlgorithmTwoTrainConflict, AlgorithmTwoTrainSectionTrackConflict, AlgorithmOneTrainSectionTrackConflict, AlgorithmOneTrainNodeConflict
+from py_client.aidm.aidm_conflict import _AlgorithmConflict, _AlgorithmNodeConflict, _AlgorithmSectionTrackConflict, _AlgorithmInfrastructureConflict, _AlgorithmTrainConflict, ConflictType, _AlgorithmTwoTrainConflict, AlgorithmTwoTrainSectionTrackConflict, AlgorithmOneTrainSectionTrackConflict, AlgorithmOneTrainNodeConflict, AlgorithmTwoTrainNodeConflict
 import datetime
 import isodate
 
@@ -173,6 +173,11 @@ class ConflictTypeMappingLookup:
         self.__lookup[ConflictType.Crossing] = AlgorithmTwoTrainSectionTrackConflict
         self.__lookup[ConflictType.WrongDrivingDirection] = AlgorithmOneTrainSectionTrackConflict
         self.__lookup[ConflictType.ChangeDirection] = AlgorithmOneTrainNodeConflict
+        self.__lookup[ConflictType.SimultaneousArrival] = AlgorithmTwoTrainNodeConflict
+        self.__lookup[ConflictType.SameStationTrack] = AlgorithmTwoTrainNodeConflict
+        self.__lookup[ConflictType.SameSectionTrack] = AlgorithmTwoTrainNodeConflict
+        self.__lookup[ConflictType.IncompatibleStationRoutes] = AlgorithmTwoTrainNodeConflict
+        self.__lookup[ConflictType.IncompatibleJunctionRoutes] = AlgorithmTwoTrainNodeConflict
 
     def get_conflict_type_mapping(self, enumConflictype: ConflictType) -> Type[_AlgorithmConflict]:
         return self.__lookup[enumConflictype]

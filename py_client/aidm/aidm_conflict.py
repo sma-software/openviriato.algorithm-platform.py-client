@@ -10,7 +10,11 @@ class ConflictType(Enum):
     Crossing = "crossing"
     WrongDrivingDirection = "wrongDrivingDirection"
     ChangeDirection = "changeDirection"
-
+    SimultaneousArrival = "simultaneousArrival"
+    SameStationTrack = "sameStationTrack"
+    SameSectionTrack = "sameSectionTrack"
+    IncompatibleStationRoutes = "incompatibleStationRoutes"
+    IncompatibleJunctionRoutes = "incompatibleJunctionRoutes"
 
 class _AlgorithmConflict:
     __conflict_type: ConflictType
@@ -168,6 +172,24 @@ class AlgorithmOneTrainNodeConflict(_AlgorithmOneTrainConflict, _AlgorithmNodeCo
             time_window=time_window,
             train_id=train_id,
             train_path_node_id=train_path_node_id,
+            node_id=node_id)
+
+class AlgorithmTwoTrainNodeConflict(_AlgorithmTwoTrainConflict, _AlgorithmNodeConflict):
+    def __init__(self,
+                 conflict_type: ConflictType,
+                 time_window: TimeWindow,
+                 node_id: int,
+                 preceding_train_id: int,
+                 preceding_train_path_node_id: int,
+                 succeeding_train_id: int,
+                 succeeding_train_path_node_id: int):
+        super().__init__(
+            conflict_type=conflict_type,
+            time_window=time_window,
+            preceding_train_id=preceding_train_id,
+            preceding_train_path_node_id=preceding_train_path_node_id,
+            succeeding_train_id=succeeding_train_id,
+            succeding_train_path_node_id=succeeding_train_path_node_id,
             node_id=node_id)
 
 

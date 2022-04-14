@@ -1,6 +1,6 @@
 # Walkthrough Creating an Algorithm Using the py_client
 
-In this walkthrough we will show you how to create algorithms using the [AlgorithmInterface](../py_client/algorithm_interface/algorithm_interface.py) via the Python client (py_client) provided with the Algorithm Platform.
+In this walkthrough we will show you how to create algorithms using the [AlgorithmInterface](../../py_client/algorithm_interface/algorithm_interface.py) via the Python client (py_client) provided with the Algorithm Platform.
                                                                                         
                                                                          
 
@@ -49,9 +49,9 @@ pip install sma.algorithm_platform.py_client-{py_client-version}.whl
 ## Counting Trains with the py_client
 
 Having installed the py_client we can start to develop our algorithm. Just import
-the [AlgorithmInterface](../py_client/algorithm_interface/algorithm_interface.py)
+the [AlgorithmInterface](../../py_client/algorithm_interface/algorithm_interface.py)
 and use it by putting it into a `with` statement. Then you can use all available methods. The example code shows how to
-query all [AlgorithmTrain](../py_client/aidm/aidm_algorithm_classes.py) in a given [TimeWindow](../py_client/aidm/aidm_time_window_classes.py), counts them and sends a message to the user reporting the number. You can [download this sample](../Walkthrough/count_trains_py_client.py).
+query all [AlgorithmTrain](../../py_client/aidm/aidm_algorithm_classes.py) in a given [TimeWindow](../../py_client/aidm/aidm_time_window_classes.py), counts them and sends a message to the user reporting the number. You can [download this sample](count_trains_py_client.py).
 
 ```python
 import argparse
@@ -99,7 +99,7 @@ that the algorithm is saved under
 ```
 ${FolderToAlgorithmPlatform}\\Extension\\AlgorithmPlatform\\algorithms\\count_trains_py_client.py
 ```
-Then we may save the algorithm configuration in the `algorithms.json`:
+Then we may save the algorithm configuration in the ~~~~`algorithms.json`:
 
 ```json
 {

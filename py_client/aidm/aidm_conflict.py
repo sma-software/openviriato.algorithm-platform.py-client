@@ -1,5 +1,5 @@
 from __future__ import annotations
-from typing import List, Optional
+from typing import List, Optional, Union
 from enum import unique, Enum
 from py_client.aidm.aidm_time_window_classes import TimeWindow
 from py_client.aidm.aidm_train_path_node_classes import AlgorithmTrainPathNode
@@ -40,7 +40,7 @@ class _AlgorithmTrainConflict(_AlgorithmConflict):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
-class _AlgorithmSectionTrackConflict(_AlgorithmInfrastructureConflict):
+class AlgorithmSectionTrackConflict(_AlgorithmInfrastructureConflict):
     __section_track_id: int
 
     def __init__(self, section_track_id: int, **kwargs):
@@ -51,7 +51,7 @@ class _AlgorithmSectionTrackConflict(_AlgorithmInfrastructureConflict):
     def section_track_id(self) -> int:
         return self.__section_track_id
 
-class _AlgorithmNodeConflict(_AlgorithmInfrastructureConflict):
+class AlgorithmNodeConflict(_AlgorithmInfrastructureConflict):
     __node_id: int
 
     def __init__(self, node_id: int, **kwargs):
@@ -62,7 +62,7 @@ class _AlgorithmNodeConflict(_AlgorithmInfrastructureConflict):
     def node_id(self) -> int:
         return self.__node_id
 
-class _AlgorithmTwoTrainConflict(_AlgorithmTrainConflict):
+class AlgorithmTwoTrainsConflict(_AlgorithmTrainConflict):
     __preceding_train_id: int
     __preceding_train_path_node_id: int
     __succeeding_train_id: int
@@ -92,7 +92,7 @@ class _AlgorithmTwoTrainConflict(_AlgorithmTrainConflict):
     def preceding_train_path_node_id(self) -> int:
         return self.__preceding_train_path_node_id
 
-class _AlgorithmOneTrainConflict(_AlgorithmTrainConflict):
+class AlgorithmOneTrainConflict(_AlgorithmTrainConflict):
     __train_id: int
     __train_path_node_id: int
 
@@ -109,7 +109,7 @@ class _AlgorithmOneTrainConflict(_AlgorithmTrainConflict):
     def train_path_node_id(self) -> int:
         return self.__train_path_node_id
 
-class _AlgorithmMultipleTrainsConflict(_AlgorithmTrainConflict):
+class AlgorithmMultipleTrainsConflict(_AlgorithmTrainConflict):
     __train_ids: List[int]
     __train_path_node_ids: List[int]
 
@@ -126,7 +126,7 @@ class _AlgorithmMultipleTrainsConflict(_AlgorithmTrainConflict):
     def train_path_node_ids(self) -> List[int]:
         return self.__train_path_node_ids
 
-class AlgorithmTwoTrainSectionTrackConflict(_AlgorithmTwoTrainConflict, _AlgorithmSectionTrackConflict):
+class _AlgorithmTwoTrainsSectionTrackConflict(AlgorithmTwoTrainsConflict, AlgorithmSectionTrackConflict):
     def __init__(self,
                  conflict_type: ConflictType,
                  time_window: TimeWindow,
@@ -144,7 +144,7 @@ class AlgorithmTwoTrainSectionTrackConflict(_AlgorithmTwoTrainConflict, _Algorit
             succeding_train_path_node_id=succeeding_train_path_node_id,
             section_track_id=section_track_id)
 
-class AlgorithmOneTrainSectionTrackConflict(_AlgorithmOneTrainConflict, _AlgorithmSectionTrackConflict):
+class _AlgorithmOneTrainSectionTrackConflict(AlgorithmOneTrainConflict, AlgorithmSectionTrackConflict):
     def __init__(self,
                  conflict_type: ConflictType,
                  time_window: TimeWindow,
@@ -159,7 +159,7 @@ class AlgorithmOneTrainSectionTrackConflict(_AlgorithmOneTrainConflict, _Algorit
             train_path_node_id=train_path_node_id,
             section_track_id=section_track_id)
 
-class AlgorithmOneTrainNodeConflict(_AlgorithmOneTrainConflict, _AlgorithmNodeConflict):
+class _AlgorithmOneTrainNodeConflict(AlgorithmOneTrainConflict, AlgorithmNodeConflict):
     def __init__(self,
                  conflict_type: ConflictType,
                  time_window: TimeWindow,
@@ -174,7 +174,7 @@ class AlgorithmOneTrainNodeConflict(_AlgorithmOneTrainConflict, _AlgorithmNodeCo
             train_path_node_id=train_path_node_id,
             node_id=node_id)
 
-class AlgorithmTwoTrainNodeConflict(_AlgorithmTwoTrainConflict, _AlgorithmNodeConflict):
+class _AlgorithmTwoTrainsNodeConflict(AlgorithmTwoTrainsConflict, AlgorithmNodeConflict):
     def __init__(self,
                  conflict_type: ConflictType,
                  time_window: TimeWindow,
@@ -191,6 +191,8 @@ class AlgorithmTwoTrainNodeConflict(_AlgorithmTwoTrainConflict, _AlgorithmNodeCo
             succeeding_train_id=succeeding_train_id,
             succeding_train_path_node_id=succeeding_train_path_node_id,
             node_id=node_id)
+
+AlgorithmConflict = Union[AlgorithmTwoTrainsConflict, AlgorithmOneTrainConflict, AlgorithmMultipleTrainsConflict, AlgorithmSectionTrackConflict, AlgorithmNodeConflict]
 
 
 class ConflictDetectionArguments:

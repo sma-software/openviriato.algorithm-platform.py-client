@@ -6,7 +6,7 @@ from py_client.aidm.aidm_link_classes import _AlgorithmLink, AlgorithmAwaitArriv
 from py_client.aidm.aidm_routing_edge_classes import _RoutingEdge, CrossingRoutingEdge, IncomingRoutingEdge, OutgoingRoutingEdge, IncomingNodeTrackRoutingEdge, OutgoingNodeTrackRoutingEdge
 from py_client.aidm.aidm_routing_edge_classes import *
 from abc import ABC, abstractmethod
-from py_client.aidm.aidm_conflict import _AlgorithmConflict, _AlgorithmNodeConflict, _AlgorithmSectionTrackConflict, _AlgorithmInfrastructureConflict, _AlgorithmTrainConflict, ConflictType, _AlgorithmTwoTrainConflict, AlgorithmTwoTrainSectionTrackConflict, AlgorithmOneTrainSectionTrackConflict, AlgorithmOneTrainNodeConflict, AlgorithmTwoTrainNodeConflict
+from py_client.aidm.aidm_conflict import _AlgorithmConflict, AlgorithmConflict, AlgorithmNodeConflict, AlgorithmSectionTrackConflict, _AlgorithmInfrastructureConflict, _AlgorithmTrainConflict, ConflictType, AlgorithmTwoTrainsConflict, _AlgorithmTwoTrainsSectionTrackConflict, _AlgorithmOneTrainSectionTrackConflict, _AlgorithmOneTrainNodeConflict, _AlgorithmTwoTrainsNodeConflict
 import datetime
 import isodate
 
@@ -121,6 +121,9 @@ class PolymorphicClassesProcessor(JsonToAidmProcessor):
                             ]
 
     def is_applicable(self, attribute_dict: dict, targeted_type: Type[object]) -> bool:
+        is_not_an_object = not isinstance(targeted_type, type)
+        if is_not_an_object:
+            return False
         if not True in [ issubclass(targeted_type, x) for x in self.types_to_process ]:
             return False
         if not 'type' in attribute_dict:
@@ -167,26 +170,26 @@ class PolymorphicClassesProcessor(JsonToAidmProcessor):
 
 
 class ConflictTypeMappingLookup:
-    __lookup : Dict[ConflictType, _AlgorithmConflict] = dict()
+    __lookup : Dict[ConflictType, AlgorithmConflict] = dict()
 
     def __init__(self):
-        self.__lookup[ConflictType.Crossing] = AlgorithmTwoTrainSectionTrackConflict
-        self.__lookup[ConflictType.WrongDrivingDirection] = AlgorithmOneTrainSectionTrackConflict
-        self.__lookup[ConflictType.ChangeDirection] = AlgorithmOneTrainNodeConflict
-        self.__lookup[ConflictType.SimultaneousArrival] = AlgorithmTwoTrainNodeConflict
-        self.__lookup[ConflictType.SameStationTrack] = AlgorithmTwoTrainNodeConflict
-        self.__lookup[ConflictType.SameSectionTrack] = AlgorithmTwoTrainNodeConflict
-        self.__lookup[ConflictType.IncompatibleStationRoutes] = AlgorithmTwoTrainNodeConflict
-        self.__lookup[ConflictType.IncompatibleJunctionRoutes] = AlgorithmTwoTrainNodeConflict
+        self.__lookup[ConflictType.Crossing] = _AlgorithmTwoTrainsSectionTrackConflict
+        self.__lookup[ConflictType.WrongDrivingDirection] = _AlgorithmOneTrainSectionTrackConflict
+        self.__lookup[ConflictType.ChangeDirection] = _AlgorithmOneTrainNodeConflict
+        self.__lookup[ConflictType.SimultaneousArrival] = _AlgorithmTwoTrainsNodeConflict
+        self.__lookup[ConflictType.SameStationTrack] = _AlgorithmTwoTrainsNodeConflict
+        self.__lookup[ConflictType.SameSectionTrack] = _AlgorithmTwoTrainsNodeConflict
+        self.__lookup[ConflictType.IncompatibleStationRoutes] = _AlgorithmTwoTrainsNodeConflict
+        self.__lookup[ConflictType.IncompatibleJunctionRoutes] = _AlgorithmTwoTrainsNodeConflict
 
-    def get_conflict_type_mapping(self, enumConflictype: ConflictType) -> Type[_AlgorithmConflict]:
+    def get_conflict_type_mapping(self, enumConflictype: ConflictType) -> Type[AlgorithmConflict]:
         return self.__lookup[enumConflictype]
 
 class ConflictProcessor(JsonToAidmProcessor):
-    def is_applicable(self, attribute_dict: dict, targeted_type: Type[_AlgorithmConflict]) -> bool:
-        return targeted_type == _AlgorithmConflict
+    def is_applicable(self, attribute_dict: dict, targeted_type: Type[AlgorithmConflict]) -> bool:
+        return targeted_type == AlgorithmConflict
 
-    def process_attribute_dict(self, attribute_dict: dict, aidm_class: Type) -> _AlgorithmConflict:
+    def process_attribute_dict(self, attribute_dict: dict, aidm_class: Type) -> AlgorithmConflict:
         conflict_type_as_enum = JsonToAidmConverter().process_json_to_aidm(attribute_dict["conflictType"], ConflictType)
         targeted_type = ConflictTypeMappingLookup().get_conflict_type_mapping(conflict_type_as_enum)
         return JsonToAidmConverter().process_json_to_aidm(attribute_dict, targeted_type)

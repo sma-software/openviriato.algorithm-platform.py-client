@@ -50,7 +50,7 @@ from py_client.aidm import (
     RunningTimeCalculationResult,
     ConflictDetectionArguments
 )
-from py_client.aidm.aidm_conflict import _AlgorithmConflict
+from py_client.aidm.aidm_conflict import AlgorithmConflict
 from py_client.aidm.aidm_link_classes import _AlgorithmLink
 from py_client.communication.communication_layer import CommunicationLayer
 from py_client.conversion.json_to_aidm_converter import JsonToAidmConverter
@@ -705,7 +705,7 @@ class AlgorithmInterface:
         response_list = self.__communication_layer.do_get_request(url_to_resource)
         return JsonToAidmConverter().process_json_to_aidm(response_list, List[RunningTimePenaltyOnTrainPath])
 
-    def detect_conflicts(self, arguments: ConflictDetectionArguments) -> List[_AlgorithmConflict]:
+    def detect_conflicts(self, arguments: ConflictDetectionArguments) -> List[AlgorithmConflict]:
 
         url_to_resource = "services/trains:detect-conflicts"
 
@@ -727,4 +727,5 @@ class AlgorithmInterface:
             query_parameters["sectionTrackIds"] = arguments.filter_section_track_ids
 
         response_list = self.__communication_layer.do_get_request(url_to_resource, query_parameters)
-        return JsonToAidmConverter().process_json_to_aidm(response_list, List[_AlgorithmConflict])
+        return JsonToAidmConverter().process_json_to_aidm(response_list, List[AlgorithmConflict])
+        return JsonToAidmConverter().process_json_to_aidm(response_list, List[AlgorithmConflict])

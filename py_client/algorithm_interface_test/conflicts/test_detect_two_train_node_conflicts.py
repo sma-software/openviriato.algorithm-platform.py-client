@@ -5,7 +5,7 @@ from py_client.algorithm_interface.algorithm_interface import AlgorithmInterface
 from py_client.algorithm_interface import algorithm_interface_factory
 import py_client.algorithm_interface_test.test_helper.SessionMockFactory as SessionMockFactory
 from py_client.algorithm_interface_test.test_helper.SessionMockTestBase import get_api_url, SessionMockTestBase
-from py_client.aidm.aidm_conflict import ConflictDetectionArguments, _AlgorithmNodeConflict, _AlgorithmTwoTrainConflict, AlgorithmTwoTrainNodeConflict, ConflictType
+from py_client.aidm.aidm_conflict import ConflictDetectionArguments, AlgorithmNodeConflict, AlgorithmTwoTrainsConflict, _AlgorithmTwoTrainsNodeConflict, ConflictType
 from py_client.aidm.aidm_time_window_classes import TimeWindow
 
 class TestDetectConflicts(unittest.TestCase):
@@ -97,15 +97,15 @@ class TestDetectConflicts(unittest.TestCase):
 
         self.assertIsInstance(
             list_of_algorithm_conflicts[0],
-            _AlgorithmNodeConflict)
+            AlgorithmNodeConflict)
 
         self.assertIsInstance(
             list_of_algorithm_conflicts[0],
-            _AlgorithmTwoTrainConflict)
+            AlgorithmTwoTrainsConflict)
 
         self.assertIsInstance(
             list_of_algorithm_conflicts[0],
-            AlgorithmTwoTrainNodeConflict)
+            _AlgorithmTwoTrainsNodeConflict)
 
         self.assertIsInstance(
             list_of_algorithm_conflicts[0].conflict_type,
@@ -151,15 +151,15 @@ class TestDetectConflicts(unittest.TestCase):
 
         self.assertIsInstance(
             list_of_algorithm_conflicts[1],
-            _AlgorithmNodeConflict)
+            AlgorithmNodeConflict)
 
         self.assertIsInstance(
             list_of_algorithm_conflicts[1],
-            _AlgorithmTwoTrainConflict)
+            AlgorithmTwoTrainsConflict)
 
         self.assertIsInstance(
             list_of_algorithm_conflicts[1],
-            AlgorithmTwoTrainNodeConflict)
+            _AlgorithmTwoTrainsNodeConflict)
 
         self.assertEqual(
             list_of_algorithm_conflicts[1].conflict_type,
@@ -167,15 +167,15 @@ class TestDetectConflicts(unittest.TestCase):
 
         self.assertIsInstance(
             list_of_algorithm_conflicts[2],
-            _AlgorithmNodeConflict)
+            AlgorithmNodeConflict)
 
         self.assertIsInstance(
             list_of_algorithm_conflicts[2],
-            _AlgorithmTwoTrainConflict)
+            AlgorithmTwoTrainsConflict)
 
         self.assertIsInstance(
             list_of_algorithm_conflicts[2],
-            AlgorithmTwoTrainNodeConflict)
+            _AlgorithmTwoTrainsNodeConflict)
 
         self.assertEqual(
             list_of_algorithm_conflicts[2].conflict_type,
@@ -183,15 +183,15 @@ class TestDetectConflicts(unittest.TestCase):
 
         self.assertIsInstance(
             list_of_algorithm_conflicts[3],
-            _AlgorithmNodeConflict)
+            AlgorithmNodeConflict)
 
         self.assertIsInstance(
             list_of_algorithm_conflicts[3],
-            _AlgorithmTwoTrainConflict)
+            AlgorithmTwoTrainsConflict)
 
         self.assertIsInstance(
             list_of_algorithm_conflicts[3],
-            AlgorithmTwoTrainNodeConflict)
+            _AlgorithmTwoTrainsNodeConflict)
 
         self.assertEqual(
             list_of_algorithm_conflicts[3].conflict_type,

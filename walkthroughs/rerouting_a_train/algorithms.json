@@ -1,0 +1,32 @@
+﻿{
+  "algorithms": [
+   {
+       "name": "Reroute train (py_client)",
+       "startupRestInterfaceOnly": false,
+       "parameterDescriptions": [
+       {
+           "key": "trainToReroute",
+           "label": "Train to reroute",
+           "tooltip": "Train to reroute.",
+           "advanced": false,
+           "type": "TimetableTrain",
+           "mandatory": true
+       },
+       {
+           "key": "trainWithAlternativeRoute",
+           "label": "Train with alternative route",
+           "tooltip": "The alternative route we want to set to the train to reroute.",
+           "advanced": false,
+           "type": "TimetableTrain",
+           "mandatory": true
+       }
+       ],
+       "workingDirectory": "../algorithms",
+       "files": [
+           "RerouteTrainRunner.py"
+       ],
+       "command": "demo_venv\\Scripts\\python.exe",
+       "arguments": "{File[0]} -u {ApiUrl}"
+    }
+  ]
+}

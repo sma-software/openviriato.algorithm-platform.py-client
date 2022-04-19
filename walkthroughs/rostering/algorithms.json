@@ -1,0 +1,32 @@
+﻿{
+  "algorithms": [
+   {
+       "name": "Create roster links between two trains (py_client)",
+       "startupRestInterfaceOnly": false,
+       "parameterDescriptions": [
+       {
+           "key": "trainFrom",
+           "label": "Train from",
+           "tooltip": "Train from",
+           "advanced": false,
+           "type": "TimetableTrain",
+           "mandatory": true
+       },
+       {
+           "key": "trainTo",
+           "label": "Train to",
+           "tooltip": "Train to",
+           "advanced": false,
+           "type": "TimetableTrain",
+           "mandatory": true
+       }
+       ],
+       "workingDirectory": "../algorithms",
+       "files": [
+           "SimpleRosteringExample.py"
+       ],
+       "command": "demo_venv\\Scripts\\python.exe",
+       "arguments": "{File[0]} -u {ApiUrl}"
+    }
+  ]
+}

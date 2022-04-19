@@ -33,16 +33,19 @@ class _AlgorithmConflict:
         return self.__time_window
 
 class _AlgorithmInfrastructureConflict(_AlgorithmConflict):
+    # **kwargs is needed because operator ** cannot deal with double interheritance otherwise (as needed by json2Aidm conversion)
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
 class _AlgorithmTrainConflict(_AlgorithmConflict):
+    # **kwargs is needed because operator ** cannot deal with double interheritance otherwise (as needed by json2Aidm conversion)
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
 class AlgorithmSectionTrackConflict(_AlgorithmInfrastructureConflict):
     __section_track_id: int
 
+    # **kwargs is needed because operator ** cannot deal with double interheritance otherwise (as needed by json2Aidm conversion)
     def __init__(self, section_track_id: int, **kwargs):
         super().__init__(**kwargs)
         self.__section_track_id = section_track_id
@@ -54,6 +57,7 @@ class AlgorithmSectionTrackConflict(_AlgorithmInfrastructureConflict):
 class AlgorithmNodeConflict(_AlgorithmInfrastructureConflict):
     __node_id: int
 
+    # **kwargs is needed because operator ** cannot deal with double interheritance otherwise (as needed by json2Aidm conversion)
     def __init__(self, node_id: int, **kwargs):
         super().__init__(**kwargs)
         self.__node_id = node_id
@@ -96,6 +100,7 @@ class AlgorithmOneTrainConflict(_AlgorithmTrainConflict):
     __train_id: int
     __train_path_node_id: int
 
+    # **kwargs is needed because operator ** cannot deal with double interheritance otherwise (as needed by json2Aidm conversion)
     def __init__(self, train_id: int, train_path_node_id: int, **kwargs):
         super().__init__(**kwargs)
         self.__train_id = train_id
@@ -113,6 +118,7 @@ class AlgorithmMultipleTrainsConflict(_AlgorithmTrainConflict):
     __train_ids: List[int]
     __train_path_node_ids: List[int]
 
+    # **kwargs is needed because operator ** cannot deal with double interheritance otherwise (as needed by json2Aidm conversion)
     def __init__(self, train_ids: List[int], train_path_node_ids: List[int], **kwargs):
         super().__init__(**kwargs)
         self.__train_ids = train_ids

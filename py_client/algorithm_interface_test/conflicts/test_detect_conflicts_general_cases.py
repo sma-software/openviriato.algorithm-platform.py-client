@@ -6,7 +6,7 @@ from py_client.algorithm_interface.algorithm_interface import AlgorithmInterface
 from py_client.algorithm_interface import algorithm_interface_factory
 import py_client.algorithm_interface_test.test_helper.SessionMockFactory as SessionMockFactory
 from py_client.algorithm_interface_test.test_helper.SessionMockTestBase import get_api_url, SessionMockTestBase
-from py_client.aidm.aidm_conflict import ConflictDetectionArguments, ConflictType
+from py_client.aidm.aidm_conflict import ConflictDetectionArguments, ConflictType, _AlgorithmTwoTrainsSectionTrackConflict, AlgorithmConflict, AlgorithmMultipleTrainsConflict
 from py_client.aidm.aidm_time_window_classes import TimeWindow
 
 from py_client.communication.response_processing import AlgorithmPlatformConversionError
@@ -128,3 +128,10 @@ class TestDetectConflictsWithNonMandatoryFilters(unittest.TestCase):
     @mock.patch('requests.Session', side_effect=DetectConflictsWithNonMandatoryFiltersMockSession)
     def tearDown(self, mocked_get_obj) -> None:
         self.interface_to_viriato.__exit__(None, None, None)
+
+class TestConflictDetectionArguments(unittest.TestCase):
+    @unittest.skip("Waiting for the update of the python version to 3.10")
+    def test_ensure_algorithm_conflict_has_subtyping_as_expected(self):
+        # is a hard assumption on which we rely in the json2aidm processors (signature of method )
+        self.assertTrue(issubclass(_AlgorithmTwoTrainsSectionTrackConflict, AlgorithmConflict))
+        self.assertTrue(issubclass(AlgorithmMultipleTrainsConflict, AlgorithmConflict))

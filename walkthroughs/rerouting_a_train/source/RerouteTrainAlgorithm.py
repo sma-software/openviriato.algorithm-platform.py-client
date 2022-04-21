@@ -7,7 +7,7 @@ from py_client.aidm.aidm_routing_edge_classes import _RoutingEdge, CrossingRouti
 from RerouteTrainPersistenceService import RerouteTrainPersistenceService
 
 
-
+#@RerouteTrainAlgorithm[:74]
 class RerouteTrainAlgorithm:
     def run(self, algorithm_interface: AlgorithmInterface):
         # AlgorithmTrain received from interface.
@@ -83,17 +83,17 @@ class RerouteTrainAlgorithm:
                 "Algorithm Failed",
                 "Last node on diversion is a junction. Must be a station.")
             return
-
+        # @RerouteTrainAlgorithm2[:]
         # construct mesoscopic routing edges to reroute the train.
         routing_edges_on_diversion = self._construct_mesoscopic_routing_edges_from_train_with_alternative_route(algorithm_interface, train_with_alternative_route)
 
         reroute_train_persistence_service = RerouteTrainPersistenceService(algorithm_interface)
         rerouted_train = reroute_train_persistence_service.persist_rerouted_train(train_to_reroute, first_train_path_node_on_diversion, last_train_path_node_on_diversion, routing_edges_on_diversion, True)
 
-        message = "Train successfully rerouted. Train visits now {0} nodes on its path.".format(
-                                len(rerouted_train.train_path_nodes))
+        message = "Train successfully rerouted. Train visits now {0} nodes on its path.".format(len(rerouted_train.train_path_nodes))
         algorithm_interface.notify_user("Algorithm succeeded", message)
 
+    # @RerouteTrainAlgorithm3[:]
     def _construct_mesoscopic_routing_edges_from_train_with_alternative_route(self, algorithm_interface: AlgorithmInterface, train_with_alternative_path: AlgorithmTrain) -> List[_RoutingEdge]:
         resulting_routing_edges = []
         train_path_node_pairs = zip(

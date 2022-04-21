@@ -1,5 +1,5 @@
+#@RerouteTrainPersistenceService[:]
 from typing import List
-
 from py_client.algorithm_interface.algorithm_interface import AlgorithmInterface
 from py_client.aidm import AlgorithmTrain, AlgorithmTrainPathNode, UpdateTrainRoute
 from py_client.aidm.aidm_routing_edge_classes import _RoutingEdge

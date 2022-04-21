@@ -12,6 +12,7 @@ class CommonActivitiesFactory:
         self.__next_free_single_activity_id = 1
         self.__algorithm_interface = algorithm_interface
 
+    #@to_common_activities[:]
     def to_common_activities(self, train: AlgorithmTrain) -> List[CommonActivity]:
         train_path_nodes_with_changes_of_formation = self.__calculate_train_path_node_with_change_of_formation(train)
 
@@ -41,6 +42,7 @@ class CommonActivitiesFactory:
 
         return train_path_nodes_with_change_of_formation
 
+    #@create_single_activities[:]
     def __create_single_activities(self, departure_node: AlgorithmTrainPathNode, arrival_node: AlgorithmTrainPathNode) -> List[SingleActivity]:
         vehicles = self.__algorithm_interface.get_formation(departure_node.formation_id)
         activities = []

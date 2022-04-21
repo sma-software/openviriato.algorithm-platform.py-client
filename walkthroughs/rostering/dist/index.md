@@ -3,7 +3,7 @@
 The goal of this walkthrough is to present the algorithm developer all building blocks that you need in order to provide an algorithm for roster optimisation using the Algorithm Platform. 
 
 If you are not familiar with the creation of algorithms with the Viriato interface we recommand to follow first the
-[Walkthrough Creating an Algorithm Using the py_client](../py_client_usage/py_client_usage.md).
+[Walkthrough Creating an Algorithm Using the py_client](../../py_client_usage/dist/py_client_usage.md).
 
 **Overview**
 
@@ -31,13 +31,13 @@ Suppose we have the following initial situation with two trains. Each train has 
     
 Observe that the first train has its formation changes in OF and WE, whereas the second train has the formation change in WE.
 
-![Initial situation](images/before_links.png)
+![Initial situation](../images/before_links.PNG)
 
 Figure 1: Two unlinked trains with formation changes.
 
 The algorithm proposed throughout this article will create the roster links depicted in Figure 2. The links are represented by the arrows in the picture.
 
-![Linked situation](images/after_links.png)
+![Linked situation](../images/after_links.PNG)
 
 Figure 2: The two trains with roster links created by the algorithm presented in this article.
 
@@ -47,18 +47,18 @@ During this walktrough, we will explain step-by-step the creation of a greedy al
 ## Parameters
 The algorithm presented during this walkthrough takes as input two trains selected by the user in the algorithm interface of Viriato and creates links. 
 
-![Parameter mask](images/parameter_mask.png)
+![Parameter mask](../images/parameter_mask.PNG)
 
 Figure 3: The user can choose two trains to link together.
 
-You will find linked the file [algorithms.json](algorithms.json) that you could add to Viriato to select the trains and retrieve them, as presented on Figure 3. 
+You will find linked the file [algorithms.json](../source/algorithms.json) that you could add to Viriato to select the trains and retrieve them, as presented on Figure 3. 
 
 ## Proposed Domain Model
 
 We propose to use _common activities_ and _single activities_. Each common activity represents a route of a train without formation change. A common activity is composed of several single activities. Each single activity represents 
 a piece of rolling stock running on the network between the nodes of the corresponding common activity. The picture below present our trains decomposed in common activities and single activities. 
 
-![Common and Single activities situation](images/common_and_single_actvities.PNG)
+![Common and Single activities situation](../images/common_and_single_actvities.PNG)
 
 Figure 4: Decomposition of the two trains in common activities and single activities.
 
@@ -69,19 +69,18 @@ We design the class CommonActivityFactory to create both types of activities. Th
 ```python
 def to_common_activities(self, train: AlgorithmTrain) -> List[CommonActivity]:
     train_path_nodes_with_changes_of_formation = self.__calculate_train_path_node_with_change_of_formation(train)
-
     departure_and_arrival_node_pairs_of_common_activities = zip(
         train_path_nodes_with_changes_of_formation[:-1],
         train_path_nodes_with_changes_of_formation[1:])
-
     common_activities = []
     for departure_node, arrival_node in departure_and_arrival_node_pairs_of_common_activities:
         single_activities = self.__create_single_activities(departure_node, arrival_node)
         common_activity = CommonActivity(single_activities)
         common_activities.append(common_activity)
-
     return common_activities
+
 ```
+
 
 With the helper function
 
@@ -109,9 +108,9 @@ def __create_single_activities(self, departure_node: AlgorithmTrainPathNode, arr
             vehicle)
         self.__next_free_single_activity_id += 1
         activities.append(activity)
-
     return activities
 ```
+
 to create all single activities for this common activity. We read out the vehicles from the formation at the departure node and obtain a single activity for each one.
 
 ## Creating Links

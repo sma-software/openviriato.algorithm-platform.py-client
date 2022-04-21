@@ -1,20 +1,20 @@
 # Walkthrough Creating an Algorithm Using the py_client
 
-In this walkthrough we will show you how to create algorithms using the [AlgorithmInterface](../../py_client/algorithm_interface/algorithm_interface.py) via the Python client (py_client) provided with the Algorithm Platform.
+In this walkthrough we will show you how to create algorithms using the [AlgorithmInterface](../../../py_client/algorithm_interface/algorithm_interface.py) via the Python client (py_client) provided with the Algorithm Platform.
                                                                                         
                                                                          
 
 ## Documentation
 
 As the py_client strongly follows the C#-Client combined with Python's coding
-conventions (according to [PEP 8]), [see the example below](count_trains_py_client.py)), there is no
+conventions (according to [PEP 8]), [see the example below](../source/count_trains_py_client.py)), there is no
 dedicated documentation. Instead, we refer the developer to the C# API Documentation Chapter, which is part of the documentation provided with the Algorithm Research Package. 
                                                                   
 
 We also support
 Python's type hints showing the developer the correct Python syntax and strongly supporting a rapid development:
 
-![CodeCompletionInPyCharm](images/code_completion_py_client.png)
+![CodeCompletionInPyCharm](../images/code_completion_py_client.png)
 
 ## Installing the py_client
 
@@ -49,45 +49,11 @@ pip install sma.algorithm_platform.py_client-{py_client-version}.whl
 ## Counting Trains with the py_client
 
 Having installed the py_client we can start to develop our algorithm. Just import
-the [AlgorithmInterface](../../py_client/algorithm_interface/algorithm_interface.py)
+the [AlgorithmInterface](../../../py_client/algorithm_interface/algorithm_interface.py)
 and use it by putting it into a `with` statement. Then you can use all available methods. The example code shows how to
-query all [AlgorithmTrain](../../py_client/aidm/aidm_algorithm_classes.py) in a given [TimeWindow](../../py_client/aidm/aidm_time_window_classes.py), counts them and sends a message to the user reporting the number. You can [download this sample](count_trains_py_client.py).
+query all [AlgorithmTrain](../../../py_client/aidm/aidm_algorithm_classes.py) in a given [TimeWindow](../../../py_client/aidm/aidm_time_window_classes.py), counts them and sends a message to the user reporting the number. You can [download this sample](../source/count_trains_py_client.py).
 
-```python
-import argparse
-
-from py_client.algorithm_interface import algorithm_interface_factory
-
-
-def count_trains_in_time_window(api_url: str):
-    with algorithm_interface_factory.create(api_url) as algorithm_interface:
-        time_window = algorithm_interface.get_time_window_algorithm_parameter("timeWindowParameter")
-        trains_in_window = algorithm_interface.get_trains(time_window)
-
-        algorithm_interface.notify_user(
-            "count_trains_algorithm",
-            "Found {0} trains in time window from {1} to {2}".format(
-                len(trains_in_window),
-                time_window.from_time,
-                time_window.to_time))
-
-
-def parse_api_url_from_command_line_arguments() -> str:
-    argument_parser = argparse.ArgumentParser()
-    argument_parser.add_argument("-u", "--api_url", required=True)
-    command_line_arguments = vars(argument_parser.parse_args())
-    api_url: str = command_line_arguments["api_url"]
-    return api_url
-
-
-def main():
-    api_url = parse_api_url_from_command_line_arguments()
-    count_trains_in_time_window(api_url=api_url)
-
-
-if __name__ == '__main__':
-    main()
-```
+@Import(count_trains_py_client,count_trains_py_client.py)
 
 ## Configuration for the Deployment
 
@@ -99,7 +65,7 @@ that the algorithm is saved under
 ```
 ${FolderToAlgorithmPlatform}\\Extension\\AlgorithmPlatform\\algorithms\\count_trains_py_client.py
 ```
-Then we may save the algorithm configuration in the ~~~~`algorithms.json`:
+Then we may save the algorithm configuration in the `algorithms.json`:
 
 ```json
 {

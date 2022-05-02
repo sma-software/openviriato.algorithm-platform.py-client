@@ -130,7 +130,6 @@ class TestDetectConflictsWithNonMandatoryFilters(unittest.TestCase):
         self.interface_to_viriato.__exit__(None, None, None)
 
 class TestConflictDetectionArguments(unittest.TestCase):
-    @unittest.skip("Waiting for the update of the python version to 3.10")
     def test_ensure_algorithm_conflict_has_subtyping_as_expected(self):
         # is a hard assumption on which we rely in the json2aidm processors (signature of method )
         self.assertTrue(issubclass(_AlgorithmTwoTrainsSectionTrackConflict, AlgorithmConflict))

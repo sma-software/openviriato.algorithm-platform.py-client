@@ -2,10 +2,12 @@ from enum import Enum, unique
 from typing import Optional
 from py_client.aidm.aidm_update_classes import UpdateTimesTrain
 
+
 @unique
 class RunningTimeCalculationStatus(Enum):
     error = "error"
     ok = "ok"
+
 
 class RunningTimeCalculationResult:
     __message: Optional[str]

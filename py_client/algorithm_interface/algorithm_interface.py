@@ -587,10 +587,10 @@ class AlgorithmInterface:
         delete_request_body = dict(linkIDs=link_ids)
         self.__communication_layer.do_delete_request(url_to_resource, delete_request_body)
 
-    def calculate_running_times(self, train_id: int) -> (UpdateTimesTrain, None):
+    def calculate_running_times(self, train_id: int) -> RunningTimeCalculationResult:
         url_to_resource = "services/trains/{0}:calculate-running-times".format(train_id)
         response_dict = self.__communication_layer.do_get_request(url_to_resource)
-        return JsonToAidmConverter().process_json_to_aidm(response_dict, Optional[RunningTimeCalculationResult])
+        return JsonToAidmConverter().process_json_to_aidm(response_dict, RunningTimeCalculationResult)
 
     def notify_user(self, title: str, description: str) -> None:
         url_to_resource = "user-outputs/notifications"

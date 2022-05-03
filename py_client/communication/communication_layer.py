@@ -14,7 +14,7 @@ class CommunicationLayer:
     def merge_base_url_with_request(self, request: str) -> str:
         return '{0}/{1}'.format(self.base_url, request)
 
-    def do_get_request(self, request_call: str, query_parameters: dict = None) -> (dict, list):
+    def do_get_request_without_body(self, request_call: str, query_parameters: dict = None) -> (dict, list):
         if query_parameters is None:
             query_parameters = {}
         complete_url = self.merge_base_url_with_request(request_call)

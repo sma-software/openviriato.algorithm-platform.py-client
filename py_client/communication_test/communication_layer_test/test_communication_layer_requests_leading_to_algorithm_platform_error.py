@@ -21,7 +21,7 @@ class TestCommunicationLayerToRaiseAlgorithmPlatformError(unittest.TestCase):
         ))
 
         with self.assertRaises(response_processing.AlgorithmPlatformHTTPError) as algorithm_platform_error:
-            self.CommunicationLayer.do_get_request('get_request_to_raise_AlgorithmPlatformError')
+            self.CommunicationLayer.do_get_request_without_body('get_request_to_raise_AlgorithmPlatformError')
 
         self.assertIsInstance(algorithm_platform_error.exception, response_processing.AlgorithmPlatformHTTPError)
         self.assertEqual(algorithm_platform_error.exception.message, "test_to_raise_AlgorithmPlatformError")

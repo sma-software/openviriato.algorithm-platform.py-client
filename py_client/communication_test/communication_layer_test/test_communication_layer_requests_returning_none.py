@@ -20,7 +20,7 @@ class TestCommunicationLayerToReturnNone(unittest.TestCase):
             status=200
         ))
 
-        response = self.CommunicationLayer.do_get_request('get_request_that_returns_nothing')
+        response = self.CommunicationLayer.do_get_request_without_body('get_request_that_returns_nothing')
 
         self.assertIsNone(response)
 

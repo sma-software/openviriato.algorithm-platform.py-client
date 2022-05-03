@@ -65,7 +65,7 @@ def do_get_routing_edges_request(
         routingEdgeType=None if routing_edge_type is None else routing_edge_type.value,
         nodeTrackId=routing_point.node_track_id,
     )
-    response_list = communication_layer.do_get_request(url_to_resource, get_request_params)
+    response_list = communication_layer.do_get_request_without_body(url_to_resource, get_request_params)
     return JsonToAidmConverter().process_json_to_aidm(response_list, List[_RoutingEdge])
 
 
@@ -74,7 +74,7 @@ def do_get_any_parameter(
         key: str
 ) -> Optional[Union[bool, dict, int, list, str]]:
     url_to_resource = "parameters/{0}".format(key)
-    return communication_layer.do_get_request(url_to_resource)["value"]
+    return communication_layer.do_get_request_without_body(url_to_resource)["value"]
 
 
 def do_get_any_link(
@@ -89,5 +89,5 @@ def do_get_any_link(
     query_parameters = merge_query_parameters(
         [convert_any_object(time_window), dict(linkType=link_type, nodeFilter=node_filter)]
     )
-    response_dict = communication_layer.do_get_request(url_to_resource, query_parameters)
+    response_dict = communication_layer.do_get_request_without_body(url_to_resource, query_parameters)
     return JsonToAidmConverter().process_json_to_aidm(response_dict, List[_AlgorithmLink])

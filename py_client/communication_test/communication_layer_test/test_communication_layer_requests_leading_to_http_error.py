@@ -21,7 +21,7 @@ class TestCommunicationLayerToRaiseHTTPError(unittest.TestCase):
             status=400,
         ))
         with self.assertRaises(requests.exceptions.HTTPError) as http_error:
-            self.CommunicationLayer.do_get_request('get_to_raise_HTTPError')
+            self.CommunicationLayer.do_get_request_without_body('get_to_raise_HTTPError')
 
         self.assertIsInstance(http_error.exception, requests.exceptions.HTTPError)
         self.assertEqual(http_error.exception.response.status_code, 400)

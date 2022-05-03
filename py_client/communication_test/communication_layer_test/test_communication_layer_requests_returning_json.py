@@ -20,7 +20,7 @@ class TestCommunicationLayerToReturnJson(unittest.TestCase):
             status=200
         ))
 
-        response = self.CommunicationLayer.do_get_request('get_request_that_returns_json')
+        response = self.CommunicationLayer.do_get_request_without_body('get_request_that_returns_json')
 
         self.assertIsInstance(response, dict)
         self.assertDictEqual(response, dict(key="Value"))

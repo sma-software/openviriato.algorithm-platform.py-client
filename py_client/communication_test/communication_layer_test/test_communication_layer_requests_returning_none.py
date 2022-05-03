@@ -25,6 +25,19 @@ class TestCommunicationLayerToReturnNone(unittest.TestCase):
         self.assertIsNone(response)
 
     @responses.activate
+    def test_do_get_request_with_body_to_return_None(self):
+        responses.add(**dict(
+            method=responses.GET,
+            url='http://viriato.rest.ch/api/get_request_that_returns_nothing',
+            body='',
+            status=200
+        ))
+
+        response = self.CommunicationLayer.do_get_request_with_body('get_request_that_returns_nothing', {})
+
+        self.assertIsNone(response)
+
+    @responses.activate
     def test_do_post_request_to_return_None(self):
         responses.add(**dict(
             method=responses.POST,

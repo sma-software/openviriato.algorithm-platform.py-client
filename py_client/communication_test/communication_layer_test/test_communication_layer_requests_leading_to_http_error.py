@@ -28,6 +28,21 @@ class TestCommunicationLayerToRaiseHTTPError(unittest.TestCase):
         self.assertEqual(http_error.exception.response.reason, "Bad Request")
 
     @responses.activate
+    def test_do_get_request_with_body_to_raise_HTTPError(self):
+        responses.add(**dict(
+            method=responses.GET,
+            url='http://viriato.rest.ch/api/get_to_raise_HTTPError',
+            body='',
+            status=400,
+        ))
+        with self.assertRaises(requests.exceptions.HTTPError) as http_error:
+            self.CommunicationLayer.do_get_request_with_body('get_to_raise_HTTPError', {})
+
+        self.assertIsInstance(http_error.exception, requests.exceptions.HTTPError)
+        self.assertEqual(http_error.exception.response.status_code, 400)
+        self.assertEqual(http_error.exception.response.reason, "Bad Request")
+
+    @responses.activate
     def test_do_post_request_to_raise_HTTPError(self):
         responses.add(**dict(
             method=responses.POST,

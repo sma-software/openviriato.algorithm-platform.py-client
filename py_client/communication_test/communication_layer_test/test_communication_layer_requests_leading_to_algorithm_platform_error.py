@@ -27,6 +27,21 @@ class TestCommunicationLayerToRaiseAlgorithmPlatformError(unittest.TestCase):
         self.assertEqual(algorithm_platform_error.exception.message, "test_to_raise_AlgorithmPlatformError")
 
     @responses.activate
+    def test_do_get_request_with_body_to_raise_AlgorithmPlatformError(self):
+        responses.add(**dict(
+            method=responses.GET,
+            url='http://viriato.rest.ch/api/get_request_to_raise_AlgorithmPlatformError',
+            body='{"statusCode": "400", "message": "test_to_raise_AlgorithmPlatformError"}',
+            status=400
+        ))
+
+        with self.assertRaises(response_processing.AlgorithmPlatformHTTPError) as algorithm_platform_error:
+            self.CommunicationLayer.do_get_request_with_body('get_request_to_raise_AlgorithmPlatformError', {})
+
+        self.assertIsInstance(algorithm_platform_error.exception, response_processing.AlgorithmPlatformHTTPError)
+        self.assertEqual(algorithm_platform_error.exception.message, "test_to_raise_AlgorithmPlatformError")
+
+    @responses.activate
     def test_do_post_request_to_raise_AlgorithmPlatformError(self):
         responses.add(**dict(
             method=responses.POST,

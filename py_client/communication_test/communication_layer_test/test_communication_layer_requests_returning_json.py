@@ -26,6 +26,20 @@ class TestCommunicationLayerToReturnJson(unittest.TestCase):
         self.assertDictEqual(response, dict(key="Value"))
 
     @responses.activate
+    def test_requests_with_body_that_return_json(self):
+        responses.add(**dict(
+            method=responses.GET,
+            url='http://viriato.rest.ch/api/get_request_that_returns_json',
+            body='{"key" : "Value"}',
+            status=200
+        ))
+
+        response = self.CommunicationLayer.do_get_request_with_body('get_request_that_returns_json', {})
+
+        self.assertIsInstance(response, dict)
+        self.assertDictEqual(response, dict(key="Value"))
+
+    @responses.activate
     def test_do_post_request_to_return_json(self):
         responses.add(**dict(
             method=responses.POST,

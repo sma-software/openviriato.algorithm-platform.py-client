@@ -23,6 +23,16 @@ class CommunicationLayer:
 
         return extract_json_if_possible(api_response)
 
+    def do_get_request_with_body(self, request_call: str, body: dict, query_parameters: dict = None) -> (dict, list):
+        if query_parameters is None:
+            query_parameters = {}
+
+        complete_url = self.merge_base_url_with_request(request_call)
+
+        api_response = self.currentSession.get(complete_url, params=query_parameters, json=body)
+
+        return extract_json_if_possible(api_response)
+
     def do_post_request(self, request_call: str, request_body: dict = None) -> (dict, list, None):
         if request_body is None:
             request_body = {}

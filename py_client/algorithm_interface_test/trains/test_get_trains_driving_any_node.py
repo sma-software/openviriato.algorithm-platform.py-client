@@ -10,8 +10,9 @@ from py_client.algorithm_interface_test.test_helper.SessionMockTestBase import g
 
 class TestGetTrainsDrivingAnyNode(unittest.TestCase):
     class GetTrainsDrivingAnyNodeTestMockSession(SessionMockTestBase):
-        def get(self, request, params):
-            self.__last_body = params
+        def get(self, request, params, json):
+            self.__last_body = json
+            self.__last_params = params
             self.__last_request = request
             json_string = (
                 "[\n"
@@ -68,10 +69,11 @@ class TestGetTrainsDrivingAnyNode(unittest.TestCase):
 
         session_obj = self.interface_to_viriato._AlgorithmInterface__communication_layer.currentSession
         self.assertEqual(session_obj._GetTrainsDrivingAnyNodeTestMockSession__last_request, get_api_url() + '/trains')
-        self.assertDictEqual(session_obj._GetTrainsDrivingAnyNodeTestMockSession__last_body,
+        self.assertDictEqual(session_obj._GetTrainsDrivingAnyNodeTestMockSession__last_params,
                              dict(fromTime="2000-01-01T01:01:00",
-                                  toTime="2004-01-01T00:00:00",
-                                  filterNodeIds=[10]))
+                                  toTime="2004-01-01T00:00:00"))
+
+        self.assertDictEqual(session_obj._GetTrainsDrivingAnyNodeTestMockSession__last_body, dict(filterNodeIds=[10]))
 
     @mock.patch('requests.Session', side_effect=GetTrainsDrivingAnyNodeTestMockSession)
     def test_get_trains_driving_any_node_response(self, mocked_get_obj):

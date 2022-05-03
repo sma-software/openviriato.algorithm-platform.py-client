@@ -728,4 +728,3 @@ class AlgorithmInterface:
 
         response_list = self.__communication_layer.do_get_request(url_to_resource, query_parameters)
         return JsonToAidmConverter().process_json_to_aidm(response_list, List[AlgorithmConflict])
-        return JsonToAidmConverter().process_json_to_aidm(response_list, List[AlgorithmConflict])

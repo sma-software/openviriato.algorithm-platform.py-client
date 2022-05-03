@@ -728,3 +728,8 @@ class AlgorithmInterface:
 
         response_list = self.__communication_layer.do_get_request_without_body(url_to_resource, query_parameters)
         return JsonToAidmConverter().process_json_to_aidm(response_list, List[AlgorithmConflict])
+
+    def has_changed_links(self) -> bool:
+        url_to_resource = "links:has-changed"
+        response = self.__communication_layer.do_get_request_without_body(url_to_resource)
+        return JsonToAidmConverter().process_json_to_aidm(response, bool)

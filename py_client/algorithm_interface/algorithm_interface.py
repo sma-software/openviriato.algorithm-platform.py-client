@@ -733,3 +733,8 @@ class AlgorithmInterface:
         url_to_resource = "links:has-changed"
         response = self.__communication_layer.do_get_request_without_body(url_to_resource)
         return JsonToAidmConverter().process_json_to_aidm(response, bool)
+
+    def has_changed_trains(self) -> bool:
+        url_to_resource = "trains:has-changed"
+        response = self.__communication_layer.do_get_request_without_body(url_to_resource)
+        return JsonToAidmConverter().process_json_to_aidm(response, bool)

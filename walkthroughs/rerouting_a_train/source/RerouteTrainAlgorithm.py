@@ -19,7 +19,7 @@ class RerouteTrainAlgorithm:
         # check if prerequisites satisfied
 
         # train with alternative route has at least two train path nodes
-        if (len(train_with_alternative_route.train_path_nodes) < 2) :
+        if len(train_with_alternative_route.train_path_nodes) < 2:
             algorithm_interface.notify_user(
                 "Algorithm Failed",
                 "Train with alternative route ({0}) must have at least two train path nodes. Algorithm aborted. ".format(
@@ -38,47 +38,47 @@ class RerouteTrainAlgorithm:
             start_of_diversion_node = algorithm_interface.get_node(first_train_path_node_on_train_with_alternative_path.node_id)
             algorithm_interface.notify_user("Algorithm Failed",
                                             "Node {0} (ID: {1}) does not exist on train to reroute ({2}). Algorithm aborted. ".format(
-                                                                            startOfDiversionNode.Code,
-                                                                            startOfDiversionNode.ID,
-                                                                            trainToReroute.DebugString))
+                                                                            start_of_diversion_node.Code,
+                                                                            start_of_diversion_node.ID,
+                                                                            start_of_diversion_node.DebugString))
             return
         first_train_path_node_on_diversion = first_train_path_node_on_diversion[0]
 
         last_train_path_node_on_diversion = [tpn
                                              for tpn in train_to_reroute.train_path_nodes
                                              if tpn.node_id == last_train_path_node_on_train_with_alternative_path.node_id]
-        if (len(last_train_path_node_on_diversion) == 0):
+        if len(last_train_path_node_on_diversion) == 0:
             end_of_diversion_node = algorithm_interface.get_node(last_train_path_node_on_train_with_alternative_path.node_id)
             algorithm_interface.notify_user(
                 "Algorithm Failed",
-                "Node {0} (ID: {1}) does not exist on train to reroute ({2}). Algorithm aborted. ".format(endOfDiversionNode.Code, endOfDiversionNode.ID, trainToReroute.DebugString))
+                "Node {0} (ID: {1}) does not exist on train to reroute ({2}). Algorithm aborted. ".format(end_of_diversion_node.Code, end_of_diversion_node.ID, end_of_diversion_node.DebugString))
             return
         last_train_path_node_on_diversion = last_train_path_node_on_diversion[-1]
 
         # firstTrainPathNodeOnDiversion must occur before lastTrainPathNodeOnDiversion on the trainToReroute
-        if (first_train_path_node_on_diversion.sequence_number >= last_train_path_node_on_diversion.sequence_number):
+        if first_train_path_node_on_diversion.sequence_number >= last_train_path_node_on_diversion.sequence_number:
             start_of_diversion_node = algorithm_interface.get_node(first_train_path_node_on_train_with_alternative_path.node_id)
             end_of_diversion_node = algorithm_interface.get_node(last_train_path_node_on_train_with_alternative_path.node_id)
             algorithm_interface.notify_user(
                 "Algorithm Failed",
                 "First occurence of node {0} (ID: {1}) must be before the last occurence of node {2}(ID:{3}) on the path of train to reroute ({4}). Algorithm aborted. ".format(
-                    startOfDiversionNode.Code,
-                    startOfDiversionNode.ID,
-                    endOfDiversionNode.Code,
-                    endOfDiversionNode.ID,
-                    trainToReroute.DebugString))
+                    start_of_diversion_node.Code,
+                    start_of_diversion_node.ID,
+                    end_of_diversion_node.Code,
+                    end_of_diversion_node.ID,
+                    train_to_reroute.DebugString))
 
         # firstTrainPathNodeOnDiversion and lastTrainPathNodeOnDiversion are stations
         first_node_on_diversion = algorithm_interface.get_node(first_train_path_node_on_diversion.node_id)
         last_node_on_diversion = algorithm_interface.get_node(last_train_path_node_on_diversion.node_id)
 
-        if (not self._is_station(first_node_on_diversion)):
+        if not self._is_station(first_node_on_diversion):
             algorithm_interface.notify_user(
                 "Algorithm Failed",
                 "First node on diversion is a junction. Must be a station.")
             return
 
-        if (not self._is_station(last_node_on_diversion)):
+        if not self._is_station(last_node_on_diversion):
             algorithm_interface.notify_user(
                 "Algorithm Failed",
                 "Last node on diversion is a junction. Must be a station.")
@@ -105,7 +105,7 @@ class RerouteTrainAlgorithm:
         for train_path_node_pair in train_path_node_pairs:
             from_node = algorithm_interface.get_node(train_path_node_pair[0].node_id)
             to_node = algorithm_interface.get_node(train_path_node_pair[1].node_id)
-            if ( self._is_station(from_node)):
+            if self._is_station(from_node):
                 selected_node_track_id = train_path_node_pair[0].node_track_id \
                     if train_path_node_pair[0].node_track_id \
                     else from_node.node_tracks[0].id
@@ -114,15 +114,15 @@ class RerouteTrainAlgorithm:
                         train_path_node_pair[0].node_id,
                         selected_node_track_id,
                         train_path_node_pair[1].section_track_id))
-            else :
+            else:
                 resulting_routing_edges.append(
                     CrossingRoutingEdge(
                         train_path_node_pair[0].node_id,
                         train_path_node_pair[0].section_track_id,
                         train_path_node_pair[1].section_track_id))
 
-            if (self._is_station(to_node)):
-                selected_node_track_id =  train_path_node_pair[1].node_track_id \
+            if self._is_station(to_node):
+                selected_node_track_id = train_path_node_pair[1].node_track_id \
                     if train_path_node_pair[1].node_track_id \
                     else to_node.node_tracks[0].id
                 resulting_routing_edges.append(
@@ -133,5 +133,6 @@ class RerouteTrainAlgorithm:
 
         return resulting_routing_edges
 
-    def _is_station(self, node: AlgorithmNode) -> bool:
+    @staticmethod
+    def _is_station(node: AlgorithmNode) -> bool:
         return len(node.node_tracks) > 0

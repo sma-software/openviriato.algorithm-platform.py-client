@@ -3,10 +3,12 @@ import argparse
 from py_client.algorithm_interface import algorithm_interface_factory
 from RerouteTrainAlgorithm import RerouteTrainAlgorithm
 
+
 def reroute_train_runner(api_url: str):
     with algorithm_interface_factory.create(api_url) as algorithm_interface:
         reroute_train_algorithm = RerouteTrainAlgorithm()
         reroute_train_algorithm.run(algorithm_interface)
+
 
 def parse_api_url_from_command_line_arguments() -> str:
     argument_parser = argparse.ArgumentParser()

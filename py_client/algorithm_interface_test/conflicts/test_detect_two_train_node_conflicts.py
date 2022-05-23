@@ -10,8 +10,9 @@ from py_client.aidm.aidm_time_window_classes import TimeWindow
 
 class TestDetectConflicts(unittest.TestCase):
     class DetectConflictsMockSession(SessionMockTestBase):
-        def get(self, request, params):
-            self.__last_body = params
+        def get(self, request, params, json):
+            self.__last_body = json
+            self.__last_params = params
             self.__last_request = request
 
             json_string = ( "["
@@ -83,21 +84,22 @@ class TestDetectConflicts(unittest.TestCase):
     @mock.patch('requests.Session', side_effect=DetectConflictsMockSession)
     def test_detect_conflicts_mock_session(self, mocked_get_obj):
         train_ids = [1226, 1230, 1234]
-        arguments = ConflictDetectionArguments(train_ids = train_ids)
+        arguments = ConflictDetectionArguments(train_ids=train_ids)
 
-        self.interface_to_viriato.detect_conflicts(arguments = arguments)
+        self.interface_to_viriato.detect_conflicts(arguments=arguments)
 
         session_obj = self.interface_to_viriato._AlgorithmInterface__communication_layer.currentSession
 
         self.assertEqual(session_obj._DetectConflictsMockSession__last_request,
                          get_api_url() + "/services/trains:detect-conflicts")
 
-        self.assertDictEqual(session_obj._DetectConflictsMockSession__last_body, {'trainIds': [1226, 1230, 1234]})
+        self.assertDictEqual(session_obj._DetectConflictsMockSession__last_body, {'trainIds': [1226, 1230, 1234], 'filters': {'location': {'nodeIds': [], 'sectionTrackIds': []}, 'conflictTypes': []}})
+        self.assertDictEqual(session_obj._DetectConflictsMockSession__last_params, {})
 
     @mock.patch('requests.Session', side_effect=DetectConflictsMockSession)
     def test_detect_conflicts_response(self, mocked_get_obj):
-        arguments = ConflictDetectionArguments(train_ids = [1230, 1234])
-        list_of_algorithm_conflicts = self.interface_to_viriato.detect_conflicts(arguments = arguments)
+        arguments = ConflictDetectionArguments(train_ids=[1230, 1234])
+        list_of_algorithm_conflicts = self.interface_to_viriato.detect_conflicts(arguments=arguments)
 
         self.assertIsInstance(
             list_of_algorithm_conflicts,

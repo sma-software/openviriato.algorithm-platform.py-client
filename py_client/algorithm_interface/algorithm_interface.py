@@ -706,28 +706,33 @@ class AlgorithmInterface:
         return JsonToAidmConverter().process_json_to_aidm(response_list, List[RunningTimePenaltyOnTrainPath])
 
     def detect_conflicts(self, arguments: ConflictDetectionArguments) -> List[AlgorithmConflict]:
-
         url_to_resource = "services/trains:detect-conflicts"
 
-        query_parameters = dict(trainIds = arguments.train_ids)
-
-        if len(arguments.filter_conflict_types) >  0:
-            query_parameters['types'] = to_json_converter.convert_any_object(arguments.filter_conflict_types)
-
+        query_parameters = dict()
         if arguments.filter_train_id is not None:
             query_parameters['trainId'] = arguments.filter_train_id
 
         if arguments.time_window is not None:
-            query_parameters["timeWindow"] = to_json_converter.convert_any_object(arguments.time_window)
+            query_parameters = _interface_helpers.merge_query_parameters([query_parameters, to_json_converter.convert_any_object(arguments.time_window)])
 
-        if len(arguments.filter_node_ids) > 0 :
-            query_parameters["nodeIds"] = arguments.filter_node_ids
-
-        if len(arguments.filter_section_track_ids) > 0:
-            query_parameters["sectionTrackIds"] = arguments.filter_section_track_ids
-
-        response_list = self.__communication_layer.do_get_request_without_body(url_to_resource, query_parameters)
+        body = self.__construct_body(arguments)
+        response_list = self.__communication_layer.do_get_request_with_body(url_to_resource, body, query_parameters)
         return JsonToAidmConverter().process_json_to_aidm(response_list, List[AlgorithmConflict])
+
+    def __construct_body(self, arguments: ConflictDetectionArguments):
+        location = dict(
+            nodeIds=arguments.filter_node_ids,
+            sectionTrackIds=arguments.filter_section_track_ids
+        )
+        filters = dict(
+            location=location,
+            conflictTypes=to_json_converter.convert_any_object(arguments.filter_conflict_types)
+        )
+        body = dict(
+            trainIds=arguments.train_ids,
+            filters=filters
+        )
+        return body
 
     def has_changed_links(self) -> bool:
         url_to_resource = "links:has-changed"

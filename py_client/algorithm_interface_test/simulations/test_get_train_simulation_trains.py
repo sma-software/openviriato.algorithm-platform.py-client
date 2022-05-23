@@ -1,12 +1,11 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 import unittest
 from unittest import mock
+from typing import Optional
 
 from py_client.algorithm_interface.algorithm_interface import AlgorithmInterface
 from py_client.aidm.aidm_train_simulation_classes import AlgorithmTrainSimulationTrain, AlgorithmTrainSimulationTrainPathNode
-import py_client.aidm.aidm_train_simulation_classes
 import py_client.algorithm_interface_test.test_helper.SessionMockFactory as SessionMockFactory
-from py_client import algorithm_interface
 from py_client.algorithm_interface import algorithm_interface_factory
 from py_client.algorithm_interface_test.test_helper.SessionMockTestBase import \
     get_api_url, \
@@ -26,20 +25,38 @@ class TestGetTrainSimulationTrains(unittest.TestCase):
                            "        { \n"
                            "        \"id\": 1000001, \n"
                            "        \"nodeId\": 162, \n"
-                           "        \"arrivalTime\": \"2003-05-05T07:30:00\", \n"
-                           "        \"departureTime\": \"2003-05-05T07:30:00\" \n"
+                           "        \"plannedArrivalTime\": \"2003-05-05T07:30:00\", \n"
+                           "        \"plannedDepartureTime\": \"2003-05-05T07:30:00\", \n"
+                           "        \"minimumRunTime\": null, \n"
+                           "        \"minimumStopTime\": \"P0D\", \n"
+                           "        \"arrivalDelay\": \"PT2M\", \n"
+                           "        \"departureDelay\": \"PT30S\", \n"
+                           "        \"estimatedArrivalTime\": \"2003-05-05T07:30:00\", \n"
+                           "        \"estimatedDepartureTime\": \"2003-05-05T07:30:00\" \n"      
                            "    }, \n"
                            "    { \n"
                            "        \"id\": 1000002, \n"
                            "        \"nodeId\": 282, \n"
-                           "        \"arrivalTime\": \"2003-05-05T07:31:12\", \n"
-                           "        \"departureTime\": \"2003-05-05T07:31:12\" \n"
+                           "        \"plannedArrivalTime\": \"2003-05-05T07:31:12\", \n"
+                           "        \"plannedDepartureTime\": \"2003-05-05T07:31:12\", \n"
+                           "        \"minimumRunTime\": \"PT1M12S\", \n"
+                           "        \"minimumStopTime\": \"P0D\", \n"
+                           "        \"arrivalDelay\": \"PT1M\", \n"
+                           "        \"departureDelay\": \"P0D\", \n"
+                           "        \"estimatedArrivalTime\": \"2003-05-05T07:31:12\", \n"
+                           "        \"estimatedDepartureTime\": \"2003-05-05T07:31:12\" \n"
                            "    }, \n"
                            "    { \n"
                            "        \"id\": 1000003, \n"
                            "        \"nodeId\": 322, \n"
-                           "        \"arrivalTime\": \"2003-05-05T07:33:54\", \n"
-                           "        \"departureTime\": \"2003-05-05T07:33:54\" \n"
+                           "        \"plannedArrivalTime\": \"2003-05-05T07:33:54\", \n"
+                           "        \"plannedDepartureTime\": \"2003-05-05T07:33:54\", \n"
+                           "        \"minimumRunTime\": \"PT2M42S\", \n"
+                           "        \"minimumStopTime\": \"P0D\", \n"
+                           "        \"arrivalDelay\": \"P0D\", \n"
+                           "        \"departureDelay\": \"PT2M25S\", \n"
+                           "        \"estimatedArrivalTime\": \"2003-05-05T07:33:54\", \n"
+                           "        \"estimatedDepartureTime\": \"2003-05-05T07:33:54\" \n"      
                            "    } \n"
                            "    ] \n"
                            " } \n"
@@ -95,13 +112,70 @@ class TestGetTrainSimulationTrains(unittest.TestCase):
             162
         )
         self.assertIsInstance(
-            response[0].train_path_nodes[0].arrival_time,
+            response[0].train_path_nodes[0].planned_arrival_time,
             datetime
             )
+        self.assertEqual(
+            response[0].train_path_nodes[0].planned_arrival_time,
+            datetime(year=2003, month=5, day=5, hour=7, minute=30)
+        )
         self.assertIsInstance(
-            response[0].train_path_nodes[0].departure_time,
+            response[0].train_path_nodes[0].planned_departure_time,
             datetime
         )
+        self.assertEqual(
+            response[0].train_path_nodes[0].planned_departure_time,
+            datetime(year=2003, month=5, day=5, hour=7, minute=30)
+        )
+        self.assertIsInstance(
+            response[0].train_path_nodes[0].minimum_run_time,
+            Optional[timedelta]
+        )
+        self.assertEqual(
+            response[0].train_path_nodes[0].minimum_run_time,
+            None
+        )
+        self.assertIsInstance(
+            response[0].train_path_nodes[0].minimum_stop_time,
+            timedelta
+        )
+        self.assertEqual(
+            response[0].train_path_nodes[0].minimum_stop_time,
+            timedelta(0)
+        )
+        self.assertIsInstance(
+            response[0].train_path_nodes[0].arrival_delay,
+            timedelta
+        )
+        self.assertEqual(
+            response[0].train_path_nodes[0].arrival_delay,
+            timedelta(minutes=2)
+        )
+        self.assertIsInstance(
+            response[0].train_path_nodes[0].departure_delay,
+            timedelta
+        )
+        self.assertEqual(
+            response[0].train_path_nodes[0].departure_delay,
+            timedelta(seconds=30)
+        )
+        self.assertIsInstance(
+            response[0].train_path_nodes[0].estimated_arrival_time,
+            datetime
+        )
+        self.assertEqual(
+            response[0].train_path_nodes[0].estimated_arrival_time,
+            datetime(year=2003, month=5, day=5, hour=7, minute=30)
+        )
+        self.assertIsInstance(
+            response[0].train_path_nodes[0].estimated_departure_time,
+            datetime
+        )
+        self.assertEqual(
+            response[0].train_path_nodes[0].estimated_departure_time,
+            datetime(year=2003, month=5, day=5, hour=7, minute=30)
+        )
+
         self.assertIsInstance(
             response[0].train_path_nodes[1],
             AlgorithmTrainSimulationTrainPathNode)
@@ -114,13 +188,70 @@ class TestGetTrainSimulationTrains(unittest.TestCase):
             282
         )
         self.assertIsInstance(
-            response[0].train_path_nodes[1].arrival_time,
+            response[0].train_path_nodes[1].planned_arrival_time,
             datetime
+        )
+        self.assertEqual(
+            response[0].train_path_nodes[1].planned_arrival_time,
+            datetime(year=2003, month=5, day=5, hour=7, minute=31, second=12)
         )
         self.assertIsInstance(
-            response[0].train_path_nodes[1].departure_time,
+            response[0].train_path_nodes[1].planned_departure_time,
             datetime
         )
+        self.assertEqual(
+            response[0].train_path_nodes[1].planned_departure_time,
+            datetime(year=2003, month=5, day=5, hour=7, minute=31, second=12)
+        )
+        self.assertIsInstance(
+            response[0].train_path_nodes[1].minimum_run_time,
+            Optional[timedelta]
+        )
+        self.assertEqual(
+            response[0].train_path_nodes[1].minimum_run_time,
+            timedelta(minutes=1, seconds=12)
+        )
+        self.assertIsInstance(
+            response[0].train_path_nodes[1].minimum_stop_time,
+            timedelta
+        )
+        self.assertEqual(
+            response[0].train_path_nodes[1].minimum_stop_time,
+            timedelta(0)
+        )
+        self.assertIsInstance(
+            response[0].train_path_nodes[1].arrival_delay,
+            timedelta
+        )
+        self.assertEqual(
+            response[0].train_path_nodes[1].arrival_delay,
+            timedelta(minutes=1)
+        )
+        self.assertIsInstance(
+            response[0].train_path_nodes[1].departure_delay,
+            timedelta
+        )
+        self.assertEqual(
+            response[0].train_path_nodes[1].departure_delay,
+            timedelta(0)
+        )
+        self.assertIsInstance(
+            response[0].train_path_nodes[1].estimated_arrival_time,
+            datetime
+        )
+        self.assertEqual(
+            response[0].train_path_nodes[1].estimated_arrival_time,
+            datetime(year=2003, month=5, day=5, hour=7, minute=31, second=12)
+        )
+        self.assertIsInstance(
+            response[0].train_path_nodes[1].estimated_departure_time,
+            datetime
+        )
+        self.assertEqual(
+            response[0].train_path_nodes[1].estimated_departure_time,
+            datetime(year=2003, month=5, day=5, hour=7, minute=31, second=12)
+        )
+
         self.assertIsInstance(
             response[0].train_path_nodes[2],
             AlgorithmTrainSimulationTrainPathNode)
@@ -133,15 +264,69 @@ class TestGetTrainSimulationTrains(unittest.TestCase):
             322
         )
         self.assertIsInstance(
-            response[0].train_path_nodes[2].arrival_time,
+            response[0].train_path_nodes[2].planned_arrival_time,
             datetime
+        )
+        self.assertEqual(
+            response[0].train_path_nodes[2].planned_arrival_time,
+            datetime(year=2003, month=5, day=5, hour=7, minute=33, second=54)
         )
         self.assertIsInstance(
-            response[0].train_path_nodes[2].departure_time,
+            response[0].train_path_nodes[2].planned_departure_time,
             datetime
         )
-
-
+        self.assertEqual(
+            response[0].train_path_nodes[2].planned_departure_time,
+            datetime(year=2003, month=5, day=5, hour=7, minute=33, second=54)
+        )
+        self.assertIsInstance(
+            response[0].train_path_nodes[2].minimum_run_time,
+            Optional[timedelta]
+        )
+        self.assertEqual(
+            response[0].train_path_nodes[2].minimum_run_time,
+            timedelta(minutes=2, seconds=42)
+        )
+        self.assertIsInstance(
+            response[0].train_path_nodes[2].minimum_stop_time,
+            timedelta
+        )
+        self.assertEqual(
+            response[0].train_path_nodes[2].minimum_stop_time,
+            timedelta(0)
+        )
+        self.assertIsInstance(
+            response[0].train_path_nodes[2].arrival_delay,
+            timedelta
+        )
+        self.assertEqual(
+            response[0].train_path_nodes[2].arrival_delay,
+            timedelta(0)
+        )
+        self.assertIsInstance(
+            response[0].train_path_nodes[2].departure_delay,
+            timedelta
+        )
+        self.assertEqual(
+            response[0].train_path_nodes[2].departure_delay,
+            timedelta(minutes=2, seconds=25)
+        )
+        self.assertIsInstance(
+            response[0].train_path_nodes[2].estimated_arrival_time,
+            datetime
+        )
+        self.assertEqual(
+            response[0].train_path_nodes[2].estimated_arrival_time,
+            datetime(year=2003, month=5, day=5, hour=7, minute=33, second=54)
+        )
+        self.assertIsInstance(
+            response[0].train_path_nodes[2].estimated_departure_time,
+            datetime
+        )
+        self.assertEqual(
+            response[0].train_path_nodes[2].estimated_departure_time,
+            datetime(year=2003, month=5, day=5, hour=7, minute=33, second=54)
+        )
 
     @mock.patch('requests.Session', side_effect=GetTrainSimulationTrainsMockSession)
     def tearDown(self, mocked_get_obj) -> None:

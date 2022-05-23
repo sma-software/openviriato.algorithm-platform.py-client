@@ -1,36 +1,78 @@
 from enum import Enum, unique
-from typing import List
+from typing import List, Optional
 import datetime
 
 from py_client.aidm.aidm_base_classes import _HasID
 
+
 @unique
 class AlgorithmTrainSimulationEventType(Enum):
-    arrival = 'arrival'#"The event describes the arrival at a node."
-    departure = 'departure'#"The event describes a departure from a node."
+    arrival = 'arrival'
+    departure = 'departure'
+
 
 class AlgorithmTrainSimulationTrainPathNode(_HasID):
-    __arrival_time: datetime.datetime
-    __departure_time: datetime.datetime
+    __arrival_delay: datetime.timedelta
+    __departure_delay: datetime.timedelta
+    __estimated_arrival_time: datetime.datetime
+    __estimated_departure_time: datetime.datetime
+    __minimum_run_time: Optional[datetime.timedelta]
+    __minimum_stop_time: datetime.timedelta
+    __planned_arrival_time: datetime.datetime
+    __planned_departure_time: datetime.datetime
     __node_id: int
 
-    def __init__(self, id: int, arrival_time, departure_time, node_id: int):
+    def __init__(self, id: int, arrival_delay: datetime.timedelta, departure_delay: datetime.timedelta,
+                 estimated_arrival_time: datetime.datetime, estimated_departure_time: datetime.datetime,
+                 minimum_run_time: datetime.timedelta, minimum_stop_time: datetime.timedelta,
+                 planned_arrival_time: datetime.datetime, planned_departure_time: datetime.datetime, node_id: int):
         _HasID.__init__(self, id)
-        self.__arrival_time = arrival_time
-        self.__departure_time = departure_time
+        self.__arrival_delay = arrival_delay
+        self.__departure_delay = departure_delay
+        self.__estimated_arrival_time = estimated_arrival_time
+        self.__estimated_departure_time = estimated_departure_time
+        self.__minimum_run_time = minimum_run_time
+        self.__minimum_stop_time = minimum_stop_time
+        self.__planned_arrival_time = planned_arrival_time
+        self.__planned_departure_time = planned_departure_time
         self.__node_id = node_id
 
     @property
-    def arrival_time(self) -> datetime.datetime:
-        return self.__arrival_time
+    def arrival_delay(self) -> datetime.timedelta:
+        return self.__arrival_delay
 
     @property
-    def departure_time(self) -> datetime.datetime:
-        return self.__departure_time
+    def departure_delay(self) -> datetime.timedelta:
+        return self.__departure_delay
+
+    @property
+    def estimated_arrival_time(self) -> datetime.datetime:
+        return self.__estimated_arrival_time
+
+    @property
+    def estimated_departure_time(self) -> datetime.datetime:
+        return self.__estimated_departure_time
+
+    @property
+    def minimum_run_time(self) -> Optional[datetime.timedelta]:
+        return self.__minimum_run_time
+
+    @property
+    def minimum_stop_time(self) -> datetime.timedelta:
+        return self.__minimum_stop_time
+
+    @property
+    def planned_arrival_time(self) -> datetime.datetime:
+        return self.__planned_arrival_time
+
+    @property
+    def planned_departure_time(self) -> datetime.datetime:
+        return self.__planned_departure_time
 
     @property
     def node_id(self) -> int:
         return self.__node_id
+
 
 class AlgorithmTrainSimulationEvent(_HasID):
     __absolute_time: datetime.datetime
@@ -54,6 +96,7 @@ class AlgorithmTrainSimulationEvent(_HasID):
     @property
     def type(self) -> AlgorithmTrainSimulationEventType:
         return self.__type
+
 
 class AlgorithmTrainSimulationTrain(_HasID):
     __train_path_nodes: List[AlgorithmTrainSimulationTrainPathNode]
@@ -99,3 +142,4 @@ class AlgorithmTrainSimulationRealizationForecast:
     @property
     def unrealizable_events(self) -> List[AlgorithmTrainSimulationUnrealizableEvent]:
         return self.__unrealizable_events
+    

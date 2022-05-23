@@ -5,6 +5,7 @@ from py_client.aidm.aidm_time_window_classes import TimeWindow
 from py_client.aidm.aidm_train_path_node_classes import AlgorithmTrainPathNode
 from py_client.aidm.aidm_algorithm_classes import AlgorithmTrain
 
+
 @unique
 class ConflictType(Enum):
     Crossing = "crossing"
@@ -15,6 +16,14 @@ class ConflictType(Enum):
     SameSectionTrack = "sameSectionTrack"
     IncompatibleStationRoutes = "incompatibleStationRoutes"
     IncompatibleJunctionRoutes = "incompatibleJunctionRoutes"
+
+
+@unique
+class AlgorithmTrainPathNodeEventType(Enum):
+    PreviousDeparture = "previousDeparture"
+    Arrival = "arrival"
+    Departure = "departure"
+
 
 class _AlgorithmConflict:
     __conflict_type: ConflictType
@@ -32,15 +41,18 @@ class _AlgorithmConflict:
     def time_window(self) -> TimeWindow:
         return self.__time_window
 
+
 class _AlgorithmInfrastructureConflict(_AlgorithmConflict):
     # **kwargs is needed because operator ** cannot deal with double interheritance otherwise (as needed by json2Aidm conversion)
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
+
 class _AlgorithmTrainConflict(_AlgorithmConflict):
     # **kwargs is needed because operator ** cannot deal with double interheritance otherwise (as needed by json2Aidm conversion)
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+
 
 class AlgorithmSectionTrackConflict(_AlgorithmInfrastructureConflict):
     __section_track_id: int
@@ -54,6 +66,7 @@ class AlgorithmSectionTrackConflict(_AlgorithmInfrastructureConflict):
     def section_track_id(self) -> int:
         return self.__section_track_id
 
+
 class AlgorithmNodeConflict(_AlgorithmInfrastructureConflict):
     __node_id: int
 
@@ -66,19 +79,25 @@ class AlgorithmNodeConflict(_AlgorithmInfrastructureConflict):
     def node_id(self) -> int:
         return self.__node_id
 
+
 class AlgorithmTwoTrainsConflict(_AlgorithmTrainConflict):
     __preceding_train_id: int
     __preceding_train_path_node_id: int
+    __preceding_train_path_node_event_type: AlgorithmTrainPathNodeEventType
     __succeeding_train_id: int
     __succeeding_train_path_node_id: int
+    __succeeding_train_path_node_event_type: AlgorithmTrainPathNodeEventType
+
 
     # **kwargs is needed because operator ** cannot deal with double interheritance otherwise (as needed by json2Aidm conversion)
-    def __init__(self, preceding_train_id: int, preceding_train_path_node_id: int, succeeding_train_id: int, succeding_train_path_node_id: int, **kwargs):
+    def __init__(self, preceding_train_id: int, preceding_train_path_node_id: int, preceding_train_path_node_event_type: AlgorithmTrainPathNodeEventType, succeeding_train_id: int, succeding_train_path_node_id: int, succeeding_train_path_node_event_type: AlgorithmTrainPathNodeEventType, **kwargs):
         super().__init__(**kwargs)
         self.__succeeding_train_id = succeeding_train_id
         self.__succeeding_train_path_node_id = succeding_train_path_node_id
+        self.__succeeding_train_path_node_event_type = succeeding_train_path_node_event_type
         self.__preceding_train_id = preceding_train_id
         self.__preceding_train_path_node_id = preceding_train_path_node_id
+        self.__preceding_train_path_node_event_type = preceding_train_path_node_event_type
 
     @property
     def succeeding_train_id(self) -> int:
@@ -89,12 +108,21 @@ class AlgorithmTwoTrainsConflict(_AlgorithmTrainConflict):
         return self.__succeeding_train_path_node_id
 
     @property
+    def succeeding_train_path_node_event_type(self) -> AlgorithmTrainPathNodeEventType:
+        return self.__succeeding_train_path_node_event_type
+
+    @property
     def preceding_train_id(self) -> int:
         return self.__preceding_train_id
 
     @property
     def preceding_train_path_node_id(self) -> int:
         return self.__preceding_train_path_node_id
+
+    @property
+    def preceding_train_path_node_event_type(self) -> AlgorithmTrainPathNodeEventType:
+        return self.__preceding_train_path_node_event_type
+
 
 class AlgorithmOneTrainConflict(_AlgorithmTrainConflict):
     __train_id: int
@@ -114,6 +142,7 @@ class AlgorithmOneTrainConflict(_AlgorithmTrainConflict):
     def train_path_node_id(self) -> int:
         return self.__train_path_node_id
 
+
 class AlgorithmMultipleTrainsConflict(_AlgorithmTrainConflict):
     __train_ids: List[int]
     __train_path_node_ids: List[int]
@@ -132,6 +161,7 @@ class AlgorithmMultipleTrainsConflict(_AlgorithmTrainConflict):
     def train_path_node_ids(self) -> List[int]:
         return self.__train_path_node_ids
 
+
 class _AlgorithmTwoTrainsSectionTrackConflict(AlgorithmTwoTrainsConflict, AlgorithmSectionTrackConflict):
     def __init__(self,
                  conflict_type: ConflictType,
@@ -139,16 +169,21 @@ class _AlgorithmTwoTrainsSectionTrackConflict(AlgorithmTwoTrainsConflict, Algori
                  section_track_id: int,
                  preceding_train_id: int,
                  preceding_train_path_node_id: int,
+                 preceding_train_path_node_event_type: AlgorithmTrainPathNodeEventType,
                  succeeding_train_id: int,
-                 succeeding_train_path_node_id: int):
+                 succeeding_train_path_node_id: int,
+                 succeeding_train_path_node_event_type: AlgorithmTrainPathNodeEventType):
         super().__init__(
             conflict_type=conflict_type,
             time_window=time_window,
             preceding_train_id=preceding_train_id,
             preceding_train_path_node_id=preceding_train_path_node_id,
+            preceding_train_path_node_event_type=preceding_train_path_node_event_type,
             succeeding_train_id=succeeding_train_id,
             succeding_train_path_node_id=succeeding_train_path_node_id,
+            succeeding_train_path_node_event_type=succeeding_train_path_node_event_type,
             section_track_id=section_track_id)
+
 
 class _AlgorithmOneTrainSectionTrackConflict(AlgorithmOneTrainConflict, AlgorithmSectionTrackConflict):
     def __init__(self,
@@ -165,6 +200,7 @@ class _AlgorithmOneTrainSectionTrackConflict(AlgorithmOneTrainConflict, Algorith
             train_path_node_id=train_path_node_id,
             section_track_id=section_track_id)
 
+
 class _AlgorithmOneTrainNodeConflict(AlgorithmOneTrainConflict, AlgorithmNodeConflict):
     def __init__(self,
                  conflict_type: ConflictType,
@@ -180,6 +216,7 @@ class _AlgorithmOneTrainNodeConflict(AlgorithmOneTrainConflict, AlgorithmNodeCon
             train_path_node_id=train_path_node_id,
             node_id=node_id)
 
+
 class _AlgorithmTwoTrainsNodeConflict(AlgorithmTwoTrainsConflict, AlgorithmNodeConflict):
     def __init__(self,
                  conflict_type: ConflictType,
@@ -187,16 +224,21 @@ class _AlgorithmTwoTrainsNodeConflict(AlgorithmTwoTrainsConflict, AlgorithmNodeC
                  node_id: int,
                  preceding_train_id: int,
                  preceding_train_path_node_id: int,
+                 preceding_train_path_node_event_type: AlgorithmTrainPathNodeEventType,
                  succeeding_train_id: int,
-                 succeeding_train_path_node_id: int):
+                 succeeding_train_path_node_id: int,
+                 succeeding_train_path_node_event_type: AlgorithmTrainPathNodeEventType,):
         super().__init__(
             conflict_type=conflict_type,
             time_window=time_window,
             preceding_train_id=preceding_train_id,
             preceding_train_path_node_id=preceding_train_path_node_id,
+            preceding_train_path_node_event_type=preceding_train_path_node_event_type,
             succeeding_train_id=succeeding_train_id,
             succeding_train_path_node_id=succeeding_train_path_node_id,
+            succeeding_train_path_node_event_type=succeeding_train_path_node_event_type,
             node_id=node_id)
+
 
 AlgorithmConflict = Union[AlgorithmTwoTrainsConflict, AlgorithmOneTrainConflict, AlgorithmMultipleTrainsConflict, AlgorithmSectionTrackConflict, AlgorithmNodeConflict]
 
@@ -220,7 +262,7 @@ class ConflictDetectionArguments:
     def _private_init__(
             self,
             filter_conflict_types: List[ConflictType],
-            filter_node_ids: List[int] ,
+            filter_node_ids: List[int],
             filter_section_track_ids: List[int],
             filter_train_id: Optional[int],
             time_window: TimeWindow) -> None:

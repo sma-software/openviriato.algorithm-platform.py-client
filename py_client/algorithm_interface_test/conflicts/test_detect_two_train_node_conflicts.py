@@ -1,12 +1,12 @@
 import datetime
 import unittest
 from unittest import mock
-from py_client.algorithm_interface.algorithm_interface import AlgorithmInterface
 from py_client.algorithm_interface import algorithm_interface_factory
 import py_client.algorithm_interface_test.test_helper.SessionMockFactory as SessionMockFactory
 from py_client.algorithm_interface_test.test_helper.SessionMockTestBase import get_api_url, SessionMockTestBase
-from py_client.aidm.aidm_conflict import ConflictDetectionArguments, AlgorithmNodeConflict, AlgorithmTwoTrainsConflict, _AlgorithmTwoTrainsNodeConflict, ConflictType
+from py_client.aidm.aidm_conflict import ConflictDetectionArguments, AlgorithmNodeConflict, AlgorithmTwoTrainsConflict, _AlgorithmTwoTrainsNodeConflict, ConflictType, AlgorithmTrainPathNodeEventType
 from py_client.aidm.aidm_time_window_classes import TimeWindow
+
 
 class TestDetectConflicts(unittest.TestCase):
     class DetectConflictsMockSession(SessionMockTestBase):
@@ -24,8 +24,10 @@ class TestDetectConflicts(unittest.TestCase):
                             "       \"nodeId\": 352, \n"
                             "       \"precedingTrainId\": 1230, \n"
                             "       \"precedingTrainPathNodeId\": 1228, \n"
+                            "       \"precedingTrainPathNodeEventType\": \"departure\", \n"
                             "       \"succeedingTrainId\": 1234, \n"
-                            "       \"succeedingTrainPathNodeId\": 1232 \n"
+                            "       \"succeedingTrainPathNodeId\": 1232, \n"
+                            "       \"succeedingTrainPathNodeEventType\": \"arrival\" \n"
                             "   }, \n"
                             "   { \n"
                             "       \"conflictType\": \"sameSectionTrack\", \n"
@@ -36,8 +38,10 @@ class TestDetectConflicts(unittest.TestCase):
                             "       \"nodeId\": 352, \n"
                             "       \"precedingTrainId\": 1226, \n"
                             "       \"precedingTrainPathNodeId\": 1224, \n"
+                            "       \"precedingTrainPathNodeEventType\": \"arrival\", \n"
                             "       \"succeedingTrainId\": 1230, \n"
-                            "       \"succeedingTrainPathNodeId\": 1228 \n"
+                            "       \"succeedingTrainPathNodeId\": 1228, \n"
+                            "       \"succeedingTrainPathNodeEventType\": \"departure\" \n"
                             "   }, \n"
                             "   { \n"
                             "       \"conflictType\": \"incompatibleStationRoutes\", \n"
@@ -48,8 +52,10 @@ class TestDetectConflicts(unittest.TestCase):
                             "       \"nodeId\": 482, \n"
                             "       \"precedingTrainId\": 1226, \n"
                             "       \"precedingTrainPathNodeId\": 1246, \n"
+                            "       \"precedingTrainPathNodeEventType\": \"departure\", \n"
                             "       \"succeedingTrainId\": 1230, \n"
-                            "       \"succeedingTrainPathNodeId\": 1275 \n"
+                            "       \"succeedingTrainPathNodeId\": 1275, \n"
+                            "       \"succeedingTrainPathNodeEventType\": \"arrival\" \n"
                             "   }, \n"
                             "   { \n"
                             "       \"conflictType\": \"incompatibleJunctionRoutes\", \n"
@@ -60,8 +66,10 @@ class TestDetectConflicts(unittest.TestCase):
                             "       \"nodeId\": 7894, \n"
                             "       \"precedingTrainId\": 1226, \n"
                             "       \"precedingTrainPathNodeId\": 2285, \n"
+                            "       \"precedingTrainPathNodeEventType\": \"arrival\", \n"
                             "       \"succeedingTrainId\": 1230, \n"
-                            "       \"succeedingTrainPathNodeId\": 9678 \n"
+                            "       \"succeedingTrainPathNodeId\": 9678, \n"
+                            "       \"succeedingTrainPathNodeEventType\": \"departure\" \n"
                             "   } \n"
                             "]"
                             )
@@ -147,7 +155,21 @@ class TestDetectConflicts(unittest.TestCase):
             list_of_algorithm_conflicts[0].succeeding_train_path_node_id,
             1232)
 
+        self.assertIsInstance(
+            list_of_algorithm_conflicts[0].succeeding_train_path_node_event_type,
+            AlgorithmTrainPathNodeEventType)
 
+        self.assertEqual(
+            list_of_algorithm_conflicts[0].succeeding_train_path_node_event_type,
+            AlgorithmTrainPathNodeEventType.Arrival)
+
+        self.assertIsInstance(
+            list_of_algorithm_conflicts[0].preceding_train_path_node_event_type,
+            AlgorithmTrainPathNodeEventType)
+
+        self.assertEqual(
+            list_of_algorithm_conflicts[0].preceding_train_path_node_event_type,
+            AlgorithmTrainPathNodeEventType.Departure)
 
         self.assertIsInstance(
             list_of_algorithm_conflicts[1],
@@ -166,6 +188,22 @@ class TestDetectConflicts(unittest.TestCase):
             ConflictType.SameSectionTrack)
 
         self.assertIsInstance(
+            list_of_algorithm_conflicts[1].succeeding_train_path_node_event_type,
+            AlgorithmTrainPathNodeEventType)
+
+        self.assertEqual(
+            list_of_algorithm_conflicts[1].succeeding_train_path_node_event_type,
+            AlgorithmTrainPathNodeEventType.Departure)
+
+        self.assertIsInstance(
+            list_of_algorithm_conflicts[1].preceding_train_path_node_event_type,
+            AlgorithmTrainPathNodeEventType)
+
+        self.assertEqual(
+            list_of_algorithm_conflicts[1].preceding_train_path_node_event_type,
+            AlgorithmTrainPathNodeEventType.Arrival)
+
+        self.assertIsInstance(
             list_of_algorithm_conflicts[2],
             AlgorithmNodeConflict)
 
@@ -180,6 +218,22 @@ class TestDetectConflicts(unittest.TestCase):
         self.assertEqual(
             list_of_algorithm_conflicts[2].conflict_type,
             ConflictType.IncompatibleStationRoutes)
+
+        self.assertIsInstance(
+            list_of_algorithm_conflicts[2].succeeding_train_path_node_event_type,
+            AlgorithmTrainPathNodeEventType)
+
+        self.assertEqual(
+            list_of_algorithm_conflicts[2].succeeding_train_path_node_event_type,
+            AlgorithmTrainPathNodeEventType.Arrival)
+
+        self.assertIsInstance(
+            list_of_algorithm_conflicts[2].preceding_train_path_node_event_type,
+            AlgorithmTrainPathNodeEventType)
+
+        self.assertEqual(
+            list_of_algorithm_conflicts[2].preceding_train_path_node_event_type,
+            AlgorithmTrainPathNodeEventType.Departure)
 
         self.assertIsInstance(
             list_of_algorithm_conflicts[3],
@@ -197,9 +251,21 @@ class TestDetectConflicts(unittest.TestCase):
             list_of_algorithm_conflicts[3].conflict_type,
             ConflictType.IncompatibleJunctionRoutes)
 
+        self.assertIsInstance(
+            list_of_algorithm_conflicts[3].succeeding_train_path_node_event_type,
+            AlgorithmTrainPathNodeEventType)
 
+        self.assertEqual(
+            list_of_algorithm_conflicts[3].succeeding_train_path_node_event_type,
+            AlgorithmTrainPathNodeEventType.Departure)
 
+        self.assertIsInstance(
+            list_of_algorithm_conflicts[3].preceding_train_path_node_event_type,
+            AlgorithmTrainPathNodeEventType)
 
+        self.assertEqual(
+            list_of_algorithm_conflicts[3].preceding_train_path_node_event_type,
+            AlgorithmTrainPathNodeEventType.Arrival)
 
     @mock.patch('requests.Session', side_effect=DetectConflictsMockSession)
     def tearDown(self, mocked_get_obj) -> None:

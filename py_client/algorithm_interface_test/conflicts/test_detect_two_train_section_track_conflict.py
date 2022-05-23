@@ -6,7 +6,7 @@ from py_client.algorithm_interface.algorithm_interface import AlgorithmInterface
 from py_client.algorithm_interface import algorithm_interface_factory
 import py_client.algorithm_interface_test.test_helper.SessionMockFactory as SessionMockFactory
 from py_client.algorithm_interface_test.test_helper.SessionMockTestBase import get_api_url, SessionMockTestBase
-from py_client.aidm.aidm_conflict import _AlgorithmConflict, ConflictType, ConflictDetectionArguments, AlgorithmSectionTrackConflict, AlgorithmNodeConflict, _AlgorithmTwoTrainsSectionTrackConflict
+from py_client.aidm.aidm_conflict import ConflictType, ConflictDetectionArguments, AlgorithmSectionTrackConflict, _AlgorithmTwoTrainsSectionTrackConflict, AlgorithmTrainPathNodeEventType
 from py_client.aidm.aidm_time_window_classes import TimeWindow
 
 class TestDetectConflicts(unittest.TestCase):
@@ -25,8 +25,10 @@ class TestDetectConflicts(unittest.TestCase):
                             "   \"sectionTrackId\": 725, \n"
                             "   \"precedingTrainId\": 1238, \n"
                             "   \"precedingTrainPathNodeId\": 1236, \n"
+                            "   \"preceding_train_path_node_event_type\": \"arrival\", \n"
                             "   \"succeedingTrainId\": 1226, \n"
-                            "   \"succeedingTrainPathNodeId\": 1225 \n"
+                            "   \"succeedingTrainPathNodeId\": 1225, \n"
+                            "   \"succeeding_train_path_node_event_type\": \"previousDeparture\" \n"
                             "    } \n"
                             "]"
                             )
@@ -100,6 +102,14 @@ class TestDetectConflicts(unittest.TestCase):
             list_of_algorithm_conflicts[0].preceding_train_path_node_id,
             1236)
 
+        self.assertIsInstance(
+            list_of_algorithm_conflicts[0].preceding_train_path_node_event_type,
+            AlgorithmTrainPathNodeEventType)
+
+        self.assertEqual(
+            list_of_algorithm_conflicts[0].preceding_train_path_node_event_type,
+            AlgorithmTrainPathNodeEventType.Arrival)
+
         self.assertEqual(
             list_of_algorithm_conflicts[0].succeeding_train_id,
             1226)
@@ -107,6 +117,14 @@ class TestDetectConflicts(unittest.TestCase):
         self.assertEqual(
             list_of_algorithm_conflicts[0].succeeding_train_path_node_id,
             1225)
+
+        self.assertIsInstance(
+            list_of_algorithm_conflicts[0].succeeding_train_path_node_event_type,
+            AlgorithmTrainPathNodeEventType)
+
+        self.assertEqual(
+            list_of_algorithm_conflicts[0].succeeding_train_path_node_event_type,
+            AlgorithmTrainPathNodeEventType.PreviousDeparture)
         
     @mock.patch('requests.Session', side_effect=DetectConflictsMockSession)
     def tearDown(self, mocked_get_obj) -> None:

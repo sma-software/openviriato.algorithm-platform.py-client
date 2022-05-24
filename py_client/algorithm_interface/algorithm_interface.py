@@ -743,3 +743,9 @@ class AlgorithmInterface:
         url_to_resource = "trains:has-changed"
         response = self.__communication_layer.do_get_request_without_body(url_to_resource)
         return JsonToAidmConverter().process_json_to_aidm(response, bool)
+
+    def postpone_next_train_simulation_event(self, additional_delay: datetime.timedelta) -> AlgorithmTrainSimulationRealizationForecast:
+        url_to_resource = "services/trains/simulations/events/next:postpone"
+        post_request_body = dict(additionalDelay=additional_delay)
+        response = self.__communication_layer.do_post_request(url_to_resource, post_request_body)
+        return JsonToAidmConverter().process_json_to_aidm(response, AlgorithmTrainSimulationRealizationForecast)

@@ -11,6 +11,7 @@ class CommunicationLayer:
     def __init__(self, base_url: str):
         self.base_url = base_url
         self.currentSession = requests.Session()
+        http.client.HTTPConnection.debuglevel = 1
 
     def merge_base_url_with_request(self, request: str) -> str:
         return '{0}/{1}'.format(self.base_url, request)

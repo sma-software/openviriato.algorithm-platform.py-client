@@ -174,7 +174,7 @@ class ConflictTypeMappingLookup:
 
     def __init__(self):
         self.__lookup[ConflictType.Crossing] = _AlgorithmTwoTrainsSectionTrackConflict
-        self.__lookup[ConflictType.WrongDrivingDirection] = _AlgorithmOneTrainSectionTrackConflict
+        self.__lookup[ConflictType.Trafficability] = _AlgorithmOneTrainSectionTrackConflict
         self.__lookup[ConflictType.ChangeDirection] = _AlgorithmOneTrainNodeConflict
         self.__lookup[ConflictType.SimultaneousArrival] = _AlgorithmTwoTrainsNodeConflict
         self.__lookup[ConflictType.SameStationTrack] = _AlgorithmTwoTrainsNodeConflict

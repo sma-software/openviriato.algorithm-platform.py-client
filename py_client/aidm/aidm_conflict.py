@@ -8,7 +8,7 @@ from py_client.aidm.aidm_algorithm_classes import AlgorithmTrain
 @unique
 class ConflictType(Enum):
     Crossing = "crossing"
-    WrongDrivingDirection = "wrongDrivingDirection"
+    Trafficability = "trafficability"
     ChangeDirection = "changeDirection"
     SimultaneousArrival = "simultaneousArrival"
     SameStationTrack = "sameStationTrack"

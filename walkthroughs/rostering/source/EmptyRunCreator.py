@@ -4,6 +4,7 @@ from py_client.aidm.aidm_algorithm_classes import AlgorithmTrain
 from py_client.aidm.aidm_update_classes import UpdateStopTimesTrainPathNode, UpdateRunTimesTrainPathSegment
 from CommonActivitiesFactory import CommonActivitiesFactory, CommonActivity
 
+
 class EmptyRunCreator:
     __algorithm_interface: AlgorithmInterface
     __common_activity_factory: CommonActivitiesFactory

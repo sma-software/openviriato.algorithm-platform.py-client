@@ -4,6 +4,7 @@ from py_client.aidm.aidm_algorithm_classes import AlgorithmTrain, AlgorithmTrain
 from py_client.algorithm_interface.algorithm_interface import AlgorithmInterface
 from Activities import CommonActivity, SingleActivity
 
+
 class CommonActivitiesFactory:
     __next_free_single_activity_id: int
     __algorithm_interface: AlgorithmInterface
@@ -12,7 +13,7 @@ class CommonActivitiesFactory:
         self.__next_free_single_activity_id = 1
         self.__algorithm_interface = algorithm_interface
 
-    #@to_common_activities[:]
+    # @to_common_activities[:]
     def to_common_activities(self, train: AlgorithmTrain) -> List[CommonActivity]:
         train_path_nodes_with_changes_of_formation = self.__calculate_train_path_node_with_change_of_formation(train)
 
@@ -30,7 +31,6 @@ class CommonActivitiesFactory:
 
     def __calculate_train_path_node_with_change_of_formation(self, train: AlgorithmTrain):
         first_train_path_node = train.train_path_nodes[0]
-        last_train_path_node = train.train_path_nodes[-1]
         train_path_node_with_change_last_seen = first_train_path_node
         train_path_nodes_with_change_of_formation = [train_path_node_with_change_last_seen]
 
@@ -42,11 +42,11 @@ class CommonActivitiesFactory:
 
         return train_path_nodes_with_change_of_formation
 
-    #@create_single_activities[:]
+    # @create_single_activities[:]
     def __create_single_activities(self, departure_node: AlgorithmTrainPathNode, arrival_node: AlgorithmTrainPathNode) -> List[SingleActivity]:
         vehicles = self.__algorithm_interface.get_formation(departure_node.formation_id)
         activities = []
-        for position, vehicle in enumerate(vehicles.vehicle_type_ids):
+        for position, vehicle_type_id in enumerate(vehicles.vehicle_type_ids):
             activity = SingleActivity(
                 self.__next_free_single_activity_id,
                 departure_node.id,
@@ -55,7 +55,7 @@ class CommonActivitiesFactory:
                 arrival_node.arrival_time,
                 arrival_node.node_id,
                 position,
-                vehicle)
+                vehicle_type_id)
             self.__next_free_single_activity_id += 1
             activities.append(activity)
 

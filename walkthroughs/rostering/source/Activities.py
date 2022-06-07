@@ -1,6 +1,7 @@
 from datetime import datetime
 from typing import List
 
+
 class SingleActivity:
     __id: int
     __position: int
@@ -54,6 +55,7 @@ class SingleActivity:
     @property
     def rolling_stock_type_id(self) -> int:
         return self.__rolling_stock_type_id
+
 
 class CommonActivity:
     __single_activities: List[SingleActivity]

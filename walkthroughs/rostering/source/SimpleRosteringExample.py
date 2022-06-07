@@ -7,8 +7,9 @@ from py_client.aidm.aidm_algorithm_classes import AlgorithmTrain
 from py_client.algorithm_interface.algorithm_interface import AlgorithmInterface
 
 from EmptyRunCreator import EmptyRunCreator
-from Activities import CommonActivity, SingleActivity
+from Activities import CommonActivity
 from CommonActivitiesFactory import CommonActivitiesFactory
+
 
 def create_link_definitions_between_two_common_activities(source_common_activity: CommonActivity, target_common_activity: CommonActivity) -> List[AlgorithmRosterLinkDefinition]:
     unlinked_target_activities = list(target_common_activity.single_activities)
@@ -26,6 +27,7 @@ def create_link_definitions_between_two_common_activities(source_common_activity
                 unlinked_target_activities.remove(target_single_activity)
                 break
     return roster_link_definitions
+
 
 def create_link_definitions_for_common_activities_of_one_train(common_activities_for_one_train: List[CommonActivity]) -> List[AlgorithmRosterLinkDefinition]:
     subsequent_common_activities = zip(common_activities_for_one_train[:-1], common_activities_for_one_train[1:])
@@ -70,6 +72,7 @@ def create_link_definitions_between_trains(algorithm_interface: AlgorithmInterfa
 
     return links_between_common_activities_preceding_train + links_between_different_trains + links_between_common_activities_succeeding_train
 
+
 def run(api_url: str) -> None:
     with algorithm_interface_factory.create(api_url) as algorithm_interface:
         preceding_train = algorithm_interface.get_algorithm_train_parameter("trainFrom")
@@ -78,6 +81,7 @@ def run(api_url: str) -> None:
         roster_links_to_create = create_link_definitions_between_trains(algorithm_interface, preceding_train, succeeding_train)
         algorithm_interface.create_roster_links(roster_links_to_create)
 
+
 def parse_api_url_from_command_line_arguments() -> str:
     argument_parser = argparse.ArgumentParser()
     argument_parser.add_argument("-u", "--api_url", required=True)
@@ -85,9 +89,11 @@ def parse_api_url_from_command_line_arguments() -> str:
     api_url: str = command_line_arguments["api_url"]
     return api_url
 
+
 def main():
     api_url = parse_api_url_from_command_line_arguments()
     run(api_url=api_url)
+
 
 if __name__ == '__main__':
     main()

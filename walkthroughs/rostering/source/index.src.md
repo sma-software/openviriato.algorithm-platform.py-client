@@ -42,7 +42,7 @@ The algorithm proposed throughout this article will create the roster links depi
 _Figure 2: The two trains with roster links created by the algorithm presented in this article._
 
 As the arrival node of the first train (KLW) is different from the departing node of the second train (LANG), an empty run has been created in grey to link the activities.
-During this walktrough, we will explain step-by-step the creation of a greedy algorithm producing these links.
+During this walkthrough, we will explain step-by-step the creation of a greedy algorithm producing these links.
 
 ## Parameters
 The algorithm presented during this walkthrough takes as input two trains selected by the user in the algorithm interface of Viriato and creates links. 
@@ -63,7 +63,7 @@ a piece of rolling stock running on the network between the nodes of the corresp
 
 _Figure 4: Decomposition of the two trains in common activities and single activities._
 
-During the rest of our walktrough we will use this domain model with common and single activities. We will create these from the given trains and subsequently link the single activities.
+During the rest of our walkthrough we will use this domain model with common and single activities. We will create these from the given trains and subsequently link the single activities.
 
 We design the class _CommonActivityFactory_ to create both types of activities. The following function of this class takes as input a train and returns the list of corresponding common activities.
 

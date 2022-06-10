@@ -16,7 +16,7 @@ We propose a [Walkthrough for rerouting a train](walkthroughs/rerouting_a_train/
 
 ## Creating roster links
 
-In the [Rostering walkthrough](walkthroughs/rostering/dist/index.md) we exlplain how to link picese of rolling stock together and create empty runs if needed. 
+In the [Rostering walkthrough](walkthroughs/rostering/dist/index.md) we explain how to link pieces of rolling stock together and create empty runs if needed. 
 
 ## Wiki
 

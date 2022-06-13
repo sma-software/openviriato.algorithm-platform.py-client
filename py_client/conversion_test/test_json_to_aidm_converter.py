@@ -1,7 +1,7 @@
 from __future__ import annotations
 import unittest
 
-from py_client.conversion.json_to_aidm_converter import JsonToAidmConverter, PolymorphicClassesProcessor
+from py_client.conversion.json_to_aidm_converter import JsonToAidmConverter, PolymorphicClassesProcessor, PrimitiveProcessor
 from py_client.aidm import AlgorithmSectionTrack, AlgorithmFormation, AlgorithmNode, AlgorithmNodeTrack, StopStatus, AlgorithmTrainPathNode
 from py_client.aidm.aidm_base_classes import _HasID, _HasCode, _HasDebugString
 from py_client.communication.response_processing import AlgorithmPlatformConversionError
@@ -707,6 +707,45 @@ class TestJsonToAIDMConverter(unittest.TestCase):
         polymorphic_processor = PolymorphicClassesProcessor()
 
         self.assertIsNone(polymorphic_processor._validate_most_specific_name_are_at_start_of_list())
+
+    def test_primitive_processor(self):
+        primitive_int = 3
+        primitive_bool = True
+        primitive_str = "primitive string"
+
+        primitive_processor = PrimitiveProcessor()
+
+        is_primitive_processor_applicable_for_int = primitive_processor.is_applicable(primitive_int, int)
+        self.assertTrue(is_primitive_processor_applicable_for_int)
+
+        is_primitive_processor_applicable_for_bool = primitive_processor.is_applicable(primitive_bool, bool)
+        self.assertTrue(is_primitive_processor_applicable_for_bool)
+
+        is_primitive_processor_applicable_for_str = primitive_processor.is_applicable(primitive_str, str)
+        self.assertTrue(is_primitive_processor_applicable_for_str)
+
+        primitive_int_processed = primitive_processor.process_attribute_dict(primitive_int, int)
+        self.assertEqual(primitive_int_processed, primitive_int)
+
+        primitive_bool_processed = primitive_processor.process_attribute_dict(primitive_bool, bool)
+        self.assertEqual(primitive_bool_processed, primitive_bool)
+
+        primitive_str_processed = primitive_processor.process_attribute_dict(primitive_str, str)
+        self.assertEqual(primitive_str_processed, primitive_str)
+
+    def test_primitive_processor_unapplicable(self):
+        list_of_primitive = [1, True, "test"]
+        dictionary = dict(string="primitive")
+
+        primitive_processor = PrimitiveProcessor()
+
+        is_primitive_processor_applicable_for_list = primitive_processor.is_applicable(list_of_primitive, List)
+        self.assertFalse(is_primitive_processor_applicable_for_list)
+
+        is_primitive_processor_applicable_for_dictionary = primitive_processor.is_applicable(dictionary, dict)
+        self.assertFalse(is_primitive_processor_applicable_for_dictionary)
+
+
 
 class SomeClass:
     __some_property: SomeClass

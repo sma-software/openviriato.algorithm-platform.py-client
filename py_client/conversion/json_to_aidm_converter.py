@@ -62,6 +62,14 @@ class EnumProcessor(JsonToAidmProcessor):
             )
 
 
+class PrimitiveProcessor(JsonToAidmProcessor):
+    def is_applicable(self, attribute_dict: dict, targeted_type: Type[object]) -> bool:
+        return is_primitive(targeted_type)
+
+    def process_attribute_dict(self, attribute_dict: Primitive, targeted_type: Primitive) -> Primitive:
+        return attribute_dict
+
+
 # === DICT PROCESSORS ==
 
 
@@ -217,6 +225,7 @@ class JsonToAidmConverter:
             EnumProcessor(),
             PolymorphicClassesProcessor(),
             ConflictProcessor(),
+            PrimitiveProcessor(),
             AtomicTypeProcessor()
         ]
 

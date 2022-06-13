@@ -37,7 +37,6 @@ from py_client.aidm import (
     SignalType,
     TableRow,
     FloatingPoint,
-    UpdateTimesTrain,
     AlgorithmRosterLinkDefinition,
     TableDefinition,
     AlgorithmNodeTrackClosure,
@@ -259,9 +258,9 @@ class AlgorithmInterface:
 
     def update_movement_type(self, movement_type_id: int, train_id: int, from_train_path_node_id: int, to_train_path_node_id: int) -> AlgorithmTrain:
         url_to_resource = "trains/{0}/train-path-nodes:update-movement-type".format(train_id)
-        put_body_dict = dict(movementTypeId = movement_type_id,
-                             fromTrainPathNodeId = from_train_path_node_id,
-                             toTrainPathNodeId = to_train_path_node_id)
+        put_body_dict = dict(movementTypeId=movement_type_id,
+                             fromTrainPathNodeId=from_train_path_node_id,
+                             toTrainPathNodeId=to_train_path_node_id)
         response_dict = self.__communication_layer.do_put_request(url_to_resource, request_body=put_body_dict)
         return JsonToAidmConverter().process_json_to_aidm(response_dict, AlgorithmTrain)
 

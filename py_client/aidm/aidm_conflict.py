@@ -90,10 +90,10 @@ class AlgorithmTwoTrainsConflict(_AlgorithmTrainConflict):
 
 
     # **kwargs is needed because operator ** cannot deal with double interheritance otherwise (as needed by json2Aidm conversion)
-    def __init__(self, preceding_train_id: int, preceding_train_path_node_id: int, preceding_train_path_node_event_type: AlgorithmTrainPathNodeEventType, succeeding_train_id: int, succeding_train_path_node_id: int, succeeding_train_path_node_event_type: AlgorithmTrainPathNodeEventType, **kwargs):
+    def __init__(self, preceding_train_id: int, preceding_train_path_node_id: int, preceding_train_path_node_event_type: AlgorithmTrainPathNodeEventType, succeeding_train_id: int, succeeding_train_path_node_id: int, succeeding_train_path_node_event_type: AlgorithmTrainPathNodeEventType, **kwargs):
         super().__init__(**kwargs)
         self.__succeeding_train_id = succeeding_train_id
-        self.__succeeding_train_path_node_id = succeding_train_path_node_id
+        self.__succeeding_train_path_node_id = succeeding_train_path_node_id
         self.__succeeding_train_path_node_event_type = succeeding_train_path_node_event_type
         self.__preceding_train_id = preceding_train_id
         self.__preceding_train_path_node_id = preceding_train_path_node_id
@@ -180,7 +180,7 @@ class _AlgorithmTwoTrainsSectionTrackConflict(AlgorithmTwoTrainsConflict, Algori
             preceding_train_path_node_id=preceding_train_path_node_id,
             preceding_train_path_node_event_type=preceding_train_path_node_event_type,
             succeeding_train_id=succeeding_train_id,
-            succeding_train_path_node_id=succeeding_train_path_node_id,
+            succeeding_train_path_node_id=succeeding_train_path_node_id,
             succeeding_train_path_node_event_type=succeeding_train_path_node_event_type,
             section_track_id=section_track_id)
 
@@ -235,7 +235,7 @@ class _AlgorithmTwoTrainsNodeConflict(AlgorithmTwoTrainsConflict, AlgorithmNodeC
             preceding_train_path_node_id=preceding_train_path_node_id,
             preceding_train_path_node_event_type=preceding_train_path_node_event_type,
             succeeding_train_id=succeeding_train_id,
-            succeding_train_path_node_id=succeeding_train_path_node_id,
+            succeeding_train_path_node_id=succeeding_train_path_node_id,
             succeeding_train_path_node_event_type=succeeding_train_path_node_event_type,
             node_id=node_id)
 

@@ -3,13 +3,13 @@ import unittest
 
 from py_client.conversion.json_to_aidm_converter import JsonToAidmConverter, PolymorphicClassesProcessor, PrimitiveProcessor
 from py_client.aidm import AlgorithmSectionTrack, AlgorithmFormation, AlgorithmNode, AlgorithmNodeTrack, StopStatus, AlgorithmTrainPathNode
-from py_client.aidm.aidm_base_classes import _HasID, _HasCode, _HasDebugString
+from py_client.aidm.aidm_base_classes import _HasID
 from py_client.communication.response_processing import AlgorithmPlatformConversionError
 from py_client.aidm.aidm_link_classes import AlgorithmConnectionLink, AlgorithmAwaitArrivalLink, AlgorithmRosterLink, _AlgorithmLink
-from py_client.aidm.aidm_routing_edge_classes import _RoutingEdge, CrossingRoutingEdge, IncomingRoutingEdge, OutgoingRoutingEdge, IncomingNodeTrackRoutingEdge, OutgoingNodeTrackRoutingEdge
-from typing import Optional, List, Union
-from enum import Enum
+from py_client.aidm.aidm_routing_edge_classes import _RoutingEdge, IncomingRoutingEdge, OutgoingRoutingEdge, IncomingNodeTrackRoutingEdge, OutgoingNodeTrackRoutingEdge
+from typing import Optional, List
 import datetime
+
 
 class TestJsonToAIDMConverter(unittest.TestCase):
     __converter: JsonToAidmConverter
@@ -17,14 +17,13 @@ class TestJsonToAIDMConverter(unittest.TestCase):
     def setUp(self):
         self.__converter = JsonToAidmConverter()
 
-
     def test_json_to_section_track(self):
         json_dict = dict(
-            id = 1082,
-            code ="900",
-            sectionCode = "70015",
-            distanceUnits = 10000,
-            debugString = "sectiontrack:s_70015 n_85ZHDB 900")
+            id=1082,
+            code="900",
+            sectionCode="70015",
+            distanceUnits=10000,
+            debugString="sectiontrack:s_70015 n_85ZHDB 900")
 
         test_section_track = self.__converter.process_json_to_aidm(json_dict, AlgorithmSectionTrack)
 
@@ -40,7 +39,7 @@ class TestJsonToAIDMConverter(unittest.TestCase):
             id=1082,
             code="900",
             sectionCode="70015",
-           debugString="sectiontrack:s_70015 n_85ZHDB 900")
+            debugString="sectiontrack:s_70015 n_85ZHDB 900")
 
         with self.assertRaises(AlgorithmPlatformConversionError):
             self.__converter.process_json_to_aidm(json_dict, AlgorithmSectionTrack)
@@ -74,20 +73,20 @@ class TestJsonToAIDMConverter(unittest.TestCase):
 
     def test_json_to_aidm_containing_list_of_aidm(self):
         json_dict = dict(
-            id = 162,
-            code = "85AR",
-            nodeTracks = [
-                dict(id = 163,
-                     code = "1",
-                     debugString = "stationtrack:85AR_{StationTrack SID = 34138}"
+            id=162,
+            code="85AR",
+            nodeTracks=[
+                dict(id=163,
+                     code="1",
+                     debugString="stationtrack:85AR_{StationTrack SID = 34138}"
                      ),
                 dict(
-                    id = 164,
-                    code = "2",
-                    debugString = "stationtrack:85AR_{StationTrack SID = 34140}"
+                    id=164,
+                    code="2",
+                    debugString="stationtrack:85AR_{StationTrack SID = 34140}"
                 )
             ],
-            debugString = "station:85AR"
+            debugString="station:85AR"
         )
 
         algorithm_node = self.__converter.process_json_to_aidm(json_dict, AlgorithmNode)
@@ -98,10 +97,10 @@ class TestJsonToAIDMConverter(unittest.TestCase):
 
     def test_json_to_aidm_containing_empty_list_of_aidm(self):
         json_dict = dict(
-            id = 162,
-            code = "85AR",
-            nodeTracks = [],
-            debugString = "station:85AR"
+            id=162,
+            code="85AR",
+            nodeTracks=[],
+            debugString="station:85AR"
         )
 
         algorithm_node = self.__converter.process_json_to_aidm(json_dict, AlgorithmNode)
@@ -111,21 +110,21 @@ class TestJsonToAIDMConverter(unittest.TestCase):
 
     def test_json_to_list_of_aidm(self):
         json_dict = [
-            dict(id = 1,
-                 code = "45ADW",
-                 nodeTracks = [],
-                 debugString= "station:45ADW"
+            dict(id=1,
+                 code="45ADW",
+                 nodeTracks=[],
+                 debugString="station:45ADW"
                  ),
-            dict(id = 2,
-                 code = "45LNG",
-                 nodeTracks = [],
-                 debugString = "station:45LNG"
+            dict(id=2,
+                 code="45LNG",
+                 nodeTracks=[],
+                 debugString="station:45LNG"
                  ),
             dict(
-                id = 3,
-                code = "45SIA",
-                nodeTracks = [],
-                debugString ="station:45SIA"
+                id=3,
+                code="45SIA",
+                nodeTracks=[],
+                debugString="station:45SIA"
             )
         ]
 
@@ -144,6 +143,7 @@ class TestJsonToAIDMConverter(unittest.TestCase):
     def test_json_to_aidm_containing_datetime(self):
         class AidmContainingDatetimeTest(_HasID):
             __arrival_time:  datetime.datetime
+
             def __init__(self, id: int, arrival_time:  datetime.datetime):
                 _HasID.__init__(self, id)
                 self.__arrival_time = arrival_time
@@ -154,7 +154,7 @@ class TestJsonToAIDMConverter(unittest.TestCase):
 
         json_dict = dict(
             id=54,
-            arrivalTime = "2003-05-01T00:05:00"
+            arrivalTime="2003-05-01T00:05:00"
         )
 
         aidm = self.__converter.process_json_to_aidm(json_dict, AidmContainingDatetimeTest)
@@ -165,6 +165,7 @@ class TestJsonToAIDMConverter(unittest.TestCase):
     def test_json_to_aidm_containing_datetime_not_optional_with_none(self):
         class AidmContainingDatetimeTest(_HasID):
             __arrival_time:  datetime.datetime
+
             def __init__(self, id: int, arrival_time:  datetime.datetime):
                 _HasID.__init__(self, id)
                 self.__arrival_time = arrival_time
@@ -175,7 +176,7 @@ class TestJsonToAIDMConverter(unittest.TestCase):
 
         json_dict = dict(
             id=54,
-            arrivalTime = None
+            arrivalTime=None
         )
         with self.assertRaises(AlgorithmPlatformConversionError) as raised_exception:
             self.__converter.process_json_to_aidm(json_dict, AidmContainingDatetimeTest)
@@ -187,6 +188,7 @@ class TestJsonToAIDMConverter(unittest.TestCase):
     def test_json_to_aidm_containing_optional_datetime(self):
         class AidmContainingDatetimeTest(_HasID):
             __arrival_time:  Optional[datetime.datetime]
+
             def __init__(self, id: int, arrival_time:  Optional[datetime.datetime]):
                 _HasID.__init__(self, id)
                 self.__arrival_time = arrival_time
@@ -197,7 +199,7 @@ class TestJsonToAIDMConverter(unittest.TestCase):
 
         json_dict = dict(
             id=54,
-            arrivalTime = "2003-05-01T00:05:00"
+            arrivalTime="2003-05-01T00:05:00"
         )
 
         aidm = self.__converter.process_json_to_aidm(json_dict, AidmContainingDatetimeTest)
@@ -208,6 +210,7 @@ class TestJsonToAIDMConverter(unittest.TestCase):
     def test_json_to_aidm_containing_optional_with_none_datetime(self):
         class AidmContainingDatetimeTest(_HasID):
             __arrival_time:  Optional[datetime.datetime]
+
             def __init__(self, id: int, arrival_time:  Optional[datetime.datetime]):
                 _HasID.__init__(self, id)
                 self.__arrival_time = arrival_time
@@ -218,7 +221,7 @@ class TestJsonToAIDMConverter(unittest.TestCase):
 
         json_dict = dict(
             id=54,
-            arrivalTime = None
+            arrivalTime=None
         )
 
         aidm = self.__converter.process_json_to_aidm(json_dict, AidmContainingDatetimeTest)
@@ -452,7 +455,7 @@ class TestJsonToAIDMConverter(unittest.TestCase):
         class AidmContainingEnumTest(_HasID):
             __enum_field: StopStatus
 
-            def __init__(self, id: int, enum_field: string):
+            def __init__(self, id: int, enum_field: str):
                 _HasID.__init__(self, id)
                 self.__enum_field = enum_field
 
@@ -473,7 +476,7 @@ class TestJsonToAIDMConverter(unittest.TestCase):
         class AidmContainingEnumTest(_HasID):
             __enum_field: StopStatus
 
-            def __init__(self, id: int, enum_field: string):
+            def __init__(self, id: int, enum_field: str):
                 _HasID.__init__(self, id)
                 self.__enum_field = enum_field
 
@@ -540,43 +543,43 @@ class TestJsonToAIDMConverter(unittest.TestCase):
     def test_links(self):
         json = [
             dict(
-                minimumDuration = "PT6M",
-                maximumDeviation = "PT13M",
-                weight = 1,
-                id = 4139,
-                fromNodeId = 282,
-                fromTrainId = 1226,
-                fromTrainPathNodeId = 1224,
-                toNodeId = 282,
-                toTrainId = 3912,
-                toTrainPathNodeId = 3184,
-                type = "connection",
-                debugString = "link: FV_8_J03, 85JE, planned arrival: 01.05.2003 07:01.2 - FV_10_J03, 85JE, planned departure: 01.05.2003 07:31.2"
+                minimumDuration="PT6M",
+                maximumDeviation="PT13M",
+                weight=1,
+                id=4139,
+                fromNodeId=282,
+                fromTrainId=1226,
+                fromTrainPathNodeId=1224,
+                toNodeId=282,
+                toTrainId=3912,
+                toTrainPathNodeId=3184,
+                type="connection",
+                debugString="link: FV_8_J03, 85JE, planned arrival: 01.05.2003 07:01.2 - FV_10_J03, 85JE, planned departure: 01.05.2003 07:31.2"
             ),
             dict(
-                minimumDuration = "PT10M",
-                id = 4140,
-                fromNodeId = 162,
-                fromTrainId = 2456,
-                fromTrainPathNodeId = 2092,
-                toNodeId = 162,
-                toTrainId = 1226,
-                toTrainPathNodeId = 1222,
-                type = "awaitArrival",
-                debugString = "link: FV_9_J03, 85AR, planned arrival: 01.05.2003 06:03.9 - FV_8_J03, 85AR, planned departure: 01.05.2003 07:00.0"
+                minimumDuration="PT10M",
+                id=4140,
+                fromNodeId=162,
+                fromTrainId=2456,
+                fromTrainPathNodeId=2092,
+                toNodeId=162,
+                toTrainId=1226,
+                toTrainPathNodeId=1222,
+                type="awaitArrival",
+                debugString="link: FV_9_J03, 85AR, planned arrival: 01.05.2003 06:03.9 - FV_8_J03, 85AR, planned departure: 01.05.2003 07:00.0"
             ),
             dict(
-                fromVehiclePositionInFormation = 0,
-                toVehiclePositionInFormation = 5,
-                id = 6769,
-                fromNodeId = 622,
-                fromTrainId = 6726,
-                fromTrainPathNodeId = 6725,
-                toNodeId = 622,
-                toTrainId = 6731,
-                toTrainPathNodeId = 6727,
-                type = "roster",
-                debugString = "link: FV_31_J03, 85ZMUS, planned arrival: 30.04.2003 09:10.0 - FV_30_J03, 85ZMUS, planned departure: 30.04.2003 09:20.0, vehicles: from 693 to 693"
+                fromVehiclePositionInFormation=0,
+                toVehiclePositionInFormation=5,
+                id=6769,
+                fromNodeId=622,
+                fromTrainId=6726,
+                fromTrainPathNodeId=6725,
+                toNodeId=622,
+                toTrainId=6731,
+                toTrainPathNodeId=6727,
+                type="roster",
+                debugString="link: FV_31_J03, 85ZMUS, planned arrival: 30.04.2003 09:10.0 - FV_30_J03, 85ZMUS, planned departure: 30.04.2003 09:20.0, vehicles: from 693 to 693"
             )
         ]
 
@@ -633,14 +636,15 @@ class TestJsonToAIDMConverter(unittest.TestCase):
         self.assertEqual(converter_error.exception.message, "Impossible to convert to {}. No attribute 'type' in the dictionary.".format(_AlgorithmLink))
 
     def test_unsupported_non_primitive_type(self):
-        json_dict = dict(someProperty = dict(someProperty = None))
+        json_dict = dict(someProperty=dict(someProperty=None))
 
         with self.assertRaises(AlgorithmPlatformConversionError):
             self.__converter.process_json_to_aidm(json_dict, SomeClass)
 
     def test_optional_non_primitive_none(self):
-        class aidm_optional_non_primitive:
-            __section_track:Optional[AlgorithmSectionTrack]
+        class AidmOptionalNonPrimitive:
+            __section_track: Optional[AlgorithmSectionTrack]
+
             def __init__(self, section_track: Optional[AlgorithmSectionTrack]):
                 self.__section_track = section_track
 
@@ -649,11 +653,11 @@ class TestJsonToAIDMConverter(unittest.TestCase):
                 return self.__section_track
 
         json_dict = dict(
-            sectionTrack = None
+            sectionTrack=None
         )
 
-        test_optional_non_primitive = self.__converter.process_json_to_aidm(json_dict, aidm_optional_non_primitive)
-        self.assertIsInstance(test_optional_non_primitive, aidm_optional_non_primitive)
+        test_optional_non_primitive = self.__converter.process_json_to_aidm(json_dict, AidmOptionalNonPrimitive)
+        self.assertIsInstance(test_optional_non_primitive, AidmOptionalNonPrimitive)
         self.assertIsInstance(test_optional_non_primitive.section_track, type(None))
 
     def test_routing_edge(self):
@@ -703,7 +707,7 @@ class TestJsonToAIDMConverter(unittest.TestCase):
             polymorphic_processor._validate_most_specific_name_are_at_start_of_list()
         self.assertEqual(conversion_error.exception.message, "The types {} is less specific than {}. They must be in the reverse order in the types_to_process list to avoid conversion error".format(IncomingNodeTrackRoutingEdge, IncomingRoutingEdge))
 
-    def test_aidm_types_to_crreate_list_is_in_right_order_polymorphic_processor(self):
+    def test_aidm_types_to_create_list_is_in_right_order_polymorphic_processor(self):
         polymorphic_processor = PolymorphicClassesProcessor()
 
         self.assertIsNone(polymorphic_processor._validate_most_specific_name_are_at_start_of_list())

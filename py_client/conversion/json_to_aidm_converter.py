@@ -1,14 +1,14 @@
-from typing import Type, List, Optional, Union, Dict, get_type_hints, get_origin, get_args
-from py_client.communication.response_processing import AlgorithmPlatformConversionError
+from typing import Dict, get_type_hints
 from py_client.aidm.aidm_base_classes import _HasID
 from py_client.conversion.converter_helpers import *
-from py_client.aidm.aidm_link_classes import _AlgorithmLink, AlgorithmAwaitArrivalLink, AlgorithmRosterLink, AlgorithmRosterLinkDefinition, AlgorithmConnectionLink
-from py_client.aidm.aidm_routing_edge_classes import _RoutingEdge, CrossingRoutingEdge, IncomingRoutingEdge, OutgoingRoutingEdge, IncomingNodeTrackRoutingEdge, OutgoingNodeTrackRoutingEdge
+from py_client.aidm.aidm_link_classes import _AlgorithmLink, AlgorithmAwaitArrivalLink, AlgorithmRosterLink, AlgorithmConnectionLink
+from py_client.aidm.aidm_routing_edge_classes import _RoutingEdge
 from py_client.aidm.aidm_routing_edge_classes import *
-from abc import ABC, abstractmethod
-from py_client.aidm.aidm_conflict import _AlgorithmConflict, AlgorithmConflict, AlgorithmNodeConflict, AlgorithmSectionTrackConflict, _AlgorithmInfrastructureConflict, _AlgorithmTrainConflict, ConflictType, AlgorithmTwoTrainsConflict, _AlgorithmTwoTrainsSectionTrackConflict, _AlgorithmOneTrainSectionTrackConflict, _AlgorithmOneTrainNodeConflict, _AlgorithmTwoTrainsNodeConflict
+from abc import abstractmethod
+from py_client.aidm.aidm_conflict import AlgorithmConflict, ConflictType, _AlgorithmTwoTrainsSectionTrackConflict, _AlgorithmOneTrainSectionTrackConflict, _AlgorithmOneTrainNodeConflict, _AlgorithmTwoTrainsNodeConflict
 import datetime
 import isodate
+
 
 class JsonToAidmProcessor:
     @abstractmethod
@@ -16,7 +16,7 @@ class JsonToAidmProcessor:
         pass
 
     @abstractmethod
-    def process_attribute_dict(self, list:List[dict]) -> List[_HasID]:
+    def process_attribute_dict(self, list: List[dict]) -> List[_HasID]:
         pass
 
 # === VALUE PROCESSORS ===
@@ -26,7 +26,7 @@ class DatetimeProcessor(JsonToAidmProcessor):
     def is_applicable(self, attribute_dict: dict, targeted_type: Type[object]) -> bool:
         return targeted_type is datetime.datetime
 
-    def process_attribute_dict(self, datetime_raw_str:str, targeted_type:datetime) -> datetime.datetime:
+    def process_attribute_dict(self, datetime_raw_str:str, targeted_type: datetime) -> datetime.datetime:
         try:
             return datetime.datetime.fromisoformat(datetime_raw_str)
         except Exception as e:
@@ -39,7 +39,7 @@ class TimedeltaProcessor(JsonToAidmProcessor):
     def is_applicable(self, attribute_dict: dict, targeted_type: Type[object]) -> bool:
         return targeted_type is datetime.timedelta
 
-    def process_attribute_dict(self, timedelta_raw_str:str, targeted_type:datetime) -> datetime.timedelta:
+    def process_attribute_dict(self, timedelta_raw_str: str, targeted_type: datetime) -> datetime.timedelta:
         try:
             return isodate.parse_duration(timedelta_raw_str)
         except Exception as e:
@@ -52,7 +52,7 @@ class EnumProcessor(JsonToAidmProcessor):
     def is_applicable(self, attribute_dict: dict, targeted_type: Type[object]) -> bool:
         return is_enum_type(targeted_type)
 
-    def process_attribute_dict(self, enum_value:str, aidm_class: Type[Enum]) -> Enum:
+    def process_attribute_dict(self, enum_value: str, aidm_class: Type[Enum]) -> Enum:
         try:
             return aidm_class(enum_value)
         except Exception as e:
@@ -151,9 +151,9 @@ class PolymorphicClassesProcessor(JsonToAidmProcessor):
         is_not_an_object = not isinstance(targeted_type, type)
         if is_not_an_object:
             return False
-        if not True in [ issubclass(targeted_type, x) for x in self.types_to_process ]:
+        if True not in [issubclass(targeted_type, x) for x in self.types_to_process]:
             return False
-        if not 'type' in attribute_dict:
+        if 'type' not in attribute_dict:
             # we can come into this branch after popping the type attribute or when we first see a polymorphic type
             # if we are for the first time here we have to have the type attribute
             if targeted_type in self.types_to_process:
@@ -162,7 +162,6 @@ class PolymorphicClassesProcessor(JsonToAidmProcessor):
                 # otherwise the AtomicTypeProcessor does the conversion for us
                 return False
         return True
-
 
     def process_attribute_dict(self, attribute_dict: dict, aidm_class: Type) -> object:
         # Remove the attribute type from the attribute_dict and convert it to snake case
@@ -176,16 +175,17 @@ class PolymorphicClassesProcessor(JsonToAidmProcessor):
             self._validate_most_specific_name_are_at_start_of_list()
             substring_start_index = snake_case_of_type_to_process.find(type_name_in_enum)
             is_targeted_type = substring_start_index != -1
-            if  is_targeted_type:
+            if is_targeted_type:
                 return type_to_process
         raise AlgorithmPlatformConversionError("unexisting link {} can not be converted. Extend converter".format(type_name_in_enum), None)
 
     def _validate_most_specific_name_are_at_start_of_list(self):
         for aidm_type in self.aidm_types_to_create:
-            for aidm_type_later_in_list in self.aidm_types_to_create[self.aidm_types_to_create.index(aidm_type) + 1 :]:
+            for aidm_type_later_in_list in self.aidm_types_to_create[self.aidm_types_to_create.index(aidm_type) + 1:]:
                 self._validate_first_is_more_specific(aidm_type, aidm_type_later_in_list)
 
-    def _validate_first_is_more_specific(self, aidm_type, aidm_type_later_in_list):
+    @staticmethod
+    def _validate_first_is_more_specific(aidm_type, aidm_type_later_in_list):
         type_name_parts_aidm_type = convert_to_snake_case(aidm_type.__name__).split('_')
         type_name_parts_aidm_type_later_in_list = convert_to_snake_case(aidm_type_later_in_list.__name__).split('_')
         is_first_type_less_specific = set(type_name_parts_aidm_type_later_in_list).issubset(set(type_name_parts_aidm_type))
@@ -197,7 +197,7 @@ class PolymorphicClassesProcessor(JsonToAidmProcessor):
 
 
 class ConflictTypeMappingLookup:
-    __lookup : Dict[ConflictType, AlgorithmConflict] = dict()
+    __lookup: Dict[ConflictType, AlgorithmConflict] = dict()
 
     def __init__(self):
         self.__lookup[ConflictType.Crossing] = _AlgorithmTwoTrainsSectionTrackConflict
@@ -209,8 +209,9 @@ class ConflictTypeMappingLookup:
         self.__lookup[ConflictType.IncompatibleStationRoutes] = _AlgorithmTwoTrainsNodeConflict
         self.__lookup[ConflictType.IncompatibleJunctionRoutes] = _AlgorithmTwoTrainsNodeConflict
 
-    def get_conflict_type_mapping(self, enumConflictype: ConflictType) -> Type[AlgorithmConflict]:
-        return self.__lookup[enumConflictype]
+    def get_conflict_type_mapping(self, enum_conflict_type: ConflictType) -> Type[AlgorithmConflict]:
+        return self.__lookup[enum_conflict_type]
+
 
 class ConflictProcessor(JsonToAidmProcessor):
     def is_applicable(self, attribute_dict: dict, targeted_type: Type[AlgorithmConflict]) -> bool:
@@ -220,6 +221,7 @@ class ConflictProcessor(JsonToAidmProcessor):
         conflict_type_as_enum = JsonToAidmConverter().process_json_to_aidm(attribute_dict["conflictType"], ConflictType)
         targeted_type = ConflictTypeMappingLookup().get_conflict_type_mapping(conflict_type_as_enum)
         return JsonToAidmConverter().process_json_to_aidm(attribute_dict, targeted_type)
+
 
 class JsonToAidmConverter:
     __processors: List[JsonToAidmProcessor]
@@ -244,11 +246,12 @@ class JsonToAidmConverter:
                 raise AlgorithmPlatformConversionError("Got a None value for a non-optional type.", None)
             return None
         for processor in self.__processors:
-            if (processor.is_applicable(attribute_dict, targeted_type)):
+            if processor.is_applicable(attribute_dict, targeted_type):
                 return processor.process_attribute_dict(attribute_dict, targeted_type)
         raise AlgorithmPlatformConversionError("Found no appropriate processor for the given response", None)
 
-    def targeted_type_cannot_have_none_value(self, targeted_type):
+    @staticmethod
+    def targeted_type_cannot_have_none_value(targeted_type):
         if is_optional(targeted_type):
             return False
         if is_primitive(targeted_type):

@@ -102,14 +102,13 @@ class SingleAttributeProcessor(JsonToAidmProcessor):
         return JsonToAidmConverter().process_json_to_aidm(value_of_single_attribute, targeted_type)
 
 
-class AtomicTypeProcessor(JsonToAidmProcessor):
+class GeneralAidmObjectProcessor(JsonToAidmProcessor):
     def is_applicable(self, attribute_dict: dict, targeted_type: Type[object]) -> bool:
+        # If it is not a list, we assume it is a general object, otherwise it will fail
+        # as primitives, enums, list are handled by other processors
         return not is_list_type(targeted_type)
 
-    def process_attribute_dict(self, attribute_dict: [Primitive, dict], targeted_type: Union[_HasID, Primitive]) -> Union[_HasID, Primitive]:
-        if is_primitive(targeted_type):
-            return attribute_dict
-
+    def process_attribute_dict(self, attribute_dict: dict, targeted_type: _HasID) -> _HasID:
         state = convert_keys_to_snake_case(attribute_dict)
 
         object_attribute_and_attribute_type = get_type_hints(targeted_type)
@@ -236,7 +235,7 @@ class JsonToAidmConverter:
             PolymorphicClassesProcessor(),
             ConflictProcessor(),
             PrimitiveProcessor(),
-            AtomicTypeProcessor()
+            GeneralAidmObjectProcessor()
         ]
 
     def process_json_to_aidm(self, attribute_dict: dict, targeted_type: Type[object]) -> object:

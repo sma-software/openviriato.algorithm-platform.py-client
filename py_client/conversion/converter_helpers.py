@@ -95,6 +95,16 @@ def is_struct(value: object):
     list_of_struct = Struct.__args__
     return value in list_of_struct or (is_optional(value) and get_type_of_optional_element(value) in list_of_struct)
 
+
+def is_single_attribute(attribute_dict: dict, received_type: Type[object]) -> bool:
+    if type(attribute_dict) is not dict:
+        return False
+    if len(attribute_dict) != 1:
+        return False
+
+    return is_primitive(received_type) or is_struct(received_type)
+
+
 @unique
 class RoutingEdgeType(Enum):
     incoming = "incoming"

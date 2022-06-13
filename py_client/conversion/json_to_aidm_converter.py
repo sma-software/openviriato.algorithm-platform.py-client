@@ -93,6 +93,15 @@ class OptionalProcessor(JsonToAidmProcessor):
         return JsonToAidmConverter().process_json_to_aidm(optional_value, get_type_of_optional_element(targeted_type))
 
 
+class SingleAttributeProcessor(JsonToAidmProcessor):
+    def is_applicable(self, attribute_dict: dict, targeted_type: Type[object]) -> bool:
+        return is_single_attribute(attribute_dict, targeted_type)
+
+    def process_attribute_dict(self, attribute_dict: dict, targeted_type: Union[Primitive, Struct]) -> Union[Primitive, Struct]:
+        value_of_single_attribute = list(attribute_dict.values())[0]
+        return JsonToAidmConverter().process_json_to_aidm(value_of_single_attribute, targeted_type)
+
+
 class AtomicTypeProcessor(JsonToAidmProcessor):
     def is_applicable(self, attribute_dict: dict, targeted_type: Type[object]) -> bool:
         return not is_list_type(targeted_type)
@@ -219,6 +228,7 @@ class JsonToAidmConverter:
     def __init__(self):
         self.__processors = [
             ListProcessor(),
+            SingleAttributeProcessor(),
             OptionalProcessor(),
             DatetimeProcessor(),
             TimedeltaProcessor(),

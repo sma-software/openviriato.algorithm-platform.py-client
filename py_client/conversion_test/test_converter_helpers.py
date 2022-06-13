@@ -2,8 +2,9 @@ import datetime
 import unittest
 
 import isodate
-from typing import List, Optional
+from typing import List, Optional, Union
 import py_client.conversion.converter_helpers as converter_helpers
+from py_client.aidm.aidm_conflict import ConflictType
 
 
 class TestAllConverterHelpers(unittest.TestCase):
@@ -140,3 +141,14 @@ class TestAllConverterHelpers(unittest.TestCase):
         with self.assertRaises(TypeError) as type_error:
             converter_helpers.get_type_of_optional_element(str)
         self.assertEqual(str(type_error.exception), "The targeted type is not optional.")
+
+    def test_is_single_attribute(self):
+        self.assertTrue(converter_helpers.is_single_attribute(dict(integer=3), int))
+        self.assertTrue(converter_helpers.is_single_attribute(dict(boolean=False), bool))
+        self.assertTrue(converter_helpers.is_single_attribute(dict(string="string"), str))
+        self.assertTrue(converter_helpers.is_single_attribute(dict(duration=datetime.timedelta(minutes=3)), datetime.timedelta))
+        self.assertTrue(converter_helpers.is_single_attribute(dict(date=datetime.datetime(year=2022, month=6, day=13, hour=8, minute=57)), datetime.datetime))
+
+        self.assertFalse(converter_helpers.is_single_attribute(False, bool))
+        self.assertFalse(converter_helpers.is_single_attribute(dict(first_attribute=3, second_attribute="str"), Union[bool, str]))
+        self.assertFalse(converter_helpers.is_single_attribute(ConflictType.Trafficability, ConflictType))

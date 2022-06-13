@@ -19,29 +19,77 @@ class JsonToAidmProcessor:
     def process_attribute_dict(self, list:List[dict]) -> List[_HasID]:
         pass
 
+# === VALUE PROCESSORS ===
+
+
+class DatetimeProcessor(JsonToAidmProcessor):
+    def is_applicable(self, attribute_dict: dict, targeted_type: Type[object]) -> bool:
+        return targeted_type is datetime.datetime
+
+    def process_attribute_dict(self, datetime_raw_str:str, targeted_type:datetime) -> datetime.datetime:
+        try:
+            return datetime.datetime.fromisoformat(datetime_raw_str)
+        except Exception as e:
+            raise AlgorithmPlatformConversionError(
+                "Could not parse datetime, invalid datetime format: {}".format(datetime_raw_str),
+                e)
+
+
+class TimedeltaProcessor(JsonToAidmProcessor):
+    def is_applicable(self, attribute_dict: dict, targeted_type: Type[object]) -> bool:
+        return targeted_type is datetime.timedelta
+
+    def process_attribute_dict(self, timedelta_raw_str:str, targeted_type:datetime) -> datetime.timedelta:
+        try:
+            return isodate.parse_duration(timedelta_raw_str)
+        except Exception as e:
+            raise AlgorithmPlatformConversionError(
+                "Could not parse duration, invalid duration format: {}".format(timedelta_raw_str),
+                e)
+
+
+class EnumProcessor(JsonToAidmProcessor):
+    def is_applicable(self, attribute_dict: dict, targeted_type: Type[object]) -> bool:
+        return is_enum_type(targeted_type)
+
+    def process_attribute_dict(self, enum_value:str, aidm_class: Type[Enum]) -> Enum:
+        try:
+            return aidm_class(enum_value)
+        except Exception as e:
+            raise AlgorithmPlatformConversionError(
+                "Could not parse Enum {}, invalid enum format for expected class Enum {}".format(enum_value, aidm_class),
+                e
+            )
+
+
+# === DICT PROCESSORS ==
+
+
 class ListProcessor(JsonToAidmProcessor):
     def is_applicable(self, attribute_dict: dict, targeted_type: Type[object]) -> bool:
         return is_list_type(targeted_type)
 
-    def process_attribute_dict(self, list:List[Union[Primitive, dict]], targeted_type:Type[Union[_HasID, Primitive]]) -> List[Union[_HasID, Primitive]]:
+    def process_attribute_dict(self, list: List[Union[Primitive, dict]], targeted_type: Type[Union[_HasID, Primitive]]) -> List[Union[_HasID, Primitive]]:
         if is_primitive(get_type_of_list_element(targeted_type)):
             return list
         return [JsonToAidmConverter().process_json_to_aidm(element, get_type_of_list_element(targeted_type)) for element in list]
+
 
 class OptionalProcessor(JsonToAidmProcessor):
     def is_applicable(self, attribute_dict: dict, targeted_type: Type[object]) -> bool:
         return is_optional(targeted_type)
 
-    def process_attribute_dict(self, optional_value:Optional[Union[Primitive, dict]], targeted_type:Type[Union[_HasID, Primitive]]) -> Optional[object]:
+    def process_attribute_dict(self, optional_value: Optional[Union[Primitive, dict]], targeted_type: Type[Union[_HasID, Primitive]]) -> Optional[object]:
         if optional_value is None:
             return None
         return JsonToAidmConverter().process_json_to_aidm(optional_value, get_type_of_optional_element(targeted_type))
+
 
 class AtomicTypeProcessor(JsonToAidmProcessor):
     def is_applicable(self, attribute_dict: dict, targeted_type: Type[object]) -> bool:
         return not is_list_type(targeted_type)
 
-    def process_attribute_dict(self, attribute_dict:[Primitive, dict], targeted_type:Union[_HasID, Primitive]) -> Union[_HasID, Primitive]:
+    def process_attribute_dict(self, attribute_dict: [Primitive, dict], targeted_type: Union[_HasID, Primitive]) -> Union[_HasID, Primitive]:
         if is_primitive(targeted_type):
             return attribute_dict
 
@@ -67,43 +115,6 @@ class AtomicTypeProcessor(JsonToAidmProcessor):
     @staticmethod
     def unmangle(attribute_name_with_class_name):
         return attribute_name_with_class_name.split("__")[-1]
-
-class DatetimeProcessor(JsonToAidmProcessor):
-    def is_applicable(self, attribute_dict: dict, targeted_type: Type[object]) -> bool:
-        return targeted_type is datetime.datetime
-
-    def process_attribute_dict(self, datetime_raw_str:str, targeted_type:datetime) -> datetime.datetime:
-        try:
-            return datetime.datetime.fromisoformat(datetime_raw_str)
-        except Exception as e:
-            raise AlgorithmPlatformConversionError(
-                "Could not parse datetime, invalid datetime format: {}".format(datetime_raw_str),
-                e)
-
-class TimedeltaProcessor(JsonToAidmProcessor):
-    def is_applicable(self, attribute_dict: dict, targeted_type: Type[object]) -> bool:
-        return targeted_type is datetime.timedelta
-
-    def process_attribute_dict(self, timedelta_raw_str:str, targeted_type:datetime) -> datetime.timedelta:
-        try:
-            return isodate.parse_duration(timedelta_raw_str)
-        except Exception as e:
-            raise AlgorithmPlatformConversionError(
-                "Could not parse duration, invalid duration format: {}".format(timedelta_raw_str),
-                e)
-
-class EnumProcessor(JsonToAidmProcessor):
-    def is_applicable(self, attribute_dict: dict, targeted_type: Type[object]) -> bool:
-        return is_enum_type(targeted_type)
-
-    def process_attribute_dict(self, enum_value:str, aidm_class: Type[Enum]) -> Enum:
-        try:
-            return aidm_class(enum_value)
-        except Exception as e:
-            raise AlgorithmPlatformConversionError(
-                "Could not parse Enum {}, invalid enum format for expected class Enum {}".format(enum_value, aidm_class),
-                e
-            )
 
 
 class PolymorphicClassesProcessor(JsonToAidmProcessor):

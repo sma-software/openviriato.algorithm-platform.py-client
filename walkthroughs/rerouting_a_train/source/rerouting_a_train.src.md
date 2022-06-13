@@ -25,7 +25,7 @@ graph datastructure to model the network infrastructure using the methods in Sec
 For our example we are given two trains defined by the user. The _train_to_route_ is the train we want to reroute. The alternative route we want to set is defined by the train _train_with_alternative_route_. The user has the responsibility to pick the train with
 the alternative route correctly, i.e. to ensure the picked train has the following properties 
 * _train_with_alternative_route_ has at least two train path nodes
-* the _train_to_reroute_ contains the first node on the path of _train_with_alternative_route_ and it contains the last node on the path of _train_with_alternative_route
+* the _train_to_reroute_ contains the first node on the path of _train_with_alternative_route_ and it contains the last node on the path of _train_with_alternative_route_
 * the first occurence of the first node on the path of _train_with_alternative_route_ must be before the last occurence of the last node on the path of _train_with_alternative_route_ on the path of _train_to_reroute_
 * it starts and ends at a station
 

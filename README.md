@@ -12,7 +12,7 @@ We refer the reader to the [Walkthrough using the py_client](walkthroughs/py_cli
 
 ## Rerouting a train
 
-We propose a [Walkthrough for rerouting a train](walkthroughs/rerouting_a_train/dist/rerouting_a_train.md).
+We show how to divert or reroute a train in the [Walkthrough for rerouting a train](walkthroughs/rerouting_a_train/dist/rerouting_a_train.md).
 
 ## Creating roster links
 

@@ -10,11 +10,11 @@ from typing import Optional
 
 class TestJsonToAidmConverterProcessorsOrder(unittest.TestCase):
     @parameterized.expand([
-            (SingleAttributeProcessor, TimedeltaProcessor, "Error, the SingleAttributeProcessor has to be called before the TimedeltaProcessor. The TimeDelta is made to perform on strings and not on wrapped dictionnaries."),
-            (SingleAttributeProcessor, DatetimeProcessor, "Error, the SingleAttributeProcessor has to be called before the DatetimeProcessor. The DatetimeProcessor is made to perform on strings and not on wrapped dictionnaries."),
-            (SingleAttributeProcessor, OptionalProcessor, "Error, the SingleAttributeProcessor has to be called before the OptionalProcessor. The SingleAttributeProcessor is not created to process None values, but only to unwrappe them.")
+            (SingleAttributeProcessor, TimedeltaProcessor, "Error, the SingleAttributeProcessor has to be called before the TimeDeltaProcessor. The TimeDelta is made to perform on strings and not on wrapped dictionaries."),
+            (SingleAttributeProcessor, DatetimeProcessor, "Error, the SingleAttributeProcessor has to be called before the DatetimeProcessor. The DatetimeProcessor is made to perform on strings and not on wrapped dictionaries."),
+            (SingleAttributeProcessor, OptionalProcessor, "Error, the SingleAttributeProcessor has to be called before the OptionalProcessor. The SingleAttributeProcessor is not created to process None values, but only to unwrap them.")
     ])
-    def test_processor_order(self, processor_one, processor_two, explanation_if_test_fail):
+    def test_processor_order(self, processor_one: JsonToAidmConverter, processor_two: JsonToAidmConverter, explanation_if_test_fail: str):
         converter = JsonToAidmConverter()
         ordered_list_of_processors = converter._JsonToAidmConverter__processors
 
@@ -31,7 +31,7 @@ class TestJsonToAidmConverterProcessorsOrder(unittest.TestCase):
         (DatetimeProcessor(), SingleAttributeProcessor(), dict(date_time="2022-06-13T17:22:00"), datetime, "Could not parse datetime, invalid datetime format: {'date_time': '2022-06-13T17:22:00'}"),
         (TimedeltaProcessor(), SingleAttributeProcessor(), dict(time_delta="PT3M"), timedelta, "Could not parse duration, invalid duration format: {'time_delta': 'PT3M'}")
     ])
-    def test_wrong_processor_order_exceptions(self, instance_of_processor_one, instance_of_processor_two, attribute_dict, targeted_type, expected_error_message):
+    def test_wrong_processor_order_exceptions(self, instance_of_processor_one: JsonToAidmConverter, instance_of_processor_two: JsonToAidmConverter, attribute_dict: dict, targeted_type: object, expected_error_message: str):
         class JsonToAidmConverterWrongOrder(JsonToAidmConverter):
             def __init__(self):
                 self._JsonToAidmConverter__processors = [

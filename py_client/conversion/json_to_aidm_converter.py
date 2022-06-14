@@ -10,106 +10,121 @@ import datetime
 import isodate
 
 
-class JsonToAidmProcessor:
+class _ABCJsonToAidmProcessor:
     @abstractmethod
-    def is_applicable(self, attribute_dict: dict, targeted_type: Type[object]) -> bool:
+    def is_applicable(self, json_to_process: Union[dict, Primitive, Optional[Primitive]], targeted_type: Type[object]) -> bool:
         pass
 
     @abstractmethod
-    def process_attribute_dict(self, list: List[dict]) -> List[_HasID]:
+    def process_attribute_dict(self, json_to_process: Union[dict, Primitive, Optional[Primitive]], targeted_type: Type[object]) -> object:
         pass
 
-# === VALUE PROCESSORS ===
+
+class _ABCJsonToAidmValueProcessor(_ABCJsonToAidmProcessor):
+    @abstractmethod
+    def is_applicable(self, json_to_process: Union[dict, Primitive, Optional[Primitive]], targeted_type: Type[object]) -> bool:
+        pass
+
+    @abstractmethod
+    def process_attribute_dict(self, json_to_process: Union[dict, Primitive, Optional[Primitive]], targeted_type: Type[object]) -> object:
+        pass
 
 
-class DatetimeProcessor(JsonToAidmProcessor):
-    def is_applicable(self, attribute_dict: dict, targeted_type: Type[object]) -> bool:
+class _ABCJsonToAidmDictProcessor(_ABCJsonToAidmProcessor):
+    @abstractmethod
+    def is_applicable(self, json_to_process: Union[dict, Primitive, Optional[Primitive]], targeted_type: Type[object]) -> bool:
+        pass
+
+    @abstractmethod
+    def process_attribute_dict(self, json_to_process: Union[dict, Primitive, Optional[Primitive]], targeted_type: Type[object]) -> object:
+        pass
+
+
+class DatetimeProcessor(_ABCJsonToAidmValueProcessor):
+    def is_applicable(self, json_to_process: Union[dict, Primitive, Optional[Primitive]], targeted_type: Type[object]) -> bool:
         return targeted_type is datetime.datetime
 
-    def process_attribute_dict(self, datetime_raw_str:str, targeted_type: datetime) -> datetime.datetime:
+    def process_attribute_dict(self, json_to_process: Union[dict, Primitive, Optional[Primitive]], targeted_type: Type[object]) -> object:
         try:
-            return datetime.datetime.fromisoformat(datetime_raw_str)
+            return datetime.datetime.fromisoformat(json_to_process)
         except Exception as e:
             raise AlgorithmPlatformConversionError(
-                "Could not parse datetime, invalid datetime format: {}".format(datetime_raw_str),
+                "Could not parse datetime, invalid datetime format: {}".format(json_to_process),
                 e)
 
 
-class TimedeltaProcessor(JsonToAidmProcessor):
-    def is_applicable(self, attribute_dict: dict, targeted_type: Type[object]) -> bool:
+class TimedeltaProcessor(_ABCJsonToAidmValueProcessor):
+    def is_applicable(self, json_to_process: dict, targeted_type: Type[object]) -> bool:
         return targeted_type is datetime.timedelta
 
-    def process_attribute_dict(self, timedelta_raw_str: str, targeted_type: datetime) -> datetime.timedelta:
+    def process_attribute_dict(self, json_to_process: Union[dict, Primitive, Optional[Primitive]], targeted_type: Type[object]) -> object:
         try:
-            return isodate.parse_duration(timedelta_raw_str)
+            return isodate.parse_duration(json_to_process)
         except Exception as e:
             raise AlgorithmPlatformConversionError(
-                "Could not parse duration, invalid duration format: {}".format(timedelta_raw_str),
+                "Could not parse duration, invalid duration format: {}".format(json_to_process),
                 e)
 
 
-class EnumProcessor(JsonToAidmProcessor):
-    def is_applicable(self, attribute_dict: dict, targeted_type: Type[object]) -> bool:
+class EnumProcessor(_ABCJsonToAidmValueProcessor):
+    def is_applicable(self, json_to_process: Union[dict, Primitive, Optional[Primitive]], targeted_type: Type[object]) -> bool:
         return is_enum_type(targeted_type)
 
-    def process_attribute_dict(self, enum_value: str, aidm_class: Type[Enum]) -> Enum:
+    def process_attribute_dict(self, json_to_process: Union[dict, Primitive, Optional[Primitive]], targeted_type: Type[object]) -> object:
         try:
-            return aidm_class(enum_value)
+            return targeted_type(json_to_process)
         except Exception as e:
             raise AlgorithmPlatformConversionError(
-                "Could not parse Enum {}, invalid enum format for expected class Enum {}".format(enum_value, aidm_class),
+                "Could not parse Enum {}, invalid enum format for expected class Enum {}".format(json_to_process, targeted_type),
                 e
             )
 
 
-class PrimitiveProcessor(JsonToAidmProcessor):
-    def is_applicable(self, attribute_dict: dict, targeted_type: Type[object]) -> bool:
+class PrimitiveProcessor(_ABCJsonToAidmValueProcessor):
+    def is_applicable(self, json_to_process: Union[dict, Primitive, Optional[Primitive]], targeted_type: Type[object]) -> bool:
         return is_primitive(targeted_type)
 
-    def process_attribute_dict(self, attribute_dict: Primitive, targeted_type: Primitive) -> Primitive:
-        return attribute_dict
+    def process_attribute_dict(self, json_to_process: Union[dict, Primitive, Optional[Primitive]], targeted_type: Type[object]) -> object:
+        return json_to_process
 
 
-# === DICT PROCESSORS ==
-
-
-class ListProcessor(JsonToAidmProcessor):
-    def is_applicable(self, attribute_dict: dict, targeted_type: Type[object]) -> bool:
+class ListProcessor(_ABCJsonToAidmValueProcessor):
+    def is_applicable(self, json_to_process: Union[dict, Primitive, Optional[Primitive]], targeted_type: Type[object]) -> bool:
         return is_list_type(targeted_type)
 
-    def process_attribute_dict(self, list: List[Union[Primitive, dict]], targeted_type: Type[Union[_HasID, Primitive]]) -> List[Union[_HasID, Primitive]]:
+    def process_attribute_dict(self, json_to_process: Union[dict, Primitive, Optional[Primitive]], targeted_type: Type[object]) -> object:
         if is_primitive(get_type_of_list_element(targeted_type)):
-            return list
-        return [JsonToAidmConverter().process_json_to_aidm(element, get_type_of_list_element(targeted_type)) for element in list]
+            return json_to_process
+        return [JsonToAidmConverter().process_json_to_aidm(element, get_type_of_list_element(targeted_type)) for element in json_to_process]
 
 
-class OptionalProcessor(JsonToAidmProcessor):
-    def is_applicable(self, attribute_dict: dict, targeted_type: Type[object]) -> bool:
+class OptionalProcessor(_ABCJsonToAidmValueProcessor):
+    def is_applicable(self, json_to_process: Union[dict, Primitive, Optional[Primitive]], targeted_type: Type[object]) -> bool:
         return is_optional(targeted_type)
 
-    def process_attribute_dict(self, optional_value: Optional[Union[Primitive, dict]], targeted_type: Type[Union[_HasID, Primitive]]) -> Optional[object]:
-        if optional_value is None:
+    def process_attribute_dict(self, json_to_process: Union[dict, Primitive, Optional[Primitive]], targeted_type: Type[object]) -> object:
+        if json_to_process is None:
             return None
-        return JsonToAidmConverter().process_json_to_aidm(optional_value, get_type_of_optional_element(targeted_type))
+        return JsonToAidmConverter().process_json_to_aidm(json_to_process, get_type_of_optional_element(targeted_type))
 
 
-class SingleAttributeProcessor(JsonToAidmProcessor):
-    def is_applicable(self, attribute_dict: dict, targeted_type: Type[object]) -> bool:
-        return is_single_attribute(attribute_dict, targeted_type)
+class SingleAttributeProcessor(_ABCJsonToAidmDictProcessor):
+    def is_applicable(self, json_to_process: Union[dict, Primitive, Optional[Primitive]], targeted_type: Type[object]) -> bool:
+        return is_single_attribute(json_to_process, targeted_type)
 
-    def process_attribute_dict(self, attribute_dict: dict, targeted_type: Union[Primitive, Struct]) -> Union[Primitive, Struct]:
-        value_of_single_attribute = list(attribute_dict.values())[0]
+    def process_attribute_dict(self, json_to_process: Union[dict, Primitive, Optional[Primitive]], targeted_type: Type[object]) -> object:
+        value_of_single_attribute = list(json_to_process.values())[0]
         return JsonToAidmConverter().process_json_to_aidm(value_of_single_attribute, targeted_type)
 
 
-class GeneralAidmObjectProcessor(JsonToAidmProcessor):
-    def is_applicable(self, attribute_dict: dict, targeted_type: Type[object]) -> bool:
+class GeneralAidmObjectProcessor(_ABCJsonToAidmDictProcessor):
+    def is_applicable(self, json_to_process: Union[dict, Primitive, Optional[Primitive]], targeted_type: Type[object]) -> bool:
         # If it is not a list, we assume it is a general object, otherwise it will fail
         # as primitives, enums, list are handled by other processors
         return not is_list_type(targeted_type)
 
-    def process_attribute_dict(self, attribute_dict: dict, targeted_type: _HasID) -> _HasID:
-        state = convert_keys_to_snake_case(attribute_dict)
+    def process_attribute_dict(self, json_to_process: Union[dict, Primitive, Optional[Primitive]], targeted_type: Type[object]) -> object:
+        state = convert_keys_to_snake_case(json_to_process)
 
         object_attribute_and_attribute_type = get_type_hints(targeted_type)
         for attribute_name_with_class_name, attribute_type in object_attribute_and_attribute_type.items():
@@ -119,7 +134,7 @@ class GeneralAidmObjectProcessor(JsonToAidmProcessor):
         return self.transform_processed_dict_to_aidm(targeted_type, state)
 
     @staticmethod
-    def transform_processed_dict_to_aidm(targeted_type, snake_case_attribute_dict):
+    def transform_processed_dict_to_aidm(targeted_type: Type[object], snake_case_attribute_dict: dict) -> object:
         try:
             return targeted_type(**snake_case_attribute_dict)
         except TypeError as e:
@@ -129,11 +144,11 @@ class GeneralAidmObjectProcessor(JsonToAidmProcessor):
                 e)
 
     @staticmethod
-    def unmangle(attribute_name_with_class_name):
+    def unmangle(attribute_name_with_class_name: str) -> str:
         return attribute_name_with_class_name.split("__")[-1]
 
 
-class PolymorphicClassesProcessor(JsonToAidmProcessor):
+class PolymorphicClassesProcessor(_ABCJsonToAidmDictProcessor):
     types_to_process = [_AlgorithmLink,
                         _RoutingEdge
                         ]
@@ -147,13 +162,13 @@ class PolymorphicClassesProcessor(JsonToAidmProcessor):
                             OutgoingNodeTrackRoutingEdge
                             ]
 
-    def is_applicable(self, attribute_dict: dict, targeted_type: Type[object]) -> bool:
+    def is_applicable(self, json_to_process: Union[dict, Primitive, Optional[Primitive]], targeted_type: Type[object]) -> bool:
         is_not_an_object = not isinstance(targeted_type, type)
         if is_not_an_object:
             return False
         if True not in [issubclass(targeted_type, x) for x in self.types_to_process]:
             return False
-        if 'type' not in attribute_dict:
+        if 'type' not in json_to_process:
             # we can come into this branch after popping the type attribute or when we first see a polymorphic type
             # if we are for the first time here we have to have the type attribute
             if targeted_type in self.types_to_process:
@@ -163,11 +178,11 @@ class PolymorphicClassesProcessor(JsonToAidmProcessor):
                 return False
         return True
 
-    def process_attribute_dict(self, attribute_dict: dict, aidm_class: Type) -> object:
+    def process_attribute_dict(self, json_to_process: Union[dict, Primitive, Optional[Primitive]], targeted_type: Type[object]) -> object:
         # Remove the attribute type from the attribute_dict and convert it to snake case
-        type_name_in_enum = convert_to_snake_case(attribute_dict.pop('type'))
+        type_name_in_enum = convert_to_snake_case(json_to_process.pop('type'))
         target_type = self._get_type_from_enum_value(type_name_in_enum)
-        return JsonToAidmConverter().process_json_to_aidm(attribute_dict, target_type)
+        return JsonToAidmConverter().process_json_to_aidm(json_to_process, target_type)
 
     def _get_type_from_enum_value(self, type_name_in_enum: str) -> Type:
         for type_to_process in self.aidm_types_to_create:
@@ -185,7 +200,7 @@ class PolymorphicClassesProcessor(JsonToAidmProcessor):
                 self._validate_first_is_more_specific(aidm_type, aidm_type_later_in_list)
 
     @staticmethod
-    def _validate_first_is_more_specific(aidm_type, aidm_type_later_in_list):
+    def _validate_first_is_more_specific(aidm_type: object, aidm_type_later_in_list:  object):
         type_name_parts_aidm_type = convert_to_snake_case(aidm_type.__name__).split('_')
         type_name_parts_aidm_type_later_in_list = convert_to_snake_case(aidm_type_later_in_list.__name__).split('_')
         is_first_type_less_specific = set(type_name_parts_aidm_type_later_in_list).issubset(set(type_name_parts_aidm_type))
@@ -213,18 +228,18 @@ class ConflictTypeMappingLookup:
         return self.__lookup[enum_conflict_type]
 
 
-class ConflictProcessor(JsonToAidmProcessor):
-    def is_applicable(self, attribute_dict: dict, targeted_type: Type[AlgorithmConflict]) -> bool:
+class ConflictProcessor(_ABCJsonToAidmProcessor):
+    def is_applicable(self, json_to_process: Union[dict, Primitive, Optional[Primitive]], targeted_type: Type[object]) -> bool:
         return targeted_type == AlgorithmConflict
 
-    def process_attribute_dict(self, attribute_dict: dict, aidm_class: Type) -> AlgorithmConflict:
-        conflict_type_as_enum = JsonToAidmConverter().process_json_to_aidm(attribute_dict["conflictType"], ConflictType)
+    def process_attribute_dict(self, json_to_process: Union[dict, Primitive, Optional[Primitive]], targeted_type: Type[object]) -> object:
+        conflict_type_as_enum = JsonToAidmConverter().process_json_to_aidm(json_to_process["conflictType"], ConflictType)
         targeted_type = ConflictTypeMappingLookup().get_conflict_type_mapping(conflict_type_as_enum)
-        return JsonToAidmConverter().process_json_to_aidm(attribute_dict, targeted_type)
+        return JsonToAidmConverter().process_json_to_aidm(json_to_process, targeted_type)
 
 
 class JsonToAidmConverter:
-    __processors: List[JsonToAidmProcessor]
+    __processors: List[_ABCJsonToAidmProcessor]
 
     def __init__(self):
         self.__processors = [
@@ -240,7 +255,7 @@ class JsonToAidmConverter:
             GeneralAidmObjectProcessor()
         ]
 
-    def process_json_to_aidm(self, attribute_dict: dict, targeted_type: Type[object]) -> object:
+    def process_json_to_aidm(self, attribute_dict: Union[dict, Primitive, Optional[Primitive]], targeted_type: Type[object]) -> object:
         if attribute_dict is None:
             if self.targeted_type_cannot_have_none_value(targeted_type):
                 raise AlgorithmPlatformConversionError("Got a None value for a non-optional type.", None)
@@ -251,7 +266,7 @@ class JsonToAidmConverter:
         raise AlgorithmPlatformConversionError("Found no appropriate processor for the given response", None)
 
     @staticmethod
-    def targeted_type_cannot_have_none_value(targeted_type):
+    def targeted_type_cannot_have_none_value(targeted_type: Type[object]) -> bool:
         if is_optional(targeted_type):
             return False
         if is_primitive(targeted_type):

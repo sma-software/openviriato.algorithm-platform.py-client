@@ -142,9 +142,9 @@ class TestJsonToAIDMConverter(unittest.TestCase):
 
     def test_json_to_aidm_containing_datetime(self):
         class AidmContainingDatetimeTest(_HasID):
-            __arrival_time:  datetime.datetime
+            __arrival_time: datetime.datetime
 
-            def __init__(self, id: int, arrival_time:  datetime.datetime):
+            def __init__(self, id: int, arrival_time: datetime.datetime):
                 _HasID.__init__(self, id)
                 self.__arrival_time = arrival_time
 
@@ -164,9 +164,9 @@ class TestJsonToAIDMConverter(unittest.TestCase):
 
     def test_json_to_aidm_containing_datetime_not_optional_with_none(self):
         class AidmContainingDatetimeTest(_HasID):
-            __arrival_time:  datetime.datetime
+            __arrival_time: datetime.datetime
 
-            def __init__(self, id: int, arrival_time:  datetime.datetime):
+            def __init__(self, id: int, arrival_time: datetime.datetime):
                 _HasID.__init__(self, id)
                 self.__arrival_time = arrival_time
 
@@ -187,9 +187,9 @@ class TestJsonToAIDMConverter(unittest.TestCase):
 
     def test_json_to_aidm_containing_optional_datetime(self):
         class AidmContainingDatetimeTest(_HasID):
-            __arrival_time:  Optional[datetime.datetime]
+            __arrival_time: Optional[datetime.datetime]
 
-            def __init__(self, id: int, arrival_time:  Optional[datetime.datetime]):
+            def __init__(self, id: int, arrival_time: Optional[datetime.datetime]):
                 _HasID.__init__(self, id)
                 self.__arrival_time = arrival_time
 
@@ -209,9 +209,9 @@ class TestJsonToAIDMConverter(unittest.TestCase):
 
     def test_json_to_aidm_containing_optional_with_none_datetime(self):
         class AidmContainingDatetimeTest(_HasID):
-            __arrival_time:  Optional[datetime.datetime]
+            __arrival_time: Optional[datetime.datetime]
 
-            def __init__(self, id: int, arrival_time:  Optional[datetime.datetime]):
+            def __init__(self, id: int, arrival_time: Optional[datetime.datetime]):
                 _HasID.__init__(self, id)
                 self.__arrival_time = arrival_time
 
@@ -373,6 +373,7 @@ class TestJsonToAIDMConverter(unittest.TestCase):
             @property
             def optional_field(self) -> Optional[str]:
                 return self.__optional_field
+
         json_dict = dict(
             id=1223,
             optionalField="non empty"
@@ -395,6 +396,7 @@ class TestJsonToAIDMConverter(unittest.TestCase):
             @property
             def optional_field(self) -> Optional[int]:
                 return self.__optional_field
+
         json_dict = dict(
             id=1223,
             optionalField=None
@@ -417,6 +419,7 @@ class TestJsonToAIDMConverter(unittest.TestCase):
             @property
             def optional_field(self) -> Optional[str]:
                 return self.__optional_field
+
         json_dict = dict(
             id=1223,
             optionalField=None
@@ -439,6 +442,7 @@ class TestJsonToAIDMConverter(unittest.TestCase):
             @property
             def optional_field(self) -> str:
                 return self.__optional_field
+
         json_dict = dict(
             id=1223,
             optionalField=None
@@ -462,6 +466,7 @@ class TestJsonToAIDMConverter(unittest.TestCase):
             @property
             def enum_field(self) -> StopStatus:
                 return self.__enum_field
+
         json_dict = dict(
             id=1223,
             enumField="commercialStop"
@@ -483,6 +488,7 @@ class TestJsonToAIDMConverter(unittest.TestCase):
             @property
             def enum_field(self) -> StopStatus:
                 return self.__enum_field
+
         json_dict = dict(
             id=1223,
             enumField="nonStopStatusValue"
@@ -524,7 +530,7 @@ class TestJsonToAIDMConverter(unittest.TestCase):
         self.assertEqual(algorithm_train_path_node.movement_type_id, 2222)
 
         self.assertIsInstance(algorithm_train_path_node.arrival_time, datetime.datetime)
-        self.assertEqual(algorithm_train_path_node.arrival_time, datetime.datetime(year=2003, month=5, day= 1, hour=0, minute=5))
+        self.assertEqual(algorithm_train_path_node.arrival_time, datetime.datetime(year=2003, month=5, day=1, hour=0, minute=5))
 
         self.assertIsInstance(algorithm_train_path_node.departure_time, datetime.datetime)
         self.assertEqual(algorithm_train_path_node.departure_time, datetime.datetime(year=2003, month=5, day=1, hour=0, minute=5))

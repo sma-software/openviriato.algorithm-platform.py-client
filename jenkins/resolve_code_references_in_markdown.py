@@ -157,19 +157,35 @@ def _write_output_markdown_to_file(filename: str, target_directory: str) -> None
 
 
 def _translate_source_markdown_to_output_markdown(file_contents: List[str], source_code_folder: str) -> List[str] :
+    # @Import(import_function, RerouteTrainAlgorithm.py, Function imported)
     output_markdown_file_content = []
+    pattern_for_import_marker = "@Import"
+    pattern_for_reference_name_in_target_file = "\((.*),"
+    pattern_for_source_code_file_name = "(.*),"
+    pattern_for_caption = "(.*)\)"
+
+    regex_for_import_marker_in_markdown_source_code = \
+        pattern_for_import_marker \
+        + pattern_for_reference_name_in_target_file \
+        + pattern_for_source_code_file_name \
+        + pattern_for_caption
+
     for line in file_contents:
-        regex_for_import_marker_in_markdown_source_code = "@Import\((.*),(.*)\)"
+
         import_marker_parsed_from_source_code_line = re.search(regex_for_import_marker_in_markdown_source_code, line)
         if import_marker_parsed_from_source_code_line is None:
             output_markdown_file_content.append(line)
         else:
             reference_name = import_marker_parsed_from_source_code_line.group(1)
             source_code_file_name = import_marker_parsed_from_source_code_line.group(2)
+            caption_text = import_marker_parsed_from_source_code_line.group(3)
             reference_to_import_marker = ReferenceToImportMarkerInMarkDownSourceCode(reference_name, source_code_folder + "/" + source_code_file_name)
 
             formatted_code_block_with_source_code_lines = _read_source_code_and_format_code_for_output_markdown(reference_to_import_marker)
             output_markdown_file_content += formatted_code_block_with_source_code_lines.code_block
+
+            generated_caption = _generate_caption(caption_text, formatted_code_block_with_source_code_lines.start_line_number_in_source_code, formatted_code_block_with_source_code_lines.end_line_number_in_source_code, source_code_file_name)
+            output_markdown_file_content.append(generated_caption)
 
     return output_markdown_file_content
 
@@ -179,6 +195,10 @@ def _read_source_code_and_format_code_for_output_markdown(reference_to_import_ma
     unindented_code_block = _remove_indentation_not_desired_for_output_markdown(raw_code_block_with_line_numbers.code_block)
     expanded_code_listing_for_output = ["```python\n"] + unindented_code_block + ["\n```\n"]
     return CodeBlockWithLinesNumberInSourceCode(expanded_code_listing_for_output, raw_code_block_with_line_numbers.start_line_number_in_source_code)
+
+
+def _generate_caption(caption_text: str, from_line: int, to_line: int, source_code_file_name: str) -> str:
+    return "Code listing: {}. Lines: {} - {} from file: {}\n".format(caption_text, from_line, to_line, source_code_file_name)
 
 
 def _parse_file_name_from_command_line_arguments() -> tuple[str, str]:

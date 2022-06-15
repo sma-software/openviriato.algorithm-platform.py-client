@@ -3,6 +3,7 @@ import os
 
 from jenkins.resolve_code_references_in_markdown import _write_output_markdown_to_file
 
+
 class TestResolveCodeReferencesInMarkdown(unittest.TestCase):
     def test(self):
         source_file = "source/rerouting_a_train.src.md"

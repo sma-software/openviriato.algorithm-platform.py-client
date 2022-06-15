@@ -8,6 +8,28 @@ from typing import List, Optional
 # @reference_name[line_selector] example:
 # @twoLinesBeforeTheEndOfTheFunction[1:-2]
 
+
+class CodeBlockWithLinesNumberInSourceCode:
+    _code_block: List[str]
+    _start_line_number_in_source_code: int
+
+    def __init__(self, code_block: List[str], start_line_number_in_source_code: int):
+        self._code_block = code_block
+        self._start_line_number_in_source_code = start_line_number_in_source_code
+
+    @property
+    def code_block(self) -> List[str]:
+        return self._code_block
+
+    @property
+    def start_line_number_in_source_code(self) -> int:
+        return self._start_line_number_in_source_code
+
+    @property
+    def end_line_number_in_source_code(self) -> int:
+        return self._start_line_number_in_source_code + len(self._code_block) - 1
+
+
 class PythonSourceCodeImportMarker:
     _reference_name: str
     _position_line_number: int
@@ -101,7 +123,8 @@ def _extract_code_block(all_lines:List[str], line_number_code_block_start: int) 
             return all_lines[line_number_code_block_start: line_number_code_block_start + line_number]
     return all_lines[line_number_code_block_start:]
 
-def _import_code_block_from_source_file(reference: ReferenceToImportMarkerInMarkDownSourceCode) -> List[str]:
+
+def _import_code_block_from_source_file(reference: ReferenceToImportMarkerInMarkDownSourceCode) -> CodeBlockWithLinesNumberInSourceCode:
     with open(reference.source_code_absolute_path) as file:
         all_lines = file.readlines()
 
@@ -111,7 +134,8 @@ def _import_code_block_from_source_file(reference: ReferenceToImportMarkerInMark
         first_line_of_the_code_block = import_marker.position_line_number + 1
         code_block = _extract_code_block(all_lines, first_line_of_the_code_block)
 
-        return code_block[import_marker.line_selector_start : import_marker.line_selector_end]
+        code_block_content = code_block[import_marker.line_selector_start: import_marker.line_selector_end]
+        return CodeBlockWithLinesNumberInSourceCode(code_block_content, first_line_of_the_code_block)
 
 
 def _write_output_markdown_file(filename: str, lines_to_write: List[str]) -> None:
@@ -144,17 +168,17 @@ def _translate_source_markdown_to_output_markdown(file_contents: List[str], sour
             source_code_file_name = import_marker_parsed_from_source_code_line.group(2)
             reference_to_import_marker = ReferenceToImportMarkerInMarkDownSourceCode(reference_name, source_code_folder + "/" + source_code_file_name)
 
-            expanded_code_listing_for_output = _read_source_code_and_format_code_for_output_markdown(reference_to_import_marker)
-            output_markdown_file_content += expanded_code_listing_for_output
+            formatted_code_block_with_source_code_lines = _read_source_code_and_format_code_for_output_markdown(reference_to_import_marker)
+            output_markdown_file_content += formatted_code_block_with_source_code_lines.code_block
 
     return output_markdown_file_content
 
 
-def _read_source_code_and_format_code_for_output_markdown(reference_to_import_marker: ReferenceToImportMarkerInMarkDownSourceCode) -> List[str]:
-    code_block = _import_code_block_from_source_file(reference_to_import_marker)
-    code_block = _remove_indentation_not_desired_for_output_markdown(code_block)
-    expanded_code_listing_for_output = ["```python\n"] + code_block + ["\n```\n"]
-    return expanded_code_listing_for_output
+def _read_source_code_and_format_code_for_output_markdown(reference_to_import_marker: ReferenceToImportMarkerInMarkDownSourceCode) -> CodeBlockWithLinesNumberInSourceCode:
+    raw_code_block_with_line_numbers = _import_code_block_from_source_file(reference_to_import_marker)
+    unindented_code_block = _remove_indentation_not_desired_for_output_markdown(raw_code_block_with_line_numbers.code_block)
+    expanded_code_listing_for_output = ["```python\n"] + unindented_code_block + ["\n```\n"]
+    return CodeBlockWithLinesNumberInSourceCode(expanded_code_listing_for_output, raw_code_block_with_line_numbers.start_line_number_in_source_code)
 
 
 def _parse_file_name_from_command_line_arguments() -> tuple[str, str]:

@@ -54,12 +54,13 @@ class ReferenceToImportMarkerInMarkDownSourceCode:
         return self._source_code_absolute_path
 
 
-
 def _is_non_empty_line(line: str) -> bool:
     return line != '\n'
 
+
 def _number_of_leading_spaces(code_line: str) -> int:
     return len(code_line) - len(code_line.lstrip())
+
 
 def _remove_indentation_not_desired_for_output_markdown(code_block: List[str]) -> List[str]:
     # we have to remove the indentation that is necessary in the source code file, but superfluous in the output
@@ -67,6 +68,7 @@ def _remove_indentation_not_desired_for_output_markdown(code_block: List[str]) -
     spaces_to_remove = min([_number_of_leading_spaces(code_line) for code_line in non_empty_lines_of_code_block])
     code_line_with_removed_indentation = [code_line[spaces_to_remove:] for code_line in code_block]
     return code_line_with_removed_indentation
+
 
 def _find_import_marker(all_lines: List[str], marker: str) -> PythonSourceCodeImportMarker:
     regex_for_import_marker_in_source_code = "@{}\[(.*):(.*)\]".format(marker)
@@ -79,7 +81,8 @@ def _find_import_marker(all_lines: List[str], marker: str) -> PythonSourceCodeIm
             line_selector_start = None if line_selector_start_as_string == '' else int(line_selector_start_as_string)
             line_selector_end = None if line_selector_end_as_string == '' else int(line_selector_end_as_string)
             return PythonSourceCodeImportMarker(marker, line_number, line_selector_start, line_selector_end)
-    raise Error("desired import marker cannot be found in source code file. name of marker searched for: {}".format(marker))
+    raise Exception("desired import marker cannot be found in source code file. name of marker searched for: {}".format(marker))
+
 
 def _extract_code_block(all_lines:List[str], line_number_code_block_start: int) -> List[str]:
     # For functions the first line is the signature, for classes it's the declaration
@@ -110,10 +113,12 @@ def _import_code_block_from_source_file(reference: ReferenceToImportMarkerInMark
 
         return code_block[import_marker.line_selector_start : import_marker.line_selector_end]
 
+
 def _write_output_markdown_file(filename: str, lines_to_write: List[str]) -> None:
     with open(filename, 'w') as textfile:
         for line_to_write in lines_to_write:
             textfile.write(line_to_write)
+
 
 def _write_output_markdown_to_file(filename: str, target_directory: str) -> None:
     markdown_source_folder = os.path.dirname(filename)
@@ -152,7 +157,7 @@ def _read_source_code_and_format_code_for_output_markdown(reference_to_import_ma
     return expanded_code_listing_for_output
 
 
-def _parse_file_name_from_command_line_arguments() -> str:
+def _parse_file_name_from_command_line_arguments() -> tuple[str, str]:
     argument_parser = argparse.ArgumentParser()
     argument_parser.add_argument("-f", "--file", required=True)
     argument_parser.add_argument("-t", "--target_directory", required=True)
@@ -162,9 +167,11 @@ def _parse_file_name_from_command_line_arguments() -> str:
     target_directory: str = command_line_arguments["target_directory"]
     return file_to_parse, target_directory
 
+
 def main():
     file_name, target_directory = _parse_file_name_from_command_line_arguments()
     _write_output_markdown_to_file(file_name, target_directory)
+
 
 if __name__ == '__main__':
     main()

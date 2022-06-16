@@ -4,6 +4,9 @@ import re
 
 from typing import List, Optional
 
+PY_CLIENT_SYMBOLIC_PATH_TAG = "@py_client_root"
+PY_CLIENT_ROOT_FROM_MD_TARGET = "../../../py_client"
+
 # naming and structure of an import marker
 # @reference_name[line_selector] example:
 # @twoLinesBeforeTheEndOfTheFunction[1:-2]
@@ -156,6 +159,13 @@ def _write_output_markdown_to_file(filename: str, target_directory: str) -> None
         _write_output_markdown_file(destination_folder + '/' + output_file_name_without_src, content_of_the_result_file)
 
 
+def _resolve_relative_path(line: str, path_to_py_client_from_context: str) -> str:
+    if PY_CLIENT_SYMBOLIC_PATH_TAG in line:
+        return line.replace(PY_CLIENT_SYMBOLIC_PATH_TAG, path_to_py_client_from_context)
+    else:
+        return line
+
+
 def _translate_source_markdown_to_output_markdown(file_contents: List[str], source_code_folder: str) -> List[str] :
     # @Import(import_function, RerouteTrainAlgorithm.py, Function imported)
     output_markdown_file_content = []
@@ -173,6 +183,9 @@ def _translate_source_markdown_to_output_markdown(file_contents: List[str], sour
     for line in file_contents:
 
         import_marker_parsed_from_source_code_line = re.search(regex_for_import_marker_in_markdown_source_code, line)
+
+        line = _resolve_relative_path(line, PY_CLIENT_ROOT_FROM_MD_TARGET)
+
         if import_marker_parsed_from_source_code_line is None:
             output_markdown_file_content.append(line)
         else:

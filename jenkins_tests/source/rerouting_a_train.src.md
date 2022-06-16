@@ -11,7 +11,7 @@ our method call, see the previous section.
 Continuation of the example below
 
 
-In a second step we can calculate a sequence of [RoutingEdge](../../py_client/aidm/aidm_routing_edge_classes.py). Even though the created routing edges might not exist according to the infrastructure, which is known to 
+In a second step we can calculate a sequence of [RoutingEdge](@py_client_root/aidm/aidm_routing_edge_classes.py). Even though the created routing edges might not exist according to the infrastructure, which is known to 
 the Algorithm Platform. 
 
 @Import(import_function,RerouteTrainAlgorithm.py,Function imported)

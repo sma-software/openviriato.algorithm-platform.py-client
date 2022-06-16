@@ -6,12 +6,12 @@ For more detailed information we refer the developer to the C# API Documentation
 
 ## The Method for Rerouting Trains
 
-In order to reroute a train, which is possible with the method [reroute_train](../../../py_client/algorithm_interface/algorithm_interface.py), 
-the developer has to use the class [UpdateTrainRoute](../../../py_client/aidm/aidm_update_classes.py).
+In order to reroute a train, which is possible with the method [reroute_train](@py_client_root/algorithm_interface/algorithm_interface.py), 
+the developer has to use the class [UpdateTrainRoute](@py_client_root/aidm/aidm_update_classes.py).
 
-For our walkthrough we have encapsulated the call to [RerouteTrain](../../../py_client/aidm/aidm_update_classes.py) by a method 
+For our walkthrough we have encapsulated the call to [RerouteTrain](@py_client_root/aidm/aidm_update_classes.py) by a method 
 `persist_rerouted_train(self, train_to_reroute: AlgorithmTrain, first_train_path_node_on_diversion: AlgorithmTrainPathNode, last_train_path_node_on_diversion: AlgorithmTrainPathNode, routing_edges_on_diversion: List[_RoutingEdge], restore_node_tracks_at_start_and_end_of_diversion: bool) -> AlgorithmTrain`,
-which we can simply invoke below. This also demonstrates how an algorithm developer can use [reroute_train](../../../py_client/algorithm_interface/algorithm_interface.py).
+which we can simply invoke below. This also demonstrates how an algorithm developer can use [reroute_train](@py_client_root/algorithm_interface/algorithm_interface.py).
 Here we list the source code with explanations.
 
 @Import(RerouteTrainPersistenceService,RerouteTrainPersistenceService.py,RerouteTrainPersistenceService source code)
@@ -37,10 +37,10 @@ our method call, see the previous section.
 Continuation of the example below
 
 
-In a second step we can calculate a sequence of [RoutingEdge](../../../py_client/aidm/aidm_routing_edge_classes.py). Even though the created routing edges might not exist according to the infrastructure, which is known to 
-the Algorithm Platform, i.e. these will not be provided by any of the methods [GetOutgoingRoutingEdges](../../../py_client/algorithm_interface/algorithm_interface.py), 
-[GetIncomingRoutingEdges](../../../py_client/algorithm_interface/algorithm_interface.py) and 
-[GetCrossingRoutingEdges](../../../py_client/algorithm_interface/algorithm_interface.py), we can use them to reroute the train. 
+In a second step we can calculate a sequence of [RoutingEdge](@py_client_root/aidm/aidm_routing_edge_classes.py). Even though the created routing edges might not exist according to the infrastructure, which is known to 
+the Algorithm Platform, i.e. these will not be provided by any of the methods [GetOutgoingRoutingEdges](@py_client_root/algorithm_interface/algorithm_interface.py), 
+[GetIncomingRoutingEdges](@py_client_root/algorithm_interface/algorithm_interface.py) and 
+[GetCrossingRoutingEdges](@py_client_root/algorithm_interface/algorithm_interface.py), we can use them to reroute the train. 
 
 @Import(RerouteTrainAlgorithm3,RerouteTrainAlgorithm.py,Method used to calculate the sequence of routing edges to reroute a train)
 

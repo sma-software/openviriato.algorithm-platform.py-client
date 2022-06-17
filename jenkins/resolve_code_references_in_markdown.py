@@ -4,6 +4,7 @@ import re
 
 from typing import List, Optional
 
+SOURCE_FROM_MD_TARGET = '../source/'
 PY_CLIENT_SYMBOLIC_PATH_TAG = "@py_client_root"
 PY_CLIENT_ROOT_FROM_MD_TARGET = "../../../py_client"
 
@@ -133,8 +134,8 @@ def _import_code_block_from_source_file(reference: ReferenceToImportMarkerInMark
 
         import_marker = _find_import_marker(all_lines, reference.reference_name)
 
-        # The code block starts the line after the marker
-        first_line_of_the_code_block = import_marker.position_line_number + 1
+        offset_code_block_start_after_line_marker = 1
+        first_line_of_the_code_block = import_marker.position_line_number + offset_code_block_start_after_line_marker
         code_block = _extract_code_block(all_lines, first_line_of_the_code_block)
 
         code_block_content = code_block[import_marker.line_selector_start: import_marker.line_selector_end]
@@ -197,7 +198,7 @@ def _translate_source_markdown_to_output_markdown(file_contents: List[str], sour
             formatted_code_block_with_source_code_lines = _read_source_code_and_format_code_for_output_markdown(reference_to_import_marker)
             output_markdown_file_content += formatted_code_block_with_source_code_lines.code_block
 
-            generated_caption = _generate_caption(caption_text, formatted_code_block_with_source_code_lines.start_line_number_in_source_code, formatted_code_block_with_source_code_lines.end_line_number_in_source_code, source_code_file_name)
+            generated_caption = _generate_caption(formatted_code_block_with_source_code_lines, source_code_file_name, caption_text)
             output_markdown_file_content.append(generated_caption)
 
     return output_markdown_file_content
@@ -210,8 +211,19 @@ def _read_source_code_and_format_code_for_output_markdown(reference_to_import_ma
     return CodeBlockWithLinesNumberInSourceCode(expanded_code_listing_for_output, raw_code_block_with_line_numbers.start_line_number_in_source_code)
 
 
-def _generate_caption(caption_text: str, from_line: int, to_line: int, source_code_file_name: str) -> str:
-    return "Code listing: {}. Lines: {} - {} from file: {}\n".format(caption_text, from_line, to_line, source_code_file_name)
+def _generate_caption(formatted_code_block_with_source_code_lines: CodeBlockWithLinesNumberInSourceCode, source_code_file_name: str, caption_text: str) -> str:
+    source_code_relative_path = SOURCE_FROM_MD_TARGET + source_code_file_name
+    offset_for_git_hub = 1
+    link_to_source_code = "{}#L{}-L{}".format(
+        source_code_relative_path,
+        formatted_code_block_with_source_code_lines.start_line_number_in_source_code + offset_for_git_hub,
+        formatted_code_block_with_source_code_lines.end_line_number_in_source_code - offset_for_git_hub)
+
+    return "_Code listing: {}_. ([_Lines: {} - {} from file: {}_]({})).\n".format(
+        caption_text,
+        formatted_code_block_with_source_code_lines.start_line_number_in_source_code + offset_for_git_hub,
+        formatted_code_block_with_source_code_lines.end_line_number_in_source_code - offset_for_git_hub,
+        source_code_file_name, link_to_source_code)
 
 
 def _parse_file_name_from_command_line_arguments() -> tuple[str, str]:

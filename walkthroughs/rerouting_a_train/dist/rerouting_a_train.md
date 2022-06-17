@@ -49,7 +49,7 @@ class RerouteTrainPersistenceService:
         return rerouted_train
 
 ```
-Codelisting: RerouteTrainPersistenceService source code. Lines: 1 - 33 from filename: RerouteTrainPersistenceService.py
+_Code listing: RerouteTrainPersistenceService source code_. ([_Lines: 2 - 33 from file: RerouteTrainPersistenceService.py_](../source/RerouteTrainPersistenceService.py#L2-L33)).
 
 ## Picking a Route
 
@@ -144,7 +144,7 @@ class RerouteTrainAlgorithm:
                 "Last node on diversion is a junction. Must be a station.")
 
 ```
-Codelisting: RerouteTrainAlgorithm source code. Lines: 10 - 84 from filename: RerouteTrainAlgorithm.py
+_Code listing: RerouteTrainAlgorithm source code_. ([_Lines: 11 - 84 from file: RerouteTrainAlgorithm.py_](../source/RerouteTrainAlgorithm.py#L11-L84)).
 
 Continuation of the example below
 
@@ -192,7 +192,7 @@ def _construct_mesoscopic_routing_edges_from_train_with_alternative_route(self, 
     return resulting_routing_edges
 
 ```
-Codelisting: Method used to calculate the sequence of routing edges to reroute a train. Lines: 96 - 134 from filename: RerouteTrainAlgorithm.py
+_Code listing: Method used to calculate the sequence of routing edges to reroute a train_. ([_Lines: 97 - 134 from file: RerouteTrainAlgorithm.py_](../source/RerouteTrainAlgorithm.py#L97-L134)).
 
 Now we can continue with the code from the method above (see comment in the source code listing). We construct the routing edges and we can invoke `persist_rerouted_train(...)` with the obtained routing edges.
 
@@ -207,4 +207,4 @@ message = "Train successfully rerouted. Train visits now {0} nodes on its path."
 algorithm_interface.notify_user("Algorithm succeeded", message)
 
 ```
-Codelisting: Continuation of the RerouteTrainAlgorithm source code. Lines: 86 - 94 from filename: RerouteTrainAlgorithm.py
+_Code listing: Continuation of the RerouteTrainAlgorithm source code_. ([_Lines: 87 - 94 from file: RerouteTrainAlgorithm.py_](../source/RerouteTrainAlgorithm.py#L87-L94)).

@@ -29,7 +29,7 @@ class CommonActivitiesFactory:
 
         return common_activities
 
-    def __calculate_train_path_node_with_change_of_formation(self, train: AlgorithmTrain):
+    def __calculate_train_path_node_with_change_of_formation(self, train: AlgorithmTrain) -> List[AlgorithmTrainPathNode]:
         first_train_path_node = train.train_path_nodes[0]
         train_path_node_with_change_last_seen = first_train_path_node
         train_path_nodes_with_change_of_formation = [train_path_node_with_change_last_seen]

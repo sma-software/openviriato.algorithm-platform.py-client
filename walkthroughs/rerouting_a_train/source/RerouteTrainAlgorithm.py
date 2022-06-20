@@ -55,7 +55,7 @@ class RerouteTrainAlgorithm:
             return
         last_train_path_node_on_diversion = last_train_path_node_on_diversion[-1]
 
-        # firstTrainPathNodeOnDiversion must occur before lastTrainPathNodeOnDiversion on the trainToReroute
+        # first_train_path_node_on_diversion must occur before last_train_path_node_on_diversion on the train_to_reroute
         if first_train_path_node_on_diversion.sequence_number >= last_train_path_node_on_diversion.sequence_number:
             start_of_diversion_node = algorithm_interface.get_node(first_train_path_node_on_train_with_alternative_path.node_id)
             end_of_diversion_node = algorithm_interface.get_node(last_train_path_node_on_train_with_alternative_path.node_id)
@@ -68,7 +68,7 @@ class RerouteTrainAlgorithm:
                     end_of_diversion_node.ID,
                     train_to_reroute.DebugString))
 
-        # firstTrainPathNodeOnDiversion and lastTrainPathNodeOnDiversion are stations
+        # first_train_path_node_on_diversion and last_train_path_node_on_diversion are stations
         first_node_on_diversion = algorithm_interface.get_node(first_train_path_node_on_diversion.node_id)
         last_node_on_diversion = algorithm_interface.get_node(last_train_path_node_on_diversion.node_id)
 

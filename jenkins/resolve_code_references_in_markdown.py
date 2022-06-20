@@ -6,7 +6,7 @@ from typing import List, Optional
 
 PY_CLIENT_ROOT_FROM_MD_SOURCE = "../../.."
 SOURCE_DIRECTORY = "source"
-DIST_DIRECTORY = "dist"
+MD_OUTPUT_DIRECTORY = "dist"
 WALKTHROUGHS_ROOT = "walkthroughs"
 PY_CLIENT_SYMBOLIC_PATH_TAG = "@py_client_root"
 OFFSET_FOR_GIT_HUB = 1
@@ -298,6 +298,9 @@ def _translate_source_markdown_to_output_markdown(py_client_root, file_contents:
 
 
 def _persist_md(filename: str, lines_to_write: List[str]) -> None:
+    if not os.path.exists(os.path.dirname(filename)):
+        os.makedirs(os.path.dirname(filename))
+
     with open(filename, 'w') as textfile:
         for line_to_write in lines_to_write:
             textfile.write(line_to_write)
@@ -330,25 +333,34 @@ def _list_walkthroughs_to_process(py_client_root: str) -> List[str]:
     return src_md_file_names
 
 
-def _parse_file_name_from_command_line_arguments() -> str:
+def _parse_file_name_from_command_line_arguments() -> tuple[str, str]:
     argument_parser = argparse.ArgumentParser()
     argument_parser.add_argument("-r", "--py_client_root", required=True)
+    argument_parser.add_argument("-d", "--dist_directory", required=True)
 
     command_line_arguments = vars(argument_parser.parse_args())
     py_client_root_directory: str = command_line_arguments["py_client_root"]
-    return py_client_root_directory
+    dist_directory: str = command_line_arguments["dist_directory"]
+
+    return py_client_root_directory, dist_directory
 
 
-def main():
-    py_client_root = _parse_file_name_from_command_line_arguments()
+def _run_with_arguments(py_client_root:str, dist_directory) -> None:
     src_md_files_to_process = _list_walkthroughs_to_process(py_client_root)
     for src_md_file in src_md_files_to_process:
         src_md_file_contents = _read_src_md(src_md_file)
         src_md_file_translated = _translate_source_markdown_to_output_markdown(py_client_root, src_md_file_contents)
 
-        md_file_in_dist_directory = src_md_file.replace(SOURCE_DIRECTORY, DIST_DIRECTORY)
-        md_output_file = md_file_in_dist_directory.replace('.src.md', '.md')
+        md_output_file = src_md_file\
+            .replace(SOURCE_DIRECTORY, MD_OUTPUT_DIRECTORY)\
+            .replace(WALKTHROUGHS_ROOT, dist_directory)\
+            .replace('.src.md', '.md')
         _persist_md(md_output_file, src_md_file_translated)
+
+
+def main():
+    py_client_root, dist_directory = _parse_file_name_from_command_line_arguments()
+    _run_with_arguments(py_client_root, dist_directory)
 
 
 if __name__ == '__main__':

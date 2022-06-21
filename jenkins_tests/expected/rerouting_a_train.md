@@ -83,9 +83,7 @@ class RerouteTrainAlgorithm:
                 "Last node on diversion is a junction. Must be a station.")
 
 ```
-_Code listing: Part of class imported_. ([_Lines: 11 - 84 from file: jenkins_tests/source/RerouteTrainAlgorithm.py_](../../../jenkins_tests/source/RerouteTrainAlgorithm.py#L11-L84)).
-
-Continuation of the example below
+_Code listing: Continuation of the example below_. ([_Lines: 11 - 84 from file: jenkins_tests/source/RerouteTrainAlgorithm.py_](../../../jenkins_tests/source/RerouteTrainAlgorithm.py#L11-L84)).
 
 
 In a second step we can calculate a sequence of [RoutingEdge](../../../py_client/aidm/aidm_routing_edge_classes.py). Even though the created routing edges might not exist according to the infrastructure, which is known to 
@@ -95,10 +93,8 @@ the Algorithm Platform.
 def _is_station(self, node: AlgorithmNode) -> bool:
     return len(node.node_tracks) > 0
 ```
-_Code listing: Function imported_. ([_Lines: 136 - 137 from file: jenkins_tests/source/RerouteTrainAlgorithm.py_](../../../jenkins_tests/source/RerouteTrainAlgorithm.py#L136-L137)).
+_Code listing: Continued example from above_. ([_Lines: 136 - 137 from file: jenkins_tests/source/RerouteTrainAlgorithm.py_](../../../jenkins_tests/source/RerouteTrainAlgorithm.py#L136-L137)).
 
-Now we can continue with the code from the method above (see comment in the source code listing). We construct the routing edges and we can invoke `persist_rerouted_train(...)` with the obtained routing edges.
-
-Continued example from above
+Here is a short signature import [def _construct_mesoscopic_routing_edges_from_train_with_alternative_route(...)](../../../jenkins_tests/source/RerouteTrainAlgorithm.py#L96) and a long import signature from the py_client root [def _construct_mesoscopic_routing_edges_from_train_with_alternative_route(self, algorithm_interface: AlgorithmInterface, train_with_alternative_path: AlgorithmTrain) -> List[_RoutingEdge]](../../../jenkins_tests/source/RerouteTrainAlgorithm.py#L96)
 
 # next section

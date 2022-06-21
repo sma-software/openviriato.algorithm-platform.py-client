@@ -15,6 +15,34 @@ PY_CLIENT_SYMBOLIC_PATH_TAG = "@py_client_root"
 # @reference_name[line_selector] example:
 # @twoLinesBeforeTheEndOfTheFunction[1:-2]
 
+class MethodSignature:
+    _method_arguments_as_str: str
+    _return_type_as_str: str
+    _method_name: str
+    _line_number_in_source_file: int
+
+    def __init__(self, method_name: str, method_arguments_as_str: str, return_type_as_str: str, line_number_in_source_file: int):
+        self._method_name = method_name
+        self._method_arguments_as_str = method_arguments_as_str
+        self._return_type_as_str = return_type_as_str
+        self._line_number_in_source_file = line_number_in_source_file
+
+    @property
+    def method_arguments_as_str(self) -> str:
+        return self._method_arguments_as_str
+
+    @property
+    def return_type_as_str(self) -> str:
+        return self._return_type_as_str
+
+    @property
+    def method_name(self) -> str:
+        return self._method_name
+
+    @property
+    def line_number_in_source_file(self) -> int:
+        return self._line_number_in_source_file
+
 
 class CodeBlockWithLinesNumberInSourceCode:
     _code_block: List[str]
@@ -113,6 +141,21 @@ def _find_import_marker(all_lines: List[str], marker: str) -> PythonSourceCodeIm
     raise Exception("desired import marker cannot be found in source code file. name of marker searched for: {}".format(marker))
 
 
+def _extract_method_signature(py_client_root: str, path_to_source_file_from_py_client_root: str, method_name: str) -> MethodSignature:
+    source_code_file = _resolve_path_from_py_client_root(py_client_root, path_to_source_file_from_py_client_root)
+
+    regex_for_signature_in_source_code = "def {}\((.*?)\) -> (.*?):".format(method_name)
+    with open(source_code_file) as file:
+        for line_number, line in enumerate(file.readlines()):
+            retrieved_signature = re.search(regex_for_signature_in_source_code, line)
+            if retrieved_signature is not None:
+                parameters = retrieved_signature.group(1)
+                return_type = retrieved_signature.group(2)
+                return MethodSignature(method_name, parameters, return_type, line_number)
+        else:
+            raise Exception("desired method signature '{}' cannot be found in source code file '{}'.".format(method_name, source_code_file))
+
+
 def _extract_code_block(all_lines:List[str], line_number_code_block_start: int) -> List[str]:
     # For functions the first line is the signature, for classes it's the declaration
     # the indentation starts at the subsequent line in these cases
@@ -205,13 +248,51 @@ def _translate_py_client_symbolic_path_to_relative_path(line: str, path_to_py_cl
         return line
 
 
+def _translate_source_markdown_with_method_signature(py_client_root: str, line: str) -> str:
+    offset_for_git_hub = 1
+    suffix_long_signature = "Long"
+    suffix_short_signature = "Short"
+    pattern_for_import_marker = "@ImportInline"
+    pattern_for_source_code_file_name = "\((.*?),"
+    pattern_for_target_signature = "(.*?)\)"
+
+    regex_for_import_signature_in_markdown_source_code = \
+        pattern_for_import_marker \
+        + "({}|{})".format(suffix_short_signature, suffix_long_signature) \
+        + pattern_for_source_code_file_name \
+        + pattern_for_target_signature
+
+    import_signature_parsed_from_source_code_line = re.findall(regex_for_import_signature_in_markdown_source_code, line)
+    for signature_parsed in import_signature_parsed_from_source_code_line:
+        tag_suffix = signature_parsed[0]
+        source_code_file_name = signature_parsed[1]
+        target_signature = signature_parsed[2]
+
+        retrieved_method_signature = _extract_method_signature(py_client_root, source_code_file_name, target_signature)
+        source_code_from_md_source = _resolve_path_from_py_client_root(PY_CLIENT_ROOT_FROM_MD_SOURCE, source_code_file_name)
+        if tag_suffix == "Long":
+            method_signature = "def {}({}) -> {}".format(retrieved_method_signature.method_name, retrieved_method_signature.method_arguments_as_str, retrieved_method_signature.return_type_as_str)
+        else:
+            method_signature = "def {}(...)".format(retrieved_method_signature.method_name)
+
+        line = line.replace(
+            "{}{}({},{})".format(
+                pattern_for_import_marker,
+                tag_suffix,
+                source_code_file_name,
+                target_signature),
+            "[{}]({}#L{})".format(method_signature, source_code_from_md_source, retrieved_method_signature.line_number_in_source_file + offset_for_git_hub))
+    return line
+
+
 def _translate_source_markdown_to_output_markdown(py_client_root, file_contents: List[str]) -> List[str]:
     output_markdown_file_content = []
 
     for line in file_contents:
         translated_lines = _translate_source_markdown_with_code_block(py_client_root, line)
         if translated_lines == [line]:
-            translated_lines = [_translate_py_client_symbolic_path_to_relative_path(line, PY_CLIENT_ROOT_FROM_MD_SOURCE)]
+            translated_lines = _translate_source_markdown_with_method_signature(py_client_root, line)
+            translated_lines = [_translate_py_client_symbolic_path_to_relative_path(translated_lines, PY_CLIENT_ROOT_FROM_MD_SOURCE)]
         output_markdown_file_content += translated_lines
 
     return output_markdown_file_content

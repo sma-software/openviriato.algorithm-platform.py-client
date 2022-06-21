@@ -53,7 +53,7 @@ the [AlgorithmInterface](@py_client_root/algorithm_interface/algorithm_interface
 and use it by putting it into a `with` statement. Then you can use all available methods. The example code shows how to
 query all [AlgorithmTrain](@py_client_root/aidm/aidm_algorithm_classes.py) in a given [TimeWindow](@py_client_root/aidm/aidm_time_window_classes.py), counts them and sends a message to the user reporting the number. You can [download this sample](../source/count_trains_py_client.py).
 
-@Import(count_trains_py_client,count_trains_py_client.py,count_trains_py_client source code)
+@Import(count_trains_py_client,walkthroughs/py_client_usage/source/count_trains_py_client.py,count_trains_py_client source code)
 
 ## Configuration for the Deployment
 

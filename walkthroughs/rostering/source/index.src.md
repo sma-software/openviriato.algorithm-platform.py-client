@@ -67,7 +67,7 @@ During the rest of our walkthrough we will use this domain model with common and
 
 We design the class _CommonActivityFactory_ to create both types of activities. The following function of this class takes as input a train and returns the list of corresponding common activities.
 
-@Import(to_common_activities,CommonActivitiesFactory.py,CommonActivitiesFactory source code)
+@Import(to_common_activities,walkthroughs/rostering/source/CommonActivitiesFactory.py,CommonActivitiesFactory source code)
 
 
 With the helper function
@@ -80,7 +80,7 @@ In the picture you can see this where common activities start or end. Therefore,
 
 We invoke
 
-@Import(create_single_activities,CommonActivitiesFactory.py,CommonActivitiesFactory source code)
+@Import(create_single_activities,walkthroughs/rostering/source/CommonActivitiesFactory.py,CommonActivitiesFactory source code)
 
 to create all single activities for this common activity. We read out the vehicles from the formation at the departure node and obtain a single activity for each one.
 

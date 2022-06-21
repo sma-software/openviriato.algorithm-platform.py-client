@@ -4,9 +4,12 @@ import re
 
 from typing import List, Optional
 
-SOURCE_FROM_MD_TARGET = '../source/'
+PY_CLIENT_ROOT_FROM_MD_SOURCE = "../../.."
+SOURCE_DIRECTORY = "source"
+DIST_DIRECTORY = "dist"
+WALKTHROUGHS_ROOT = "walkthroughs"
 PY_CLIENT_SYMBOLIC_PATH_TAG = "@py_client_root"
-PY_CLIENT_ROOT_FROM_MD_TARGET = "../../../py_client"
+
 
 # naming and structure of an import marker
 # @reference_name[line_selector] example:
@@ -76,7 +79,7 @@ class ReferenceToImportMarkerInMarkDownSourceCode:
         return self._reference_name
 
     @property
-    def source_code_absolute_path(self) -> str:
+    def relative_path_to_source_file(self) -> str:
         return self._source_code_absolute_path
 
 
@@ -128,8 +131,9 @@ def _extract_code_block(all_lines:List[str], line_number_code_block_start: int) 
     return all_lines[line_number_code_block_start:]
 
 
-def _import_code_block_from_source_file(reference: ReferenceToImportMarkerInMarkDownSourceCode) -> CodeBlockWithLinesNumberInSourceCode:
-    with open(reference.source_code_absolute_path) as file:
+def _import_code_block_from_source_file(py_client_root: str, reference: ReferenceToImportMarkerInMarkDownSourceCode) -> CodeBlockWithLinesNumberInSourceCode:
+    path_to_source_code_file_with_code_block = _resolve_path_from_py_client_root(py_client_root, reference.relative_path_to_source_file)
+    with open(path_to_source_code_file_with_code_block) as file:
         all_lines = file.readlines()
 
         import_marker = _find_import_marker(all_lines, reference.reference_name)
@@ -142,34 +146,29 @@ def _import_code_block_from_source_file(reference: ReferenceToImportMarkerInMark
         return CodeBlockWithLinesNumberInSourceCode(code_block_content, first_line_of_the_code_block)
 
 
-def _write_output_markdown_file(filename: str, lines_to_write: List[str]) -> None:
-    with open(filename, 'w') as textfile:
-        for line_to_write in lines_to_write:
-            textfile.write(line_to_write)
+def _read_source_code_and_format_code_for_output_markdown(py_client_root, reference_to_import_marker: ReferenceToImportMarkerInMarkDownSourceCode) -> CodeBlockWithLinesNumberInSourceCode:
+    raw_code_block_with_line_numbers = _import_code_block_from_source_file(py_client_root, reference_to_import_marker)
+    unindented_code_block = _remove_indentation_not_desired_for_output_markdown(raw_code_block_with_line_numbers.code_block)
+    expanded_code_listing_for_output = ["```python\n"] + unindented_code_block + ["\n```\n"]
+    return CodeBlockWithLinesNumberInSourceCode(expanded_code_listing_for_output, raw_code_block_with_line_numbers.start_line_number_in_source_code)
 
 
-def _write_output_markdown_to_file(filename: str, target_directory: str) -> None:
-    markdown_source_folder = os.path.dirname(filename)
-    source_code_folder = markdown_source_folder
-    destination_folder = target_directory
+def _generate_caption(py_client_root, formatted_code_block_with_source_code_lines: CodeBlockWithLinesNumberInSourceCode, source_code_file_name: str, caption_text: str) -> str:
+    source_code_from_py_client = _resolve_path_from_py_client_root(PY_CLIENT_ROOT_FROM_MD_SOURCE, source_code_file_name)
+    offset_for_git_hub = 1
+    link_to_source_code = "{}#L{}-L{}".format(
+        source_code_from_py_client,
+        formatted_code_block_with_source_code_lines.start_line_number_in_source_code + offset_for_git_hub,
+        formatted_code_block_with_source_code_lines.end_line_number_in_source_code - offset_for_git_hub)
 
-    with open(filename) as file:
-        file_contents = file.readlines()
-        content_of_the_result_file = _translate_source_markdown_to_output_markdown(file_contents, source_code_folder)
-        output_file_name_without_src = os.path.basename(filename.replace(".src", ""))
-        _write_output_markdown_file(destination_folder + '/' + output_file_name_without_src, content_of_the_result_file)
-
-
-def _resolve_relative_path(line: str, path_to_py_client_from_context: str) -> str:
-    if PY_CLIENT_SYMBOLIC_PATH_TAG in line:
-        return line.replace(PY_CLIENT_SYMBOLIC_PATH_TAG, path_to_py_client_from_context)
-    else:
-        return line
+    return "_Code listing: {}_. ([_Lines: {} - {} from file: {}_]({})).\n".format(
+        caption_text,
+        formatted_code_block_with_source_code_lines.start_line_number_in_source_code + offset_for_git_hub,
+        formatted_code_block_with_source_code_lines.end_line_number_in_source_code - offset_for_git_hub,
+        source_code_file_name, link_to_source_code)
 
 
-def _translate_source_markdown_to_output_markdown(file_contents: List[str], source_code_folder: str) -> List[str] :
-    # @Import(import_function, RerouteTrainAlgorithm.py, Function imported)
-    output_markdown_file_content = []
+def _translate_source_markdown_with_code_block(py_client_root: str, line: str) -> List[str]:
     pattern_for_import_marker = "@Import"
     pattern_for_reference_name_in_target_file = "\((.*),"
     pattern_for_source_code_file_name = "(.*),"
@@ -181,65 +180,95 @@ def _translate_source_markdown_to_output_markdown(file_contents: List[str], sour
         + pattern_for_source_code_file_name \
         + pattern_for_caption
 
+    import_marker_parsed_from_source_code_line = re.search(regex_for_import_marker_in_markdown_source_code, line)
+
+    if import_marker_parsed_from_source_code_line is None:
+        return [line]
+
+    reference_name = import_marker_parsed_from_source_code_line.group(1)
+    source_code_file_name = import_marker_parsed_from_source_code_line.group(2)
+    caption_text = import_marker_parsed_from_source_code_line.group(3)
+    reference_to_import_marker = ReferenceToImportMarkerInMarkDownSourceCode(reference_name, source_code_file_name)
+
+    formatted_code_block_with_source_code_lines = _read_source_code_and_format_code_for_output_markdown(py_client_root, reference_to_import_marker)
+    output_markdown_file_content = formatted_code_block_with_source_code_lines.code_block
+
+    generated_caption = _generate_caption(py_client_root, formatted_code_block_with_source_code_lines, source_code_file_name, caption_text)
+    output_markdown_file_content.append(generated_caption)
+    return output_markdown_file_content
+
+
+def _translate_py_client_symbolic_path_to_relative_path(line: str, path_to_py_client_from_context: str) -> str:
+    if PY_CLIENT_SYMBOLIC_PATH_TAG in line:
+        return line.replace(PY_CLIENT_SYMBOLIC_PATH_TAG, path_to_py_client_from_context + "/py_client")
+    else:
+        return line
+
+
+def _translate_source_markdown_to_output_markdown(py_client_root, file_contents: List[str]) -> List[str]:
+    output_markdown_file_content = []
+
     for line in file_contents:
-
-        import_marker_parsed_from_source_code_line = re.search(regex_for_import_marker_in_markdown_source_code, line)
-
-        line = _resolve_relative_path(line, PY_CLIENT_ROOT_FROM_MD_TARGET)
-
-        if import_marker_parsed_from_source_code_line is None:
-            output_markdown_file_content.append(line)
-        else:
-            reference_name = import_marker_parsed_from_source_code_line.group(1)
-            source_code_file_name = import_marker_parsed_from_source_code_line.group(2)
-            caption_text = import_marker_parsed_from_source_code_line.group(3)
-            reference_to_import_marker = ReferenceToImportMarkerInMarkDownSourceCode(reference_name, source_code_folder + "/" + source_code_file_name)
-
-            formatted_code_block_with_source_code_lines = _read_source_code_and_format_code_for_output_markdown(reference_to_import_marker)
-            output_markdown_file_content += formatted_code_block_with_source_code_lines.code_block
-
-            generated_caption = _generate_caption(formatted_code_block_with_source_code_lines, source_code_file_name, caption_text)
-            output_markdown_file_content.append(generated_caption)
+        translated_lines = _translate_source_markdown_with_code_block(py_client_root, line)
+        if translated_lines == [line]:
+            translated_lines = [_translate_py_client_symbolic_path_to_relative_path(line, PY_CLIENT_ROOT_FROM_MD_SOURCE)]
+        output_markdown_file_content += translated_lines
 
     return output_markdown_file_content
 
 
-def _read_source_code_and_format_code_for_output_markdown(reference_to_import_marker: ReferenceToImportMarkerInMarkDownSourceCode) -> CodeBlockWithLinesNumberInSourceCode:
-    raw_code_block_with_line_numbers = _import_code_block_from_source_file(reference_to_import_marker)
-    unindented_code_block = _remove_indentation_not_desired_for_output_markdown(raw_code_block_with_line_numbers.code_block)
-    expanded_code_listing_for_output = ["```python\n"] + unindented_code_block + ["\n```\n"]
-    return CodeBlockWithLinesNumberInSourceCode(expanded_code_listing_for_output, raw_code_block_with_line_numbers.start_line_number_in_source_code)
+def _persist_md(filename: str, lines_to_write: List[str]) -> None:
+    with open(filename, 'w') as textfile:
+        for line_to_write in lines_to_write:
+            textfile.write(line_to_write)
 
 
-def _generate_caption(formatted_code_block_with_source_code_lines: CodeBlockWithLinesNumberInSourceCode, source_code_file_name: str, caption_text: str) -> str:
-    source_code_relative_path = SOURCE_FROM_MD_TARGET + source_code_file_name
-    offset_for_git_hub = 1
-    link_to_source_code = "{}#L{}-L{}".format(
-        source_code_relative_path,
-        formatted_code_block_with_source_code_lines.start_line_number_in_source_code + offset_for_git_hub,
-        formatted_code_block_with_source_code_lines.end_line_number_in_source_code - offset_for_git_hub)
-
-    return "_Code listing: {}_. ([_Lines: {} - {} from file: {}_]({})).\n".format(
-        caption_text,
-        formatted_code_block_with_source_code_lines.start_line_number_in_source_code + offset_for_git_hub,
-        formatted_code_block_with_source_code_lines.end_line_number_in_source_code - offset_for_git_hub,
-        source_code_file_name, link_to_source_code)
+def _read_src_md(absolute_path_src_md: str) -> List[str]:
+    with open(absolute_path_src_md) as file:
+        return file.readlines()
 
 
-def _parse_file_name_from_command_line_arguments() -> tuple[str, str]:
+def _resolve_path_from_py_client_root(py_client_root: str, path_to_resolve: str) -> str:
+    return py_client_root + '/' + path_to_resolve
+
+
+def _get_all_files_with_absolute_paths_in_directory_recursive(root_to_search_from: str) -> list[str]:
+    files = []
+    for root, dirs, file_names_in_current_dir in os.walk(root_to_search_from):
+        files += [os.path.join(root, file) for file in file_names_in_current_dir]
+
+    file_names_with_slashes_instead_of_backslashes = [file.replace("\\", "/") for file in files]
+    return file_names_with_slashes_instead_of_backslashes
+
+
+def _list_walkthroughs_to_process(py_client_root: str) -> List[str]:
+    walkthroughs_directory = py_client_root + "/" + WALKTHROUGHS_ROOT
+    filter_src_md_regex = "{}/(.*?).src.md".format(walkthroughs_directory, SOURCE_DIRECTORY)
+
+    file_names = _get_all_files_with_absolute_paths_in_directory_recursive(walkthroughs_directory)
+    src_md_file_names = [file_name for file_name in file_names if re.match(filter_src_md_regex, file_name)]
+    return src_md_file_names
+
+
+def _parse_file_name_from_command_line_arguments() -> str:
     argument_parser = argparse.ArgumentParser()
-    argument_parser.add_argument("-f", "--file", required=True)
-    argument_parser.add_argument("-t", "--target_directory", required=True)
+    argument_parser.add_argument("-r", "--py_client_root", required=True)
 
     command_line_arguments = vars(argument_parser.parse_args())
-    file_to_parse: str = command_line_arguments["file"]
-    target_directory: str = command_line_arguments["target_directory"]
-    return file_to_parse, target_directory
+    py_client_root_directory: str = command_line_arguments["py_client_root"]
+    return py_client_root_directory
 
 
 def main():
-    file_name, target_directory = _parse_file_name_from_command_line_arguments()
-    _write_output_markdown_to_file(file_name, target_directory)
+    py_client_root = _parse_file_name_from_command_line_arguments()
+    src_md_files_to_process = _list_walkthroughs_to_process(py_client_root)
+    for src_md_file in src_md_files_to_process:
+        src_md_file_contents = _read_src_md(src_md_file)
+        src_md_file_translated = _translate_source_markdown_to_output_markdown(py_client_root, src_md_file_contents)
+
+        md_file_in_dist_directory = src_md_file.replace(SOURCE_DIRECTORY, DIST_DIRECTORY)
+        md_output_file = md_file_in_dist_directory.replace('.src.md', '.md')
+        _persist_md(md_output_file, src_md_file_translated)
 
 
 if __name__ == '__main__':

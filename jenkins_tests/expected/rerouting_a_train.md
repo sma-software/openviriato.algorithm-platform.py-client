@@ -83,7 +83,7 @@ class RerouteTrainAlgorithm:
                 "Last node on diversion is a junction. Must be a station.")
 
 ```
-_Code listing: Part of class imported_. ([_Lines: 11 - 84 from file: RerouteTrainAlgorithm.py_](../source/RerouteTrainAlgorithm.py#L11-L84)).
+_Code listing: Part of class imported_. ([_Lines: 11 - 84 from file: jenkins_tests/source/RerouteTrainAlgorithm.py_](../../../jenkins_tests/source/RerouteTrainAlgorithm.py#L11-L84)).
 
 Continuation of the example below
 
@@ -95,7 +95,7 @@ the Algorithm Platform.
 def _is_station(self, node: AlgorithmNode) -> bool:
     return len(node.node_tracks) > 0
 ```
-_Code listing: Function imported_. ([_Lines: 136 - 137 from file: RerouteTrainAlgorithm.py_](../source/RerouteTrainAlgorithm.py#L136-L137)).
+_Code listing: Function imported_. ([_Lines: 136 - 137 from file: jenkins_tests/source/RerouteTrainAlgorithm.py_](../../../jenkins_tests/source/RerouteTrainAlgorithm.py#L136-L137)).
 
 Now we can continue with the code from the method above (see comment in the source code listing). We construct the routing edges and we can invoke `persist_rerouted_train(...)` with the obtained routing edges.
 

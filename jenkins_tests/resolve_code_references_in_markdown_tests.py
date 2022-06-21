@@ -1,17 +1,19 @@
 import unittest
 import os
 
-from jenkins.resolve_code_references_in_markdown import _write_output_markdown_to_file
+from jenkins.resolve_code_references_in_markdown import _read_src_md, _translate_source_markdown_to_output_markdown, _persist_md
 
 
 class TestResolveCodeReferencesInMarkdown(unittest.TestCase):
     def test(self):
-        source_file = "source/rerouting_a_train.src.md"
         expected_markdown_file_path = "expected/rerouting_a_train.md"
-        target_directory = "target"
         target_markdown_file_path = "target/rerouting_a_train.md"
 
-        _write_output_markdown_to_file(source_file, target_directory)
+        src_md_file = os.path.abspath("source/rerouting_a_train.src.md").replace("\\", "/")
+        py_client_root = ".."
+        src_md_file_contents = _read_src_md(src_md_file)
+        src_md_file_translated = _translate_source_markdown_to_output_markdown(py_client_root, src_md_file_contents)
+        _persist_md(target_markdown_file_path, src_md_file_translated)
 
         self.assertTrue(os.path.isfile(target_markdown_file_path))
         with open(expected_markdown_file_path) as expected_markdown_file, open(target_markdown_file_path) as target_markdown_file:

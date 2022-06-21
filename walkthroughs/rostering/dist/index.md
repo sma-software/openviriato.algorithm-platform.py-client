@@ -81,7 +81,7 @@ def to_common_activities(self, train: AlgorithmTrain) -> List[CommonActivity]:
     return common_activities
 
 ```
-_Code listing: CommonActivitiesFactory source code_. ([_Lines: 17 - 30 from file: CommonActivitiesFactory.py_](../source/CommonActivitiesFactory.py#L17-L30)).
+_Code listing: CommonActivitiesFactory source code_. ([_Lines: 17 - 30 from file: walkthroughs/rostering/source/CommonActivitiesFactory.py_](../../../walkthroughs/rostering/source/CommonActivitiesFactory.py#L17-L30)).
 
 
 With the helper function
@@ -113,7 +113,7 @@ def __create_single_activities(self, departure_node: AlgorithmTrainPathNode, arr
     return activities
 
 ```
-_Code listing: CommonActivitiesFactory source code_. ([_Lines: 46 - 62 from file: CommonActivitiesFactory.py_](../source/CommonActivitiesFactory.py#L46-L62)).
+_Code listing: CommonActivitiesFactory source code_. ([_Lines: 46 - 62 from file: walkthroughs/rostering/source/CommonActivitiesFactory.py_](../../../walkthroughs/rostering/source/CommonActivitiesFactory.py#L46-L62)).
 
 to create all single activities for this common activity. We read out the vehicles from the formation at the departure node and obtain a single activity for each one.
 

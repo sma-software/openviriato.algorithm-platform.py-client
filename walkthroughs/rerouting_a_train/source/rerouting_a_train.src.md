@@ -14,7 +14,7 @@ For our walkthrough we have encapsulated the call to [RerouteTrain](@py_client_r
 which we can simply invoke below. This also demonstrates how an algorithm developer can use [reroute_train](@py_client_root/algorithm_interface/algorithm_interface.py).
 Here we list the source code with explanations.
 
-@Import(RerouteTrainPersistenceService,RerouteTrainPersistenceService.py,RerouteTrainPersistenceService source code)
+@Import(RerouteTrainPersistenceService,walkthroughs/rerouting_a_train/source/RerouteTrainPersistenceService.py,RerouteTrainPersistenceService source code)
 
 ## Picking a Route
 
@@ -32,7 +32,7 @@ the alternative route correctly, i.e. to ensure the picked train has the followi
 If one of these prerequisites is not met the algorithm will fail. The following code checks if the requirements to the given trains are met and determines the _first_train_path_node_on_diversion_ and the _last_train_path_node_on_diversion_, which are needed for 
 our method call, see the previous section.
 
-@Import(RerouteTrainAlgorithm,RerouteTrainAlgorithm.py,RerouteTrainAlgorithm source code)
+@Import(RerouteTrainAlgorithm,walkthroughs/rerouting_a_train/source/RerouteTrainAlgorithm.py,RerouteTrainAlgorithm source code)
 
 Continuation of the example below
 
@@ -42,10 +42,10 @@ the Algorithm Platform, i.e. these will not be provided by any of the methods [G
 [GetIncomingRoutingEdges](@py_client_root/algorithm_interface/algorithm_interface.py) and 
 [GetCrossingRoutingEdges](@py_client_root/algorithm_interface/algorithm_interface.py), we can use them to reroute the train. 
 
-@Import(RerouteTrainAlgorithm3,RerouteTrainAlgorithm.py,Method used to calculate the sequence of routing edges to reroute a train)
+@Import(RerouteTrainAlgorithm3,walkthroughs/rerouting_a_train/source/RerouteTrainAlgorithm.py,Method used to calculate the sequence of routing edges to reroute a train)
 
 Now we can continue with the code from the method above (see comment in the source code listing). We construct the routing edges and we can invoke `persist_rerouted_train(...)` with the obtained routing edges.
 
 Continued example from above
 
-@Import(RerouteTrainAlgorithm2,RerouteTrainAlgorithm.py,Continuation of the RerouteTrainAlgorithm source code)
+@Import(RerouteTrainAlgorithm2,walkthroughs/rerouting_a_train/source/RerouteTrainAlgorithm.py,Continuation of the RerouteTrainAlgorithm source code)

@@ -88,7 +88,7 @@ if __name__ == '__main__':
     main()
 
 ```
-_Code listing: count_trains_py_client source code_. ([_Lines: 2 - 33 from file: count_trains_py_client.py_](../source/count_trains_py_client.py#L2-L33)).
+_Code listing: count_trains_py_client source code_. ([_Lines: 2 - 33 from file: walkthroughs/py_client_usage/source/count_trains_py_client.py_](../../../walkthroughs/py_client_usage/source/count_trains_py_client.py#L2-L33)).
 
 ## Configuration for the Deployment
 

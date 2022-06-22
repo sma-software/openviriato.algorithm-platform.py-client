@@ -253,9 +253,9 @@ class ConflictDetectionArguments:
 
     def __init__(self, train_ids: List[int]):
         self.__train_ids = train_ids
-        self.__filter_conflict_types = []
-        self.__filter_node_ids = []
-        self.__filter_section_track_ids = []
+        self.__filter_conflict_types = None
+        self.__filter_node_ids = None
+        self.__filter_section_track_ids = None
         self.__filter_train_id = None
         self.__time_window = None
 

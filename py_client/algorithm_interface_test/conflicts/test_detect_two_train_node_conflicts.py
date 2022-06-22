@@ -93,7 +93,7 @@ class TestDetectConflicts(unittest.TestCase):
         self.assertEqual(session_obj._DetectConflictsMockSession__last_request,
                          get_api_url() + "/services/trains:detect-conflicts")
 
-        self.assertDictEqual(session_obj._DetectConflictsMockSession__last_body, {'trainIds': [1226, 1230, 1234], 'filters': {'location': {'nodeIds': [], 'sectionTrackIds': []}, 'conflictTypes': []}})
+        self.assertDictEqual(session_obj._DetectConflictsMockSession__last_body, {'trainIds': [1226, 1230, 1234], 'filters': {'location': {'nodeIds': None, 'sectionTrackIds': None}, 'conflictTypes': None}})
         self.assertDictEqual(session_obj._DetectConflictsMockSession__last_params, {})
 
     @mock.patch('requests.Session', side_effect=DetectConflictsMockSession)

@@ -5,6 +5,7 @@ from py_client.aidm.aidm_conflict import ConflictDetectionArguments
 from py_client.aidm.aidm_time_window_classes import TimeWindow
 from py_client.aidm.aidm_conflict import ConflictType
 
+
 class TestConflictDetectionArguments(unittest.TestCase):
 
     def test_mandatory_filter(self):
@@ -13,14 +14,11 @@ class TestConflictDetectionArguments(unittest.TestCase):
 
         self.assertIsInstance(conflict_detection_arguments, ConflictDetectionArguments)
 
-        self.assertIsInstance(conflict_detection_arguments.filter_conflict_types, list)
-        self.assertEqual(len(conflict_detection_arguments.filter_conflict_types), 0)
+        self.assertEqual(conflict_detection_arguments.filter_conflict_types, None)
 
-        self.assertIsInstance(conflict_detection_arguments.filter_node_ids, list)
-        self.assertEqual(len(conflict_detection_arguments.filter_node_ids), 0)
+        self.assertEqual(conflict_detection_arguments.filter_node_ids, None)
 
-        self.assertIsInstance(conflict_detection_arguments.filter_section_track_ids, list)
-        self.assertEqual(len(conflict_detection_arguments.filter_section_track_ids), 0)
+        self.assertEqual(conflict_detection_arguments.filter_section_track_ids, None)
 
         self.assertEqual(conflict_detection_arguments.filter_train_id, None)
 

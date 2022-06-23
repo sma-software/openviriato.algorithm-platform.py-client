@@ -9,6 +9,7 @@ SOURCE_DIRECTORY = "source"
 DIST_DIRECTORY = "dist"
 WALKTHROUGHS_ROOT = "walkthroughs"
 PY_CLIENT_SYMBOLIC_PATH_TAG = "@py_client_root"
+OFFSET_FOR_GIT_HUB = 1
 
 
 # naming and structure of an import marker
@@ -198,16 +199,15 @@ def _read_source_code_and_format_code_for_output_markdown(py_client_root, refere
 
 def _generate_caption(py_client_root, formatted_code_block_with_source_code_lines: CodeBlockWithLinesNumberInSourceCode, source_code_file_name: str, caption_text: str) -> str:
     source_code_from_py_client = _resolve_path_from_py_client_root(PY_CLIENT_ROOT_FROM_MD_SOURCE, source_code_file_name)
-    offset_for_git_hub = 1
     link_to_source_code = "{}#L{}-L{}".format(
         source_code_from_py_client,
-        formatted_code_block_with_source_code_lines.start_line_number_in_source_code + offset_for_git_hub,
-        formatted_code_block_with_source_code_lines.end_line_number_in_source_code - offset_for_git_hub)
+        formatted_code_block_with_source_code_lines.start_line_number_in_source_code + OFFSET_FOR_GIT_HUB,
+        formatted_code_block_with_source_code_lines.end_line_number_in_source_code - OFFSET_FOR_GIT_HUB)
 
     return "_Code listing: {}_. ([_Lines: {} - {} from file: {}_]({})).\n".format(
         caption_text,
-        formatted_code_block_with_source_code_lines.start_line_number_in_source_code + offset_for_git_hub,
-        formatted_code_block_with_source_code_lines.end_line_number_in_source_code - offset_for_git_hub,
+        formatted_code_block_with_source_code_lines.start_line_number_in_source_code + OFFSET_FOR_GIT_HUB,
+        formatted_code_block_with_source_code_lines.end_line_number_in_source_code - OFFSET_FOR_GIT_HUB,
         source_code_file_name, link_to_source_code)
 
 
@@ -249,7 +249,6 @@ def _translate_py_client_symbolic_path_to_relative_path(line: str, path_to_py_cl
 
 
 def _translate_source_markdown_with_method_signature(py_client_root: str, line: str) -> str:
-    offset_for_git_hub = 1
     suffix_long_signature = "Long"
     suffix_short_signature = "Short"
     pattern_for_import_marker = "@ImportInline"
@@ -281,7 +280,7 @@ def _translate_source_markdown_with_method_signature(py_client_root: str, line: 
                 tag_suffix,
                 source_code_file_name,
                 target_signature),
-            "[{}]({}#L{})".format(method_signature, source_code_from_md_source, retrieved_method_signature.line_number_in_source_file + offset_for_git_hub))
+            "[{}]({}#L{})".format(method_signature, source_code_from_md_source, retrieved_method_signature.line_number_in_source_file + OFFSET_FOR_GIT_HUB))
     return line
 
 

@@ -6,7 +6,7 @@ from jenkins.resolve_code_references_in_markdown import _read_src_md, _translate
 
 class TestResolveCodeReferencesInMarkdown(unittest.TestCase):
     def test(self):
-        expected_markdown_file_path = "expected/rerouting_a_train.md"
+        expected_markdown_file_path = "../py_client/jenkins_tests/expected/rerouting_a_train.md"
         target_markdown_file_path = "target/rerouting_a_train.md"
 
         src_md_file = os.path.abspath("source/rerouting_a_train.src.md").replace("\\", "/")

@@ -7,7 +7,7 @@ import jenkins.resolve_code_references_in_markdown as resolve_code_references_in
 from jenkins.resolve_code_references_in_markdown import SOURCE_DIRECTORY, MD_OUTPUT_DIRECTORY, WALKTHROUGHS_ROOT
 
 
-REGENERATE_DIRECTORY = "jenkins_tests/temp"
+REGENERATE_DIRECTORY = "jenkins_test/temp"
 PY_CLIENT_ROOT = ".."
 
 

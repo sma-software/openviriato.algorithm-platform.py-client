@@ -145,6 +145,9 @@ def _find_import_marker(all_lines: List[str], marker: str) -> PythonSourceCodeIm
 def _extract_method_signature(py_client_root: str, path_to_source_file_from_py_client_root: str, method_name: str) -> MethodSignature:
     source_code_file = _resolve_path_from_py_client_root(py_client_root, path_to_source_file_from_py_client_root)
 
+    if not os.path.exists(source_code_file):
+        raise FileNotFoundError("Cannot find file referenced from src.md: {}".format(source_code_file))
+
     regex_for_signature_in_source_code = "def {}\((.*?)\) -> (.*?):".format(method_name)
     with open(source_code_file) as file:
         for line_number, line in enumerate(file.readlines()):
@@ -177,6 +180,8 @@ def _extract_code_block(all_lines:List[str], line_number_code_block_start: int) 
 
 def _import_code_block_from_source_file(py_client_root: str, reference: ReferenceToImportMarkerInMarkDownSourceCode) -> CodeBlockWithLinesNumberInSourceCode:
     path_to_source_code_file_with_code_block = _resolve_path_from_py_client_root(py_client_root, reference.relative_path_to_source_file)
+    if not os.path.exists(path_to_source_code_file_with_code_block):
+        raise FileNotFoundError("Cannot find file referenced from src.md: {}".format(path_to_source_code_file_with_code_block))
     with open(path_to_source_code_file_with_code_block) as file:
         all_lines = file.readlines()
 

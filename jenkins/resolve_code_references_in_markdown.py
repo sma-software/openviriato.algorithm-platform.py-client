@@ -330,8 +330,8 @@ def _get_all_files_with_absolute_paths_in_directory_recursive(root_to_search_fro
 
 
 def _list_walkthroughs_to_process(py_client_root: str) -> List[str]:
-    walkthroughs_directory = py_client_root + "/" + WALKTHROUGHS_ROOT
-    filter_src_md_regex = "{}/(.*?).src.md".format(walkthroughs_directory, SOURCE_DIRECTORY)
+    walkthroughs_directory = os.path.join(py_client_root, WALKTHROUGHS_ROOT).replace("\\", "/")
+    filter_src_md_regex = "(.+)\.src\.md"
 
     file_names = _get_all_files_with_absolute_paths_in_directory_recursive(walkthroughs_directory)
     src_md_file_names = [file_name for file_name in file_names if re.match(filter_src_md_regex, file_name)]

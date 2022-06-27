@@ -202,7 +202,7 @@ def _read_source_code_and_format_code_for_output_markdown(py_client_root, refere
     return CodeBlockWithLinesNumberInSourceCode(expanded_code_listing_for_output, raw_code_block_with_line_numbers.start_line_number_in_source_code)
 
 
-def _generate_caption(py_client_root, formatted_code_block_with_source_code_lines: CodeBlockWithLinesNumberInSourceCode, source_code_file_name: str, caption_text: str) -> str:
+def _generate_caption(formatted_code_block_with_source_code_lines: CodeBlockWithLinesNumberInSourceCode, source_code_file_name: str, caption_text: str) -> str:
     source_code_from_py_client = _resolve_path_from_py_client_root(PY_CLIENT_ROOT_FROM_MD_SOURCE, source_code_file_name)
     link_to_source_code = "{}#L{}-L{}".format(
         source_code_from_py_client,
@@ -241,7 +241,7 @@ def _translate_source_markdown_with_code_block(py_client_root: str, line: str) -
     formatted_code_block_with_source_code_lines = _read_source_code_and_format_code_for_output_markdown(py_client_root, reference_to_import_marker)
     output_markdown_file_content = formatted_code_block_with_source_code_lines.code_block
 
-    generated_caption = _generate_caption(py_client_root, formatted_code_block_with_source_code_lines, source_code_file_name, caption_text)
+    generated_caption = _generate_caption(formatted_code_block_with_source_code_lines, source_code_file_name, caption_text)
     output_markdown_file_content.append(generated_caption)
     return output_markdown_file_content
 

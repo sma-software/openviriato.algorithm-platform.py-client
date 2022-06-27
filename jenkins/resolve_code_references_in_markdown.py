@@ -209,11 +209,12 @@ def _generate_caption(formatted_code_block_with_source_code_lines: CodeBlockWith
         formatted_code_block_with_source_code_lines.start_line_number_in_source_code + OFFSET_FOR_GIT_HUB,
         formatted_code_block_with_source_code_lines.end_line_number_in_source_code - OFFSET_FOR_GIT_HUB)
 
+    source_code_basename = os.path.basename(source_code_file_name)
     return "Code listing: _{}_. ([Lines: {} - {} from file: _{}_]({})).\n".format(
         caption_text,
         formatted_code_block_with_source_code_lines.start_line_number_in_source_code + OFFSET_FOR_GIT_HUB,
         formatted_code_block_with_source_code_lines.end_line_number_in_source_code - OFFSET_FOR_GIT_HUB,
-        source_code_file_name, link_to_source_code)
+        source_code_basename, link_to_source_code)
 
 
 def _translate_source_markdown_with_code_block(py_client_repo_root: str, line: str) -> List[str]:

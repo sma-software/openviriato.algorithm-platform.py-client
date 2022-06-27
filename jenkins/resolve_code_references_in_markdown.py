@@ -209,7 +209,7 @@ def _generate_caption(formatted_code_block_with_source_code_lines: CodeBlockWith
         formatted_code_block_with_source_code_lines.start_line_number_in_source_code + OFFSET_FOR_GIT_HUB,
         formatted_code_block_with_source_code_lines.end_line_number_in_source_code - OFFSET_FOR_GIT_HUB)
 
-    return "_Code listing: {}_. ([_Lines: {} - {} from file: {}_]({})).\n".format(
+    return "Code listing: _{}_. ([Lines: {} - {} from file: _{}_]({})).\n".format(
         caption_text,
         formatted_code_block_with_source_code_lines.start_line_number_in_source_code + OFFSET_FOR_GIT_HUB,
         formatted_code_block_with_source_code_lines.end_line_number_in_source_code - OFFSET_FOR_GIT_HUB,

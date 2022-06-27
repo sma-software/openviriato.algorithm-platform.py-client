@@ -7,7 +7,7 @@ import jenkins.resolve_code_references_in_markdown as resolve_code_references_in
 from jenkins.resolve_code_references_in_markdown import SOURCE_DIRECTORY, MD_OUTPUT_SUB_DIRECTORY, WALKTHROUGHS_ROOT
 
 
-REGENERATE_DIRECTORY = "jenkins_test/temp"
+REGENERATE_DIRECTORY = "py_client/jenkins_test/temp"
 PY_CLIENT_ROOT = ".."
 
 
@@ -15,13 +15,16 @@ class TestGeneratedMdCorrespondToRegeneratedMd(unittest.TestCase):
     src_md_files_to_process: List[str]
 
     def setUp(self):
-        os.makedirs("../" + REGENERATE_DIRECTORY)
-        self.src_md_files_to_process = resolve_code_references_in_markdown._list_walkthroughs_to_process(PY_CLIENT_ROOT)
+        os.makedirs(PY_CLIENT_ROOT + "/" + REGENERATE_DIRECTORY)
+        self.src_md_files_to_process = resolve_code_references_in_markdown\
+            ._list_walkthroughs_to_process(PY_CLIENT_ROOT)
+        if len(self.src_md_files_to_process) == 0:
+            raise Exception("did not find any files to test in {}".format(self.src_md_files_to_process))
 
     def tearDown(self):
-        shutil.rmtree("../" + REGENERATE_DIRECTORY)
+        shutil.rmtree(PY_CLIENT_ROOT + "/" + REGENERATE_DIRECTORY)
 
-    def testGeneratedMdCorrespondToRegeneratedMd(self):
+    def test_committed_md_is_equal_to_regenerated_md(self):
         resolve_code_references_in_markdown._run_with_arguments(PY_CLIENT_ROOT, REGENERATE_DIRECTORY)
 
         for source_md_file_to_test in self.src_md_files_to_process:

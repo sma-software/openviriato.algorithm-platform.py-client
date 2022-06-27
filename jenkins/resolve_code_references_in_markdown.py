@@ -219,14 +219,14 @@ def _generate_caption(formatted_code_block_with_source_code_lines: CodeBlockWith
 
 def _translate_source_markdown_with_code_block(py_client_repo_root: str, line: str) -> List[str]:
     pattern_for_import_marker = "@Import"
-    pattern_for_reference_name_in_target_file = "\((.*),"
-    pattern_for_source_code_file_name = "(.*),"
+    pattern_for_source_code_file_name = "\((.*),"
+    pattern_for_reference_name_in_target_file = "(.*),"
     pattern_for_caption = "(.*)\)"
 
     regex_for_import_marker_in_markdown_source_code = \
         pattern_for_import_marker \
-        + pattern_for_reference_name_in_target_file \
         + pattern_for_source_code_file_name \
+        + pattern_for_reference_name_in_target_file \
         + pattern_for_caption
 
     import_marker_parsed_from_source_code_line = re.search(regex_for_import_marker_in_markdown_source_code, line)
@@ -234,8 +234,8 @@ def _translate_source_markdown_with_code_block(py_client_repo_root: str, line: s
     if import_marker_parsed_from_source_code_line is None:
         return [line]
 
-    reference_name = import_marker_parsed_from_source_code_line.group(1)
-    source_code_file_name = import_marker_parsed_from_source_code_line.group(2)
+    source_code_file_name = import_marker_parsed_from_source_code_line.group(1)
+    reference_name = import_marker_parsed_from_source_code_line.group(2)
     caption_text = import_marker_parsed_from_source_code_line.group(3)
     reference_to_import_marker = ReferenceToImportMarkerInMarkDownSourceCode(reference_name, source_code_file_name)
 

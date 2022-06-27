@@ -6,7 +6,7 @@ from typing import List, Optional
 
 PY_CLIENT_ROOT_FROM_MD_SOURCE = "../../.."
 SOURCE_DIRECTORY = "source"
-MD_OUTPUT_DIRECTORY = "dist"
+MD_OUTPUT_SUB_DIRECTORY = "dist"
 WALKTHROUGHS_ROOT = "walkthroughs"
 PY_CLIENT_SYMBOLIC_PATH_TAG = "@py_client_root"
 OFFSET_FOR_GIT_HUB = 1
@@ -341,24 +341,24 @@ def _list_walkthroughs_to_process(py_client_root: str) -> List[str]:
 def _parse_file_name_from_command_line_arguments() -> tuple[str, str]:
     argument_parser = argparse.ArgumentParser()
     argument_parser.add_argument("-r", "--py_client_root", required=True)
-    argument_parser.add_argument("-d", "--dist_directory", required=True)
+    argument_parser.add_argument("-o", "--md-output-root", required=True)
 
     command_line_arguments = vars(argument_parser.parse_args())
     py_client_root_directory: str = command_line_arguments["py_client_root"]
-    dist_directory: str = command_line_arguments["dist_directory"]
+    md_output_root: str = command_line_arguments["md_output_root"]
 
-    return py_client_root_directory, dist_directory
+    return py_client_root_directory, md_output_root
 
 
-def _run_with_arguments(py_client_root:str, dist_directory) -> None:
+def _run_with_arguments(py_client_root: str, md_output_root: str) -> None:
     src_md_files_to_process = _list_walkthroughs_to_process(py_client_root)
     for src_md_file in src_md_files_to_process:
         src_md_file_contents = _read_src_md(src_md_file)
         src_md_file_translated = _translate_source_markdown_to_output_markdown(py_client_root, src_md_file_contents)
 
         md_output_file = src_md_file\
-            .replace(SOURCE_DIRECTORY, MD_OUTPUT_DIRECTORY)\
-            .replace(WALKTHROUGHS_ROOT, dist_directory)\
+            .replace(SOURCE_DIRECTORY, MD_OUTPUT_SUB_DIRECTORY)\
+            .replace(WALKTHROUGHS_ROOT, md_output_root)\
             .replace('.src.md', '.md')
         _persist_md(md_output_file, src_md_file_translated)
 

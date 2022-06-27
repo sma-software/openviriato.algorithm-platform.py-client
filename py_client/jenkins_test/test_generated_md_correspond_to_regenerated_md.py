@@ -4,7 +4,7 @@ from typing import List
 import shutil
 
 import jenkins.resolve_code_references_in_markdown as resolve_code_references_in_markdown
-from jenkins.resolve_code_references_in_markdown import SOURCE_DIRECTORY, MD_OUTPUT_DIRECTORY, WALKTHROUGHS_ROOT
+from jenkins.resolve_code_references_in_markdown import SOURCE_DIRECTORY, MD_OUTPUT_SUB_DIRECTORY, WALKTHROUGHS_ROOT
 
 
 REGENERATE_DIRECTORY = "jenkins_test/temp"
@@ -48,11 +48,11 @@ class TestGeneratedMdCorrespondToRegeneratedMd(unittest.TestCase):
 
     @staticmethod
     def _retrieve_actual_md_file_name_from_src_md_file_name(src_md_file):
-        return src_md_file.replace('.src.md', '.md').replace(SOURCE_DIRECTORY, MD_OUTPUT_DIRECTORY)
+        return src_md_file.replace('.src.md', '.md').replace(SOURCE_DIRECTORY, MD_OUTPUT_SUB_DIRECTORY)
 
     @staticmethod
     def _retrieve_regenerated_md_from_src_md(src_md_file):
-        return src_md_file.replace('.src.md', '.md').replace(SOURCE_DIRECTORY, MD_OUTPUT_DIRECTORY).replace(WALKTHROUGHS_ROOT, REGENERATE_DIRECTORY)
+        return src_md_file.replace('.src.md', '.md').replace(SOURCE_DIRECTORY, MD_OUTPUT_SUB_DIRECTORY).replace(WALKTHROUGHS_ROOT, REGENERATE_DIRECTORY)
 
 
 

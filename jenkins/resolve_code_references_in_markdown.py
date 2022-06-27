@@ -276,9 +276,9 @@ def _translate_source_markdown_with_method_signature(py_client_repo_root: str, l
         retrieved_method_signature = _extract_method_signature(py_client_repo_root, source_code_file_name, target_signature)
         source_code_from_md_source = _resolve_path_from_py_client_repo_root(PY_CLIENT_REPO_ROOT_FROM_MD_SOURCE, source_code_file_name)
         if tag_suffix == "Long":
-            method_signature = "def {}({}) -> {}".format(retrieved_method_signature.method_name, retrieved_method_signature.method_arguments_as_str, retrieved_method_signature.return_type_as_str)
+            method_signature = "{}({}) -> {}".format(retrieved_method_signature.method_name, retrieved_method_signature.method_arguments_as_str, retrieved_method_signature.return_type_as_str)
         else:
-            method_signature = "def {}(...)".format(retrieved_method_signature.method_name)
+            method_signature = "{}(...)".format(retrieved_method_signature.method_name)
 
         line = line.replace(
             "{}{}({},{})".format(

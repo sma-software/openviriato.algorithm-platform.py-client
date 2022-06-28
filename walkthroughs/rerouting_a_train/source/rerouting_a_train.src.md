@@ -32,9 +32,7 @@ the alternative route correctly, i.e. to ensure the picked train has the followi
 If one of these prerequisites is not met the algorithm will fail. The following code checks if the requirements to the given trains are met and determines the _first_train_path_node_on_diversion_ and the _last_train_path_node_on_diversion_, which are needed for 
 our method call, see the previous section.
 
-@Import(walkthroughs/rerouting_a_train/source/RerouteTrainAlgorithm.py,RerouteTrainAlgorithm,RerouteTrainAlgorithm source code)
-
-Continuation of the example below
+@Import(walkthroughs/rerouting_a_train/source/RerouteTrainAlgorithm.py,RerouteTrainAlgorithm,RerouteTrainAlgorithm source code. Continuation of the example below.)
 
 
 In a second step we can calculate a sequence of [RoutingEdge](@py_client_root/aidm/aidm_routing_edge_classes.py). Even though the created routing edges might not exist according to the infrastructure, which is known to 

@@ -640,9 +640,9 @@ class AlgorithmInterface:
         response_dict_or_none = _interface_helpers.do_get_any_parameter(self.__communication_layer, key)
         return JsonToAidmConverter().process_json_to_aidm(response_dict_or_none, FloatingPoint)
 
-    def get_string_algorithm_parameter(self, key: str) -> str:
+    def get_string_algorithm_parameter(self, key: str) -> Optional[str]:
         response_string_or_none = _interface_helpers.do_get_any_parameter(self.__communication_layer, key)
-        return JsonToAidmConverter().process_json_to_aidm(response_string_or_none, str)
+        return JsonToAidmConverter().process_json_to_aidm(response_string_or_none, Optional[str])
 
     def get_algorithm_train_parameter(self, key: str) -> AlgorithmTrain:
         response_dict = _interface_helpers.do_get_any_parameter(self.__communication_layer, key)

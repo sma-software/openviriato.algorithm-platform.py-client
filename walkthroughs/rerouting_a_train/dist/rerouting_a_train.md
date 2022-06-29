@@ -6,12 +6,12 @@ For more detailed information we refer the developer to the C# API Documentation
 
 ## The Method for Rerouting Trains
 
-In order to reroute a train, which is possible with the method [reroute_train](../../../py_client/algorithm_interface/algorithm_interface.py), 
+In order to reroute a train, which is possible with the method [reroute_train(...)](../../../py_client/algorithm_interface/algorithm_interface.py#L288), 
 the developer has to use the class [UpdateTrainRoute](../../../py_client/aidm/aidm_update_classes.py).
 
-For our walkthrough we have encapsulated the call to [RerouteTrain](../../../py_client/aidm/aidm_update_classes.py) by a method 
-`persist_rerouted_train(self, train_to_reroute: AlgorithmTrain, first_train_path_node_on_diversion: AlgorithmTrainPathNode, last_train_path_node_on_diversion: AlgorithmTrainPathNode, routing_edges_on_diversion: List[_RoutingEdge], restore_node_tracks_at_start_and_end_of_diversion: bool) -> AlgorithmTrain`,
-which we can simply invoke below. This also demonstrates how an algorithm developer can use [reroute_train](../../../py_client/algorithm_interface/algorithm_interface.py).
+For our walkthrough we have encapsulated the call to [reroute_train(...)](../../../py_client/algorithm_interface/algorithm_interface.py#L288) by a method 
+[persist_rerouted_train(self, train_to_reroute: AlgorithmTrain, first_train_path_node_on_diversion: AlgorithmTrainPathNode, last_train_path_node_on_diversion: AlgorithmTrainPathNode, routing_edges_on_diversion: List[_RoutingEdge], restore_node_tracks_at_start_and_end_of_diversion: bool) -> AlgorithmTrain](../../../walkthroughs/rerouting_a_train/source/RerouteTrainPersistenceService.py#L14)
+which we can simply invoke below. This also demonstrates how an algorithm developer can use [reroute_train(...)](../../../py_client/algorithm_interface/algorithm_interface.py#L288).
 Here we list the source code with explanations.
 
 ```python
@@ -60,7 +60,7 @@ graph datastructure to model the network infrastructure using the methods in Sec
 For our example we are given two trains defined by the user. The _train_to_route_ is the train we want to reroute. The alternative route we want to set is defined by the train _train_with_alternative_route_. The user has the responsibility to pick the train with
 the alternative route correctly, i.e. to ensure the picked train has the following properties 
 * _train_with_alternative_route_ has at least two train path nodes
-* the _train_to_reroute_ contains the first node on the path of _train_with_alternative_route_ and it contains the last node on the path of _train_with_alternative_route
+* the _train_to_reroute_ contains the first node on the path of _train_with_alternative_route_ and it contains the last node on the path of _train_with_alternative_route_
 * the first occurence of the first node on the path of _train_with_alternative_route_ must be before the last occurence of the last node on the path of _train_with_alternative_route_ on the path of _train_to_reroute_
 * it starts and ends at a station
 
@@ -115,7 +115,7 @@ class RerouteTrainAlgorithm:
             return
         last_train_path_node_on_diversion = last_train_path_node_on_diversion[-1]
 
-        # firstTrainPathNodeOnDiversion must occur before lastTrainPathNodeOnDiversion on the trainToReroute
+        # first_train_path_node_on_diversion must occur before last_train_path_node_on_diversion on the train_to_reroute
         if first_train_path_node_on_diversion.sequence_number >= last_train_path_node_on_diversion.sequence_number:
             start_of_diversion_node = algorithm_interface.get_node(first_train_path_node_on_train_with_alternative_path.node_id)
             end_of_diversion_node = algorithm_interface.get_node(last_train_path_node_on_train_with_alternative_path.node_id)
@@ -128,7 +128,7 @@ class RerouteTrainAlgorithm:
                     end_of_diversion_node.ID,
                     train_to_reroute.DebugString))
 
-        # firstTrainPathNodeOnDiversion and lastTrainPathNodeOnDiversion are stations
+        # first_train_path_node_on_diversion and last_train_path_node_on_diversion are stations
         first_node_on_diversion = algorithm_interface.get_node(first_train_path_node_on_diversion.node_id)
         last_node_on_diversion = algorithm_interface.get_node(last_train_path_node_on_diversion.node_id)
 
@@ -144,15 +144,13 @@ class RerouteTrainAlgorithm:
                 "Last node on diversion is a junction. Must be a station.")
 
 ```
-Code listing: _RerouteTrainAlgorithm source code_. ([Lines: 11 - 84 from file: _RerouteTrainAlgorithm.py_](../../../walkthroughs/rerouting_a_train/source/RerouteTrainAlgorithm.py#L11-L84)).
-
-Continuation of the example below
+Code listing: _RerouteTrainAlgorithm source code. Continuation of the example below._. ([Lines: 11 - 84 from file: _RerouteTrainAlgorithm.py_](../../../walkthroughs/rerouting_a_train/source/RerouteTrainAlgorithm.py#L11-L84)).
 
 
 In a second step we can calculate a sequence of [RoutingEdge](../../../py_client/aidm/aidm_routing_edge_classes.py). Even though the created routing edges might not exist according to the infrastructure, which is known to 
-the Algorithm Platform, i.e. these will not be provided by any of the methods [GetOutgoingRoutingEdges](../../../py_client/algorithm_interface/algorithm_interface.py), 
-[GetIncomingRoutingEdges](../../../py_client/algorithm_interface/algorithm_interface.py) and 
-[GetCrossingRoutingEdges](../../../py_client/algorithm_interface/algorithm_interface.py), we can use them to reroute the train. 
+the Algorithm Platform, i.e. these will not be provided by any of the methods [get_outgoing_routing_edges(...)](../../../py_client/algorithm_interface/algorithm_interface.py#L506), 
+[get_incoming_routing_edges(...)](../../../py_client/algorithm_interface/algorithm_interface.py#L499) and 
+[get_crossing_routing_edges(...)](../../../py_client/algorithm_interface/algorithm_interface.py#L511), we can use them to reroute the train. 
 
 ```python
 def _construct_mesoscopic_routing_edges_from_train_with_alternative_route(self, algorithm_interface: AlgorithmInterface, train_with_alternative_path: AlgorithmTrain) -> List[_RoutingEdge]:
@@ -194,7 +192,7 @@ def _construct_mesoscopic_routing_edges_from_train_with_alternative_route(self, 
 ```
 Code listing: _Method used to calculate the sequence of routing edges to reroute a train_. ([Lines: 97 - 134 from file: _RerouteTrainAlgorithm.py_](../../../walkthroughs/rerouting_a_train/source/RerouteTrainAlgorithm.py#L97-L134)).
 
-Now we can continue with the code from the method above (see comment in the source code listing). We construct the routing edges and we can invoke `persist_rerouted_train(...)` with the obtained routing edges.
+Now we can continue with the code from the method above (see comment in the source code listing). We construct the routing edges and we can invoke [persist_rerouted_train(...)](../../../walkthroughs/rerouting_a_train/source/RerouteTrainPersistenceService.py#L14) with the obtained routing edges.
 
 Continued example from above
 

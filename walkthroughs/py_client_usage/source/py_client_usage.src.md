@@ -65,7 +65,7 @@ that the algorithm is saved under
 ```
 ${FolderToAlgorithmPlatform}\\Extension\\AlgorithmPlatform\\algorithms\\count_trains_py_client.py
 ```
-Then we may save the algorithm configuration in the `algorithms.json`:
+Then we may save the algorithm configuration in the [algorithms.json](../source/algorithms.json):
 
 ```json
 {

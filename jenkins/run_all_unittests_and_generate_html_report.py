@@ -1,4 +1,5 @@
 import unittest
+from SmaHtmlTestResult import SmaHtmlTestResult
 from HtmlTestRunner import HTMLTestRunner
 import sys
 
@@ -19,6 +20,7 @@ def main():
         report_name=report_name,
         open_in_browser=False,
         add_timestamp=False,
+        resultclass=SmaHtmlTestResult,
         verbosity=3)
     html_test_runner.run(test_suite)
     sys.exit(0)

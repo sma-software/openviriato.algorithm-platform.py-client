@@ -10,7 +10,7 @@ from py_client.aidm.aidm_algorithm_classes import AlgorithmTrain
 class ConflictType(Enum):
     Crossing = "crossing"
     Trafficability = "trafficability"
-    ChangeDirection = "changeDirection"
+    TravelDirectionChange = "travelDirectionChange"
     SimultaneousArrival = "simultaneousArrival"
     SameStationTrack = "sameStationTrack"
     SameSectionTrack = "sameSectionTrack"

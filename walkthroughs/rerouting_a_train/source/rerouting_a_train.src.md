@@ -2,7 +2,7 @@
 # Rerouting a Train
 
 In this walkthrough we will show how to reroute a train. The scope of this article is only to show how a train can be rerouted on a technical level.
-For more detailed information we refer the developer to the C# API Documentation Chapter _Routing Edges and Routes_, which is part of the documentation provided with the Algorithm Research Package.
+For more detailed information we refer the developer to the C# API Documentation Chapter _Routing Edges and Routes_, which is part of the documentation provided with the Algorithm Research SDK.
 
 ## The Method for Rerouting Trains
 
@@ -20,13 +20,13 @@ Here we list the source code with explanations.
 
 For ease of presentation we will select a route in a trivial way. We propose to the developer to use the linked [algorithms.json](../source/algorithms.json). It is not guaranteed that the sample algorithm finds a route, which is valid in the sense that the train can actually run on the given path 
 according to the infrastructure context of the Algorithm Platform. The task of computing a valid and good diversion for real use cases is up to the algorithmic expert. For example, you can build up a 
-graph datastructure to model the network infrastructure using the methods in Section _Infrastructure_ of the C# API Documentation and find a shortest path using Dijkstra's algorithm on this graph. 
+graph data structure to model the network infrastructure using the methods in Section _Infrastructure_ of the documentation provided with the Algorithm Research SDK and find a shortest path using Dijkstra's algorithm on this graph. 
 
 For our example we are given two trains defined by the user. The _train_to_route_ is the train we want to reroute. The alternative route we want to set is defined by the train _train_with_alternative_route_. The user has the responsibility to pick the train with
 the alternative route correctly, i.e. to ensure the picked train has the following properties 
 * _train_with_alternative_route_ has at least two train path nodes
 * the _train_to_reroute_ contains the first node on the path of _train_with_alternative_route_ and it contains the last node on the path of _train_with_alternative_route_
-* the first occurence of the first node on the path of _train_with_alternative_route_ must be before the last occurence of the last node on the path of _train_with_alternative_route_ on the path of _train_to_reroute_
+* the first occurrence of the first node on the path of _train_with_alternative_route_ must be before the last occurrence of the last node on the path of _train_with_alternative_route_ on the path of _train_to_reroute_
 * it starts and ends at a station
 
 If one of these prerequisites is not met the algorithm will fail. The following code checks if the requirements to the given trains are met and determines the _first_train_path_node_on_diversion_ and the _last_train_path_node_on_diversion_, which are needed for 

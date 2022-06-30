@@ -2,7 +2,7 @@
 # Rerouting a Train
 
 In this walkthrough we will show how to reroute a train. The scope of this article is only to show how a train can be rerouted on a technical level.
-For more detailed information we refer the developer to the C# API Documentation Chapter _Routing Edges and Routes_, which is part of the documentation provided with the Algorithm Research Package.
+For more detailed information we refer the developer to the C# API Documentation Chapter _Routing Edges and Routes_, which is part of the documentation provided with the Algorithm Research SDK.
 
 ## The Method for Rerouting Trains
 
@@ -55,13 +55,13 @@ Code listing: _RerouteTrainPersistenceService source code_. ([Lines: 2 - 33 from
 
 For ease of presentation we will select a route in a trivial way. We propose to the developer to use the linked [algorithms.json](../source/algorithms.json). It is not guaranteed that the sample algorithm finds a route, which is valid in the sense that the train can actually run on the given path 
 according to the infrastructure context of the Algorithm Platform. The task of computing a valid and good diversion for real use cases is up to the algorithmic expert. For example, you can build up a 
-graph datastructure to model the network infrastructure using the methods in Section _Infrastructure_ of the C# API Documentation and find a shortest path using Dijkstra's algorithm on this graph. 
+graph data structure to model the network infrastructure using the methods in Section _Infrastructure_ of the documentation provided with the Algorithm Research SDK and find a shortest path using Dijkstra's algorithm on this graph. 
 
 For our example we are given two trains defined by the user. The _train_to_route_ is the train we want to reroute. The alternative route we want to set is defined by the train _train_with_alternative_route_. The user has the responsibility to pick the train with
 the alternative route correctly, i.e. to ensure the picked train has the following properties 
 * _train_with_alternative_route_ has at least two train path nodes
 * the _train_to_reroute_ contains the first node on the path of _train_with_alternative_route_ and it contains the last node on the path of _train_with_alternative_route_
-* the first occurence of the first node on the path of _train_with_alternative_route_ must be before the last occurence of the last node on the path of _train_with_alternative_route_ on the path of _train_to_reroute_
+* the first occurrence of the first node on the path of _train_with_alternative_route_ must be before the last occurrence of the last node on the path of _train_with_alternative_route_ on the path of _train_to_reroute_
 * it starts and ends at a station
 
 If one of these prerequisites is not met the algorithm will fail. The following code checks if the requirements to the given trains are met and determines the _first_train_path_node_on_diversion_ and the _last_train_path_node_on_diversion_, which are needed for 
@@ -86,34 +86,42 @@ class RerouteTrainAlgorithm:
                     train_with_alternative_route.debug_string))
             return
 
-        # first and last node of train with alternative route already occur in the train path of the train to reroute.
+        # validate that first and last node of train with alternative route already occur in the train path
+        # of the train to reroute.
         first_train_path_node_on_train_with_alternative_path = train_with_alternative_route.train_path_nodes[0]
         last_train_path_node_on_train_with_alternative_path = train_with_alternative_route.train_path_nodes[-1]
 
-        first_train_path_node_on_diversion = [tpn
-                                              for tpn in train_to_reroute.train_path_nodes
-                                              if tpn.node_id == first_train_path_node_on_train_with_alternative_path.node_id]
-
-        if len(first_train_path_node_on_diversion) == 0:
+        train_to_reroute_contains_first_node_on_diversion = \
+            first_train_path_node_on_train_with_alternative_path.node_id in [train_path_node.node_id
+                                                                             for train_path_node
+                                                                             in train_to_reroute.train_path_nodes]
+        if not train_to_reroute_contains_first_node_on_diversion:
             start_of_diversion_node = algorithm_interface.get_node(first_train_path_node_on_train_with_alternative_path.node_id)
-            algorithm_interface.notify_user("Algorithm Failed",
-                                            "Node {0} (ID: {1}) does not exist on train to reroute ({2}). Algorithm aborted. ".format(
-                                                                            start_of_diversion_node.Code,
-                                                                            start_of_diversion_node.ID,
-                                                                            start_of_diversion_node.DebugString))
+            algorithm_interface.notify_user(
+                "Algorithm Failed",
+                "Node {0} (ID: {1}) does not exist on train to reroute ({2}). Algorithm aborted. ".format(
+                    start_of_diversion_node.Code, start_of_diversion_node.ID, start_of_diversion_node.DebugString))
             return
-        first_train_path_node_on_diversion = first_train_path_node_on_diversion[0]
 
-        last_train_path_node_on_diversion = [tpn
-                                             for tpn in train_to_reroute.train_path_nodes
-                                             if tpn.node_id == last_train_path_node_on_train_with_alternative_path.node_id]
-        if len(last_train_path_node_on_diversion) == 0:
+        train_to_reroute_contains_last_node_on_diversion = \
+            last_train_path_node_on_train_with_alternative_path.node_id in [train_path_node.node_id
+                                                                             for train_path_node
+                                                                             in train_to_reroute.train_path_nodes]
+        if not train_to_reroute_contains_last_node_on_diversion:
             end_of_diversion_node = algorithm_interface.get_node(last_train_path_node_on_train_with_alternative_path.node_id)
             algorithm_interface.notify_user(
                 "Algorithm Failed",
-                "Node {0} (ID: {1}) does not exist on train to reroute ({2}). Algorithm aborted. ".format(end_of_diversion_node.Code, end_of_diversion_node.ID, end_of_diversion_node.DebugString))
+                "Node {0} (ID: {1}) does not exist on train to reroute ({2}). Algorithm aborted. ".format(
+                    end_of_diversion_node.Code, end_of_diversion_node.ID, end_of_diversion_node.DebugString))
             return
-        last_train_path_node_on_diversion = last_train_path_node_on_diversion[-1]
+
+        first_train_path_node_on_diversion = [tpn
+                                              for tpn in train_to_reroute.train_path_nodes
+                                              if tpn.node_id == first_train_path_node_on_train_with_alternative_path.node_id][0]
+
+        last_train_path_node_on_diversion = [tpn
+                                             for tpn in train_to_reroute.train_path_nodes
+                                             if tpn.node_id == last_train_path_node_on_train_with_alternative_path.node_id][-1]
 
         # first_train_path_node_on_diversion must occur before last_train_path_node_on_diversion on the train_to_reroute
         if first_train_path_node_on_diversion.sequence_number >= last_train_path_node_on_diversion.sequence_number:
@@ -144,7 +152,7 @@ class RerouteTrainAlgorithm:
                 "Last node on diversion is a junction. Must be a station.")
 
 ```
-Code listing: _RerouteTrainAlgorithm source code. Continuation of the example below._. ([Lines: 11 - 84 from file: _RerouteTrainAlgorithm.py_](../../../walkthroughs/rerouting_a_train/source/RerouteTrainAlgorithm.py#L11-L84)).
+Code listing: _RerouteTrainAlgorithm source code. Continuation of the example below._. ([Lines: 11 - 92 from file: _RerouteTrainAlgorithm.py_](../../../walkthroughs/rerouting_a_train/source/RerouteTrainAlgorithm.py#L11-L92)).
 
 
 In a second step we can calculate a sequence of [RoutingEdge](../../../py_client/aidm/aidm_routing_edge_classes.py). Even though the created routing edges might not exist according to the infrastructure, which is known to 
@@ -190,7 +198,7 @@ def _construct_mesoscopic_routing_edges_from_train_with_alternative_route(self, 
     return resulting_routing_edges
 
 ```
-Code listing: _Method used to calculate the sequence of routing edges to reroute a train_. ([Lines: 97 - 134 from file: _RerouteTrainAlgorithm.py_](../../../walkthroughs/rerouting_a_train/source/RerouteTrainAlgorithm.py#L97-L134)).
+Code listing: _Method used to calculate the sequence of routing edges to reroute a train_. ([Lines: 106 - 143 from file: _RerouteTrainAlgorithm.py_](../../../walkthroughs/rerouting_a_train/source/RerouteTrainAlgorithm.py#L106-L143)).
 
 Now we can continue with the code from the method above (see comment in the source code listing). We construct the routing edges and we can invoke [persist_rerouted_train(...)](../../../walkthroughs/rerouting_a_train/source/RerouteTrainPersistenceService.py#L14) with the obtained routing edges.
 
@@ -205,4 +213,4 @@ message = "Train successfully rerouted. Train visits now {0} nodes on its path."
 algorithm_interface.notify_user("Algorithm succeeded", message)
 
 ```
-Code listing: _Continuation of the RerouteTrainAlgorithm source code_. ([Lines: 87 - 94 from file: _RerouteTrainAlgorithm.py_](../../../walkthroughs/rerouting_a_train/source/RerouteTrainAlgorithm.py#L87-L94)).
+Code listing: _Continuation of the RerouteTrainAlgorithm source code_. ([Lines: 96 - 103 from file: _RerouteTrainAlgorithm.py_](../../../walkthroughs/rerouting_a_train/source/RerouteTrainAlgorithm.py#L96-L103)).

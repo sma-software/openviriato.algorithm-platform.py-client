@@ -1,11 +1,12 @@
 import requests
-
+from requests import Session
+import http
 from py_client.communication.response_processing import extract_json_if_possible
 
 
 class CommunicationLayer:
     base_url: str
-    currentSession: requests.Session()
+    currentSession: Session
 
     def __init__(self, base_url: str):
         self.base_url = base_url

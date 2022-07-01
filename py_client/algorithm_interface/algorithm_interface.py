@@ -47,7 +47,8 @@ from py_client.aidm import (
     AlgorithmMovementType,
     RunningTimePenaltyOnTrainPath,
     RunningTimeCalculationResult,
-    ConflictDetectionArguments
+    ConflictDetectionArguments,
+    AlgorithmTrainSimulationRealizationForecast
 )
 from py_client.aidm.aidm_conflict import AlgorithmConflict
 from py_client.aidm.aidm_link_classes import _AlgorithmLink
@@ -689,15 +690,15 @@ class AlgorithmInterface:
         response_list_of_dict = self.__communication_layer.do_get_request_without_body(url_to_resource)
         return JsonToAidmConverter().process_json_to_aidm(response_list_of_dict, List[AlgorithmTrainSimulationTrain])
 
-    def get_next_train_simulation_event(self) -> AlgorithmTrainSimulationEvent:
+    def get_next_train_simulation_event(self) -> AlgorithmTrainSimulationRealizationForecast:
         url_to_resource = "services/trains/simulations/events/next"
         response_dict = self.__communication_layer.do_get_request_without_body(url_to_resource)
-        return JsonToAidmConverter().process_json_to_aidm(response_dict, AlgorithmTrainSimulationEvent)
+        return JsonToAidmConverter().process_json_to_aidm(response_dict, AlgorithmTrainSimulationRealizationForecast)
 
-    def realize_next_train_simulation_event(self) -> AlgorithmTrainSimulationEvent:
+    def realize_next_train_simulation_event(self) -> AlgorithmTrainSimulationRealizationForecast:
         url_to_resource = "services/trains/simulations/events/next:realize"
         response_dict = self.__communication_layer.do_post_request(url_to_resource)
-        return JsonToAidmConverter().process_json_to_aidm(response_dict, AlgorithmTrainSimulationEvent)
+        return JsonToAidmConverter().process_json_to_aidm(response_dict, AlgorithmTrainSimulationRealizationForecast)
 
     def calculate_running_time_penalties_on_train(self, train_id) -> List[RunningTimePenaltyOnTrainPath]:
         url_to_resource = "services/trains/{0}:calculate-running-time-penalties".format(train_id)

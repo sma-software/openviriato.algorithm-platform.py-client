@@ -4,9 +4,8 @@ import unittest
 from unittest import mock
 
 from py_client.algorithm_interface.algorithm_interface import AlgorithmInterface
-from py_client.aidm.aidm_train_simulation_classes import AlgorithmTrainSimulationEventType, AlgorithmTrainSimulationEvent
+from py_client.aidm.aidm_train_simulation_classes import AlgorithmTrainSimulationEventType, AlgorithmTrainSimulationEvent, AlgorithmTrainSimulationRealizationForecast
 import py_client.algorithm_interface_test.test_helper.SessionMockFactory as SessionMockFactory
-from py_client import algorithm_interface
 from py_client.algorithm_interface import algorithm_interface_factory
 from py_client.algorithm_interface_test.test_helper.SessionMockTestBase import \
     get_api_url, \
@@ -19,13 +18,16 @@ class TestPostRealizeNextTrainSimulationEvent(unittest.TestCase):
             self.__last_body = json
             self.__last_request = request
 
-            json_string = ( "{ \n"
-                            "   \"id\": 2000001, \n"
-                            "   \"trainSimulationTrainPathNodeId\": 1000002, \n"
-                            "   \"type\": \"arrival\", \n"
-                            "   \"absoluteTime\": \"2003-05-05T07:31:12\" \n"
-                            " } "
-                            )
+            json_string = ("{ \n"
+                           "   \"nextEvent\": {"
+                           "       \"id\": 2000001, \n"
+                           "       \"trainSimulationTrainPathNodeId\": 1000002, \n"
+                           "       \"type\": \"arrival\", \n"
+                           "       \"absoluteTime\": \"2003-05-05T07:31:12\" \n"
+                           "    }, \n "
+                           "    \"unrealizableEvents\": []"
+                           " } "
+                           )
 
             return SessionMockFactory.create_response_mock(json_string, 200)
 
@@ -53,29 +55,34 @@ class TestPostRealizeNextTrainSimulationEvent(unittest.TestCase):
 
         response = self.interface_to_viriato.realize_next_train_simulation_event()
 
-
         self.assertIsInstance(
             response,
-            AlgorithmTrainSimulationEvent)
+            AlgorithmTrainSimulationRealizationForecast
+            )
+
+        self.assertIsInstance(
+            response.next_event,
+            AlgorithmTrainSimulationEvent
+        )
+
         self.assertEqual(
-            response.id,
+            response.next_event.id,
             2000001
         )
         self.assertEqual(
-            response.train_simulation_train_path_node_id,
+            response.next_event.train_simulation_train_path_node_id,
             1000002
         )
         self.assertIsInstance(
-            response.absolute_time,
+            response.next_event.absolute_time,
             datetime
         )
         self.assertIsInstance(
-            response.type,
+            response.next_event.type,
             AlgorithmTrainSimulationEventType
         )
 
-
-
+        self.assertEqual(response.unrealizable_events, [])
 
     @mock.patch('requests.Session', side_effect=PostRealizeNextTrainSimulationEventMockSession)
     def tearDown(self, mocked_get_obj) -> None:

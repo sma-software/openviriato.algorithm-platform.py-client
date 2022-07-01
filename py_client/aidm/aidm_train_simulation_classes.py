@@ -66,3 +66,36 @@ class AlgorithmTrainSimulationTrain(_HasID):
     def train_path_nodes(self) -> List[AlgorithmTrainSimulationTrainPathNode]:
         return self.__train_path_nodes
 
+
+class AlgorithmTrainSimulationUnrealizableEvent:
+    __estimated_delay: datetime.timedelta
+    __event: AlgorithmTrainSimulationEvent
+
+    def __init__(self, estimated_delay: datetime.timedelta, event: AlgorithmTrainSimulationEvent):
+        self.__estimated_delay = estimated_delay
+        self.__event = event
+
+    @property
+    def estimated_delay(self) -> datetime.timedelta:
+        return self.__estimated_delay
+
+    @property
+    def event(self) -> datetime.timedelta:
+        return self.__event
+
+
+class AlgorithmTrainSimulationRealizationForecast:
+    __next_event: AlgorithmTrainSimulationEvent
+    __unrealizable_events: List[AlgorithmTrainSimulationUnrealizableEvent]
+
+    def __init__(self, next_event: AlgorithmTrainSimulationEvent, unrealizable_events: List[AlgorithmTrainSimulationUnrealizableEvent]):
+        self.__unrealizable_events = unrealizable_events
+        self.__next_event = next_event
+
+    @property
+    def next_event(self) -> AlgorithmTrainSimulationEvent:
+        return self.__next_event
+
+    @property
+    def unrealizable_events(self) -> List[AlgorithmTrainSimulationUnrealizableEvent]:
+        return self.__unrealizable_events

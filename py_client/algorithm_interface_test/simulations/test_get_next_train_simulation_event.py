@@ -20,10 +20,13 @@ class TestGetNextTrainSimulationEvent(unittest.TestCase):
             self.__last_request = request
 
             json_string = (" { \n"
-                           "    \"id\": 2000000, \n"
-                           "    \"trainSimulationTrainPathNodeId\": 1000001, \n"
-                           "    \"type\": \"departure\", \n"
-                           "    \"absoluteTime\": \"2003-05-05T07:30:00\" \n"
+                           "    \"nextEvent\": { \n"
+                           "        \"id\": 2000000, \n"
+                           "        \"trainSimulationTrainPathNodeId\": 1000001, \n"
+                           "        \"type\": \"departure\", \n"
+                           "        \"absoluteTime\": \"2003-05-05T07:30:00\" \n"
+                           "    }, \n"
+                           "    \"unrealizableEvents\": []"
                            " }"
                            )
 
@@ -53,22 +56,28 @@ class TestGetNextTrainSimulationEvent(unittest.TestCase):
 
         self.assertIsInstance(
             response,
-            py_client.aidm.aidm_train_simulation_classes.AlgorithmTrainSimulationEvent)
+            py_client.aidm.aidm_train_simulation_classes.AlgorithmTrainSimulationRealizationForecast)
+
+        self.assertIsInstance(
+            response.next_event,
+            py_client.aidm.aidm_train_simulation_classes.AlgorithmTrainSimulationEvent
+        )
         self.assertEqual(
-            response.id,
+            response.next_event.id,
             2000000
         )
         self.assertEqual(
-            response.train_simulation_train_path_node_id,
+            response.next_event.train_simulation_train_path_node_id,
             1000001
         )
         self.assertIsInstance(
-            response.type,
+            response.next_event.type,
             py_client.aidm.aidm_train_simulation_classes.AlgorithmTrainSimulationEventType )
         self.assertIsInstance(
-            response.absolute_time,
+            response.next_event.absolute_time,
             datetime)
 
+        self.assertEqual(response.unrealizable_events, [])
 
 
     @mock.patch('requests.Session', side_effect=GetNextTrainSimulationEventMockSession)

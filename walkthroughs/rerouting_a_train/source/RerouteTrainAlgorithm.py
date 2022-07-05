@@ -40,19 +40,19 @@ class RerouteTrainAlgorithm:
             algorithm_interface.notify_user(
                 "Algorithm Failed",
                 "Node {0} (ID: {1}) does not exist on train to reroute ({2}). Algorithm aborted. ".format(
-                    start_of_diversion_node.Code, start_of_diversion_node.ID, start_of_diversion_node.DebugString))
+                    start_of_diversion_node.code, start_of_diversion_node.id, start_of_diversion_node.debug_string))
             return
 
         train_to_reroute_contains_last_node_on_diversion = \
             last_train_path_node_on_train_with_alternative_path.node_id in [train_path_node.node_id
-                                                                             for train_path_node
-                                                                             in train_to_reroute.train_path_nodes]
+                                                                            for train_path_node
+                                                                            in train_to_reroute.train_path_nodes]
         if not train_to_reroute_contains_last_node_on_diversion:
             end_of_diversion_node = algorithm_interface.get_node(last_train_path_node_on_train_with_alternative_path.node_id)
             algorithm_interface.notify_user(
                 "Algorithm Failed",
                 "Node {0} (ID: {1}) does not exist on train to reroute ({2}). Algorithm aborted. ".format(
-                    end_of_diversion_node.Code, end_of_diversion_node.ID, end_of_diversion_node.DebugString))
+                    end_of_diversion_node.code, end_of_diversion_node.id, end_of_diversion_node.debug_string))
             return
 
         first_train_path_node_on_diversion = [tpn
@@ -70,11 +70,11 @@ class RerouteTrainAlgorithm:
             algorithm_interface.notify_user(
                 "Algorithm Failed",
                 "First occurence of node {0} (ID: {1}) must be before the last occurence of node {2}(ID:{3}) on the path of train to reroute ({4}). Algorithm aborted. ".format(
-                    start_of_diversion_node.Code,
-                    start_of_diversion_node.ID,
-                    end_of_diversion_node.Code,
-                    end_of_diversion_node.ID,
-                    train_to_reroute.DebugString))
+                    start_of_diversion_node.code,
+                    start_of_diversion_node.id,
+                    end_of_diversion_node.code,
+                    end_of_diversion_node.id,
+                    train_to_reroute.debug_string))
 
         # first_train_path_node_on_diversion and last_train_path_node_on_diversion are stations
         first_node_on_diversion = algorithm_interface.get_node(first_train_path_node_on_diversion.node_id)

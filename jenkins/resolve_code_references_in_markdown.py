@@ -5,7 +5,7 @@ import re
 from typing import List, Optional
 
 PY_CLIENT_REPO_ROOT_FROM_MD_SOURCE = "../../.."
-SOURCE_DIRECTORY = "source"
+SOURCE_DIRECTORY = "md_source"
 MD_OUTPUT_SUB_DIRECTORY = "dist"
 WALKTHROUGHS_ROOT = "walkthroughs"
 PY_CLIENT_ROOT_SYMBOLIC_PATH_TAG = "@py_client_root"

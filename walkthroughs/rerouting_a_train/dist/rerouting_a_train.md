@@ -10,7 +10,7 @@ In order to reroute a train, which is possible with the method [reroute_train(..
 the developer has to use the class [UpdateTrainRoute](../../../py_client/aidm/aidm_update_classes.py).
 
 For our walkthrough we have encapsulated the call to [reroute_train(...)](../../../py_client/algorithm_interface/algorithm_interface.py#L289) by a method 
-[persist_rerouted_train(self, train_to_reroute: AlgorithmTrain, first_train_path_node_on_diversion: AlgorithmTrainPathNode, last_train_path_node_on_diversion: AlgorithmTrainPathNode, routing_edges_on_diversion: List[_RoutingEdge], restore_node_tracks_at_start_and_end_of_diversion: bool) -> AlgorithmTrain](../../../walkthroughs/rerouting_a_train/source/RerouteTrainPersistenceService.py#L14)
+[persist_rerouted_train(self, train_to_reroute: AlgorithmTrain, first_train_path_node_on_diversion: AlgorithmTrainPathNode, last_train_path_node_on_diversion: AlgorithmTrainPathNode, routing_edges_on_diversion: List[_RoutingEdge], restore_node_tracks_at_start_and_end_of_diversion: bool) -> AlgorithmTrain](../../../walkthroughs/rerouting_a_train/py/RerouteTrainPersistenceService.py#L14)
 which we can simply invoke below. This also demonstrates how an algorithm developer can use [reroute_train(...)](../../../py_client/algorithm_interface/algorithm_interface.py#L289).
 Here we list the source code with explanations.
 
@@ -49,11 +49,11 @@ class RerouteTrainPersistenceService:
         return rerouted_train
 
 ```
-Code listing: _RerouteTrainPersistenceService source code_. ([Lines: 2 - 33 from file: _RerouteTrainPersistenceService.py_](../../../walkthroughs/rerouting_a_train/source/RerouteTrainPersistenceService.py#L2-L33)).
+Code listing: _RerouteTrainPersistenceService source code_. ([Lines: 2 - 33 from file: _RerouteTrainPersistenceService.py_](../../../walkthroughs/rerouting_a_train/py/RerouteTrainPersistenceService.py#L2-L33)).
 
 ## Picking a Route
 
-For ease of presentation we will select a route in a trivial way. We propose to the developer to use the linked [algorithms.json](../source/algorithms.json). It is not guaranteed that the sample algorithm finds a route, which is valid in the sense that the train can actually run on the given path 
+For ease of presentation we will select a route in a trivial way. We propose to the developer to use the linked [algorithms.json](../config/algorithms.json). It is not guaranteed that the sample algorithm finds a route, which is valid in the sense that the train can actually run on the given path 
 according to the infrastructure context of the Algorithm Platform. The task of computing a valid and good diversion for real use cases is up to the algorithmic expert. For example, you can build up a 
 graph data structure to model the network infrastructure using the methods in Section _Infrastructure_ of the documentation provided with the Algorithm Research SDK and find a shortest path using Dijkstra's algorithm on this graph. 
 
@@ -152,7 +152,7 @@ class RerouteTrainAlgorithm:
                 "Last node on diversion is a junction. Must be a station.")
 
 ```
-Code listing: _RerouteTrainAlgorithm source code. Continuation of the example below._. ([Lines: 11 - 92 from file: _RerouteTrainAlgorithm.py_](../../../walkthroughs/rerouting_a_train/source/RerouteTrainAlgorithm.py#L11-L92)).
+Code listing: _RerouteTrainAlgorithm source code. Continuation of the example below._. ([Lines: 11 - 92 from file: _RerouteTrainAlgorithm.py_](../../../walkthroughs/rerouting_a_train/py/RerouteTrainAlgorithm.py#L11-L92)).
 
 
 In a second step we can calculate a sequence of [RoutingEdge](../../../py_client/aidm/aidm_routing_edge_classes.py). Even though the created routing edges might not exist according to the infrastructure, which is known to 
@@ -198,9 +198,9 @@ def _construct_mesoscopic_routing_edges_from_train_with_alternative_route(self, 
     return resulting_routing_edges
 
 ```
-Code listing: _Method used to calculate the sequence of routing edges to reroute a train_. ([Lines: 106 - 143 from file: _RerouteTrainAlgorithm.py_](../../../walkthroughs/rerouting_a_train/source/RerouteTrainAlgorithm.py#L106-L143)).
+Code listing: _Method used to calculate the sequence of routing edges to reroute a train_. ([Lines: 106 - 143 from file: _RerouteTrainAlgorithm.py_](../../../walkthroughs/rerouting_a_train/py/RerouteTrainAlgorithm.py#L106-L143)).
 
-Now we can continue with the code from the method above (see comment in the source code listing). We construct the routing edges and we can invoke [persist_rerouted_train(...)](../../../walkthroughs/rerouting_a_train/source/RerouteTrainPersistenceService.py#L14) with the obtained routing edges.
+Now we can continue with the code from the method above (see comment in the source code listing). We construct the routing edges and we can invoke [persist_rerouted_train(...)](../../../walkthroughs/rerouting_a_train/py/RerouteTrainPersistenceService.py#L14) with the obtained routing edges.
 
 Continued example from above
 
@@ -213,4 +213,4 @@ message = "Train successfully rerouted. Train visits now {0} nodes on its path."
 algorithm_interface.notify_user("Algorithm succeeded", message)
 
 ```
-Code listing: _Continuation of the RerouteTrainAlgorithm source code_. ([Lines: 96 - 103 from file: _RerouteTrainAlgorithm.py_](../../../walkthroughs/rerouting_a_train/source/RerouteTrainAlgorithm.py#L96-L103)).
+Code listing: _Continuation of the RerouteTrainAlgorithm source code_. ([Lines: 96 - 103 from file: _RerouteTrainAlgorithm.py_](../../../walkthroughs/rerouting_a_train/py/RerouteTrainAlgorithm.py#L96-L103)).

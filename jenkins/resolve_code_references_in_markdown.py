@@ -10,6 +10,7 @@ MD_OUTPUT_SUB_DIRECTORY = "dist"
 WALKTHROUGHS_ROOT = "walkthroughs"
 PY_CLIENT_ROOT_SYMBOLIC_PATH_TAG = "@py_client_root"
 OFFSET_FOR_GIT_HUB = 1
+README_FILE_NAME = "README.md"
 
 
 # naming and structure of an import marker
@@ -312,6 +313,21 @@ def _persist_md(filename: str, lines_to_write: List[str]) -> None:
             textfile.write(line_to_write)
 
 
+def _create_walkthrough_readme(walkthrough_dist_file_path: str):
+    walkthrough_file_name = os.path.basename(walkthrough_dist_file_path)
+    walkthrough_dist_directory = os.path.dirname(walkthrough_dist_file_path)
+
+    path_to_walkthrough_md_from_walkthrough_subdirectory = "/".join((MD_OUTPUT_SUB_DIRECTORY, walkthrough_file_name))
+    walkthrough_sub_directory = walkthrough_dist_directory.replace(MD_OUTPUT_SUB_DIRECTORY, "")
+
+    readme_file_in_walkthrough_subdirectory = "/".join((walkthrough_sub_directory, README_FILE_NAME))
+
+    with open(readme_file_in_walkthrough_subdirectory, 'w') as readme_file:
+        readme_file.write(
+            "[Link to the walkthrough]({})".format(path_to_walkthrough_md_from_walkthrough_subdirectory)
+        )
+
+
 def _read_src_md(absolute_path_src_md: str) -> List[str]:
     with open(absolute_path_src_md) as file:
         return file.readlines()
@@ -362,6 +378,7 @@ def _run_with_arguments(py_client_repo_root: str, md_output_root: str) -> None:
             .replace(WALKTHROUGHS_ROOT, md_output_root)\
             .replace('.src.md', '.md')
         _persist_md(md_output_file, src_md_file_translated)
+        _create_walkthrough_readme(md_output_file)
 
 
 def main():

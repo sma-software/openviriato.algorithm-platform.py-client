@@ -31,13 +31,13 @@ Suppose we have the following initial situation with two trains. Each train has 
     
 Observe that the first train has its formation changes in OF and WE in the examples, whereas the second train has the formation change in WE.
 
-![Initial situation](../images/before_links.PNG)
+![Initial situation](@images/before_links.PNG)
 
 _Figure 1: Two unlinked trains with formation changes._
 
 The algorithm proposed throughout this article will create the roster links depicted in Figure 2. The links are represented by the arrows in the picture.
 
-![Linked situation](../images/after_links.PNG)
+![Linked situation](@images/after_links.PNG)
 
 _Figure 2: The two trains with roster links created by the algorithm presented in this article._
 
@@ -47,11 +47,11 @@ During this walkthrough, we will explain step-by-step the creation of a greedy a
 ## Parameters
 The algorithm presented during this walkthrough takes as input two trains selected by the user in the algorithm interface of Viriato and creates links. 
 
-![Parameter mask](../images/parameter_mask.PNG)
+![Parameter mask](@images/parameter_mask.PNG)
 
 _Figure 3: The user can choose two trains to be linked together._
 
-We have attached the configuration [algorithms.json](../config/algorithms.json) that you can use for selecting 
+We have attached the configuration [algorithms.json](@config/algorithms.json) that you can use for selecting 
 the trains, as presented in Figure 3, in order to run this walkthrough. 
 
 ## Proposed Domain Model
@@ -59,7 +59,7 @@ the trains, as presented in Figure 3, in order to run this walkthrough.
 We propose to use _common activities_ and _single activities_. Each common activity represents a route of a train without formation change. A common activity is composed of one or several single activities. Each single activity represents 
 a piece of rolling stock running on the network between the nodes of the corresponding common activity. The picture below presents our trains decomposed in common activities and single activities. 
 
-![Common and Single activities situation](../images/common_and_single_actvities.PNG)
+![Common and Single activities situation](@images/common_and_single_actvities.PNG)
 
 _Figure 4: Decomposition of the two trains in common activities and single activities._
 

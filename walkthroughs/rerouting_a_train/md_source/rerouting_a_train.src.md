@@ -18,7 +18,7 @@ Here we list the source code with explanations.
 
 ## Picking a Route
 
-For ease of presentation we will select a route in a trivial way. We propose to the developer to use the linked [algorithms.json](../config/algorithms.json). It is not guaranteed that the sample algorithm finds a route, which is valid in the sense that the train can actually run on the given path 
+For ease of presentation we will select a route in a trivial way. We propose to the developer to use the linked [algorithms.json](@config/algorithms.json). It is not guaranteed that the sample algorithm finds a route, which is valid in the sense that the train can actually run on the given path 
 according to the infrastructure context of the Algorithm Platform. The task of computing a valid and good diversion for real use cases is up to the algorithmic expert. For example, you can build up a 
 graph data structure to model the network infrastructure using the methods in Section _Infrastructure_ of the documentation provided with the Algorithm Research SDK and find a shortest path using Dijkstra's algorithm on this graph. 
 

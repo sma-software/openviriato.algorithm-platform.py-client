@@ -4,11 +4,20 @@ import re
 
 from typing import List, Optional
 
-PY_CLIENT_REPO_ROOT_FROM_MD_SOURCE = "../../.."
+
 SOURCE_DIRECTORY = "md_source"
 MD_OUTPUT_SUB_DIRECTORY = "dist"
 WALKTHROUGHS_ROOT = "walkthroughs"
+PY_SOURCE_DIR = "py"
+CONFIG_DIR = "config"
+IMAGES_DIR = "images"
+PY_CLIENT_MODULE_ROOT = "py_client"
+
 PY_CLIENT_ROOT_SYMBOLIC_PATH_TAG = "@py_client_root"
+PY_SOURCE_SYMBOLIC_PATH_TAG = "@py_source"
+CONFIG_SYMBOLIC_PATH_TAG = "@config"
+IMAGES_SYMBOLIC_PATH_TAG = "@images"
+
 OFFSET_FOR_GIT_HUB = 1
 README_FILE_NAME = "README.md"
 
@@ -121,6 +130,13 @@ def _number_of_leading_spaces(code_line: str) -> int:
     return len(code_line) - len(code_line.lstrip())
 
 
+def _make_relative_url_back_from_relative_path(path: str) -> str:
+    path_as_posix = os.path.normpath(path)
+    relative_url_syntax = str(path_as_posix).replace("\\", "/")
+    split = relative_url_syntax.split("/")
+    return "/".join([".." for s in split])
+
+
 def _remove_indentation_not_desired_for_output_markdown(code_block: List[str]) -> List[str]:
     # we have to remove the indentation that is necessary in the source code file, but superfluous in the output
     non_empty_lines_of_code_block = [code_line for code_line in code_block if _is_non_empty_line(code_line)]
@@ -204,7 +220,7 @@ def _read_source_code_and_format_code_for_output_markdown(py_client_repo_root, r
 
 
 def _generate_caption(formatted_code_block_with_source_code_lines: CodeBlockWithLinesNumberInSourceCode, source_code_file_name: str, caption_text: str) -> str:
-    source_code_from_py_client = _resolve_path_from_py_client_repo_root(PY_CLIENT_REPO_ROOT_FROM_MD_SOURCE, source_code_file_name)
+    source_code_from_py_client = _resolve_path_from_py_client_repo_root(_path_back_from_md_output_to_py_client_repo_root(), source_code_file_name)
     link_to_source_code = "{}#L{}-L{}".format(
         source_code_from_py_client,
         formatted_code_block_with_source_code_lines.start_line_number_in_source_code + OFFSET_FOR_GIT_HUB,
@@ -248,11 +264,31 @@ def _translate_source_markdown_with_code_block(py_client_repo_root: str, line: s
     return output_markdown_file_content
 
 
-def _translate_py_client_symbolic_path_to_relative_path(path_to_py_client_repo_root_from_context: str, line: str) -> str:
-    if PY_CLIENT_ROOT_SYMBOLIC_PATH_TAG in line:
-        return line.replace(PY_CLIENT_ROOT_SYMBOLIC_PATH_TAG, path_to_py_client_repo_root_from_context + "/py_client")
-    else:
-        return line
+def _path_back_from_md_output_to_py_client_repo_root() -> str:
+    current_path = "/".join([WALKTHROUGHS_ROOT, "walkthrough_name_placeholder", MD_OUTPUT_SUB_DIRECTORY])
+    path_back_to_py_client_module_root = _make_relative_url_back_from_relative_path(current_path)
+    return path_back_to_py_client_module_root
+
+
+def _translate_symbolic_path_to_relative_path(line: str) -> str:
+    current_state_of_line_to_process = line
+
+    if PY_CLIENT_ROOT_SYMBOLIC_PATH_TAG in current_state_of_line_to_process:
+        path_back_from_md_output_to_py_client_module_root = "/".join((_path_back_from_md_output_to_py_client_repo_root(), PY_CLIENT_MODULE_ROOT))
+        current_state_of_line_to_process = current_state_of_line_to_process.replace(PY_CLIENT_ROOT_SYMBOLIC_PATH_TAG, path_back_from_md_output_to_py_client_module_root)
+
+    path_back_to_current_walkthrough_sub_dir = _make_relative_url_back_from_relative_path(MD_OUTPUT_SUB_DIRECTORY)
+
+    if PY_SOURCE_SYMBOLIC_PATH_TAG in current_state_of_line_to_process:
+        sub_path_replacing_symbolic_tag = "/".join((path_back_to_current_walkthrough_sub_dir, PY_SOURCE_DIR))
+        current_state_of_line_to_process = current_state_of_line_to_process.replace(PY_SOURCE_SYMBOLIC_PATH_TAG, sub_path_replacing_symbolic_tag)
+    if CONFIG_SYMBOLIC_PATH_TAG in current_state_of_line_to_process:
+        sub_path_replacing_symbolic_tag = "/".join((path_back_to_current_walkthrough_sub_dir, CONFIG_DIR))
+        current_state_of_line_to_process = current_state_of_line_to_process.replace(CONFIG_SYMBOLIC_PATH_TAG, sub_path_replacing_symbolic_tag)
+    if IMAGES_SYMBOLIC_PATH_TAG in current_state_of_line_to_process:
+        sub_path_replacing_symbolic_tag = "/".join((path_back_to_current_walkthrough_sub_dir, IMAGES_DIR))
+        current_state_of_line_to_process = current_state_of_line_to_process.replace(IMAGES_SYMBOLIC_PATH_TAG, sub_path_replacing_symbolic_tag)
+    return current_state_of_line_to_process
 
 
 def _translate_source_markdown_with_method_signature(py_client_repo_root: str, line: str) -> str:
@@ -275,7 +311,7 @@ def _translate_source_markdown_with_method_signature(py_client_repo_root: str, l
         target_signature = signature_parsed[2]
 
         retrieved_method_signature = _extract_method_signature(py_client_repo_root, source_code_file_name, target_signature)
-        source_code_from_md_source = _resolve_path_from_py_client_repo_root(PY_CLIENT_REPO_ROOT_FROM_MD_SOURCE, source_code_file_name)
+        source_code_from_md_source = _resolve_path_from_py_client_repo_root(_path_back_from_md_output_to_py_client_repo_root(), source_code_file_name)
         if tag_suffix == "Long":
             method_signature = "{}({}) -> {}".format(retrieved_method_signature.method_name, retrieved_method_signature.method_arguments_as_str, retrieved_method_signature.return_type_as_str)
         else:
@@ -298,7 +334,7 @@ def _translate_source_markdown_to_output_markdown(py_client_repo_root: str, file
         translated_lines = _translate_source_markdown_with_code_block(py_client_repo_root, line)
         if translated_lines == [line]:
             translated_lines = _translate_source_markdown_with_method_signature(py_client_repo_root, line)
-            translated_lines = [_translate_py_client_symbolic_path_to_relative_path(PY_CLIENT_REPO_ROOT_FROM_MD_SOURCE, translated_lines)]
+            translated_lines = [_translate_symbolic_path_to_relative_path(translated_lines)]
         output_markdown_file_content += translated_lines
 
     return output_markdown_file_content

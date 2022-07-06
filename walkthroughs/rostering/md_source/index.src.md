@@ -51,7 +51,7 @@ The algorithm presented during this walkthrough takes as input two trains select
 
 _Figure 3: The user can choose two trains to be linked together._
 
-We have attached the configuration [algorithms.json](../source/algorithms.json) that you can use for selecting 
+We have attached the configuration [algorithms.json](../config/algorithms.json) that you can use for selecting 
 the trains, as presented in Figure 3, in order to run this walkthrough. 
 
 ## Proposed Domain Model
@@ -67,15 +67,15 @@ During the rest of our walkthrough we will use this domain model with common and
 
 We design the class _CommonActivityFactory_ to create both types of activities. The following function of this class takes as input a train and returns the list of corresponding common activities.
 
-@Import(walkthroughs/rostering/source/CommonActivitiesFactory.py,to_common_activities,CommonActivitiesFactory source code)
+@Import(walkthroughs/rostering/py/CommonActivitiesFactory.py,to_common_activities,CommonActivitiesFactory source code)
 
 
-With the helper function @ImportInlineShort(walkthroughs/rostering/source/CommonActivitiesFactory.py,__calculate_train_path_node_with_change_of_formation) we determine a list of train path nodes, where the formation changes, i.e. the formation of a train at a given train path node is different from the formation at the previous train path node. 
+With the helper function @ImportInlineShort(walkthroughs/rostering/py/CommonActivitiesFactory.py,__calculate_train_path_node_with_change_of_formation) we determine a list of train path nodes, where the formation changes, i.e. the formation of a train at a given train path node is different from the formation at the previous train path node. 
 In the picture you can see this where common activities start or end. Therefore, by creating a list of pairs of subsequent train path nodes with formation changes (_departure_and_arrival_node_pairs_of_common_activities_) we can find the departure and arrival nodes of the common activities.
 
 We invoke
 
-@Import(walkthroughs/rostering/source/CommonActivitiesFactory.py,create_single_activities,CommonActivitiesFactory source code)
+@Import(walkthroughs/rostering/py/CommonActivitiesFactory.py,create_single_activities,CommonActivitiesFactory source code)
 
 to create all single activities for this common activity. We read out the vehicles from the formation at the departure node and obtain a single activity for each one.
 
@@ -91,23 +91,23 @@ we give the following method to link their single activities together. As argume
 the preceding train and the first common activity of the succeeding train. It is used at each formation change within a 
 train run.
 
-The function @ImportInlineShort(walkthroughs/rostering/source/SimpleRosteringExample.py,create_link_definitions_between_two_common_activities) will iterate over all the single activities of the source common activity and looks for a single activity with a common rolling stock type in the target common 
+The function @ImportInlineShort(walkthroughs/rostering/py/SimpleRosteringExample.py,create_link_definitions_between_two_common_activities) will iterate over all the single activities of the source common activity and looks for a single activity with a common rolling stock type in the target common 
 activity. For each match, a new roster link definition is created that can be written back to the Algorithm Platform to create the links in the Figure 1. 
 
 A _roster link definition_ is an object of the py_client defined between two pieces rolling stock at given train path nodes. The position is the index of the given rolling stock in the train formation. 
 
-@Import(walkthroughs/rostering/source/SimpleRosteringExample.py,AlgorithmRosterLinkDefinitionExample,AlgorithmRosterLink definition example usage)
+@Import(walkthroughs/rostering/py/SimpleRosteringExample.py,AlgorithmRosterLinkDefinitionExample,AlgorithmRosterLink definition example usage)
 
 
 ## Creating Empty Runs
 
 In the case where the preceding train does not arrive at the departure node of the succeeding train, an empty run is needed to bring the rolling stock to the departure node. Defining a realistic empty run is not straightforward and left to the algorithm developer. 
-In our walkthrough we use a strongly simplified model in order to yield the desired output. However, we do not claim that these empty runs are realistic. We use the _EmptyRunCreator_ to create empty runs with the function @ImportInlineShort(walkthroughs/rostering/source/EmptyRunCreator.py,create_empty_run_common_activity).
+In our walkthrough we use a strongly simplified model in order to yield the desired output. However, we do not claim that these empty runs are realistic. We use the _EmptyRunCreator_ to create empty runs with the function @ImportInlineShort(walkthroughs/rostering/py/EmptyRunCreator.py,create_empty_run_common_activity).
 
-With the method @ImportInlineShort(walkthroughs/rostering/source/EmptyRunCreator.py,__create_empty_run_train), an empty run is created as a copy of an existing train _template_for_empty_run_ where the original route has been overridden by the shortest path between the two train path nodes: the last one of the preceding train and the first one of the succeeding train.
+With the method @ImportInlineShort(walkthroughs/rostering/py/EmptyRunCreator.py,__create_empty_run_train), an empty run is created as a copy of an existing train _template_for_empty_run_ where the original route has been overridden by the shortest path between the two train path nodes: the last one of the preceding train and the first one of the succeeding train.
 In order to keep the algorithm simple, the empty run is created with exactly the same formation as the preceding train.
 
-Moreover, the duration of this empty run is somewhat arbitrarily defined to be the half of the available time between the two trains. With the method @ImportInlineShort(walkthroughs/rostering/source/EmptyRunCreator.py,__update_times_on_empty_run), we calculate the updated times of the created train and send it as an _UpdateStopTimesTrainPathNode_ to the Algorithm Platform.
+Moreover, the duration of this empty run is somewhat arbitrarily defined to be the half of the available time between the two trains. With the method @ImportInlineShort(walkthroughs/rostering/py/EmptyRunCreator.py,__update_times_on_empty_run), we calculate the updated times of the created train and send it as an _UpdateStopTimesTrainPathNode_ to the Algorithm Platform.
 
 
 Afterwards, we set the movement type of the created train to be of type "empty run" so that the activities are marked as empty runs in Viriato. Then, we can create roster links between the trains and the empty runs, as presented in the [previous section](#creating-links).

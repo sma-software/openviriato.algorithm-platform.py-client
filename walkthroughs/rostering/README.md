@@ -1,1 +1,1 @@
-[Link to the walkthrough](dist/index.md)
+[Link to the walkthrough](dist/rostering.md)

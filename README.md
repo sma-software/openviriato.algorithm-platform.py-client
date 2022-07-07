@@ -10,13 +10,9 @@ We provide a Python client implementing the [AlgorithmInterface](py_client/algor
 
 We refer the reader to the [Walkthrough using the py_client](walkthroughs/py_client_usage/dist/py_client_usage.md) to see how the py_client can be used by an algorithm.
 
-## Rerouting a train
+## More Walkthroughs
 
-We show how to divert or reroute a train in the [Walkthrough for rerouting a train](walkthroughs/rerouting_a_train/dist/rerouting_a_train.md).
-
-## Creating roster links
-
-In the [Rostering walkthrough](walkthroughs/rostering/dist/rostering.md) we explain how to link pieces of rolling stock together and create empty runs if needed. 
+Walkthroughs demonstrate basic concepts of the algorithm platform with small and easy-to-understand code snippets. See this [list of available Walkthroughs in Python](walkthroughs).
 
 ## Wiki
 

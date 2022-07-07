@@ -49,6 +49,7 @@ from py_client.aidm import (
     RunningTimeCalculationResult,
     ConflictDetectionArguments
 )
+
 from py_client.aidm.aidm_conflict import AlgorithmConflict
 from py_client.aidm.aidm_link_classes import _AlgorithmLink
 from py_client.communication.communication_layer import CommunicationLayer

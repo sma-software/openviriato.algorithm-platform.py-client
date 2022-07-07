@@ -1,4 +1,4 @@
-#@count_trains_py_client[:]
+# @count_trains_py_client[:]
 import argparse
 from py_client.algorithm_interface import algorithm_interface_factory
 

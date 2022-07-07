@@ -7,7 +7,7 @@ In this walkthrough we will show you how to create algorithms using the [Algorit
 ## Documentation
 
 As the py_client strongly follows the C#-Client combined with Python's coding
-conventions (according to [PEP 8]), [see the example below](../source/count_trains_py_client.py)), there is no
+conventions (according to [PEP 8]), [see the example below](../py/count_trains_py_client.py)), there is no
 dedicated documentation. Instead, we refer the developer to the C# API Documentation Chapter, which is part of the documentation provided with the Algorithm Research Package. 
                                                                   
 
@@ -51,7 +51,7 @@ pip install sma.algorithm_platform.py_client-{py_client-version}.whl
 Having installed the py_client we can start to develop our algorithm. Just import
 the [AlgorithmInterface](../../../py_client/algorithm_interface/algorithm_interface.py)
 and use it by putting it into a `with` statement. Then you can use all available methods. The example code shows how to
-query all [AlgorithmTrain](../../../py_client/aidm/aidm_algorithm_classes.py) in a given [TimeWindow](../../../py_client/aidm/aidm_time_window_classes.py), counts them and sends a message to the user reporting the number. You can [download this sample](../source/count_trains_py_client.py).
+query all [AlgorithmTrain](../../../py_client/aidm/aidm_algorithm_classes.py) in a given [TimeWindow](../../../py_client/aidm/aidm_time_window_classes.py), counts them and sends a message to the user reporting the number. You can [download this sample](../py/count_trains_py_client.py).
 
 ```python
 import argparse
@@ -88,6 +88,7 @@ if __name__ == '__main__':
     main()
 
 ```
+Code listing: _count_trains_py_client source code_. ([Lines: 2 - 33 from file: _count_trains_py_client.py_](../../../walkthroughs/py_client_usage/py/count_trains_py_client.py#L2-L33)).
 
 ## Configuration for the Deployment
 
@@ -99,7 +100,7 @@ that the algorithm is saved under
 ```
 ${FolderToAlgorithmPlatform}\\Extension\\AlgorithmPlatform\\algorithms\\count_trains_py_client.py
 ```
-Then we may save the algorithm configuration in the `algorithms.json`:
+Then we may save the algorithm configuration in the [algorithms.json](../config/algorithms.json):
 
 ```json
 {

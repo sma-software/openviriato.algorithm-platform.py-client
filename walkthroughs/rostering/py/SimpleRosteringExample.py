@@ -18,6 +18,7 @@ def create_link_definitions_between_two_common_activities(source_common_activity
         for target_single_activity in unlinked_target_activities:
             common_rolling_stock_type = source_single_activity.rolling_stock_type_id == target_single_activity.rolling_stock_type_id
             if common_rolling_stock_type:
+                # @AlgorithmRosterLinkDefinitionExample[:]
                 roster_link_definition = AlgorithmRosterLinkDefinition(
                     source_single_activity.arrival_tpn_id,
                     target_single_activity.departure_tpn_id,

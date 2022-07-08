@@ -3,8 +3,9 @@ Used dependencies and licenses:
 html-testRunner, https://pypi.org/project/html-testRunner/, MIT License (MIT license), https://opensource.org/licenses/MIT
 responses, https://pypi.org/project/responses/, Apache Software License (Apache 2.0), https://www.apache.org/licenses/LICENSE-2.0
 requests, https://pypi.org/project/requests/, Apache Software License (Apache 2.0), https://www.apache.org/licenses/LICENSE-2.0
-jsonpath-ng https://pypi.org/project/jsonpath-ng/, Apache Software License (Apache 2.0), https://www.apache.org/licenses/LICENSE-2.0
+jsonpath-ng, https://pypi.org/project/jsonpath-ng/, Apache Software License (Apache 2.0), https://www.apache.org/licenses/LICENSE-2.0
 isodate, https://pypi.org/project/isodate/, BSD License (BSD), https://opensource.org/search/node/BSD+3-Clause
 multipledispatch, https://pypi.org/project/multipledispatch/, New BSD License (BSD), https://github.com/mrocklin/multipledispatch/blob/master/LICENSE.txt
+parameterized, https://pypi.org/project/parameterized/, BSD License (FreeBSD), https://opensource.org/search/node/BSD+3-Clause
 
-All web-links retrieved on 07.01.2021
+All web-links retrieved on 08.07.2022

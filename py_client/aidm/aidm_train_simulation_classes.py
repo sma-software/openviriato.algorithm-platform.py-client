@@ -10,6 +10,7 @@ from py_client.aidm.aidm_base_classes import _HasID
 class AlgorithmTrainSimulationEventType(Enum):
     arrival = 'arrival'
     departure = 'departure'
+    passing = 'passing'
 
 
 class AlgorithmTrainSimulationTrainPathNode(_HasID):

@@ -20,7 +20,7 @@ class TestPostponeNextEvent(unittest.TestCase):
                            "    \"nextEvent\": {"
                            "        \"id\": 2000002, \n"
                            "        \"trainSimulationTrainPathNodeId\": 1000002, \n"
-                           "        \"type\": \"arrival\", \n"
+                           "        \"type\": \"passing\", \n"
                            "        \"absoluteTime\": \"2003-05-05T07:34:12\" \n"
                            "    }, \n"
                            "    \"unrealizableEvents\": [] \n"
@@ -55,7 +55,7 @@ class TestPostponeNextEvent(unittest.TestCase):
         self.assertIsInstance(response.next_event, AlgorithmTrainSimulationEvent)
         self.assertEqual(response.next_event.id, 2000002)
         self.assertEqual(response.next_event.train_simulation_train_path_node_id, 1000002)
-        self.assertEqual(response.next_event.type, AlgorithmTrainSimulationEventType.arrival)
+        self.assertEqual(response.next_event.type, AlgorithmTrainSimulationEventType.passing)
         self.assertEqual(response.next_event.absolute_time, datetime(year=2003, month=5, day=5, hour=7, minute=34, second=12))
         self.assertEqual(response.unrealizable_events, [])
 

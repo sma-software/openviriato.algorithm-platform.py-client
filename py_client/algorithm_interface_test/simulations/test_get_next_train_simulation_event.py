@@ -3,10 +3,9 @@ from datetime import datetime
 import unittest
 from unittest import mock
 
-import py_client.aidm.aidm_train_simulation_classes
+from py_client.aidm.aidm_train_simulation_classes import AlgorithmTrainSimulationEventType, AlgorithmTrainSimulationRealizationForecast, AlgorithmTrainSimulationEvent
 from py_client.algorithm_interface.algorithm_interface import AlgorithmInterface
 import py_client.algorithm_interface_test.test_helper.SessionMockFactory as SessionMockFactory
-from py_client import algorithm_interface
 from py_client.algorithm_interface import algorithm_interface_factory
 from py_client.algorithm_interface_test.test_helper.SessionMockTestBase import \
     get_api_url, \
@@ -56,11 +55,11 @@ class TestGetNextTrainSimulationEvent(unittest.TestCase):
 
         self.assertIsInstance(
             response,
-            py_client.aidm.aidm_train_simulation_classes.AlgorithmTrainSimulationRealizationForecast)
+            AlgorithmTrainSimulationRealizationForecast)
 
         self.assertIsInstance(
             response.next_event,
-            py_client.aidm.aidm_train_simulation_classes.AlgorithmTrainSimulationEvent
+            AlgorithmTrainSimulationEvent
         )
         self.assertEqual(
             response.next_event.id,
@@ -72,13 +71,15 @@ class TestGetNextTrainSimulationEvent(unittest.TestCase):
         )
         self.assertIsInstance(
             response.next_event.type,
-            py_client.aidm.aidm_train_simulation_classes.AlgorithmTrainSimulationEventType )
+            AlgorithmTrainSimulationEventType)
+        self.assertEqual(
+            response.next_event.type,
+            AlgorithmTrainSimulationEventType.departure)
         self.assertIsInstance(
             response.next_event.absolute_time,
             datetime)
 
         self.assertEqual(response.unrealizable_events, [])
-
 
     @mock.patch('requests.Session', side_effect=GetNextTrainSimulationEventMockSession)
     def tearDown(self, mocked_get_obj) -> None:

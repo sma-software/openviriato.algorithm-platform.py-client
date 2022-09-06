@@ -749,3 +749,8 @@ class AlgorithmInterface:
         post_request_body = dict(additionalDelay=additional_delay)
         response = self.__communication_layer.do_post_request(url_to_resource, post_request_body)
         return JsonToAidmConverter().process_json_to_aidm(response, AlgorithmTrainSimulationRealizationForecast)
+
+    def replace_next_train_simulation_event_by_stop(self) -> AlgorithmTrainSimulationRealizationForecast:
+        url_to_resource = "services/trains/simulations/events/next:replace-by-stop"
+        response = self.__communication_layer.do_post_request(url_to_resource)
+        return JsonToAidmConverter().process_json_to_aidm(response, AlgorithmTrainSimulationRealizationForecast)

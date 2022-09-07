@@ -5,8 +5,7 @@ import py_client.aidm.aidm_algorithm_classes
 import py_client.algorithm_interface_test.test_helper.SessionMockFactory as APISessionMock
 from py_client.aidm import aidm_enum_classes
 from py_client.algorithm_interface import algorithm_interface_factory
-from py_client.algorithm_interface_test.test_helper.SessionMockTestBase import \
-    get_api_url, SessionMockTestBase
+from py_client.algorithm_interface_test.test_helper.SessionMockTestBase import get_api_url, SessionMockTestBase
 
 
 class TestGetAssignableNodeTracksForTrainPathNode(unittest.TestCase):
@@ -15,73 +14,64 @@ class TestGetAssignableNodeTracksForTrainPathNode(unittest.TestCase):
             self.__last_request = request
             self.__last_body = params
 
-            json__string = ("[\n"
-                            "  {\n"
-                            "    \"id\": 163,\n"
-                            "    \"code\": \"2\",\n"
-                            "    \"debugString\": \"stationtrack:85AR_{StationTrack SID = 34140}\"\n"
-                            "  }\n"
-                            "]")
+            json__string = (
+                "[\n" "  {\n" '    "id": 163,\n' '    "code": "2",\n' '    "debugString": "stationtrack:85AR_{StationTrack SID = 34140}"\n' "  }\n" "]"
+            )
 
             return APISessionMock.create_response_mock(json__string, 200)
 
-    @mock.patch('requests.Session', side_effect=GetAssignableNodeTracksForTrainPathNodeTestSessionMock)
+    @mock.patch("requests.Session", side_effect=GetAssignableNodeTracksForTrainPathNodeTestSessionMock)
     def setUp(self, mocked_get_obj):
         self.interface_to_viriato = algorithm_interface_factory.create(get_api_url())
 
-    @mock.patch('requests.Session', side_effect=GetAssignableNodeTracksForTrainPathNodeTestSessionMock)
+    @mock.patch("requests.Session", side_effect=GetAssignableNodeTracksForTrainPathNodeTestSessionMock)
     def test_get_assignable_station_tracks_in_algorithm_node_request(self, mocked_get_obj):
         node_id = 1
         train_path_node_id = 1
         test_stop_status = aidm_enum_classes.StopStatus.commercial_stop
 
         self.interface_to_viriato.get_assignable_node_tracks_for_train_path_node(
-            node_id=node_id,
-            train_path_node_id=train_path_node_id,
-            stop_status=test_stop_status)
+            node_id=node_id, train_path_node_id=train_path_node_id, stop_status=test_stop_status
+        )
 
         session_obj = self.interface_to_viriato._AlgorithmInterface__communication_layer.currentSession
-        self.assertEqual(session_obj._GetAssignableNodeTracksForTrainPathNodeTestSessionMock__last_request,
-                         get_api_url() + '/nodes/1/node-tracks')
-        self.assertDictEqual(session_obj._GetAssignableNodeTracksForTrainPathNodeTestSessionMock__last_body,
-                             dict(assignableForTrainPathNodeId=1, stopStatus="commercialStop"))
+        self.assertEqual(session_obj._GetAssignableNodeTracksForTrainPathNodeTestSessionMock__last_request, get_api_url() + "/nodes/1/node-tracks")
+        self.assertDictEqual(
+            session_obj._GetAssignableNodeTracksForTrainPathNodeTestSessionMock__last_body, dict(assignableForTrainPathNodeId=1, stopStatus="commercialStop")
+        )
 
-    @mock.patch('requests.Session', side_effect=GetAssignableNodeTracksForTrainPathNodeTestSessionMock)
+    @mock.patch("requests.Session", side_effect=GetAssignableNodeTracksForTrainPathNodeTestSessionMock)
     def test_get_assignable_station_tracks_in_algorithm_node_request_no_stop_status(self, mocked_get_obj):
         node_id = 1
         train_path_node_id = 1
         test_stop_status = None
 
         self.interface_to_viriato.get_assignable_node_tracks_for_train_path_node(
-            node_id=node_id,
-            train_path_node_id=train_path_node_id,
-            stop_status=test_stop_status)
+            node_id=node_id, train_path_node_id=train_path_node_id, stop_status=test_stop_status
+        )
 
         session_obj = self.interface_to_viriato._AlgorithmInterface__communication_layer.currentSession
-        self.assertEqual(session_obj._GetAssignableNodeTracksForTrainPathNodeTestSessionMock__last_request,
-                         get_api_url() + '/nodes/1/node-tracks')
-        self.assertDictEqual(session_obj._GetAssignableNodeTracksForTrainPathNodeTestSessionMock__last_body,
-                             dict(assignableForTrainPathNodeId=1))
+        self.assertEqual(session_obj._GetAssignableNodeTracksForTrainPathNodeTestSessionMock__last_request, get_api_url() + "/nodes/1/node-tracks")
+        self.assertDictEqual(session_obj._GetAssignableNodeTracksForTrainPathNodeTestSessionMock__last_body, dict(assignableForTrainPathNodeId=1))
 
-    @mock.patch('requests.Session', side_effect=GetAssignableNodeTracksForTrainPathNodeTestSessionMock)
+    @mock.patch("requests.Session", side_effect=GetAssignableNodeTracksForTrainPathNodeTestSessionMock)
     def test_get_assignable_station_tracks_in_algorithm_node_response(self, mocked_get_obj):
         node_id = 1
         train_path_node_id = 1
         test_stop_status = aidm_enum_classes.StopStatus.commercial_stop
 
         test_list = self.interface_to_viriato.get_assignable_node_tracks_for_train_path_node(
-            node_id=node_id,
-            train_path_node_id=train_path_node_id,
-            stop_status=test_stop_status)
+            node_id=node_id, train_path_node_id=train_path_node_id, stop_status=test_stop_status
+        )
 
         self.assertIsInstance(test_list, list)
         self.assertIsInstance(test_list[0], py_client.aidm.aidm_algorithm_classes.AlgorithmNodeTrack)
         self.assertEqual(test_list[0].debug_string, "stationtrack:85AR_{StationTrack SID = 34140}")
 
-    @mock.patch('requests.Session', side_effect=GetAssignableNodeTracksForTrainPathNodeTestSessionMock)
+    @mock.patch("requests.Session", side_effect=GetAssignableNodeTracksForTrainPathNodeTestSessionMock)
     def tearDown(self, mocked_get_obj) -> None:
         self.interface_to_viriato.__exit__(None, None, None)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

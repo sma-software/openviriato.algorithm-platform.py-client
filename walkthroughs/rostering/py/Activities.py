@@ -13,7 +13,18 @@ class SingleActivity:
     __arrival_time: datetime
     __rolling_stock_type_id: int
 
-    def __init__(self, id: int, departure_tpn_id: int, departure_time: datetime, from_node_id: int, arrival_tpn_id: int, arrival_time: datetime, to_node_id: int, position: int, rolling_stock_type_id: int):
+    def __init__(
+        self,
+        id: int,
+        departure_tpn_id: int,
+        departure_time: datetime,
+        from_node_id: int,
+        arrival_tpn_id: int,
+        arrival_time: datetime,
+        to_node_id: int,
+        position: int,
+        rolling_stock_type_id: int,
+    ):
         self.__id = id
         self.__position = position
         self.__from_node_id = from_node_id

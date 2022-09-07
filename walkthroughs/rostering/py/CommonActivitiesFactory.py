@@ -18,8 +18,8 @@ class CommonActivitiesFactory:
         train_path_nodes_with_changes_of_formation = self.__calculate_train_path_node_with_change_of_formation(train)
 
         departure_and_arrival_node_pairs_of_common_activities = zip(
-            train_path_nodes_with_changes_of_formation[:-1],
-            train_path_nodes_with_changes_of_formation[1:])
+            train_path_nodes_with_changes_of_formation[:-1], train_path_nodes_with_changes_of_formation[1:]
+        )
 
         common_activities = []
         for departure_node, arrival_node in departure_and_arrival_node_pairs_of_common_activities:
@@ -51,11 +51,13 @@ class CommonActivitiesFactory:
                 self.__next_free_single_activity_id,
                 departure_node.id,
                 departure_node.departure_time,
-                departure_node.node_id, arrival_node.id,
+                departure_node.node_id,
+                arrival_node.id,
                 arrival_node.arrival_time,
                 arrival_node.node_id,
                 position,
-                vehicle_type_id)
+                vehicle_type_id,
+            )
             self.__next_free_single_activity_id += 1
             activities.append(activity)
 

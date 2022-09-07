@@ -18,35 +18,35 @@ class TestCreateRosterLinks(unittest.TestCase):
                 json_string = (
                     "[\n"
                     "    {\n"
-                    "        \"fromVehiclePositionInFormation\": 0,\n"
-                    "        \"toVehiclePositionInFormation\": 5,\n"
-                    "        \"fromNodeId\": 639,\n"
-                    "        \"fromTrainId\": 11078,\n"
-                    "        \"fromTrainPathNodeId\": 11076,\n"
-                    "        \"toNodeId\": 622,\n"
-                    "        \"toTrainId\": 11083,\n"
-                    "        \"toTrainPathNodeId\": 11079,\n"
-                    "        \"type\": \"roster\",\n"
-                    "        \"id\": 6542,\n"
-                    "        \"debugString\": \"DebugStringTest+-+asd\"\n"
+                    '        "fromVehiclePositionInFormation": 0,\n'
+                    '        "toVehiclePositionInFormation": 5,\n'
+                    '        "fromNodeId": 639,\n'
+                    '        "fromTrainId": 11078,\n'
+                    '        "fromTrainPathNodeId": 11076,\n'
+                    '        "toNodeId": 622,\n'
+                    '        "toTrainId": 11083,\n'
+                    '        "toTrainPathNodeId": 11079,\n'
+                    '        "type": "roster",\n'
+                    '        "id": 6542,\n'
+                    '        "debugString": "DebugStringTest+-+asd"\n'
                     "    }"
                     "]"
                 )
 
             return SessionMockFactory.create_response_mock(json_string, 200)
 
-    @mock.patch('requests.Session', side_effect=CreateRosterLinksTestMockSession)
+    @mock.patch("requests.Session", side_effect=CreateRosterLinksTestMockSession)
     def setUp(self, mocked_get_obj):
         self.interface_to_viriato = algorithm_interface_factory.create(get_api_url())
 
-    @mock.patch('requests.Session', side_effect=CreateRosterLinksTestMockSession)
+    @mock.patch("requests.Session", side_effect=CreateRosterLinksTestMockSession)
     def test_create_roster_links(self, mocked_get_obj):
         roster_link_definition = AlgorithmRosterLinkDefinition(1, 20, 200, 2000)
 
         self.interface_to_viriato.create_roster_links([roster_link_definition])
 
         session_obj = self.interface_to_viriato._AlgorithmInterface__communication_layer.currentSession
-        self.assertEqual(session_obj.last_request, get_api_url() + '/links')
+        self.assertEqual(session_obj.last_request, get_api_url() + "/links")
         expected_body = [
             dict(
                 fromTrainPathNodeId=1,
@@ -58,7 +58,7 @@ class TestCreateRosterLinks(unittest.TestCase):
         ]
         self.assertListEqual(session_obj.last_body, expected_body)
 
-    @mock.patch('requests.Session', side_effect=CreateRosterLinksTestMockSession)
+    @mock.patch("requests.Session", side_effect=CreateRosterLinksTestMockSession)
     def test_create_roster_links_one_link_as_response(self, mocked_get_obj):
         roster_link_definition = AlgorithmRosterLinkDefinition(1, 20, 200, 2000)
 
@@ -77,7 +77,7 @@ class TestCreateRosterLinks(unittest.TestCase):
         self.assertEqual(algorithm_roster_link.to_train_path_node_id, 11079)
         self.assertEqual(algorithm_roster_link.debug_string, "DebugStringTest+-+asd")
 
-    @mock.patch('requests.Session', side_effect=CreateRosterLinksTestMockSession)
+    @mock.patch("requests.Session", side_effect=CreateRosterLinksTestMockSession)
     def test_get_roster_links_empty_list_as_response(self, mocked_get_obj):
 
         listed_roster_links = self.interface_to_viriato.create_roster_links([])
@@ -85,6 +85,6 @@ class TestCreateRosterLinks(unittest.TestCase):
         self.assertIsInstance(listed_roster_links, list)
         self.assertEqual(listed_roster_links.__len__(), 0)
 
-    @mock.patch('requests.Session', side_effect=CreateRosterLinksTestMockSession)
+    @mock.patch("requests.Session", side_effect=CreateRosterLinksTestMockSession)
     def tearDown(self, mocked_get_obj) -> None:
         self.interface_to_viriato.__exit__(None, None, None)

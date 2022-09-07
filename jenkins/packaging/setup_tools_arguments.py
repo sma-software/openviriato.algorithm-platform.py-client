@@ -4,11 +4,7 @@ class SetupToolsArguments:
     __project_root_directory: str
     __output_directory: str
 
-    def __init__(self,
-                 release_package_requirements_on_relative_path: str,
-                 py_client_version_number: str,
-                 project_root_directory: str,
-                 output_directory: str):
+    def __init__(self, release_package_requirements_on_relative_path: str, py_client_version_number: str, project_root_directory: str, output_directory: str):
 
         self.__release_package_requirements_on_relative_path = release_package_requirements_on_relative_path
         self.__py_client_version = py_client_version_number

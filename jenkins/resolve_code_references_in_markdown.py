@@ -26,6 +26,7 @@ README_FILE_NAME = "README.md"
 # @reference_name[line_selector] example:
 # @twoLinesBeforeTheEndOfTheFunction[1:-2]
 
+
 class MethodSignature:
     _method_arguments_as_str: str
     _return_type_as_str: str
@@ -82,7 +83,7 @@ class PythonSourceCodeImportMarker:
     _line_selector_start: Optional[int]
     _line_selector_end: Optional[int]
 
-    def __init__(self, reference_name: str, position_line_number:int, line_selector_start: Optional[int], line_selector_end: Optional[int]):
+    def __init__(self, reference_name: str, position_line_number: int, line_selector_start: Optional[int], line_selector_end: Optional[int]):
         self._reference_name = reference_name
         self._position_line_number = position_line_number
         self._line_selector_start = line_selector_start
@@ -123,7 +124,7 @@ class ReferenceToImportMarkerInMarkDownSourceCode:
 
 
 def _is_non_empty_line(line: str) -> bool:
-    return line != '\n'
+    return line != "\n"
 
 
 def _number_of_leading_spaces(code_line: str) -> int:
@@ -153,8 +154,8 @@ def _find_import_marker(all_lines: List[str], marker: str) -> PythonSourceCodeIm
             line_selector_start_as_string = retrieved_marker_with_line_numbers.group(1)
             line_selector_end_as_string = retrieved_marker_with_line_numbers.group(2)
 
-            line_selector_start = None if line_selector_start_as_string == '' else int(line_selector_start_as_string)
-            line_selector_end = None if line_selector_end_as_string == '' else int(line_selector_end_as_string)
+            line_selector_start = None if line_selector_start_as_string == "" else int(line_selector_start_as_string)
+            line_selector_end = None if line_selector_end_as_string == "" else int(line_selector_end_as_string)
             return PythonSourceCodeImportMarker(marker, line_number, line_selector_start, line_selector_end)
     raise Exception("desired import marker cannot be found in source code file. name of marker searched for: {}".format(marker))
 
@@ -177,7 +178,7 @@ def _extract_method_signature(py_client_repo_root: str, path_to_source_file_from
             raise Exception("desired method signature '{}' cannot be found in source code file '{}'.".format(method_name, source_code_file))
 
 
-def _extract_code_block(all_lines:List[str], line_number_code_block_start: int) -> List[str]:
+def _extract_code_block(all_lines: List[str], line_number_code_block_start: int) -> List[str]:
     # For functions the first line is the signature, for classes it's the declaration
     # the indentation starts at the subsequent line in these cases
     # this is also working for other types of code blocks with at least two line
@@ -191,11 +192,13 @@ def _extract_code_block(all_lines:List[str], line_number_code_block_start: int) 
         # In the case of a class, an empty line with no indentation may separate two methods, but doesn't represent the end of the class
         next_code_block_detected = _is_non_empty_line(line) and number_of_leading_spaces_of_the_line < number_of_white_spaces_of_indentation
         if next_code_block_detected:
-            return all_lines[line_number_code_block_start: line_number_code_block_start + line_number]
+            return all_lines[line_number_code_block_start : line_number_code_block_start + line_number]
     return all_lines[line_number_code_block_start:]
 
 
-def _import_code_block_from_source_file(py_client_repo_root: str, reference: ReferenceToImportMarkerInMarkDownSourceCode) -> CodeBlockWithLinesNumberInSourceCode:
+def _import_code_block_from_source_file(
+    py_client_repo_root: str, reference: ReferenceToImportMarkerInMarkDownSourceCode
+) -> CodeBlockWithLinesNumberInSourceCode:
     path_to_source_code_file_with_code_block = _resolve_path_from_py_client_repo_root(py_client_repo_root, reference.relative_path_to_source_file)
     if not os.path.exists(path_to_source_code_file_with_code_block):
         raise FileNotFoundError("Cannot find file referenced from src.md: {}".format(path_to_source_code_file_with_code_block))
@@ -208,11 +211,13 @@ def _import_code_block_from_source_file(py_client_repo_root: str, reference: Ref
         first_line_of_the_code_block = import_marker.position_line_number + offset_code_block_start_after_line_marker
         code_block = _extract_code_block(all_lines, first_line_of_the_code_block)
 
-        code_block_content = code_block[import_marker.line_selector_start: import_marker.line_selector_end]
+        code_block_content = code_block[import_marker.line_selector_start : import_marker.line_selector_end]
         return CodeBlockWithLinesNumberInSourceCode(code_block_content, first_line_of_the_code_block)
 
 
-def _read_source_code_and_format_code_for_output_markdown(py_client_repo_root, reference_to_import_marker: ReferenceToImportMarkerInMarkDownSourceCode) -> CodeBlockWithLinesNumberInSourceCode:
+def _read_source_code_and_format_code_for_output_markdown(
+    py_client_repo_root, reference_to_import_marker: ReferenceToImportMarkerInMarkDownSourceCode
+) -> CodeBlockWithLinesNumberInSourceCode:
     raw_code_block_with_line_numbers = _import_code_block_from_source_file(py_client_repo_root, reference_to_import_marker)
     unindented_code_block = _remove_indentation_not_desired_for_output_markdown(raw_code_block_with_line_numbers.code_block)
     expanded_code_listing_for_output = ["```python\n"] + unindented_code_block + ["\n```\n"]
@@ -224,14 +229,17 @@ def _generate_caption(formatted_code_block_with_source_code_lines: CodeBlockWith
     link_to_source_code = "{}#L{}-L{}".format(
         source_code_from_py_client,
         formatted_code_block_with_source_code_lines.start_line_number_in_source_code + OFFSET_FOR_GIT_HUB,
-        formatted_code_block_with_source_code_lines.end_line_number_in_source_code - OFFSET_FOR_GIT_HUB)
+        formatted_code_block_with_source_code_lines.end_line_number_in_source_code - OFFSET_FOR_GIT_HUB,
+    )
 
     source_code_basename = os.path.basename(source_code_file_name)
     return "Code listing: _{}_. ([Lines: {} - {} from file: _{}_]({})).\n".format(
         caption_text,
         formatted_code_block_with_source_code_lines.start_line_number_in_source_code + OFFSET_FOR_GIT_HUB,
         formatted_code_block_with_source_code_lines.end_line_number_in_source_code - OFFSET_FOR_GIT_HUB,
-        source_code_basename, link_to_source_code)
+        source_code_basename,
+        link_to_source_code,
+    )
 
 
 def _translate_source_markdown_with_code_block(py_client_repo_root: str, line: str) -> List[str]:
@@ -240,11 +248,9 @@ def _translate_source_markdown_with_code_block(py_client_repo_root: str, line: s
     pattern_for_reference_name_in_target_file = "(.*),"
     pattern_for_caption = "(.*)\)"
 
-    regex_for_import_marker_in_markdown_source_code = \
-        pattern_for_import_marker \
-        + pattern_for_source_code_file_name \
-        + pattern_for_reference_name_in_target_file \
-        + pattern_for_caption
+    regex_for_import_marker_in_markdown_source_code = (
+        pattern_for_import_marker + pattern_for_source_code_file_name + pattern_for_reference_name_in_target_file + pattern_for_caption
+    )
 
     import_marker_parsed_from_source_code_line = re.search(regex_for_import_marker_in_markdown_source_code, line)
 
@@ -275,7 +281,9 @@ def _translate_symbolic_path_to_relative_path(line: str) -> str:
 
     if PY_CLIENT_ROOT_SYMBOLIC_PATH_TAG in current_state_of_line_to_process:
         path_back_from_md_output_to_py_client_module_root = "/".join((_path_back_from_md_output_to_py_client_repo_root(), PY_CLIENT_MODULE_ROOT))
-        current_state_of_line_to_process = current_state_of_line_to_process.replace(PY_CLIENT_ROOT_SYMBOLIC_PATH_TAG, path_back_from_md_output_to_py_client_module_root)
+        current_state_of_line_to_process = current_state_of_line_to_process.replace(
+            PY_CLIENT_ROOT_SYMBOLIC_PATH_TAG, path_back_from_md_output_to_py_client_module_root
+        )
 
     path_back_to_current_walkthrough_sub_dir = _make_relative_url_back_from_relative_path(MD_OUTPUT_SUB_DIRECTORY)
 
@@ -298,11 +306,12 @@ def _translate_source_markdown_with_method_signature(py_client_repo_root: str, l
     pattern_for_source_code_file_name = "\((.*?),"
     pattern_for_target_signature = "(.*?)\)"
 
-    regex_for_import_signature_in_markdown_source_code = \
-        pattern_for_import_marker \
-        + "({}|{})".format(suffix_short_signature, suffix_long_signature) \
-        + pattern_for_source_code_file_name \
+    regex_for_import_signature_in_markdown_source_code = (
+        pattern_for_import_marker
+        + "({}|{})".format(suffix_short_signature, suffix_long_signature)
+        + pattern_for_source_code_file_name
         + pattern_for_target_signature
+    )
 
     import_signature_parsed_from_source_code_line = re.findall(regex_for_import_signature_in_markdown_source_code, line)
     for signature_parsed in import_signature_parsed_from_source_code_line:
@@ -313,17 +322,16 @@ def _translate_source_markdown_with_method_signature(py_client_repo_root: str, l
         retrieved_method_signature = _extract_method_signature(py_client_repo_root, source_code_file_name, target_signature)
         source_code_from_md_source = _resolve_path_from_py_client_repo_root(_path_back_from_md_output_to_py_client_repo_root(), source_code_file_name)
         if tag_suffix == "Long":
-            method_signature = "{}({}) -> {}".format(retrieved_method_signature.method_name, retrieved_method_signature.method_arguments_as_str, retrieved_method_signature.return_type_as_str)
+            method_signature = "{}({}) -> {}".format(
+                retrieved_method_signature.method_name, retrieved_method_signature.method_arguments_as_str, retrieved_method_signature.return_type_as_str
+            )
         else:
             method_signature = "{}(...)".format(retrieved_method_signature.method_name)
 
         line = line.replace(
-            "{}{}({},{})".format(
-                pattern_for_import_marker,
-                tag_suffix,
-                source_code_file_name,
-                target_signature),
-            "[{}]({}#L{})".format(method_signature, source_code_from_md_source, retrieved_method_signature.line_number_in_source_file + OFFSET_FOR_GIT_HUB))
+            "{}{}({},{})".format(pattern_for_import_marker, tag_suffix, source_code_file_name, target_signature),
+            "[{}]({}#L{})".format(method_signature, source_code_from_md_source, retrieved_method_signature.line_number_in_source_file + OFFSET_FOR_GIT_HUB),
+        )
     return line
 
 
@@ -344,7 +352,7 @@ def _persist_md(filename: str, lines_to_write: List[str]) -> None:
     if not os.path.exists(os.path.dirname(filename)):
         os.makedirs(os.path.dirname(filename))
 
-    with open(filename, 'w') as textfile:
+    with open(filename, "w") as textfile:
         for line_to_write in lines_to_write:
             textfile.write(line_to_write)
 
@@ -358,10 +366,8 @@ def _create_walkthrough_readme(walkthrough_dist_file_path: str):
 
     readme_file_in_walkthrough_subdirectory = "/".join((walkthrough_sub_directory, README_FILE_NAME))
 
-    with open(readme_file_in_walkthrough_subdirectory, 'w') as readme_file:
-        readme_file.write(
-            "[Link to the walkthrough]({})".format(path_to_walkthrough_md_from_walkthrough_subdirectory)
-        )
+    with open(readme_file_in_walkthrough_subdirectory, "w") as readme_file:
+        readme_file.write("[Link to the walkthrough]({})".format(path_to_walkthrough_md_from_walkthrough_subdirectory))
 
 
 def _read_src_md(absolute_path_src_md: str) -> List[str]:
@@ -370,7 +376,7 @@ def _read_src_md(absolute_path_src_md: str) -> List[str]:
 
 
 def _resolve_path_from_py_client_repo_root(py_client_repo_root: str, path_to_resolve: str) -> str:
-    return py_client_repo_root + '/' + path_to_resolve
+    return py_client_repo_root + "/" + path_to_resolve
 
 
 def _get_all_files_with_absolute_paths_in_directory_recursive(root_to_search_from: str) -> list[str]:
@@ -409,10 +415,7 @@ def _run_with_arguments(py_client_repo_root: str, md_output_root: str) -> None:
         src_md_file_contents = _read_src_md(src_md_file)
         src_md_file_translated = _translate_source_markdown_to_output_markdown(py_client_repo_root, src_md_file_contents)
 
-        md_output_file = src_md_file\
-            .replace(SOURCE_DIRECTORY, MD_OUTPUT_SUB_DIRECTORY)\
-            .replace(WALKTHROUGHS_ROOT, md_output_root)\
-            .replace('.src.md', '.md')
+        md_output_file = src_md_file.replace(SOURCE_DIRECTORY, MD_OUTPUT_SUB_DIRECTORY).replace(WALKTHROUGHS_ROOT, md_output_root).replace(".src.md", ".md")
         _persist_md(md_output_file, src_md_file_translated)
         _create_walkthrough_readme(md_output_file)
 
@@ -422,5 +425,5 @@ def main():
     _run_with_arguments(py_client_repo_root, dist_directory)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

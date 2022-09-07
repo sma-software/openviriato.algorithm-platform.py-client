@@ -4,8 +4,14 @@ from unittest import mock
 
 import py_client.algorithm_interface_test.test_helper.SessionMockFactory as APISessionMock
 from py_client.aidm import AlgorithmNode, AlgorithmTrain, TableRow
-from py_client.aidm.aidm_table_cell_classes import TableTextCell, TableIntegerCell, TableDurationCell, TableLocalDateTimeCell, \
-    TableAlgorithmNodeCell, TableAlgorithmTrainCell
+from py_client.aidm.aidm_table_cell_classes import (
+    TableTextCell,
+    TableIntegerCell,
+    TableDurationCell,
+    TableLocalDateTimeCell,
+    TableAlgorithmNodeCell,
+    TableAlgorithmTrainCell,
+)
 from py_client.algorithm_interface import algorithm_interface_factory
 from py_client.algorithm_interface_test.test_helper.SessionMockTestBase import get_api_url, SessionMockTestBase
 
@@ -18,23 +24,19 @@ class TestAddRowsToTable(unittest.TestCase):
 
             return APISessionMock.create_response_mock("", 200)
 
-    @mock.patch('requests.Session', side_effect=AddRowsToTableTestSessionMock)
+    @mock.patch("requests.Session", side_effect=AddRowsToTableTestSessionMock)
     def setUp(self, mocked_get_obj):
         self.interface_to_viriato = algorithm_interface_factory.create(get_api_url())
 
-    @mock.patch('requests.Session', side_effect=AddRowsToTableTestSessionMock)
+    @mock.patch("requests.Session", side_effect=AddRowsToTableTestSessionMock)
     def test_add_rows_to_table_request(self, mocked_session_object):
         table_id = 11041
         cell_1 = TableTextCell("keyOfColumn1", "some_contents")
         cell_2 = TableIntegerCell("keyOfColumn2", 9)
         cell_4 = TableDurationCell("keyOfColumn4", timedelta(seconds=5))
         cell_5 = TableAlgorithmNodeCell("keyOfColumn5", AlgorithmNode(1, "code", "debug_string", node_tracks=[]).id)
-        cell_3 = TableLocalDateTimeCell(
-            "keyOfColumn3",
-            datetime(year=2003, month=5, day=21, hour=18, minute=4, second=59))
-        cell_6 = TableAlgorithmTrainCell(
-            "keyOfColumn6",
-            AlgorithmTrain(id=0, debug_string="dummy_train", train_path_nodes=[], code='test_train').id)
+        cell_3 = TableLocalDateTimeCell("keyOfColumn3", datetime(year=2003, month=5, day=21, hour=18, minute=4, second=59))
+        cell_6 = TableAlgorithmTrainCell("keyOfColumn6", AlgorithmTrain(id=0, debug_string="dummy_train", train_path_nodes=[], code="test_train").id)
         table_row = TableRow([cell_1, cell_2, cell_3, cell_4, cell_5, cell_6])
 
         self.interface_to_viriato.add_rows_to_table(table_id, [table_row])
@@ -74,26 +76,22 @@ class TestAddRowsToTable(unittest.TestCase):
         self.assertEqual(session_obj.last_body[0]["row"][5]["columnKey"], "keyOfColumn6")
         self.assertEqual(session_obj.last_body[0]["row"][5]["trainId"], 0)
 
-    @mock.patch('requests.Session', side_effect=AddRowsToTableTestSessionMock)
+    @mock.patch("requests.Session", side_effect=AddRowsToTableTestSessionMock)
     def test_add_rows_to_table_one_row_response(self, _):
         table_id = 11041
         cell_1 = TableTextCell("keyOfColumn1", "some_contents")
         cell_2 = TableIntegerCell("keyOfColumn2", 9)
         cell_4 = TableDurationCell("keyOfColumn4", timedelta(seconds=5))
         cell_5 = TableAlgorithmNodeCell("keyOfColumn5", AlgorithmNode(1, "code", "debug_string", node_tracks=[]).id)
-        cell_3 = TableLocalDateTimeCell(
-            "keyOfColumn3",
-            datetime(year=2003, month=5, day=21, hour=18, minute=4, second=59))
-        cell_6 = TableAlgorithmTrainCell(
-            "keyOfColumn6",
-            AlgorithmTrain(id=0, debug_string="dummy_train", train_path_nodes=[], code="dummy_train").id)
+        cell_3 = TableLocalDateTimeCell("keyOfColumn3", datetime(year=2003, month=5, day=21, hour=18, minute=4, second=59))
+        cell_6 = TableAlgorithmTrainCell("keyOfColumn6", AlgorithmTrain(id=0, debug_string="dummy_train", train_path_nodes=[], code="dummy_train").id)
         table_row = TableRow([cell_1, cell_2, cell_3, cell_4, cell_5, cell_6])
 
         none_response = self.interface_to_viriato.add_rows_to_table(table_id, [table_row])
 
         self.assertIsNone(none_response)
 
-    @mock.patch('requests.Session', side_effect=AddRowsToTableTestSessionMock)
+    @mock.patch("requests.Session", side_effect=AddRowsToTableTestSessionMock)
     def test_add_empty_list_of_rows_to_table_response(self, _):
         table_id = 1231
 
@@ -108,6 +106,6 @@ class TestAddRowsToTable(unittest.TestCase):
 
         self.assertIsNone(none_response)
 
-    @mock.patch('requests.Session', side_effect=AddRowsToTableTestSessionMock)
+    @mock.patch("requests.Session", side_effect=AddRowsToTableTestSessionMock)
     def tearDown(self, mocked_get_obj) -> None:
         self.interface_to_viriato.__exit__(None, None, None)

@@ -1,9 +1,18 @@
 from abc import ABC, abstractmethod
 from typing import Type, Tuple
 
-from py_client.aidm import IncomingRoutingEdge, OutgoingRoutingEdge, IncomingNodeTrackRoutingEdge, \
-    CrossingRoutingEdge, OutgoingNodeTrackRoutingEdge, AlgorithmRosterLinkDefinition, LinkType, \
-    AlgorithmAwaitArrivalLink, AlgorithmConnectionLink, AlgorithmRosterLink
+from py_client.aidm import (
+    IncomingRoutingEdge,
+    OutgoingRoutingEdge,
+    IncomingNodeTrackRoutingEdge,
+    CrossingRoutingEdge,
+    OutgoingNodeTrackRoutingEdge,
+    AlgorithmRosterLinkDefinition,
+    LinkType,
+    AlgorithmAwaitArrivalLink,
+    AlgorithmConnectionLink,
+    AlgorithmRosterLink,
+)
 from py_client.conversion.converter_helpers import RoutingEdgeType
 
 
@@ -22,7 +31,6 @@ class ABCAIDMToJSONPostProcessor(ABC):
 
 
 class RoutingEdgeProcessor(ABCAIDMToJSONPostProcessor):
-
     @staticmethod
     def __get_routing_edge_types():
         return (
@@ -102,7 +110,7 @@ class AIDMToJSONPostProcessorChain:
         AlgorithmRosterLinkDefinitionPostProcessor,
         AlgorithmAwaitArrivalLinkPostProcessor,
         AlgorithmConnectionLinkPostProcessor,
-        AlgorithmRosterLinkPostProcessor
+        AlgorithmRosterLinkPostProcessor,
     )
 
     @classmethod

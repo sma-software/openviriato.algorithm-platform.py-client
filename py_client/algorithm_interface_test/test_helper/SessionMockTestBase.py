@@ -25,5 +25,5 @@ class SessionMockTestBase:
 
 
 def get_api_url():
-    url_str = 'http://localhost:8080'
+    url_str = "http://localhost:8080"
     return url_str

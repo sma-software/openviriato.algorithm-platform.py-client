@@ -11,10 +11,10 @@ class UpdateTrainRoute:
     __routing_edges: List[AnyRoutingEdgeIncomingOrCrossingOrOutgoing]
 
     def __init__(
-            self,
-            start_train_path_node_id: int,
-            end_train_path_node_id: int,
-            routing_edges: List[AnyRoutingEdgeIncomingOrCrossingOrOutgoing],
+        self,
+        start_train_path_node_id: int,
+        end_train_path_node_id: int,
+        routing_edges: List[AnyRoutingEdgeIncomingOrCrossingOrOutgoing],
     ):
         self.__start_train_path_node_id = start_train_path_node_id
         self.__end_train_path_node_id = end_train_path_node_id
@@ -42,13 +42,13 @@ class UpdateTimesTrainPathNode:
     __stop_status: Optional[StopStatus] = None
 
     def __init__(
-            self,
-            train_path_node_id: int,
-            arrival_time: datetime.datetime,
-            departure_time: datetime.datetime,
-            minimum_run_time: Optional[datetime.timedelta] = None,
-            minimum_stop_time: Optional[datetime.timedelta] = None,
-            stop_status: Optional[StopStatus] = None
+        self,
+        train_path_node_id: int,
+        arrival_time: datetime.datetime,
+        departure_time: datetime.datetime,
+        minimum_run_time: Optional[datetime.timedelta] = None,
+        minimum_stop_time: Optional[datetime.timedelta] = None,
+        stop_status: Optional[StopStatus] = None,
     ):
         self.__train_path_node_id = train_path_node_id
         self.__arrival_time = arrival_time
@@ -102,12 +102,12 @@ class UpdateStopTimesTrainPathNode:
     __stop_status: Optional[StopStatus] = None
 
     def __init__(
-            self,
-            train_path_node_id: int,
-            arrival_time: datetime.datetime,
-            departure_time: datetime.datetime,
-            minimum_stop_time: Optional[datetime.timedelta] = None,
-            stop_status: Optional[StopStatus] = None
+        self,
+        train_path_node_id: int,
+        arrival_time: datetime.datetime,
+        departure_time: datetime.datetime,
+        minimum_stop_time: Optional[datetime.timedelta] = None,
+        stop_status: Optional[StopStatus] = None,
     ):
         self.__train_path_node_id = train_path_node_id
         self.__arrival_time = arrival_time
@@ -143,11 +143,12 @@ class UpdateRunTimesTrainPathSegment:
     __minimum_run_time: Optional[datetime.timedelta]
 
     def __init__(
-            self,
-            to_train_path_node_id: int,
-            from_node_departure_time: datetime.datetime,
-            to_node_arrival_time: datetime.datetime,
-            minimum_run_time: Optional[datetime.timedelta]):
+        self,
+        to_train_path_node_id: int,
+        from_node_departure_time: datetime.datetime,
+        to_node_arrival_time: datetime.datetime,
+        minimum_run_time: Optional[datetime.timedelta],
+    ):
         self.__to_train_path_node_id = to_train_path_node_id
         self.__from_node_departure_time = from_node_departure_time
         self.__to_node_arrival_time = to_node_arrival_time

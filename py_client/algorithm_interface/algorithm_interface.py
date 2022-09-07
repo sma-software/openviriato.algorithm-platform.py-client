@@ -48,7 +48,7 @@ from py_client.aidm import (
     RunningTimePenaltyOnTrainPath,
     RunningTimeCalculationResult,
     ConflictDetectionArguments,
-    AlgorithmTrainSimulationRealizationForecast
+    AlgorithmTrainSimulationRealizationForecast,
 )
 from py_client.aidm.aidm_conflict import AlgorithmConflict
 from py_client.aidm.aidm_link_classes import _AlgorithmLink
@@ -109,17 +109,13 @@ class AlgorithmInterface:
         response_list = self.__communication_layer.do_get_request_without_body(url_to_resource, query_parameters)
         return JsonToAidmConverter().process_json_to_aidm(response_list, List[RoutingEdgePair])
 
-    def get_preferred_starting_routes_for_node(
-        self, node_id: int, end_section_track_id: Optional[int]
-    ) -> List[RoutingEdgePair]:
+    def get_preferred_starting_routes_for_node(self, node_id: int, end_section_track_id: Optional[int]) -> List[RoutingEdgePair]:
         url_to_resource = "nodes/{0}/preferred-routes".format(node_id)
         query_parameters = dict(endSectionTrackID=end_section_track_id, endInNode=False, startInNode=True)
         response_list = self.__communication_layer.do_get_request_without_body(url_to_resource, query_parameters)
         return JsonToAidmConverter().process_json_to_aidm(response_list, List[RoutingEdgePair])
 
-    def get_preferred_ending_routes_for_node(
-        self, node_id: int, start_section_track_id: Optional[int]
-    ) -> List[RoutingEdgePair]:
+    def get_preferred_ending_routes_for_node(self, node_id: int, start_section_track_id: Optional[int]) -> List[RoutingEdgePair]:
         url_to_resource = "nodes/{0}/preferred-routes".format(node_id)
         query_parameters = dict(startSectionTrackID=start_section_track_id, endInNode=True, startInNode=False)
         response_list = self.__communication_layer.do_get_request_without_body(url_to_resource, query_parameters)
@@ -215,21 +211,15 @@ class AlgorithmInterface:
     def get_trains_cut_to_time_range(self, time_window: TimeWindow) -> List[AlgorithmTrain]:
         url_to_resource = "trains"
         cut_train_query_parameters = dict(cutTrain=True)
-        query_parameters = _interface_helpers.merge_query_parameters(
-            [cut_train_query_parameters, to_json_converter.convert_any_object(time_window)]
-        )
+        query_parameters = _interface_helpers.merge_query_parameters([cut_train_query_parameters, to_json_converter.convert_any_object(time_window)])
         response_list = self.__communication_layer.do_get_request_without_body(url_to_resource, query_parameters=query_parameters)
         return JsonToAidmConverter().process_json_to_aidm(response_list, List[AlgorithmTrain])
 
-    def get_trains_cut_to_time_range_driving_any_node(
-        self, time_window: TimeWindow, filter_node_ids: List[int]
-    ) -> List[AlgorithmTrain]:
+    def get_trains_cut_to_time_range_driving_any_node(self, time_window: TimeWindow, filter_node_ids: List[int]) -> List[AlgorithmTrain]:
         url_to_resource = "trains"
         body = dict(filterNodeIds=filter_node_ids)
         manual_converted_query_parameters = dict(cutTrain=True)
-        query_parameters = _interface_helpers.merge_query_parameters(
-            [manual_converted_query_parameters, to_json_converter.convert_any_object(time_window)]
-        )
+        query_parameters = _interface_helpers.merge_query_parameters([manual_converted_query_parameters, to_json_converter.convert_any_object(time_window)])
         response_list = self.__communication_layer.do_get_request_with_body(url_to_resource, body=body, query_parameters=query_parameters)
         return JsonToAidmConverter().process_json_to_aidm(response_list, List[AlgorithmTrain])
 
@@ -259,9 +249,7 @@ class AlgorithmInterface:
 
     def update_movement_type(self, movement_type_id: int, train_id: int, from_train_path_node_id: int, to_train_path_node_id: int) -> AlgorithmTrain:
         url_to_resource = "trains/{0}/train-path-nodes:update-movement-type".format(train_id)
-        put_body_dict = dict(movementTypeId=movement_type_id,
-                             fromTrainPathNodeId=from_train_path_node_id,
-                             toTrainPathNodeId=to_train_path_node_id)
+        put_body_dict = dict(movementTypeId=movement_type_id, fromTrainPathNodeId=from_train_path_node_id, toTrainPathNodeId=to_train_path_node_id)
         response_dict = self.__communication_layer.do_put_request(url_to_resource, request_body=put_body_dict)
         return JsonToAidmConverter().process_json_to_aidm(response_dict, AlgorithmTrain)
 
@@ -298,18 +286,14 @@ class AlgorithmInterface:
         response_dict = self.__communication_layer.do_put_request(url_to_resource, request_body=put_request_body)
         return JsonToAidmConverter().process_json_to_aidm(response_dict, AlgorithmTrain)
 
-    def update_train_times(
-        self, train_id: int, update_train_times_nodes: List[UpdateTimesTrainPathNode]
-    ) -> AlgorithmTrain:
+    def update_train_times(self, train_id: int, update_train_times_nodes: List[UpdateTimesTrainPathNode]) -> AlgorithmTrain:
         url_to_resource = "trains/{0}/train-path-nodes:update-times".format(train_id)
         put_body_list = to_json_converter.convert_any_object(update_train_times_nodes)
         response_dict = self.__communication_layer.do_put_request(url_to_resource, request_body=put_body_list)
         return JsonToAidmConverter().process_json_to_aidm(response_dict, AlgorithmTrain)
 
     @dispatch(int, UpdateStopTimesTrainPathNode)
-    def update_train_trajectory_stop_times(
-        self, train_id: int, update_train_stop_times_node: UpdateStopTimesTrainPathNode
-    ) -> AlgorithmTrain:
+    def update_train_trajectory_stop_times(self, train_id: int, update_train_stop_times_node: UpdateStopTimesTrainPathNode) -> AlgorithmTrain:
         url_to_resource = "trains/{0}/train-path-nodes:update-trajectory-stop-times".format(train_id)
         put_body_list = to_json_converter.convert_any_object(update_train_stop_times_node)
         response_dict = self.__communication_layer.do_put_request(url_to_resource, request_body=put_body_list)
@@ -356,9 +340,7 @@ class AlgorithmInterface:
         response_dict = self.__communication_layer.do_get_request_without_body(url_to_resource, query_parameters)
         return JsonToAidmConverter().process_json_to_aidm(response_dict, Optional[datetime.timedelta])
 
-    def get_separation_time_in_station_for_node_track_reoccupation(
-        self, node_id: int, node_track_id: int
-    ) -> datetime.timedelta:
+    def get_separation_time_in_station_for_node_track_reoccupation(self, node_id: int, node_track_id: int) -> datetime.timedelta:
         url_to_resource = "nodes/{0}/separation-times".format(node_id)
         query_parameters = dict(nodeTrackId=node_track_id)
         response_dict = self.__communication_layer.do_get_request_without_body(url_to_resource, query_parameters)
@@ -409,9 +391,7 @@ class AlgorithmInterface:
 
         return JsonToAidmConverter().process_json_to_aidm(response_dict, Optional[datetime.timedelta])
 
-    def get_default_headway_time(
-        self, section_track_id: int, from_node_id: Optional[int], to_node_id: Optional[int]
-    ) -> datetime.timedelta:
+    def get_default_headway_time(self, section_track_id: int, from_node_id: Optional[int], to_node_id: Optional[int]) -> datetime.timedelta:
         url_to_resource = "section-tracks/{0}/headway-times".format(section_track_id)
         headway_query_parameters = dict()
         if from_node_id is not None:
@@ -443,12 +423,8 @@ class AlgorithmInterface:
         response_dict = self.__communication_layer.do_get_request_without_body(url_to_resource, headway_query_parameters)
         return JsonToAidmConverter().process_json_to_aidm(response_dict, datetime.timedelta)
 
-    def get_headway_time_for_train_path_nodes(
-        self, preceding_train_path_node_id: int, succeeding_train_path_node_id: int
-    ) -> datetime.timedelta:
-        url_to_resource = "headway-times/between-train-path-nodes/{0}/{1}".format(
-            preceding_train_path_node_id, succeeding_train_path_node_id
-        )
+    def get_headway_time_for_train_path_nodes(self, preceding_train_path_node_id: int, succeeding_train_path_node_id: int) -> datetime.timedelta:
+        url_to_resource = "headway-times/between-train-path-nodes/{0}/{1}".format(preceding_train_path_node_id, succeeding_train_path_node_id)
         response_dict = self.__communication_layer.do_get_request_without_body(url_to_resource)
         return JsonToAidmConverter().process_json_to_aidm(response_dict, datetime.timedelta)
 
@@ -460,14 +436,12 @@ class AlgorithmInterface:
         from_node_id: int,
         to_node_id: int,
     ) -> datetime.timedelta:
-        url_to_resource = (
-            "headway-times/between-train-path-nodes/{0}/{1}/for-section-track/{2}/in-direction/{3}/{4}".format(
-                preceding_train_path_node_id,
-                succeeding_train_path_node_id,
-                section_track_id,
-                from_node_id,
-                to_node_id,
-            )
+        url_to_resource = "headway-times/between-train-path-nodes/{0}/{1}/for-section-track/{2}/in-direction/{3}/{4}".format(
+            preceding_train_path_node_id,
+            succeeding_train_path_node_id,
+            section_track_id,
+            from_node_id,
+            to_node_id,
         )
         response_dict = self.__communication_layer.do_get_request_without_body(url_to_resource)
         return JsonToAidmConverter().process_json_to_aidm(response_dict, datetime.timedelta)
@@ -489,9 +463,7 @@ class AlgorithmInterface:
         response_list = self.__communication_layer.do_get_request_without_body(url_to_resource, query_parameters)
         return JsonToAidmConverter().process_json_to_aidm(response_list, List[AlgorithmNodeTrack])
 
-    def update_node_track(
-        self, train_id: int, train_path_node_id: int, station_track_id_or_none: Optional[int] = None
-    ) -> AlgorithmTrain:
+    def update_node_track(self, train_id: int, train_path_node_id: int, station_track_id_or_none: Optional[int] = None) -> AlgorithmTrain:
         url_to_resource = "trains/{0}/train-path-nodes/{1}:update-node-track".format(train_id, train_path_node_id)
         put_request_body = dict(nodeTrackId=to_json_converter.convert_any_object(station_track_id_or_none))
         response_dict = self.__communication_layer.do_put_request(url_to_resource, put_request_body)
@@ -505,14 +477,10 @@ class AlgorithmInterface:
         )
 
     def get_outgoing_routing_edges(self, routing_point: RoutingPoint) -> List[OutgoingNodeTrackRoutingEdge]:
-        return _interface_helpers.do_get_routing_edges_request(
-            self.__communication_layer, routing_point, converter_helpers.RoutingEdgeType.outgoing_node_track
-        )
+        return _interface_helpers.do_get_routing_edges_request(self.__communication_layer, routing_point, converter_helpers.RoutingEdgeType.outgoing_node_track)
 
     def get_crossing_routing_edges(self, routing_point: RoutingPoint) -> List[CrossingRoutingEdge]:
-        return _interface_helpers.do_get_routing_edges_request(
-            self.__communication_layer, routing_point, converter_helpers.RoutingEdgeType.crossing
-        )
+        return _interface_helpers.do_get_routing_edges_request(self.__communication_layer, routing_point, converter_helpers.RoutingEdgeType.crossing)
 
     def get_routing_edges(self, routing_point: RoutingPoint) -> List[AnyRoutingEdgeIncomingOrCrossingOrOutgoing]:
         return _interface_helpers.do_get_routing_edges_request(self.__communication_layer, routing_point, None)
@@ -538,9 +506,7 @@ class AlgorithmInterface:
         response_dict = self.__communication_layer.do_get_request_without_body(url_to_resource)
         return JsonToAidmConverter().process_json_to_aidm(response_dict, AlgorithmVehicleType)
 
-    def get_links(
-        self, time_window: TimeWindow
-    ) -> List[Union[AlgorithmConnectionLink, AlgorithmAwaitArrivalLink, AlgorithmRosterLink]]:
+    def get_links(self, time_window: TimeWindow) -> List[Union[AlgorithmConnectionLink, AlgorithmAwaitArrivalLink, AlgorithmRosterLink]]:
         return _interface_helpers.do_get_any_link(self.__communication_layer, time_window, None, None)
 
     def get_links_containing_any_node(
@@ -551,29 +517,19 @@ class AlgorithmInterface:
     def get_connection_links(self, time_window: TimeWindow) -> List[AlgorithmConnectionLink]:
         return _interface_helpers.do_get_any_link(self.__communication_layer, time_window, LinkType.connection, None)
 
-    def get_connection_links_containing_any_node(
-        self, time_window: TimeWindow, node_ids: List[int]
-    ) -> List[AlgorithmConnectionLink]:
-        return _interface_helpers.do_get_any_link(
-            self.__communication_layer, time_window, LinkType.connection, node_ids
-        )
+    def get_connection_links_containing_any_node(self, time_window: TimeWindow, node_ids: List[int]) -> List[AlgorithmConnectionLink]:
+        return _interface_helpers.do_get_any_link(self.__communication_layer, time_window, LinkType.connection, node_ids)
 
     def get_await_arrival_links(self, time_window: TimeWindow) -> List[AlgorithmAwaitArrivalLink]:
         return _interface_helpers.do_get_any_link(self.__communication_layer, time_window, LinkType.await_arrival, None)
 
-    def get_await_arrival_links_containing_any_node(
-        self, time_window: TimeWindow, node_ids: List[int]
-    ) -> List[AlgorithmAwaitArrivalLink]:
-        return _interface_helpers.do_get_any_link(
-            self.__communication_layer, time_window, LinkType.await_arrival, node_ids
-        )
+    def get_await_arrival_links_containing_any_node(self, time_window: TimeWindow, node_ids: List[int]) -> List[AlgorithmAwaitArrivalLink]:
+        return _interface_helpers.do_get_any_link(self.__communication_layer, time_window, LinkType.await_arrival, node_ids)
 
     def get_roster_links(self, time_window: TimeWindow) -> List[AlgorithmRosterLink]:
         return _interface_helpers.do_get_any_link(self.__communication_layer, time_window, LinkType.roster, None)
 
-    def get_roster_links_containing_any_node(
-        self, time_window: TimeWindow, node_ids: List[int]
-    ) -> List[AlgorithmRosterLink]:
+    def get_roster_links_containing_any_node(self, time_window: TimeWindow, node_ids: List[int]) -> List[AlgorithmRosterLink]:
         return _interface_helpers.do_get_any_link(self.__communication_layer, time_window, LinkType.roster, node_ids)
 
     def create_roster_links(self, roster_links: List[AlgorithmRosterLinkDefinition]) -> List[AlgorithmRosterLink]:
@@ -606,9 +562,7 @@ class AlgorithmInterface:
         url_to_resource = "user-outputs/tables"
         table_definition_as_json = to_json_converter.convert_any_object(table_definition)
         for column_index in range(len(table_definition_as_json["columns"])):
-            table_definition_as_json["columns"][column_index]["header"] = table_definition_as_json["columns"][
-                column_index
-            ]["header"]["value"]
+            table_definition_as_json["columns"][column_index]["header"] = table_definition_as_json["columns"][column_index]["header"]["value"]
         response_dict = self.__communication_layer.do_post_request(url_to_resource, table_definition_as_json)
         return JsonToAidmConverter().process_json_to_aidm(response_dict, int)
 
@@ -631,9 +585,7 @@ class AlgorithmInterface:
         response_value: Optional[int] = _interface_helpers.do_get_any_parameter(self.__communication_layer, key)
         return JsonToAidmConverter().process_json_to_aidm(response_value, Optional[int])
 
-    def get_enum_algorithm_parameter(
-        self, enum_type: Type[EnumType], key: str
-    ) -> Optional[EnumType]:
+    def get_enum_algorithm_parameter(self, enum_type: Type[EnumType], key: str) -> Optional[EnumType]:
         response_value = _interface_helpers.do_get_any_parameter(self.__communication_layer, key)
         return JsonToAidmConverter().process_json_to_aidm(response_value, Optional[enum_type])
 
@@ -669,7 +621,7 @@ class AlgorithmInterface:
         response_list_of_dict = self.__communication_layer.do_get_request_without_body(url_to_resource, query_parameters)
         return JsonToAidmConverter().process_json_to_aidm(response_list_of_dict, List[AlgorithmSectionTrackClosure])
 
-    def get_section_running_time_penalties(self, time_window: TimeWindow)-> List[AlgorithmSectionRunningTimePenalty]:
+    def get_section_running_time_penalties(self, time_window: TimeWindow) -> List[AlgorithmSectionRunningTimePenalty]:
         query_parameters = to_json_converter.convert_any_object(time_window)
         url_to_resource = "possessions/section-running-time-penalties"
         response_list_of_dict = self.__communication_layer.do_get_request_without_body(url_to_resource, query_parameters)
@@ -710,7 +662,7 @@ class AlgorithmInterface:
 
         query_parameters = dict()
         if arguments.filter_train_id is not None:
-            query_parameters['trainId'] = arguments.filter_train_id
+            query_parameters["trainId"] = arguments.filter_train_id
 
         if arguments.time_window is not None:
             query_parameters = _interface_helpers.merge_query_parameters([query_parameters, to_json_converter.convert_any_object(arguments.time_window)])
@@ -720,18 +672,9 @@ class AlgorithmInterface:
         return JsonToAidmConverter().process_json_to_aidm(response_list, List[AlgorithmConflict])
 
     def __construct_body(self, arguments: ConflictDetectionArguments):
-        location = dict(
-            nodeIds=arguments.filter_node_ids,
-            sectionTrackIds=arguments.filter_section_track_ids
-        )
-        filters = dict(
-            location=location,
-            conflictTypes=to_json_converter.convert_any_object(arguments.filter_conflict_types)
-        )
-        body = dict(
-            trainIds=arguments.train_ids,
-            filters=filters
-        )
+        location = dict(nodeIds=arguments.filter_node_ids, sectionTrackIds=arguments.filter_section_track_ids)
+        filters = dict(location=location, conflictTypes=to_json_converter.convert_any_object(arguments.filter_conflict_types))
+        body = dict(trainIds=arguments.train_ids, filters=filters)
         return body
 
     def has_changed_links(self) -> bool:

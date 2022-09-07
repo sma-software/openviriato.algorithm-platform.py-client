@@ -8,9 +8,9 @@ from py_client.aidm.aidm_base_classes import _HasID
 
 @unique
 class AlgorithmTrainSimulationEventType(Enum):
-    arrival = 'arrival'
-    departure = 'departure'
-    passing = 'passing'
+    arrival = "arrival"
+    departure = "departure"
+    passing = "passing"
 
 
 class AlgorithmTrainSimulationTrainPathNode(_HasID):
@@ -26,11 +26,21 @@ class AlgorithmTrainSimulationTrainPathNode(_HasID):
     __planned_stop_status: StopStatus
     __node_id: int
 
-    def __init__(self, id: int, arrival_delay: datetime.timedelta, departure_delay: datetime.timedelta,
-                 estimated_arrival_time: datetime.datetime, estimated_departure_time: datetime.datetime,
-                 estimated_stop_status: StopStatus, minimum_run_time: datetime.timedelta,
-                 minimum_stop_time: datetime.timedelta, planned_arrival_time: datetime.datetime,
-                 planned_departure_time: datetime.datetime, planned_stop_status: StopStatus, node_id: int):
+    def __init__(
+        self,
+        id: int,
+        arrival_delay: datetime.timedelta,
+        departure_delay: datetime.timedelta,
+        estimated_arrival_time: datetime.datetime,
+        estimated_departure_time: datetime.datetime,
+        estimated_stop_status: StopStatus,
+        minimum_run_time: datetime.timedelta,
+        minimum_stop_time: datetime.timedelta,
+        planned_arrival_time: datetime.datetime,
+        planned_departure_time: datetime.datetime,
+        planned_stop_status: StopStatus,
+        node_id: int,
+    ):
         _HasID.__init__(self, id)
         self.__arrival_delay = arrival_delay
         self.__departure_delay = departure_delay
@@ -157,4 +167,3 @@ class AlgorithmTrainSimulationRealizationForecast:
     @property
     def unrealizable_events(self) -> List[AlgorithmTrainSimulationUnrealizableEvent]:
         return self.__unrealizable_events
-    

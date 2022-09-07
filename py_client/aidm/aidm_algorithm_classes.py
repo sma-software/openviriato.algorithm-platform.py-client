@@ -5,7 +5,6 @@ from py_client.aidm.aidm_train_path_node_classes import AlgorithmTrainPathNode
 
 
 class AlgorithmNodeTrack(_HasID, _HasCode, _HasDebugString):
-
     def __init__(self, id: int, code: str, debug_string: str):
         _HasID.__init__(self, id)
         _HasCode.__init__(self, code)
@@ -65,12 +64,7 @@ class AlgorithmFormation(_HasID, _HasDebugString):
     __places_second_class: int
     __vehicle_type_ids: List[int]
 
-    def __init__(self,
-                 id: int,
-                 debug_string: str,
-                 vehicle_type_ids: List[int],
-                 places_first_class: int,
-                 places_second_class: int):
+    def __init__(self, id: int, debug_string: str, vehicle_type_ids: List[int], places_first_class: int, places_second_class: int):
         _HasID.__init__(self, id)
         _HasDebugString.__init__(self, debug_string)
         self.__places_first_class = places_first_class
@@ -114,6 +108,7 @@ class AlgorithmVehicleType(_HasID, _HasDebugString):
     def places_second_class(self) -> int:
         return self.__places_second_class
 
+
 class AlgorithmMovementType(_HasID):
     __description: str
     __is_empty_train: bool
@@ -136,4 +131,3 @@ class AlgorithmMovementType(_HasID):
     @property
     def name(self):
         return self.__name
-

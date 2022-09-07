@@ -15,27 +15,28 @@ class TestDetectConflicts(unittest.TestCase):
             self.__last_params = params
             self.__last_request = request
 
-            json_string = ( "["
-                            "   {"
-                            "       \"conflictType\": \"travelDirectionChange\", \n"
-                            "       \"timeWindow\": { \n"
-                            "           \"fromTime\": \"2022-04-14T11:42:10\", \n"
-                            "           \"toTime\": \"2022-04-14T12:02:00\" \n"
-                            "   }, \n"
-                            "   \"nodeId\": 892, \n"
-                            "   \"trainId\": 2743, \n"
-                            "   \"trainPathNodeId\": 227 \n"
-                            "    } \n"
-                            "]"
-                            )
+            json_string = (
+                "["
+                "   {"
+                '       "conflictType": "travelDirectionChange", \n'
+                '       "timeWindow": { \n'
+                '           "fromTime": "2022-04-14T11:42:10", \n'
+                '           "toTime": "2022-04-14T12:02:00" \n'
+                "   }, \n"
+                '   "nodeId": 892, \n'
+                '   "trainId": 2743, \n'
+                '   "trainPathNodeId": 227 \n'
+                "    } \n"
+                "]"
+            )
 
             return SessionMockFactory.create_response_mock(json_string, 200)
 
-    @mock.patch('requests.Session', side_effect=DetectConflictsMockSession)
+    @mock.patch("requests.Session", side_effect=DetectConflictsMockSession)
     def setUp(self, mocked_get_obj):
         self.interface_to_viriato = algorithm_interface_factory.create(get_api_url())
 
-    @mock.patch('requests.Session', side_effect=DetectConflictsMockSession)
+    @mock.patch("requests.Session", side_effect=DetectConflictsMockSession)
     def test_detect_conflicts_mock_session(self, mocked_get_obj):
         train_ids = [2743]
         arguments = ConflictDetectionArguments(train_ids=train_ids)
@@ -44,61 +45,41 @@ class TestDetectConflicts(unittest.TestCase):
 
         session_obj = self.interface_to_viriato._AlgorithmInterface__communication_layer.currentSession
 
-        self.assertEqual(session_obj._DetectConflictsMockSession__last_request,
-                         get_api_url() + "/services/trains:detect-conflicts")
+        self.assertEqual(session_obj._DetectConflictsMockSession__last_request, get_api_url() + "/services/trains:detect-conflicts")
 
-        self.assertDictEqual(session_obj._DetectConflictsMockSession__last_body, {'trainIds': [2743], 'filters': {'location': {'nodeIds': None, 'sectionTrackIds': None}, 'conflictTypes': None}})
+        self.assertDictEqual(
+            session_obj._DetectConflictsMockSession__last_body,
+            {"trainIds": [2743], "filters": {"location": {"nodeIds": None, "sectionTrackIds": None}, "conflictTypes": None}},
+        )
         self.assertDictEqual(session_obj._DetectConflictsMockSession__last_params, {})
 
-    @mock.patch('requests.Session', side_effect=DetectConflictsMockSession)
+    @mock.patch("requests.Session", side_effect=DetectConflictsMockSession)
     def test_detect_conflicts_response(self, mocked_get_obj):
-        arguments = ConflictDetectionArguments(train_ids = [6745, 6750])
+        arguments = ConflictDetectionArguments(train_ids=[6745, 6750])
         list_of_algorithm_conflicts = self.interface_to_viriato.detect_conflicts(arguments=arguments)
 
-        self.assertIsInstance(
-            list_of_algorithm_conflicts,
-            list)
+        self.assertIsInstance(list_of_algorithm_conflicts, list)
 
-        self.assertIsInstance(
-            list_of_algorithm_conflicts[0],
-            AlgorithmNodeConflict)
+        self.assertIsInstance(list_of_algorithm_conflicts[0], AlgorithmNodeConflict)
 
-        self.assertIsInstance(
-            list_of_algorithm_conflicts[0],
-            _AlgorithmOneTrainNodeConflict)
+        self.assertIsInstance(list_of_algorithm_conflicts[0], _AlgorithmOneTrainNodeConflict)
 
-        self.assertIsInstance(
-            list_of_algorithm_conflicts[0].conflict_type,
-            ConflictType)
+        self.assertIsInstance(list_of_algorithm_conflicts[0].conflict_type, ConflictType)
 
-        self.assertEqual(
-            list_of_algorithm_conflicts[0].conflict_type,
-            ConflictType.TravelDirectionChange)
+        self.assertEqual(list_of_algorithm_conflicts[0].conflict_type, ConflictType.TravelDirectionChange)
 
-        self.assertIsInstance(
-            list_of_algorithm_conflicts[0].time_window,
-            TimeWindow)
+        self.assertIsInstance(list_of_algorithm_conflicts[0].time_window, TimeWindow)
 
-        self.assertEqual(
-            list_of_algorithm_conflicts[0].time_window.from_time,
-            datetime.datetime(day=14, month=4, year=2022, hour=11, minute=42, second=10))
+        self.assertEqual(list_of_algorithm_conflicts[0].time_window.from_time, datetime.datetime(day=14, month=4, year=2022, hour=11, minute=42, second=10))
 
-        self.assertEqual(
-            list_of_algorithm_conflicts[0].time_window.to_time,
-            datetime.datetime(day=14, month=4, year=2022, hour=12, minute=2, second=0))
+        self.assertEqual(list_of_algorithm_conflicts[0].time_window.to_time, datetime.datetime(day=14, month=4, year=2022, hour=12, minute=2, second=0))
 
-        self.assertEqual(
-            list_of_algorithm_conflicts[0].node_id,
-            892)
+        self.assertEqual(list_of_algorithm_conflicts[0].node_id, 892)
 
-        self.assertEqual(
-            list_of_algorithm_conflicts[0].train_id,
-            2743)
+        self.assertEqual(list_of_algorithm_conflicts[0].train_id, 2743)
 
-        self.assertEqual(
-            list_of_algorithm_conflicts[0].train_path_node_id,
-            227)
+        self.assertEqual(list_of_algorithm_conflicts[0].train_path_node_id, 227)
 
-    @mock.patch('requests.Session', side_effect=DetectConflictsMockSession)
+    @mock.patch("requests.Session", side_effect=DetectConflictsMockSession)
     def tearDown(self, mocked_get_obj) -> None:
         self.interface_to_viriato.__exit__(None, None, None)

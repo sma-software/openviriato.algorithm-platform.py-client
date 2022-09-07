@@ -7,16 +7,11 @@ from py_client.communication import response_processing
 
 
 class TestResponseProcessing(unittest.TestCase):
-
     @responses.activate
     def test_extract_json_if_possible_to_raise_http_error(self):
-        responses.add(**dict(
-            method=responses.GET,
-            url='http://notanurl/',
-            status=404
-        ))
+        responses.add(**dict(method=responses.GET, url="http://notanurl/", status=404))
 
-        response = requests.get('http://notanurl/')
+        response = requests.get("http://notanurl/")
 
         with self.assertRaises(requests.HTTPError) as http_error:
             response_processing.extract_json_if_possible(response)
@@ -27,14 +22,13 @@ class TestResponseProcessing(unittest.TestCase):
 
     @responses.activate
     def test_extract_json_if_possible_to_raise_algorithm_platform_error(self):
-        responses.add(**dict(
-            method=responses.GET,
-            url='http://notanurl/',
-            body='{"statusCode": "404", "message": "test_reason_to_raise_AlgorithmPlatformError"}',
-            status=400
-        ))
+        responses.add(
+            **dict(
+                method=responses.GET, url="http://notanurl/", body='{"statusCode": "404", "message": "test_reason_to_raise_AlgorithmPlatformError"}', status=400
+            )
+        )
 
-        response = requests.get('http://notanurl/')
+        response = requests.get("http://notanurl/")
         with self.assertRaises(response_processing.AlgorithmPlatformHTTPError) as algorithm_platform_error:
             response_processing.extract_json_if_possible(response)
 
@@ -43,14 +37,9 @@ class TestResponseProcessing(unittest.TestCase):
 
     @responses.activate
     def test_extract_json_if_possible_to_return_json(self):
-        responses.add(**dict(
-            method=responses.GET,
-            url='http://notanurl/',
-            body='{"key" : "Value"}',
-            status=200
-        ))
+        responses.add(**dict(method=responses.GET, url="http://notanurl/", body='{"key" : "Value"}', status=200))
 
-        response = requests.get('http://notanurl/')
+        response = requests.get("http://notanurl/")
         processed_response = response_processing.extract_json_if_possible(response)
 
         self.assertIsInstance(processed_response, dict)
@@ -58,14 +47,9 @@ class TestResponseProcessing(unittest.TestCase):
 
     @responses.activate
     def test_extract_json_if_possible_to_return_none(self):
-        responses.add(**dict(
-            method=responses.GET,
-            url='http://notanurl/',
-            body='',
-            status=200
-        ))
+        responses.add(**dict(method=responses.GET, url="http://notanurl/", body="", status=200))
 
-        response = requests.get('http://notanurl/')
+        response = requests.get("http://notanurl/")
         processed_response = response_processing.extract_json_if_possible(response)
 
         self.assertIsNone(processed_response)

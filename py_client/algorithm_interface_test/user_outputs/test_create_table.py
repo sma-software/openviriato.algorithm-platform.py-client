@@ -16,44 +16,29 @@ class TestCreateTable(unittest.TestCase):
 
             return APISessionMock.create_response_mock("""{ "tableId": 11041 }""", 200)
 
-    @mock.patch('requests.Session', side_effect=TestCreateTableTestSessionMock)
+    @mock.patch("requests.Session", side_effect=TestCreateTableTestSessionMock)
     def setUp(self, mocked_get_obj):
         self.interface_to_viriato = algorithm_interface_factory.create(get_api_url())
 
-    @mock.patch('requests.Session', side_effect=TestCreateTableTestSessionMock)
+    @mock.patch("requests.Session", side_effect=TestCreateTableTestSessionMock)
     def test_create_table_request(self, _):
         header_1 = TableTextCell("keyOfColumn1", "Caption of Column With String Header and String Data")
-        definition_of_table_column_1 = \
-            TableColumnDefinition(header_1.column_key, header_1, TableCellDataType.string, TableCellDataType.string)
+        definition_of_table_column_1 = TableColumnDefinition(header_1.column_key, header_1, TableCellDataType.string, TableCellDataType.string)
 
         header_2 = TableTextCell("keyOfColumn2", "Column With Integer Entries")
-        definition_of_table_column_2 = \
-            TableColumnDefinition(header_2.column_key, header_2, TableCellDataType.string, TableCellDataType.integer)
+        definition_of_table_column_2 = TableColumnDefinition(header_2.column_key, header_2, TableCellDataType.string, TableCellDataType.integer)
 
         header_3 = TableTextCell("keyOfColumn3", "Column With DateTime Entries")
-        definition_of_table_column_3 = TableColumnDefinition(
-            header_3.column_key,
-            header_3,
-            TableCellDataType.string,
-            TableCellDataType.local_date_time)
+        definition_of_table_column_3 = TableColumnDefinition(header_3.column_key, header_3, TableCellDataType.string, TableCellDataType.local_date_time)
 
         header_4 = TableTextCell("keyOfColumn4", "Column With Duration Entries")
-        definition_of_table_column_4 = \
-            TableColumnDefinition(header_4.column_key, header_4, TableCellDataType.string, TableCellDataType.duration)
+        definition_of_table_column_4 = TableColumnDefinition(header_4.column_key, header_4, TableCellDataType.string, TableCellDataType.duration)
 
         header_5 = TableTextCell("keyOfColumn5", "Column With Algorithm Node Entries")
-        definition_of_table_column_5 = TableColumnDefinition(
-            header_5.column_key,
-            header_5,
-            TableCellDataType.string,
-            TableCellDataType.algorithm_node)
+        definition_of_table_column_5 = TableColumnDefinition(header_5.column_key, header_5, TableCellDataType.string, TableCellDataType.algorithm_node)
 
         header_6 = TableTextCell("keyOfColumn6", "Column With Algorithm Train Entries")
-        definition_of_table_column_6 = TableColumnDefinition(
-            header_6.column_key,
-            header_6,
-            TableCellDataType.string,
-            TableCellDataType.algorithm_train)
+        definition_of_table_column_6 = TableColumnDefinition(header_6.column_key, header_6, TableCellDataType.string, TableCellDataType.algorithm_train)
 
         all_column_definitions = [
             definition_of_table_column_1,
@@ -61,7 +46,8 @@ class TestCreateTable(unittest.TestCase):
             definition_of_table_column_3,
             definition_of_table_column_4,
             definition_of_table_column_5,
-            definition_of_table_column_6]
+            definition_of_table_column_6,
+        ]
 
         table_definition = TableDefinition("TableName", columns=all_column_definitions)
 
@@ -69,9 +55,7 @@ class TestCreateTable(unittest.TestCase):
 
         session_obj = self.interface_to_viriato._AlgorithmInterface__communication_layer.currentSession
 
-        self.assertEqual(
-            session_obj.last_request,
-            get_api_url() + "/user-outputs/tables")
+        self.assertEqual(session_obj.last_request, get_api_url() + "/user-outputs/tables")
 
         self.assertIsInstance(session_obj.last_body, dict)
         self.assertSetEqual(set(session_obj.last_body.keys()), {"name", "columns"})
@@ -123,40 +107,25 @@ class TestCreateTable(unittest.TestCase):
         self.assertEqual(columns_in_body[5]["headerDataType"], "string")
         self.assertEqual(columns_in_body[5]["columnDataType"], "algorithmTrain")
 
-    @mock.patch('requests.Session', side_effect=TestCreateTableTestSessionMock)
+    @mock.patch("requests.Session", side_effect=TestCreateTableTestSessionMock)
     def test_create_table_response(self, _):
         header_1 = TableTextCell("keyOfColumn1", "Caption of Column With String Header and String Data")
-        definition_of_table_column_1 = \
-            TableColumnDefinition(header_1.column_key, header_1, TableCellDataType.string, TableCellDataType.string)
+        definition_of_table_column_1 = TableColumnDefinition(header_1.column_key, header_1, TableCellDataType.string, TableCellDataType.string)
 
         header_2 = TableTextCell("keyOfColumn2", "Column With Integer Entries")
-        definition_of_table_column_2 = \
-            TableColumnDefinition(header_2.column_key, header_2, TableCellDataType.string, TableCellDataType.integer)
+        definition_of_table_column_2 = TableColumnDefinition(header_2.column_key, header_2, TableCellDataType.string, TableCellDataType.integer)
 
         header_3 = TableTextCell("keyOfColumn3", "Column With DateTime Entries")
-        definition_of_table_column_3 = TableColumnDefinition(
-            header_3.column_key,
-            header_3,
-            TableCellDataType.string,
-            TableCellDataType.local_date_time)
+        definition_of_table_column_3 = TableColumnDefinition(header_3.column_key, header_3, TableCellDataType.string, TableCellDataType.local_date_time)
 
         header_4 = TableTextCell("keyOfColumn4", "Column With Duration Entries")
-        definition_of_table_column_4 = \
-            TableColumnDefinition(header_4.column_key, header_4, TableCellDataType.string, TableCellDataType.duration)
+        definition_of_table_column_4 = TableColumnDefinition(header_4.column_key, header_4, TableCellDataType.string, TableCellDataType.duration)
 
         header_5 = TableTextCell("keyOfColumn5", "Column With Algorithm Node Entries")
-        definition_of_table_column_5 = TableColumnDefinition(
-            header_5.column_key,
-            header_5,
-            TableCellDataType.string,
-            TableCellDataType.algorithm_node)
+        definition_of_table_column_5 = TableColumnDefinition(header_5.column_key, header_5, TableCellDataType.string, TableCellDataType.algorithm_node)
 
         header_6 = TableTextCell("keyOfColumn6", "Column With Algorithm Train Entries")
-        definition_of_table_column_6 = TableColumnDefinition(
-            header_6.column_key,
-            header_6,
-            TableCellDataType.string,
-            TableCellDataType.algorithm_train)
+        definition_of_table_column_6 = TableColumnDefinition(header_6.column_key, header_6, TableCellDataType.string, TableCellDataType.algorithm_train)
 
         all_column_definitions = [
             definition_of_table_column_1,
@@ -164,7 +133,8 @@ class TestCreateTable(unittest.TestCase):
             definition_of_table_column_3,
             definition_of_table_column_4,
             definition_of_table_column_5,
-            definition_of_table_column_6]
+            definition_of_table_column_6,
+        ]
 
         table_definition = TableDefinition("TableName", columns=all_column_definitions)
 
@@ -173,6 +143,6 @@ class TestCreateTable(unittest.TestCase):
         self.assertIsInstance(table_id, int)
         self.assertEqual(table_id, 11041)
 
-    @mock.patch('requests.Session', side_effect=TestCreateTableTestSessionMock)
+    @mock.patch("requests.Session", side_effect=TestCreateTableTestSessionMock)
     def tearDown(self, mocked_get_obj) -> None:
         self.interface_to_viriato.__exit__(None, None, None)

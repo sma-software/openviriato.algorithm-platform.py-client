@@ -9,7 +9,7 @@ from HtmlTestRunner.result import HtmlTestResult
 # If an assertion is false
 class SmaHtmlTestResult(HtmlTestResult):
     def _exc_info_to_string(self, err, test):
-        """ Converts a sys.exc_info()-style tuple of values into a string."""
+        """Converts a sys.exc_info()-style tuple of values into a string."""
         # if six.PY3:
         #     # It works fine in python 3
         #     try:
@@ -35,11 +35,11 @@ class SmaHtmlTestResult(HtmlTestResult):
             except AttributeError:
                 error = None
             if error:
-                if not error.endswith('\n'):
-                    error += '\n'
+                if not error.endswith("\n"):
+                    error += "\n"
                 msg_lines.append(error)
         # This is the extra magic to make sure all lines are str
-        encoding = getattr(sys.stdout, 'encoding', 'utf-8')
+        encoding = getattr(sys.stdout, "encoding", "utf-8")
         lines = []
         for line in msg_lines:
             if not isinstance(line, str):
@@ -47,4 +47,4 @@ class SmaHtmlTestResult(HtmlTestResult):
                 line = line.encode(encoding)
             lines.append(line)
 
-        return ''.join(lines)
+        return "".join(lines)

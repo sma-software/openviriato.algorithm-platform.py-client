@@ -4,8 +4,7 @@ from unittest import mock
 import py_client.aidm.aidm_algorithm_classes
 import py_client.algorithm_interface_test.test_helper.SessionMockFactory as APISessionMock
 from py_client.algorithm_interface import algorithm_interface_factory
-from py_client.algorithm_interface_test.test_helper.SessionMockTestBase import \
-    get_api_url, SessionMockTestBase
+from py_client.algorithm_interface_test.test_helper.SessionMockTestBase import get_api_url, SessionMockTestBase
 
 
 class TestGetFormation(unittest.TestCase):
@@ -16,33 +15,32 @@ class TestGetFormation(unittest.TestCase):
 
             json__string = (
                 "{\n"
-                "        \"id\": 4108,\n"
-                "        \"vehicleTypeIds\": [\n"
+                '        "id": 4108,\n'
+                '        "vehicleTypeIds": [\n'
                 "             4107\n"
                 "        ],\n"
-                "        \"placesFirstClass\": 125,\n"
-                "        \"placesSecondClass\": 326,\n"
-                "        \"debugString\": \"train configuration:  seats 125 326\"\n"
+                '        "placesFirstClass": 125,\n'
+                '        "placesSecondClass": 326,\n'
+                '        "debugString": "train configuration:  seats 125 326"\n'
                 "}"
             )
             return APISessionMock.create_response_mock(json__string, 200)
 
-    @mock.patch('requests.Session', side_effect=GetGetFormationTestSessionMock)
+    @mock.patch("requests.Session", side_effect=GetGetFormationTestSessionMock)
     def setUp(self, mocked_get_obj):
         self.interface_to_viriato = algorithm_interface_factory.create(get_api_url())
 
-    @mock.patch('requests.Session', side_effect=GetGetFormationTestSessionMock)
+    @mock.patch("requests.Session", side_effect=GetGetFormationTestSessionMock)
     def test_get_formation_request(self, mocked_get_obj):
         formation_id = 1828
 
         self.interface_to_viriato.get_formation(formation_id=formation_id)
 
         session_obj = self.interface_to_viriato._AlgorithmInterface__communication_layer.currentSession
-        self.assertEqual(session_obj._GetGetFormationTestSessionMock__last_request, get_api_url() +
-                         "/vehicles/formations/1828")
+        self.assertEqual(session_obj._GetGetFormationTestSessionMock__last_request, get_api_url() + "/vehicles/formations/1828")
         self.assertDictEqual(session_obj._GetGetFormationTestSessionMock__last_body, {})
 
-    @mock.patch('requests.Session', side_effect=GetGetFormationTestSessionMock)
+    @mock.patch("requests.Session", side_effect=GetGetFormationTestSessionMock)
     def test_get_formation_response(self, mocked_get_obj):
         key = 1828
 
@@ -56,10 +54,10 @@ class TestGetFormation(unittest.TestCase):
         self.assertEqual(test_algorithm_formation.places_first_class, 125)
         self.assertEqual(test_algorithm_formation.places_second_class, 326)
 
-    @mock.patch('requests.Session', side_effect=GetGetFormationTestSessionMock)
+    @mock.patch("requests.Session", side_effect=GetGetFormationTestSessionMock)
     def tearDown(self, mocked_get_obj) -> None:
         self.interface_to_viriato.__exit__(None, None, None)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

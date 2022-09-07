@@ -17,8 +17,7 @@ class TestGeneratedMdCorrespondToRegeneratedMd(unittest.TestCase):
         # then runs the two tests, and then runs the teardown twice
         if not os.path.exists(REGENERATE_DIRECTORY):
             os.makedirs(REGENERATE_DIRECTORY)
-        self.src_md_files_to_process = resolve_code_references_in_markdown\
-            ._list_walkthroughs_to_process(self.get_py_client_repo_root())
+        self.src_md_files_to_process = resolve_code_references_in_markdown._list_walkthroughs_to_process(self.get_py_client_repo_root())
         if len(self.src_md_files_to_process) == 0:
             raise Exception("did not find any files to test in {}".format(self.src_md_files_to_process))
 
@@ -38,7 +37,9 @@ class TestGeneratedMdCorrespondToRegeneratedMd(unittest.TestCase):
             actual_lines = TestGeneratedMdCorrespondToRegeneratedMd._get_text_from_content(actual_md_file)
 
             for expected_line, actual_line, current_line_mumber in zip(expected_lines, actual_lines, range(1, len(expected_lines) + 1)):
-                self.assertEqual(expected_line, actual_line, "Walkthrough '{}' is not up to date in line {}".format(source_md_file_to_test, current_line_mumber))
+                self.assertEqual(
+                    expected_line, actual_line, "Walkthrough '{}' is not up to date in line {}".format(source_md_file_to_test, current_line_mumber)
+                )
 
     def get_py_client_repo_root(self):
         # set up correct path to py_client_root depending if we start test explicitly
@@ -54,7 +55,7 @@ class TestGeneratedMdCorrespondToRegeneratedMd(unittest.TestCase):
             actual_md_file = TestGeneratedMdCorrespondToRegeneratedMd._retrieve_actual_md_file_name_from_src_md_file_name(src_md_file)
             dist_content = os.listdir(os.path.dirname(actual_md_file))
             self.assertEqual(len(dist_content), 1, "Too many files in the directory '{}' only one markdown file should be present.".format(src_md_file))
-            self.assertTrue(dist_content[0].endswith('.md'), "The file present in '{}' is not a markdown file".format(src_md_file))
+            self.assertTrue(dist_content[0].endswith(".md"), "The file present in '{}' is not a markdown file".format(src_md_file))
 
     @staticmethod
     def _get_text_from_content(filename: str) -> List[str]:
@@ -63,11 +64,8 @@ class TestGeneratedMdCorrespondToRegeneratedMd(unittest.TestCase):
 
     @staticmethod
     def _retrieve_actual_md_file_name_from_src_md_file_name(src_md_file):
-        return src_md_file.replace('.src.md', '.md').replace(SOURCE_DIRECTORY, MD_OUTPUT_SUB_DIRECTORY)
+        return src_md_file.replace(".src.md", ".md").replace(SOURCE_DIRECTORY, MD_OUTPUT_SUB_DIRECTORY)
 
     @staticmethod
     def _retrieve_regenerated_md_from_src_md(src_md_file):
-        return src_md_file.replace('.src.md', '.md').replace(SOURCE_DIRECTORY, MD_OUTPUT_SUB_DIRECTORY).replace(WALKTHROUGHS_ROOT, REGENERATE_DIRECTORY)
-
-
-
+        return src_md_file.replace(".src.md", ".md").replace(SOURCE_DIRECTORY, MD_OUTPUT_SUB_DIRECTORY).replace(WALKTHROUGHS_ROOT, REGENERATE_DIRECTORY)

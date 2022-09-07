@@ -1,5 +1,6 @@
 from typing import Optional
 
+
 class FloatingPoint:
     __mantissa: int
     __decimal_places: int

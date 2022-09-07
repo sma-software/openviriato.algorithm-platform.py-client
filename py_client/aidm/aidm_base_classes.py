@@ -44,5 +44,3 @@ class _UpdateTrain:
     @property
     def train_id(self) -> int:
         return self.__train_id
-
-

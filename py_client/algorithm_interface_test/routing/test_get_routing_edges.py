@@ -16,51 +16,51 @@ class TestRoutingEdges(unittest.TestCase):
             json_string = (
                 "[\n"
                 "  {\n"
-                "    \"startSectionTrackId\": 887,\n"
-                "    \"endSectionTrackId\": 888,\n"
-                "    \"nodeId\": 281,\n"
-                "    \"type\": \"crossing\"\n"
+                '    "startSectionTrackId": 887,\n'
+                '    "endSectionTrackId": 888,\n'
+                '    "nodeId": 281,\n'
+                '    "type": "crossing"\n'
                 "  },\n"
                 "  {\n"
-                "    \"startNodeTrackId\": 162,\n"
-                "    \"endSectionTrackId\": 885,\n"
-                "    \"nodeId\": 281,\n"
-                "    \"type\": \"outgoingNodeTrack\"\n"
+                '    "startNodeTrackId": 162,\n'
+                '    "endSectionTrackId": 885,\n'
+                '    "nodeId": 281,\n'
+                '    "type": "outgoingNodeTrack"\n'
                 "  },\n"
                 "  {\n"
-                "    \"startSectionTrackId\": 888,\n"
-                "    \"endSectionTrackId\": 887,\n"
-                "    \"nodeId\": 281,\n"
-                "    \"type\": \"crossing\"\n"
+                '    "startSectionTrackId": 888,\n'
+                '    "endSectionTrackId": 887,\n'
+                '    "nodeId": 281,\n'
+                '    "type": "crossing"\n'
                 "  },\n"
                 "  {\n"
-                "    \"startSectionTrackId\": 885,\n"
-                "    \"endNodeTrackId\": 162,\n"
-                "    \"nodeId\": 281,\n"
-                "    \"type\": \"incomingNodeTrack\"\n"
+                '    "startSectionTrackId": 885,\n'
+                '    "endNodeTrackId": 162,\n'
+                '    "nodeId": 281,\n'
+                '    "type": "incomingNodeTrack"\n'
                 "  },\n"
                 "  {\n"
-                "    \"startSectionTrackId\": 885,\n"
-                "    \"endNodeTrackId\": 163,\n"
-                "    \"nodeId\": 281,\n"
-                "    \"type\": \"incomingNodeTrack\"\n"
+                '    "startSectionTrackId": 885,\n'
+                '    "endNodeTrackId": 163,\n'
+                '    "nodeId": 281,\n'
+                '    "type": "incomingNodeTrack"\n'
                 "  },\n"
                 "  {\n"
-                "    \"startSectionTrackId\": 886,\n"
-                "    \"endNodeTrackId\": 162,\n"
-                "    \"nodeId\": 281,\n"
-                "    \"type\": \"incomingNodeTrack\"\n"
+                '    "startSectionTrackId": 886,\n'
+                '    "endNodeTrackId": 162,\n'
+                '    "nodeId": 281,\n'
+                '    "type": "incomingNodeTrack"\n'
                 "  }\n"
                 "]"
             )
 
             return APISessionMock.create_response_mock(json_string, 200)
 
-    @mock.patch('requests.Session', side_effect=GetRoutingEdgesTestSessionMock)
+    @mock.patch("requests.Session", side_effect=GetRoutingEdgesTestSessionMock)
     def setUp(self, mocked_get_obj):
         self.interface_to_viriato = algorithm_interface_factory.create(get_api_url())
 
-    @mock.patch('requests.Session', side_effect=GetRoutingEdgesTestSessionMock)
+    @mock.patch("requests.Session", side_effect=GetRoutingEdgesTestSessionMock)
     def test_get_routing_edges_request(self, mocked_get_obj):
         routing_point = RoutingPoint(node_id=121, node_track_id=12)
 
@@ -70,7 +70,7 @@ class TestRoutingEdges(unittest.TestCase):
         self.assertEqual(session_obj.last_request, get_api_url() + "/nodes/121/routing-edges")
         self.assertDictEqual(session_obj.last_body, {"nodeTrackId": 12, "routingEdgeType": None})
 
-    @mock.patch('requests.Session', side_effect=GetRoutingEdgesTestSessionMock)
+    @mock.patch("requests.Session", side_effect=GetRoutingEdgesTestSessionMock)
     def test_get_crossing_routing_edges_response(self, mocked_get_obj):
         routing_point = RoutingPoint(node_id=1)
 
@@ -86,10 +86,10 @@ class TestRoutingEdges(unittest.TestCase):
 
         self.assertEqual(len(routing_edges), 6)
 
-    @mock.patch('requests.Session', side_effect=GetRoutingEdgesTestSessionMock)
+    @mock.patch("requests.Session", side_effect=GetRoutingEdgesTestSessionMock)
     def tearDown(self, mocked_get_obj) -> None:
         self.interface_to_viriato.__exit__(None, None, None)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

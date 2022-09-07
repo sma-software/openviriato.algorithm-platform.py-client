@@ -4,9 +4,7 @@ from unittest import mock
 import py_client.aidm.aidm_algorithm_classes
 from py_client.algorithm_interface import algorithm_interface_factory
 from py_client.algorithm_interface_test.test_helper import SessionMockFactory as SessionMockFactory
-from py_client.algorithm_interface_test.test_helper.SessionMockTestBase import \
-    get_api_url, \
-    SessionMockTestBase
+from py_client.algorithm_interface_test.test_helper.SessionMockTestBase import get_api_url, SessionMockTestBase
 
 
 class TestGetDirectedSectionTracks(unittest.TestCase):
@@ -15,30 +13,32 @@ class TestGetDirectedSectionTracks(unittest.TestCase):
             self._last_body = params
             self._last_request = request
 
-            json_string = ('[\n'
-                           '                {\n'
-                           '                    "id": 885,\n'
-                           '                    "code": "838",\n'
-                           '                    "sectionCode": "61010",\n'
-                           '                    "distanceUnits": 37040,\n'
-                           '                    "debugString": "sectiontrack:s_61010 n_85AR 838"\n'
-                           '                },\n'
-                           '                {\n'
-                           '                    "id": 886,\n'
-                           '                    "code": "2",\n'
-                           '                    "sectionCode": "61010",\n'
-                           '                    "distanceUnits": 37040,\n'
-                           '                    "debugString": "sectiontrack:s_61010 n_85AR 2"\n'
-                           '                }\n'
-                           '            ]')
+            json_string = (
+                "[\n"
+                "                {\n"
+                '                    "id": 885,\n'
+                '                    "code": "838",\n'
+                '                    "sectionCode": "61010",\n'
+                '                    "distanceUnits": 37040,\n'
+                '                    "debugString": "sectiontrack:s_61010 n_85AR 838"\n'
+                "                },\n"
+                "                {\n"
+                '                    "id": 886,\n'
+                '                    "code": "2",\n'
+                '                    "sectionCode": "61010",\n'
+                '                    "distanceUnits": 37040,\n'
+                '                    "debugString": "sectiontrack:s_61010 n_85AR 2"\n'
+                "                }\n"
+                "            ]"
+            )
 
             return SessionMockFactory.create_response_mock(json_string, 200)
 
-    @mock.patch('requests.Session', side_effect=GetDirectedSectionTracksSessionTestMock)
+    @mock.patch("requests.Session", side_effect=GetDirectedSectionTracksSessionTestMock)
     def setUp(self, mocked_get_obj):
         self.interface_to_viriato = algorithm_interface_factory.create(get_api_url())
 
-    @mock.patch('requests.Session', side_effect=GetDirectedSectionTracksSessionTestMock)
+    @mock.patch("requests.Session", side_effect=GetDirectedSectionTracksSessionTestMock)
     def test_get_directed_section_tracks_request(self, mocked_get_obj):
         node_id_1 = 20
         node_id_2 = 500
@@ -46,10 +46,10 @@ class TestGetDirectedSectionTracks(unittest.TestCase):
         self.interface_to_viriato.get_directed_section_tracks(node_id_1, node_id_2)
 
         session_obj = self.interface_to_viriato._AlgorithmInterface__communication_layer.currentSession
-        self.assertEqual(session_obj.last_request, get_api_url() + '/section-tracks-between/20/500')
+        self.assertEqual(session_obj.last_request, get_api_url() + "/section-tracks-between/20/500")
         self.assertEqual(session_obj.last_body, {})
 
-    @mock.patch('requests.Session', side_effect=GetDirectedSectionTracksSessionTestMock)
+    @mock.patch("requests.Session", side_effect=GetDirectedSectionTracksSessionTestMock)
     def test_get_directed_section_tracks_return(self, mocked_get_obj):
         node_id_1 = 0
         node_id_2 = 0
@@ -63,6 +63,6 @@ class TestGetDirectedSectionTracks(unittest.TestCase):
         self.assertIsInstance(directed_section_tracks[0].distance_units, int)
         self.assertIsInstance(directed_section_tracks[0].debug_string, str)
 
-    @mock.patch('requests.Session', side_effect=GetDirectedSectionTracksSessionTestMock)
+    @mock.patch("requests.Session", side_effect=GetDirectedSectionTracksSessionTestMock)
     def tearDown(self, mocked_get_obj) -> None:
         self.interface_to_viriato.__exit__(None, None, None)

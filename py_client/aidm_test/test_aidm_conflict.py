@@ -7,7 +7,6 @@ from py_client.aidm.aidm_conflict import ConflictType
 
 
 class TestConflictDetectionArguments(unittest.TestCase):
-
     def test_mandatory_filter(self):
         train_ids = [1234, 1237]
         conflict_detection_arguments = ConflictDetectionArguments(train_ids)
@@ -34,14 +33,16 @@ class TestConflictDetectionArguments(unittest.TestCase):
         conflict_types = [ConflictType.Crossing, ConflictType.Trafficability]
         train_id = 1230
         time_window = TimeWindow(
-            from_time=datetime.datetime(year=2022, month=2, day=7, hour=17, minute=10),
-            to_time=datetime.datetime(year=2022, month=2, day=7, hour=17, minute=15))
+            from_time=datetime.datetime(year=2022, month=2, day=7, hour=17, minute=10), to_time=datetime.datetime(year=2022, month=2, day=7, hour=17, minute=15)
+        )
 
-        conflict_detection_arguments = ConflictDetectionArguments(train_ids)\
-            .with_type_filter(conflict_types)\
-            .with_location_filter(filter_node_ids, filter_section_track_ids)\
-            .with_train_filter(train_id)\
+        conflict_detection_arguments = (
+            ConflictDetectionArguments(train_ids)
+            .with_type_filter(conflict_types)
+            .with_location_filter(filter_node_ids, filter_section_track_ids)
+            .with_train_filter(train_id)
             .with_time_filter(time_window)
+        )
 
         self.assertIsInstance(conflict_detection_arguments, ConflictDetectionArguments)
 

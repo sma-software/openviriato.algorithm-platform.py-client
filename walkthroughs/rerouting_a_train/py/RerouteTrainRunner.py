@@ -23,5 +23,5 @@ def main():
     reroute_train_runner(api_url=api_url)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

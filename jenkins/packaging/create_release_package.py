@@ -9,12 +9,13 @@ def add_project_root_directory_to_python_path(project_root_directory):
 def main():
     if len(sys.argv) != 5:
         print(
-            'Expected arguments: '
-            '[py_client_version_number] '
-            '[release_package_requirements_on_relative_path.txt] '
-            '[project_root_directory] '
-            '[output_directory]',
-            file=sys.stderr)
+            "Expected arguments: "
+            "[py_client_version_number] "
+            "[release_package_requirements_on_relative_path.txt] "
+            "[project_root_directory] "
+            "[output_directory]",
+            file=sys.stderr,
+        )
         sys.exit(1)
 
     # since this script is not located in the project root-directory, which is expected by setup-tools we have to add
@@ -29,7 +30,8 @@ def main():
         py_client_version_number=sys.argv[1],
         release_package_requirements_on_relative_path=sys.argv[2],
         project_root_directory=sys.argv[3],
-        output_directory=sys.argv[4])
+        output_directory=sys.argv[4],
+    )
 
     if SetupToolsRunner().make_package(setup_tools_arguments):
         sys.exit(0)
@@ -37,5 +39,5 @@ def main():
         sys.exit(1)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

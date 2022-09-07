@@ -5,7 +5,14 @@ from py_client.aidm.aidm_link_classes import _AlgorithmLink, AlgorithmAwaitArriv
 from py_client.aidm.aidm_routing_edge_classes import _RoutingEdge
 from py_client.aidm.aidm_routing_edge_classes import *
 from abc import abstractmethod
-from py_client.aidm.aidm_conflict import AlgorithmConflict, ConflictType, _AlgorithmTwoTrainsSectionTrackConflict, _AlgorithmOneTrainSectionTrackConflict, _AlgorithmOneTrainNodeConflict, _AlgorithmTwoTrainsNodeConflict
+from py_client.aidm.aidm_conflict import (
+    AlgorithmConflict,
+    ConflictType,
+    _AlgorithmTwoTrainsSectionTrackConflict,
+    _AlgorithmOneTrainSectionTrackConflict,
+    _AlgorithmOneTrainNodeConflict,
+    _AlgorithmTwoTrainsNodeConflict,
+)
 import datetime
 import isodate
 
@@ -48,9 +55,7 @@ class DatetimeProcessor(_ABCJsonToAidmValueProcessor):
         try:
             return datetime.datetime.fromisoformat(json_to_process)
         except Exception as e:
-            raise AlgorithmPlatformConversionError(
-                "Could not parse datetime, invalid datetime format: {}".format(json_to_process),
-                e)
+            raise AlgorithmPlatformConversionError("Could not parse datetime, invalid datetime format: {}".format(json_to_process), e)
 
 
 class TimedeltaProcessor(_ABCJsonToAidmValueProcessor):
@@ -61,9 +66,7 @@ class TimedeltaProcessor(_ABCJsonToAidmValueProcessor):
         try:
             return isodate.parse_duration(json_to_process)
         except Exception as e:
-            raise AlgorithmPlatformConversionError(
-                "Could not parse duration, invalid duration format: {}".format(json_to_process),
-                e)
+            raise AlgorithmPlatformConversionError("Could not parse duration, invalid duration format: {}".format(json_to_process), e)
 
 
 class EnumProcessor(_ABCJsonToAidmValueProcessor):
@@ -75,8 +78,7 @@ class EnumProcessor(_ABCJsonToAidmValueProcessor):
             return targeted_type(json_to_process)
         except Exception as e:
             raise AlgorithmPlatformConversionError(
-                "Could not parse Enum {}, invalid enum format for expected class Enum {}".format(json_to_process, targeted_type),
-                e
+                "Could not parse Enum {}, invalid enum format for expected class Enum {}".format(json_to_process, targeted_type), e
             )
 
 
@@ -139,9 +141,8 @@ class GeneralAidmObjectProcessor(_ABCJsonToAidmDictProcessor):
             return targeted_type(**snake_case_attribute_dict)
         except TypeError as e:
             raise AlgorithmPlatformConversionError(
-                "Could not populate AIDM object, AIDM class {} is unknown, "\
-                + "has unexpected attributes or is missing attributes.".format(targeted_type),
-                e)
+                "Could not populate AIDM object, AIDM class {} is unknown, " + "has unexpected attributes or is missing attributes.".format(targeted_type), e
+            )
 
     @staticmethod
     def unmangle(attribute_name_with_class_name: str) -> str:
@@ -149,18 +150,17 @@ class GeneralAidmObjectProcessor(_ABCJsonToAidmDictProcessor):
 
 
 class PolymorphicClassesProcessor(_ABCJsonToAidmDictProcessor):
-    types_to_process = [_AlgorithmLink,
-                        _RoutingEdge
-                        ]
-    aidm_types_to_create = [AlgorithmAwaitArrivalLink,
-                            AlgorithmConnectionLink,
-                            AlgorithmRosterLink,
-                            CrossingRoutingEdge,
-                            IncomingRoutingEdge,
-                            IncomingNodeTrackRoutingEdge,
-                            OutgoingRoutingEdge,
-                            OutgoingNodeTrackRoutingEdge
-                            ]
+    types_to_process = [_AlgorithmLink, _RoutingEdge]
+    aidm_types_to_create = [
+        AlgorithmAwaitArrivalLink,
+        AlgorithmConnectionLink,
+        AlgorithmRosterLink,
+        CrossingRoutingEdge,
+        IncomingRoutingEdge,
+        IncomingNodeTrackRoutingEdge,
+        OutgoingRoutingEdge,
+        OutgoingNodeTrackRoutingEdge,
+    ]
 
     def is_applicable(self, json_to_process: Union[dict, Primitive, Optional[Primitive]], targeted_type: Type[object]) -> bool:
         is_not_an_object = not isinstance(targeted_type, type)
@@ -168,7 +168,7 @@ class PolymorphicClassesProcessor(_ABCJsonToAidmDictProcessor):
             return False
         if True not in [issubclass(targeted_type, x) for x in self.types_to_process]:
             return False
-        if 'type' not in json_to_process:
+        if "type" not in json_to_process:
             # we can come into this branch after popping the type attribute or when we first see a polymorphic type
             # if we are for the first time here we have to have the type attribute
             if targeted_type in self.types_to_process:
@@ -180,7 +180,7 @@ class PolymorphicClassesProcessor(_ABCJsonToAidmDictProcessor):
 
     def process_attribute_dict(self, json_to_process: Union[dict, Primitive, Optional[Primitive]], targeted_type: Type[object]) -> object:
         # Remove the attribute type from the attribute_dict and convert it to snake case
-        type_name_in_enum = convert_to_snake_case(json_to_process.pop('type'))
+        type_name_in_enum = convert_to_snake_case(json_to_process.pop("type"))
         target_type = self._get_type_from_enum_value(type_name_in_enum)
         return JsonToAidmConverter().process_json_to_aidm(json_to_process, target_type)
 
@@ -196,19 +196,21 @@ class PolymorphicClassesProcessor(_ABCJsonToAidmDictProcessor):
 
     def _validate_most_specific_name_are_at_start_of_list(self):
         for aidm_type in self.aidm_types_to_create:
-            for aidm_type_later_in_list in self.aidm_types_to_create[self.aidm_types_to_create.index(aidm_type) + 1:]:
+            for aidm_type_later_in_list in self.aidm_types_to_create[self.aidm_types_to_create.index(aidm_type) + 1 :]:
                 self._validate_first_is_more_specific(aidm_type, aidm_type_later_in_list)
 
     @staticmethod
-    def _validate_first_is_more_specific(aidm_type: object, aidm_type_later_in_list:  object):
-        type_name_parts_aidm_type = convert_to_snake_case(aidm_type.__name__).split('_')
-        type_name_parts_aidm_type_later_in_list = convert_to_snake_case(aidm_type_later_in_list.__name__).split('_')
+    def _validate_first_is_more_specific(aidm_type: object, aidm_type_later_in_list: object):
+        type_name_parts_aidm_type = convert_to_snake_case(aidm_type.__name__).split("_")
+        type_name_parts_aidm_type_later_in_list = convert_to_snake_case(aidm_type_later_in_list.__name__).split("_")
         is_first_type_less_specific = set(type_name_parts_aidm_type_later_in_list).issubset(set(type_name_parts_aidm_type))
         if is_first_type_less_specific:
             raise AlgorithmPlatformConversionError(
                 "The types {} is less specific than {}. They must be in the reverse order in the types_to_process list to avoid conversion error".format(
-                    aidm_type,
-                    aidm_type_later_in_list), None)
+                    aidm_type, aidm_type_later_in_list
+                ),
+                None,
+            )
 
 
 class ConflictTypeMappingLookup:
@@ -252,7 +254,7 @@ class JsonToAidmConverter:
             PolymorphicClassesProcessor(),
             ConflictProcessor(),
             PrimitiveProcessor(),
-            GeneralAidmObjectProcessor()
+            GeneralAidmObjectProcessor(),
         ]
 
     def process_json_to_aidm(self, attribute_dict: Union[dict, Primitive, Optional[Primitive]], targeted_type: Type[object]) -> object:

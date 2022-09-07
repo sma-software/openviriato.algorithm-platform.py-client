@@ -34,13 +34,14 @@ class AlgorithmSectionTrackClosure(_HasDebugString):
     __closure_time_window_to_node: TimeWindow
 
     def __init__(
-            self,
-            debug_string: str,
-            section_track_id: int,
-            from_node_id: int,
-            to_node_id: int,
-            closure_time_window_from_node: TimeWindow,
-            closure_time_window_to_node: TimeWindow):
+        self,
+        debug_string: str,
+        section_track_id: int,
+        from_node_id: int,
+        to_node_id: int,
+        closure_time_window_from_node: TimeWindow,
+        closure_time_window_to_node: TimeWindow,
+    ):
         _HasDebugString.__init__(self, debug_string)
         self.__section_track_id = section_track_id
         self.__from_node_id = from_node_id

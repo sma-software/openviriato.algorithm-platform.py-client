@@ -5,8 +5,7 @@ import py_client.aidm.aidm_algorithm_classes
 import py_client.algorithm_interface_test.test_helper.SessionMockFactory as APISessionMock
 from py_client.aidm import aidm_train_path_node_classes
 from py_client.algorithm_interface import algorithm_interface_factory
-from py_client.algorithm_interface_test.test_helper.SessionMockTestBase import \
-    get_api_url, SessionMockTestBase
+from py_client.algorithm_interface_test.test_helper.SessionMockTestBase import get_api_url, SessionMockTestBase
 
 
 class TestSetStationTracksNode(unittest.TestCase):
@@ -15,63 +14,65 @@ class TestSetStationTracksNode(unittest.TestCase):
             self.__last_request = request
             self.__last_body = json
 
-            json__string = ("{\n"
-                            "  \"id\": 6430,\n"
-                            "  \"code\": \"TestCode\",\n"
-                            "  \"trainPathNodes\": [\n"
-                            "    {\n"
-                            "      \"id\": 5338,\n"
-                            "      \"SectionTrackId\": null,\n"
-                            "      \"nodeId\": 321,\n"
-                            "      \"nodeTrackId\": 322,\n"
-                            "      \"formationId\": 4108,\n"
-                            "      \"movementTypeId\": null,\n"
-                            "      \"arrivalTime\": \"2003-05-01T06:00:00\",\n"
-                            "      \"departureTime\": \"2003-05-01T06:00:00\",\n"
-                            "      \"minimumRunTime\": null,\n"
-                            "      \"minimumStopTime\": \"P0D\",\n"
-                            "      \"stopStatus\": \"commercialStop\",\n"
-                            "      \"sequenceNumber\": 0\n"
-                            "    },\n"
-                            "    {\n"
-                            "      \"id\": 5702,\n"
-                            "      \"sectionTrackId\": 888,\n"
-                            "      \"nodeId\": 281,\n"
-                            "      \"nodeTrackId\": null,\n"
-                            "      \"formationID\": 4108,\n"
-                            "      \"movementTypeId\": null,\n"
-                            "      \"arrivalTime\": \"2003-05-01T06:02:42\",\n"
-                            "      \"departureTime\": \"2003-05-01T06:02:42\",\n"
-                            "      \"minimumRunTime\": \"PT2M42S\",\n"
-                            "      \"minimumStopTime\": \"P0D\",\n"
-                            "      \"stopStatus\": \"passing\",\n"
-                            "      \"sequenceNumber\": 1\n"
-                            "    },\n"
-                            "    {\n"
-                            "      \"id\": 6066,\n"
-                            "      \"sectionTrackId\": 887,\n"
-                            "      \"nodeId\": 161,\n"
-                            "      \"nodeTrackId\": 162,\n"
-                            "      \"formationId\": null,\n"
-                            "      \"movementTypeId\": null,\n"
-                            "      \"arrivalTime\": \"2003-05-01T06:03:54\",\n"
-                            "      \"departureTime\": \"2003-05-01T06:03:54\",\n"
-                            "      \"minimumRunTime\": \"PT1M12S\",\n"
-                            "      \"minimumStopTime\": \"P0D\",\n"
-                            "      \"stopStatus\": \"commercialStop\",\n"
-                            "      \"sequenceNumber\": 2\n"
-                            "    }\n"
-                            "  ],\n"
-                            "  \"debugString\": \"FV_9_J03 tt_(SZ)\"\n"
-                            "}")
+            json__string = (
+                "{\n"
+                '  "id": 6430,\n'
+                '  "code": "TestCode",\n'
+                '  "trainPathNodes": [\n'
+                "    {\n"
+                '      "id": 5338,\n'
+                '      "SectionTrackId": null,\n'
+                '      "nodeId": 321,\n'
+                '      "nodeTrackId": 322,\n'
+                '      "formationId": 4108,\n'
+                '      "movementTypeId": null,\n'
+                '      "arrivalTime": "2003-05-01T06:00:00",\n'
+                '      "departureTime": "2003-05-01T06:00:00",\n'
+                '      "minimumRunTime": null,\n'
+                '      "minimumStopTime": "P0D",\n'
+                '      "stopStatus": "commercialStop",\n'
+                '      "sequenceNumber": 0\n'
+                "    },\n"
+                "    {\n"
+                '      "id": 5702,\n'
+                '      "sectionTrackId": 888,\n'
+                '      "nodeId": 281,\n'
+                '      "nodeTrackId": null,\n'
+                '      "formationID": 4108,\n'
+                '      "movementTypeId": null,\n'
+                '      "arrivalTime": "2003-05-01T06:02:42",\n'
+                '      "departureTime": "2003-05-01T06:02:42",\n'
+                '      "minimumRunTime": "PT2M42S",\n'
+                '      "minimumStopTime": "P0D",\n'
+                '      "stopStatus": "passing",\n'
+                '      "sequenceNumber": 1\n'
+                "    },\n"
+                "    {\n"
+                '      "id": 6066,\n'
+                '      "sectionTrackId": 887,\n'
+                '      "nodeId": 161,\n'
+                '      "nodeTrackId": 162,\n'
+                '      "formationId": null,\n'
+                '      "movementTypeId": null,\n'
+                '      "arrivalTime": "2003-05-01T06:03:54",\n'
+                '      "departureTime": "2003-05-01T06:03:54",\n'
+                '      "minimumRunTime": "PT1M12S",\n'
+                '      "minimumStopTime": "P0D",\n'
+                '      "stopStatus": "commercialStop",\n'
+                '      "sequenceNumber": 2\n'
+                "    }\n"
+                "  ],\n"
+                '  "debugString": "FV_9_J03 tt_(SZ)"\n'
+                "}"
+            )
 
             return APISessionMock.create_response_mock(json__string, 200)
 
-    @mock.patch('requests.Session', side_effect=SetStationTracksNodeTestSessionMock)
+    @mock.patch("requests.Session", side_effect=SetStationTracksNodeTestSessionMock)
     def setUp(self, mocked_get_obj):
         self.interface_to_viriato = algorithm_interface_factory.create(get_api_url())
 
-    @mock.patch('requests.Session', side_effect=SetStationTracksNodeTestSessionMock)
+    @mock.patch("requests.Session", side_effect=SetStationTracksNodeTestSessionMock)
     def test_assign_station_track_request(self, mocked_get_obj):
         train_id = 2017
         train_path_node_id = 50
@@ -80,11 +81,10 @@ class TestSetStationTracksNode(unittest.TestCase):
         self.interface_to_viriato.update_node_track(train_id, train_path_node_id, node_track_id)
 
         session_obj = self.interface_to_viriato._AlgorithmInterface__communication_layer.currentSession
-        self.assertEqual(session_obj._SetStationTracksNodeTestSessionMock__last_request,
-                         get_api_url() + '/trains/2017/train-path-nodes/50:update-node-track')
+        self.assertEqual(session_obj._SetStationTracksNodeTestSessionMock__last_request, get_api_url() + "/trains/2017/train-path-nodes/50:update-node-track")
         self.assertDictEqual(session_obj._SetStationTracksNodeTestSessionMock__last_body, dict(nodeTrackId=162))
 
-    @mock.patch('requests.Session', side_effect=SetStationTracksNodeTestSessionMock)
+    @mock.patch("requests.Session", side_effect=SetStationTracksNodeTestSessionMock)
     def test_assign_station_track_request_node_track_is_none(self, mocked_get_obj):
         train_id = 2017
         train_path_node_id = 50
@@ -93,11 +93,10 @@ class TestSetStationTracksNode(unittest.TestCase):
         self.interface_to_viriato.update_node_track(train_id, train_path_node_id, node_track_id)
 
         session_obj = self.interface_to_viriato._AlgorithmInterface__communication_layer.currentSession
-        self.assertEqual(session_obj._SetStationTracksNodeTestSessionMock__last_request,
-                         get_api_url() + '/trains/2017/train-path-nodes/50:update-node-track')
+        self.assertEqual(session_obj._SetStationTracksNodeTestSessionMock__last_request, get_api_url() + "/trains/2017/train-path-nodes/50:update-node-track")
         self.assertDictEqual(session_obj._SetStationTracksNodeTestSessionMock__last_body, dict(nodeTrackId=None))
 
-    @mock.patch('requests.Session', side_effect=SetStationTracksNodeTestSessionMock)
+    @mock.patch("requests.Session", side_effect=SetStationTracksNodeTestSessionMock)
     def test_assign_station_track_response(self, mocked_get_obj):
         train_id = 2017
         train_path_node_id = 50
@@ -110,10 +109,10 @@ class TestSetStationTracksNode(unittest.TestCase):
         self.assertEqual(test_train.debug_string, "FV_9_J03 tt_(SZ)")
         self.assertEqual(test_train.code, "TestCode")
 
-    @mock.patch('requests.Session', side_effect=SetStationTracksNodeTestSessionMock)
+    @mock.patch("requests.Session", side_effect=SetStationTracksNodeTestSessionMock)
     def tearDown(self, mocked_get_obj) -> None:
         self.interface_to_viriato.__exit__(None, None, None)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

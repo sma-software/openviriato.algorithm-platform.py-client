@@ -9,11 +9,7 @@ class TableColumnDefinition:
     __header_data_type: TableCellDataType
     __column_data_type: TableCellDataType
 
-    def __init__(self,
-                 key: str,
-                 header: _TableCell,
-                 header_data_type: TableCellDataType,
-                 column_data_type: TableCellDataType):
+    def __init__(self, key: str, header: _TableCell, header_data_type: TableCellDataType, column_data_type: TableCellDataType):
         self.__key = key
         self.__header = header
         self.__column_data_type = column_data_type

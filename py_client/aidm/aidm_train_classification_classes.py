@@ -1,5 +1,3 @@
-
-
 class AlgorithmTrainClassification:
     __description: str
 

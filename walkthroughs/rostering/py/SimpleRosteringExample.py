@@ -11,7 +11,9 @@ from Activities import CommonActivity
 from CommonActivitiesFactory import CommonActivitiesFactory
 
 
-def create_link_definitions_between_two_common_activities(source_common_activity: CommonActivity, target_common_activity: CommonActivity) -> List[AlgorithmRosterLinkDefinition]:
+def create_link_definitions_between_two_common_activities(
+    source_common_activity: CommonActivity, target_common_activity: CommonActivity
+) -> List[AlgorithmRosterLinkDefinition]:
     unlinked_target_activities = list(target_common_activity.single_activities)
     roster_link_definitions = []
     for source_single_activity in source_common_activity.single_activities:
@@ -23,7 +25,8 @@ def create_link_definitions_between_two_common_activities(source_common_activity
                     source_single_activity.arrival_tpn_id,
                     target_single_activity.departure_tpn_id,
                     source_single_activity.position,
-                    target_single_activity.position)
+                    target_single_activity.position,
+                )
                 roster_link_definitions.append(roster_link_definition)
                 unlinked_target_activities.remove(target_single_activity)
                 break
@@ -38,7 +41,9 @@ def create_link_definitions_for_common_activities_of_one_train(common_activities
     return roster_link_definitions
 
 
-def create_link_definitions_between_trains(algorithm_interface: AlgorithmInterface, preceding_train: AlgorithmTrain, succeeding_train: AlgorithmTrain)-> List[AlgorithmRosterLinkDefinition]:
+def create_link_definitions_between_trains(
+    algorithm_interface: AlgorithmInterface, preceding_train: AlgorithmTrain, succeeding_train: AlgorithmTrain
+) -> List[AlgorithmRosterLinkDefinition]:
     common_activity_factory = CommonActivitiesFactory(algorithm_interface)
 
     # create common activities
@@ -51,25 +56,33 @@ def create_link_definitions_between_trains(algorithm_interface: AlgorithmInterfa
     links_between_common_activities_preceding_train = create_link_definitions_for_common_activities_of_one_train(common_activities_preceding_train)
     links_between_common_activities_succeeding_train = create_link_definitions_for_common_activities_of_one_train(common_activities_succeeding_train)
 
-    link_only_within_trains = last_common_activity_preceding_train.single_activities[0].arrival_time > first_common_activity_succeeding_train.single_activities[0].departure_time
+    link_only_within_trains = (
+        last_common_activity_preceding_train.single_activities[0].arrival_time > first_common_activity_succeeding_train.single_activities[0].departure_time
+    )
     if link_only_within_trains:
-        algorithm_interface.notify_user("Warning!", "Cannot add links between the two trains as succeeding train departs before preceding train has arrived." )
+        algorithm_interface.notify_user("Warning!", "Cannot add links between the two trains as succeeding train departs before preceding train has arrived.")
         return links_between_common_activities_preceding_train + links_between_common_activities_succeeding_train
 
     needs_empty_run = preceding_train.train_path_nodes[-1].node_id != succeeding_train.train_path_nodes[0].node_id
     if needs_empty_run:
         # case 1: create empty run common activity and link the common activities of the two trains through this
         empty_run_creator = EmptyRunCreator(algorithm_interface, common_activity_factory)
-        empty_run_common_activity = empty_run_creator.create_empty_run_common_activity(first_common_activity_succeeding_train, last_common_activity_preceding_train, preceding_train)
+        empty_run_common_activity = empty_run_creator.create_empty_run_common_activity(
+            first_common_activity_succeeding_train, last_common_activity_preceding_train, preceding_train
+        )
 
         links_between_preceeding_train_and_empty_run_train = create_link_definitions_between_two_common_activities(
-            last_common_activity_preceding_train, empty_run_common_activity)
+            last_common_activity_preceding_train, empty_run_common_activity
+        )
         links_between_empty_run_train_and_succeeding_train = create_link_definitions_between_two_common_activities(
-            empty_run_common_activity, first_common_activity_succeeding_train)
+            empty_run_common_activity, first_common_activity_succeeding_train
+        )
         links_between_different_trains = links_between_preceeding_train_and_empty_run_train + links_between_empty_run_train_and_succeeding_train
     else:
         # case 2: just link the common activities of the two trains
-        links_between_different_trains = create_link_definitions_between_two_common_activities(last_common_activity_preceding_train, first_common_activity_succeeding_train)
+        links_between_different_trains = create_link_definitions_between_two_common_activities(
+            last_common_activity_preceding_train, first_common_activity_succeeding_train
+        )
 
     return links_between_common_activities_preceding_train + links_between_different_trains + links_between_common_activities_succeeding_train
 
@@ -96,5 +109,5 @@ def main():
     run(api_url=api_url)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

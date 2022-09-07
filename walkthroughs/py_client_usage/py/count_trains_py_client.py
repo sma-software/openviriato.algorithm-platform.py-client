@@ -10,10 +10,8 @@ def count_trains_in_time_window(api_url: str):
 
         algorithm_interface.notify_user(
             "count_trains_algorithm",
-            "Found {0} trains in time window from {1} to {2}".format(
-                len(trains_in_window),
-                time_window.from_time,
-                time_window.to_time))
+            "Found {0} trains in time window from {1} to {2}".format(len(trains_in_window), time_window.from_time, time_window.to_time),
+        )
 
 
 def parse_api_url_from_command_line_arguments() -> str:
@@ -29,5 +27,5 @@ def main():
     count_trains_in_time_window(api_url=api_url)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

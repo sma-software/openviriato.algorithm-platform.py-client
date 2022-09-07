@@ -14,7 +14,7 @@ class CommunicationLayer:
         http.client.HTTPConnection.debuglevel = 1
 
     def merge_base_url_with_request(self, request: str) -> str:
-        return '{0}/{1}'.format(self.base_url, request)
+        return "{0}/{1}".format(self.base_url, request)
 
     def do_get_request_without_body(self, request_call: str, query_parameters: dict = None) -> (dict, list):
         if query_parameters is None:

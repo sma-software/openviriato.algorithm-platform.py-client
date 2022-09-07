@@ -7,5 +7,6 @@ jsonpath-ng, https://pypi.org/project/jsonpath-ng/, Apache Software License (Apa
 isodate, https://pypi.org/project/isodate/, BSD License (BSD), https://opensource.org/search/node/BSD+3-Clause
 multipledispatch, https://pypi.org/project/multipledispatch/, New BSD License (BSD), https://github.com/mrocklin/multipledispatch/blob/master/LICENSE.txt
 parameterized, https://pypi.org/project/parameterized/, BSD License (FreeBSD), https://opensource.org/search/node/BSD+3-Clause
+black, https://black.readthedocs.io/en/stable/license.html, MIT License (MIT license), https://opensource.org/licenses/MIT
 
-All web-links retrieved on 08.07.2022
+All web-links retrieved on 07.09.2022

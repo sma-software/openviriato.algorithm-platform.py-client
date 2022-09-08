@@ -182,22 +182,54 @@ def _extract_method_signature(py_client_repo_root: str, path_to_source_file_from
         return MethodSignature(method_name, parameters, return_type, line_number)
 
 
+def _calculate_offset_to_first_line_number_of_code_block(lines_starting_from_marker: List[str]) -> int:
+    if _contains_any_keyword(lines_starting_from_marker[0]):
+        return _find_first_line_with_colon(lines_starting_from_marker)
+    else:
+        return 1
+
+
+def _find_first_line_with_colon(lines: List[str]) -> int:
+    end_of_statement_requiring_indentation_character = ':\n'
+    for index, line in enumerate(lines):
+        if line.find(end_of_statement_requiring_indentation_character) > -1:
+            return index + 1
+    raise Exception("Colon not found as expected.")
+
+
+def _contains_any_keyword(line: str) -> bool:
+    keywords_requiring_indentation = ["if ", "else ", "elif ", "for ", "while ", "def ", "class ", "try ", "except ", "finally ", "with "]
+    for keyword in keywords_requiring_indentation:
+        if line.find(keyword) > -1:
+            return True
+    return False
+
+
 def _extract_code_block(all_lines: List[str], line_number_code_block_start: int) -> List[str]:
     # For functions the first line is the signature, for classes it's the declaration
     # the indentation starts at the subsequent line in these cases
     # this is also working for other types of code blocks with at least two line
     # might not working in general cases
-    line_number_of_first_indented_line = line_number_code_block_start + 1
-    number_of_white_spaces_of_indentation = _number_of_leading_spaces(all_lines[line_number_of_first_indented_line])
 
-    for line_number, line in enumerate(all_lines[line_number_of_first_indented_line:]):
+    number_of_first_line_in_code_block = line_number_code_block_start + _calculate_offset_to_first_line_number_of_code_block(all_lines[line_number_code_block_start:])
+    number_of_lines_within_code_block = _calculate_number_of_lines_within_code_block(all_lines[number_of_first_line_in_code_block:])
+
+    line_number_code_block_end = number_of_first_line_in_code_block + number_of_lines_within_code_block
+    return all_lines[line_number_code_block_start: line_number_code_block_end]
+
+
+def _calculate_number_of_lines_within_code_block(lines_starting_from_code_block: List[str]):
+    number_of_white_spaces_of_indentation = _number_of_leading_spaces(lines_starting_from_code_block[0])
+
+    for line_number, line in enumerate(lines_starting_from_code_block):
         number_of_leading_spaces_of_the_line = _number_of_leading_spaces(line)
 
         # In the case of a class, an empty line with no indentation may separate two methods, but doesn't represent the end of the class
         next_code_block_detected = _is_non_empty_line(line) and number_of_leading_spaces_of_the_line < number_of_white_spaces_of_indentation
         if next_code_block_detected:
-            return all_lines[line_number_code_block_start : line_number_code_block_start + line_number]
-    return all_lines[line_number_code_block_start:]
+            return line_number
+
+    return len(lines_starting_from_code_block)
 
 
 def _import_code_block_from_source_file(

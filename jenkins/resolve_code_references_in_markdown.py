@@ -168,14 +168,18 @@ def _extract_method_signature(py_client_repo_root: str, path_to_source_file_from
 
     regex_for_signature_in_source_code = "def {}\((.*?)\) -> (.*?):".format(method_name)
     with open(source_code_file) as file:
-        for line_number, line in enumerate(file.readlines()):
-            retrieved_signature = re.search(regex_for_signature_in_source_code, line)
-            if retrieved_signature is not None:
-                parameters = retrieved_signature.group(1)
-                return_type = retrieved_signature.group(2)
-                return MethodSignature(method_name, parameters, return_type, line_number)
-        else:
+        file_content = file.read()
+        retrieved_signature_match_object = re.search(regex_for_signature_in_source_code, file_content, flags=re.DOTALL)
+        if retrieved_signature_match_object is None:
             raise Exception("desired method signature '{}' cannot be found in source code file '{}'.".format(method_name, source_code_file))
+
+        retrieved_signature = retrieved_signature_match_object.group(0)
+        parameters = retrieved_signature_match_object.group(1)
+        return_type = retrieved_signature_match_object.group(2)
+
+        file_contents_before_signature = file_content.split(retrieved_signature)[0]
+        line_number = 1 + file_contents_before_signature.count("\n")
+        return MethodSignature(method_name, parameters, return_type, line_number)
 
 
 def _extract_code_block(all_lines: List[str], line_number_code_block_start: int) -> List[str]:

@@ -7,7 +7,7 @@ from py_client.aidm.aidm_routing_edge_classes import _RoutingEdge, CrossingRouti
 from RerouteTrainPersistenceService import RerouteTrainPersistenceService
 
 
-# @RerouteTrainAlgorithm[:82]
+# @RerouteTrainAlgorithm[:86]
 class RerouteTrainAlgorithm:
     def run(self, algorithm_interface: AlgorithmInterface):
         # AlgorithmTrain received from interface.

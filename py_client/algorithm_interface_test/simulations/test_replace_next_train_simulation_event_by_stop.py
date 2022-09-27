@@ -24,7 +24,7 @@ class TestReplaceNextTrainSimulationEventByStop(unittest.TestCase):
                 '        "id": 2000006, \n'
                 '        "trainSimulationTrainPathNodeId": 1000002, \n'
                 '        "type": "arrival", \n'
-                '        "absoluteTime": "2003-05-05T07:05:42" \n'
+                '        "forecastTime": "2003-05-05T07:05:42" \n'
                 "    }, \n"
                 '    "unrealizableEvents": [] \n'
                 "}"
@@ -57,8 +57,8 @@ class TestReplaceNextTrainSimulationEventByStop(unittest.TestCase):
         self.assertEqual(response.next_event.train_simulation_train_path_node_id, 1000002)
         self.assertIsInstance(response.next_event.type, AlgorithmTrainSimulationEventType)
         self.assertEqual(response.next_event.type, AlgorithmTrainSimulationEventType.arrival)
-        self.assertIsInstance(response.next_event.absolute_time, datetime)
-        self.assertEqual(response.next_event.absolute_time, datetime(year=2003, month=5, day=5, hour=7, minute=5, second=42))
+        self.assertIsInstance(response.next_event.forecast_time, datetime)
+        self.assertEqual(response.next_event.forecast_time, datetime(year=2003, month=5, day=5, hour=7, minute=5, second=42))
         self.assertEqual(response.unrealizable_events, [])
 
     @mock.patch("requests.Session", side_effect=ReplaceNextTrainSimulationEventByStopMockSession)

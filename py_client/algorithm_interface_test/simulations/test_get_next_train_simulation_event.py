@@ -25,7 +25,7 @@ class TestGetNextTrainSimulationEvent(unittest.TestCase):
                 '        "id": 2000000, \n'
                 '        "trainSimulationTrainPathNodeId": 1000001, \n'
                 '        "type": "departure", \n'
-                '        "absoluteTime": "2003-05-05T07:30:00" \n'
+                '        "forecastTime": "2003-05-05T07:30:00" \n'
                 "    }, \n"
                 '    "unrealizableEvents": []'
                 " }"
@@ -60,7 +60,7 @@ class TestGetNextTrainSimulationEvent(unittest.TestCase):
         self.assertEqual(response.next_event.train_simulation_train_path_node_id, 1000001)
         self.assertIsInstance(response.next_event.type, AlgorithmTrainSimulationEventType)
         self.assertEqual(response.next_event.type, AlgorithmTrainSimulationEventType.departure)
-        self.assertIsInstance(response.next_event.absolute_time, datetime)
+        self.assertIsInstance(response.next_event.forecast_time, datetime)
 
         self.assertEqual(response.unrealizable_events, [])
 

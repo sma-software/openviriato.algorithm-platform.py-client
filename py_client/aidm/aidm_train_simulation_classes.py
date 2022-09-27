@@ -14,11 +14,11 @@ class AlgorithmTrainSimulationEventType(Enum):
 
 
 class AlgorithmTrainSimulationTrainPathNode(_HasID):
-    __arrival_delay: datetime.timedelta
-    __departure_delay: datetime.timedelta
-    __estimated_arrival_time: datetime.datetime
-    __estimated_departure_time: datetime.datetime
-    __estimated_stop_status: StopStatus
+    __forecast_arrival_delay: datetime.timedelta
+    __forecast_departure_delay: datetime.timedelta
+    __forecast_arrival_time: datetime.datetime
+    __forecast_departure_time: datetime.datetime
+    __forecast_stop_status: StopStatus
     __minimum_run_time: Optional[datetime.timedelta]
     __minimum_stop_time: datetime.timedelta
     __planned_arrival_time: datetime.datetime
@@ -29,11 +29,11 @@ class AlgorithmTrainSimulationTrainPathNode(_HasID):
     def __init__(
         self,
         id: int,
-        arrival_delay: datetime.timedelta,
-        departure_delay: datetime.timedelta,
-        estimated_arrival_time: datetime.datetime,
-        estimated_departure_time: datetime.datetime,
-        estimated_stop_status: StopStatus,
+        forecast_arrival_delay: datetime.timedelta,
+        forecast_departure_delay: datetime.timedelta,
+        forecast_arrival_time: datetime.datetime,
+        forecast_departure_time: datetime.datetime,
+        forecast_stop_status: StopStatus,
         minimum_run_time: datetime.timedelta,
         minimum_stop_time: datetime.timedelta,
         planned_arrival_time: datetime.datetime,
@@ -42,11 +42,11 @@ class AlgorithmTrainSimulationTrainPathNode(_HasID):
         node_id: int,
     ):
         _HasID.__init__(self, id)
-        self.__arrival_delay = arrival_delay
-        self.__departure_delay = departure_delay
-        self.__estimated_arrival_time = estimated_arrival_time
-        self.__estimated_departure_time = estimated_departure_time
-        self.__estimated_stop_status = estimated_stop_status
+        self.__forecast_arrival_delay = forecast_arrival_delay
+        self.__forecast_departure_delay = forecast_departure_delay
+        self.__forecast_arrival_time = forecast_arrival_time
+        self.__forecast_departure_time = forecast_departure_time
+        self.__forecast_stop_status = forecast_stop_status
         self.__minimum_run_time = minimum_run_time
         self.__minimum_stop_time = minimum_stop_time
         self.__planned_arrival_time = planned_arrival_time
@@ -55,24 +55,24 @@ class AlgorithmTrainSimulationTrainPathNode(_HasID):
         self.__node_id = node_id
 
     @property
-    def arrival_delay(self) -> datetime.timedelta:
-        return self.__arrival_delay
+    def forecast_arrival_delay(self) -> datetime.timedelta:
+        return self.__forecast_arrival_delay
 
     @property
-    def departure_delay(self) -> datetime.timedelta:
-        return self.__departure_delay
+    def forecast_departure_delay(self) -> datetime.timedelta:
+        return self.__forecast_departure_delay
 
     @property
-    def estimated_arrival_time(self) -> datetime.datetime:
-        return self.__estimated_arrival_time
+    def forecast_arrival_time(self) -> datetime.datetime:
+        return self.__forecast_arrival_time
 
     @property
-    def estimated_departure_time(self) -> datetime.datetime:
-        return self.__estimated_departure_time
+    def forecast_departure_time(self) -> datetime.datetime:
+        return self.__forecast_departure_time
 
     @property
-    def estimated_stop_status(self) -> StopStatus:
-        return self.__estimated_stop_status
+    def forecast_stop_status(self) -> StopStatus:
+        return self.__forecast_stop_status
 
     @property
     def minimum_run_time(self) -> Optional[datetime.timedelta]:
@@ -100,19 +100,19 @@ class AlgorithmTrainSimulationTrainPathNode(_HasID):
 
 
 class AlgorithmTrainSimulationEvent(_HasID):
-    __absolute_time: datetime.datetime
+    __forecast_time: datetime.datetime
     __train_simulation_train_path_node_id: int
     __type: AlgorithmTrainSimulationEventType
 
-    def __init__(self, id: int, absolute_time: datetime.datetime, train_simulation_train_path_node_id: int, type: AlgorithmTrainSimulationEventType):
+    def __init__(self, id: int, forecast_time: datetime.datetime, train_simulation_train_path_node_id: int, type: AlgorithmTrainSimulationEventType):
         _HasID.__init__(self, id)
-        self.__absolute_time = absolute_time
+        self.__forecast_time = forecast_time
         self.__train_simulation_train_path_node_id = train_simulation_train_path_node_id
         self.__type = type
 
     @property
-    def absolute_time(self) -> datetime.datetime:
-        return self.__absolute_time
+    def forecast_time(self) -> datetime.datetime:
+        return self.__forecast_time
 
     @property
     def train_simulation_train_path_node_id(self) -> int:

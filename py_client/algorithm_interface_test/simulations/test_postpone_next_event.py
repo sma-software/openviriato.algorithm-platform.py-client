@@ -24,7 +24,7 @@ class TestPostponeNextEvent(unittest.TestCase):
                 '        "id": 2000002, \n'
                 '        "trainSimulationTrainPathNodeId": 1000002, \n'
                 '        "type": "passing", \n'
-                '        "absoluteTime": "2003-05-05T07:34:12" \n'
+                '        "forecastTime": "2003-05-05T07:34:12" \n'
                 "    }, \n"
                 '    "unrealizableEvents": [] \n'
                 "}"
@@ -56,7 +56,7 @@ class TestPostponeNextEvent(unittest.TestCase):
         self.assertEqual(response.next_event.id, 2000002)
         self.assertEqual(response.next_event.train_simulation_train_path_node_id, 1000002)
         self.assertEqual(response.next_event.type, AlgorithmTrainSimulationEventType.passing)
-        self.assertEqual(response.next_event.absolute_time, datetime(year=2003, month=5, day=5, hour=7, minute=34, second=12))
+        self.assertEqual(response.next_event.forecast_time, datetime(year=2003, month=5, day=5, hour=7, minute=34, second=12))
         self.assertEqual(response.unrealizable_events, [])
 
     @mock.patch("requests.Session", side_effect=PostponeNextEventMockSession)

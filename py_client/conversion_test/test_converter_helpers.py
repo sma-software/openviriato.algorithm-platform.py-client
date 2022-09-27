@@ -136,4 +136,4 @@ class TestAllConverterHelpers(unittest.TestCase):
 
         self.assertFalse(converter_helpers.is_single_attribute(False, bool))
         self.assertFalse(converter_helpers.is_single_attribute(dict(first_attribute=3, second_attribute="str"), Union[bool, str]))
-        self.assertFalse(converter_helpers.is_single_attribute(ConflictType.Trafficability, ConflictType))
+        self.assertFalse(converter_helpers.is_single_attribute(ConflictType.InvalidDrivingDirection, ConflictType))

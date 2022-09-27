@@ -25,7 +25,7 @@ class TestDetectConflicts(unittest.TestCase):
             json_string = (
                 "["
                 "   { \n"
-                '       "conflictType": "sameStationTrack", \n'
+                '       "conflictType": "sameStationTrackSeparationTime", \n'
                 '       "timeWindow": { \n'
                 '           "fromTime": "2005-05-01T04:04:00", \n'
                 '           "toTime": "2005-05-01T04:06:00" \n'
@@ -39,7 +39,7 @@ class TestDetectConflicts(unittest.TestCase):
                 '       "succeedingTrainPathNodeEventType": "arrival" \n'
                 "   }, \n"
                 "   { \n"
-                '       "conflictType": "sameSectionTrack", \n'
+                '       "conflictType": "sameSectionTrackSeparationTime", \n'
                 '       "timeWindow": { \n'
                 '           "fromTime": "2005-05-01T04:04:00", \n'
                 '           "toTime": "2005-05-01T04:06:00" \n'
@@ -121,7 +121,7 @@ class TestDetectConflicts(unittest.TestCase):
 
         self.assertIsInstance(list_of_algorithm_conflicts[0].conflict_type, ConflictType)
 
-        self.assertEqual(list_of_algorithm_conflicts[0].conflict_type, ConflictType.SameStationTrack)
+        self.assertEqual(list_of_algorithm_conflicts[0].conflict_type, ConflictType.SameStationTrackSeparationTime)
 
         self.assertIsInstance(list_of_algorithm_conflicts[0].time_window, TimeWindow)
 
@@ -153,7 +153,7 @@ class TestDetectConflicts(unittest.TestCase):
 
         self.assertIsInstance(list_of_algorithm_conflicts[1], _AlgorithmTwoTrainsNodeConflict)
 
-        self.assertEqual(list_of_algorithm_conflicts[1].conflict_type, ConflictType.SameSectionTrack)
+        self.assertEqual(list_of_algorithm_conflicts[1].conflict_type, ConflictType.SameSectionTrackSeparationTime)
 
         self.assertIsInstance(list_of_algorithm_conflicts[1].succeeding_train_path_node_event_type, AlgorithmTrainPathNodeEventType)
 

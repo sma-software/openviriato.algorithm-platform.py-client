@@ -30,7 +30,7 @@ class TestConflictDetectionArguments(unittest.TestCase):
         train_ids = [1234, 1237]
         filter_node_ids = [1456, 1457]
         filter_section_track_ids = [1654, 1657]
-        conflict_types = [ConflictType.Crossing, ConflictType.Trafficability]
+        conflict_types = [ConflictType.Crossing, ConflictType.InvalidDrivingDirection]
         train_id = 1230
         time_window = TimeWindow(
             from_time=datetime.datetime(year=2022, month=2, day=7, hour=17, minute=10), to_time=datetime.datetime(year=2022, month=2, day=7, hour=17, minute=15)
@@ -47,7 +47,7 @@ class TestConflictDetectionArguments(unittest.TestCase):
         self.assertIsInstance(conflict_detection_arguments, ConflictDetectionArguments)
 
         self.assertIsInstance(conflict_detection_arguments.filter_conflict_types, list)
-        self.assertEqual(conflict_detection_arguments.filter_conflict_types, [ConflictType.Crossing, ConflictType.Trafficability])
+        self.assertEqual(conflict_detection_arguments.filter_conflict_types, [ConflictType.Crossing, ConflictType.InvalidDrivingDirection])
 
         self.assertIsInstance(conflict_detection_arguments.filter_node_ids, list)
         self.assertEqual(conflict_detection_arguments.filter_node_ids, [1456, 1457])

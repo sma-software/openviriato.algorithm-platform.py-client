@@ -18,7 +18,7 @@ class TestDetectConflicts(unittest.TestCase):
             json_string = (
                 "["
                 "   {"
-                '       "conflictType": "travelDirectionChange", \n'
+                '       "conflictType": "drivingDirectionChange", \n'
                 '       "timeWindow": { \n'
                 '           "fromTime": "2022-04-14T11:42:10", \n'
                 '           "toTime": "2022-04-14T12:02:00" \n'
@@ -66,7 +66,7 @@ class TestDetectConflicts(unittest.TestCase):
 
         self.assertIsInstance(list_of_algorithm_conflicts[0].conflict_type, ConflictType)
 
-        self.assertEqual(list_of_algorithm_conflicts[0].conflict_type, ConflictType.TravelDirectionChange)
+        self.assertEqual(list_of_algorithm_conflicts[0].conflict_type, ConflictType.DrivingDirectionChange)
 
         self.assertIsInstance(list_of_algorithm_conflicts[0].time_window, TimeWindow)
 

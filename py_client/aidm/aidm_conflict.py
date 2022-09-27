@@ -9,11 +9,11 @@ from py_client.aidm.aidm_algorithm_classes import AlgorithmTrain
 @unique
 class ConflictType(Enum):
     Crossing = "crossing"
-    Trafficability = "trafficability"
-    TravelDirectionChange = "travelDirectionChange"
-    SimultaneousArrival = "simultaneousArrival"
-    SameStationTrack = "sameStationTrack"
-    SameSectionTrack = "sameSectionTrack"
+    InvalidDrivingDirection = "invalidDrivingDirection"
+    DrivingDirectionChange = "drivingDirectionChange"
+    SimultaneousArrivalSeparationTime = "simultaneousArrivalSeparationTime"
+    SameStationTrackSeparationTime = "sameStationTrackSeparationTime"
+    SameSectionTrackSeparationTime = "sameSectionTrackSeparationTime"
     IncompatibleStationRoutes = "incompatibleStationRoutes"
     IncompatibleJunctionRoutes = "incompatibleJunctionRoutes"
 

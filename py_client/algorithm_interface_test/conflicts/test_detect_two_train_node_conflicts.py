@@ -7,8 +7,10 @@ from py_client.algorithm_interface_test.test_helper.SessionMockTestBase import g
 from py_client.aidm.aidm_conflict import (
     ConflictDetectionArguments,
     AlgorithmNodeConflict,
+    AlgorithmSectionTrackConflict,
     AlgorithmTwoTrainsConflict,
     _AlgorithmTwoTrainsNodeConflict,
+    _AlgorithmTwoTrainsSectionTrackConflict,
     ConflictType,
     AlgorithmTrainPathNodeEventType,
 )
@@ -78,6 +80,34 @@ class TestDetectConflicts(unittest.TestCase):
                 '       "precedingTrainPathNodeEventType": "arrival", \n'
                 '       "succeedingTrainId": 1230, \n'
                 '       "succeedingTrainPathNodeId": 9678, \n'
+                '       "succeedingTrainPathNodeEventType": "departure" \n'
+                "   }, \n"
+                "   { \n"
+                '       "conflictType": "headwayTime", \n'
+                '       "timeWindow": { \n'
+                '           "fromTime": "2005-05-01T04:12:00", \n'
+                '           "toTime": "2005-05-01T04:13:00" \n'
+                "       }, \n"
+                '       "sectionTrackId": 659, \n'
+                '       "precedingTrainId": 1224, \n'
+                '       "precedingTrainPathNodeId": 2734, \n'
+                '       "precedingTrainPathNodeEventType": "departure", \n'
+                '       "succeedingTrainId": 1212, \n'
+                '       "succeedingTrainPathNodeId": 9999, \n'
+                '       "succeedingTrainPathNodeEventType": "arrival" \n'
+                "   }, \n"
+                "   { \n"
+                '       "conflictType": "overtaking", \n'
+                '       "timeWindow": { \n'
+                '           "fromTime": "2005-05-01T05:24:00", \n'
+                '           "toTime": "2005-05-01T05:26:00" \n'
+                "       }, \n"
+                '       "sectionTrackId": 734, \n'
+                '       "precedingTrainId": 1227, \n'
+                '       "precedingTrainPathNodeId": 5124, \n'
+                '       "precedingTrainPathNodeEventType": "arrival", \n'
+                '       "succeedingTrainId": 1224, \n'
+                '       "succeedingTrainPathNodeId": 9829, \n'
                 '       "succeedingTrainPathNodeEventType": "departure" \n'
                 "   } \n"
                 "]"
@@ -194,6 +224,42 @@ class TestDetectConflicts(unittest.TestCase):
         self.assertIsInstance(list_of_algorithm_conflicts[3].preceding_train_path_node_event_type, AlgorithmTrainPathNodeEventType)
 
         self.assertEqual(list_of_algorithm_conflicts[3].preceding_train_path_node_event_type, AlgorithmTrainPathNodeEventType.Arrival)
+
+        self.assertIsInstance(list_of_algorithm_conflicts[4], AlgorithmSectionTrackConflict)
+
+        self.assertIsInstance(list_of_algorithm_conflicts[4], AlgorithmTwoTrainsConflict)
+
+        self.assertIsInstance(list_of_algorithm_conflicts[4], _AlgorithmTwoTrainsSectionTrackConflict)
+
+        self.assertEqual(list_of_algorithm_conflicts[4].conflict_type, ConflictType.HeadwayTime)
+
+        self.assertEqual(list_of_algorithm_conflicts[4].section_track_id, 659)
+
+        self.assertIsInstance(list_of_algorithm_conflicts[4].succeeding_train_path_node_event_type, AlgorithmTrainPathNodeEventType)
+
+        self.assertEqual(list_of_algorithm_conflicts[4].succeeding_train_path_node_event_type, AlgorithmTrainPathNodeEventType.Arrival)
+
+        self.assertIsInstance(list_of_algorithm_conflicts[4].preceding_train_path_node_event_type, AlgorithmTrainPathNodeEventType)
+
+        self.assertEqual(list_of_algorithm_conflicts[4].preceding_train_path_node_event_type, AlgorithmTrainPathNodeEventType.Departure)
+
+        self.assertIsInstance(list_of_algorithm_conflicts[5], AlgorithmSectionTrackConflict)
+
+        self.assertIsInstance(list_of_algorithm_conflicts[5], AlgorithmTwoTrainsConflict)
+
+        self.assertIsInstance(list_of_algorithm_conflicts[5], _AlgorithmTwoTrainsSectionTrackConflict)
+
+        self.assertEqual(list_of_algorithm_conflicts[5].conflict_type, ConflictType.Overtaking)
+
+        self.assertEqual(list_of_algorithm_conflicts[5].section_track_id, 734)
+
+        self.assertIsInstance(list_of_algorithm_conflicts[5].succeeding_train_path_node_event_type, AlgorithmTrainPathNodeEventType)
+
+        self.assertEqual(list_of_algorithm_conflicts[5].succeeding_train_path_node_event_type, AlgorithmTrainPathNodeEventType.Departure)
+
+        self.assertIsInstance(list_of_algorithm_conflicts[5].preceding_train_path_node_event_type, AlgorithmTrainPathNodeEventType)
+
+        self.assertEqual(list_of_algorithm_conflicts[5].preceding_train_path_node_event_type, AlgorithmTrainPathNodeEventType.Arrival)
 
     @mock.patch("requests.Session", side_effect=DetectConflictsMockSession)
     def tearDown(self, mocked_get_obj) -> None:

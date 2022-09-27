@@ -16,6 +16,8 @@ class ConflictType(Enum):
     SameSectionTrackSeparationTime = "sameSectionTrackSeparationTime"
     IncompatibleStationRoutes = "incompatibleStationRoutes"
     IncompatibleJunctionRoutes = "incompatibleJunctionRoutes"
+    HeadwayTime = "headwayTime"
+    Overtaking = "overtaking"
 
 
 @unique

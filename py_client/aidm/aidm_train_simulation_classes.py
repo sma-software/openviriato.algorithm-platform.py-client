@@ -3,7 +3,7 @@ from typing import List, Optional
 import datetime
 
 from py_client.aidm import StopStatus
-from py_client.aidm.aidm_base_classes import _HasID
+from py_client.aidm.aidm_base_classes import _HasID, _HasDebugString
 
 
 @unique
@@ -14,6 +14,7 @@ class AlgorithmTrainSimulationEventType(Enum):
 
 
 class AlgorithmTrainSimulationTrainPathNode(_HasID):
+    __algorithm_train_path_node_id: int
     __forecast_arrival_delay: datetime.timedelta
     __forecast_departure_delay: datetime.timedelta
     __forecast_arrival_time: datetime.datetime
@@ -29,6 +30,7 @@ class AlgorithmTrainSimulationTrainPathNode(_HasID):
     def __init__(
         self,
         id: int,
+        algorithm_train_path_node_id: int,
         forecast_arrival_delay: datetime.timedelta,
         forecast_departure_delay: datetime.timedelta,
         forecast_arrival_time: datetime.datetime,
@@ -42,6 +44,7 @@ class AlgorithmTrainSimulationTrainPathNode(_HasID):
         node_id: int,
     ):
         _HasID.__init__(self, id)
+        self.__algorithm_train_path_node_id = algorithm_train_path_node_id
         self.__forecast_arrival_delay = forecast_arrival_delay
         self.__forecast_departure_delay = forecast_departure_delay
         self.__forecast_arrival_time = forecast_arrival_time
@@ -53,6 +56,10 @@ class AlgorithmTrainSimulationTrainPathNode(_HasID):
         self.__planned_departure_time = planned_departure_time
         self.__planned_stop_status = planned_stop_status
         self.__node_id = node_id
+
+    @property
+    def algorithm_train_path_node_id(self) -> int:
+        return self.__algorithm_train_path_node_id
 
     @property
     def forecast_arrival_delay(self) -> datetime.timedelta:
@@ -123,12 +130,19 @@ class AlgorithmTrainSimulationEvent(_HasID):
         return self.__type
 
 
-class AlgorithmTrainSimulationTrain(_HasID):
+class AlgorithmTrainSimulationTrain(_HasID, _HasDebugString):
     __train_path_nodes: List[AlgorithmTrainSimulationTrainPathNode]
+    __algorithm_train_id: int
 
-    def __init__(self, train_path_nodes: List[AlgorithmTrainSimulationTrainPathNode], id: int):
+    def __init__(self, train_path_nodes: List[AlgorithmTrainSimulationTrainPathNode], id: int, debug_string: str, algorithm_train_id: int):
         _HasID.__init__(self, id)
+        _HasDebugString.__init__(self, debug_string)
         self.__train_path_nodes = train_path_nodes
+        self.__algorithm_train_id = algorithm_train_id
+
+    @property
+    def algorithm_train_id(self) -> int:
+        return self.__algorithm_train_id
 
     @property
     def train_path_nodes(self) -> List[AlgorithmTrainSimulationTrainPathNode]:

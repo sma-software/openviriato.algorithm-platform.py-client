@@ -21,9 +21,12 @@ class TestGetTrainSimulationTrains(unittest.TestCase):
                 " [ \n"
                 " { \n"
                 '    "id": 1000000, \n'
+                '    "debugString": "FV_100_J03 tt_(SZ)", \n'
+                '    "algorithm_train_id": 94865, \n'
                 '    "trainPathNodes": [ \n'
                 "        { \n"
                 '        "id": 1000001, \n'
+                '        "algorithmTrainPathNodeId": 1658, \n'
                 '        "nodeId": 162, \n'
                 '        "plannedArrivalTime": "2003-05-05T07:30:00", \n'
                 '        "plannedDepartureTime": "2003-05-05T07:32:00", \n'
@@ -38,6 +41,7 @@ class TestGetTrainSimulationTrains(unittest.TestCase):
                 "    }, \n"
                 "    { \n"
                 '        "id": 1000002, \n'
+                '        "algorithmTrainPathNodeId": 1794, \n'
                 '        "nodeId": 282, \n'
                 '        "plannedArrivalTime": "2003-05-05T07:31:12", \n'
                 '        "plannedDepartureTime": "2003-05-05T07:31:12", \n'
@@ -52,6 +56,7 @@ class TestGetTrainSimulationTrains(unittest.TestCase):
                 "    }, \n"
                 "    { \n"
                 '        "id": 1000003, \n'
+                '        "algorithmTrainPathNodeId": 2379, \n'
                 '        "nodeId": 322, \n'
                 '        "plannedArrivalTime": "2003-05-05T07:33:54", \n'
                 '        "plannedDepartureTime": "2003-05-05T07:33:54", \n'
@@ -94,9 +99,11 @@ class TestGetTrainSimulationTrains(unittest.TestCase):
         self.assertIsInstance(response, list)
         self.assertIsInstance(response[0], AlgorithmTrainSimulationTrain)
         self.assertEqual(response[0].id, 1000000)
+        self.assertEqual(response[0].debug_string, "FV_100_J03 tt_(SZ)")
         self.assertIsInstance(response[0].train_path_nodes, list)
         self.assertIsInstance(response[0].train_path_nodes[0], AlgorithmTrainSimulationTrainPathNode)
         self.assertEqual(response[0].train_path_nodes[0].id, 1000001)
+        self.assertEqual(response[0].train_path_nodes[0].algorithm_train_path_node_id, 1658)
         self.assertEqual(response[0].train_path_nodes[0].node_id, 162)
         self.assertIsInstance(response[0].train_path_nodes[0].planned_arrival_time, datetime)
         self.assertEqual(response[0].train_path_nodes[0].planned_arrival_time, datetime(year=2003, month=5, day=5, hour=7, minute=30))
@@ -119,6 +126,7 @@ class TestGetTrainSimulationTrains(unittest.TestCase):
 
         self.assertIsInstance(response[0].train_path_nodes[1], AlgorithmTrainSimulationTrainPathNode)
         self.assertEqual(response[0].train_path_nodes[1].id, 1000002)
+        self.assertEqual(response[0].train_path_nodes[1].algorithm_train_path_node_id, 1794)
         self.assertEqual(response[0].train_path_nodes[1].node_id, 282)
         self.assertIsInstance(response[0].train_path_nodes[1].planned_arrival_time, datetime)
         self.assertEqual(response[0].train_path_nodes[1].planned_arrival_time, datetime(year=2003, month=5, day=5, hour=7, minute=31, second=12))
@@ -141,6 +149,7 @@ class TestGetTrainSimulationTrains(unittest.TestCase):
 
         self.assertIsInstance(response[0].train_path_nodes[2], AlgorithmTrainSimulationTrainPathNode)
         self.assertEqual(response[0].train_path_nodes[2].id, 1000003)
+        self.assertEqual(response[0].train_path_nodes[2].algorithm_train_path_node_id, 2379)
         self.assertEqual(response[0].train_path_nodes[2].node_id, 322)
         self.assertIsInstance(response[0].train_path_nodes[2].planned_arrival_time, datetime)
         self.assertEqual(response[0].train_path_nodes[2].planned_arrival_time, datetime(year=2003, month=5, day=5, hour=7, minute=33, second=54))

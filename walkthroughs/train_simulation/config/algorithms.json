@@ -1,0 +1,69 @@
+{
+  "algorithms": [
+    {
+      "name": "Train Simulation Walkthrough (py_client)",
+      "startupRestInterfaceOnly": false,
+      "acceptsTerminationByUser": false,
+      "parameterDescriptions": [
+        {
+          "key": "trainSimulationTimeWindow",
+          "label": "Train Simulation Time Window",
+          "type": "TimeWindow",
+          "advanced": false,
+          "mandatory": true,
+          "tooltip": "The train simulation will perform on the trains in the given time window."
+        },
+        {
+          "key": "dispatcherChoice",
+          "label": "Choose a dispatcher",
+          "type": "Enum",
+          "tooltip": "Choose a dispatcher to solve conflicts in the simulation.",
+          "mandatory": true,
+          "default": "simpleDispatcher",
+          "advanced": false,
+          "configuration": {
+            "choices": [
+              {
+                "enumValue": "simpleDispatcher",
+                "label": "Simple dispatcher",
+                "tooltip": "Dispatcher resolving conflicts in a first-come first-served manner."
+              },
+              {
+                "enumValue": "changeOrderDispatcher",
+                "label": "Dispatcher changing the order of the trains",
+                "tooltip": "Dispatcher extending a planned stop to solve conflicts by changing the order of the trains."
+              },
+              {
+                "enumValue": "addStopDispatcher",
+                "label": "Dispatcher adding a stop to change the order of passing trains",
+                "tooltip": "Dispatcher adding a stop to solve conflicts by changing the order of the trains."
+              }
+            ]
+          }
+        },
+        {
+          "key": "timetableTrainOne",
+          "label": "Timetable Train One",
+          "advanced": false,
+          "mandatory": false,
+          "type": "TimetableTrain",
+          "tooltip": "If two trains are selected, the dispatcher will resolve conflicts between them by reverting the order of the trains. Otherwise, the last one will be delayed.",
+        },
+        {
+          "key": "timetableTrainTwo",
+          "label": "Timetable Train Two",
+          "advanced": false,
+          "mandatory": false,
+          "type": "TimetableTrain",
+          "tooltip": "If two trains are selected, the dispatcher will resolve conflicts between them by reverting the order of the trains. Otherwise, the last one will be delayed.",
+        }
+      ],
+       "workingDirectory": "../algorithms",
+       "files": [
+           "train_simulation_example_runner.py"
+       ],
+       "command": "demo_venv\\Scripts\\python.exe",
+       "arguments": "{File[0]} -u {ApiUrl}"
+    }
+  ]
+}

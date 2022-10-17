@@ -1,18 +1,22 @@
 {
-  "name": "Count Trains in time window (py_client)",
-  "startupRestInterfaceOnly": false,
-  "parameterDescriptions": [
+  "algorithms": [
     {
-      "key": "timeWindowParameter",
-      "label": "Time Window Parameter",
-      "type": "TimeWindow",
-      "tooltip": "Defines the time-window to count the trains in."
+      "name": "Count Trains in time window (py_client)",
+      "startupRestInterfaceOnly": false,
+      "parameterDescriptions": [
+        {
+          "key": "timeWindowParameter",
+          "label": "Time Window Parameter",
+          "type": "TimeWindow",
+          "tooltip": "Defines the time-window to count the trains in."
+        }
+      ],
+      "workingDirectory": "../algorithms",
+      "files": [
+        "count_trains_py_client.py"
+      ],
+      "command": "demo_venv\\Scripts\\python.exe",
+      "arguments": "{File[0]} -u {ApiUrl}"
     }
-  ],
-  "workingDirectory": "../algorithms",
-  "files": [
-    "count_trains_py_client.py"
-  ],
-  "command": "demo_venv\\Scripts\\python.exe",
-  "arguments": "{File[0]} -u {ApiUrl}"
+  ]
 }

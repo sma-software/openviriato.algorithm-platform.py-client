@@ -44,7 +44,7 @@ class TestPostponeNextEvent(unittest.TestCase):
 
         session_obj = self.interface_to_viriato._AlgorithmInterface__communication_layer.currentSession
         self.assertEqual(session_obj._PostponeNextEventMockSession__last_request, get_api_url() + "/services/trains/simulations/events/next:postpone")
-        self.assertDictEqual(session_obj._PostponeNextEventMockSession__last_body, dict(additionalDelay=timedelta(minutes=3)))
+        self.assertDictEqual(session_obj._PostponeNextEventMockSession__last_body, dict(additionalDelay="PT3M"))
 
     @mock.patch("requests.Session", side_effect=PostponeNextEventMockSession)
     def test_postpone_next_event_response(self, mocked_post_obj):

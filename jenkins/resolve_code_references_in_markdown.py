@@ -31,13 +31,22 @@ class MethodSignature:
     _method_arguments_as_str: str
     _return_type_as_str: str
     _method_name: str
-    _line_number_in_source_file: int
+    _line_number_start_in_source_file: int
+    _line_number_stop_in_source_file: int
 
-    def __init__(self, method_name: str, method_arguments_as_str: str, return_type_as_str: str, line_number_in_source_file: int):
+    def __init__(
+        self,
+        method_name: str,
+        method_arguments_as_str: str,
+        return_type_as_str: str,
+        line_number_start_in_source_file: int,
+        line_number_stop_in_source_file: int,
+    ):
         self._method_name = method_name
         self._method_arguments_as_str = method_arguments_as_str
         self._return_type_as_str = return_type_as_str
-        self._line_number_in_source_file = line_number_in_source_file
+        self._line_number_start_in_source_file = line_number_start_in_source_file
+        self._line_number_stop_in_source_file = line_number_stop_in_source_file
 
     @property
     def method_arguments_as_str(self) -> str:
@@ -52,8 +61,12 @@ class MethodSignature:
         return self._method_name
 
     @property
-    def line_number_in_source_file(self) -> int:
-        return self._line_number_in_source_file
+    def line_number_start_in_source_file(self) -> int:
+        return self._line_number_start_in_source_file
+
+    @property
+    def line_number_stop_in_source_file(self) -> int:
+        return self._line_number_stop_in_source_file
 
 
 class CodeBlockWithLinesNumberInSourceCode:
@@ -178,8 +191,9 @@ def _extract_method_signature(py_client_repo_root: str, path_to_source_file_from
         return_type = retrieved_signature_match_object.group(2)
 
         file_contents_before_signature = file_content.split(retrieved_signature)[0]
-        line_number = 1 + file_contents_before_signature.count("\n")
-        return MethodSignature(method_name, parameters, return_type, line_number)
+        line_number_start = file_contents_before_signature.count("\n")
+        line_number_stop = line_number_start + retrieved_signature.count("\n")
+        return MethodSignature(method_name, parameters, return_type, line_number_start, line_number_stop)
 
 
 def _calculate_offset_to_first_line_number_of_code_block(lines_starting_from_marker: List[str]) -> int:
@@ -190,7 +204,7 @@ def _calculate_offset_to_first_line_number_of_code_block(lines_starting_from_mar
 
 
 def _find_first_line_with_colon(lines: List[str]) -> int:
-    end_of_statement_requiring_indentation_character = ':\n'
+    end_of_statement_requiring_indentation_character = ":\n"
     for index, line in enumerate(lines):
         if line.find(end_of_statement_requiring_indentation_character) > -1:
             return index + 1
@@ -211,11 +225,13 @@ def _extract_code_block(all_lines: List[str], line_number_code_block_start: int)
     # this is also working for other types of code blocks with at least two line
     # might not working in general cases
 
-    number_of_first_line_in_code_block = line_number_code_block_start + _calculate_offset_to_first_line_number_of_code_block(all_lines[line_number_code_block_start:])
+    number_of_first_line_in_code_block = line_number_code_block_start + _calculate_offset_to_first_line_number_of_code_block(
+        all_lines[line_number_code_block_start:]
+    )
     number_of_lines_within_code_block = _calculate_number_of_lines_within_code_block(all_lines[number_of_first_line_in_code_block:])
 
     line_number_code_block_end = number_of_first_line_in_code_block + number_of_lines_within_code_block
-    return all_lines[line_number_code_block_start: line_number_code_block_end]
+    return all_lines[line_number_code_block_start:line_number_code_block_end]
 
 
 def _calculate_number_of_lines_within_code_block(lines_starting_from_code_block: List[str]):
@@ -366,7 +382,12 @@ def _translate_source_markdown_with_method_signature(py_client_repo_root: str, l
 
         line = line.replace(
             "{}{}({},{})".format(pattern_for_import_marker, tag_suffix, source_code_file_name, target_signature),
-            "[{}]({}#L{})".format(method_signature, source_code_from_md_source, retrieved_method_signature.line_number_in_source_file + OFFSET_FOR_GIT_HUB),
+            "[{}]({}#L{}-L{})".format(
+                method_signature,
+                source_code_from_md_source,
+                retrieved_method_signature.line_number_start_in_source_file + OFFSET_FOR_GIT_HUB,
+                retrieved_method_signature.line_number_stop_in_source_file + OFFSET_FOR_GIT_HUB,
+            ),
         )
     return line
 

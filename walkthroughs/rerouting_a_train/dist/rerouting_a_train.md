@@ -6,10 +6,10 @@ For more detailed information we refer the developer to the C# API Documentation
 
 ## The Method for Rerouting Trains
 
-In order to reroute a train, which is possible with the method [reroute_train(...)](../../../py_client/algorithm_interface/algorithm_interface.py#L278), 
+In order to reroute a train, which is possible with the method [reroute_train(...)](../../../py_client/algorithm_interface/algorithm_interface.py#L277-L277), 
 the developer has to use the class [UpdateTrainRoute](../../../py_client/aidm/aidm_update_classes.py).
 
-For our walkthrough we have encapsulated the call to [reroute_train(...)](../../../py_client/algorithm_interface/algorithm_interface.py#L278) by a method 
+For our walkthrough we have encapsulated the call to [reroute_train(...)](../../../py_client/algorithm_interface/algorithm_interface.py#L277-L277) by a method 
 [persist_rerouted_train(
         self,
         train_to_reroute: AlgorithmTrain,
@@ -17,8 +17,8 @@ For our walkthrough we have encapsulated the call to [reroute_train(...)](../../
         last_train_path_node_on_diversion: AlgorithmTrainPathNode,
         routing_edges_on_diversion: List[_RoutingEdge],
         restore_node_tracks_at_start_and_end_of_diversion: bool,
-    ) -> AlgorithmTrain](../../../walkthroughs/rerouting_a_train/py/RerouteTrainPersistenceService.py#L15)
-which we can simply invoke below. This also demonstrates how an algorithm developer can use [reroute_train(...)](../../../py_client/algorithm_interface/algorithm_interface.py#L278).
+    ) -> AlgorithmTrain](../../../walkthroughs/rerouting_a_train/py/RerouteTrainPersistenceService.py#L14-L21)
+which we can simply invoke below. This also demonstrates how an algorithm developer can use [reroute_train(...)](../../../py_client/algorithm_interface/algorithm_interface.py#L277-L277).
 Here we list the source code with explanations.
 
 ```python
@@ -178,9 +178,9 @@ Code listing: _RerouteTrainAlgorithm source code. Continuation of the example be
 
 
 In a second step we can calculate a sequence of [RoutingEdge](../../../py_client/aidm/aidm_routing_edge_classes.py). Even though the created routing edges might not exist according to the infrastructure, which is known to 
-the Algorithm Platform, i.e. these will not be provided by any of the methods [get_outgoing_routing_edges(...)](../../../py_client/algorithm_interface/algorithm_interface.py#L480), 
-[get_incoming_routing_edges(...)](../../../py_client/algorithm_interface/algorithm_interface.py#L473) and 
-[get_crossing_routing_edges(...)](../../../py_client/algorithm_interface/algorithm_interface.py#L483), we can use them to reroute the train. 
+the Algorithm Platform, i.e. these will not be provided by any of the methods [get_outgoing_routing_edges(...)](../../../py_client/algorithm_interface/algorithm_interface.py#L479-L479), 
+[get_incoming_routing_edges(...)](../../../py_client/algorithm_interface/algorithm_interface.py#L472-L472) and 
+[get_crossing_routing_edges(...)](../../../py_client/algorithm_interface/algorithm_interface.py#L482-L482), we can use them to reroute the train. 
 
 ```python
 def _construct_mesoscopic_routing_edges_from_train_with_alternative_route(
@@ -210,7 +210,7 @@ def _construct_mesoscopic_routing_edges_from_train_with_alternative_route(
 ```
 Code listing: _Method used to calculate the sequence of routing edges to reroute a train_. ([Lines: 112 - 138 from file: _RerouteTrainAlgorithm.py_](../../../walkthroughs/rerouting_a_train/py/RerouteTrainAlgorithm.py#L112-L138)).
 
-Now we can continue with the code from the method above (see comment in the source code listing). We construct the routing edges and we can invoke [persist_rerouted_train(...)](../../../walkthroughs/rerouting_a_train/py/RerouteTrainPersistenceService.py#L15) with the obtained routing edges.
+Now we can continue with the code from the method above (see comment in the source code listing). We construct the routing edges and we can invoke [persist_rerouted_train(...)](../../../walkthroughs/rerouting_a_train/py/RerouteTrainPersistenceService.py#L14-L21) with the obtained routing edges.
 
 Continued example from above
 

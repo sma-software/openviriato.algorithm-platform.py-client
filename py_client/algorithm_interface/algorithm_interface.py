@@ -2,7 +2,6 @@ import datetime
 from typing import Type, List, Optional, Union
 
 from py_client.aidm.aidm_enum_classes import EnumType
-from multipledispatch import dispatch
 
 import py_client.algorithm_interface._algorithm_interface_helpers as _interface_helpers
 import py_client.conversion.converter_helpers as converter_helpers
@@ -294,14 +293,12 @@ class AlgorithmInterface:
         response_dict = self.__communication_layer.do_put_request(url_to_resource, request_body=put_body_list)
         return JsonToAidmConverter().process_json_to_aidm(response_dict, AlgorithmTrain)
 
-    @dispatch(int, UpdateStopTimesTrainPathNode)
     def update_train_trajectory_stop_times(self, train_id: int, update_stop_times_train_path_node: UpdateStopTimesTrainPathNode) -> AlgorithmTrain:
         url_to_resource = "trains/{0}/train-path-nodes:update-trajectory-stop-times".format(train_id)
         put_body_list = to_json_converter.convert_any_object(update_stop_times_train_path_node)
         response_dict = self.__communication_layer.do_put_request(url_to_resource, request_body=put_body_list)
         return JsonToAidmConverter().process_json_to_aidm(response_dict, AlgorithmTrain)
 
-    @dispatch(int, UpdateRunTimesTrainPathSegment)
     def update_train_trajectory_run_times(
         self,
         train_id: int,

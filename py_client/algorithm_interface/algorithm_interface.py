@@ -15,7 +15,6 @@ from py_client.aidm import (
     AlgorithmTrainClassification,
     UpdateStopTimesTrainPathNode,
     UpdateTimesTrainPathNode,
-    AnyRoutingEdgeIncomingOrOutgoing,
     StopStatus,
     RoutingPoint,
     IncomingNodeTrackRoutingEdge,
@@ -51,6 +50,7 @@ from py_client.aidm import (
 )
 from py_client.aidm.aidm_conflict import AlgorithmConflict
 from py_client.aidm.aidm_link_classes import _AlgorithmLink
+from py_client.aidm.aidm_routing_edge_classes import _RoutingEdge
 from py_client.communication.communication_layer import CommunicationLayer
 from py_client.conversion.json_to_aidm_converter import JsonToAidmConverter
 
@@ -374,9 +374,9 @@ class AlgorithmInterface:
 
     def get_separation_time_in_station_for_routes(
         self,
-        preceding_train_routing_edge: AnyRoutingEdgeIncomingOrOutgoing,
+        preceding_train_routing_edge: _RoutingEdge,
         preceding_train_stop_status: StopStatus,
-        succeeding_train_routing_edge: AnyRoutingEdgeIncomingOrOutgoing,
+        succeeding_train_routing_edge: _RoutingEdge,
         succeeding_train_stop_status: StopStatus,
     ) -> Optional[datetime.timedelta]:
         url_to_resource = "nodes/{0}/separation-times".format(preceding_train_routing_edge.node_id)

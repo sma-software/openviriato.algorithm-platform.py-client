@@ -65,7 +65,7 @@ class TestGetTrainsCutToTimeRangeDrivingAnyNode(unittest.TestCase):
         time_window = TimeWindow(from_time=datetime.datetime(2000, 1, 1, 1, 1), to_time=datetime.datetime(2004, 1, 1, 0, 0))
         node_ids = [10, 11, 18]
 
-        self.interface_to_viriato.get_trains_cut_to_time_range_driving_any_node(time_window, filter_node_ids=node_ids)
+        self.interface_to_viriato.get_trains_cut_to_time_range_driving_any_node(time_window, node_ids=node_ids)
 
         session_obj = self.interface_to_viriato._AlgorithmInterface__communication_layer.currentSession
         self.assertEqual(session_obj._GetTrainsCutToTimeRangeDrivingAnyNodeTestMockSession__last_request, get_api_url() + "/trains")
@@ -81,7 +81,7 @@ class TestGetTrainsCutToTimeRangeDrivingAnyNode(unittest.TestCase):
         time_window = TimeWindow(from_time=datetime.datetime(2000, 1, 1, 1, 1), to_time=datetime.datetime(2004, 1, 1, 0, 0))
         node_ids = [10]
 
-        listed_algorithm_trains = self.interface_to_viriato.get_trains_cut_to_time_range_driving_any_node(time_window, filter_node_ids=node_ids)
+        listed_algorithm_trains = self.interface_to_viriato.get_trains_cut_to_time_range_driving_any_node(time_window, node_ids=node_ids)
 
         self.assertIsInstance(listed_algorithm_trains, list)
         self.assertEqual(listed_algorithm_trains.__len__(), 1)

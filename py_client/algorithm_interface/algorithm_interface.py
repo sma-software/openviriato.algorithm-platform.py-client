@@ -701,3 +701,14 @@ class AlgorithmInterface:
         url_to_resource = "section-tracks/headway-times:calculate-maximum"
         response_dict = self.__communication_layer.do_get_request_without_body(url_to_resource)
         return JsonToAidmConverter().process_json_to_aidm(response_dict, datetime.timedelta)
+
+    def calculate_maximum_separation_time(self, node_id: int = None) -> datetime.timedelta:
+        # Overloaded method is not possible in python, need to branch on arguments
+        if node_id is None:
+            url_to_resource = "nodes/separation-times:calculate-maximum"
+            response_dict = self.__communication_layer.do_get_request_without_body(url_to_resource)
+            return JsonToAidmConverter().process_json_to_aidm(response_dict, datetime.timedelta)
+        else:
+            url_to_resource = "nodes/{}/separation-times:calculate-maximum".format(node_id)
+            response_dict = self.__communication_layer.do_get_request_without_body(url_to_resource)
+            return JsonToAidmConverter().process_json_to_aidm(response_dict, datetime.timedelta)

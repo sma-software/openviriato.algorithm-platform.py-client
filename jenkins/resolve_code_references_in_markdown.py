@@ -468,6 +468,9 @@ def _parse_file_name_from_command_line_arguments() -> tuple[str, str]:
 
 def _run_with_arguments(py_client_repo_root: str, md_output_root: str) -> None:
     src_md_files_to_process = _list_walkthroughs_to_process(py_client_repo_root)
+    if len(src_md_files_to_process) == 0:
+        raise FileNotFoundError("No walkthrough found in folder '{}' please verify the given path.".format(py_client_repo_root, WALKTHROUGHS_ROOT))
+
     for src_md_file in src_md_files_to_process:
         src_md_file_contents = _read_src_md(src_md_file)
         src_md_file_translated = _translate_source_markdown_to_output_markdown(py_client_repo_root, src_md_file_contents)

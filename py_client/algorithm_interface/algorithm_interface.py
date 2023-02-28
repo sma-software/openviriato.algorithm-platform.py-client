@@ -696,3 +696,8 @@ class AlgorithmInterface:
         url_to_resource = "services/trains/simulations/events/next:replace-by-stop"
         response = self.__communication_layer.do_post_request(url_to_resource)
         return JsonToAidmConverter().process_json_to_aidm(response, AlgorithmTrainSimulationRealizationForecast)
+
+    def calculate_maximum_headway_time(self) -> datetime.timedelta:
+        url_to_resource = "section-tracks/headway-times:calculate-maximum"
+        response_dict = self.__communication_layer.do_get_request_without_body(url_to_resource)
+        return JsonToAidmConverter().process_json_to_aidm(response_dict, datetime.timedelta)

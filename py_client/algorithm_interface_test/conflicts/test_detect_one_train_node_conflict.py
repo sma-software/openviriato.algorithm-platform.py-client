@@ -46,6 +46,16 @@ class TestDetectConflicts(unittest.TestCase):
                 '       "nodeId": 748, \n'
                 '       "trainId": 123, \n'
                 '       "trainPathNodeId": 456 \n'
+                "   }, \n"
+                "   {"
+                '       "conflictType": "impossibleJunctionRoute", \n'
+                '       "timeWindow": { \n'
+                '           "fromTime": "2023-03-14T13:36:10", \n'
+                '           "toTime": "2023-03-14T13:37:00" \n'
+                "       }, \n"
+                '       "nodeId": 748, \n'
+                '       "trainId": 123, \n'
+                '       "trainPathNodeId": 456 \n'
                 "    } \n"
                 "]"
             )
@@ -60,7 +70,12 @@ class TestDetectConflicts(unittest.TestCase):
     def test_detect_conflicts_mock_session(self, mocked_get_obj):
         train_ids = [2743]
         arguments = ConflictDetectionArguments(train_ids=train_ids).with_type_filter(
-            [ConflictType.DrivingDirectionChange, ConflictType.ImpossibleStationEntryRoute, ConflictType.ImpossibleStationExitRoute]
+            [
+                ConflictType.DrivingDirectionChange,
+                ConflictType.ImpossibleStationEntryRoute,
+                ConflictType.ImpossibleStationExitRoute,
+                ConflictType.ImpossibleJunctionRoute,
+            ]
         )
         self.interface_to_viriato.detect_conflicts(arguments=arguments)
 
@@ -74,7 +89,7 @@ class TestDetectConflicts(unittest.TestCase):
                 "trainIds": [2743],
                 "filters": {
                     "location": {"nodeIds": None, "sectionTrackIds": None},
-                    "conflictTypes": ["drivingDirectionChange", "impossibleStationEntryRoute", "impossibleStationExitRoute"],
+                    "conflictTypes": ["drivingDirectionChange", "impossibleStationEntryRoute", "impossibleStationExitRoute", "impossibleJunctionRoute"],
                 },
             },
         )
@@ -117,6 +132,16 @@ class TestDetectConflicts(unittest.TestCase):
         self.assertEqual(list_of_algorithm_conflicts[2].node_id, 748)
         self.assertEqual(list_of_algorithm_conflicts[2].train_id, 123)
         self.assertEqual(list_of_algorithm_conflicts[2].train_path_node_id, 456)
+
+        self.assertIsInstance(list_of_algorithm_conflicts[3], AlgorithmNodeConflict)
+        self.assertIsInstance(list_of_algorithm_conflicts[3], _AlgorithmOneTrainNodeConflict)
+        self.assertIsInstance(list_of_algorithm_conflicts[3].conflict_type, ConflictType)
+        self.assertEqual(list_of_algorithm_conflicts[3].conflict_type, ConflictType.ImpossibleJunctionRoute)
+        self.assertEqual(list_of_algorithm_conflicts[3].time_window.from_time, datetime.datetime(day=14, month=3, year=2023, hour=13, minute=36, second=10))
+        self.assertEqual(list_of_algorithm_conflicts[3].time_window.to_time, datetime.datetime(day=14, month=3, year=2023, hour=13, minute=37, second=0))
+        self.assertEqual(list_of_algorithm_conflicts[3].node_id, 748)
+        self.assertEqual(list_of_algorithm_conflicts[3].train_id, 123)
+        self.assertEqual(list_of_algorithm_conflicts[3].train_path_node_id, 456)
 
     @mock.patch("requests.Session", side_effect=DetectConflictsMockSession)
     def tearDown(self, mocked_get_obj) -> None:

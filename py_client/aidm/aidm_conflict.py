@@ -21,6 +21,7 @@ class ConflictType(Enum):
     CongestedNode = "congestedNode"
     ImpossibleStationEntryRoute = "impossibleStationEntryRoute"
     ImpossibleStationExitRoute = "impossibleStationExitRoute"
+    ImpossibleJunctionRoute = "impossibleJunctionRoute"
 
 
 @unique

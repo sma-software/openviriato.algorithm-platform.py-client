@@ -66,6 +66,16 @@ class TestDetectConflicts(unittest.TestCase):
                 '       "nodeId": 847, \n'
                 '       "trainId": 321, \n'
                 '       "trainPathNodeId": 654 \n'
+                "   }, \n"
+                "   {"
+                '       "conflictType": "noStationTrackAssigned", \n'
+                '       "timeWindow": { \n'
+                '           "fromTime": "2023-03-14T15:36:10", \n'
+                '           "toTime": "2023-03-14T15:37:00" \n'
+                "       }, \n"
+                '       "nodeId": 847, \n'
+                '       "trainId": 321, \n'
+                '       "trainPathNodeId": 654 \n'
                 "   } \n"
                 "]"
             )
@@ -86,6 +96,7 @@ class TestDetectConflicts(unittest.TestCase):
                 ConflictType.ImpossibleStationExitRoute,
                 ConflictType.ImpossibleJunctionRoute,
                 ConflictType.StopInJunction,
+                ConflictType.NoStationTrackAssigned,
             ]
         )
         self.interface_to_viriato.detect_conflicts(arguments=arguments)
@@ -106,6 +117,7 @@ class TestDetectConflicts(unittest.TestCase):
                         "impossibleStationExitRoute",
                         "impossibleJunctionRoute",
                         "stopInJunction",
+                        "noStationTrackAssigned",
                     ],
                 },
             },
@@ -169,6 +181,16 @@ class TestDetectConflicts(unittest.TestCase):
         self.assertEqual(list_of_algorithm_conflicts[4].node_id, 847)
         self.assertEqual(list_of_algorithm_conflicts[4].train_id, 321)
         self.assertEqual(list_of_algorithm_conflicts[4].train_path_node_id, 654)
+
+        self.assertIsInstance(list_of_algorithm_conflicts[5], AlgorithmNodeConflict)
+        self.assertIsInstance(list_of_algorithm_conflicts[5], _AlgorithmOneTrainNodeConflict)
+        self.assertIsInstance(list_of_algorithm_conflicts[5].conflict_type, ConflictType)
+        self.assertEqual(list_of_algorithm_conflicts[5].conflict_type, ConflictType.NoStationTrackAssigned)
+        self.assertEqual(list_of_algorithm_conflicts[5].time_window.from_time, datetime.datetime(day=14, month=3, year=2023, hour=15, minute=36, second=10))
+        self.assertEqual(list_of_algorithm_conflicts[5].time_window.to_time, datetime.datetime(day=14, month=3, year=2023, hour=15, minute=37, second=0))
+        self.assertEqual(list_of_algorithm_conflicts[5].node_id, 847)
+        self.assertEqual(list_of_algorithm_conflicts[5].train_id, 321)
+        self.assertEqual(list_of_algorithm_conflicts[5].train_path_node_id, 654)
 
     @mock.patch("requests.Session", side_effect=DetectConflictsMockSession)
     def tearDown(self, mocked_get_obj) -> None:

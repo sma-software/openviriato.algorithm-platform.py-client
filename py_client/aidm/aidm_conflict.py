@@ -19,6 +19,8 @@ class ConflictType(Enum):
     HeadwayTime = "headwayTime"
     Overtaking = "overtaking"
     CongestedNode = "congestedNode"
+    ImpossibleStationEntryRoute = "impossibleStationEntryRoute"
+    ImpossibleStationExitRoute = "impossibleStationExitRoute"
 
 
 @unique

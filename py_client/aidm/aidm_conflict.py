@@ -22,6 +22,7 @@ class ConflictType(Enum):
     ImpossibleStationEntryRoute = "impossibleStationEntryRoute"
     ImpossibleStationExitRoute = "impossibleStationExitRoute"
     ImpossibleJunctionRoute = "impossibleJunctionRoute"
+    StopInJunction = "stopInJunction"
 
 
 @unique

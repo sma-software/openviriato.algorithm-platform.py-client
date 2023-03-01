@@ -89,3 +89,20 @@ class AlgorithmTrainPathNode(_HasID):
     @property
     def movement_type_id(self) -> int:
         return self.__movement_type_id
+
+
+class AlgorithmTrainPathNodeReference:
+    __train_id: int
+    __train_path_node_id: int
+
+    def __init__(self, train_id: int, train_path_node_id: int):
+        self.__train_id = train_id
+        self.__train_path_node_id = train_path_node_id
+
+    @property
+    def train_id(self):
+        return self.__train_id
+
+    @property
+    def train_path_node_id(self):
+        return self.__train_path_node_id

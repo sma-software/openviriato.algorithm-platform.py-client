@@ -1,9 +1,9 @@
 from __future__ import annotations
 from typing import List, Optional, Union
 from enum import unique, Enum
+
+from py_client.aidm import AlgorithmTrainPathNodeReference
 from py_client.aidm.aidm_time_window_classes import TimeWindow
-from py_client.aidm.aidm_train_path_node_classes import AlgorithmTrainPathNode
-from py_client.aidm.aidm_algorithm_classes import AlgorithmTrain
 
 
 @unique
@@ -18,6 +18,7 @@ class ConflictType(Enum):
     IncompatibleJunctionRoutes = "incompatibleJunctionRoutes"
     HeadwayTime = "headwayTime"
     Overtaking = "overtaking"
+    CongestedNode = "congestedNode"
 
 
 @unique
@@ -154,22 +155,16 @@ class AlgorithmOneTrainConflict(_AlgorithmTrainConflict):
 
 
 class AlgorithmMultipleTrainsConflict(_AlgorithmTrainConflict):
-    __train_ids: List[int]
-    __train_path_node_ids: List[int]
+    __involved_train_path_node_references: List[AlgorithmTrainPathNodeReference]
 
     # **kwargs is needed because operator ** cannot deal with double interheritance otherwise (as needed by json2Aidm conversion)
-    def __init__(self, train_ids: List[int], train_path_node_ids: List[int], **kwargs):
+    def __init__(self, involved_train_path_node_references: List[AlgorithmTrainPathNodeReference], **kwargs):
         super().__init__(**kwargs)
-        self.__train_ids = train_ids
-        self.__train_path_node_ids = train_path_node_ids
+        self.__involved_train_path_node_references = involved_train_path_node_references
 
     @property
-    def train_ids(self) -> List[int]:
-        return self.__train_ids
-
-    @property
-    def train_path_node_ids(self) -> List[int]:
-        return self.__train_path_node_ids
+    def involved_train_path_node_references(self) -> List[AlgorithmTrainPathNodeReference]:
+        return self.__involved_train_path_node_references
 
 
 class _AlgorithmTwoTrainsSectionTrackConflict(AlgorithmTwoTrainsConflict, AlgorithmSectionTrackConflict):
@@ -233,6 +228,15 @@ class _AlgorithmTwoTrainsNodeConflict(AlgorithmTwoTrainsConflict, AlgorithmNodeC
             succeeding_train_path_node_id=succeeding_train_path_node_id,
             succeeding_train_path_node_event_type=succeeding_train_path_node_event_type,
             node_id=node_id,
+        )
+
+
+class _AlgorithmMultipleTrainsNodeConflict(AlgorithmMultipleTrainsConflict, AlgorithmNodeConflict):
+    def __init__(
+        self, conflict_type: ConflictType, time_window: TimeWindow, involved_train_path_node_references: List[AlgorithmTrainPathNodeReference], node_id: int
+    ):
+        super().__init__(
+            conflict_type=conflict_type, time_window=time_window, involved_train_path_node_references=involved_train_path_node_references, node_id=node_id
         )
 
 

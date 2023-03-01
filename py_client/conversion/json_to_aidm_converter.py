@@ -1,5 +1,4 @@
 from typing import Dict, get_type_hints
-from py_client.aidm.aidm_base_classes import _HasID
 from py_client.conversion.converter_helpers import *
 from py_client.aidm.aidm_link_classes import _AlgorithmLink, AlgorithmAwaitArrivalLink, AlgorithmRosterLink, AlgorithmConnectionLink
 from py_client.aidm.aidm_routing_edge_classes import _RoutingEdge
@@ -12,6 +11,7 @@ from py_client.aidm.aidm_conflict import (
     _AlgorithmOneTrainSectionTrackConflict,
     _AlgorithmOneTrainNodeConflict,
     _AlgorithmTwoTrainsNodeConflict,
+    _AlgorithmMultipleTrainsNodeConflict,
 )
 import datetime
 import isodate
@@ -227,6 +227,7 @@ class ConflictTypeMappingLookup:
         self.__lookup[ConflictType.IncompatibleJunctionRoutes] = _AlgorithmTwoTrainsNodeConflict
         self.__lookup[ConflictType.HeadwayTime] = _AlgorithmTwoTrainsSectionTrackConflict
         self.__lookup[ConflictType.Overtaking] = _AlgorithmTwoTrainsSectionTrackConflict
+        self.__lookup[ConflictType.CongestedNode] = _AlgorithmMultipleTrainsNodeConflict
 
     def get_conflict_type_mapping(self, enum_conflict_type: ConflictType) -> Type[AlgorithmConflict]:
         return self.__lookup[enum_conflict_type]

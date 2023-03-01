@@ -42,6 +42,7 @@ from py_client.aidm import (
     AlgorithmSectionRunningTimePenalty,
     AlgorithmTrainSimulationEvent,
     AlgorithmMovementType,
+    AlgorithmUnplannedStopPenalties,
     RunningTimePenaltyOnTrainPath,
     RunningTimeCalculationResult,
     ConflictDetectionArguments,
@@ -712,3 +713,8 @@ class AlgorithmInterface:
             url_to_resource = "nodes/{}/separation-times:calculate-maximum".format(node_id)
             response_dict = self.__communication_layer.do_get_request_without_body(url_to_resource)
             return JsonToAidmConverter().process_json_to_aidm(response_dict, datetime.timedelta)
+
+    def get_unplanned_stop_penalties(self, train_id: int) -> AlgorithmUnplannedStopPenalties:
+        url_to_resource = "trains/{}/unplanned-stop-penalties".format(train_id)
+        response_dict = self.__communication_layer.do_get_request_without_body(url_to_resource)
+        return JsonToAidmConverter().process_json_to_aidm(response_dict, AlgorithmUnplannedStopPenalties)

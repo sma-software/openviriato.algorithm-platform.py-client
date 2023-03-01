@@ -1,3 +1,4 @@
+import datetime
 from typing import List
 
 from py_client.aidm.aidm_base_classes import _HasID, _HasCode, _HasDebugString
@@ -131,3 +132,26 @@ class AlgorithmMovementType(_HasID):
     @property
     def name(self):
         return self.__name
+
+
+class AlgorithmUnplannedStopPenalties:
+    __acceleration_penalty: datetime.timedelta
+    __deceleration_penalty: datetime.timedelta
+    __minimum_duration_unplanned_stop: datetime.timedelta
+
+    def __init__(self, acceleration_penalty: datetime.timedelta, deceleration_penalty: datetime.timedelta, minimum_duration_unplanned_stop: datetime.timedelta):
+        self.__acceleration_penalty = acceleration_penalty
+        self.__deceleration_penalty = deceleration_penalty
+        self.__minimum_duration_unplanned_stop = minimum_duration_unplanned_stop
+
+    @property
+    def acceleration_penalty(self):
+        return self.__acceleration_penalty
+
+    @property
+    def deceleration_penalty(self):
+        return self.__deceleration_penalty
+
+    @property
+    def minimum_duration_unplanned_stop(self):
+        return self.__minimum_duration_unplanned_stop

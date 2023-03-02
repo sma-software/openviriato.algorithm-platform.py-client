@@ -17,6 +17,7 @@ class DispatcherService:
     def __init__(self, algorithm_interface: AlgorithmInterface):
         self._algorithm_interface = algorithm_interface
 
+    # TODO VPLAT-10184: Remove references to AlgorithmTrainSimulationTrainPathNode
     # @postpone_departure_in_given_node_of_preceding_train_or_realize_event[:]
     def postpone_departure_in_given_node_of_preceding_train_or_realize_event(
         self,
@@ -39,6 +40,7 @@ class DispatcherService:
 
         return self._algorithm_interface.realize_next_train_simulation_event()
 
+    # TODO VPLAT-10184: Remove references to AlgorithmTrainSimulationTrainPathNode
     @staticmethod
     def event_of_preceding_train_is_departure_at_given_node(
         simulation_event: AlgorithmTrainSimulationEvent, preceding_tpn_at_given_node: AlgorithmTrainSimulationTrainPathNode
@@ -49,6 +51,7 @@ class DispatcherService:
 
         return simulation_event.train_simulation_train_path_node_id == preceding_tpn_at_given_node.id
 
+    # TODO VPLAT-10184: Remove references to AlgorithmTrainSimulationTrainPathNode
     @staticmethod
     def event_of_preceding_train_is_passing_at_given_node(
         simulation_event: AlgorithmTrainSimulationEvent, preceding_tpn_at_given_node: AlgorithmTrainSimulationTrainPathNode
@@ -59,6 +62,7 @@ class DispatcherService:
 
         return simulation_event.train_simulation_train_path_node_id == preceding_tpn_at_given_node.id
 
+    # TODO VPLAT-10184: Remove references to AlgorithmTrainSimulationTrainPathNode
     @staticmethod
     def _need_to_postpone_preceding_tpn(
         any_simulation_event: AlgorithmTrainSimulationEvent,
@@ -71,6 +75,7 @@ class DispatcherService:
             departure_event_of_preceding_train_at = any_simulation_event
             return departure_event_of_preceding_train_at.forecast_time <= succeeding_tpn_at_given_node.forecast_departure_time
 
+    # TODO VPLAT-10184: Remove references to AlgorithmTrainSimulationTrainPathNode
     @staticmethod
     def _calculate_time_to_postpone_to(
         simulation_event: AlgorithmTrainSimulationEvent, succeeding_tpn_at_given_node: AlgorithmTrainSimulationTrainPathNode

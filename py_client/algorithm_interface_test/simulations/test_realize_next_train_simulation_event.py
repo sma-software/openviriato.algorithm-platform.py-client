@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 import unittest
 from unittest import mock
 
@@ -23,9 +23,13 @@ class TestPostRealizeNextTrainSimulationEvent(unittest.TestCase):
                 "{ \n"
                 '   "nextEvent": {'
                 '       "id": 2000001, \n'
-                '       "trainSimulationTrainPathNodeId": 1000002, \n'
                 '       "type": "arrival", \n'
-                '       "forecastTime": "2003-05-05T07:31:12" \n'
+                '       "plannedTime": "2003-05-05T07:31:00", \n'
+                '       "forecastTime": "2003-05-05T07:31:12", \n'
+                '       "forecastDelay": "PT12S", \n'
+                '       "nodeId": 282, \n'
+                '       "algorithmTrainId": 1303, \n'
+                '       "algorithmTrainPathNodeId": 1301 \n'
                 "    }, \n "
                 '    "unrealizableEvents": []'
                 " } "
@@ -60,9 +64,12 @@ class TestPostRealizeNextTrainSimulationEvent(unittest.TestCase):
         self.assertIsInstance(response.next_event, AlgorithmTrainSimulationEvent)
 
         self.assertEqual(response.next_event.id, 2000001)
-        self.assertEqual(response.next_event.train_simulation_train_path_node_id, 1000002)
-        self.assertIsInstance(response.next_event.forecast_time, datetime)
-        self.assertIsInstance(response.next_event.type, AlgorithmTrainSimulationEventType)
+        self.assertEqual(response.next_event.type, AlgorithmTrainSimulationEventType.arrival)
+        self.assertEqual(response.next_event.planned_time, datetime(year=2003, month=5, day=5, hour=7, minute=31))
+        self.assertEqual(response.next_event.forecast_time, datetime(year=2003, month=5, day=5, hour=7, minute=31, second=12))
+        self.assertEqual(response.next_event.forecast_delay, timedelta(seconds=12))
+        self.assertEqual(response.next_event.node_id, 282)
+        self.assertEqual(response.next_event.algorithm_train_path_node_id, 1301)
 
         self.assertEqual(response.unrealizable_events, [])
 

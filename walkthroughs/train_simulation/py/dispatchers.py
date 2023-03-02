@@ -68,7 +68,7 @@ class ChangeTrainOrderInFirstCommonTrainPathNodeDispatcher(_Dispatcher):
             simulation_event, self._preceding_train, self._conflicting_simulation_tpn_preceding_train, self._conflicting_simulation_tpn_succeeding_train
         )
 
-
+# TODO VPLAT-10184: Remove references to AlgorithmTrainSimulationTrainPathNode
 # @ChangeTrainOrderInFirstCommonTrainPathNodeAddingAStopDispatcher[:]
 class ChangeTrainOrderInFirstCommonTrainPathNodeAddingAStopDispatcher(_Dispatcher):
     _algorithm_interface: AlgorithmInterface

@@ -22,9 +22,13 @@ class TestPostponeNextEvent(unittest.TestCase):
                 "{"
                 '    "nextEvent": {'
                 '        "id": 2000002, \n'
-                '        "trainSimulationTrainPathNodeId": 1000002, \n'
                 '        "type": "passing", \n'
-                '        "forecastTime": "2003-05-05T07:34:12" \n'
+                '        "plannedTime": "2003-05-05T07:34:00", \n'
+                '        "forecastDelay": "PT1M", \n'
+                '        "forecastTime": "2003-05-05T07:35:00", \n'
+                '        "nodeId": 282, \n'
+                '        "algorithmTrainId": 1303, \n'
+                '        "algorithmTrainPathNodeId": 1301 \n'
                 "    }, \n"
                 '    "unrealizableEvents": [] \n'
                 "}"
@@ -54,9 +58,13 @@ class TestPostponeNextEvent(unittest.TestCase):
         self.assertIsInstance(response, AlgorithmTrainSimulationRealizationForecast)
         self.assertIsInstance(response.next_event, AlgorithmTrainSimulationEvent)
         self.assertEqual(response.next_event.id, 2000002)
-        self.assertEqual(response.next_event.train_simulation_train_path_node_id, 1000002)
         self.assertEqual(response.next_event.type, AlgorithmTrainSimulationEventType.passing)
-        self.assertEqual(response.next_event.forecast_time, datetime(year=2003, month=5, day=5, hour=7, minute=34, second=12))
+        self.assertEqual(response.next_event.planned_time, datetime(year=2003, month=5, day=5, hour=7, minute=34))
+        self.assertEqual(response.next_event.forecast_delay, timedelta(minutes=1))
+        self.assertEqual(response.next_event.forecast_time, datetime(year=2003, month=5, day=5, hour=7, minute=35))
+        self.assertEqual(response.next_event.node_id, 282)
+        self.assertEqual(response.next_event.algorithm_train_id, 1303)
+        self.assertEqual(response.next_event.algorithm_train_path_node_id, 1301)
         self.assertEqual(response.unrealizable_events, [])
 
     @mock.patch("requests.Session", side_effect=PostponeNextEventMockSession)

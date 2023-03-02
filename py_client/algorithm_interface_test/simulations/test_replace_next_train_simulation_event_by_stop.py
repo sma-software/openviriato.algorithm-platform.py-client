@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 import unittest
 from unittest import mock
 
@@ -22,9 +22,13 @@ class TestReplaceNextTrainSimulationEventByStop(unittest.TestCase):
                 "{ \n"
                 '    "nextEvent": { \n'
                 '        "id": 2000006, \n'
-                '        "trainSimulationTrainPathNodeId": 1000002, \n'
                 '        "type": "arrival", \n'
-                '        "forecastTime": "2003-05-05T07:05:42" \n'
+                '       "plannedTime": "2003-05-05T07:05:00", \n'
+                '        "forecastTime": "2003-05-05T07:05:42", \n'
+                '       "forecastDelay": "PT42S", \n'
+                '       "nodeId": 282, \n'
+                '       "algorithmTrainId": 1303, \n'
+                '       "algorithmTrainPathNodeId": 1301 \n'
                 "    }, \n"
                 '    "unrealizableEvents": [] \n'
                 "}"
@@ -54,11 +58,17 @@ class TestReplaceNextTrainSimulationEventByStop(unittest.TestCase):
         self.assertIsInstance(response, AlgorithmTrainSimulationRealizationForecast)
         self.assertIsInstance(response.next_event, AlgorithmTrainSimulationEvent)
         self.assertEqual(response.next_event.id, 2000006)
-        self.assertEqual(response.next_event.train_simulation_train_path_node_id, 1000002)
         self.assertIsInstance(response.next_event.type, AlgorithmTrainSimulationEventType)
         self.assertEqual(response.next_event.type, AlgorithmTrainSimulationEventType.arrival)
+        self.assertIsInstance(response.next_event.planned_time, datetime)
+        self.assertEqual(response.next_event.planned_time, datetime(year=2003, month=5, day=5, hour=7, minute=5))
         self.assertIsInstance(response.next_event.forecast_time, datetime)
         self.assertEqual(response.next_event.forecast_time, datetime(year=2003, month=5, day=5, hour=7, minute=5, second=42))
+        self.assertIsInstance(response.next_event.forecast_delay, timedelta)
+        self.assertEqual(response.next_event.forecast_delay, timedelta(seconds=42))
+        self.assertEqual(response.next_event.node_id, 282)
+        self.assertEqual(response.next_event.algorithm_train_id, 1303)
+        self.assertEqual(response.next_event.algorithm_train_path_node_id, 1301)
         self.assertEqual(response.unrealizable_events, [])
 
     @mock.patch("requests.Session", side_effect=ReplaceNextTrainSimulationEventByStopMockSession)

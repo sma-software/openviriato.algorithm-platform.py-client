@@ -54,6 +54,7 @@ class DispatcherFactory:
             else:
                 raise Exception("unexpected dispatcher type.")
 
+    # TODO VPLAT-10184: Remove references to AlgorithmTrainSimulationTrainPathNode
     def _retrieve_simulation_train_path_node_pair_on_first_common_node(
         self, train_one: AlgorithmTrain, train_two: AlgorithmTrain
     ) -> Tuple[AlgorithmTrain, AlgorithmTrainSimulationTrainPathNode, AlgorithmTrain, AlgorithmTrainSimulationTrainPathNode]:
@@ -82,6 +83,7 @@ class DispatcherFactory:
         self._algorithm_interface.notify_user(WALKTHROUGH_NAME, "The selected trains have no nodes in common.")
         return None
 
+    # TODO VPLAT-10184: Remove reference to AlgorithmTrainSimulationTrain
     def _retrieve_simulation_train(self, train: AlgorithmTrain) -> AlgorithmTrainSimulationTrain:
         simulation_trains = self._algorithm_interface.get_train_simulation_trains()
         simulation_train = next((simulation_train for simulation_train in simulation_trains if simulation_train.algorithm_train_id == train.id), None)
@@ -92,6 +94,7 @@ class DispatcherFactory:
             return None
         return simulation_train
 
+    # TODO VPLAT-10184: Remove references to AlgorithmTrainSimulationTrainPathNode
     @staticmethod
     def _order_simulation_train_path_node_by_departure_time(
         train_one: AlgorithmTrain, tpn_one: AlgorithmTrainSimulationTrainPathNode, train_two: AlgorithmTrain, tpn_two: AlgorithmTrainSimulationTrainPathNode

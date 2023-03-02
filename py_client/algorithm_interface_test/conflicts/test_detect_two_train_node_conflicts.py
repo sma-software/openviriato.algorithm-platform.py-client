@@ -79,6 +79,20 @@ class TestDetectConflicts(unittest.TestCase):
                 '       "succeedingTrainId": 1230, \n'
                 '       "succeedingTrainPathNodeId": 9678, \n'
                 '       "succeedingTrainPathNodeEventType": "departure" \n'
+                "   }, \n"
+                "   { \n"
+                '       "conflictType": "levelTrackCrossingTime", \n'
+                '       "timeWindow": { \n'
+                '           "fromTime": "2005-05-01T03:47:00", \n'
+                '           "toTime": "2005-05-01T03:52:00" \n'
+                "       }, \n"
+                '       "nodeId": 7894, \n'
+                '       "precedingTrainId": 1226, \n'
+                '       "precedingTrainPathNodeId": 2285, \n'
+                '       "precedingTrainPathNodeEventType": "arrival", \n'
+                '       "succeedingTrainId": 1230, \n'
+                '       "succeedingTrainPathNodeId": 9678, \n'
+                '       "succeedingTrainPathNodeEventType": "departure" \n'
                 "   } \n"
                 "]"
             )
@@ -92,7 +106,15 @@ class TestDetectConflicts(unittest.TestCase):
     @mock.patch("requests.Session", side_effect=DetectConflictsMockSession)
     def test_detect_conflicts_mock_session(self, mocked_get_obj):
         train_ids = [1226, 1230, 1234]
-        arguments = ConflictDetectionArguments(train_ids=train_ids)
+        arguments = ConflictDetectionArguments(train_ids=train_ids).with_type_filter(
+            [
+                ConflictType.SameStationTrackSeparationTime,
+                ConflictType.SameSectionTrackSeparationTime,
+                ConflictType.IncompatibleStationRoutes,
+                ConflictType.IncompatibleJunctionRoutes,
+                ConflictType.LevelTrackCrossingTime,
+            ]
+        )
 
         self.interface_to_viriato.detect_conflicts(arguments=arguments)
 
@@ -102,7 +124,19 @@ class TestDetectConflicts(unittest.TestCase):
 
         self.assertDictEqual(
             session_obj._DetectConflictsMockSession__last_body,
-            {"trainIds": [1226, 1230, 1234], "filters": {"location": {"nodeIds": None, "sectionTrackIds": None}, "conflictTypes": None}},
+            {
+                "trainIds": [1226, 1230, 1234],
+                "filters": {
+                    "location": {"nodeIds": None, "sectionTrackIds": None},
+                    "conflictTypes": [
+                        "sameStationTrackSeparationTime",
+                        "sameSectionTrackSeparationTime",
+                        "incompatibleStationRoutes",
+                        "incompatibleJunctionRoutes",
+                        "levelTrackCrossingTime",
+                    ],
+                },
+            },
         )
         self.assertDictEqual(session_obj._DetectConflictsMockSession__last_params, {})
 
@@ -157,6 +191,15 @@ class TestDetectConflicts(unittest.TestCase):
         self.assertEqual(list_of_algorithm_conflicts[3].succeeding_train_path_node_event_type, AlgorithmTrainPathNodeEventType.Departure)
         self.assertIsInstance(list_of_algorithm_conflicts[3].preceding_train_path_node_event_type, AlgorithmTrainPathNodeEventType)
         self.assertEqual(list_of_algorithm_conflicts[3].preceding_train_path_node_event_type, AlgorithmTrainPathNodeEventType.Arrival)
+
+        self.assertIsInstance(list_of_algorithm_conflicts[4], AlgorithmNodeConflict)
+        self.assertIsInstance(list_of_algorithm_conflicts[4], AlgorithmTwoTrainsConflict)
+        self.assertIsInstance(list_of_algorithm_conflicts[4], _AlgorithmTwoTrainsNodeConflict)
+        self.assertEqual(list_of_algorithm_conflicts[4].conflict_type, ConflictType.LevelTrackCrossingTime)
+        self.assertIsInstance(list_of_algorithm_conflicts[4].succeeding_train_path_node_event_type, AlgorithmTrainPathNodeEventType)
+        self.assertEqual(list_of_algorithm_conflicts[4].succeeding_train_path_node_event_type, AlgorithmTrainPathNodeEventType.Departure)
+        self.assertIsInstance(list_of_algorithm_conflicts[4].preceding_train_path_node_event_type, AlgorithmTrainPathNodeEventType)
+        self.assertEqual(list_of_algorithm_conflicts[4].preceding_train_path_node_event_type, AlgorithmTrainPathNodeEventType.Arrival)
 
     @mock.patch("requests.Session", side_effect=DetectConflictsMockSession)
     def tearDown(self, mocked_get_obj) -> None:

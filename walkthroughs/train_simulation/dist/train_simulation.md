@@ -58,7 +58,7 @@ time_window = algorithm_interface.get_time_window_algorithm_parameter("trainSimu
 algorithm_interface.create_train_simulation(time_window)
 
 ```
-Code listing: _Starting a simulation in a given time window_. ([Lines: 12 - 13 from file: _train_simulation_example_runner.py_](../../../walkthroughs/train_simulation/py/train_simulation_example_runner.py#L12-L13)).
+Code listing: _Starting a simulation in a given time window_. ([Lines: 19 - 20 from file: _train_simulation_example_runner.py_](../../../walkthroughs/train_simulation/py/train_simulation_example_runner.py#L19-L20)).
 
 We can retrieve the first executable [AlgorithmTrainSimulationEvent](../../../py_client/aidm/aidm_train_simulation_classes.py) from the Algorithm Interface by using the method 
 [get_next_train_simulation_event(...)](../../../py_client/algorithm_interface/algorithm_interface.py#L644-L644). 
@@ -75,11 +75,11 @@ while realization_forecast.next_realizable_event is not None:
     realization_forecast = dispatcher.make_decision_for_event(realization_forecast.next_realizable_event)
 
 ```
-Code listing: _Main loop to control the simulation_. ([Lines: 20 - 23 from file: _train_simulation_example_runner.py_](../../../walkthroughs/train_simulation/py/train_simulation_example_runner.py#L20-L23)).
+Code listing: _Main loop to control the simulation_. ([Lines: 27 - 30 from file: _train_simulation_example_runner.py_](../../../walkthroughs/train_simulation/py/train_simulation_example_runner.py#L27-L30)).
 
 ## Dispatchers
 A dispatcher makes for each step of the simulation a decision of what to do with an event. We use an abstract class with a method 
-[make_decision_for_event(...)](../../../walkthroughs/train_simulation/py/dispatchers.py#L30-L30) respecting the following structure. This allows us to implement 
+[make_decision_for_event(...)](../../../walkthroughs/train_simulation/py/dispatchers.py#L24-L24) respecting the following structure. This allows us to implement 
 different dispatchers and to switch easily between them. 
 ```python
 class _Dispatcher:
@@ -90,7 +90,7 @@ class _Dispatcher:
 
 
 ```
-Code listing: _Structure of the dispatchers_. ([Lines: 28 - 33 from file: _dispatchers.py_](../../../walkthroughs/train_simulation/py/dispatchers.py#L28-L33)).
+Code listing: _Structure of the dispatchers_. ([Lines: 22 - 27 from file: _dispatchers.py_](../../../walkthroughs/train_simulation/py/dispatchers.py#L22-L27)).
 
 ### Simple dispatcher
 The first dispatcher will just realise the events in a first-come first-served manner. In other words, it gives priority to the trains arriving or departing first and 
@@ -109,7 +109,7 @@ class SimpleDispatcher(_Dispatcher):
 
 
 ```
-Code listing: _Simple dispatcher_. ([Lines: 35 - 44 from file: _dispatchers.py_](../../../walkthroughs/train_simulation/py/dispatchers.py#L35-L44)).
+Code listing: _Simple dispatcher_. ([Lines: 29 - 38 from file: _dispatchers.py_](../../../walkthroughs/train_simulation/py/dispatchers.py#L29-L38)).
 
 This strategy can be illustrated with the example presented in Figure 3. Here, the conflict has been solved by adding additional running time to the succeeding 
 train between Zurich Seebach and Zurich Oerlikon. The headway time is then respected. 
@@ -127,42 +127,43 @@ node of the two selected trains.
 class ChangeTrainOrderInFirstCommonTrainPathNodeDispatcher(_Dispatcher):
     _algorithm_interface: AlgorithmInterface
     _preceding_train: AlgorithmTrain
-    _conflicting_simulation_tpn_preceding_train: AlgorithmTrainSimulationTrainPathNode
-    _conflicting_simulation_tpn_succeeding_train: AlgorithmTrainSimulationTrainPathNode
+    _tpn_first_common_node_preceding_train: AlgorithmTrainPathNode
+    _tpn_first_common_node_succeeding_train: AlgorithmTrainPathNode
     _dispatcher_service: DispatcherService
 
     def __init__(
         self,
         algorithm_interface: AlgorithmInterface,
         preceding_train: AlgorithmTrain,
-        conflicting_simulation_tpn_preceding_train: AlgorithmTrainSimulationTrainPathNode,
-        conflicting_simulation_tpn_succeeding_train: AlgorithmTrainSimulationTrainPathNode,
+        tpn_first_common_node_preceding_train: AlgorithmTrainPathNode,
+        tpn_first_common_node_succeeding_train: AlgorithmTrainPathNode,
     ):
         self._algorithm_interface = algorithm_interface
         self._preceding_train = preceding_train
-        self._conflicting_simulation_tpn_preceding_train = conflicting_simulation_tpn_preceding_train
-        self._conflicting_simulation_tpn_succeeding_train = conflicting_simulation_tpn_succeeding_train
+        self._tpn_first_common_node_preceding_train = tpn_first_common_node_preceding_train
+        self._tpn_first_common_node_succeeding_train = tpn_first_common_node_succeeding_train
         self._dispatcher_service = DispatcherService(algorithm_interface)
 
     def make_decision_for_event(self, simulation_event: AlgorithmTrainSimulationEvent) -> AlgorithmTrainSimulationRealizationForecast:
         return self._dispatcher_service.postpone_departure_in_given_node_of_preceding_train_or_realize_event(
-            simulation_event, self._preceding_train, self._conflicting_simulation_tpn_preceding_train, self._conflicting_simulation_tpn_succeeding_train
+            simulation_event, self._preceding_train, self._tpn_first_common_node_preceding_train, self._tpn_first_common_node_succeeding_train
         )
 
 
+
 ```
-Code listing: _Dispatcher changing the train order_. ([Lines: 46 - 70 from file: _dispatchers.py_](../../../walkthroughs/train_simulation/py/dispatchers.py#L46-L70)).
+Code listing: _Dispatcher changing the train order_. ([Lines: 40 - 65 from file: _dispatchers.py_](../../../walkthroughs/train_simulation/py/dispatchers.py#L40-L65)).
 
 
-For sake of simplicity we have chosen to postpone the departure one minute after the current forecast on the departure of the previously succeeding train, changing the order of the two trains through this. For further details, refert to [_calculate_time_to_postpone_to(...)](../../../walkthroughs/train_simulation/py/dispatcher_service.py#L80-L82)
+For sake of simplicity we have chosen to postpone the departure one minute after the current forecast on the departure of the previously succeeding train, changing the order of the two trains through this. For further details, refert to [_calculate_time_to_postpone_to(...)](../../../walkthroughs/train_simulation/py/dispatcher_service.py#L75-L75)
 
 ```python
 def postpone_departure_in_given_node_of_preceding_train_or_realize_event(
     self,
     simulation_event: AlgorithmTrainSimulationEvent,
     preceding_train: AlgorithmTrain,
-    preceding_tpn_at_given_node: AlgorithmTrainSimulationTrainPathNode,
-    succeeding_tpn_at_given_node: AlgorithmTrainSimulationTrainPathNode,
+    preceding_tpn_at_given_node: AlgorithmTrainPathNode,
+    succeeding_tpn_at_given_node: AlgorithmTrainPathNode,
 ) -> AlgorithmTrainSimulationRealizationForecast:
     if self._need_to_postpone_preceding_tpn(simulation_event, preceding_tpn_at_given_node, succeeding_tpn_at_given_node):
         node_code = self._algorithm_interface.get_node(preceding_tpn_at_given_node.node_id).code
@@ -177,7 +178,7 @@ def postpone_departure_in_given_node_of_preceding_train_or_realize_event(
     return self._algorithm_interface.realize_next_train_simulation_event()
 
 ```
-Code listing: _Example of a dispatcher changing the order of two trains by postponing the departure of the preceding train_. ([Lines: 22 - 42 from file: _dispatcher_service.py_](../../../walkthroughs/train_simulation/py/dispatcher_service.py#L22-L42)).
+Code listing: _Example of a dispatcher changing the order of two trains by postponing the departure of the preceding train_. ([Lines: 21 - 41 from file: _dispatcher_service.py_](../../../walkthroughs/train_simulation/py/dispatcher_service.py#L21-L41)).
 
 ### Dispatcher Adding a Stop to Change the Order of Passing Trains
 If a train doesn't have a planned stop and the dispatching strategy still wants to delay the departure on the first common node, there is the possibility to add an unplanned stop by using the 
@@ -188,26 +189,26 @@ event by an arrival and a departure event. The latter can then be postponed in t
 class ChangeTrainOrderInFirstCommonTrainPathNodeAddingAStopDispatcher(_Dispatcher):
     _algorithm_interface: AlgorithmInterface
     _preceding_train = AlgorithmTrain
-    _conflicting_simulation_tpn_preceding_train: AlgorithmTrainSimulationTrainPathNode
-    _conflicting_simulation_tpn_succeeding_train: AlgorithmTrainSimulationTrainPathNode
+    _tpn_first_common_node_preceding_train: AlgorithmTrainPathNode
+    _tpn_first_common_node_succeeding_train: AlgorithmTrainPathNode
     _dispatcher_service: DispatcherService
 
     def __init__(
         self,
         algorithm_interface: AlgorithmInterface,
         preceding_train: AlgorithmTrain,
-        conflicting_simulation_tpn_preceding_train: AlgorithmTrainSimulationTrainPathNode,
-        conflicting_simulation_tpn_succeeding_train: AlgorithmTrainSimulationTrainPathNode,
+        tpn_first_common_node_preceding_train: AlgorithmTrainPathNode,
+        tpn_first_common_node_succeeding_train: AlgorithmTrainPathNode,
     ):
         self._algorithm_interface = algorithm_interface
         self._preceding_train = preceding_train
-        self._conflicting_simulation_tpn_preceding_train = conflicting_simulation_tpn_preceding_train
-        self._conflicting_simulation_tpn_succeeding_train = conflicting_simulation_tpn_succeeding_train
+        self._tpn_first_common_node_preceding_train = tpn_first_common_node_preceding_train
+        self._tpn_first_common_node_succeeding_train = tpn_first_common_node_succeeding_train
         self._dispatcher_service = DispatcherService(algorithm_interface)
 
     def make_decision_for_event(self, simulation_event: AlgorithmTrainSimulationEvent) -> AlgorithmTrainSimulationRealizationForecast:
-        if self._dispatcher_service.event_of_preceding_train_is_passing_at_given_node(simulation_event, self._conflicting_simulation_tpn_preceding_train):
-            node_code = self._algorithm_interface.get_node(self._conflicting_simulation_tpn_preceding_train.node_id).code
+        if self._dispatcher_service.event_of_preceding_train_is_passing_at_given_node(simulation_event, self._tpn_first_common_node_preceding_train):
+            node_code = self._algorithm_interface.get_node(self._tpn_first_common_node_preceding_train.node_id).code
             self._algorithm_interface.notify_user(
                 WALKTHROUGH_NAME,
                 "Train {} departing from first node at {}: stop introduced at node {}.".format(
@@ -218,11 +219,11 @@ class ChangeTrainOrderInFirstCommonTrainPathNodeAddingAStopDispatcher(_Dispatche
             return self._algorithm_interface.replace_next_train_simulation_event_by_stop()
         else:
             return self._dispatcher_service.postpone_departure_in_given_node_of_preceding_train_or_realize_event(
-                simulation_event, self._preceding_train, self._conflicting_simulation_tpn_preceding_train, self._conflicting_simulation_tpn_succeeding_train
+                simulation_event, self._preceding_train, self._tpn_first_common_node_preceding_train, self._tpn_first_common_node_succeeding_train
             )
 
 ```
-Code listing: _Dispatcher adding an extra stop_. ([Lines: 73 - 107 from file: _dispatchers.py_](../../../walkthroughs/train_simulation/py/dispatchers.py#L73-L107)).
+Code listing: _Dispatcher adding an extra stop_. ([Lines: 67 - 101 from file: _dispatchers.py_](../../../walkthroughs/train_simulation/py/dispatchers.py#L67-L101)).
 
 The strategy of this dispatcher is illustrated in Figure 4. An unplanned stop has been introduced and the departure of this train is one minute after the end
 of the conflict between the two trains.
@@ -238,21 +239,41 @@ arrival time, departure time and the stop status if an unplanned stop has been i
 The user can visualize them in all Viriato views.
 
 ```python
-def _persist_updated_trains(algorithm_interface: AlgorithmInterface) -> None:
-    for train in algorithm_interface.get_train_simulation_trains():
+def _persist_updated_trains(algorithm_interface: AlgorithmInterface, time_window: TimeWindow) -> None:
+    all_trains = algorithm_interface.get_trains(time_window)
+    all_train_simulation_events = algorithm_interface.get_train_simulation_events()
+
+    realized_arrival_times_by_tpn_id = dict()
+    realized_departure_times_by_tpn_id = dict()
+    for event in all_train_simulation_events:
+        if event.type == AlgorithmTrainSimulationEventType.passing or event.type == AlgorithmTrainSimulationEventType.arrival:
+            realized_arrival_times_by_tpn_id[event.algorithm_train_path_node_id] = event.forecast_time
+        if event.type == AlgorithmTrainSimulationEventType.passing or event.type == AlgorithmTrainSimulationEventType.departure:
+            realized_departure_times_by_tpn_id[event.algorithm_train_path_node_id] = event.forecast_time
+
+    for train in all_trains:
         updated_train_path_nodes = []
-        for tpn in train.train_path_nodes:
+
+        for train_path_node in train.train_path_nodes:
+            stop_status = _determine_stop_status(
+                train_path_node, realized_arrival_times_by_tpn_id[train_path_node.id], realized_departure_times_by_tpn_id[train_path_node.id]
+            )
+
             updated_train_path_node = UpdateTimesTrainPathNode(
-                tpn.algorithm_train_path_node_id, tpn.forecast_arrival_time, tpn.forecast_departure_time, None, None, tpn.forecast_stop_status
+                train_path_node.id,
+                realized_arrival_times_by_tpn_id[train_path_node.id],
+                realized_departure_times_by_tpn_id[train_path_node.id],
+                None,
+                None,
+                stop_status,
             )
             updated_train_path_nodes.append(updated_train_path_node)
-
-        algorithm_interface.update_train_times(train.algorithm_train_id, updated_train_path_nodes)
+        algorithm_interface.update_train_times(train.id, updated_train_path_nodes)
 
 
 
 ```
-Code listing: _Writing back the result of the simulation_. ([Lines: 32 - 43 from file: _train_simulation_example_runner.py_](../../../walkthroughs/train_simulation/py/train_simulation_example_runner.py#L32-L43)).
+Code listing: _Writing back the result of the simulation_. ([Lines: 39 - 70 from file: _train_simulation_example_runner.py_](../../../walkthroughs/train_simulation/py/train_simulation_example_runner.py#L39-L70)).
 
 ## Conclusion
 Throughout this walkthrough we have presented how to create a simulation for a given scenario using the Algorithm Interface and how to implement different dispatching 

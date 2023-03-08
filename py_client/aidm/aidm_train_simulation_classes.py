@@ -72,33 +72,37 @@ class AlgorithmTrainSimulationEvent(_HasID):
 
 
 class AlgorithmTrainSimulationUnrealizableEvent:
-    __estimated_delay: datetime.timedelta
+    __additional_forecast_delay: datetime.timedelta
     __event: AlgorithmTrainSimulationEvent
 
-    def __init__(self, estimated_delay: datetime.timedelta, event: AlgorithmTrainSimulationEvent):
-        self.__estimated_delay = estimated_delay
+    def __init__(self, additional_forecast_delay: datetime.timedelta, event: AlgorithmTrainSimulationEvent):
+        self.__additional_forecast_delay = additional_forecast_delay
         self.__event = event
 
     @property
-    def estimated_delay(self) -> datetime.timedelta:
-        return self.__estimated_delay
+    def additional_forecast_delay(self) -> datetime.timedelta:
+        return self.__additional_forecast_delay
 
     @property
-    def event(self) -> datetime.timedelta:
+    def event(self) -> AlgorithmTrainSimulationEvent:
         return self.__event
 
 
 class AlgorithmTrainSimulationRealizationForecast:
-    __next_event: AlgorithmTrainSimulationEvent
+    __next_realizable_event: AlgorithmTrainSimulationEvent
     __unrealizable_events: List[AlgorithmTrainSimulationUnrealizableEvent]
 
-    def __init__(self, next_event: AlgorithmTrainSimulationEvent, unrealizable_events: List[AlgorithmTrainSimulationUnrealizableEvent]):
+    def __init__(
+        self,
+        next_realizable_event: AlgorithmTrainSimulationEvent,
+        unrealizable_events: List[AlgorithmTrainSimulationUnrealizableEvent],
+    ):
+        self.__next_realizable_event = next_realizable_event
         self.__unrealizable_events = unrealizable_events
-        self.__next_event = next_event
 
     @property
-    def next_event(self) -> AlgorithmTrainSimulationEvent:
-        return self.__next_event
+    def next_realizable_event(self) -> AlgorithmTrainSimulationEvent:
+        return self.__next_realizable_event
 
     @property
     def unrealizable_events(self) -> List[AlgorithmTrainSimulationUnrealizableEvent]:

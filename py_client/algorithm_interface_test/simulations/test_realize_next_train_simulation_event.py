@@ -21,7 +21,7 @@ class TestPostRealizeNextTrainSimulationEvent(unittest.TestCase):
 
             json_string = (
                 "{ \n"
-                '   "nextEvent": {'
+                '   "nextRealizableEvent": {'
                 '       "id": 2000001, \n'
                 '       "type": "arrival", \n'
                 '       "plannedTime": "2003-05-05T07:31:00", \n'
@@ -61,15 +61,15 @@ class TestPostRealizeNextTrainSimulationEvent(unittest.TestCase):
 
         self.assertIsInstance(response, AlgorithmTrainSimulationRealizationForecast)
 
-        self.assertIsInstance(response.next_event, AlgorithmTrainSimulationEvent)
+        self.assertIsInstance(response.next_realizable_event, AlgorithmTrainSimulationEvent)
 
-        self.assertEqual(response.next_event.id, 2000001)
-        self.assertEqual(response.next_event.type, AlgorithmTrainSimulationEventType.arrival)
-        self.assertEqual(response.next_event.planned_time, datetime(year=2003, month=5, day=5, hour=7, minute=31))
-        self.assertEqual(response.next_event.forecast_time, datetime(year=2003, month=5, day=5, hour=7, minute=31, second=12))
-        self.assertEqual(response.next_event.forecast_delay, timedelta(seconds=12))
-        self.assertEqual(response.next_event.node_id, 282)
-        self.assertEqual(response.next_event.algorithm_train_path_node_id, 1301)
+        self.assertEqual(response.next_realizable_event.id, 2000001)
+        self.assertEqual(response.next_realizable_event.type, AlgorithmTrainSimulationEventType.arrival)
+        self.assertEqual(response.next_realizable_event.planned_time, datetime(year=2003, month=5, day=5, hour=7, minute=31))
+        self.assertEqual(response.next_realizable_event.forecast_time, datetime(year=2003, month=5, day=5, hour=7, minute=31, second=12))
+        self.assertEqual(response.next_realizable_event.forecast_delay, timedelta(seconds=12))
+        self.assertEqual(response.next_realizable_event.node_id, 282)
+        self.assertEqual(response.next_realizable_event.algorithm_train_path_node_id, 1301)
 
         self.assertEqual(response.unrealizable_events, [])
 

@@ -19,9 +19,9 @@ def run(api_url: str) -> None:
         # @main_loop_controlling_simulation[1:5]
         algorithm_interface.show_status_message("Running simulation...")
         realization_forecast = algorithm_interface.get_next_train_simulation_event()
-        while realization_forecast.next_event is not None:
-            algorithm_interface.show_status_message("Simulating at {}".format(realization_forecast.next_event.forecast_time))
-            realization_forecast = dispatcher.make_decision_for_event(realization_forecast.next_event)
+        while realization_forecast.next_realizable_event is not None:
+            algorithm_interface.show_status_message("Simulating at {}".format(realization_forecast.next_realizable_event.forecast_time))
+            realization_forecast = dispatcher.make_decision_for_event(realization_forecast.next_realizable_event)
 
         algorithm_interface.show_status_message("Writing back result to Viriato")
         _persist_updated_trains(algorithm_interface)

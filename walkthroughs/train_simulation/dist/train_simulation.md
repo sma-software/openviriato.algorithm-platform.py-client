@@ -70,9 +70,9 @@ after all events have been realised the simulation terminates.
 
 ```python
 realization_forecast = algorithm_interface.get_next_train_simulation_event()
-while realization_forecast.next_event is not None:
-    algorithm_interface.show_status_message("Simulating at {}".format(realization_forecast.next_event.forecast_time))
-    realization_forecast = dispatcher.make_decision_for_event(realization_forecast.next_event)
+while realization_forecast.next_realizable_event is not None:
+    algorithm_interface.show_status_message("Simulating at {}".format(realization_forecast.next_realizable_event.forecast_time))
+    realization_forecast = dispatcher.make_decision_for_event(realization_forecast.next_realizable_event)
 
 ```
 Code listing: _Main loop to control the simulation_. ([Lines: 20 - 23 from file: _train_simulation_example_runner.py_](../../../walkthroughs/train_simulation/py/train_simulation_example_runner.py#L20-L23)).

@@ -21,7 +21,7 @@ class TestGetNextTrainSimulationEvent(unittest.TestCase):
 
             json_string = (
                 " { \n"
-                '    "nextEvent": { \n'
+                '    "nextRealizableEvent": { \n'
                 '        "id": 2000000, \n'
                 '        "type": "departure", \n'
                 '        "plannedTime": "2003-05-05T07:00:00", \n'
@@ -59,19 +59,19 @@ class TestGetNextTrainSimulationEvent(unittest.TestCase):
 
         self.assertIsInstance(response, AlgorithmTrainSimulationRealizationForecast)
 
-        self.assertIsInstance(response.next_event, AlgorithmTrainSimulationEvent)
-        self.assertEqual(response.next_event.id, 2000000)
-        self.assertIsInstance(response.next_event.type, AlgorithmTrainSimulationEventType)
-        self.assertEqual(response.next_event.type, AlgorithmTrainSimulationEventType.departure)
-        self.assertIsInstance(response.next_event.planned_time, datetime)
-        self.assertEqual(response.next_event.planned_time, datetime(year=2003, month=5, day=5, hour=7))
-        self.assertIsInstance(response.next_event.forecast_delay, timedelta)
-        self.assertEqual(response.next_event.forecast_delay, timedelta(0))
-        self.assertIsInstance(response.next_event.forecast_time, datetime)
-        self.assertEqual(response.next_event.forecast_time, datetime(year=2003, month=5, day=5, hour=7, minute=30))
-        self.assertEqual(response.next_event.node_id, 322)
-        self.assertEqual(response.next_event.algorithm_train_id, 1303)
-        self.assertEqual(response.next_event.algorithm_train_path_node_id, 1300)
+        self.assertIsInstance(response.next_realizable_event, AlgorithmTrainSimulationEvent)
+        self.assertEqual(response.next_realizable_event.id, 2000000)
+        self.assertIsInstance(response.next_realizable_event.type, AlgorithmTrainSimulationEventType)
+        self.assertEqual(response.next_realizable_event.type, AlgorithmTrainSimulationEventType.departure)
+        self.assertIsInstance(response.next_realizable_event.planned_time, datetime)
+        self.assertEqual(response.next_realizable_event.planned_time, datetime(year=2003, month=5, day=5, hour=7))
+        self.assertIsInstance(response.next_realizable_event.forecast_delay, timedelta)
+        self.assertEqual(response.next_realizable_event.forecast_delay, timedelta(0))
+        self.assertIsInstance(response.next_realizable_event.forecast_time, datetime)
+        self.assertEqual(response.next_realizable_event.forecast_time, datetime(year=2003, month=5, day=5, hour=7, minute=30))
+        self.assertEqual(response.next_realizable_event.node_id, 322)
+        self.assertEqual(response.next_realizable_event.algorithm_train_id, 1303)
+        self.assertEqual(response.next_realizable_event.algorithm_train_path_node_id, 1300)
 
         self.assertEqual(response.unrealizable_events, [])
 

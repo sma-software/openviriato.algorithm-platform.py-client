@@ -1,4 +1,4 @@
-import datetime
+from datetime import timedelta
 import unittest
 from unittest import mock
 
@@ -39,14 +39,14 @@ class TestGetUnplannedStopPenalties(unittest.TestCase):
 
         self.assertIsInstance(unplanned_stop_penalties, AlgorithmUnplannedStopPenalties)
 
-        self.assertIsInstance(unplanned_stop_penalties.minimum_duration_unplanned_stop, datetime.timedelta)
-        self.assertEqual(unplanned_stop_penalties.minimum_duration_unplanned_stop, datetime.timedelta(minutes=1, seconds=30))
+        self.assertIsInstance(unplanned_stop_penalties.minimum_duration_unplanned_stop, timedelta)
+        self.assertEqual(unplanned_stop_penalties.minimum_duration_unplanned_stop, timedelta(minutes=1, seconds=30))
 
-        self.assertIsInstance(unplanned_stop_penalties.deceleration_penalty, datetime.timedelta)
-        self.assertEqual(unplanned_stop_penalties.deceleration_penalty, datetime.timedelta(seconds=30))
+        self.assertIsInstance(unplanned_stop_penalties.deceleration_penalty, timedelta)
+        self.assertEqual(unplanned_stop_penalties.deceleration_penalty, timedelta(seconds=30))
 
-        self.assertIsInstance(unplanned_stop_penalties.acceleration_penalty, datetime.timedelta)
-        self.assertEqual(unplanned_stop_penalties.acceleration_penalty, datetime.timedelta(seconds=45))
+        self.assertIsInstance(unplanned_stop_penalties.acceleration_penalty, timedelta)
+        self.assertEqual(unplanned_stop_penalties.acceleration_penalty, timedelta(seconds=45))
 
     @mock.patch("requests.Session", side_effect=GetUnplannedStopPenaltiesTestMockSession)
     def tearDown(self, mocked_get_obj) -> None:

@@ -1,4 +1,4 @@
-import datetime
+from datetime import timedelta
 from typing import List
 
 from py_client.aidm.aidm_base_classes import _HasID, _HasCode, _HasDebugString
@@ -135,11 +135,11 @@ class AlgorithmMovementType(_HasID):
 
 
 class AlgorithmUnplannedStopPenalties:
-    __acceleration_penalty: datetime.timedelta
-    __deceleration_penalty: datetime.timedelta
-    __minimum_duration_unplanned_stop: datetime.timedelta
+    __acceleration_penalty: timedelta
+    __deceleration_penalty: timedelta
+    __minimum_duration_unplanned_stop: timedelta
 
-    def __init__(self, acceleration_penalty: datetime.timedelta, deceleration_penalty: datetime.timedelta, minimum_duration_unplanned_stop: datetime.timedelta):
+    def __init__(self, acceleration_penalty: timedelta, deceleration_penalty: timedelta, minimum_duration_unplanned_stop: timedelta):
         self.__acceleration_penalty = acceleration_penalty
         self.__deceleration_penalty = deceleration_penalty
         self.__minimum_duration_unplanned_stop = minimum_duration_unplanned_stop

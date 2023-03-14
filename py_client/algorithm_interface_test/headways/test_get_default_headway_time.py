@@ -1,4 +1,4 @@
-import datetime
+from datetime import timedelta
 import unittest
 from unittest import mock
 
@@ -80,8 +80,8 @@ class TestGetDefaultHeadwayTime(unittest.TestCase):
 
         headway_time = self.interface_to_viriato.get_default_headway_time(section_track_id, from_node_id, to_node_id)
 
-        self.assertIsInstance(headway_time, datetime.timedelta)
-        self.assertEqual(headway_time, datetime.timedelta(minutes=3, seconds=30))
+        self.assertIsInstance(headway_time, timedelta)
+        self.assertEqual(headway_time, timedelta(minutes=3, seconds=30))
 
     @mock.patch("requests.Session", side_effect=GetDefaultHeadwayTimeTestMockSession)
     def tearDown(self, mocked_get_obj) -> None:

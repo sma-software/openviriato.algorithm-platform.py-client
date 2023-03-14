@@ -1,4 +1,4 @@
-import datetime
+from datetime import timedelta
 import unittest
 from unittest import mock
 
@@ -39,8 +39,8 @@ class TestGetSeparationTimeInStationForNodeTrackReoccupation(unittest.TestCase):
 
         separation_time = self.interface_to_viriato.get_separation_time_in_station_for_node_track_reoccupation(node_id, node_track_id)
 
-        self.assertIsInstance(separation_time, datetime.timedelta)
-        self.assertEqual(separation_time, datetime.timedelta(seconds=50))
+        self.assertIsInstance(separation_time, timedelta)
+        self.assertEqual(separation_time, timedelta(seconds=50))
 
     @mock.patch("requests.Session", side_effect=GetSeparationTimeInStationForNodeTrackReoccupationTestMockSession)
     def tearDown(self, mocked_get_obj) -> None:

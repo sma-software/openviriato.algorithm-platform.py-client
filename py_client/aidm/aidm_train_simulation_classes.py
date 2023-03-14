@@ -1,9 +1,8 @@
 from enum import Enum, unique
-from typing import List, Optional
-import datetime
+from typing import List
+from datetime import datetime, timedelta
 
-from py_client.aidm import StopStatus
-from py_client.aidm.aidm_base_classes import _HasID, _HasDebugString
+from py_client.aidm.aidm_base_classes import _HasID
 
 
 @unique
@@ -16,10 +15,10 @@ class AlgorithmTrainSimulationEventType(Enum):
 class AlgorithmTrainSimulationEvent(_HasID):
     __algorithm_train_id: int
     __algorithm_train_path_node_id: int
-    __forecast_delay: datetime.timedelta
-    __forecast_time: datetime.datetime
+    __forecast_delay: timedelta
+    __forecast_time: datetime
     __node_id: int
-    __planned_time: datetime.datetime
+    __planned_time: datetime
     __type: AlgorithmTrainSimulationEventType
 
     def __init__(
@@ -27,10 +26,10 @@ class AlgorithmTrainSimulationEvent(_HasID):
         id: int,
         algorithm_train_id: int,
         algorithm_train_path_node_id: int,
-        forecast_delay: datetime.timedelta,
-        forecast_time: datetime.datetime,
+        forecast_delay: timedelta,
+        forecast_time: datetime,
         node_id: int,
-        planned_time: datetime.datetime,
+        planned_time: datetime,
         type: AlgorithmTrainSimulationEventType,
     ):
         _HasID.__init__(self, id)
@@ -51,11 +50,11 @@ class AlgorithmTrainSimulationEvent(_HasID):
         return self.__algorithm_train_path_node_id
 
     @property
-    def forecast_delay(self) -> datetime.timedelta:
+    def forecast_delay(self) -> timedelta:
         return self.__forecast_delay
 
     @property
-    def forecast_time(self) -> datetime.datetime:
+    def forecast_time(self) -> datetime:
         return self.__forecast_time
 
     @property
@@ -63,7 +62,7 @@ class AlgorithmTrainSimulationEvent(_HasID):
         return self.__node_id
 
     @property
-    def planned_time(self) -> datetime.datetime:
+    def planned_time(self) -> datetime:
         return self.__planned_time
 
     @property
@@ -72,15 +71,15 @@ class AlgorithmTrainSimulationEvent(_HasID):
 
 
 class AlgorithmTrainSimulationUnrealizableEvent:
-    __additional_forecast_delay: datetime.timedelta
+    __additional_forecast_delay: timedelta
     __event: AlgorithmTrainSimulationEvent
 
-    def __init__(self, additional_forecast_delay: datetime.timedelta, event: AlgorithmTrainSimulationEvent):
+    def __init__(self, additional_forecast_delay: timedelta, event: AlgorithmTrainSimulationEvent):
         self.__additional_forecast_delay = additional_forecast_delay
         self.__event = event
 
     @property
-    def additional_forecast_delay(self) -> datetime.timedelta:
+    def additional_forecast_delay(self) -> timedelta:
         return self.__additional_forecast_delay
 
     @property

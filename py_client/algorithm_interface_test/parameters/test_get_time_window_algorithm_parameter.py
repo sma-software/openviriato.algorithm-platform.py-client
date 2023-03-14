@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime
 import unittest
 from unittest import mock
 
@@ -46,8 +46,8 @@ class TestGetTimeWindowParameter(unittest.TestCase):
         time_window_param = self.interface_to_viriato.get_time_window_algorithm_parameter(key)
 
         self.assertIsInstance(time_window_param, py_client.aidm.aidm_time_window_classes.TimeWindow)
-        self.assertIsInstance(time_window_param.from_time, datetime.datetime)
-        self.assertEqual(time_window_param.from_time, datetime.datetime(2003, 1, 1, 10, 20, 30))
+        self.assertIsInstance(time_window_param.from_time, datetime)
+        self.assertEqual(time_window_param.from_time, datetime(2003, 1, 1, 10, 20, 30))
 
     @mock.patch("requests.Session", side_effect=GetTimeWindowParameterTestSessionMock)
     def tearDown(self, mocked_get_obj) -> None:

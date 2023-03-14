@@ -106,7 +106,7 @@ class TestToAIDMConverter(unittest.TestCase):
         self.assertIsInstance(test_train_path_node, AlgorithmTrainPathNode)
         self.assertEqual(test_train_path_node.id, 1332)
         self.assertEqual(test_train_path_node.minimum_run_time, None)
-        self.assertEqual(test_train_path_node.minimum_stop_time, datetime.timedelta(0))
+        self.assertEqual(test_train_path_node.minimum_stop_time, timedelta(0))
 
     def test_convert_pascal_case_json_to_train_path_node(self):
         test_node_as_dict = dict(
@@ -129,7 +129,7 @@ class TestToAIDMConverter(unittest.TestCase):
         self.assertIsInstance(test_train_path_node, AlgorithmTrainPathNode)
         self.assertEqual(test_train_path_node.id, 1332)
         self.assertEqual(test_train_path_node.minimum_run_time, None)
-        self.assertEqual(test_train_path_node.minimum_stop_time, datetime.timedelta(0))
+        self.assertEqual(test_train_path_node.minimum_stop_time, timedelta(0))
 
     def test_convert_json_to_algorithm_train(self):
         test_train_as_dict = dict(
@@ -188,7 +188,7 @@ class TestToAIDMConverter(unittest.TestCase):
         self.assertEqual(test_train.code, "123")
         self.assertIsInstance(test_train.train_path_nodes[0], AlgorithmTrainPathNode)
         self.assertEqual(test_train.train_path_nodes[0].minimum_run_time, None)
-        self.assertEqual(test_train.train_path_nodes[0].minimum_stop_time, datetime.timedelta(0))
+        self.assertEqual(test_train.train_path_nodes[0].minimum_stop_time, timedelta(0))
 
     def test_convert_json_to_time_window(self):
         test_time_window_as_dict = dict(FromTime="2003-05-01T08:00:00", ToTime="2023-05-02T10:00:50")
@@ -196,10 +196,10 @@ class TestToAIDMConverter(unittest.TestCase):
         test_time_window = JsonToAidmConverter().process_json_to_aidm(test_time_window_as_dict, TimeWindow)
 
         self.assertIsInstance(test_time_window, TimeWindow)
-        self.assertIsInstance(test_time_window.from_time, datetime.datetime)
-        self.assertEqual(test_time_window.from_time, datetime.datetime(year=2003, month=5, day=1, hour=8, minute=0))
-        self.assertIsInstance(test_time_window.to_time, datetime.datetime)
-        self.assertEqual(test_time_window.to_time, datetime.datetime(year=2023, month=5, day=2, hour=10, minute=0, second=50))
+        self.assertIsInstance(test_time_window.from_time, datetime)
+        self.assertEqual(test_time_window.from_time, datetime(year=2003, month=5, day=1, hour=8, minute=0))
+        self.assertIsInstance(test_time_window.to_time, datetime)
+        self.assertEqual(test_time_window.to_time, datetime(year=2023, month=5, day=2, hour=10, minute=0, second=50))
 
     def test_convert_json_to_algorithm_section_track_closure(self):
         param_dict = dict(
@@ -326,7 +326,7 @@ class TestToAIDMConverter(unittest.TestCase):
         self.assertEqual(test_update_train_times.train_id, 1012)
         self.assertIsInstance(test_update_train_times.update_times_train_path_nodes[0], UpdateTimesTrainPathNode)
         self.assertEqual(test_update_train_times.update_times_train_path_nodes[0].train_path_node_id, 3880)
-        self.assertEqual(test_update_train_times.update_times_train_path_nodes[0].arrival_time, datetime.datetime(year=2003, month=5, day=1, hour=7, minute=0))
+        self.assertEqual(test_update_train_times.update_times_train_path_nodes[0].arrival_time, datetime(year=2003, month=5, day=1, hour=7, minute=0))
 
     def test_convert_json_to_update_train_times_node(self):
         param_dict = dict(
@@ -342,9 +342,9 @@ class TestToAIDMConverter(unittest.TestCase):
 
         self.assertIsInstance(update_train_times_node, UpdateTimesTrainPathNode)
         self.assertEqual(update_train_times_node.train_path_node_id, 3880)
-        self.assertEqual(update_train_times_node.arrival_time, datetime.datetime(year=2003, month=5, day=1, hour=7, minute=0))
+        self.assertEqual(update_train_times_node.arrival_time, datetime(year=2003, month=5, day=1, hour=7, minute=0))
         self.assertEqual(update_train_times_node.minimum_run_time, None)
-        self.assertEqual(update_train_times_node.minimum_stop_time, datetime.timedelta(0))
+        self.assertEqual(update_train_times_node.minimum_stop_time, timedelta(0))
         self.assertEqual(update_train_times_node.stop_status, StopStatus.commercial_stop)
 
     def test_convert_json_to_algorithm_link_with_await_arrival_link(self):
@@ -364,7 +364,7 @@ class TestToAIDMConverter(unittest.TestCase):
         await_arrival_link = JsonToAidmConverter().process_json_to_aidm(link_as_dictionary, AlgorithmAwaitArrivalLink)
 
         self.assertIsInstance(await_arrival_link, AlgorithmAwaitArrivalLink)
-        self.assertEqual(await_arrival_link.minimum_duration, datetime.timedelta(minutes=10))
+        self.assertEqual(await_arrival_link.minimum_duration, timedelta(minutes=10))
         self.assertEqual(await_arrival_link.from_node_id, 161)
         self.assertEqual(await_arrival_link.from_train_id, 5361)
         self.assertEqual(await_arrival_link.from_train_path_node_id, 4997)
@@ -393,8 +393,8 @@ class TestToAIDMConverter(unittest.TestCase):
         connection_link = JsonToAidmConverter().process_json_to_aidm(link_as_dictionary, AlgorithmConnectionLink)
 
         self.assertIsInstance(connection_link, AlgorithmConnectionLink)
-        self.assertEqual(connection_link.minimum_duration, datetime.timedelta(minutes=6))
-        self.assertEqual(connection_link.maximum_deviation, datetime.timedelta(minutes=13))
+        self.assertEqual(connection_link.minimum_duration, timedelta(minutes=6))
+        self.assertEqual(connection_link.maximum_deviation, timedelta(minutes=13))
         self.assertEqual(connection_link.weight, 1)
         self.assertEqual(connection_link.from_node_id, 281)
         self.assertEqual(connection_link.from_train_id, 2449)

@@ -1,4 +1,4 @@
-import datetime
+from datetime import timedelta
 import unittest
 from unittest import mock
 
@@ -131,8 +131,8 @@ class TestGetSeparationTimeInStationForEntryOrExit(unittest.TestCase):
             succeeding_station_entry_or_exit,
         )
 
-        self.assertIsInstance(separation_time, datetime.timedelta)
-        self.assertEqual(separation_time, datetime.timedelta(seconds=0))
+        self.assertIsInstance(separation_time, timedelta)
+        self.assertEqual(separation_time, timedelta(seconds=0))
 
     @mock.patch("requests.Session", side_effect=GetSeparationTimeInStationForEntryOrExitTestMockSession)
     def tearDown(self, mocked_get_obj) -> None:

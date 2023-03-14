@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime, timedelta
 import unittest
 from unittest import mock
 
@@ -59,7 +59,7 @@ class TestGetConnectionLinks(unittest.TestCase):
 
     @mock.patch("requests.Session", side_effect=GetConnectionLinksTestMockSession)
     def test_get_links_request(self, mocked_get_obj):
-        time_window = TimeWindow(from_time=datetime.datetime(2000, 1, 1, 1, 1), to_time=datetime.datetime(2004, 1, 1, 0, 0))
+        time_window = TimeWindow(from_time=datetime(2000, 1, 1, 1, 1), to_time=datetime(2004, 1, 1, 0, 0))
 
         self.interface_to_viriato.get_connection_links(time_window)
 
@@ -69,7 +69,7 @@ class TestGetConnectionLinks(unittest.TestCase):
 
     @mock.patch("requests.Session", side_effect=GetConnectionLinksTestMockSession)
     def test_get_links_one_link_as_response(self, mocked_get_obj):
-        time_window = TimeWindow(from_time=datetime.datetime(2000, 1, 1, 1, 1), to_time=datetime.datetime(2004, 1, 1, 0, 0))
+        time_window = TimeWindow(from_time=datetime(2000, 1, 1, 1, 1), to_time=datetime(2004, 1, 1, 0, 0))
 
         listed_algorithm_links = self.interface_to_viriato.get_connection_links(time_window)
 
@@ -89,8 +89,8 @@ class TestGetConnectionLinks(unittest.TestCase):
         self.assertEqual(algorithm_connection_link.to_train_id, 3873)
         self.assertEqual(algorithm_connection_link.to_train_path_node_id, 3145)
         self.assertEqual(algorithm_connection_link.weight, 1)
-        self.assertEqual(algorithm_connection_link.minimum_duration, datetime.timedelta(minutes=6))
-        self.assertEqual(algorithm_connection_link.maximum_deviation, datetime.timedelta(minutes=13))
+        self.assertEqual(algorithm_connection_link.minimum_duration, timedelta(minutes=6))
+        self.assertEqual(algorithm_connection_link.maximum_deviation, timedelta(minutes=13))
 
         algorithm_connection_link: AlgorithmConnectionLink = listed_algorithm_links[1]
         self.assertIsInstance(algorithm_connection_link, AlgorithmConnectionLink)
@@ -104,13 +104,13 @@ class TestGetConnectionLinks(unittest.TestCase):
         self.assertEqual(algorithm_connection_link.to_node_id, 281)
         self.assertEqual(algorithm_connection_link.to_train_id, 3873)
         self.assertEqual(algorithm_connection_link.to_train_path_node_id, 3145)
-        self.assertEqual(algorithm_connection_link.minimum_duration, datetime.timedelta(minutes=6))
+        self.assertEqual(algorithm_connection_link.minimum_duration, timedelta(minutes=6))
         self.assertEqual(algorithm_connection_link.weight, None)
         self.assertIsNone(algorithm_connection_link.maximum_deviation, None)
 
     @mock.patch("requests.Session", side_effect=GetConnectionLinksTestMockSession)
     def test_get_links_empty_list_as_response(self, mocked_get_obj):
-        time_window = TimeWindow(from_time=datetime.datetime(2000, 1, 1, 1, 1), to_time=datetime.datetime(2000, 1, 1, 1, 1))
+        time_window = TimeWindow(from_time=datetime(2000, 1, 1, 1, 1), to_time=datetime(2000, 1, 1, 1, 1))
 
         listed_algorithm_links = self.interface_to_viriato.get_connection_links(time_window)
 

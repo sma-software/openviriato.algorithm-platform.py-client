@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime
 import unittest
 from unittest import mock
 
@@ -65,7 +65,7 @@ class TestUpdateTrainTimes(unittest.TestCase):
         train_id = 2060
         update_train_time_nodes = [
             py_client.aidm.aidm_update_classes.UpdateTimesTrainPathNode(
-                train_path_node_id=1332, arrival_time=datetime.datetime(2003, 5, 1, 0, 4), departure_time=datetime.datetime(2003, 5, 1, 0, 5)
+                train_path_node_id=1332, arrival_time=datetime(2003, 5, 1, 0, 4), departure_time=datetime(2003, 5, 1, 0, 5)
             )
         ]
 
@@ -92,7 +92,7 @@ class TestUpdateTrainTimes(unittest.TestCase):
         train_id = 2060
         update_train_time_nodes = [
             py_client.aidm.aidm_update_classes.UpdateTimesTrainPathNode(
-                train_path_node_id=1332, arrival_time=datetime.datetime(2003, 5, 1, 0, 4), departure_time=datetime.datetime(2003, 5, 1, 0, 5)
+                train_path_node_id=1332, arrival_time=datetime(2003, 5, 1, 0, 4), departure_time=datetime(2003, 5, 1, 0, 5)
             )
         ]
 

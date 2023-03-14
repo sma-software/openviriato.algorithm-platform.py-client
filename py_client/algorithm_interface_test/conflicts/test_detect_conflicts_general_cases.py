@@ -1,6 +1,6 @@
 import unittest
 from unittest import mock
-import datetime
+from datetime import datetime
 
 from py_client.algorithm_interface import algorithm_interface_factory
 import py_client.algorithm_interface_test.test_helper.SessionMockFactory as SessionMockFactory
@@ -111,9 +111,7 @@ class TestDetectConflictsWithNonMandatoryFilters(unittest.TestCase):
     def test_detect_conflicts_with_non_mandatory_filters_session(self, mocked_get_obj):
         train_ids = [6745, 6750]
         train_id = 1230
-        time_window = TimeWindow(
-            datetime.datetime(year=2022, month=1, day=23, hour=23, minute=45), datetime.datetime(year=2022, month=1, day=24, hour=0, minute=15)
-        )
+        time_window = TimeWindow(datetime(year=2022, month=1, day=23, hour=23, minute=45), datetime(year=2022, month=1, day=24, hour=0, minute=15))
         filter_node_ids = [4578, 2397]
         filter_section_track_ids = [529, 735]
         conflict_types = [ConflictType.Crossing]

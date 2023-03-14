@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime, timedelta
 import unittest
 
 import isodate
@@ -25,8 +25,8 @@ class TestAllConverterHelpers(unittest.TestCase):
 
         date = converter_helpers.parse_to_datetime(test_date_str)
 
-        self.assertIsInstance(date, datetime.datetime)
-        self.assertEqual(date, datetime.datetime(1, 5, 1, 1, 1))
+        self.assertIsInstance(date, datetime)
+        self.assertEqual(date, datetime(1, 5, 1, 1, 1))
 
     def test_parse_to_timedelta_wrong_format(self):
         test_delta_str = "30Seconds"
@@ -45,8 +45,8 @@ class TestAllConverterHelpers(unittest.TestCase):
 
         delta = converter_helpers.parse_to_timedelta(test_delta_str)
 
-        self.assertIsInstance(delta, datetime.timedelta)
-        self.assertEqual(delta, datetime.timedelta(0))
+        self.assertIsInstance(delta, timedelta)
+        self.assertEqual(delta, timedelta(0))
 
     def test_parse_to_timedelta_or_none_wrong_format(self):
         test_delta_str = "sd"
@@ -59,8 +59,8 @@ class TestAllConverterHelpers(unittest.TestCase):
 
         delta = converter_helpers.parse_to_timedelta_or_none(test_delta_str)
 
-        self.assertIsInstance(delta, datetime.timedelta)
-        self.assertEqual(delta, datetime.timedelta(days=1))
+        self.assertIsInstance(delta, timedelta)
+        self.assertEqual(delta, timedelta(days=1))
 
     def test_parse_to_timedelta_or_none_proper_none(self):
         test_delta_str = None
@@ -70,8 +70,8 @@ class TestAllConverterHelpers(unittest.TestCase):
         self.assertIsNone(delta)
 
     def test_check_and_format_any_datetime_to_iso_str_all_cases(self):
-        test_case_timedelta = datetime.timedelta(days=1)
-        test_case_datetime = datetime.datetime(1, 1, 1, 1, 1)
+        test_case_timedelta = timedelta(days=1)
+        test_case_datetime = datetime(1, 1, 1, 1, 1)
         test_case_str = "should stay the same"
 
         timedelta_str = converter_helpers.convert_to_datetime_format_or_return_self(test_case_timedelta)
@@ -131,8 +131,8 @@ class TestAllConverterHelpers(unittest.TestCase):
         self.assertTrue(converter_helpers.is_single_attribute(dict(integer=3), int))
         self.assertTrue(converter_helpers.is_single_attribute(dict(boolean=False), bool))
         self.assertTrue(converter_helpers.is_single_attribute(dict(string="string"), str))
-        self.assertTrue(converter_helpers.is_single_attribute(dict(duration=datetime.timedelta(minutes=3)), datetime.timedelta))
-        self.assertTrue(converter_helpers.is_single_attribute(dict(date=datetime.datetime(year=2022, month=6, day=13, hour=8, minute=57)), datetime.datetime))
+        self.assertTrue(converter_helpers.is_single_attribute(dict(duration=timedelta(minutes=3)), timedelta))
+        self.assertTrue(converter_helpers.is_single_attribute(dict(date=datetime(year=2022, month=6, day=13, hour=8, minute=57)), datetime))
 
         self.assertFalse(converter_helpers.is_single_attribute(False, bool))
         self.assertFalse(converter_helpers.is_single_attribute(dict(first_attribute=3, second_attribute="str"), Union[bool, str]))

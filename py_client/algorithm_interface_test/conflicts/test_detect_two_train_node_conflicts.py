@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime
 import unittest
 from unittest import mock
 from py_client.algorithm_interface import algorithm_interface_factory
@@ -153,8 +153,8 @@ class TestDetectConflicts(unittest.TestCase):
         self.assertIsInstance(list_of_algorithm_conflicts[0].conflict_type, ConflictType)
         self.assertEqual(list_of_algorithm_conflicts[0].conflict_type, ConflictType.SameStationTrackSeparationTime)
         self.assertIsInstance(list_of_algorithm_conflicts[0].time_window, TimeWindow)
-        self.assertEqual(list_of_algorithm_conflicts[0].time_window.from_time, datetime.datetime(day=1, month=5, year=2005, hour=4, minute=4, second=0))
-        self.assertEqual(list_of_algorithm_conflicts[0].time_window.to_time, datetime.datetime(day=1, month=5, year=2005, hour=4, minute=6, second=0))
+        self.assertEqual(list_of_algorithm_conflicts[0].time_window.from_time, datetime(day=1, month=5, year=2005, hour=4, minute=4, second=0))
+        self.assertEqual(list_of_algorithm_conflicts[0].time_window.to_time, datetime(day=1, month=5, year=2005, hour=4, minute=6, second=0))
         self.assertEqual(list_of_algorithm_conflicts[0].node_id, 352)
         self.assertEqual(list_of_algorithm_conflicts[0].preceding_train_id, 1230)
         self.assertEqual(list_of_algorithm_conflicts[0].preceding_train_path_node_id, 1228)

@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime, timedelta
 import unittest
 from unittest import mock
 
@@ -110,7 +110,7 @@ class TestGetTrains(unittest.TestCase):
 
     @mock.patch("requests.Session", side_effect=GetTrainsTestMockSession)
     def test_get_trains_request(self, mocked_get_obj):
-        time_window = TimeWindow(from_time=datetime.datetime(2000, 1, 1, 1, 1), to_time=datetime.datetime(2004, 1, 1, 0, 0))
+        time_window = TimeWindow(from_time=datetime(2000, 1, 1, 1, 1), to_time=datetime(2004, 1, 1, 0, 0))
 
         self.interface_to_viriato.get_trains(time_window)
 
@@ -120,7 +120,7 @@ class TestGetTrains(unittest.TestCase):
 
     @mock.patch("requests.Session", side_effect=GetTrainsTestMockSession)
     def test_get_trains_response(self, mocked_get_obj):
-        time_window = TimeWindow(from_time=datetime.datetime(2000, 1, 1, 1, 1), to_time=datetime.datetime(2004, 1, 1, 0, 0))
+        time_window = TimeWindow(from_time=datetime(2000, 1, 1, 1, 1), to_time=datetime(2004, 1, 1, 0, 0))
 
         listed_algorithm_trains = self.interface_to_viriato.get_trains(time_window)
 
@@ -140,10 +140,10 @@ class TestGetTrains(unittest.TestCase):
         self.assertEqual(listed_algorithm_trains[0].train_path_nodes[0].node_id, 7)
         self.assertEqual(listed_algorithm_trains[0].train_path_nodes[0].node_track_id, 8)
         self.assertEqual(listed_algorithm_trains[0].train_path_nodes[0].formation_id, 1187)
-        self.assertEqual(listed_algorithm_trains[0].train_path_nodes[0].arrival_time, datetime.datetime(2003, 5, 1, 0, 10))
-        self.assertEqual(listed_algorithm_trains[0].train_path_nodes[0].departure_time, datetime.datetime(2003, 5, 1, 0, 10))
+        self.assertEqual(listed_algorithm_trains[0].train_path_nodes[0].arrival_time, datetime(2003, 5, 1, 0, 10))
+        self.assertEqual(listed_algorithm_trains[0].train_path_nodes[0].departure_time, datetime(2003, 5, 1, 0, 10))
         self.assertEqual(listed_algorithm_trains[0].train_path_nodes[0].minimum_run_time, None)
-        self.assertEqual(listed_algorithm_trains[0].train_path_nodes[0].minimum_stop_time, datetime.timedelta(0))
+        self.assertEqual(listed_algorithm_trains[0].train_path_nodes[0].minimum_stop_time, timedelta(0))
         self.assertEqual(listed_algorithm_trains[0].train_path_nodes[0].stop_status, StopStatus.commercial_stop)
         self.assertEqual(listed_algorithm_trains[0].train_path_nodes[0].sequence_number, 0)
 

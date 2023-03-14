@@ -1,4 +1,4 @@
-import datetime
+from datetime import timedelta
 import unittest
 from unittest import mock
 
@@ -92,8 +92,8 @@ class TestGetHeadwayTime(unittest.TestCase):
             section_track_id, from_node_id, to_node_id, preceding_train_path_node_id, succeeding_train_path_node_id
         )
 
-        self.assertIsInstance(headway_time, datetime.timedelta)
-        self.assertEqual(headway_time, datetime.timedelta(minutes=5, seconds=12))
+        self.assertIsInstance(headway_time, timedelta)
+        self.assertEqual(headway_time, timedelta(minutes=5, seconds=12))
 
     @mock.patch("requests.Session", side_effect=GetHeadwayTimeTestMockSession)
     def tearDown(self, mocked_get_obj) -> None:

@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime
 import unittest
 
 from py_client.aidm.aidm_conflict import ConflictDetectionArguments
@@ -33,7 +33,7 @@ class TestConflictDetectionArguments(unittest.TestCase):
         conflict_types = [ConflictType.Crossing, ConflictType.InvalidDrivingDirection]
         train_id = 1230
         time_window = TimeWindow(
-            from_time=datetime.datetime(year=2022, month=2, day=7, hour=17, minute=10), to_time=datetime.datetime(year=2022, month=2, day=7, hour=17, minute=15)
+            from_time=datetime(year=2022, month=2, day=7, hour=17, minute=10), to_time=datetime(year=2022, month=2, day=7, hour=17, minute=15)
         )
 
         conflict_detection_arguments = (
@@ -58,8 +58,8 @@ class TestConflictDetectionArguments(unittest.TestCase):
         self.assertEqual(conflict_detection_arguments.filter_train_id, 1230)
 
         self.assertIsInstance(conflict_detection_arguments.time_window, TimeWindow)
-        self.assertEqual(conflict_detection_arguments.time_window.from_time, datetime.datetime(year=2022, month=2, day=7, hour=17, minute=10))
-        self.assertEqual(conflict_detection_arguments.time_window.to_time, datetime.datetime(year=2022, month=2, day=7, hour=17, minute=15))
+        self.assertEqual(conflict_detection_arguments.time_window.from_time, datetime(year=2022, month=2, day=7, hour=17, minute=10))
+        self.assertEqual(conflict_detection_arguments.time_window.to_time, datetime(year=2022, month=2, day=7, hour=17, minute=15))
 
         self.assertIsInstance(conflict_detection_arguments.train_ids, list)
         self.assertEqual(conflict_detection_arguments.train_ids, [1234, 1237])

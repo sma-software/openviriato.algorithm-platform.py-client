@@ -1,4 +1,4 @@
-import datetime
+from datetime import timedelta
 import unittest
 from unittest import mock
 
@@ -54,8 +54,8 @@ class TestGetSeparationTimeInJunctionForRoutes(unittest.TestCase):
 
         separation_time = self.interface_to_viriato.get_separation_time_in_junction_for_routes(preceding_edge, succeeding_edge)
 
-        self.assertIsInstance(separation_time, datetime.timedelta)
-        self.assertEqual(separation_time, datetime.timedelta(days=1))
+        self.assertIsInstance(separation_time, timedelta)
+        self.assertEqual(separation_time, timedelta(days=1))
 
     @mock.patch("requests.Session", side_effect=GetSeparationTimeInJunctionForRoutesTestMockSession)
     def test_get_separation_time_in_junction_for_routes_response_None(self, mocked_get_obj):

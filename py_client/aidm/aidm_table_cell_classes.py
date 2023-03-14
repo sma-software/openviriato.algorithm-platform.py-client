@@ -1,4 +1,4 @@
-import datetime
+from datetime import timedelta
 from enum import unique, Enum
 from typing import Optional
 
@@ -40,26 +40,26 @@ class TableIntegerCell(_TableCell):
 
 
 class TableDurationCell(_TableCell):
-    __value: Optional[datetime.timedelta]
+    __value: Optional[timedelta]
 
-    def __init__(self, column_key: str, value: Optional[datetime.timedelta]):
+    def __init__(self, column_key: str, value: Optional[timedelta]):
         super().__init__(column_key)
         self.__value = value
 
     @property
-    def value(self) -> Optional[datetime.timedelta]:
+    def value(self) -> Optional[timedelta]:
         return self.__value
 
 
 class TableLocalDateTimeCell(_TableCell):
-    __value: Optional[datetime.timedelta]
+    __value: Optional[timedelta]
 
-    def __init__(self, column_key: str, value: Optional[datetime.timedelta]):
+    def __init__(self, column_key: str, value: Optional[timedelta]):
         super().__init__(column_key)
         self.__value = value
 
     @property
-    def value(self) -> Optional[datetime.timedelta]:
+    def value(self) -> Optional[timedelta]:
         return self.__value
 
 

@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime, timedelta
 import unittest
 from unittest import mock
 
@@ -42,7 +42,7 @@ class TestGetAwaitArrivalLinks(unittest.TestCase):
 
     @mock.patch("requests.Session", side_effect=GetAwaitArrivalLinksTestMockSession)
     def test_get_await_arrival_links(self, mocked_get_obj):
-        time_window = TimeWindow(from_time=datetime.datetime(2000, 1, 1, 1, 1), to_time=datetime.datetime(2004, 1, 1, 0, 0))
+        time_window = TimeWindow(from_time=datetime(2000, 1, 1, 1, 1), to_time=datetime(2004, 1, 1, 0, 0))
 
         self.interface_to_viriato.get_await_arrival_links(time_window)
 
@@ -54,7 +54,7 @@ class TestGetAwaitArrivalLinks(unittest.TestCase):
 
     @mock.patch("requests.Session", side_effect=GetAwaitArrivalLinksTestMockSession)
     def test_get_await_arrival_links_one_link_as_response(self, mocked_get_obj):
-        time_window = TimeWindow(from_time=datetime.datetime(2000, 1, 1, 1, 1), to_time=datetime.datetime(2004, 1, 1, 0, 0))
+        time_window = TimeWindow(from_time=datetime(2000, 1, 1, 1, 1), to_time=datetime(2004, 1, 1, 0, 0))
 
         listed_algorithm_links = self.interface_to_viriato.get_await_arrival_links(time_window)
 
@@ -69,11 +69,11 @@ class TestGetAwaitArrivalLinks(unittest.TestCase):
         self.assertEqual(algorithm_connection_link.to_node_id, 161)
         self.assertEqual(algorithm_connection_link.to_train_id, 2417)
         self.assertEqual(algorithm_connection_link.to_train_path_node_id, 1323)
-        self.assertEqual(algorithm_connection_link.minimum_duration, datetime.timedelta(seconds=600))
+        self.assertEqual(algorithm_connection_link.minimum_duration, timedelta(seconds=600))
 
     @mock.patch("requests.Session", side_effect=GetAwaitArrivalLinksTestMockSession)
     def test_get_await_arrival_links_empty_list_as_response(self, mocked_get_obj):
-        time_window = TimeWindow(from_time=datetime.datetime(2000, 1, 1, 1, 1), to_time=datetime.datetime(2000, 1, 1, 1, 1))
+        time_window = TimeWindow(from_time=datetime(2000, 1, 1, 1, 1), to_time=datetime(2000, 1, 1, 1, 1))
 
         listed_algorithm_links = self.interface_to_viriato.get_await_arrival_links(time_window)
 

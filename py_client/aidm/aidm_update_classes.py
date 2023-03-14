@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime, timedelta
 from typing import List, Optional
 
 from py_client.aidm import StopStatus
@@ -36,19 +36,19 @@ class UpdateTrainRoute:
 
 class UpdateTimesTrainPathNode:
     __train_path_node_id: int
-    __arrival_time: datetime.datetime
-    __departure_time: datetime.datetime
-    __minimum_run_time: Optional[datetime.timedelta] = None
-    __minimum_stop_time: Optional[datetime.timedelta] = None
+    __arrival_time: datetime
+    __departure_time: datetime
+    __minimum_run_time: Optional[timedelta] = None
+    __minimum_stop_time: Optional[timedelta] = None
     __stop_status: Optional[StopStatus] = None
 
     def __init__(
         self,
         train_path_node_id: int,
-        arrival_time: datetime.datetime,
-        departure_time: datetime.datetime,
-        minimum_run_time: Optional[datetime.timedelta] = None,
-        minimum_stop_time: Optional[datetime.timedelta] = None,
+        arrival_time: datetime,
+        departure_time: datetime,
+        minimum_run_time: Optional[timedelta] = None,
+        minimum_stop_time: Optional[timedelta] = None,
         stop_status: Optional[StopStatus] = None,
     ):
         self.__train_path_node_id = train_path_node_id
@@ -63,19 +63,19 @@ class UpdateTimesTrainPathNode:
         return self.__train_path_node_id
 
     @property
-    def arrival_time(self) -> datetime.datetime:
+    def arrival_time(self) -> datetime:
         return self.__arrival_time
 
     @property
-    def departure_time(self) -> datetime.datetime:
+    def departure_time(self) -> datetime:
         return self.__departure_time
 
     @property
-    def minimum_run_time(self) -> Optional[datetime.timedelta]:
+    def minimum_run_time(self) -> Optional[timedelta]:
         return self.__minimum_run_time
 
     @property
-    def minimum_stop_time(self) -> Optional[datetime.timedelta]:
+    def minimum_stop_time(self) -> Optional[timedelta]:
         return self.__minimum_stop_time
 
     @property
@@ -97,17 +97,17 @@ class UpdateTimesTrain(_UpdateTrain):
 
 class UpdateStopTimesTrainPathNode:
     __train_path_node_id: int
-    __arrival_time: datetime.datetime
-    __departure_time: datetime.datetime
-    __minimum_stop_time: Optional[datetime.timedelta] = None
+    __arrival_time: datetime
+    __departure_time: datetime
+    __minimum_stop_time: Optional[timedelta] = None
     __stop_status: Optional[StopStatus] = None
 
     def __init__(
         self,
         train_path_node_id: int,
-        arrival_time: datetime.datetime,
-        departure_time: datetime.datetime,
-        minimum_stop_time: Optional[datetime.timedelta] = None,
+        arrival_time: datetime,
+        departure_time: datetime,
+        minimum_stop_time: Optional[timedelta] = None,
         stop_status: Optional[StopStatus] = None,
     ):
         self.__train_path_node_id = train_path_node_id
@@ -121,15 +121,15 @@ class UpdateStopTimesTrainPathNode:
         return self.__train_path_node_id
 
     @property
-    def arrival_time(self) -> datetime.datetime:
+    def arrival_time(self) -> datetime:
         return self.__arrival_time
 
     @property
-    def departure_time(self) -> datetime.datetime:
+    def departure_time(self) -> datetime:
         return self.__departure_time
 
     @property
-    def minimum_stop_time(self) -> Optional[datetime.timedelta]:
+    def minimum_stop_time(self) -> Optional[timedelta]:
         return self.__minimum_stop_time
 
     @property
@@ -139,16 +139,16 @@ class UpdateStopTimesTrainPathNode:
 
 class UpdateRunTimesTrainPathSegment:
     __to_train_path_node_id: int
-    __from_node_departure_time: datetime.datetime
-    __to_node_arrival_time: datetime.datetime
-    __minimum_run_time: Optional[datetime.timedelta]
+    __from_node_departure_time: datetime
+    __to_node_arrival_time: datetime
+    __minimum_run_time: Optional[timedelta]
 
     def __init__(
         self,
         to_train_path_node_id: int,
-        from_node_departure_time: datetime.datetime,
-        to_node_arrival_time: datetime.datetime,
-        minimum_run_time: Optional[datetime.timedelta],
+        from_node_departure_time: datetime,
+        to_node_arrival_time: datetime,
+        minimum_run_time: Optional[timedelta],
     ):
         self.__to_train_path_node_id = to_train_path_node_id
         self.__from_node_departure_time = from_node_departure_time
@@ -160,11 +160,11 @@ class UpdateRunTimesTrainPathSegment:
         return self.__to_train_path_node_id
 
     @property
-    def from_node_departure_time(self) -> datetime.datetime:
+    def from_node_departure_time(self) -> datetime:
         return self.__from_node_departure_time
 
     @property
-    def to_node_arrival_time(self) -> datetime.datetime:
+    def to_node_arrival_time(self) -> datetime:
         return self.__to_node_arrival_time
 
     @property

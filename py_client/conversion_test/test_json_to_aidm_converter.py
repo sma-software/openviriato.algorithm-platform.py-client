@@ -14,7 +14,7 @@ from py_client.aidm.aidm_routing_edge_classes import (
     OutgoingNodeTrackRoutingEdge,
 )
 from typing import Optional, List
-import datetime
+from datetime import datetime, timedelta
 
 
 class TestJsonToAIDMConverter(unittest.TestCase):
@@ -109,33 +109,33 @@ class TestJsonToAIDMConverter(unittest.TestCase):
 
     def test_json_to_aidm_containing_datetime(self):
         class AidmContainingDatetimeTest(_HasID):
-            __arrival_time: datetime.datetime
+            __arrival_time: datetime
 
-            def __init__(self, id: int, arrival_time: datetime.datetime):
+            def __init__(self, id: int, arrival_time: datetime):
                 _HasID.__init__(self, id)
                 self.__arrival_time = arrival_time
 
             @property
-            def arrival_time(self) -> datetime.datetime:
+            def arrival_time(self) -> datetime:
                 return self.__arrival_time
 
         json_dict = dict(id=54, arrivalTime="2003-05-01T00:05:00")
 
         aidm = self.__converter.process_json_to_aidm(json_dict, AidmContainingDatetimeTest)
         self.assertIsInstance(aidm, AidmContainingDatetimeTest)
-        self.assertIsInstance(aidm.arrival_time, datetime.datetime)
-        self.assertEqual(aidm.arrival_time, datetime.datetime(2003, 5, 1, hour=0, minute=5, second=0))
+        self.assertIsInstance(aidm.arrival_time, datetime)
+        self.assertEqual(aidm.arrival_time, datetime(2003, 5, 1, hour=0, minute=5, second=0))
 
     def test_json_to_aidm_containing_datetime_not_optional_with_none(self):
         class AidmContainingDatetimeTest(_HasID):
-            __arrival_time: datetime.datetime
+            __arrival_time: datetime
 
-            def __init__(self, id: int, arrival_time: datetime.datetime):
+            def __init__(self, id: int, arrival_time: datetime):
                 _HasID.__init__(self, id)
                 self.__arrival_time = arrival_time
 
             @property
-            def arrival_time(self) -> datetime.datetime:
+            def arrival_time(self) -> datetime:
                 return self.__arrival_time
 
         json_dict = dict(id=54, arrivalTime=None)
@@ -145,52 +145,52 @@ class TestJsonToAIDMConverter(unittest.TestCase):
 
     def test_json_to_aidm_containing_optional_datetime(self):
         class AidmContainingDatetimeTest(_HasID):
-            __arrival_time: Optional[datetime.datetime]
+            __arrival_time: Optional[datetime]
 
-            def __init__(self, id: int, arrival_time: Optional[datetime.datetime]):
+            def __init__(self, id: int, arrival_time: Optional[datetime]):
                 _HasID.__init__(self, id)
                 self.__arrival_time = arrival_time
 
             @property
-            def arrival_time(self) -> Optional[datetime.datetime]:
+            def arrival_time(self) -> Optional[datetime]:
                 return self.__arrival_time
 
         json_dict = dict(id=54, arrivalTime="2003-05-01T00:05:00")
 
         aidm = self.__converter.process_json_to_aidm(json_dict, AidmContainingDatetimeTest)
         self.assertIsInstance(aidm, AidmContainingDatetimeTest)
-        self.assertIn(type(aidm.arrival_time), [type(None), datetime.datetime])
-        self.assertEqual(aidm.arrival_time, datetime.datetime(2003, 5, 1, hour=0, minute=5, second=0))
+        self.assertIn(type(aidm.arrival_time), [type(None), datetime])
+        self.assertEqual(aidm.arrival_time, datetime(2003, 5, 1, hour=0, minute=5, second=0))
 
     def test_json_to_aidm_containing_optional_with_none_datetime(self):
         class AidmContainingDatetimeTest(_HasID):
-            __arrival_time: Optional[datetime.datetime]
+            __arrival_time: Optional[datetime]
 
-            def __init__(self, id: int, arrival_time: Optional[datetime.datetime]):
+            def __init__(self, id: int, arrival_time: Optional[datetime]):
                 _HasID.__init__(self, id)
                 self.__arrival_time = arrival_time
 
             @property
-            def arrival_time(self) -> Optional[datetime.datetime]:
+            def arrival_time(self) -> Optional[datetime]:
                 return self.__arrival_time
 
         json_dict = dict(id=54, arrivalTime=None)
 
         aidm = self.__converter.process_json_to_aidm(json_dict, AidmContainingDatetimeTest)
         self.assertIsInstance(aidm, AidmContainingDatetimeTest)
-        self.assertIn(type(aidm.arrival_time), [type(None), datetime.datetime])
+        self.assertIn(type(aidm.arrival_time), [type(None), datetime])
         self.assertEqual(aidm.arrival_time, None)
 
     def test_json_to_aidm_containing_datetime_with_wrong_datetime_format(self):
         class AidmContainingDatetimeTest(_HasID):
-            __arrival_time: datetime.datetime
+            __arrival_time: datetime
 
-            def __init__(self, id: int, arrival_time: datetime.datetime):
+            def __init__(self, id: int, arrival_time: datetime):
                 _HasID.__init__(self, id)
                 self.__arrival_time = arrival_time
 
             @property
-            def arrival_time(self) -> datetime.datetime:
+            def arrival_time(self) -> datetime:
                 return self.__arrival_time
 
         json_dict = dict(id=54, arrivalTime="2003-05-01TZR00:05:00")
@@ -201,33 +201,33 @@ class TestJsonToAIDMConverter(unittest.TestCase):
 
     def test_json_to_aidm_containing_timedelta(self):
         class AidmContainingTimedeltaTest(_HasID):
-            __minimum_stop_time: datetime.timedelta
+            __minimum_stop_time: timedelta
 
-            def __init__(self, id: int, minimum_stop_time: datetime.datetime):
+            def __init__(self, id: int, minimum_stop_time: datetime):
                 _HasID.__init__(self, id)
                 self.__minimum_stop_time = minimum_stop_time
 
             @property
-            def minimum_stop_time(self) -> datetime.timedelta:
+            def minimum_stop_time(self) -> timedelta:
                 return self.__minimum_stop_time
 
         json_dict = dict(id=54, minimumStopTime="PT6M")
 
         aidm = self.__converter.process_json_to_aidm(json_dict, AidmContainingTimedeltaTest)
         self.assertIsInstance(aidm, AidmContainingTimedeltaTest)
-        self.assertIsInstance(aidm.minimum_stop_time, datetime.timedelta)
-        self.assertEqual(aidm.minimum_stop_time, datetime.timedelta(minutes=6))
+        self.assertIsInstance(aidm.minimum_stop_time, timedelta)
+        self.assertEqual(aidm.minimum_stop_time, timedelta(minutes=6))
 
     def test_json_to_aidm_containing_non_optional_timedelta_with_none_value(self):
         class AidmContainingTimedeltaTest(_HasID):
-            __minimum_stop_time: datetime.timedelta
+            __minimum_stop_time: timedelta
 
-            def __init__(self, id: int, minimum_stop_time: datetime.datetime):
+            def __init__(self, id: int, minimum_stop_time: datetime):
                 _HasID.__init__(self, id)
                 self.__minimum_stop_time = minimum_stop_time
 
             @property
-            def minimum_stop_time(self) -> datetime.timedelta:
+            def minimum_stop_time(self) -> timedelta:
                 return self.__minimum_stop_time
 
         json_dict = dict(id=54, minimumStopTime=None)
@@ -238,52 +238,52 @@ class TestJsonToAIDMConverter(unittest.TestCase):
 
     def test_json_to_aidm_containing_optional_timedelta(self):
         class AidmContainingTimedeltaTest(_HasID):
-            __minimum_stop_time: Optional[datetime.timedelta]
+            __minimum_stop_time: Optional[timedelta]
 
-            def __init__(self, id: int, minimum_stop_time: Optional[datetime.datetime]):
+            def __init__(self, id: int, minimum_stop_time: Optional[datetime]):
                 _HasID.__init__(self, id)
                 self.__minimum_stop_time = minimum_stop_time
 
             @property
-            def minimum_stop_time(self) -> Optional[datetime.timedelta]:
+            def minimum_stop_time(self) -> Optional[timedelta]:
                 return self.__minimum_stop_time
 
         json_dict = dict(id=54, minimumStopTime="PT6M")
 
         aidm = self.__converter.process_json_to_aidm(json_dict, AidmContainingTimedeltaTest)
         self.assertIsInstance(aidm, AidmContainingTimedeltaTest)
-        self.assertIn(type(aidm.minimum_stop_time), [type(None), datetime.timedelta])
-        self.assertEqual(aidm.minimum_stop_time, datetime.timedelta(minutes=6))
+        self.assertIn(type(aidm.minimum_stop_time), [type(None), timedelta])
+        self.assertEqual(aidm.minimum_stop_time, timedelta(minutes=6))
 
     def test_json_to_aidm_containing_optional_timedelta_with_non_value(self):
         class AidmContainingTimedeltaTest(_HasID):
-            __minimum_stop_time: Optional[datetime.timedelta]
+            __minimum_stop_time: Optional[timedelta]
 
-            def __init__(self, id: int, minimum_stop_time: Optional[datetime.timedelta]):
+            def __init__(self, id: int, minimum_stop_time: Optional[timedelta]):
                 _HasID.__init__(self, id)
                 self.__minimum_stop_time = minimum_stop_time
 
             @property
-            def minimum_stop_time(self) -> Optional[datetime.timedelta]:
+            def minimum_stop_time(self) -> Optional[timedelta]:
                 return self.__minimum_stop_time
 
         json_dict = dict(id=54, minimumStopTime=None)
 
         aidm = self.__converter.process_json_to_aidm(json_dict, AidmContainingTimedeltaTest)
         self.assertIsInstance(aidm, AidmContainingTimedeltaTest)
-        self.assertIn(type(aidm.minimum_stop_time), [type(None), datetime.timedelta])
+        self.assertIn(type(aidm.minimum_stop_time), [type(None), timedelta])
         self.assertEqual(aidm.minimum_stop_time, None)
 
     def test_json_to_aidm_containing_timedelta_with_conversion_error(self):
         class AidmContainingTimedeltaTest(_HasID):
-            __minimum_stop_time: datetime.timedelta
+            __minimum_stop_time: timedelta
 
-            def __init__(self, id: int, minimum_stop_time: datetime.timedelta):
+            def __init__(self, id: int, minimum_stop_time: timedelta):
                 _HasID.__init__(self, id)
                 self.__minimum_stop_time = minimum_stop_time
 
             @property
-            def minimum_stop_time(self) -> datetime.timedelta:
+            def minimum_stop_time(self) -> timedelta:
                 return self.__minimum_stop_time
 
         json_dict = dict(id=54, minimumStopTime="PT6Z")
@@ -440,17 +440,17 @@ class TestJsonToAIDMConverter(unittest.TestCase):
         self.assertEqual(algorithm_train_path_node.formation_id, 4142)
         self.assertEqual(algorithm_train_path_node.movement_type_id, 2222)
 
-        self.assertIsInstance(algorithm_train_path_node.arrival_time, datetime.datetime)
-        self.assertEqual(algorithm_train_path_node.arrival_time, datetime.datetime(year=2003, month=5, day=1, hour=0, minute=5))
+        self.assertIsInstance(algorithm_train_path_node.arrival_time, datetime)
+        self.assertEqual(algorithm_train_path_node.arrival_time, datetime(year=2003, month=5, day=1, hour=0, minute=5))
 
-        self.assertIsInstance(algorithm_train_path_node.departure_time, datetime.datetime)
-        self.assertEqual(algorithm_train_path_node.departure_time, datetime.datetime(year=2003, month=5, day=1, hour=0, minute=5))
+        self.assertIsInstance(algorithm_train_path_node.departure_time, datetime)
+        self.assertEqual(algorithm_train_path_node.departure_time, datetime(year=2003, month=5, day=1, hour=0, minute=5))
 
-        self.assertIsInstance(algorithm_train_path_node.minimum_run_time, datetime.timedelta)
-        self.assertEqual(algorithm_train_path_node.minimum_run_time, datetime.timedelta(days=3))
+        self.assertIsInstance(algorithm_train_path_node.minimum_run_time, timedelta)
+        self.assertEqual(algorithm_train_path_node.minimum_run_time, timedelta(days=3))
 
-        self.assertIsInstance(algorithm_train_path_node.minimum_stop_time, datetime.timedelta)
-        self.assertEqual(algorithm_train_path_node.minimum_stop_time, datetime.timedelta(days=5))
+        self.assertIsInstance(algorithm_train_path_node.minimum_stop_time, timedelta)
+        self.assertEqual(algorithm_train_path_node.minimum_stop_time, timedelta(days=5))
 
         self.assertIsInstance(algorithm_train_path_node.stop_status, StopStatus)
         self.assertEqual(algorithm_train_path_node.stop_status, StopStatus.commercial_stop)

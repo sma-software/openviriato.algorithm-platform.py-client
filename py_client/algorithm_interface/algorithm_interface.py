@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime, timedelta
 from typing import Type, List, Optional, Union
 
 from py_client.aidm.aidm_enum_classes import EnumType
@@ -314,20 +314,20 @@ class AlgorithmInterface:
         node_id: int,
         preceding_train_path_node_id: int,
         succeeding_train_path_node_id: int,
-    ) -> Optional[datetime.timedelta]:
+    ) -> Optional[timedelta]:
         url_to_resource = "nodes/{0}/separation-times".format(node_id)
         query_parameters = dict(
             precedingTrainPathNodeId=preceding_train_path_node_id,
             succeedingTrainPathNodeId=succeeding_train_path_node_id,
         )
         response_dict = self.__communication_layer.do_get_request_without_body(url_to_resource, query_parameters)
-        return JsonToAidmConverter().process_json_to_aidm(response_dict, Optional[datetime.timedelta])
+        return JsonToAidmConverter().process_json_to_aidm(response_dict, Optional[timedelta])
 
     def get_separation_time_in_junction_for_routes(
         self,
         preceding_routing_edge: CrossingRoutingEdge,
         succeeding_routing_edge: CrossingRoutingEdge,
-    ) -> Optional[datetime.timedelta]:
+    ) -> Optional[timedelta]:
         url_to_resource = "nodes/{0}/separation-times".format(preceding_routing_edge.node_id)
         query_parameters = dict(
             precedingFromSectionTrackId=preceding_routing_edge.start_section_track_id,
@@ -337,13 +337,13 @@ class AlgorithmInterface:
         )
 
         response_dict = self.__communication_layer.do_get_request_without_body(url_to_resource, query_parameters)
-        return JsonToAidmConverter().process_json_to_aidm(response_dict, Optional[datetime.timedelta])
+        return JsonToAidmConverter().process_json_to_aidm(response_dict, Optional[timedelta])
 
-    def get_separation_time_in_station_for_node_track_reoccupation(self, node_id: int, node_track_id: int) -> datetime.timedelta:
+    def get_separation_time_in_station_for_node_track_reoccupation(self, node_id: int, node_track_id: int) -> timedelta:
         url_to_resource = "nodes/{0}/separation-times".format(node_id)
         query_parameters = dict(nodeTrackId=node_track_id)
         response_dict = self.__communication_layer.do_get_request_without_body(url_to_resource, query_parameters)
-        return JsonToAidmConverter().process_json_to_aidm(response_dict, datetime.timedelta)
+        return JsonToAidmConverter().process_json_to_aidm(response_dict, timedelta)
 
     def get_separation_time_in_station_for_planned_train_paths(
         self,
@@ -354,7 +354,7 @@ class AlgorithmInterface:
         succeeding_train_path_node_id: int,
         succeeding_train_stop_status: Optional[StopStatus],
         succeeding_station_entry_or_exit: StationEntryOrExit,
-    ) -> Optional[datetime.timedelta]:
+    ) -> Optional[timedelta]:
         url_to_resource = "nodes/{0}/separation-times".format(node_id)
 
         query_parameters = dict(
@@ -370,7 +370,7 @@ class AlgorithmInterface:
             query_parameters["succeedingStopStatus"] = succeeding_train_stop_status.value
 
         response_dict = self.__communication_layer.do_get_request_without_body(url_to_resource, query_parameters)
-        return JsonToAidmConverter().process_json_to_aidm(response_dict, Optional[datetime.timedelta])
+        return JsonToAidmConverter().process_json_to_aidm(response_dict, Optional[timedelta])
 
     def get_separation_time_in_station_for_routes(
         self,
@@ -378,7 +378,7 @@ class AlgorithmInterface:
         preceding_train_stop_status: StopStatus,
         succeeding_train_routing_edge: _RoutingEdge,
         succeeding_train_stop_status: StopStatus,
-    ) -> Optional[datetime.timedelta]:
+    ) -> Optional[timedelta]:
         url_to_resource = "nodes/{0}/separation-times".format(preceding_train_routing_edge.node_id)
         query_parameters = _interface_helpers.create_query_parameters_from_preceding_and_succeeding_routing_edge(
             preceding_train_routing_edge, succeeding_train_routing_edge
@@ -388,9 +388,9 @@ class AlgorithmInterface:
 
         response_dict = self.__communication_layer.do_get_request_without_body(url_to_resource, query_parameters)
 
-        return JsonToAidmConverter().process_json_to_aidm(response_dict, Optional[datetime.timedelta])
+        return JsonToAidmConverter().process_json_to_aidm(response_dict, Optional[timedelta])
 
-    def get_default_headway_time(self, section_track_id: int, from_node_id: Optional[int], to_node_id: Optional[int]) -> datetime.timedelta:
+    def get_default_headway_time(self, section_track_id: int, from_node_id: Optional[int], to_node_id: Optional[int]) -> timedelta:
         url_to_resource = "section-tracks/{0}/headway-times".format(section_track_id)
         headway_query_parameters = dict()
         if from_node_id is not None:
@@ -399,7 +399,7 @@ class AlgorithmInterface:
             headway_query_parameters["toNodeId"] = to_node_id
 
         response_dict = self.__communication_layer.do_get_request_without_body(url_to_resource, headway_query_parameters)
-        return JsonToAidmConverter().process_json_to_aidm(response_dict, datetime.timedelta)
+        return JsonToAidmConverter().process_json_to_aidm(response_dict, timedelta)
 
     def get_headway_time(
         self,
@@ -408,7 +408,7 @@ class AlgorithmInterface:
         to_node_id: Optional[int],
         preceding_train_path_node_id: int,
         succeeding_train_path_node_id: int,
-    ) -> datetime.timedelta:
+    ) -> timedelta:
         url_to_resource = "section-tracks/{0}/headway-times".format(section_track_id)
         headway_query_parameters = dict(
             precedingTrainPathNodeId=preceding_train_path_node_id,
@@ -420,12 +420,12 @@ class AlgorithmInterface:
             headway_query_parameters["toNodeId"] = to_node_id
 
         response_dict = self.__communication_layer.do_get_request_without_body(url_to_resource, headway_query_parameters)
-        return JsonToAidmConverter().process_json_to_aidm(response_dict, datetime.timedelta)
+        return JsonToAidmConverter().process_json_to_aidm(response_dict, timedelta)
 
-    def get_headway_time_for_train_path_nodes(self, preceding_train_path_node_id: int, succeeding_train_path_node_id: int) -> datetime.timedelta:
+    def get_headway_time_for_train_path_nodes(self, preceding_train_path_node_id: int, succeeding_train_path_node_id: int) -> timedelta:
         url_to_resource = "headway-times/between-train-path-nodes/{0}/{1}".format(preceding_train_path_node_id, succeeding_train_path_node_id)
         response_dict = self.__communication_layer.do_get_request_without_body(url_to_resource)
-        return JsonToAidmConverter().process_json_to_aidm(response_dict, datetime.timedelta)
+        return JsonToAidmConverter().process_json_to_aidm(response_dict, timedelta)
 
     def get_headway_time_for_train_path_nodes_on_section_track(
         self,
@@ -434,7 +434,7 @@ class AlgorithmInterface:
         section_track_id: int,
         from_node_id: int,
         to_node_id: int,
-    ) -> datetime.timedelta:
+    ) -> timedelta:
         url_to_resource = "headway-times/between-train-path-nodes/{0}/{1}/for-section-track/{2}/in-direction/{3}/{4}".format(
             preceding_train_path_node_id,
             succeeding_train_path_node_id,
@@ -443,7 +443,7 @@ class AlgorithmInterface:
             to_node_id,
         )
         response_dict = self.__communication_layer.do_get_request_without_body(url_to_resource)
-        return JsonToAidmConverter().process_json_to_aidm(response_dict, datetime.timedelta)
+        return JsonToAidmConverter().process_json_to_aidm(response_dict, timedelta)
 
     def get_assignable_node_tracks_for_train_path_node(
         self, node_id: int, train_path_node_id: int, stop_status: Optional[StopStatus]
@@ -686,7 +686,7 @@ class AlgorithmInterface:
         response = self.__communication_layer.do_get_request_without_body(url_to_resource)
         return JsonToAidmConverter().process_json_to_aidm(response, bool)
 
-    def postpone_next_train_simulation_event(self, additional_delay: datetime.timedelta) -> AlgorithmTrainSimulationRealizationForecast:
+    def postpone_next_train_simulation_event(self, additional_delay: timedelta) -> AlgorithmTrainSimulationRealizationForecast:
         url_to_resource = "services/trains/simulations/events/next:postpone"
         converted_additional_delay = to_json_converter.convert_any_object(additional_delay)
         post_request_body = dict(additionalDelay=converted_additional_delay)
@@ -698,21 +698,21 @@ class AlgorithmInterface:
         response = self.__communication_layer.do_post_request(url_to_resource)
         return JsonToAidmConverter().process_json_to_aidm(response, AlgorithmTrainSimulationRealizationForecast)
 
-    def calculate_maximum_headway_time(self) -> datetime.timedelta:
+    def calculate_maximum_headway_time(self) -> timedelta:
         url_to_resource = "section-tracks/headway-times:calculate-maximum"
         response_dict = self.__communication_layer.do_get_request_without_body(url_to_resource)
-        return JsonToAidmConverter().process_json_to_aidm(response_dict, datetime.timedelta)
+        return JsonToAidmConverter().process_json_to_aidm(response_dict, timedelta)
 
-    def calculate_maximum_separation_time(self, node_id: int = None) -> datetime.timedelta:
+    def calculate_maximum_separation_time(self, node_id: int = None) -> timedelta:
         # Overloaded method is not possible in python, need to branch on arguments
         if node_id is None:
             url_to_resource = "nodes/separation-times:calculate-maximum"
             response_dict = self.__communication_layer.do_get_request_without_body(url_to_resource)
-            return JsonToAidmConverter().process_json_to_aidm(response_dict, datetime.timedelta)
+            return JsonToAidmConverter().process_json_to_aidm(response_dict, timedelta)
         else:
             url_to_resource = "nodes/{}/separation-times:calculate-maximum".format(node_id)
             response_dict = self.__communication_layer.do_get_request_without_body(url_to_resource)
-            return JsonToAidmConverter().process_json_to_aidm(response_dict, datetime.timedelta)
+            return JsonToAidmConverter().process_json_to_aidm(response_dict, timedelta)
 
     def get_unplanned_stop_penalties(self, train_id: int) -> AlgorithmUnplannedStopPenalties:
         url_to_resource = "trains/{}/unplanned-stop-penalties".format(train_id)

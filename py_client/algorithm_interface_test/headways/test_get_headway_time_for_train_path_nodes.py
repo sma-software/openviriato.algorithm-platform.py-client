@@ -1,4 +1,4 @@
-import datetime
+from datetime import timedelta
 import unittest
 from unittest import mock
 
@@ -40,8 +40,8 @@ class TestGetHeadwayTimeForTrainPathNodes(unittest.TestCase):
 
         separation_time = self.interface_to_viriato.get_headway_time_for_train_path_nodes(proceeding_node_id, succeeding_node_id)
 
-        self.assertIsInstance(separation_time, datetime.timedelta)
-        self.assertEqual(separation_time, datetime.timedelta(minutes=2))
+        self.assertIsInstance(separation_time, timedelta)
+        self.assertEqual(separation_time, timedelta(minutes=2))
 
     @mock.patch("requests.Session", side_effect=GetHeadwayTimeForTrainPathNodesTestMockSession)
     def tearDown(self, mocked_get_obj) -> None:

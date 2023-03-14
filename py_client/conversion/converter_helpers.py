@@ -1,8 +1,6 @@
-import datetime
-import typing
+from datetime import datetime, timedelta
 from enum import unique, Enum
-from typing import List, Optional, Union, get_origin, get_args, Type
-from py_client.communication.response_processing import AlgorithmPlatformConversionError
+from typing import Union, get_origin, get_args, Type
 import isodate
 
 
@@ -42,15 +40,15 @@ def convert_keys_to_snake_case(json_with_camel_case_keys: dict) -> dict:
     return {snake_case_key: json_with_camel_case_keys[camel_case_key] for snake_case_key, camel_case_key in snake_case_keys_and_camel_case_keys}
 
 
-def parse_to_datetime(datetime_raw_str: str) -> datetime.datetime:
-    return datetime.datetime.fromisoformat(datetime_raw_str)
+def parse_to_datetime(datetime_raw_str: str) -> datetime:
+    return datetime.fromisoformat(datetime_raw_str)
 
 
-def parse_to_timedelta(timedelta_raw_str: str) -> datetime.timedelta:
+def parse_to_timedelta(timedelta_raw_str: str) -> timedelta:
     return isodate.parse_duration(timedelta_raw_str)
 
 
-def parse_to_timedelta_or_none(timedelta_raw_str: (str, None)) -> (datetime.timedelta, None):
+def parse_to_timedelta_or_none(timedelta_raw_str: (str, None)) -> (timedelta, None):
     if timedelta_raw_str is not None:
         return parse_to_timedelta(timedelta_raw_str)
     else:
@@ -58,9 +56,9 @@ def parse_to_timedelta_or_none(timedelta_raw_str: (str, None)) -> (datetime.time
 
 
 def convert_to_datetime_format_or_return_self(obj):
-    if isinstance(obj, datetime.datetime):
+    if isinstance(obj, datetime):
         return obj.isoformat()
-    elif isinstance(obj, datetime.timedelta):
+    elif isinstance(obj, timedelta):
         return isodate.duration_isoformat(obj)
     else:
         return obj
@@ -98,7 +96,7 @@ def is_primitive(value: object):
     return value in list_of_primitive or (is_optional(value) and get_type_of_optional_element(value) in list_of_primitive)
 
 
-Struct = Union[datetime.datetime, datetime.timedelta]
+Struct = Union[datetime, timedelta]
 
 
 def is_struct(value: object):

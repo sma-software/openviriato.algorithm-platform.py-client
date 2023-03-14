@@ -1,4 +1,4 @@
-import datetime
+from datetime import timedelta
 import unittest
 from unittest import mock
 
@@ -91,8 +91,8 @@ class TestGetSeparationTimeInStationForRoutes(unittest.TestCase):
             preceding_routing_edge, preceding_stop_status, succeeding_routing_edge, succeeding_stop_status
         )
 
-        self.assertIsInstance(separation_time, datetime.timedelta)
-        self.assertEqual(separation_time, datetime.timedelta(seconds=24))
+        self.assertIsInstance(separation_time, timedelta)
+        self.assertEqual(separation_time, timedelta(seconds=24))
 
     @mock.patch("requests.Session", side_effect=GetSeparationTimeInStationForRoutesTestMockSession)
     def test_get_separation_time_in_station_for_routes_response_incoming_outgoing(self, mocked_get_obj):
@@ -105,8 +105,8 @@ class TestGetSeparationTimeInStationForRoutes(unittest.TestCase):
             preceding_routing_edge, preceding_stop_status, succeeding_routing_edge, succeeding_stop_status
         )
 
-        self.assertIsInstance(separation_time, datetime.timedelta)
-        self.assertEqual(separation_time, datetime.timedelta(seconds=120))
+        self.assertIsInstance(separation_time, timedelta)
+        self.assertEqual(separation_time, timedelta(seconds=120))
 
     @mock.patch("requests.Session", side_effect=GetSeparationTimeInStationForRoutesTestMockSession)
     def test_get_separation_time_in_station_for_routes_response_outgoing_incoming(self, mocked_get_obj):
@@ -132,8 +132,8 @@ class TestGetSeparationTimeInStationForRoutes(unittest.TestCase):
             preceding_routing_edge, preceding_stop_status, succeeding_routing_edge, succeeding_stop_status
         )
 
-        self.assertIsInstance(separation_time, datetime.timedelta)
-        self.assertEqual(separation_time, datetime.timedelta(seconds=300))
+        self.assertIsInstance(separation_time, timedelta)
+        self.assertEqual(separation_time, timedelta(seconds=300))
 
     @mock.patch("requests.Session", side_effect=GetSeparationTimeInStationForRoutesTestMockSession)
     def tearDown(self, mocked_get_obj) -> None:

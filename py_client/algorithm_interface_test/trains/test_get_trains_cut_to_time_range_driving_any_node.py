@@ -1,4 +1,4 @@
-import datetime
+from datetime import timedelta, datetime
 import unittest
 from unittest import mock
 
@@ -62,7 +62,7 @@ class TestGetTrainsCutToTimeRangeDrivingAnyNode(unittest.TestCase):
 
     @mock.patch("requests.Session", side_effect=GetTrainsCutToTimeRangeDrivingAnyNodeTestMockSession)
     def test_get_trains_cut_to_time_range_driving_any_node_request(self, mocked_get_obj):
-        time_window = TimeWindow(from_time=datetime.datetime(2000, 1, 1, 1, 1), to_time=datetime.datetime(2004, 1, 1, 0, 0))
+        time_window = TimeWindow(from_time=datetime(2000, 1, 1, 1, 1), to_time=datetime(2004, 1, 1, 0, 0))
         node_ids = [10, 11, 18]
 
         self.interface_to_viriato.get_trains_cut_to_time_range_driving_any_node(time_window, node_ids=node_ids)
@@ -78,7 +78,7 @@ class TestGetTrainsCutToTimeRangeDrivingAnyNode(unittest.TestCase):
 
     @mock.patch("requests.Session", side_effect=GetTrainsCutToTimeRangeDrivingAnyNodeTestMockSession)
     def test_get_trains_cut_to_time_range_driving_any_node_response(self, mocked_get_obj):
-        time_window = TimeWindow(from_time=datetime.datetime(2000, 1, 1, 1, 1), to_time=datetime.datetime(2004, 1, 1, 0, 0))
+        time_window = TimeWindow(from_time=datetime(2000, 1, 1, 1, 1), to_time=datetime(2004, 1, 1, 0, 0))
         node_ids = [10]
 
         listed_algorithm_trains = self.interface_to_viriato.get_trains_cut_to_time_range_driving_any_node(time_window, node_ids=node_ids)
@@ -99,10 +99,10 @@ class TestGetTrainsCutToTimeRangeDrivingAnyNode(unittest.TestCase):
         self.assertEqual(listed_algorithm_trains[0].train_path_nodes[0].node_id, 18)
         self.assertEqual(listed_algorithm_trains[0].train_path_nodes[0].node_track_id, None)
         self.assertEqual(listed_algorithm_trains[0].train_path_nodes[0].formation_id, 1187)
-        self.assertEqual(listed_algorithm_trains[0].train_path_nodes[0].arrival_time, datetime.datetime(2003, 5, 1, 0, 5))
-        self.assertEqual(listed_algorithm_trains[0].train_path_nodes[0].departure_time, datetime.datetime(2003, 5, 1, 0, 5))
+        self.assertEqual(listed_algorithm_trains[0].train_path_nodes[0].arrival_time, datetime(2003, 5, 1, 0, 5))
+        self.assertEqual(listed_algorithm_trains[0].train_path_nodes[0].departure_time, datetime(2003, 5, 1, 0, 5))
         self.assertEqual(listed_algorithm_trains[0].train_path_nodes[0].minimum_run_time, None)
-        self.assertEqual(listed_algorithm_trains[0].train_path_nodes[0].minimum_stop_time, datetime.timedelta(0))
+        self.assertEqual(listed_algorithm_trains[0].train_path_nodes[0].minimum_stop_time, timedelta(0))
         self.assertEqual(listed_algorithm_trains[0].train_path_nodes[0].stop_status, StopStatus.commercial_stop)
         self.assertEqual(listed_algorithm_trains[0].train_path_nodes[0].sequence_number, 0)
 

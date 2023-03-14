@@ -1,4 +1,4 @@
-import datetime
+from datetime import timedelta
 import unittest
 from unittest import mock
 
@@ -37,8 +37,8 @@ class TestCalculateMaximumSeparationTimeOverOneNode(unittest.TestCase):
         node_id = 322
         maximum_headway_time = self.interface_to_viriato.calculate_maximum_separation_time(node_id)
 
-        self.assertIsInstance(maximum_headway_time, datetime.timedelta)
-        self.assertEqual(maximum_headway_time, datetime.timedelta(minutes=2, seconds=10))
+        self.assertIsInstance(maximum_headway_time, timedelta)
+        self.assertEqual(maximum_headway_time, timedelta(minutes=2, seconds=10))
 
     @mock.patch("requests.Session", side_effect=CalculateMaximumSeparationTimeTestMockSession)
     def tearDown(self, mocked_get_obj) -> None:

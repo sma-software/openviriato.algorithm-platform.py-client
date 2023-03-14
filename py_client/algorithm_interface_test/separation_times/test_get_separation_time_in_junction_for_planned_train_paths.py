@@ -1,4 +1,4 @@
-import datetime
+from datetime import timedelta
 import unittest
 from unittest import mock
 
@@ -52,8 +52,8 @@ class TestGetSeparationTimeInJunctionForPlannedTrainPaths(unittest.TestCase):
             node_id, proceeding_train_path_node_id, succeeding_train_path_node_id
         )
 
-        self.assertIsInstance(separation_time, datetime.timedelta)
-        self.assertEqual(separation_time, datetime.timedelta(minutes=5))
+        self.assertIsInstance(separation_time, timedelta)
+        self.assertEqual(separation_time, timedelta(minutes=5))
 
     @mock.patch("requests.Session", side_effect=GetSeparationTimeInJunctionForPlannedTrainPathsTestMockSession)
     def test_get_separation_time_in_junction_response_none(self, mocked_get_obj):

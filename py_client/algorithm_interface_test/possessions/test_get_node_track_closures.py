@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime
 import unittest
 from unittest import mock
 
@@ -48,9 +48,7 @@ class TestGetNodeTrackClosures(unittest.TestCase):
 
     @mock.patch("requests.Session", side_effect=GetNodeTrackClosuresTestMockSession)
     def test_get_node_track_closures_request(self, mocked_get_obj):
-        requested_time_window = py_client.aidm.aidm_time_window_classes.TimeWindow(
-            from_time=datetime.datetime(2003, 5, 1, 0, 0), to_time=datetime.datetime(2003, 5, 12, 0, 0)
-        )
+        requested_time_window = py_client.aidm.aidm_time_window_classes.TimeWindow(from_time=datetime(2003, 5, 1, 0, 0), to_time=datetime(2003, 5, 12, 0, 0))
 
         self.interface_to_viriato.get_node_track_closures(time_window=requested_time_window)
 
@@ -60,9 +58,7 @@ class TestGetNodeTrackClosures(unittest.TestCase):
 
     @mock.patch("requests.Session", side_effect=GetNodeTrackClosuresTestMockSession)
     def test_get_node_track_closures_response(self, mocked_get_obj):
-        requested_time_window = py_client.aidm.aidm_time_window_classes.TimeWindow(
-            from_time=datetime.datetime(2003, 5, 1, 0, 0), to_time=datetime.datetime(2003, 5, 12, 0, 0)
-        )
+        requested_time_window = py_client.aidm.aidm_time_window_classes.TimeWindow(from_time=datetime(2003, 5, 1, 0, 0), to_time=datetime(2003, 5, 12, 0, 0))
 
         list_of_section_track_closure = self.interface_to_viriato.get_node_track_closures(requested_time_window)
 
@@ -70,7 +66,7 @@ class TestGetNodeTrackClosures(unittest.TestCase):
         self.assertIsInstance(list_of_section_track_closure[0], py_client.aidm.aidm_track_closure_classes.AlgorithmNodeTrackClosure)
         self.assertIsInstance(list_of_section_track_closure[0].closure_time_window, py_client.aidm.aidm_time_window_classes.TimeWindow)
         self.assertEqual(list_of_section_track_closure[0].debug_string, "nodetrackclosure:85ZMUS 24")
-        self.assertEqual(list_of_section_track_closure[0].closure_time_window.from_time, datetime.datetime(2003, 5, 1, 8, 0))
+        self.assertEqual(list_of_section_track_closure[0].closure_time_window.from_time, datetime(2003, 5, 1, 8, 0))
 
     @mock.patch("requests.Session", side_effect=GetNodeTrackClosuresTestMockSession)
     def tearDown(self, mocked_get_obj) -> None:

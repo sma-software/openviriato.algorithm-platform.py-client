@@ -1,4 +1,4 @@
-import datetime
+from datetime import timedelta, datetime
 from typing import Optional
 
 from py_client.aidm.aidm_base_classes import _HasID
@@ -6,14 +6,14 @@ from py_client.aidm.aidm_enum_classes import StopStatus
 
 
 class AlgorithmTrainPathNode(_HasID):
-    __arrival_time: datetime.datetime
-    __departure_time: datetime.datetime
+    __arrival_time: datetime
+    __departure_time: datetime
     __section_track_id: Optional[int]
     __node_id: int
     __node_track_id: Optional[int]
     __formation_id: Optional[int]
-    __minimum_run_time: Optional[datetime.timedelta]
-    __minimum_stop_time: datetime.timedelta
+    __minimum_run_time: Optional[timedelta]
+    __minimum_stop_time: timedelta
     __stop_status: StopStatus
     __sequence_number: int
     __movement_type_id: Optional[int]
@@ -25,10 +25,10 @@ class AlgorithmTrainPathNode(_HasID):
         node_id: int,
         node_track_id: Optional[int],
         formation_id: Optional[int],
-        arrival_time: datetime.datetime,
-        departure_time: datetime.datetime,
-        minimum_run_time: Optional[datetime.timedelta],
-        minimum_stop_time: datetime.timedelta,
+        arrival_time: datetime,
+        departure_time: datetime,
+        minimum_run_time: Optional[timedelta],
+        minimum_stop_time: timedelta,
         stop_status: StopStatus,
         sequence_number: int,
         movement_type_id: int,
@@ -63,19 +63,19 @@ class AlgorithmTrainPathNode(_HasID):
         return self.__formation_id
 
     @property
-    def arrival_time(self) -> datetime.datetime:
+    def arrival_time(self) -> datetime:
         return self.__arrival_time
 
     @property
-    def departure_time(self) -> datetime.datetime:
+    def departure_time(self) -> datetime:
         return self.__departure_time
 
     @property
-    def minimum_run_time(self) -> Optional[datetime.timedelta]:
+    def minimum_run_time(self) -> Optional[timedelta]:
         return self.__minimum_run_time
 
     @property
-    def minimum_stop_time(self) -> datetime.timedelta:
+    def minimum_stop_time(self) -> timedelta:
         return self.__minimum_stop_time
 
     @property

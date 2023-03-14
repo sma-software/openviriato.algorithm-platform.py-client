@@ -1,4 +1,6 @@
-from typing import Dict, get_type_hints
+from typing import Dict, get_type_hints, Optional, List
+
+from py_client.communication.response_processing import AlgorithmPlatformConversionError
 from py_client.conversion.converter_helpers import *
 from py_client.aidm.aidm_link_classes import _AlgorithmLink, AlgorithmAwaitArrivalLink, AlgorithmRosterLink, AlgorithmConnectionLink
 from py_client.aidm.aidm_routing_edge_classes import _RoutingEdge
@@ -13,7 +15,7 @@ from py_client.aidm.aidm_conflict import (
     _AlgorithmTwoTrainsNodeConflict,
     _AlgorithmMultipleTrainsNodeConflict,
 )
-import datetime
+from datetime import datetime, timedelta
 import isodate
 
 
@@ -49,18 +51,18 @@ class _ABCJsonToAidmDictProcessor(_ABCJsonToAidmProcessor):
 
 class DatetimeProcessor(_ABCJsonToAidmValueProcessor):
     def is_applicable(self, json_to_process: Union[dict, Primitive, Optional[Primitive]], targeted_type: Type[object]) -> bool:
-        return targeted_type is datetime.datetime
+        return targeted_type is datetime
 
     def process_attribute_dict(self, json_to_process: Union[dict, Primitive, Optional[Primitive]], targeted_type: Type[object]) -> object:
         try:
-            return datetime.datetime.fromisoformat(json_to_process)
+            return datetime.fromisoformat(json_to_process)
         except Exception as e:
             raise AlgorithmPlatformConversionError("Could not parse datetime, invalid datetime format: {}".format(json_to_process), e)
 
 
 class TimedeltaProcessor(_ABCJsonToAidmValueProcessor):
     def is_applicable(self, json_to_process: dict, targeted_type: Type[object]) -> bool:
-        return targeted_type is datetime.timedelta
+        return targeted_type is timedelta
 
     def process_attribute_dict(self, json_to_process: Union[dict, Primitive, Optional[Primitive]], targeted_type: Type[object]) -> object:
         try:

@@ -1,4 +1,4 @@
-import datetime
+from datetime import timedelta
 
 from py_client.aidm.aidm_base_classes import _HasDebugString
 from py_client.aidm.aidm_base_classes import _HasID
@@ -43,9 +43,9 @@ class AlgorithmSectionRunningTimePenaltyTrack:
 
 class AlgorithmSectionRunningTimePenalty(_HasID, _HasDebugString):
     __affected_section_tracks: List[AlgorithmSectionRunningTimePenaltyTrack]
-    __total_penalty: datetime.timedelta
+    __total_penalty: timedelta
 
-    def __init__(self, affected_section_tracks: List[AlgorithmSectionRunningTimePenaltyTrack], total_penalty: datetime.timedelta, debug_string: str, id: int):
+    def __init__(self, affected_section_tracks: List[AlgorithmSectionRunningTimePenaltyTrack], total_penalty: timedelta, debug_string: str, id: int):
         _HasDebugString.__init__(self, debug_string)
         _HasID.__init__(self, id)
         self.__affected_section_tracks = affected_section_tracks
@@ -56,17 +56,17 @@ class AlgorithmSectionRunningTimePenalty(_HasID, _HasDebugString):
         return self.__affected_section_tracks
 
     @property
-    def total_penalty(self) -> datetime.timedelta:
+    def total_penalty(self) -> timedelta:
         return self.__total_penalty
 
 
 class RunningTimePenaltyOnTrainPath:
     __from_train_path_node_id: int
     __possession_id: int
-    __required_running_time_penalty: datetime.timedelta
+    __required_running_time_penalty: timedelta
     __to_train_path_node_id: int
 
-    def __init__(self, from_train_path_node_id: int, possession_id: int, required_running_time_penalty: datetime.timedelta, to_train_path_node_id: int):
+    def __init__(self, from_train_path_node_id: int, possession_id: int, required_running_time_penalty: timedelta, to_train_path_node_id: int):
         self.__from_train_path_node_id = from_train_path_node_id
         self.__possession_id = possession_id
         self.__required_running_time_penalty = required_running_time_penalty

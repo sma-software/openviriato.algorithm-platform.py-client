@@ -1,4 +1,3 @@
-import datetime
 import unittest
 from unittest import mock
 from py_client.algorithm_interface import algorithm_interface_factory
@@ -6,6 +5,7 @@ import py_client.algorithm_interface_test.test_helper.SessionMockFactory as Sess
 from py_client.algorithm_interface_test.test_helper.SessionMockTestBase import get_api_url, SessionMockTestBase
 from py_client.aidm.aidm_conflict import ConflictDetectionArguments, AlgorithmSectionTrackConflict, _AlgorithmOneTrainSectionTrackConflict, ConflictType
 from py_client.aidm.aidm_time_window_classes import TimeWindow
+from datetime import datetime
 
 
 class TestDetectConflicts(unittest.TestCase):
@@ -70,9 +70,9 @@ class TestDetectConflicts(unittest.TestCase):
 
         self.assertIsInstance(list_of_algorithm_conflicts[0].time_window, TimeWindow)
 
-        self.assertEqual(list_of_algorithm_conflicts[0].time_window.from_time, datetime.datetime(day=1, month=5, year=2005, hour=4, minute=0, second=0))
+        self.assertEqual(list_of_algorithm_conflicts[0].time_window.from_time, datetime(day=1, month=5, year=2005, hour=4, minute=0, second=0))
 
-        self.assertEqual(list_of_algorithm_conflicts[0].time_window.to_time, datetime.datetime(day=1, month=5, year=2005, hour=4, minute=4, second=0))
+        self.assertEqual(list_of_algorithm_conflicts[0].time_window.to_time, datetime(day=1, month=5, year=2005, hour=4, minute=4, second=0))
 
         self.assertEqual(list_of_algorithm_conflicts[0].section_track_id, 723)
 

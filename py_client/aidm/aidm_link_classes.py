@@ -1,4 +1,4 @@
-import datetime
+from datetime import timedelta
 from enum import Enum, unique
 from typing import Optional
 
@@ -67,8 +67,8 @@ class _AlgorithmLink(_HasDebugString, _HasID):
 
 
 class AlgorithmConnectionLink(_AlgorithmLink, _HasID):
-    __minimum_duration: datetime.timedelta
-    __maximum_deviation: Optional[datetime.timedelta]
+    __minimum_duration: timedelta
+    __maximum_deviation: Optional[timedelta]
     __weight: Optional[int]
 
     def __init__(
@@ -80,8 +80,8 @@ class AlgorithmConnectionLink(_AlgorithmLink, _HasID):
         to_node_id: int,
         to_train_id: int,
         to_train_path_node_id: int,
-        minimum_duration: datetime.timedelta,
-        maximum_deviation: Optional[datetime.timedelta],
+        minimum_duration: timedelta,
+        maximum_deviation: Optional[timedelta],
         weight: Optional[int],
         id: int,
     ):
@@ -92,11 +92,11 @@ class AlgorithmConnectionLink(_AlgorithmLink, _HasID):
         self.__weight = weight
 
     @property
-    def minimum_duration(self) -> datetime.timedelta:
+    def minimum_duration(self) -> timedelta:
         return self.__minimum_duration
 
     @property
-    def maximum_deviation(self) -> Optional[datetime.timedelta]:
+    def maximum_deviation(self) -> Optional[timedelta]:
         return self.__maximum_deviation
 
     @property
@@ -105,7 +105,7 @@ class AlgorithmConnectionLink(_AlgorithmLink, _HasID):
 
 
 class AlgorithmAwaitArrivalLink(_AlgorithmLink, _HasID):
-    __minimum_duration: datetime.timedelta
+    __minimum_duration: timedelta
 
     def __init__(
         self,
@@ -116,14 +116,14 @@ class AlgorithmAwaitArrivalLink(_AlgorithmLink, _HasID):
         to_node_id: int,
         to_train_id: int,
         to_train_path_node_id: int,
-        minimum_duration: datetime.timedelta,
+        minimum_duration: timedelta,
         id: int,
     ):
         _AlgorithmLink.__init__(self, debug_string, from_node_id, from_train_id, from_train_path_node_id, to_node_id, to_train_id, to_train_path_node_id, id)
         self.__minimum_duration = minimum_duration
 
     @property
-    def minimum_duration(self) -> datetime.timedelta:
+    def minimum_duration(self) -> timedelta:
         return self.__minimum_duration
 
 

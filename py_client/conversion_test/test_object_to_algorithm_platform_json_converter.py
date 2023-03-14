@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime, timedelta
 import json
 import unittest
 
@@ -14,10 +14,10 @@ class TestFromAIDMConverter(unittest.TestCase):
             node_id=18,
             node_track_id=None,
             formation_id=1187,
-            arrival_time=datetime.datetime(year=1, month=5, day=1, hour=1, minute=1),
-            departure_time=datetime.datetime(year=1, month=5, day=1, hour=1, minute=1),
+            arrival_time=datetime(year=1, month=5, day=1, hour=1, minute=1),
+            departure_time=datetime(year=1, month=5, day=1, hour=1, minute=1),
             minimum_run_time=None,
-            minimum_stop_time=datetime.timedelta(0),
+            minimum_stop_time=timedelta(0),
             stop_status=StopStatus.operational_stop,
             sequence_number=0,
             movement_type_id=None,
@@ -37,10 +37,10 @@ class TestFromAIDMConverter(unittest.TestCase):
             node_id=18,
             node_track_id=None,
             formation_id=1187,
-            arrival_time=datetime.datetime(year=1, month=5, day=1, hour=1, minute=1),
-            departure_time=datetime.datetime(year=1, month=5, day=1, hour=1, minute=1),
+            arrival_time=datetime(year=1, month=5, day=1, hour=1, minute=1),
+            departure_time=datetime(year=1, month=5, day=1, hour=1, minute=1),
             minimum_run_time=None,
-            minimum_stop_time=datetime.timedelta(0),
+            minimum_stop_time=timedelta(0),
             stop_status=StopStatus.passing,
             sequence_number=0,
             movement_type_id=None,

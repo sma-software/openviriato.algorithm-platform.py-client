@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime, timedelta
 import unittest
 from unittest import mock
 
@@ -62,10 +62,10 @@ class TestUpdateTrajectory(unittest.TestCase):
         train_id = 2060
         update_train_stop_time_node = UpdateStopTimesTrainPathNode(
             train_path_node_id=1332,
-            arrival_time=datetime.datetime(2003, 5, 1, 0, 4),
-            departure_time=datetime.datetime(2003, 5, 1, 0, 5),
+            arrival_time=datetime(2003, 5, 1, 0, 4),
+            departure_time=datetime(2003, 5, 1, 0, 5),
             stop_status=StopStatus.operational_stop,
-            minimum_stop_time=datetime.timedelta(seconds=30),
+            minimum_stop_time=timedelta(seconds=30),
         )
 
         self.interface_to_viriato.update_train_trajectory_stop_times(train_id, update_train_stop_time_node)
@@ -88,10 +88,10 @@ class TestUpdateTrajectory(unittest.TestCase):
         train_id = 2060
         update_train_stop_time_node = UpdateStopTimesTrainPathNode(
             train_path_node_id=1332,
-            arrival_time=datetime.datetime(2003, 5, 1, 0, 4),
-            departure_time=datetime.datetime(2003, 5, 1, 0, 5),
+            arrival_time=datetime(2003, 5, 1, 0, 4),
+            departure_time=datetime(2003, 5, 1, 0, 5),
             stop_status=StopStatus.operational_stop,
-            minimum_stop_time=datetime.timedelta(seconds=30),
+            minimum_stop_time=timedelta(seconds=30),
         )
 
         updated_algorithm_train = self.interface_to_viriato.update_train_trajectory_stop_times(train_id, update_train_stop_time_node)
@@ -106,10 +106,10 @@ class TestUpdateTrajectory(unittest.TestCase):
         self.assertEqual(updated_algorithm_train.train_path_nodes[0].section_track_id, None)
         self.assertEqual(updated_algorithm_train.train_path_nodes[0].node_track_id, None)
         self.assertEqual(updated_algorithm_train.train_path_nodes[0].formation_id, 1187)
-        self.assertEqual(updated_algorithm_train.train_path_nodes[0].arrival_time, datetime.datetime(2003, 5, 1, 0, 4))
-        self.assertEqual(updated_algorithm_train.train_path_nodes[0].departure_time, datetime.datetime(2003, 5, 1, 0, 5, 30))
+        self.assertEqual(updated_algorithm_train.train_path_nodes[0].arrival_time, datetime(2003, 5, 1, 0, 4))
+        self.assertEqual(updated_algorithm_train.train_path_nodes[0].departure_time, datetime(2003, 5, 1, 0, 5, 30))
         self.assertEqual(updated_algorithm_train.train_path_nodes[0].minimum_run_time, None)
-        self.assertEqual(updated_algorithm_train.train_path_nodes[0].minimum_stop_time, datetime.timedelta(0))
+        self.assertEqual(updated_algorithm_train.train_path_nodes[0].minimum_stop_time, timedelta(0))
         self.assertEqual(updated_algorithm_train.train_path_nodes[0].stop_status, StopStatus.operational_stop)
 
     @mock.patch("requests.Session", side_effect=UpdateTrajectoryTestMockSession)
@@ -117,9 +117,9 @@ class TestUpdateTrajectory(unittest.TestCase):
         train_id = 20610
         update_train_path_segment = UpdateRunTimesTrainPathSegment(
             to_train_path_node_id=1332,
-            to_node_arrival_time=datetime.datetime(2003, 5, 1, 0, 4),
-            from_node_departure_time=datetime.datetime(2003, 5, 1, 0, 5),
-            minimum_run_time=datetime.timedelta(seconds=120),
+            to_node_arrival_time=datetime(2003, 5, 1, 0, 4),
+            from_node_departure_time=datetime(2003, 5, 1, 0, 5),
+            minimum_run_time=timedelta(seconds=120),
         )
 
         self.interface_to_viriato.update_train_trajectory_run_times(train_id, update_train_path_segment)
@@ -136,8 +136,8 @@ class TestUpdateTrajectory(unittest.TestCase):
         train_id = 2062
         update_train_path_segment = UpdateRunTimesTrainPathSegment(
             to_train_path_node_id=1332,
-            to_node_arrival_time=datetime.datetime(2003, 5, 1, 0, 4),
-            from_node_departure_time=datetime.datetime(2003, 5, 1, 0, 5),
+            to_node_arrival_time=datetime(2003, 5, 1, 0, 4),
+            from_node_departure_time=datetime(2003, 5, 1, 0, 5),
             minimum_run_time=None,
         )
 
@@ -155,8 +155,8 @@ class TestUpdateTrajectory(unittest.TestCase):
         train_id = 2060
         update_train_path_segment = UpdateRunTimesTrainPathSegment(
             to_train_path_node_id=1332,
-            to_node_arrival_time=datetime.datetime(2003, 5, 1, 0, 4),
-            from_node_departure_time=datetime.datetime(2003, 5, 1, 0, 5),
+            to_node_arrival_time=datetime(2003, 5, 1, 0, 4),
+            from_node_departure_time=datetime(2003, 5, 1, 0, 5),
             minimum_run_time=None,
         )
 
@@ -172,10 +172,10 @@ class TestUpdateTrajectory(unittest.TestCase):
         self.assertEqual(updated_algorithm_train.train_path_nodes[0].section_track_id, None)
         self.assertEqual(updated_algorithm_train.train_path_nodes[0].node_track_id, None)
         self.assertEqual(updated_algorithm_train.train_path_nodes[0].formation_id, 1187)
-        self.assertEqual(updated_algorithm_train.train_path_nodes[0].arrival_time, datetime.datetime(2003, 5, 1, 0, 4))
-        self.assertEqual(updated_algorithm_train.train_path_nodes[0].departure_time, datetime.datetime(2003, 5, 1, 0, 5, 30))
+        self.assertEqual(updated_algorithm_train.train_path_nodes[0].arrival_time, datetime(2003, 5, 1, 0, 4))
+        self.assertEqual(updated_algorithm_train.train_path_nodes[0].departure_time, datetime(2003, 5, 1, 0, 5, 30))
         self.assertEqual(updated_algorithm_train.train_path_nodes[0].minimum_run_time, None)
-        self.assertEqual(updated_algorithm_train.train_path_nodes[0].minimum_stop_time, datetime.timedelta(0))
+        self.assertEqual(updated_algorithm_train.train_path_nodes[0].minimum_stop_time, timedelta(0))
         self.assertEqual(updated_algorithm_train.train_path_nodes[0].stop_status, StopStatus.operational_stop)
 
     @mock.patch("requests.Session", side_effect=UpdateTrajectoryTestMockSession)

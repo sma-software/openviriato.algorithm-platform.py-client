@@ -71,7 +71,8 @@ class DispatcherFactory:
         if simulation_event_one is None or simulation_event_two is None:
             return None
 
-        tpns_by_node_ids_of_second_train = {tpn.node_id: tpn for tpn in train_one.train_path_nodes}
+        # we exploit here that no node is visited twice by any train
+        tpns_by_node_ids_of_second_train = {tpn.node_id: tpn for tpn in train_two.train_path_nodes}
 
         for tpn_first_train in train_one.train_path_nodes:
             if tpn_first_train.node_id in tpns_by_node_ids_of_second_train:

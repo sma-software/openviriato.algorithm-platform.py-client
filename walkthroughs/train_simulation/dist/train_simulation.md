@@ -2,7 +2,7 @@
 This walkthrough demonstrates how the Viriato train simulation can be used and how to implement an own dispatching strategy.
 
 To have a good understanding of this walkthrough, it is recommended that
-* you are familiar with the concepts presented in [Walkthrough Creating an Algorithm Using the py_client](../../../py_client/walkthroughs/py_client_usage/dist/py_client_usage.md).
+* you are familiar with the concepts presented in [Walkthrough Creating an Algorithm Using the py_client](../../py_client_usage/dist/py_client_usage.md).
 * have read the article from Chapter _Train Simulation_ in the documentation provided with the Algorithm Research SDK.
 
 ## Overview
@@ -60,12 +60,12 @@ algorithm_interface.create_train_simulation(time_window)
 ```
 Code listing: _Starting a simulation in a given time window_. ([Lines: 12 - 13 from file: _train_simulation_example_runner.py_](../../../walkthroughs/train_simulation/py/train_simulation_example_runner.py#L12-L13)).
 
-We can retrieve the first executable [AlgorithmTrainSimulationEvent](../../../py_client/algorithm_interface/aidm/aidm_train_simulation_classes.py) from the Algorithm Interface by using the method 
+We can retrieve the first executable [AlgorithmTrainSimulationEvent](../../../py_client/aidm/aidm_train_simulation_classes.py) from the Algorithm Interface by using the method 
 [get_next_train_simulation_event(...)](../../../py_client/algorithm_interface/algorithm_interface.py#L644-L644). 
 
 For each event we retrieve a [dispatcher](#Dispatchers) has to decide if they want to realise it using [realize_next_train_simulation_event(...)](../../../py_client/algorithm_interface/algorithm_interface.py#L649-L649)
 or to postpone it using [postpone_next_train_simulation_event(...)](../../../py_client/algorithm_interface/algorithm_interface.py#L689-L689). After making the decision we will be provided the next executable event, 
-which is an instance of the type [AlgorithmTrainSimulationRealizationForecast](../../../py_client/algorithm_interface/aidm/aidm_train_simulation_classes.py). The objects of this class contain also all events that had to be postponed by the simulator in order to avoid conflicts. Finally, 
+which is an instance of the type [AlgorithmTrainSimulationRealizationForecast](../../../py_client/aidm/aidm_train_simulation_classes.py). The objects of this class contain also all events that had to be postponed by the simulator in order to avoid conflicts. Finally, 
 after all events have been realised the simulation terminates.
 
 ```python

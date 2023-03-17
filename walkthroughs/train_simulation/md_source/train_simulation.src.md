@@ -2,7 +2,7 @@
 This walkthrough demonstrates how the Viriato train simulation can be used and how to implement an own dispatching strategy.
 
 To have a good understanding of this walkthrough, it is recommended that
-* you are familiar with the concepts presented in [Walkthrough Creating an Algorithm Using the py_client](@py_client_root/walkthroughs/py_client_usage/dist/py_client_usage.md).
+* you are familiar with the concepts presented in [Walkthrough Creating an Algorithm Using the py_client](../../py_client_usage/dist/py_client_usage.md).
 * have read the article from Chapter _Train Simulation_ in the documentation provided with the Algorithm Research SDK.
 
 ## Overview
@@ -55,12 +55,12 @@ or one passing event is created for the simulation.
 
 @Import(walkthroughs/train_simulation/py/train_simulation_example_runner.py,start_simulation,Starting a simulation in a given time window)
 
-We can retrieve the first executable [AlgorithmTrainSimulationEvent](@py_client_root/algorithm_interface/aidm/aidm_train_simulation_classes.py) from the Algorithm Interface by using the method 
+We can retrieve the first executable [AlgorithmTrainSimulationEvent](@py_client_root/aidm/aidm_train_simulation_classes.py) from the Algorithm Interface by using the method 
 @ImportInlineShort(py_client/algorithm_interface/algorithm_interface.py,get_next_train_simulation_event). 
 
 For each event we retrieve a [dispatcher](#Dispatchers) has to decide if they want to realise it using @ImportInlineShort(py_client/algorithm_interface/algorithm_interface.py,realize_next_train_simulation_event)
 or to postpone it using @ImportInlineShort(py_client/algorithm_interface/algorithm_interface.py,postpone_next_train_simulation_event). After making the decision we will be provided the next executable event, 
-which is an instance of the type [AlgorithmTrainSimulationRealizationForecast](@py_client_root/algorithm_interface/aidm/aidm_train_simulation_classes.py). The objects of this class contain also all events that had to be postponed by the simulator in order to avoid conflicts. Finally, 
+which is an instance of the type [AlgorithmTrainSimulationRealizationForecast](@py_client_root/aidm/aidm_train_simulation_classes.py). The objects of this class contain also all events that had to be postponed by the simulator in order to avoid conflicts. Finally, 
 after all events have been realised the simulation terminates.
 
 @Import(walkthroughs/train_simulation/py/train_simulation_example_runner.py,main_loop_controlling_simulation,Main loop to control the simulation)

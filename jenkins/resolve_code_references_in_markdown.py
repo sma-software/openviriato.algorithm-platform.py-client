@@ -17,6 +17,7 @@ PY_CLIENT_ROOT_SYMBOLIC_PATH_TAG = "@py_client_root"
 PY_SOURCE_SYMBOLIC_PATH_TAG = "@py_source"
 CONFIG_SYMBOLIC_PATH_TAG = "@config"
 IMAGES_SYMBOLIC_PATH_TAG = "@images"
+WALKTHROUGHS_SYMBOLIC_PATH_TAG = "@walkthroughs"
 
 OFFSET_FOR_GIT_HUB = 1
 README_FILE_NAME = "README.md"
@@ -348,6 +349,10 @@ def _translate_symbolic_path_to_relative_path(line: str) -> str:
     if IMAGES_SYMBOLIC_PATH_TAG in current_state_of_line_to_process:
         sub_path_replacing_symbolic_tag = "/".join((path_back_to_current_walkthrough_sub_dir, IMAGES_DIR))
         current_state_of_line_to_process = current_state_of_line_to_process.replace(IMAGES_SYMBOLIC_PATH_TAG, sub_path_replacing_symbolic_tag)
+    if WALKTHROUGHS_SYMBOLIC_PATH_TAG in current_state_of_line_to_process:
+        path_back_to_walkthrough_roots_from_current_walkthrough_sub_dir = ".."
+        sub_path_replacing_symbolic_tag = "/".join((path_back_to_current_walkthrough_sub_dir, path_back_to_walkthrough_roots_from_current_walkthrough_sub_dir))
+        current_state_of_line_to_process = current_state_of_line_to_process.replace(WALKTHROUGHS_SYMBOLIC_PATH_TAG, sub_path_replacing_symbolic_tag)
     return current_state_of_line_to_process
 
 

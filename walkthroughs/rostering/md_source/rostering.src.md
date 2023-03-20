@@ -3,7 +3,7 @@
 The goal of this walkthrough is to present to the algorithm developer all building blocks that they need in order to provide an algorithm for roster optimisation using the Algorithm Platform. 
 
 If you are not familiar with the creation of algorithms with the Viriato interface, we recommend following first the
-[Walkthrough Creating an Algorithm Using the py_client](../../py_client_usage/dist/py_client_usage.md).
+[Walkthrough Creating an Algorithm Using the py_client](@walkthroughs/py_client_usage/dist/py_client_usage.md).
 
 **Overview**
 

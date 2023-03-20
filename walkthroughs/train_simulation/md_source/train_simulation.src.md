@@ -2,7 +2,7 @@
 This walkthrough demonstrates how the Viriato train simulation can be used and how to implement an own dispatching strategy.
 
 To have a good understanding of this walkthrough, it is recommended that
-* you are familiar with the concepts presented in [Walkthrough Creating an Algorithm Using the py_client](../../py_client_usage/dist/py_client_usage.md).
+* you are familiar with the concepts presented in [Walkthrough Creating an Algorithm Using the py_client](@walkthroughs/py_client_usage/dist/py_client_usage.md).
 * have read the article from Chapter _Train Simulation_ in the documentation provided with the Algorithm Research SDK.
 
 ## Overview

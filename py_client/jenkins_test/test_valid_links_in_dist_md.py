@@ -22,9 +22,10 @@ class TestValidLinksInDistMd(unittest.TestCase):
             path, _ = os.path.split(output_md_file_to_test)
             text = WalkthroughTestHelper._get_text_from_content(output_md_file_to_test)
 
-            dictionary_of_link_url_by_line_number = WalkthroughTestHelper._compute_dictionary_of_link_url_by_line_number(path, text)
+            dictionary_of_link_url_by_line_number = WalkthroughTestHelper._compute_dictionary_of_link_url_by_line_number(text)
             for link_url, line_number in dictionary_of_link_url_by_line_number.items():
-                self._assert_path_exists(text, link_url, line_number, output_md_file_to_test)
+                link_to_referenced_file = "/".join((path, link_url))
+                self._assert_path_exists(text, link_to_referenced_file, line_number, output_md_file_to_test)
 
     def _assert_path_exists(self, text: List[str], link_url: str, line_number: int, output_md_files_to_test: str) -> None:
         fail_message = "link_url '{}' (relative from dist) referenced in file {} (relative from script) does not exist. Line {}: '{}'".format(

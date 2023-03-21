@@ -31,12 +31,10 @@ class WalkthroughTestHelper:
         return path_to_py_client_repo_root
 
     @classmethod
-    def _compute_dictionary_of_link_url_by_line_number(cls, path_to_walkthrough: str, text: List[str]) -> Dict[str, int]:
+    def _compute_dictionary_of_link_url_by_line_number(cls, src_md_file_contents: List[str]) -> Dict[str, int]:
         dictionary_of_link_by_line_number = dict()
-        for line_number, line in enumerate(text):
+        for line_number, line in enumerate(src_md_file_contents):
             link_urls_found = cls._extract_urls_from_line(line)
             for link_url in link_urls_found:
-                link_to_referenced_file = "/".join((path_to_walkthrough, link_url))
-                dictionary_of_link_by_line_number[link_to_referenced_file] = line_number
+                dictionary_of_link_by_line_number[link_url] = line_number
         return dictionary_of_link_by_line_number
-    

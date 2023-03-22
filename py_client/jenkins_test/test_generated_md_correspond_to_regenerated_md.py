@@ -34,8 +34,8 @@ class TestGeneratedMdCorrespondToRegeneratedMd(unittest.TestCase):
             expected_md_file = TestGeneratedMdCorrespondToRegeneratedMd._retrieve_regenerated_md_from_src_md(source_md_file_to_test)
             actual_md_file = TestGeneratedMdCorrespondToRegeneratedMd._retrieve_actual_md_file_name_from_src_md_file_name(source_md_file_to_test)
 
-            expected_lines = WalkthroughTestHelper._get_text_from_content(expected_md_file)
-            actual_lines = WalkthroughTestHelper._get_text_from_content(actual_md_file)
+            expected_lines = WalkthroughTestHelper._get_file_contents(expected_md_file)
+            actual_lines = WalkthroughTestHelper._get_file_contents(actual_md_file)
 
             for expected_line, actual_line, current_line_mumber in zip(expected_lines, actual_lines, range(1, len(expected_lines) + 1)):
                 self.assertEqual(

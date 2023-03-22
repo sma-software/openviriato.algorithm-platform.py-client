@@ -5,7 +5,7 @@ from typing import List, Dict
 
 class WalkthroughTestHelper:
     @classmethod
-    def _get_text_from_content(cls, filename: str) -> List[str]:
+    def _get_file_contents(cls, filename: str) -> List[str]:
         with open(filename) as file:
             return file.readlines()
 
@@ -31,7 +31,7 @@ class WalkthroughTestHelper:
         return path_to_py_client_repo_root
 
     @classmethod
-    def _compute_dictionary_of_link_url_by_line_number(cls, src_md_file_contents: List[str]) -> Dict[str, int]:
+    def _compute_link_url_by_line_number_dict(cls, src_md_file_contents: List[str]) -> Dict[str, int]:
         dictionary_of_link_by_line_number = dict()
         for line_number, line in enumerate(src_md_file_contents):
             link_urls_found = cls._extract_urls_from_line(line)

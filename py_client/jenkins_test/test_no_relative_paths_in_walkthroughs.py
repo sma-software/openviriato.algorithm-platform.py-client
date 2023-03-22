@@ -18,11 +18,11 @@ class TestNoRelativePathsInWalkthroughs(unittest.TestCase):
 
     def test_links_are_not_relative(self):
         for source_md_file_to_test in self.source_md_files_to_test:
-            text = WalkthroughTestHelper._get_text_from_content(source_md_file_to_test)
+            file_contents = WalkthroughTestHelper._get_file_contents(source_md_file_to_test)
 
-            dictionary_of_link_url_by_line_number = WalkthroughTestHelper._compute_dictionary_of_link_url_by_line_number(text)
+            dictionary_of_link_url_by_line_number = WalkthroughTestHelper._compute_link_url_by_line_number_dict(file_contents)
             for link_url, line_number in dictionary_of_link_url_by_line_number.items():
-                self._assert_path_is_not_relative(text, link_url, line_number, source_md_file_to_test)
+                self._assert_path_is_not_relative(file_contents, link_url, line_number, source_md_file_to_test)
 
     def _assert_path_is_not_relative(self, text: List[str], link_url_from_source_md: str, line_number: int, output_md_files_to_test: str) -> None:
         fail_message = "link_url '{}' referenced in file {} (relative from script) should use a tag. Line {}: '{}'".format(

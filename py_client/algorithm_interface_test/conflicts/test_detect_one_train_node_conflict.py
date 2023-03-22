@@ -96,6 +96,16 @@ class TestDetectConflicts(unittest.TestCase):
                 '       "nodeId": 847, \n'
                 '       "trainId": 321, \n'
                 '       "trainPathNodeId": 654 \n'
+                "   }, \n"
+                "   { \n"
+                '       "conflictType": "forbiddenStationTrack", \n'
+                '       "timeWindow": { \n'
+                '           "fromTime": "2023-03-22T13:26:10", \n'
+                '           "toTime": "2023-03-22T13:42:00" \n'
+                "       }, \n"
+                '       "nodeId": 968, \n'
+                '       "trainId": 1554, \n'
+                '       "trainPathNodeId": 859 \n'
                 "   } \n"
                 "]"
             )
@@ -225,6 +235,11 @@ class TestDetectConflicts(unittest.TestCase):
         self.assertIsInstance(list_of_algorithm_conflicts[7], _AlgorithmOneTrainNodeConflict)
         self.assertIsInstance(list_of_algorithm_conflicts[7].conflict_type, ConflictType)
         self.assertEqual(list_of_algorithm_conflicts[7].conflict_type, ConflictType.PlatformLength)
+
+        self.assertIsInstance(list_of_algorithm_conflicts[8], AlgorithmNodeConflict)
+        self.assertIsInstance(list_of_algorithm_conflicts[8], _AlgorithmOneTrainNodeConflict)
+        self.assertIsInstance(list_of_algorithm_conflicts[8].conflict_type, ConflictType)
+        self.assertEqual(list_of_algorithm_conflicts[8].conflict_type, ConflictType.ForbiddenStationTrack)
 
     @mock.patch("requests.Session", side_effect=DetectConflictsMockSession)
     def tearDown(self, mocked_get_obj) -> None:

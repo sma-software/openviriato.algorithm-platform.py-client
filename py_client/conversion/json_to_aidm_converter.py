@@ -238,6 +238,7 @@ class ConflictTypeMappingLookup:
         self.__lookup[ConflictType.StationTrackLength] = _AlgorithmOneTrainNodeConflict
         self.__lookup[ConflictType.PlatformLength] = _AlgorithmOneTrainNodeConflict
         self.__lookup[ConflictType.LevelTrackCrossingTime] = _AlgorithmTwoTrainsNodeConflict
+        self.__lookup[ConflictType.ForbiddenStationTrack] = _AlgorithmOneTrainNodeConflict
 
     def get_conflict_type_mapping(self, enum_conflict_type: ConflictType) -> Type[AlgorithmConflict]:
         return self.__lookup[enum_conflict_type]

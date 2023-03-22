@@ -27,6 +27,7 @@ class ConflictType(Enum):
     StationTrackLength = "stationTrackLength"
     PlatformLength = "platformLength"
     LevelTrackCrossingTime = "levelTrackCrossingTime"
+    ForbiddenStationTrack = "forbiddenStationTrack"
 
 
 @unique

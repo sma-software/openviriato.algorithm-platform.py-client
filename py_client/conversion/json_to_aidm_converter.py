@@ -143,7 +143,7 @@ class GeneralAidmObjectProcessor(_ABCJsonToAidmDictProcessor):
             return targeted_type(**snake_case_attribute_dict)
         except TypeError as e:
             raise AlgorithmPlatformConversionError(
-                "Could not populate AIDM object, AIDM class {} is unknown, " + "has unexpected attributes or is missing attributes.".format(targeted_type), e
+                ("Could not populate AIDM object, AIDM class {} is unknown, has unexpected attributes or is missing attributes.").format(targeted_type), e
             )
 
     @staticmethod

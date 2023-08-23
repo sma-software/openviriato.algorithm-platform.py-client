@@ -1,5 +1,5 @@
 from enum import Enum, unique
-from typing import List
+from typing import List, Optional
 from datetime import datetime, timedelta
 
 from py_client.aidm.aidm_base_classes import _HasID
@@ -13,33 +13,46 @@ class AlgorithmTrainSimulationEventType(Enum):
 
 
 class AlgorithmTrainSimulationEvent(_HasID):
-    __algorithm_train_id: int
+    # TODO VPLAT-10975: make mandatory if respective issue is fixed
+    __algorithm_train_id: Optional[int]
     __algorithm_train_path_node_id: int
+    __algorithm_train_path_node_sequence_number: int
     __forecast_delay: timedelta
     __forecast_time: datetime
     __node_id: int
     __planned_time: datetime
     __type: AlgorithmTrainSimulationEventType
+    __from_section_track_id: Optional[int]
+    __node_track_id: Optional[int]
+    __to_section_track_id: Optional[int]
 
     def __init__(
         self,
         id: int,
-        algorithm_train_id: int,
         algorithm_train_path_node_id: int,
         forecast_delay: timedelta,
         forecast_time: datetime,
         node_id: int,
         planned_time: datetime,
         type: AlgorithmTrainSimulationEventType,
+        algorithm_train_path_node_sequence_number: int,
+        algorithm_train_id: Optional[int] = None,
+        from_section_track_id: Optional[int] = None,
+        node_track_id: Optional[int] = None,
+        to_section_track_id: Optional[int] = None,
     ):
         _HasID.__init__(self, id)
         self.__algorithm_train_id = algorithm_train_id
         self.__algorithm_train_path_node_id = algorithm_train_path_node_id
+        self.__algorithm_train_path_node_sequence_number = algorithm_train_path_node_sequence_number
         self.__forecast_delay = forecast_delay
         self.__forecast_time = forecast_time
         self.__node_id = node_id
         self.__planned_time = planned_time
         self.__type = type
+        self.__from_section_track_id = from_section_track_id
+        self.__node_track_id = node_track_id
+        self.__to_section_track_id = to_section_track_id
 
     @property
     def algorithm_train_id(self) -> int:
@@ -68,6 +81,50 @@ class AlgorithmTrainSimulationEvent(_HasID):
     @property
     def type(self) -> AlgorithmTrainSimulationEventType:
         return self.__type
+
+    @property
+    def from_section_track_id(self):
+        return self.__from_section_track_id
+
+    @property
+    def node_track_id(self):
+        return self.__node_track_id
+
+    @property
+    def to_section_track_id(self):
+        return self.__to_section_track_id
+
+    @property
+    def algorithm_train_path_node_sequence_number(self):
+        return self.__algorithm_train_path_node_sequence_number
+
+
+class AlgorithmTrainSimulationTrain:
+    __algorithm_train_id: int
+    __next_event_id: Optional[int]
+    __events: List[AlgorithmTrainSimulationEvent]
+
+    def __init__(
+        self,
+        algorithm_train_id: int,
+        events: List[AlgorithmTrainSimulationEvent],
+        next_event_id: Optional[int],
+    ):
+        self.__algorithm_train_id = algorithm_train_id
+        self.__events = events
+        self.__next_event_id = next_event_id
+
+    @property
+    def algorithm_train_id(self):
+        return self.__algorithm_train_id
+
+    @property
+    def events(self):
+        return self.__events
+
+    @property
+    def next_event_id(self):
+        return self.__next_event_id
 
 
 class AlgorithmTrainSimulationUnrealizableEvent:

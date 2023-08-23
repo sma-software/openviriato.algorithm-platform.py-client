@@ -24,18 +24,18 @@ class TestGetTrainSimulationEventsEmpty(unittest.TestCase):
         self.interface_to_viriato = algorithm_interface_factory.create(get_api_url())
 
     @mock.patch("requests.Session", side_effect=GetTrainSimulationEventsMockSession)
-    def test_get_train_simulation_events(self, mocked_get_obj):
+    def test_get_train_simulation_trains(self, mocked_get_obj):
 
-        self.interface_to_viriato.get_train_simulation_events()
+        self.interface_to_viriato.get_train_simulation_trains()
 
         session_obj = self.interface_to_viriato._AlgorithmInterface__communication_layer.currentSession
-        self.assertEqual(session_obj._GetTrainSimulationEventsMockSession__last_request, get_api_url() + "/services/trains/simulations/events")
+        self.assertEqual(session_obj._GetTrainSimulationEventsMockSession__last_request, get_api_url() + "/services/trains/simulations/trains")
         self.assertDictEqual(session_obj._GetTrainSimulationEventsMockSession__last_body, dict())
 
     @mock.patch("requests.Session", side_effect=GetTrainSimulationEventsMockSession)
-    def test_get_train_simulation_events_response(self, mocked_get_obj):
+    def test_get_train_simulation_trains_response(self, mocked_get_obj):
 
-        response = self.interface_to_viriato.get_train_simulation_events()
+        response = self.interface_to_viriato.get_train_simulation_trains()
 
         self.assertIsInstance(response, list)
         self.assertListEqual(response, [])

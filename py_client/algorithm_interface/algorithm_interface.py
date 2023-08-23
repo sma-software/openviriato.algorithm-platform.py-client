@@ -40,7 +40,7 @@ from py_client.aidm import (
     AlgorithmNodeTrackClosure,
     AlgorithmSectionTrackClosure,
     AlgorithmSectionRunningTimePenalty,
-    AlgorithmTrainSimulationEvent,
+    AlgorithmTrainSimulationTrain,
     AlgorithmMovementType,
     AlgorithmUnplannedStopPenalties,
     RunningTimePenaltyOnTrainPath,
@@ -636,10 +636,10 @@ class AlgorithmInterface:
         url_to_resource = "services/trains/simulations"
         self.__communication_layer.do_put_request(url_to_resource, query_parameters)
 
-    def get_train_simulation_events(self) -> List[AlgorithmTrainSimulationEvent]:
-        url_to_resource = "services/trains/simulations/events"
+    def get_train_simulation_trains(self) -> List[AlgorithmTrainSimulationTrain]:
+        url_to_resource = "services/trains/simulations/trains"
         response_list_of_dict = self.__communication_layer.do_get_request_without_body(url_to_resource)
-        return JsonToAidmConverter().process_json_to_aidm(response_list_of_dict, List[AlgorithmTrainSimulationEvent])
+        return JsonToAidmConverter().process_json_to_aidm(response_list_of_dict, List[AlgorithmTrainSimulationTrain])
 
     def get_next_train_simulation_event(self) -> AlgorithmTrainSimulationRealizationForecast:
         url_to_resource = "services/trains/simulations/events/next"

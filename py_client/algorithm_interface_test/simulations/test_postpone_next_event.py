@@ -27,8 +27,12 @@ class TestPostponeNextEvent(unittest.TestCase):
                 '        "forecastDelay": "PT1M", \n'
                 '        "forecastTime": "2003-05-05T07:35:00", \n'
                 '        "nodeId": 282, \n'
+                '        "fromSectionTrackId": 922, \n'
+                '        "nodeTrackId": null, \n'
+                '        "toSectionTrackId": null, \n'
                 '        "algorithmTrainId": 1303, \n'
-                '        "algorithmTrainPathNodeId": 1301 \n'
+                '        "algorithmTrainPathNodeId": 1301, \n'
+                '        "algorithmTrainPathNodeSequenceNumber": 1 \n'
                 "    }, \n"
                 '    "unrealizableEvents": [] \n'
                 "}"

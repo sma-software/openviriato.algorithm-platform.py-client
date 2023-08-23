@@ -28,8 +28,12 @@ class TestPostRealizeNextTrainSimulationEvent(unittest.TestCase):
                 '       "forecastTime": "2003-05-05T07:31:12", \n'
                 '       "forecastDelay": "PT12S", \n'
                 '       "nodeId": 282, \n'
+                '       "fromSectionTrackId": null, \n'
+                '       "nodeTrackId": 323, \n'
+                '       "toSectionTrackId": 922, \n'
                 '       "algorithmTrainId": 1303, \n'
-                '       "algorithmTrainPathNodeId": 1301 \n'
+                '       "algorithmTrainPathNodeId": 1301, \n'
+                '       "algorithmTrainPathNodeSequenceNumber": 0 \n'
                 "    }, \n "
                 '    "unrealizableEvents": []'
                 " } "
@@ -45,7 +49,6 @@ class TestPostRealizeNextTrainSimulationEvent(unittest.TestCase):
 
     @mock.patch("requests.Session", side_effect=PostRealizeNextTrainSimulationEventMockSession)
     def test_get_train_simulation_trains(self, mocked_get_obj):
-
         self.interface_to_viriato.realize_next_train_simulation_event()
 
         session_obj = self.interface_to_viriato._AlgorithmInterface__communication_layer.currentSession
@@ -56,7 +59,6 @@ class TestPostRealizeNextTrainSimulationEvent(unittest.TestCase):
 
     @mock.patch("requests.Session", side_effect=PostRealizeNextTrainSimulationEventMockSession)
     def test_get_train_simulation_trains_response(self, mocked_get_obj):
-
         response = self.interface_to_viriato.realize_next_train_simulation_event()
 
         self.assertIsInstance(response, AlgorithmTrainSimulationRealizationForecast)

@@ -21,14 +21,18 @@ class TestReplaceNextTrainSimulationEventByStop(unittest.TestCase):
             json_string = (
                 "{ \n"
                 '    "nextRealizableEvent": { \n'
-                '        "id": 2000006, \n'
-                '        "type": "arrival", \n'
+                '       "id": 2000006, \n'
+                '       "type": "arrival", \n'
                 '       "plannedTime": "2003-05-05T07:05:00", \n'
-                '        "forecastTime": "2003-05-05T07:05:42", \n'
+                '       "forecastTime": "2003-05-05T07:05:42", \n'
                 '       "forecastDelay": "PT42S", \n'
                 '       "nodeId": 282, \n'
+                '       "fromSectionTrackId": null, \n'
+                '       "nodeTrackId": 323, \n'
+                '       "toSectionTrackId": 922, \n'
                 '       "algorithmTrainId": 1303, \n'
-                '       "algorithmTrainPathNodeId": 1301 \n'
+                '       "algorithmTrainPathNodeId": 1301, \n'
+                '       "algorithmTrainPathNodeSequenceNumber": 0 \n'
                 "    }, \n"
                 '    "unrealizableEvents": [] \n'
                 "}"

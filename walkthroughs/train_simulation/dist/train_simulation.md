@@ -241,7 +241,7 @@ The user can visualize them in all Viriato views.
 ```python
 def _persist_updated_trains(algorithm_interface: AlgorithmInterface, time_window: TimeWindow) -> None:
     all_trains = algorithm_interface.get_trains(time_window)
-    all_train_simulation_events = algorithm_interface.get_train_simulation_events()
+    all_train_simulation_events = algorithm_interface.get_train_simulation_trains()
 
     realized_arrival_times_by_tpn_id = dict()
     realized_departure_times_by_tpn_id = dict()

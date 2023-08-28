@@ -84,7 +84,7 @@ class DispatcherFactory:
         return None
 
     def _retrieve_simulation_event(self, train: AlgorithmTrain) -> AlgorithmTrainSimulationEvent:
-        simulation_events = self._algorithm_interface.get_train_simulation_events()
+        simulation_events = self._algorithm_interface.get_train_simulation_trains()
         simulation_event = next((simulation_event for simulation_event in simulation_events if simulation_event.algorithm_train_id == train.id), None)
         if simulation_event is None:
             self._algorithm_interface.notify_user(

@@ -25,7 +25,6 @@ class TestGetTrainSimulationEventsEmpty(unittest.TestCase):
 
     @mock.patch("requests.Session", side_effect=GetTrainSimulationEventsMockSession)
     def test_get_train_simulation_trains(self, mocked_get_obj):
-
         self.interface_to_viriato.get_train_simulation_trains()
 
         session_obj = self.interface_to_viriato._AlgorithmInterface__communication_layer.currentSession
@@ -34,7 +33,6 @@ class TestGetTrainSimulationEventsEmpty(unittest.TestCase):
 
     @mock.patch("requests.Session", side_effect=GetTrainSimulationEventsMockSession)
     def test_get_train_simulation_trains_response(self, mocked_get_obj):
-
         response = self.interface_to_viriato.get_train_simulation_trains()
 
         self.assertIsInstance(response, list)

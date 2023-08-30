@@ -79,7 +79,6 @@ class TestCreateRosterLinks(unittest.TestCase):
 
     @mock.patch("requests.Session", side_effect=CreateRosterLinksTestMockSession)
     def test_get_roster_links_empty_list_as_response(self, mocked_get_obj):
-
         listed_roster_links = self.interface_to_viriato.create_roster_links([])
 
         self.assertIsInstance(listed_roster_links, list)

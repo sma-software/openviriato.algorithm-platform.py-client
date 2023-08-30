@@ -26,11 +26,11 @@ Both trains share the following nodes on their route
 * Hard
 * Zurich Hardbrücke
 
-Therefore, if the preceding train is delayed a conflict can occur between the two trains, see Figure 2.
+Therefore, if the preceding train is delayed a conflict can occur between the two trains, see Figure 1.
 
 ![Conflicting situation](@images/conflicting_scenario.PNG)
 
-_Figure 2: Example of a conflicting situation occurring during the simulation._
+_Figure 1: Example of a conflicting situation occurring during the simulation._
 
 In the following we will give different examples, how you can implement your own dispatcher to resolve such conflicts using different methods available on the Algorithm Interface.
 
@@ -46,7 +46,7 @@ The presented algorithms request the following parameters:
 
 ![Parameters](@images/parameters.PNG)
 
-_Figure 3: The user chooses a time window to run the simulation on and if desired the order of two conflicting trains can be changed by selecting the two concerned trains._
+_Figure 2: The user chooses a time window to run the simulation on and if desired the order of two conflicting trains can be changed by selecting the two concerned trains._
 
 ### Simulation
 First, the simulation has to be started in a time window by the algorithm developer and in our example this time window is given by the user. This loads the timetable data in the given time window for the trains stemming from the reference scenario 

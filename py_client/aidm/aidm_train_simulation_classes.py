@@ -13,8 +13,7 @@ class AlgorithmTrainSimulationEventType(Enum):
 
 
 class AlgorithmTrainSimulationEvent(_HasID):
-    # TODO VPLAT-10975: make mandatory if respective issue is fixed
-    __algorithm_train_id: Optional[int]
+    __algorithm_train_id: int
     __algorithm_train_path_node_id: int
     __algorithm_train_path_node_sequence_number: int
     __forecast_delay: timedelta
@@ -36,7 +35,7 @@ class AlgorithmTrainSimulationEvent(_HasID):
         planned_time: datetime,
         type: AlgorithmTrainSimulationEventType,
         algorithm_train_path_node_sequence_number: int,
-        algorithm_train_id: Optional[int] = None,
+        algorithm_train_id: int,
         from_section_track_id: Optional[int] = None,
         node_track_id: Optional[int] = None,
         to_section_track_id: Optional[int] = None,

@@ -47,6 +47,7 @@ from py_client.aidm import (
     RunningTimeCalculationResult,
     ConflictDetectionArguments,
     AlgorithmTrainSimulationRealizationForecast,
+    UserOutputSettings,
 )
 from py_client.aidm.aidm_conflict import AlgorithmConflict
 from py_client.aidm.aidm_link_classes import _AlgorithmLink
@@ -718,3 +719,8 @@ class AlgorithmInterface:
         url_to_resource = "trains/{}/unplanned-stop-penalties".format(train_id)
         response_dict = self.__communication_layer.do_get_request_without_body(url_to_resource)
         return JsonToAidmConverter().process_json_to_aidm(response_dict, AlgorithmUnplannedStopPenalties)
+
+    def get_user_output_settings(self) -> UserOutputSettings:
+        url_to_resource = "user-outputs/settings"
+        response_dict = self.__communication_layer.do_get_request_without_body(url_to_resource)
+        return JsonToAidmConverter().process_json_to_aidm(response_dict, UserOutputSettings)

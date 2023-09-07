@@ -16,3 +16,4 @@ from py_client.aidm.aidm_running_time_penalty_classes import *
 from py_client.aidm.aidm_train_simulation_classes import *
 from py_client.aidm.aidm_conflict import *
 from py_client.aidm.aidm_running_time_calculation_classes import *
+from py_client.aidm.aidm_user_outputs_classes import *

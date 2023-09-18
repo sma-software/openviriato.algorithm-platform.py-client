@@ -1,6 +1,8 @@
 from datetime import datetime
 import unittest
 from unittest import mock
+
+from py_client.aidm import AlgorithmTrainPathNodeReference
 from py_client.algorithm_interface import algorithm_interface_factory
 import py_client.algorithm_interface_test.test_helper.SessionMockFactory as SessionMockFactory
 from py_client.algorithm_interface_test.test_helper.SessionMockTestBase import get_api_url, SessionMockTestBase
@@ -24,8 +26,10 @@ class TestDetectConflicts(unittest.TestCase):
                 '           "toTime": "2022-04-14T12:02:00" \n'
                 "       }, \n"
                 '       "nodeId": 892, \n'
-                '       "trainId": 2743, \n'
-                '       "trainPathNodeId": 227 \n'
+                '       "affectedTrainPathNode": { \n'
+                '           "trainId": 2743, \n'
+                '           "trainPathNodeId": 227 \n'
+                "       } \n"
                 "   }, \n"
                 "   {"
                 '       "conflictType": "impossibleStationExitRoute", \n'
@@ -34,8 +38,10 @@ class TestDetectConflicts(unittest.TestCase):
                 '           "toTime": "2023-03-14T13:37:00" \n'
                 "       }, \n"
                 '       "nodeId": 748, \n'
-                '       "trainId": 123, \n'
-                '       "trainPathNodeId": 456 \n'
+                '       "affectedTrainPathNode": { \n'
+                '           "trainId": 123, \n'
+                '           "trainPathNodeId": 456 \n'
+                "       } \n"
                 "   }, \n"
                 "   {"
                 '       "conflictType": "impossibleStationEntryRoute", \n'
@@ -44,8 +50,10 @@ class TestDetectConflicts(unittest.TestCase):
                 '           "toTime": "2023-03-14T13:37:00" \n'
                 "       }, \n"
                 '       "nodeId": 748, \n'
-                '       "trainId": 123, \n'
-                '       "trainPathNodeId": 456 \n'
+                '       "affectedTrainPathNode": { \n'
+                '           "trainId": 123, \n'
+                '           "trainPathNodeId": 456 \n'
+                "       } \n"
                 "   }, \n"
                 "   {"
                 '       "conflictType": "impossibleJunctionRoute", \n'
@@ -54,8 +62,10 @@ class TestDetectConflicts(unittest.TestCase):
                 '           "toTime": "2023-03-14T13:37:00" \n'
                 "       }, \n"
                 '       "nodeId": 748, \n'
-                '       "trainId": 123, \n'
-                '       "trainPathNodeId": 456 \n'
+                '       "affectedTrainPathNode": { \n'
+                '           "trainId": 123, \n'
+                '           "trainPathNodeId": 456 \n'
+                "       } \n"
                 "   }, \n"
                 "   {"
                 '       "conflictType": "stopInJunction", \n'
@@ -64,8 +74,10 @@ class TestDetectConflicts(unittest.TestCase):
                 '           "toTime": "2023-03-14T15:37:00" \n'
                 "       }, \n"
                 '       "nodeId": 847, \n'
-                '       "trainId": 321, \n'
-                '       "trainPathNodeId": 654 \n'
+                '       "affectedTrainPathNode": { \n'
+                '           "trainId": 321, \n'
+                '           "trainPathNodeId": 654 \n'
+                "       } \n"
                 "   }, \n"
                 "   {"
                 '       "conflictType": "noStationTrackAssigned", \n'
@@ -74,8 +86,10 @@ class TestDetectConflicts(unittest.TestCase):
                 '           "toTime": "2023-03-14T15:37:00" \n'
                 "       }, \n"
                 '       "nodeId": 847, \n'
-                '       "trainId": 321, \n'
-                '       "trainPathNodeId": 654 \n'
+                '       "affectedTrainPathNode": { \n'
+                '           "trainId": 321, \n'
+                '           "trainPathNodeId": 654 \n'
+                "       } \n"
                 "   }, \n"
                 "   {"
                 '       "conflictType": "stationTrackLength", \n'
@@ -84,8 +98,10 @@ class TestDetectConflicts(unittest.TestCase):
                 '           "toTime": "2023-03-14T15:37:00" \n'
                 "       }, \n"
                 '       "nodeId": 847, \n'
-                '       "trainId": 321, \n'
-                '       "trainPathNodeId": 654 \n'
+                '       "affectedTrainPathNode": { \n'
+                '           "trainId": 321, \n'
+                '           "trainPathNodeId": 654 \n'
+                "       } \n"
                 "   }, \n"
                 "   {"
                 '       "conflictType": "platformLength", \n'
@@ -94,8 +110,10 @@ class TestDetectConflicts(unittest.TestCase):
                 '           "toTime": "2023-03-14T15:37:00" \n'
                 "       }, \n"
                 '       "nodeId": 847, \n'
-                '       "trainId": 321, \n'
-                '       "trainPathNodeId": 654 \n'
+                '       "affectedTrainPathNode": { \n'
+                '           "trainId": 321, \n'
+                '           "trainPathNodeId": 654 \n'
+                "       } \n"
                 "   }, \n"
                 "   { \n"
                 '       "conflictType": "forbiddenStationTrack", \n'
@@ -104,8 +122,10 @@ class TestDetectConflicts(unittest.TestCase):
                 '           "toTime": "2023-03-22T13:42:00" \n'
                 "       }, \n"
                 '       "nodeId": 968, \n'
-                '       "trainId": 1554, \n'
-                '       "trainPathNodeId": 859 \n'
+                '       "affectedTrainPathNode": { \n'
+                '           "trainId": 1554, \n'
+                '           "trainPathNodeId": 859 \n'
+                "       } \n"
                 "   } \n"
                 "]"
             )
@@ -173,8 +193,10 @@ class TestDetectConflicts(unittest.TestCase):
         self.assertEqual(list_of_algorithm_conflicts[0].time_window.from_time, datetime(day=14, month=4, year=2022, hour=11, minute=42, second=10))
         self.assertEqual(list_of_algorithm_conflicts[0].time_window.to_time, datetime(day=14, month=4, year=2022, hour=12, minute=2, second=0))
         self.assertEqual(list_of_algorithm_conflicts[0].node_id, 892)
-        self.assertEqual(list_of_algorithm_conflicts[0].train_id, 2743)
-        self.assertEqual(list_of_algorithm_conflicts[0].train_path_node_id, 227)
+        affected_train_path_node = list_of_algorithm_conflicts[0].affected_train_path_node
+        self.assertIsInstance(affected_train_path_node, AlgorithmTrainPathNodeReference)
+        self.assertEqual(affected_train_path_node.train_id, 2743)
+        self.assertEqual(affected_train_path_node.train_path_node_id, 227)
 
         self.assertIsInstance(list_of_algorithm_conflicts[1], AlgorithmNodeConflict)
         self.assertIsInstance(list_of_algorithm_conflicts[1], _AlgorithmOneTrainNodeConflict)
@@ -183,8 +205,10 @@ class TestDetectConflicts(unittest.TestCase):
         self.assertEqual(list_of_algorithm_conflicts[1].time_window.from_time, datetime(day=14, month=3, year=2023, hour=13, minute=36, second=10))
         self.assertEqual(list_of_algorithm_conflicts[1].time_window.to_time, datetime(day=14, month=3, year=2023, hour=13, minute=37, second=0))
         self.assertEqual(list_of_algorithm_conflicts[1].node_id, 748)
-        self.assertEqual(list_of_algorithm_conflicts[1].train_id, 123)
-        self.assertEqual(list_of_algorithm_conflicts[1].train_path_node_id, 456)
+        affected_train_path_node = list_of_algorithm_conflicts[1].affected_train_path_node
+        self.assertIsInstance(affected_train_path_node, AlgorithmTrainPathNodeReference)
+        self.assertEqual(affected_train_path_node.train_id, 123)
+        self.assertEqual(affected_train_path_node.train_path_node_id, 456)
 
         self.assertIsInstance(list_of_algorithm_conflicts[2], AlgorithmNodeConflict)
         self.assertIsInstance(list_of_algorithm_conflicts[2], _AlgorithmOneTrainNodeConflict)
@@ -193,8 +217,10 @@ class TestDetectConflicts(unittest.TestCase):
         self.assertEqual(list_of_algorithm_conflicts[2].time_window.from_time, datetime(day=14, month=3, year=2023, hour=13, minute=36, second=10))
         self.assertEqual(list_of_algorithm_conflicts[2].time_window.to_time, datetime(day=14, month=3, year=2023, hour=13, minute=37, second=0))
         self.assertEqual(list_of_algorithm_conflicts[2].node_id, 748)
-        self.assertEqual(list_of_algorithm_conflicts[2].train_id, 123)
-        self.assertEqual(list_of_algorithm_conflicts[2].train_path_node_id, 456)
+        affected_train_path_node = list_of_algorithm_conflicts[2].affected_train_path_node
+        self.assertIsInstance(affected_train_path_node, AlgorithmTrainPathNodeReference)
+        self.assertEqual(affected_train_path_node.train_id, 123)
+        self.assertEqual(affected_train_path_node.train_path_node_id, 456)
 
         self.assertIsInstance(list_of_algorithm_conflicts[3], AlgorithmNodeConflict)
         self.assertIsInstance(list_of_algorithm_conflicts[3], _AlgorithmOneTrainNodeConflict)
@@ -203,8 +229,10 @@ class TestDetectConflicts(unittest.TestCase):
         self.assertEqual(list_of_algorithm_conflicts[3].time_window.from_time, datetime(day=14, month=3, year=2023, hour=13, minute=36, second=10))
         self.assertEqual(list_of_algorithm_conflicts[3].time_window.to_time, datetime(day=14, month=3, year=2023, hour=13, minute=37, second=0))
         self.assertEqual(list_of_algorithm_conflicts[3].node_id, 748)
-        self.assertEqual(list_of_algorithm_conflicts[3].train_id, 123)
-        self.assertEqual(list_of_algorithm_conflicts[3].train_path_node_id, 456)
+        affected_train_path_node = list_of_algorithm_conflicts[3].affected_train_path_node
+        self.assertIsInstance(affected_train_path_node, AlgorithmTrainPathNodeReference)
+        self.assertEqual(affected_train_path_node.train_id, 123)
+        self.assertEqual(affected_train_path_node.train_path_node_id, 456)
 
         self.assertIsInstance(list_of_algorithm_conflicts[4], AlgorithmNodeConflict)
         self.assertIsInstance(list_of_algorithm_conflicts[4], _AlgorithmOneTrainNodeConflict)
@@ -213,8 +241,10 @@ class TestDetectConflicts(unittest.TestCase):
         self.assertEqual(list_of_algorithm_conflicts[4].time_window.from_time, datetime(day=14, month=3, year=2023, hour=15, minute=36, second=10))
         self.assertEqual(list_of_algorithm_conflicts[4].time_window.to_time, datetime(day=14, month=3, year=2023, hour=15, minute=37, second=0))
         self.assertEqual(list_of_algorithm_conflicts[4].node_id, 847)
-        self.assertEqual(list_of_algorithm_conflicts[4].train_id, 321)
-        self.assertEqual(list_of_algorithm_conflicts[4].train_path_node_id, 654)
+        affected_train_path_node = list_of_algorithm_conflicts[4].affected_train_path_node
+        self.assertIsInstance(affected_train_path_node, AlgorithmTrainPathNodeReference)
+        self.assertEqual(affected_train_path_node.train_id, 321)
+        self.assertEqual(affected_train_path_node.train_path_node_id, 654)
 
         self.assertIsInstance(list_of_algorithm_conflicts[5], AlgorithmNodeConflict)
         self.assertIsInstance(list_of_algorithm_conflicts[5], _AlgorithmOneTrainNodeConflict)
@@ -223,8 +253,10 @@ class TestDetectConflicts(unittest.TestCase):
         self.assertEqual(list_of_algorithm_conflicts[5].time_window.from_time, datetime(day=14, month=3, year=2023, hour=15, minute=36, second=10))
         self.assertEqual(list_of_algorithm_conflicts[5].time_window.to_time, datetime(day=14, month=3, year=2023, hour=15, minute=37, second=0))
         self.assertEqual(list_of_algorithm_conflicts[5].node_id, 847)
-        self.assertEqual(list_of_algorithm_conflicts[5].train_id, 321)
-        self.assertEqual(list_of_algorithm_conflicts[5].train_path_node_id, 654)
+        affected_train_path_node = list_of_algorithm_conflicts[5].affected_train_path_node
+        self.assertIsInstance(affected_train_path_node, AlgorithmTrainPathNodeReference)
+        self.assertEqual(affected_train_path_node.train_id, 321)
+        self.assertEqual(affected_train_path_node.train_path_node_id, 654)
 
         self.assertIsInstance(list_of_algorithm_conflicts[6], AlgorithmNodeConflict)
         self.assertIsInstance(list_of_algorithm_conflicts[6], _AlgorithmOneTrainNodeConflict)

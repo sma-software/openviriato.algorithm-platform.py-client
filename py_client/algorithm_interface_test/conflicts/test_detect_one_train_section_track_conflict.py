@@ -1,5 +1,7 @@
 import unittest
 from unittest import mock
+
+from py_client.aidm import AlgorithmTrainPathNodeReference
 from py_client.algorithm_interface import algorithm_interface_factory
 import py_client.algorithm_interface_test.test_helper.SessionMockFactory as SessionMockFactory
 from py_client.algorithm_interface_test.test_helper.SessionMockTestBase import get_api_url, SessionMockTestBase
@@ -22,10 +24,12 @@ class TestDetectConflicts(unittest.TestCase):
                 '       "timeWindow": { \n'
                 '           "fromTime": "2005-05-01T04:00:00", \n'
                 '           "toTime": "2005-05-01T04:04:00" \n'
-                "   }, \n"
-                '   "sectionTrackId": 723, \n'
-                '   "trainId": 1234, \n'
-                '   "trainPathNodeId": 1232 \n'
+                "        }, \n"
+                '       "sectionTrackId": 723, \n'
+                '       "affectedTrainPathNode": { \n'
+                '           "trainId": 1234, \n'
+                '           "trainPathNodeId": 1232 \n'
+                "       } \n"
                 "    } \n"
                 "]"
             )
@@ -76,9 +80,10 @@ class TestDetectConflicts(unittest.TestCase):
 
         self.assertEqual(list_of_algorithm_conflicts[0].section_track_id, 723)
 
-        self.assertEqual(list_of_algorithm_conflicts[0].train_id, 1234)
-
-        self.assertEqual(list_of_algorithm_conflicts[0].train_path_node_id, 1232)
+        affected_train_path_node = list_of_algorithm_conflicts[0].affected_train_path_node
+        self.assertIsInstance(affected_train_path_node, AlgorithmTrainPathNodeReference)
+        self.assertEqual(affected_train_path_node.train_id, 1234)
+        self.assertEqual(affected_train_path_node.train_path_node_id, 1232)
 
     @mock.patch("requests.Session", side_effect=DetectConflictsMockSession)
     def tearDown(self, mocked_get_obj) -> None:

@@ -28,18 +28,22 @@ class TestCreateTrainSimulation(unittest.TestCase):
     @mock.patch("requests.Session", side_effect=PutCreateTrainSimulationMockSession)
     def test_create_train_simulation(self, mocked_get_obj):
         requested_time_window = TimeWindow(from_time=datetime(2003, 5, 5, 7, 0), to_time=datetime(2003, 5, 5, 9, 0))
+        ignore_timetable_conflicts = False
 
-        self.interface_to_viriato.create_train_simulation(time_window=requested_time_window)
+        self.interface_to_viriato.create_train_simulation(time_window=requested_time_window, ignore_timetable_conflicts=ignore_timetable_conflicts)
 
         session_obj = self.interface_to_viriato._AlgorithmInterface__communication_layer.currentSession
+        request_body = session_obj._PutCreateTrainSimulationMockSession__last_body
         self.assertEqual(session_obj._PutCreateTrainSimulationMockSession__last_request, get_api_url() + "/services/trains/simulations")
-        self.assertDictEqual(session_obj._PutCreateTrainSimulationMockSession__last_body, dict(fromTime="2003-05-05T07:00:00", toTime="2003-05-05T09:00:00"))
+        self.assertDictEqual(request_body["timeWindow"], dict(fromTime="2003-05-05T07:00:00", toTime="2003-05-05T09:00:00"))
+        self.assertFalse(request_body["ignoreTimetableConflicts"])
 
     @mock.patch("requests.Session", side_effect=PutCreateTrainSimulationMockSession)
     def test_create_train_simulation_response(self, mocked_get_obj):
         requested_time_window = TimeWindow(from_time=datetime(2003, 5, 5, 7, 0), to_time=datetime(2003, 5, 5, 9, 0))
+        ignore_timetable_conflicts = False
 
-        response = self.interface_to_viriato.create_train_simulation(time_window=requested_time_window)
+        response = self.interface_to_viriato.create_train_simulation(time_window=requested_time_window, ignore_timetable_conflicts=ignore_timetable_conflicts)
 
         self.assertIsNone(response)
 

@@ -632,10 +632,13 @@ class AlgorithmInterface:
         response_list_of_dict = self.__communication_layer.do_get_request_without_body(url_to_resource)
         return JsonToAidmConverter().process_json_to_aidm(response_list_of_dict, List[AlgorithmMovementType])
 
-    def create_train_simulation(self, time_window: TimeWindow) -> None:
-        query_parameters = to_json_converter.convert_any_object(time_window)
+    def create_train_simulation(self, time_window: TimeWindow, ignore_timetable_conflicts: bool) -> None:
+        request_body = dict(
+            timeWindow=to_json_converter.convert_any_object(time_window),
+            ignoreTimetableConflicts=to_json_converter.convert_any_object(ignore_timetable_conflicts),
+        )
         url_to_resource = "services/trains/simulations"
-        self.__communication_layer.do_put_request(url_to_resource, query_parameters)
+        self.__communication_layer.do_put_request(url_to_resource, request_body)
 
     def get_train_simulation_trains(self) -> List[AlgorithmTrainSimulationTrain]:
         url_to_resource = "services/trains/simulations/trains"

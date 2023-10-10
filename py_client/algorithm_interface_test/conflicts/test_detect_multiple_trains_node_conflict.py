@@ -30,7 +30,7 @@ class TestDetectConflicts(unittest.TestCase):
                 '           "fromTime": "2005-05-01T04:04:00", \n'
                 '           "toTime": "2005-05-01T04:07:00" \n'
                 "       }, \n"
-                '       "involvedTrainPathNodeReferences": [ \n'
+                '       "affectedTrainPathNodes": [ \n'
                 "           { \n"
                 '               "trainId": 1234, \n'
                 '               "trainPathNodeId": 12345 \n'
@@ -86,14 +86,14 @@ class TestDetectConflicts(unittest.TestCase):
         self.assertEqual(list_of_algorithm_conflicts[0].time_window.from_time, datetime(day=1, month=5, year=2005, hour=4, minute=4, second=0))
         self.assertEqual(list_of_algorithm_conflicts[0].time_window.to_time, datetime(day=1, month=5, year=2005, hour=4, minute=7, second=0))
 
-        self.assertIsInstance(list_of_algorithm_conflicts[0].involved_train_path_node_references, list)
-        self.assertEqual(len(list_of_algorithm_conflicts[0].involved_train_path_node_references), 3)
-        self.assertEqual(list_of_algorithm_conflicts[0].involved_train_path_node_references[0].train_id, 1234)
-        self.assertEqual(list_of_algorithm_conflicts[0].involved_train_path_node_references[0].train_path_node_id, 12345)
-        self.assertEqual(list_of_algorithm_conflicts[0].involved_train_path_node_references[1].train_id, 1235)
-        self.assertEqual(list_of_algorithm_conflicts[0].involved_train_path_node_references[1].train_path_node_id, 12346)
-        self.assertEqual(list_of_algorithm_conflicts[0].involved_train_path_node_references[2].train_id, 1236)
-        self.assertEqual(list_of_algorithm_conflicts[0].involved_train_path_node_references[2].train_path_node_id, 12347)
+        self.assertIsInstance(list_of_algorithm_conflicts[0].affected_train_path_nodes, list)
+        self.assertEqual(len(list_of_algorithm_conflicts[0].affected_train_path_nodes), 3)
+        self.assertEqual(list_of_algorithm_conflicts[0].affected_train_path_nodes[0].train_id, 1234)
+        self.assertEqual(list_of_algorithm_conflicts[0].affected_train_path_nodes[0].train_path_node_id, 12345)
+        self.assertEqual(list_of_algorithm_conflicts[0].affected_train_path_nodes[1].train_id, 1235)
+        self.assertEqual(list_of_algorithm_conflicts[0].affected_train_path_nodes[1].train_path_node_id, 12346)
+        self.assertEqual(list_of_algorithm_conflicts[0].affected_train_path_nodes[2].train_id, 1236)
+        self.assertEqual(list_of_algorithm_conflicts[0].affected_train_path_nodes[2].train_path_node_id, 12347)
 
     @mock.patch("requests.Session", side_effect=DetectConflictsMockSession)
     def tearDown(self, mocked_get_obj) -> None:

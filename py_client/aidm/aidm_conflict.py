@@ -144,16 +144,16 @@ class AlgorithmOneTrainConflict(_AlgorithmTrainConflict):
 
 
 class AlgorithmMultipleTrainsConflict(_AlgorithmTrainConflict):
-    __involved_train_path_node_references: List[AlgorithmTrainPathNodeReference]
+    __affected_train_path_nodes: List[AlgorithmTrainPathNodeReference]
 
     # **kwargs is needed because operator ** cannot deal with double interheritance otherwise (as needed by json2Aidm conversion)
-    def __init__(self, involved_train_path_node_references: List[AlgorithmTrainPathNodeReference], **kwargs):
+    def __init__(self, affected_train_path_nodes: List[AlgorithmTrainPathNodeReference], **kwargs):
         super().__init__(**kwargs)
-        self.__involved_train_path_node_references = involved_train_path_node_references
+        self.__affected_train_path_nodes = affected_train_path_nodes
 
     @property
-    def involved_train_path_node_references(self) -> List[AlgorithmTrainPathNodeReference]:
-        return self.__involved_train_path_node_references
+    def affected_train_path_nodes(self) -> List[AlgorithmTrainPathNodeReference]:
+        return self.__affected_train_path_nodes
 
 
 class _AlgorithmTwoTrainsSectionTrackConflict(AlgorithmTwoTrainsConflict, AlgorithmSectionTrackConflict):
@@ -213,12 +213,8 @@ class _AlgorithmTwoTrainsNodeConflict(AlgorithmTwoTrainsConflict, AlgorithmNodeC
 
 
 class _AlgorithmMultipleTrainsNodeConflict(AlgorithmMultipleTrainsConflict, AlgorithmNodeConflict):
-    def __init__(
-        self, conflict_type: ConflictType, time_window: TimeWindow, involved_train_path_node_references: List[AlgorithmTrainPathNodeReference], node_id: int
-    ):
-        super().__init__(
-            conflict_type=conflict_type, time_window=time_window, involved_train_path_node_references=involved_train_path_node_references, node_id=node_id
-        )
+    def __init__(self, conflict_type: ConflictType, time_window: TimeWindow, affected_train_path_nodes: List[AlgorithmTrainPathNodeReference], node_id: int):
+        super().__init__(conflict_type=conflict_type, time_window=time_window, affected_train_path_nodes=affected_train_path_nodes, node_id=node_id)
 
 
 AlgorithmConflict = Union[

@@ -32,7 +32,7 @@ The official Python release provides all needed tools / scripts / modules. Chang
 to develop your algorithm. We assume we are in the following directory:
 
 ```
-${FolderToAlgorithmPlatform}\\Extension\\AlgorithmPlatform\\algorithms
+${FolderToAlgorithmPlatform}\\Extension\\AlgorithmPlatformService\\algorithms
 ```
 
 The following commands cover the three steps above:
@@ -96,7 +96,7 @@ environment `demo_env` as described in the [previous paragraph](#installing-the-
 that the algorithm is saved under
 
 ```
-${FolderToAlgorithmPlatform}\\Extension\\AlgorithmPlatform\\algorithms\\count_trains_py_client.py
+${FolderToAlgorithmPlatform}\\Extension\\AlgorithmPlatformService\\algorithms\\count_trains_py_client.py
 ```
 Then we may save the algorithm configuration in the [algorithms.json](../config/algorithms.json):
 

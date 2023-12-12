@@ -9,7 +9,7 @@ if "%7" == "" (
 )
 
 echo "USAGE: algorithmplatform.pyclient\jenkins\build.release.bat [STAGE] [RELEASE-BRANCH] [ALGORITHM-PLATFORM-RELEASE-TARGET-VERSION] [STD-ALGORITHM-RESEARCH-RELEASE-CREATE-PACKAGE-BUILD-NUMBER] [STD-NIGHTLY-STABLE-BUILD-NUMBER] [BUILD-NUMBER]
-echo "Example call: algorithmplatform.pyclient\jenkins\build.release.bat STAGE-CHECK-OUT-AND-AGGREGATE-DATA-FOR-END-TO-END-TEST Product-43 8.43.33 33 29 1"
+echo "Example call: algorithmplatform.pyclient\jenkins\build.release.bat CHECK-OUT-AND-AGGREGATE-DATA-FOR-END-TO-END-TEST Product-43 8.43.33 33 29 1"
 exit /b 1
 
 

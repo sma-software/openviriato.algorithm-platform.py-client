@@ -57,3 +57,9 @@ def copy_file_and_return_file_path(source_path: str, target_directory: str):
 
     zip_file_path_local_copy_db = shutil.copy2(source_path, target_directory)
     return zip_file_path_local_copy_db
+
+
+def is_string_in_file_content(search_string: str, file_path: str) -> bool:
+    with open(file_path, "r") as file:
+        file_content = file.read()
+        return search_string in file_content

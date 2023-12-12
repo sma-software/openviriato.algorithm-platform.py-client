@@ -1,6 +1,5 @@
 import argparse
 import os.path
-import re
 from enum import Enum
 from typing import Dict
 
@@ -29,9 +28,13 @@ class ReleaseBuildConstants:
 
     FILE_NAME_UNIT_TEST_REPORT = "test_results"
 
-    RELATIVE_PATH_CALL_FILES_DIRECTORY_FROM_VIRIATO_ROOT = "data\\AlgorithmPlatformService.RestSamples\\calls"
-    FILE_NAME_END_TO_END_TEST_REPORT = "end_to_end_test_results.txt"
+    PATH_CALL_FILES_DIRECTORY_FROM_VIRIATO_ROOT = "data\\AlgorithmPlatformService.RestSamples\\calls"
+    PATH_TO_END_TO_END_TEST_REPORT_FILE = os.path.join(OUTPUT_DIRECTORY, "end_to_end_test_results.txt")
     PATH_TO_END_TO_END_TEST_CALLS_FOLDER = "algorithmplatform.pyclient.endtoendtesttool\\end_to_end_tests_tool\\data\\calls"
+    FOLDER_NAME_END_TO_END_TESTS_TOOL_ROOT = "algorithmPlatform.pyclient.endtoendtesttool"
+    PATH_TO_EXECUTABLE_END_TO_END_TESTS = "jenkins\\run_end_to_end_test.bat"
+    UPDATE_PIP_IN_END_TO_END_TESTS_PYTHON_ENVIRONMENT = False
+    SUCCESS_STRING_OF_END_TO_END_TESTS_TOOL = "All End-To-End-Tests were executed successfully. There are no errors and no test fail"
 
     # ALGORITHM_PLATFORM_RESEARCH_RELEASE_PACKAGE_WILDCARD = "AlgorithmResearch_Package*.zip"
     # VIRIATO_STANDARD_TEST_ZIP_WILDCARD = "SMA.Viriato.Standard-*test.zip"
@@ -190,7 +193,7 @@ class ReleaseBuildArgumentsFactory:
         root_directory_call_jsons = os.path.join(
             unzip_directory_viriato_nightly_stable,
             # f"SMA.Viriato.Standard-{target_version_algorithm_platform_research_release}",
-            ReleaseBuildConstants.RELATIVE_PATH_CALL_FILES_DIRECTORY_FROM_VIRIATO_ROOT,
+            ReleaseBuildConstants.PATH_CALL_FILES_DIRECTORY_FROM_VIRIATO_ROOT,
         )
         file_path_wheel_py_client = os.path.join(
             ReleaseBuildConstants.OUTPUT_DIRECTORY,

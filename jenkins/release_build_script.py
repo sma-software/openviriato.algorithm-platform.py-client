@@ -1,8 +1,7 @@
-import functools
 import os
 import shutil
-from zipfile import ZipFile
 import subprocess
+from zipfile import ZipFile
 
 from release_build_classes import ReleaseBuildArguments, JobStage, ReleaseBuildConstants, ReleaseBuildArgumentsFactory, ArgumentParserFactory
 from release_build_utilty_methods import (
@@ -10,9 +9,10 @@ from release_build_utilty_methods import (
     download_zip_and_return_file_path,
     copy_file_and_return_file_path,
     is_string_in_file_content,
+    printf,
+    create_or_reinstall_python_environment,
+    update_pip_in_python_environment,
 )
-
-printf = functools.partial(print, flush=True)
 
 
 def _parse_arguments_from_command_line_arguments() -> ReleaseBuildArguments:
@@ -20,6 +20,32 @@ def _parse_arguments_from_command_line_arguments() -> ReleaseBuildArguments:
     command_line_arguments = vars(argument_parser.parse_args())
 
     return ReleaseBuildArgumentsFactory().create_instance_from_dictionary(command_line_arguments)
+
+
+def execute_stage_create_whl_package(release_build_arguments: ReleaseBuildArguments) -> None:
+    printf("Creating environment")
+    create_or_reinstall_python_environment(absolute_or_relative_path_new_venv=ReleaseBuildConstants.PATH_TO_RELEASE_PACKING_PYTHON_ENVIRONMENT)
+    if ReleaseBuildConstants.UPDATE_PIP_IN_RELEASE_PACKAGING_PYTHON_ENVIRONMENT:
+        update_pip_in_python_environment(
+            absolute_or_relative_path_to_venv_activate_script=ReleaseBuildConstants.PATH_TO_RELEASE_PACKING_PYTHON_ENVIRONMENT_ACTIVATE_SCRIPT
+        )
+
+    printf("Pip packages install output: ")
+    pip_packages_install_process = subprocess.run(ReleaseBuildConstants.COMMAND_PACKAGES_INSTALL_FOR_PYTHON_ENVIRONMENT_RELEASE_PACKING, shell=True)
+    if pip_packages_install_process.returncode != 0:
+        raise Exception("stage_create_whl_package: could not install all packages.")
+
+    printf("Creating release package")
+    create_release_package_process = subprocess.run(
+        release_build_arguments.command_create_release_package, shell=True, cwd=ReleaseBuildConstants.PATH_TO_RELEASE_PACKING_SCRIPT_FOLDER
+    )
+    if create_release_package_process.returncode != 0:
+        raise Exception("stage_create_whl_package: create_release_package_process could not create wheel package.")
+
+    printf("copying py_client licenses file")
+    copy_file_and_return_file_path(
+        source_path=ReleaseBuildConstants.FILE_PATH_SOURCE_LICENSES_PY_CLIENT, target_directory=ReleaseBuildConstants.OUTPUT_DIRECTORY
+    )
 
 
 def execute_stage_check_out_and_aggregate_data_for_end_to_end_test(release_build_arguments: ReleaseBuildArguments):
@@ -60,8 +86,6 @@ def execute_stage_performing_end_to_end_test(release_build_arguments: ReleaseBui
         )
 
     printf("Start end_to_end_tests_tool. The following output is from the end_to_end_tests_tool:")
-    # the following process will be executed in the algorithmPlatform.pyclient.endtoendtesttool directory
-    # so that all relatives path in this batch script: EXECUTABLE_END_TO_END_TESTS are still working without modification
     # TODO VPLAT-10906: Derive paths correctly for end2end test tool script
     process_result_end_to_end_tests = subprocess.run(
         [
@@ -143,6 +167,8 @@ def main():
             execute_stage_check_out_and_aggregate_data_for_end_to_end_test(release_build_arguments=release_build_arguments)
         case JobStage.perform_end_to_end_test:
             execute_stage_performing_end_to_end_test(release_build_arguments=release_build_arguments)
+        case JobStage.create_whl_package:
+            execute_stage_create_whl_package(release_build_arguments=release_build_arguments)
         case _:
             raise NotImplementedError(f"The step {release_build_arguments.job_stage} is not implemented.")
 

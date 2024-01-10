@@ -1,11 +1,16 @@
+import functools
 import glob
 import re
 import shutil
+import subprocess
+import venv
 from zipfile import ZipFile
 import os
 import requests
 
 FILE_VERSION_REGEX = re.compile(r"(\d+\.\d+\.\d+)")  # => 1.2.3
+
+printf = functools.partial(print, flush=True)
 
 
 def get_matching_single_filename_from_directory(directory: str, filename_pattern: str) -> str:
@@ -27,7 +32,7 @@ def get_version_number_from_file_name(filename: str) -> str:
 def download_zip_and_return_file_path(url: str, filename: str, target_directory: str) -> str:
     if not os.path.isdir(target_directory):
         os.mkdir(target_directory)
-        print("Created directory for downloaded zip at: ", os.path.abspath(target_directory))
+        printf("Created directory for downloaded zip at: ", os.path.abspath(target_directory))
 
     zip_file_path = os.path.join(target_directory, filename)
 
@@ -49,11 +54,11 @@ def extract_zip_file(path_zip_file: str, target_directory: str) -> str:
     return target_directory
 
 
-def copy_file_and_return_file_path(source_path: str, target_directory: str):
+def copy_file_and_return_file_path(source_path: str, target_directory: str) -> str:
     # create output directory if not available
     if not os.path.isdir(target_directory):
         os.mkdir(target_directory)
-        print("Created output directory at: ", os.path.abspath(target_directory))
+        printf("Created output directory at: ", os.path.abspath(target_directory))
 
     zip_file_path_local_copy_db = shutil.copy2(source_path, target_directory)
     return zip_file_path_local_copy_db
@@ -63,3 +68,22 @@ def is_string_in_file_content(search_string: str, file_path: str) -> bool:
     with open(file_path, "r") as file:
         file_content = file.read()
         return search_string in file_content
+
+
+def create_or_reinstall_python_environment(absolute_or_relative_path_new_venv: str) -> None:
+    venv.create(
+        absolute_or_relative_path_new_venv,
+        system_site_packages=False,
+        clear=True,
+        symlinks=False,
+        with_pip=True,
+        prompt=None,
+        upgrade_deps=False,
+    )
+
+
+def update_pip_in_python_environment(absolute_or_relative_path_to_venv_activate_script: str) -> None:
+    pip_update_commands = f"{absolute_or_relative_path_to_venv_activate_script} && python -m pip install --upgrade pip --no-cache-dir"
+    pip_update_process = subprocess.run(pip_update_commands, shell=True)
+    if pip_update_process.returncode != 0:
+        raise Exception(f"Could not update pip in venv: {absolute_or_relative_path_to_venv_activate_script}")

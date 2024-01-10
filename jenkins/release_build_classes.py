@@ -8,12 +8,14 @@ class JobStage(Enum):
     perform_end_to_end_test = "PERFORM-END-TO-END-TEST"
     prepare_artifacts = "PREPARE-ARTIFACTS"
     check_out_and_aggregate_data_for_end_to_end_test = "CHECK-OUT-AND-AGGREGATE-DATA-FOR-END-TO-END-TEST"
+    create_whl_package = "CREATE-WHL-PACKAGE"
 
     def __str__(self):
         return self.value
 
 
 class ReleaseBuildConstants:
+    # ToDo VPLAT-10906: See if we can derive more constants from each other
     OUTPUT_DIRECTORY = "output"
     DATABASE_DIRECTORY = "database"
 
@@ -22,11 +24,27 @@ class ReleaseBuildConstants:
     FILE_NAME_SAMPLES_DATABASE = "Samples_Database.vstd64"
     PATH_REMOTE_DIRECTORY_DATABASES = r"\\ZHFAS01A\\Entwicklung\Jenkins\JobData\PyClient-End2EndTests-Labs"
 
-    REQUIREMENTS_FILE_WITH_PATH_PY_CLIENT = "py_client/py_client_requirements.txt"
+    REQUIREMENTS_FILE_WITH_PATH_PY_CLIENT = "algorithmplatform.pyclient/py_client/py_client_requirements.txt"
     REQUIREMENTS_FILE_WITH_PATH_PY_CLIENT_UNIT_TEST = "py_client/py_client_unit_tests_requirements.txt"
     REQUIREMENTS_FILE_WITH_PATH_END_TO_END_TEST_TOOL = "end_to_end_tests_tool/end_to_end_test_tool_requirements.txt"
 
     FILE_NAME_UNIT_TEST_REPORT = "test_results"
+
+    NAME_AND_VERSION_WHEEL_PIP_PACKAGE = "wheel~=0.35.1"
+    # ToDo VPLAT-10906: Make Update Pip optional commandline argument; check if other commandline arguments can be optional as well
+    UPDATE_PIP_IN_RELEASE_PACKAGING_PYTHON_ENVIRONMENT = False
+    PATH_TO_RELEASE_PACKING_SCRIPT_FOLDER = "algorithmplatform.pyclient\\jenkins\\packaging"
+    PATH_TO_RELEASE_PACKING_PYTHON_ENVIRONMENT = "algorithmplatform.pyclient\\packaging_env"
+    PATH_TO_RELEASE_PACKING_PYTHON_ENVIRONMENT_ACTIVATE_SCRIPT = "algorithmplatform.pyclient\\packaging_env\\Scripts\\activate.bat"
+    FILE_PATH_SOURCE_LICENSES_PY_CLIENT = "algorithmplatform.pyclient\\jenkins\\packaging\\algorithmplatform.pyclient.licenses.txt"
+    COMMAND_PACKAGES_INSTALL_FOR_PYTHON_ENVIRONMENT_RELEASE_PACKING = f"{PATH_TO_RELEASE_PACKING_PYTHON_ENVIRONMENT_ACTIVATE_SCRIPT} && pip install {NAME_AND_VERSION_WHEEL_PIP_PACKAGE} --no-cache-dir && pip install -r {REQUIREMENTS_FILE_WITH_PATH_PY_CLIENT} --no-cache-dir"
+    RELATIVE_PATH_TO_ACTIVATION_SCRIPT_OF_PYTHON_ENVIRONMENT_RELEASE_PACKING_FOR_CREATE_PACKAGE_EXECUTABLE = os.path.join(
+        "..", "..", "..", PATH_TO_RELEASE_PACKING_PYTHON_ENVIRONMENT_ACTIVATE_SCRIPT
+    )
+    RELATIVE_PATH_TO_REQUIREMENTS_FILE_WITH_PATH_PY_CLIENT_FOR_CREATE_PACKAGE_EXECUTABLE = os.path.join("..", "..", "..", REQUIREMENTS_FILE_WITH_PATH_PY_CLIENT)
+    RELATIVE_PATH_TO_OUTPUT_DIRECTORY_FOR_CREATE_PACKAGE_EXECUTABLE = os.path.join("..", "..", "..", OUTPUT_DIRECTORY)
+    RELATIVE_PATH_TO_PROJECT_ROOT_DIRECTORY_FOR_CREATE_PACKAGE_EXECUTABLE = "..\\.."
+    PATH_TO_CREATE_PACKAGE_EXECUTABLE = "call python create_release_package.py"
 
     PATH_CALL_FILES_DIRECTORY_FROM_VIRIATO_ROOT = "data\\AlgorithmPlatformService.RestSamples\\calls"
     PATH_TO_END_TO_END_TEST_REPORT_FILE = os.path.join(OUTPUT_DIRECTORY, "end_to_end_test_results.txt")
@@ -53,6 +71,7 @@ class ReleaseBuildArguments:
 
     __root_directory_call_jsons: str
     __file_path_wheel_py_client: str
+    __command_create_release_package: str
 
     __zip_file_name_algorithm_platform_research_release: str
     __job_name_algorithm_platform_research_release: str
@@ -83,7 +102,9 @@ class ReleaseBuildArguments:
         branch_suffix: str,
         path_to_samples_db_on_jenkins: str,
         root_directory_call_jsons: str,
+        command_create_release_package: str,
     ):
+        self.__command_create_release_package = command_create_release_package
         self.__root_directory_call_jsons = root_directory_call_jsons
         self.__path_to_samples_db_on_jenkins = path_to_samples_db_on_jenkins
         self.__url_viriato_standard_nightly_stable_test = url_viriato_standard_nightly_stable_test
@@ -165,6 +186,10 @@ class ReleaseBuildArguments:
     def root_directory_call_jsons(self):
         return self.__root_directory_call_jsons
 
+    @property
+    def command_create_release_package(self):
+        return self.__command_create_release_package
+
 
 class ReleaseBuildArgumentsFactory:
     @staticmethod
@@ -194,6 +219,14 @@ class ReleaseBuildArgumentsFactory:
             unzip_directory_viriato_nightly_stable,
             # f"SMA.Viriato.Standard-{target_version_algorithm_platform_research_release}",
             ReleaseBuildConstants.PATH_CALL_FILES_DIRECTORY_FROM_VIRIATO_ROOT,
+        )
+
+        command_create_release_package = (
+            f"{ReleaseBuildConstants.RELATIVE_PATH_TO_ACTIVATION_SCRIPT_OF_PYTHON_ENVIRONMENT_RELEASE_PACKING_FOR_CREATE_PACKAGE_EXECUTABLE} && "
+            f"{ReleaseBuildConstants.PATH_TO_CREATE_PACKAGE_EXECUTABLE} {target_version_algorithm_platform_research_release}.post{build_number_jenkins_job} "
+            f"{ReleaseBuildConstants.RELATIVE_PATH_TO_REQUIREMENTS_FILE_WITH_PATH_PY_CLIENT_FOR_CREATE_PACKAGE_EXECUTABLE} "
+            f"{ReleaseBuildConstants.RELATIVE_PATH_TO_PROJECT_ROOT_DIRECTORY_FOR_CREATE_PACKAGE_EXECUTABLE} "
+            f"{ReleaseBuildConstants.RELATIVE_PATH_TO_OUTPUT_DIRECTORY_FOR_CREATE_PACKAGE_EXECUTABLE}"
         )
         file_path_wheel_py_client = os.path.join(
             ReleaseBuildConstants.OUTPUT_DIRECTORY,
@@ -227,6 +260,7 @@ class ReleaseBuildArgumentsFactory:
             url_viriato_standard_nightly_stable_test=url_viriato_standard_nightly_stable_test,
             path_to_samples_db_on_jenkins=path_to_samples_db_on_jenkins,
             root_directory_call_jsons=root_directory_call_jsons,
+            command_create_release_package=command_create_release_package,
         )
 
 

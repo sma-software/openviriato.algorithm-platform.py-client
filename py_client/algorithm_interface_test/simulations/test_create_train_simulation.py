@@ -1,13 +1,12 @@
-from datetime import datetime
 import unittest
+from datetime import datetime
 from unittest import mock
 
-from py_client.algorithm_interface.algorithm_interface import AlgorithmInterface
-from py_client.aidm.aidm_time_window_classes import TimeWindow
-import py_client.aidm.aidm_running_time_penalty_classes
 import py_client.algorithm_interface_test.test_helper.SessionMockFactory as SessionMockFactory
-from py_client import algorithm_interface
+from py_client.aidm import AlgorithmTrainSimulationCreationArguments
+from py_client.aidm.aidm_time_window_classes import TimeWindow
 from py_client.algorithm_interface import algorithm_interface_factory
+from py_client.algorithm_interface.algorithm_interface import AlgorithmInterface
 from py_client.algorithm_interface_test.test_helper.SessionMockTestBase import get_api_url, SessionMockTestBase
 
 
@@ -29,8 +28,11 @@ class TestCreateTrainSimulation(unittest.TestCase):
     def test_create_train_simulation(self, mocked_get_obj):
         requested_time_window = TimeWindow(from_time=datetime(2003, 5, 5, 7, 0), to_time=datetime(2003, 5, 5, 9, 0))
         ignore_timetable_conflicts = False
+        algorithm_train_simulation_creation_arguments = AlgorithmTrainSimulationCreationArguments(
+            ignore_timetable_conflicts=ignore_timetable_conflicts, time_window=requested_time_window
+        )
 
-        self.interface_to_viriato.create_train_simulation(time_window=requested_time_window, ignore_timetable_conflicts=ignore_timetable_conflicts)
+        self.interface_to_viriato.create_train_simulation(algorithm_train_simulation_creation_arguments=algorithm_train_simulation_creation_arguments)
 
         session_obj = self.interface_to_viriato._AlgorithmInterface__communication_layer.currentSession
         request_body = session_obj._PutCreateTrainSimulationMockSession__last_body
@@ -42,8 +44,13 @@ class TestCreateTrainSimulation(unittest.TestCase):
     def test_create_train_simulation_response(self, mocked_get_obj):
         requested_time_window = TimeWindow(from_time=datetime(2003, 5, 5, 7, 0), to_time=datetime(2003, 5, 5, 9, 0))
         ignore_timetable_conflicts = False
+        algorithm_train_simulation_creation_arguments = AlgorithmTrainSimulationCreationArguments(
+            ignore_timetable_conflicts=ignore_timetable_conflicts, time_window=requested_time_window
+        )
 
-        response = self.interface_to_viriato.create_train_simulation(time_window=requested_time_window, ignore_timetable_conflicts=ignore_timetable_conflicts)
+        response = self.interface_to_viriato.create_train_simulation(
+            algorithm_train_simulation_creation_arguments=algorithm_train_simulation_creation_arguments
+        )
 
         self.assertIsNone(response)
 

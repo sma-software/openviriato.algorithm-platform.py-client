@@ -2,6 +2,7 @@ from enum import Enum, unique
 from typing import List, Optional
 from datetime import datetime, timedelta
 
+from py_client.aidm import TimeWindow
 from py_client.aidm.aidm_base_classes import _HasID
 
 
@@ -162,3 +163,37 @@ class AlgorithmTrainSimulationRealizationForecast:
     @property
     def unrealizable_events(self) -> List[AlgorithmTrainSimulationUnrealizableEvent]:
         return self.__unrealizable_events
+
+
+class AlgorithmTrainSimulationPerimeter:
+    __node_ids: List[int]
+
+    def __init__(self, node_ids: List[int]):
+        self.__node_ids = node_ids
+
+    @property
+    def node_ids(self) -> List[int]:
+        return self.__node_ids
+
+
+class AlgorithmTrainSimulationCreationArguments:
+    __ignore_timetable_conflicts: bool
+    __perimeter: AlgorithmTrainSimulationPerimeter
+    __time_window: TimeWindow
+
+    def __init__(self, ignore_timetable_conflicts: bool, time_window: TimeWindow, perimeter: AlgorithmTrainSimulationPerimeter):
+        self.__time_window = time_window
+        self.__perimeter = perimeter
+        self.__ignore_timetable_conflicts = ignore_timetable_conflicts
+
+    @property
+    def ignore_timetable_conflicts(self) -> bool:
+        return self.__ignore_timetable_conflicts
+
+    @property
+    def perimeter(self) -> AlgorithmTrainSimulationPerimeter:
+        return self.__perimeter
+
+    @property
+    def time_window(self) -> TimeWindow:
+        return self.__time_window

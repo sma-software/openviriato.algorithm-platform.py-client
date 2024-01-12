@@ -22,6 +22,41 @@ def _parse_arguments_from_command_line_arguments() -> ReleaseBuildArguments:
     return ReleaseBuildArgumentsFactory().create_instance_from_dictionary(command_line_arguments)
 
 
+def execute_stage_unit_test_py_client(release_build_arguments: ReleaseBuildArguments) -> None:
+    printf("Creating testing environment")
+    create_or_reinstall_python_environment(absolute_or_relative_path_new_venv=ReleaseBuildConstants.PATH_TO_TESTING_PYTHON_ENVIRONMENT)
+    if ReleaseBuildConstants.UPDATE_PIP_IN_TESTING_PYTHON_ENVIRONMENT:
+        update_pip_in_python_environment(
+            absolute_or_relative_path_to_venv_activate_script=ReleaseBuildConstants.PATH_TO_TESTING_PYTHON_ENVIRONMENT_ACTIVATE_SCRIPT
+        )
+
+    printf("Step: installing required packages into testing")
+    pip_packages_install_process = subprocess.run(ReleaseBuildConstants.COMMAND_INSTALL_PACKAGES_FOR_TESTING_PYTHON_ENVIRONMENT, shell=True)
+    if pip_packages_install_process.returncode != 0:
+        raise Exception("stage_unit_test: could not install all packages.")
+
+    printf("Start Unit tests. The following output is from the unit test runner:")
+    process_result_end_to_end_tests = subprocess.run(
+        ReleaseBuildConstants.COMMAND_EXECUTE_UNIT_TESTS,
+        shell=True,
+        cwd=ReleaseBuildConstants.PY_CLIENT_ROOT_DIRECTORY,
+    )
+    if process_result_end_to_end_tests.returncode != 0:
+        raise Exception(f"Executing Unittests threw an Error. See above.")
+
+    printf("Step: checking success")
+    file_path_unittest_result = os.path.join(ReleaseBuildConstants.OUTPUT_DIRECTORY, f"{ReleaseBuildConstants.FILE_NAME_UNIT_TEST_REPORT}.html")
+    if not os.path.isfile(file_path_unittest_result):
+        raise Exception(f"Unit test result: expected file does NOT exist: {file_path_unittest_result}")
+
+    printf("Step: scanning for erroneous or failed tests")
+    if is_string_in_file_content("Fail</span>", file_path_unittest_result):
+        raise Exception(f"Unit test result: Found failed unit test in: {file_path_unittest_result}")
+    if is_string_in_file_content("Error</span>", file_path_unittest_result):
+        raise Exception(f"Unit test result: Found erroneous unit test in: {file_path_unittest_result}")
+    printf("Unit test result: All Unit tests passed.")
+
+
 def execute_stage_create_whl_package(release_build_arguments: ReleaseBuildArguments) -> None:
     printf("Creating environment")
     create_or_reinstall_python_environment(absolute_or_relative_path_new_venv=ReleaseBuildConstants.PATH_TO_RELEASE_PACKING_PYTHON_ENVIRONMENT)
@@ -31,7 +66,7 @@ def execute_stage_create_whl_package(release_build_arguments: ReleaseBuildArgume
         )
 
     printf("Pip packages install output: ")
-    pip_packages_install_process = subprocess.run(ReleaseBuildConstants.COMMAND_PACKAGES_INSTALL_FOR_PYTHON_ENVIRONMENT_RELEASE_PACKING, shell=True)
+    pip_packages_install_process = subprocess.run(ReleaseBuildConstants.COMMAND_INSTALL_PACKAGES_FOR_PYTHON_ENVIRONMENT_RELEASE_PACKING, shell=True)
     if pip_packages_install_process.returncode != 0:
         raise Exception("stage_create_whl_package: could not install all packages.")
 
@@ -169,6 +204,8 @@ def main():
             execute_stage_performing_end_to_end_test(release_build_arguments=release_build_arguments)
         case JobStage.create_whl_package:
             execute_stage_create_whl_package(release_build_arguments=release_build_arguments)
+        case JobStage.unit_test_py_client:
+            execute_stage_unit_test_py_client(release_build_arguments=release_build_arguments)
         case _:
             raise NotImplementedError(f"The step {release_build_arguments.job_stage} is not implemented.")
 

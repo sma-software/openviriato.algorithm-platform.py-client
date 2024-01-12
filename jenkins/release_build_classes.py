@@ -9,6 +9,7 @@ class JobStage(Enum):
     prepare_artifacts = "PREPARE-ARTIFACTS"
     check_out_and_aggregate_data_for_end_to_end_test = "CHECK-OUT-AND-AGGREGATE-DATA-FOR-END-TO-END-TEST"
     create_whl_package = "CREATE-WHL-PACKAGE"
+    unit_test_py_client = "UNIT-TEST-PY-CLIENT"
 
     def __str__(self):
         return self.value
@@ -18,6 +19,7 @@ class ReleaseBuildConstants:
     # ToDo VPLAT-10906: See if we can derive more constants from each other
     OUTPUT_DIRECTORY = "output"
     DATABASE_DIRECTORY = "database"
+    PY_CLIENT_ROOT_DIRECTORY = "algorithmplatform.pyclient"
 
     URL_JENKINS_ADDRESS = "https://jenkins.sma-partner.com"
 
@@ -25,10 +27,8 @@ class ReleaseBuildConstants:
     PATH_REMOTE_DIRECTORY_DATABASES = r"\\ZHFAS01A\\Entwicklung\Jenkins\JobData\PyClient-End2EndTests-Labs"
 
     REQUIREMENTS_FILE_WITH_PATH_PY_CLIENT = "algorithmplatform.pyclient/py_client/py_client_requirements.txt"
-    REQUIREMENTS_FILE_WITH_PATH_PY_CLIENT_UNIT_TEST = "py_client/py_client_unit_tests_requirements.txt"
+    REQUIREMENTS_FILE_WITH_PATH_PY_CLIENT_UNIT_TEST = "algorithmplatform.pyclient\\py_client\\py_client_unit_tests_requirements.txt"
     REQUIREMENTS_FILE_WITH_PATH_END_TO_END_TEST_TOOL = "end_to_end_tests_tool/end_to_end_test_tool_requirements.txt"
-
-    FILE_NAME_UNIT_TEST_REPORT = "test_results"
 
     NAME_AND_VERSION_WHEEL_PIP_PACKAGE = "wheel~=0.35.1"
     # ToDo VPLAT-10906: Make Update Pip optional commandline argument; check if other commandline arguments can be optional as well
@@ -37,7 +37,7 @@ class ReleaseBuildConstants:
     PATH_TO_RELEASE_PACKING_PYTHON_ENVIRONMENT = "algorithmplatform.pyclient\\packaging_env"
     PATH_TO_RELEASE_PACKING_PYTHON_ENVIRONMENT_ACTIVATE_SCRIPT = "algorithmplatform.pyclient\\packaging_env\\Scripts\\activate.bat"
     FILE_PATH_SOURCE_LICENSES_PY_CLIENT = "algorithmplatform.pyclient\\jenkins\\packaging\\algorithmplatform.pyclient.licenses.txt"
-    COMMAND_PACKAGES_INSTALL_FOR_PYTHON_ENVIRONMENT_RELEASE_PACKING = f"{PATH_TO_RELEASE_PACKING_PYTHON_ENVIRONMENT_ACTIVATE_SCRIPT} && pip install {NAME_AND_VERSION_WHEEL_PIP_PACKAGE} --no-cache-dir && pip install -r {REQUIREMENTS_FILE_WITH_PATH_PY_CLIENT} --no-cache-dir"
+    COMMAND_INSTALL_PACKAGES_FOR_PYTHON_ENVIRONMENT_RELEASE_PACKING = f"{PATH_TO_RELEASE_PACKING_PYTHON_ENVIRONMENT_ACTIVATE_SCRIPT} && pip install {NAME_AND_VERSION_WHEEL_PIP_PACKAGE} --no-cache-dir && pip install -r {REQUIREMENTS_FILE_WITH_PATH_PY_CLIENT} --no-cache-dir"
     RELATIVE_PATH_TO_ACTIVATION_SCRIPT_OF_PYTHON_ENVIRONMENT_RELEASE_PACKING_FOR_CREATE_PACKAGE_EXECUTABLE = os.path.join(
         "..", "..", "..", PATH_TO_RELEASE_PACKING_PYTHON_ENVIRONMENT_ACTIVATE_SCRIPT
     )
@@ -45,6 +45,15 @@ class ReleaseBuildConstants:
     RELATIVE_PATH_TO_OUTPUT_DIRECTORY_FOR_CREATE_PACKAGE_EXECUTABLE = os.path.join("..", "..", "..", OUTPUT_DIRECTORY)
     RELATIVE_PATH_TO_PROJECT_ROOT_DIRECTORY_FOR_CREATE_PACKAGE_EXECUTABLE = "..\\.."
     PATH_TO_CREATE_PACKAGE_EXECUTABLE = "call python create_release_package.py"
+
+    UPDATE_PIP_IN_TESTING_PYTHON_ENVIRONMENT = False
+    PATH_TO_TESTING_PYTHON_ENVIRONMENT = f"{PY_CLIENT_ROOT_DIRECTORY}\\testing_venv"
+    PATH_TO_TESTING_PYTHON_ENVIRONMENT_ACTIVATE_SCRIPT = f"{PATH_TO_TESTING_PYTHON_ENVIRONMENT}\\Scripts\\activate.bat"
+    PATH_TO_TESTING_PYTHON_ENVIRONMENT_DEACTIVATE_SCRIPT_FROM_PYCLIENT_DIRECTORY = f"..\\{PATH_TO_TESTING_PYTHON_ENVIRONMENT}\\Scripts\\deactivate.bat"
+    PATH_TO_UNIT_TESTS_EXECUTABLE_FROM_PYCLIENT_ROOT_DIRECTORY = "jenkins\\run_all_unittests_and_generate_html_report.py"
+    FILE_NAME_UNIT_TEST_REPORT = "test_results"
+    COMMAND_INSTALL_PACKAGES_FOR_TESTING_PYTHON_ENVIRONMENT = f"{PATH_TO_TESTING_PYTHON_ENVIRONMENT_ACTIVATE_SCRIPT} && pip install -r {REQUIREMENTS_FILE_WITH_PATH_PY_CLIENT} --no-cache-dir && pip install -r {REQUIREMENTS_FILE_WITH_PATH_PY_CLIENT_UNIT_TEST} --no-cache-dir"
+    COMMAND_EXECUTE_UNIT_TESTS = f"{os.path.join('..', PATH_TO_TESTING_PYTHON_ENVIRONMENT_ACTIVATE_SCRIPT)} && {PATH_TO_UNIT_TESTS_EXECUTABLE_FROM_PYCLIENT_ROOT_DIRECTORY} . {os.path.join('..', OUTPUT_DIRECTORY)} {FILE_NAME_UNIT_TEST_REPORT} && {PATH_TO_TESTING_PYTHON_ENVIRONMENT_DEACTIVATE_SCRIPT_FROM_PYCLIENT_DIRECTORY} "
 
     PATH_CALL_FILES_DIRECTORY_FROM_VIRIATO_ROOT = "data\\AlgorithmPlatformService.RestSamples\\calls"
     PATH_TO_END_TO_END_TEST_REPORT_FILE = os.path.join(OUTPUT_DIRECTORY, "end_to_end_test_results.txt")

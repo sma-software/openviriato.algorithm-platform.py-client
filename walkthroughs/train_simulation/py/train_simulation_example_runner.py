@@ -8,6 +8,7 @@ from py_client.aidm import (
     TimeWindow,
     StopStatus,
     AlgorithmTrainPathNode,
+    AlgorithmTrainSimulationCreationArguments,
 )
 from py_client.algorithm_interface.algorithm_interface import AlgorithmInterface
 from dispatcher_factory import DispatcherFactory
@@ -15,9 +16,10 @@ from dispatcher_factory import DispatcherFactory
 
 def run(api_url: str) -> None:
     with algorithm_interface_factory.create(api_url) as algorithm_interface:
-        # @start_simulation[:2]
+        # @start_simulation[:3]
         time_window = algorithm_interface.get_time_window_algorithm_parameter("trainSimulationTimeWindow")
-        algorithm_interface.create_train_simulation(time_window)
+        algorithm_train_simulation_creation_arguments = AlgorithmTrainSimulationCreationArguments(time_window=time_window)
+        algorithm_interface.create_train_simulation(algorithm_train_simulation_creation_arguments=algorithm_train_simulation_creation_arguments)
 
         dispatcher = DispatcherFactory(algorithm_interface).create_dispatcher()
         if dispatcher is None:
@@ -38,15 +40,16 @@ def run(api_url: str) -> None:
 # @persisting_updated_trains[:]
 def _persist_updated_trains(algorithm_interface: AlgorithmInterface, time_window: TimeWindow) -> None:
     all_trains = algorithm_interface.get_trains(time_window)
-    all_train_simulation_events = algorithm_interface.get_train_simulation_trains()
+    all_train_simulations_trains = algorithm_interface.get_train_simulation_trains()
 
     realized_arrival_times_by_tpn_id = dict()
     realized_departure_times_by_tpn_id = dict()
-    for event in all_train_simulation_events:
-        if event.type == AlgorithmTrainSimulationEventType.passing or event.type == AlgorithmTrainSimulationEventType.arrival:
-            realized_arrival_times_by_tpn_id[event.algorithm_train_path_node_id] = event.forecast_time
-        if event.type == AlgorithmTrainSimulationEventType.passing or event.type == AlgorithmTrainSimulationEventType.departure:
-            realized_departure_times_by_tpn_id[event.algorithm_train_path_node_id] = event.forecast_time
+    for simulation_train in all_train_simulations_trains:
+        for event in simulation_train.events:
+            if event.type == AlgorithmTrainSimulationEventType.passing or event.type == AlgorithmTrainSimulationEventType.arrival:
+                realized_arrival_times_by_tpn_id[event.algorithm_train_path_node_id] = event.forecast_time
+            if event.type == AlgorithmTrainSimulationEventType.passing or event.type == AlgorithmTrainSimulationEventType.departure:
+                realized_departure_times_by_tpn_id[event.algorithm_train_path_node_id] = event.forecast_time
 
     for train in all_trains:
         updated_train_path_nodes = []

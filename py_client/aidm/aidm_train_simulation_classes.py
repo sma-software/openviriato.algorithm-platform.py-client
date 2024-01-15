@@ -1,3 +1,4 @@
+from __future__ import annotations
 from enum import Enum, unique
 from typing import List, Optional
 from datetime import datetime, timedelta
@@ -181,10 +182,18 @@ class AlgorithmTrainSimulationCreationArguments:
     __perimeter: AlgorithmTrainSimulationPerimeter
     __time_window: TimeWindow
 
-    def __init__(self, ignore_timetable_conflicts: bool, time_window: TimeWindow, perimeter: AlgorithmTrainSimulationPerimeter):
+    def __init__(self, time_window: TimeWindow, ignore_timetable_conflicts: bool = None, perimeter: AlgorithmTrainSimulationPerimeter = None):
         self.__time_window = time_window
         self.__perimeter = perimeter
         self.__ignore_timetable_conflicts = ignore_timetable_conflicts
+
+    def with_ignore_timetable_conflicts(self, ignore_timetable_conflicts: bool) -> AlgorithmTrainSimulationCreationArguments:
+        self.__ignore_timetable_conflicts = ignore_timetable_conflicts
+        return self
+
+    def with_perimeter(self, perimeter: AlgorithmTrainSimulationPerimeter) -> AlgorithmTrainSimulationCreationArguments:
+        self.__perimeter = perimeter
+        return self
 
     @property
     def ignore_timetable_conflicts(self) -> bool:

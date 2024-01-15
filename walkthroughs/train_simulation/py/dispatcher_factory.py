@@ -88,7 +88,7 @@ class DispatcherFactory:
         simulation_event = next((simulation_event for simulation_event in simulation_events if simulation_event.algorithm_train_id == train.id), None)
         if simulation_event is None:
             self._algorithm_interface.notify_user(
-                WALKTHROUGH_NAME, "Cannot retrieve the train {} in the simulation. Pick a train within the time window of the simulation.".format(train.Code)
+                WALKTHROUGH_NAME, "Cannot retrieve the train {} in the simulation. Pick a train within the time window of the simulation.".format(train.code)
             )
             return None
         return simulation_event

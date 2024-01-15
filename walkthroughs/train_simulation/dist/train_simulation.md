@@ -55,10 +55,11 @@ or one passing event is created for the simulation.
 
 ```python
 time_window = algorithm_interface.get_time_window_algorithm_parameter("trainSimulationTimeWindow")
-algorithm_interface.create_train_simulation(time_window)
+algorithm_train_simulation_creation_arguments = AlgorithmTrainSimulationCreationArguments(time_window=time_window)
+algorithm_interface.create_train_simulation(algorithm_train_simulation_creation_arguments=algorithm_train_simulation_creation_arguments)
 
 ```
-Code listing: _Starting a simulation in a given time window_. ([Lines: 19 - 20 from file: _train_simulation_example_runner.py_](../../../walkthroughs/train_simulation/py/train_simulation_example_runner.py#L19-L20)).
+Code listing: _Starting a simulation in a given time window_. ([Lines: 20 - 22 from file: _train_simulation_example_runner.py_](../../../walkthroughs/train_simulation/py/train_simulation_example_runner.py#L20-L22)).
 
 We can retrieve the first executable [AlgorithmTrainSimulationEvent](../../../py_client/aidm/aidm_train_simulation_classes.py) from the Algorithm Interface by using the method 
 [get_next_train_simulation_event(...)](../../../py_client/algorithm_interface/algorithm_interface.py#L645-L645). 
@@ -75,7 +76,7 @@ while realization_forecast.next_realizable_event is not None:
     realization_forecast = dispatcher.make_decision_for_event(realization_forecast.next_realizable_event)
 
 ```
-Code listing: _Main loop to control the simulation_. ([Lines: 27 - 30 from file: _train_simulation_example_runner.py_](../../../walkthroughs/train_simulation/py/train_simulation_example_runner.py#L27-L30)).
+Code listing: _Main loop to control the simulation_. ([Lines: 29 - 32 from file: _train_simulation_example_runner.py_](../../../walkthroughs/train_simulation/py/train_simulation_example_runner.py#L29-L32)).
 
 ## Dispatchers
 A dispatcher makes for each step of the simulation a decision of what to do with an event. We use an abstract class with a method 
@@ -241,15 +242,16 @@ The user can visualize them in all Viriato views.
 ```python
 def _persist_updated_trains(algorithm_interface: AlgorithmInterface, time_window: TimeWindow) -> None:
     all_trains = algorithm_interface.get_trains(time_window)
-    all_train_simulation_events = algorithm_interface.get_train_simulation_trains()
+    all_train_simulations_trains = algorithm_interface.get_train_simulation_trains()
 
     realized_arrival_times_by_tpn_id = dict()
     realized_departure_times_by_tpn_id = dict()
-    for event in all_train_simulation_events:
-        if event.type == AlgorithmTrainSimulationEventType.passing or event.type == AlgorithmTrainSimulationEventType.arrival:
-            realized_arrival_times_by_tpn_id[event.algorithm_train_path_node_id] = event.forecast_time
-        if event.type == AlgorithmTrainSimulationEventType.passing or event.type == AlgorithmTrainSimulationEventType.departure:
-            realized_departure_times_by_tpn_id[event.algorithm_train_path_node_id] = event.forecast_time
+    for simulation_train in all_train_simulations_trains:
+        for event in simulation_train.events:
+            if event.type == AlgorithmTrainSimulationEventType.passing or event.type == AlgorithmTrainSimulationEventType.arrival:
+                realized_arrival_times_by_tpn_id[event.algorithm_train_path_node_id] = event.forecast_time
+            if event.type == AlgorithmTrainSimulationEventType.passing or event.type == AlgorithmTrainSimulationEventType.departure:
+                realized_departure_times_by_tpn_id[event.algorithm_train_path_node_id] = event.forecast_time
 
     for train in all_trains:
         updated_train_path_nodes = []
@@ -273,7 +275,7 @@ def _persist_updated_trains(algorithm_interface: AlgorithmInterface, time_window
 
 
 ```
-Code listing: _Writing back the result of the simulation_. ([Lines: 39 - 70 from file: _train_simulation_example_runner.py_](../../../walkthroughs/train_simulation/py/train_simulation_example_runner.py#L39-L70)).
+Code listing: _Writing back the result of the simulation_. ([Lines: 41 - 73 from file: _train_simulation_example_runner.py_](../../../walkthroughs/train_simulation/py/train_simulation_example_runner.py#L41-L73)).
 
 ## Conclusion
 Throughout this walkthrough we have presented how to create a simulation for a given scenario using the Algorithm Interface and how to implement different dispatching 

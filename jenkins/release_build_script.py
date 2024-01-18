@@ -26,19 +26,16 @@ def execute_stage_unit_test_py_client(release_build_arguments: ReleaseBuildArgum
     printf("Creating testing environment")
     create_or_reinstall_python_environment(absolute_or_relative_path_new_venv=ReleaseBuildConstants.PATH_TO_TESTING_PYTHON_ENVIRONMENT)
     if ReleaseBuildConstants.UPDATE_PIP_IN_TESTING_PYTHON_ENVIRONMENT:
-        update_pip_in_python_environment(
-            absolute_or_relative_path_to_venv_activate_script=ReleaseBuildConstants.PATH_TO_TESTING_PYTHON_ENVIRONMENT_ACTIVATE_SCRIPT
-        )
+        update_pip_in_python_environment(absolute_path_to_python_exe=ReleaseBuildConstants.ABSOLUTE_PATH_TO_PYTHON_EXE_TESTING_PYTHON_ENVIRONMENT)
 
     printf("Step: installing required packages into testing")
-    pip_packages_install_process = subprocess.run(ReleaseBuildConstants.COMMAND_INSTALL_PACKAGES_FOR_TESTING_PYTHON_ENVIRONMENT, shell=True)
+    pip_packages_install_process = subprocess.run(ReleaseBuildConstants.COMMAND_INSTALL_PACKAGES_FOR_TESTING_PYTHON_ENVIRONMENT)
     if pip_packages_install_process.returncode != 0:
         raise Exception("stage_unit_test: could not install all packages.")
 
     printf("Start Unit tests. The following output is from the unit test runner:")
     process_result_end_to_end_tests = subprocess.run(
         ReleaseBuildConstants.COMMAND_EXECUTE_UNIT_TESTS,
-        shell=True,
         cwd=ReleaseBuildConstants.PY_CLIENT_ROOT_DIRECTORY,
     )
     if process_result_end_to_end_tests.returncode != 0:
@@ -61,18 +58,22 @@ def execute_stage_create_whl_package(release_build_arguments: ReleaseBuildArgume
     printf("Creating environment")
     create_or_reinstall_python_environment(absolute_or_relative_path_new_venv=ReleaseBuildConstants.PATH_TO_RELEASE_PACKING_PYTHON_ENVIRONMENT)
     if ReleaseBuildConstants.UPDATE_PIP_IN_RELEASE_PACKAGING_PYTHON_ENVIRONMENT:
-        update_pip_in_python_environment(
-            absolute_or_relative_path_to_venv_activate_script=ReleaseBuildConstants.PATH_TO_RELEASE_PACKING_PYTHON_ENVIRONMENT_ACTIVATE_SCRIPT
-        )
+        update_pip_in_python_environment(absolute_path_to_python_exe=ReleaseBuildConstants.ABSOLUTE_PATH_TO_PYTHON_EXE_PACKING_PYTHON_ENVIRONMENT)
+
+    printf("Pip install wheel output: ")
+    pip_wheel_install_process = subprocess.run(ReleaseBuildConstants.COMMAND_INSTALL_WHEEL_PACKAGE_FOR_PYTHON_ENVIRONMENT_RELEASE_PACKING)
+    if pip_wheel_install_process.returncode != 0:
+        raise Exception("stage_create_whl_package: could not install wheel package.")
 
     printf("Pip packages install output: ")
-    pip_packages_install_process = subprocess.run(ReleaseBuildConstants.COMMAND_INSTALL_PACKAGES_FOR_PYTHON_ENVIRONMENT_RELEASE_PACKING, shell=True)
+    pip_packages_install_process = subprocess.run(ReleaseBuildConstants.COMMAND_INSTALL_PACKAGES_FOR_PYTHON_ENVIRONMENT_RELEASE_PACKING)
     if pip_packages_install_process.returncode != 0:
         raise Exception("stage_create_whl_package: could not install all packages.")
 
     printf("Creating release package")
+    printf(release_build_arguments.command_create_release_package)
     create_release_package_process = subprocess.run(
-        release_build_arguments.command_create_release_package, shell=True, cwd=ReleaseBuildConstants.PATH_TO_RELEASE_PACKING_SCRIPT_FOLDER
+        release_build_arguments.command_create_release_package, cwd=ReleaseBuildConstants.PATH_TO_RELEASE_PACKING_SCRIPT_FOLDER
     )
     if create_release_package_process.returncode != 0:
         raise Exception("stage_create_whl_package: create_release_package_process could not create wheel package.")
@@ -131,7 +132,6 @@ def execute_stage_performing_end_to_end_test(release_build_arguments: ReleaseBui
             os.path.join(ReleaseBuildConstants.DATABASE_DIRECTORY, ReleaseBuildConstants.FILE_NAME_SAMPLES_DATABASE),
             os.path.join("..", ReleaseBuildConstants.PATH_TO_END_TO_END_TEST_REPORT_FILE),
         ],
-        shell=True,
         cwd=ReleaseBuildConstants.FOLDER_NAME_END_TO_END_TESTS_TOOL_ROOT,
     )
     if process_result_end_to_end_tests.returncode != 0:

@@ -82,8 +82,8 @@ def create_or_reinstall_python_environment(absolute_or_relative_path_new_venv: s
     )
 
 
-def update_pip_in_python_environment(absolute_or_relative_path_to_venv_activate_script: str) -> None:
-    pip_update_commands = f"{absolute_or_relative_path_to_venv_activate_script} && python -m pip install --upgrade pip --no-cache-dir"
-    pip_update_process = subprocess.run(pip_update_commands, shell=True)
+def update_pip_in_python_environment(absolute_path_to_python_exe: str) -> None:
+    pip_update_commands = f"{absolute_path_to_python_exe} -m pip install --upgrade pip --no-cache-dir"
+    pip_update_process = subprocess.run(pip_update_commands)
     if pip_update_process.returncode != 0:
-        raise Exception(f"Could not update pip in venv: {absolute_or_relative_path_to_venv_activate_script}")
+        raise Exception(f"Could not update pip for python interpreter: {absolute_path_to_python_exe}")

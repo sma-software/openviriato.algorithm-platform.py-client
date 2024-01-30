@@ -4,12 +4,12 @@ set BUILDTOOL=python algorithmplatform.pyclient\\jenkins\\release_build_script.p
 set PY_CLIENT_REQUIREMENTS_FILE_WITH_PATH=algorithmplatform.pyclient\\jenkins\\release_build_requirements.txt
 set ACTIVATE_VENV_BAT_SCRIPT=venv_jenkins_build_job\\Scripts\\activate.bat
 
-if "%7" == "" (
-    if "%6" neq "" goto stages
+if "%8" == "" (
+    if "%7" neq "" goto stages
 )
 
-echo "USAGE: algorithmplatform.pyclient\jenkins\build.release.bat [STAGE] [RELEASE-BRANCH] [ALGORITHM-PLATFORM-RELEASE-TARGET-VERSION] [STD-ALGORITHM-RESEARCH-RELEASE-CREATE-PACKAGE-BUILD-NUMBER] [STD-NIGHTLY-STABLE-BUILD-NUMBER] [BUILD-NUMBER]
-echo "Example call: algorithmplatform.pyclient\jenkins\build.release.bat CHECK-OUT-AND-AGGREGATE-DATA-FOR-END-TO-END-TEST Product-43 8.43.33 33 29 1"
+echo "USAGE: algorithmplatform.pyclient\jenkins\build.release.bat [STAGE] [RELEASE-BRANCH] [ALGORITHM-PLATFORM-RELEASE-TARGET-VERSION] [STD-ALGORITHM-RESEARCH-RELEASE-CREATE-PACKAGE-BUILD-NUMBER] [STD-NIGHTLY-STABLE-BUILD-NUMBER] [BUILD-NUMBER] [UPDATE-PIP]
+echo "Example call: algorithmplatform.pyclient\jenkins\build.release.bat CHECK-OUT-AND-AGGREGATE-DATA-FOR-END-TO-END-TEST Product-43 8.43.33 33 29 1 false"
 exit /b 1
 
 
@@ -33,7 +33,7 @@ echo "Step: activating local environment"
 call %ACTIVATE_VENV_BAT_SCRIPT%
 
 echo "Executing stage."
-%BUILDTOOL% --STAGE=%1 --RELEASE-BRANCH=%2 --ALGORITHM-PLATFORM-RELEASE-TARGET-VERSION=%3 --STD-ALGORITHM-RESEARCH-RELEASE-CREATE-PACKAGE-BUILD-NUMBER=%4 --STD-NIGHTLY-STABLE-BUILD-NUMBER=%5 --BUILD-NUMBER=%6
+%BUILDTOOL% --STAGE=%1 --RELEASE-BRANCH=%2 --ALGORITHM-PLATFORM-RELEASE-TARGET-VERSION=%3 --STD-ALGORITHM-RESEARCH-RELEASE-CREATE-PACKAGE-BUILD-NUMBER=%4 --STD-NIGHTLY-STABLE-BUILD-NUMBER=%5 --BUILD-NUMBER=%6 --UPDATE-PIP=%7
 
 if %ERRORLEVEL% neq 0 (
     echo "An error occurred during executing the stage."

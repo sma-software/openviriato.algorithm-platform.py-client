@@ -24,8 +24,8 @@ def _parse_arguments_from_command_line_arguments() -> ReleaseBuildArguments:
 
 def execute_stage_unit_test_py_client(release_build_arguments: ReleaseBuildArguments) -> None:
     printf("Creating testing environment")
-    create_or_reinstall_python_environment(absolute_or_relative_path_new_venv=ReleaseBuildConstants.PATH_TO_TESTING_PYTHON_ENVIRONMENT)
-    if ReleaseBuildConstants.UPDATE_PIP_IN_TESTING_PYTHON_ENVIRONMENT:
+    create_or_reinstall_python_environment(absolute_or_relative_path_new_venv=ReleaseBuildConstants.ABSOLUTE_PATH_TO_TESTING_PYTHON_ENVIRONMENT)
+    if release_build_arguments.update_pip:
         update_pip_in_python_environment(absolute_path_to_python_exe=ReleaseBuildConstants.ABSOLUTE_PATH_TO_PYTHON_EXE_TESTING_PYTHON_ENVIRONMENT)
 
     printf("Step: installing required packages into testing")
@@ -36,28 +36,27 @@ def execute_stage_unit_test_py_client(release_build_arguments: ReleaseBuildArgum
     printf("Start Unit tests. The following output is from the unit test runner:")
     process_result_end_to_end_tests = subprocess.run(
         ReleaseBuildConstants.COMMAND_EXECUTE_UNIT_TESTS,
-        cwd=ReleaseBuildConstants.PY_CLIENT_ROOT_DIRECTORY,
+        cwd=ReleaseBuildConstants.ABSOLUTE_PATH_PY_CLIENT_ROOT_DIRECTORY,
     )
     if process_result_end_to_end_tests.returncode != 0:
         raise Exception(f"Executing Unittests threw an Error. See above.")
 
     printf("Step: checking success")
-    file_path_unittest_result = os.path.join(ReleaseBuildConstants.OUTPUT_DIRECTORY, f"{ReleaseBuildConstants.FILE_NAME_UNIT_TEST_REPORT}.html")
-    if not os.path.isfile(file_path_unittest_result):
-        raise Exception(f"Unit test result: expected file does NOT exist: {file_path_unittest_result}")
+    if not os.path.isfile(ReleaseBuildConstants.ABSOLUTE_FILE_PATH_UNITTEST_RESULT):
+        raise Exception(f"Unit test result: expected file does NOT exist: {ReleaseBuildConstants.ABSOLUTE_FILE_PATH_UNITTEST_RESULT}")
 
     printf("Step: scanning for erroneous or failed tests")
-    if is_string_in_file_content("Fail</span>", file_path_unittest_result):
-        raise Exception(f"Unit test result: Found failed unit test in: {file_path_unittest_result}")
-    if is_string_in_file_content("Error</span>", file_path_unittest_result):
-        raise Exception(f"Unit test result: Found erroneous unit test in: {file_path_unittest_result}")
+    if is_string_in_file_content("Fail</span>", ReleaseBuildConstants.ABSOLUTE_FILE_PATH_UNITTEST_RESULT):
+        raise Exception(f"Unit test result: Found failed unit test in: {ReleaseBuildConstants.ABSOLUTE_FILE_PATH_UNITTEST_RESULT}")
+    if is_string_in_file_content("Error</span>", ReleaseBuildConstants.ABSOLUTE_FILE_PATH_UNITTEST_RESULT):
+        raise Exception(f"Unit test result: Found erroneous unit test in: {ReleaseBuildConstants.ABSOLUTE_FILE_PATH_UNITTEST_RESULT}")
     printf("Unit test result: All Unit tests passed.")
 
 
 def execute_stage_create_whl_package(release_build_arguments: ReleaseBuildArguments) -> None:
     printf("Creating environment")
-    create_or_reinstall_python_environment(absolute_or_relative_path_new_venv=ReleaseBuildConstants.PATH_TO_RELEASE_PACKING_PYTHON_ENVIRONMENT)
-    if ReleaseBuildConstants.UPDATE_PIP_IN_RELEASE_PACKAGING_PYTHON_ENVIRONMENT:
+    create_or_reinstall_python_environment(absolute_or_relative_path_new_venv=ReleaseBuildConstants.ABSOLUTE_PATH_TO_RELEASE_PACKING_PYTHON_ENVIRONMENT)
+    if release_build_arguments.update_pip:
         update_pip_in_python_environment(absolute_path_to_python_exe=ReleaseBuildConstants.ABSOLUTE_PATH_TO_PYTHON_EXE_PACKING_PYTHON_ENVIRONMENT)
 
     printf("Pip install wheel output: ")
@@ -73,32 +72,32 @@ def execute_stage_create_whl_package(release_build_arguments: ReleaseBuildArgume
     printf("Creating release package")
     printf(release_build_arguments.command_create_release_package)
     create_release_package_process = subprocess.run(
-        release_build_arguments.command_create_release_package, cwd=ReleaseBuildConstants.PATH_TO_RELEASE_PACKING_SCRIPT_FOLDER
+        release_build_arguments.command_create_release_package, cwd=ReleaseBuildConstants.ABSOLUTE_PATH_TO_RELEASE_PACKING_SCRIPT_FOLDER
     )
     if create_release_package_process.returncode != 0:
         raise Exception("stage_create_whl_package: create_release_package_process could not create wheel package.")
 
     printf("copying py_client licenses file")
     copy_file_and_return_file_path(
-        source_path=ReleaseBuildConstants.FILE_PATH_SOURCE_LICENSES_PY_CLIENT, target_directory=ReleaseBuildConstants.OUTPUT_DIRECTORY
+        source_path=ReleaseBuildConstants.ABSOLUTE_FILE_PATH_SOURCE_LICENSES_PY_CLIENT, target_directory=ReleaseBuildConstants.ABSOLUTE_PATH_OUTPUT_DIRECTORY
     )
 
 
 def execute_stage_check_out_and_aggregate_data_for_end_to_end_test(release_build_arguments: ReleaseBuildArguments):
-    if not os.path.exists(ReleaseBuildConstants.PATH_TO_END_TO_END_TEST_CALLS_FOLDER):
+    if not os.path.exists(ReleaseBuildConstants.ABSOLUTE_PATH_END_TO_END_TESTS_TOOL_ROOT_DIRECTORY):
         raise Exception(
-            f"Folder {os.path.abspath(ReleaseBuildConstants.PATH_TO_END_TO_END_TEST_CALLS_FOLDER)} does not exist but was expected to. "
+            f"Folder {ReleaseBuildConstants.ABSOLUTE_PATH_TO_END_TO_END_TEST_CALLS_FOLDER} does not exist but was expected to. "
             f"Did you check out the end-to-end test tool?"
         )
 
-    shutil.rmtree(ReleaseBuildConstants.PATH_TO_END_TO_END_TEST_CALLS_FOLDER)
-    printf("Deleted folder: ", os.path.abspath(ReleaseBuildConstants.PATH_TO_END_TO_END_TEST_CALLS_FOLDER))
+    shutil.rmtree(ReleaseBuildConstants.ABSOLUTE_PATH_TO_END_TO_END_TEST_CALLS_FOLDER)
+    printf("Deleted folder: ", ReleaseBuildConstants.ABSOLUTE_PATH_TO_END_TO_END_TEST_CALLS_FOLDER)
 
     zip_file_path_locally_copied_samples_db = copy_file_and_return_file_path(
-        source_path=release_build_arguments.path_to_samples_db_on_jenkins, target_directory=ReleaseBuildConstants.DATABASE_DIRECTORY
+        source_path=release_build_arguments.path_to_samples_db_on_jenkins, target_directory=ReleaseBuildConstants.ABSOLUTE_PATH_DATABASE_DIRECTORY
     )
-    extract_zip_file(zip_file_path_locally_copied_samples_db, target_directory=ReleaseBuildConstants.DATABASE_DIRECTORY)
-    printf(f"Copied and extracted end-to-end test database to {os.path.abspath(ReleaseBuildConstants.DATABASE_DIRECTORY)}")
+    extract_zip_file(zip_file_path_locally_copied_samples_db, target_directory=ReleaseBuildConstants.ABSOLUTE_PATH_DATABASE_DIRECTORY)
+    printf(f"Copied and extracted end-to-end test database to {ReleaseBuildConstants.ABSOLUTE_PATH_DATABASE_DIRECTORY}")
 
     zip_file_path_viriato_standard_nightly_stable_test = download_zip_and_return_file_path(
         url=release_build_arguments.url_viriato_standard_test_zip,
@@ -110,7 +109,7 @@ def execute_stage_check_out_and_aggregate_data_for_end_to_end_test(release_build
     )
     printf("Downloaded and extracted viriato to ", release_build_arguments.unzip_directory_viriato_nightly_stable)
 
-    shutil.copytree(release_build_arguments.root_directory_call_jsons, ReleaseBuildConstants.PATH_TO_END_TO_END_TEST_CALLS_FOLDER)
+    shutil.copytree(release_build_arguments.root_directory_call_jsons, ReleaseBuildConstants.ABSOLUTE_PATH_TO_END_TO_END_TEST_CALLS_FOLDER)
     printf("Copied call json files from nightly stable to end-to-end test tool.")
 
 
@@ -125,32 +124,33 @@ def execute_stage_performing_end_to_end_test(release_build_arguments: ReleaseBui
     # TODO VPLAT-10906: Derive paths correctly for end2end test tool script
     process_result_end_to_end_tests = subprocess.run(
         [
-            ReleaseBuildConstants.PATH_TO_EXECUTABLE_END_TO_END_TESTS,
-            str(ReleaseBuildConstants.UPDATE_PIP_IN_END_TO_END_TESTS_PYTHON_ENVIRONMENT).lower(),
+            ReleaseBuildConstants.ABSOLUTE_PATH_TO_EXECUTABLE_END_TO_END_TESTS,
+            str(release_build_arguments.update_pip).lower(),
             os.path.join("..", release_build_arguments.file_path_wheel_py_client),
             os.path.join("..", release_build_arguments.unzip_directory_viriato_nightly_stable),
-            os.path.join(ReleaseBuildConstants.DATABASE_DIRECTORY, ReleaseBuildConstants.FILE_NAME_SAMPLES_DATABASE),
-            os.path.join("..", ReleaseBuildConstants.PATH_TO_END_TO_END_TEST_REPORT_FILE),
+            ReleaseBuildConstants.RELATIVE_PATH_TO_SAMPLES_DATABASE,
+            ReleaseBuildConstants.PATH_TO_END_TO_END_TEST_REPORT_FILE_FROM_END_TO_END_TEST_TOOL,
         ],
-        cwd=ReleaseBuildConstants.FOLDER_NAME_END_TO_END_TESTS_TOOL_ROOT,
+        cwd=ReleaseBuildConstants.ABSOLUTE_PATH_END_TO_END_TESTS_TOOL_ROOT_DIRECTORY,
     )
     if process_result_end_to_end_tests.returncode != 0:
         raise Exception(
-            f"end_to_end_tests_tool threw an Error. Location: {ReleaseBuildConstants.PATH_TO_EXECUTABLE_END_TO_END_TESTS}. Arguments used: {process_result_end_to_end_tests.args}"
+            f"end_to_end_tests_tool threw an Error. Location: {ReleaseBuildConstants.ABSOLUTE_PATH_TO_END_TO_END_TEST_REPORT_FILE}. Arguments used: {process_result_end_to_end_tests.args}"
         )
     printf("End_to_end_tests_tool finished executing.")
 
-    if not os.path.isfile(ReleaseBuildConstants.PATH_TO_END_TO_END_TEST_REPORT_FILE):
+    if not os.path.isfile(ReleaseBuildConstants.ABSOLUTE_PATH_TO_END_TO_END_TEST_REPORT_FILE):
         raise Exception(
-            f"The end_to_end_tests_tool report file at {os.path.abspath(ReleaseBuildConstants.PATH_TO_END_TO_END_TEST_REPORT_FILE)} does not exist"
+            f"The end_to_end_tests_tool report file at {ReleaseBuildConstants.ABSOLUTE_PATH_TO_END_TO_END_TEST_REPORT_FILE} does not exist "
             f"but was expected to be created by the end_to_end_tests_tool. "
         )
 
     if not is_string_in_file_content(
-        search_string=ReleaseBuildConstants.SUCCESS_STRING_OF_END_TO_END_TESTS_TOOL, file_path=ReleaseBuildConstants.PATH_TO_END_TO_END_TEST_REPORT_FILE
+        search_string=ReleaseBuildConstants.SUCCESS_STRING_OF_END_TO_END_TESTS_TOOL,
+        file_path=ReleaseBuildConstants.ABSOLUTE_PATH_TO_END_TO_END_TEST_REPORT_FILE,
     ):
         raise Exception(
-            f"The end_to_end_tests_tool report file at {os.path.abspath(ReleaseBuildConstants.PATH_TO_END_TO_END_TEST_REPORT_FILE)} "
+            f"The end_to_end_tests_tool report file at {ReleaseBuildConstants.ABSOLUTE_PATH_TO_END_TO_END_TEST_REPORT_FILE} "
             f"shows that the End_to_end_tests_tool failed."
         )
 
@@ -158,15 +158,15 @@ def execute_stage_performing_end_to_end_test(release_build_arguments: ReleaseBui
 
 
 def execute_stage_preparing_artifacts(release_build_arguments: ReleaseBuildArguments) -> None:
-    if not os.path.isfile(ReleaseBuildConstants.FILE_PATH_LICENSES_PY_CLIENT):
-        raise Exception(f"LICENSE File {os.path.abspath(ReleaseBuildConstants.FILE_PATH_LICENSES_PY_CLIENT)} does not exist but was expected to.")
+    if not os.path.isfile(ReleaseBuildConstants.ABSOLUTE_FILE_PATH_LICENSES_PY_CLIENT):
+        raise Exception(f"LICENSE File {ReleaseBuildConstants.ABSOLUTE_FILE_PATH_LICENSES_PY_CLIENT} does not exist but was expected to.")
     if not os.path.isfile(release_build_arguments.file_path_wheel_py_client):
         raise Exception(f"WHEEL FILE {os.path.abspath(release_build_arguments.file_path_wheel_py_client)} does not exist but was expected to.")
 
     zip_file_path_algorithm_research_package = download_zip_and_return_file_path(
         url=release_build_arguments.release_url_algorithm_platform_research,
         filename=release_build_arguments.zip_file_name_algorithm_platform_research_release,
-        target_directory=ReleaseBuildConstants.OUTPUT_DIRECTORY,
+        target_directory=ReleaseBuildConstants.ABSOLUTE_PATH_OUTPUT_DIRECTORY,
     )
     printf("Downloaded the following zip: ", zip_file_path_algorithm_research_package)
 
@@ -182,9 +182,12 @@ def execute_stage_preparing_artifacts(release_build_arguments: ReleaseBuildArgum
         printf(f"Added file:{release_build_arguments.file_path_wheel_py_client} to the already existing zip: {zip_file_path_algorithm_research_package}.")
 
         algorithm_zip.write(
-            filename=ReleaseBuildConstants.FILE_PATH_LICENSES_PY_CLIENT, arcname=os.path.basename(ReleaseBuildConstants.FILE_PATH_LICENSES_PY_CLIENT)
+            filename=ReleaseBuildConstants.ABSOLUTE_FILE_PATH_LICENSES_PY_CLIENT,
+            arcname=os.path.basename(ReleaseBuildConstants.ABSOLUTE_FILE_PATH_LICENSES_PY_CLIENT),
         )
-        printf(f"Added file:{ReleaseBuildConstants.FILE_PATH_LICENSES_PY_CLIENT} to the already existing zip: {zip_file_path_algorithm_research_package}.")
+        printf(
+            f"Added file:{ReleaseBuildConstants.ABSOLUTE_FILE_PATH_LICENSES_PY_CLIENT} to the already existing zip: {zip_file_path_algorithm_research_package}."
+        )
 
 
 def main():

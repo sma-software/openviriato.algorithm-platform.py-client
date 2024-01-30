@@ -20,56 +20,56 @@ class ReleaseBuildConstants:
     OUTPUT_DIRECTORY = "output"
     DATABASE_DIRECTORY = "database"
     PY_CLIENT_ROOT_DIRECTORY = "algorithmplatform.pyclient"
-
+    END_TO_END_TESTS_TOOL_ROOT_DIRECTORY = "algorithmPlatform.pyclient.endtoendtesttool"
+    FILE_NAME_LICENSES_PY_CLIENT = "algorithmplatform.pyclient.licenses.txt"
     URL_JENKINS_ADDRESS = "https://jenkins.sma-partner.com"
 
-    FILE_NAME_SAMPLES_DATABASE = "Samples_Database.vstd64"
     PATH_REMOTE_DIRECTORY_DATABASES = r"\\ZHFAS01A\\Entwicklung\Jenkins\JobData\PyClient-End2EndTests-Labs"
 
-    REQUIREMENTS_FILE_WITH_PATH_PY_CLIENT = "algorithmplatform.pyclient/py_client/py_client_requirements.txt"
-    REQUIREMENTS_FILE_WITH_PATH_PY_CLIENT_UNIT_TEST = "algorithmplatform.pyclient\\py_client\\py_client_unit_tests_requirements.txt"
-    REQUIREMENTS_FILE_WITH_PATH_END_TO_END_TEST_TOOL = "end_to_end_tests_tool/end_to_end_test_tool_requirements.txt"
+    ABSOLUTE_BASE_PATH_WORK_SPACE = os.getcwd()
+    ABSOLUTE_PATH_OUTPUT_DIRECTORY = os.path.join(ABSOLUTE_BASE_PATH_WORK_SPACE, OUTPUT_DIRECTORY)
+    ABSOLUTE_PATH_DATABASE_DIRECTORY = os.path.join(ABSOLUTE_BASE_PATH_WORK_SPACE, DATABASE_DIRECTORY)
+    ABSOLUTE_PATH_PY_CLIENT_ROOT_DIRECTORY = os.path.join(ABSOLUTE_BASE_PATH_WORK_SPACE, PY_CLIENT_ROOT_DIRECTORY)
+    ABSOLUTE_PATH_END_TO_END_TESTS_TOOL_ROOT_DIRECTORY = os.path.join(ABSOLUTE_BASE_PATH_WORK_SPACE, END_TO_END_TESTS_TOOL_ROOT_DIRECTORY)
 
-    # ToDo VPLAT-10906: Make Update Pip optional commandline argument; check if other commandline arguments can be optional as well
-    UPDATE_PIP_IN_RELEASE_PACKAGING_PYTHON_ENVIRONMENT = False
-    PATH_TO_RELEASE_PACKING_SCRIPT_FOLDER = "algorithmplatform.pyclient\\jenkins\\packaging"
-    PATH_TO_RELEASE_PACKING_PYTHON_ENVIRONMENT = "algorithmplatform.pyclient\\packaging_env"
-    ABSOLUTE_PATH_TO_PYTHON_EXE_PACKING_PYTHON_ENVIRONMENT = os.path.abspath(os.path.join(PATH_TO_RELEASE_PACKING_PYTHON_ENVIRONMENT, "Scripts", "python.exe"))
-    ABSOLUTE_PATH_TO_PIP_EXE_PACKING_PYTHON_ENVIRONMENT = os.path.abspath(os.path.join(PATH_TO_RELEASE_PACKING_PYTHON_ENVIRONMENT, "Scripts", "pip.exe"))
-    FILE_PATH_SOURCE_LICENSES_PY_CLIENT = "algorithmplatform.pyclient\\jenkins\\packaging\\algorithmplatform.pyclient.licenses.txt"
+    REQUIREMENTS_FILE_WITH_ABSOLUTE_PATH_PY_CLIENT = os.path.join(ABSOLUTE_PATH_PY_CLIENT_ROOT_DIRECTORY, "py_client", "py_client_requirements.txt")
+    REQUIREMENTS_FILE_WITH_ABSOLUTE_PATH_PY_CLIENT_UNIT_TEST = os.path.join(
+        ABSOLUTE_PATH_PY_CLIENT_ROOT_DIRECTORY, "py_client", "py_client_unit_tests_requirements.txt"
+    )
+    # REQUIREMENTS_FILE_WITH_PATH_END_TO_END_TEST_TOOL = "end_to_end_tests_tool/end_to_end_test_tool_requirements.txt"
+
+    # ToDo VPLAT-10906: check if commandline arguments can be optional
+    ABSOLUTE_PATH_TO_RELEASE_PACKING_SCRIPT_FOLDER = os.path.join(ABSOLUTE_PATH_PY_CLIENT_ROOT_DIRECTORY, "jenkins", "packaging")
+    ABSOLUTE_PATH_TO_RELEASE_PACKING_PYTHON_ENVIRONMENT = os.path.join(ABSOLUTE_PATH_PY_CLIENT_ROOT_DIRECTORY, "packaging_env")
+    ABSOLUTE_PATH_TO_PYTHON_EXE_PACKING_PYTHON_ENVIRONMENT = os.path.join(ABSOLUTE_PATH_TO_RELEASE_PACKING_PYTHON_ENVIRONMENT, "Scripts", "python.exe")
+    ABSOLUTE_PATH_TO_PIP_EXE_PACKING_PYTHON_ENVIRONMENT = os.path.join(ABSOLUTE_PATH_TO_RELEASE_PACKING_PYTHON_ENVIRONMENT, "Scripts", "pip.exe")
+    ABSOLUTE_FILE_PATH_SOURCE_LICENSES_PY_CLIENT = os.path.join(ABSOLUTE_PATH_TO_RELEASE_PACKING_SCRIPT_FOLDER, FILE_NAME_LICENSES_PY_CLIENT)
     COMMAND_INSTALL_WHEEL_PACKAGE_FOR_PYTHON_ENVIRONMENT_RELEASE_PACKING = (
         f"{ABSOLUTE_PATH_TO_PIP_EXE_PACKING_PYTHON_ENVIRONMENT} install wheel~=0.35.1 --no-cache-dir"
     )
     COMMAND_INSTALL_PACKAGES_FOR_PYTHON_ENVIRONMENT_RELEASE_PACKING = (
-        f"{ABSOLUTE_PATH_TO_PIP_EXE_PACKING_PYTHON_ENVIRONMENT} install -r {REQUIREMENTS_FILE_WITH_PATH_PY_CLIENT} --no-cache-dir"
+        f"{ABSOLUTE_PATH_TO_PIP_EXE_PACKING_PYTHON_ENVIRONMENT} install -r {REQUIREMENTS_FILE_WITH_ABSOLUTE_PATH_PY_CLIENT} --no-cache-dir"
     )
-
-    RELATIVE_PATH_TO_REQUIREMENTS_FILE_WITH_PATH_PY_CLIENT_FOR_CREATE_PACKAGE_EXECUTABLE = os.path.join("..", "..", "..", REQUIREMENTS_FILE_WITH_PATH_PY_CLIENT)
-    RELATIVE_PATH_TO_OUTPUT_DIRECTORY_FOR_CREATE_PACKAGE_EXECUTABLE = os.path.join("..", "..", "..", OUTPUT_DIRECTORY)
-    RELATIVE_PATH_TO_PROJECT_ROOT_DIRECTORY_FOR_CREATE_PACKAGE_EXECUTABLE = "..\\.."
     COMMAND_TO_START_CREATE_PACKAGE_EXECUTABLE = f"{ABSOLUTE_PATH_TO_PYTHON_EXE_PACKING_PYTHON_ENVIRONMENT} create_release_package.py"
 
-    UPDATE_PIP_IN_TESTING_PYTHON_ENVIRONMENT = False
-    PATH_TO_TESTING_PYTHON_ENVIRONMENT = f"{PY_CLIENT_ROOT_DIRECTORY}\\testing_venv"
-    PATH_TO_UNIT_TESTS_EXECUTABLE_FROM_PYCLIENT_ROOT_DIRECTORY = "jenkins\\run_all_unittests_and_generate_html_report.py"
+    ABSOLUTE_PATH_TO_TESTING_PYTHON_ENVIRONMENT = os.path.join(ABSOLUTE_PATH_PY_CLIENT_ROOT_DIRECTORY, "testing_venv")
     FILE_NAME_UNIT_TEST_REPORT = "test_results"
-    ABSOLUTE_PATH_TO_PYTHON_EXE_TESTING_PYTHON_ENVIRONMENT = os.path.abspath(os.path.join(PATH_TO_TESTING_PYTHON_ENVIRONMENT, "Scripts", "python.exe"))
-    ABSOLUTE_PATH_TO_PIP_EXE_TESTING_PYTHON_ENVIRONMENT = os.path.abspath(os.path.join(PATH_TO_TESTING_PYTHON_ENVIRONMENT, "Scripts", "pip.exe"))
-    COMMAND_INSTALL_PACKAGES_FOR_TESTING_PYTHON_ENVIRONMENT = f"{ABSOLUTE_PATH_TO_PIP_EXE_TESTING_PYTHON_ENVIRONMENT} install -r {REQUIREMENTS_FILE_WITH_PATH_PY_CLIENT} -r {REQUIREMENTS_FILE_WITH_PATH_PY_CLIENT_UNIT_TEST} --no-cache-dir"
-    COMMAND_EXECUTE_UNIT_TESTS = f"{ABSOLUTE_PATH_TO_PYTHON_EXE_TESTING_PYTHON_ENVIRONMENT} {PATH_TO_UNIT_TESTS_EXECUTABLE_FROM_PYCLIENT_ROOT_DIRECTORY} . {os.path.join('..', OUTPUT_DIRECTORY)} {FILE_NAME_UNIT_TEST_REPORT}"
+    ABSOLUTE_FILE_PATH_UNITTEST_RESULT = os.path.join(ABSOLUTE_PATH_OUTPUT_DIRECTORY, f"{FILE_NAME_UNIT_TEST_REPORT}.html")
+    ABSOLUTE_PATH_TO_PYTHON_EXE_TESTING_PYTHON_ENVIRONMENT = os.path.join(ABSOLUTE_PATH_TO_TESTING_PYTHON_ENVIRONMENT, "Scripts", "python.exe")
+    ABSOLUTE_PATH_TO_PIP_EXE_TESTING_PYTHON_ENVIRONMENT = os.path.join(ABSOLUTE_PATH_TO_TESTING_PYTHON_ENVIRONMENT, "Scripts", "pip.exe")
+    COMMAND_INSTALL_PACKAGES_FOR_TESTING_PYTHON_ENVIRONMENT = f"{ABSOLUTE_PATH_TO_PIP_EXE_TESTING_PYTHON_ENVIRONMENT} install -r {REQUIREMENTS_FILE_WITH_ABSOLUTE_PATH_PY_CLIENT} -r {REQUIREMENTS_FILE_WITH_ABSOLUTE_PATH_PY_CLIENT_UNIT_TEST} --no-cache-dir"
+    COMMAND_EXECUTE_UNIT_TESTS = f"{ABSOLUTE_PATH_TO_PYTHON_EXE_TESTING_PYTHON_ENVIRONMENT} {os.path.join('jenkins', 'run_all_unittests_and_generate_html_report.py')} . {ABSOLUTE_PATH_OUTPUT_DIRECTORY} {FILE_NAME_UNIT_TEST_REPORT}"
 
-    PATH_CALL_FILES_DIRECTORY_FROM_VIRIATO_ROOT = "data\\AlgorithmPlatformService.RestSamples\\calls"
-    PATH_TO_END_TO_END_TEST_REPORT_FILE = os.path.join(OUTPUT_DIRECTORY, "end_to_end_test_results.txt")
-    PATH_TO_END_TO_END_TEST_CALLS_FOLDER = "algorithmplatform.pyclient.endtoendtesttool\\end_to_end_tests_tool\\data\\calls"
-    FOLDER_NAME_END_TO_END_TESTS_TOOL_ROOT = "algorithmPlatform.pyclient.endtoendtesttool"
-    PATH_TO_EXECUTABLE_END_TO_END_TESTS = os.path.abspath(f"{FOLDER_NAME_END_TO_END_TESTS_TOOL_ROOT}\\jenkins\\run_end_to_end_test.bat")
-    UPDATE_PIP_IN_END_TO_END_TESTS_PYTHON_ENVIRONMENT = False
+    FILE_NAME_END_TO_END_TEST_TOOL_REPORT = "end_to_end_test_results.txt"
+    PATH_CALL_FILES_DIRECTORY_FROM_VIRIATO_ROOT = os.path.join("data", "AlgorithmPlatformService.RestSamples", "calls")
+    ABSOLUTE_PATH_TO_END_TO_END_TEST_REPORT_FILE = os.path.join(ABSOLUTE_PATH_OUTPUT_DIRECTORY, FILE_NAME_END_TO_END_TEST_TOOL_REPORT)
+    PATH_TO_END_TO_END_TEST_REPORT_FILE_FROM_END_TO_END_TEST_TOOL = os.path.join("..", OUTPUT_DIRECTORY, FILE_NAME_END_TO_END_TEST_TOOL_REPORT)
+    RELATIVE_PATH_TO_SAMPLES_DATABASE = os.path.join(DATABASE_DIRECTORY, "Samples_Database.vstd64")
+    ABSOLUTE_PATH_TO_END_TO_END_TEST_CALLS_FOLDER = os.path.join(ABSOLUTE_PATH_END_TO_END_TESTS_TOOL_ROOT_DIRECTORY, "end_to_end_tests_tool", "data", "calls")
+    ABSOLUTE_PATH_TO_EXECUTABLE_END_TO_END_TESTS = os.path.join(ABSOLUTE_PATH_END_TO_END_TESTS_TOOL_ROOT_DIRECTORY, "jenkins", "run_end_to_end_test.bat")
     SUCCESS_STRING_OF_END_TO_END_TESTS_TOOL = "All End-To-End-Tests were executed successfully. There are no errors and no test fail"
 
-    # ALGORITHM_PLATFORM_RESEARCH_RELEASE_PACKAGE_WILDCARD = "AlgorithmResearch_Package*.zip"
-    # VIRIATO_STANDARD_TEST_ZIP_WILDCARD = "SMA.Viriato.Standard-*test.zip"
-
-    FILE_PATH_LICENSES_PY_CLIENT = os.path.join(OUTPUT_DIRECTORY, "algorithmplatform.pyclient.licenses.txt")
+    ABSOLUTE_FILE_PATH_LICENSES_PY_CLIENT = os.path.join(ABSOLUTE_PATH_OUTPUT_DIRECTORY, FILE_NAME_LICENSES_PY_CLIENT)
 
 
 class ReleaseBuildArguments:
@@ -95,6 +95,7 @@ class ReleaseBuildArguments:
     __url_viriato_standard_nightly_stable_test: str
     __unzip_directory_viriato_nightly_stable: str
     __build_number_viriato_standard_nightly_stable: int
+    __update_pip: bool
 
     def __init__(
         self,
@@ -115,7 +116,9 @@ class ReleaseBuildArguments:
         path_to_samples_db_on_jenkins: str,
         root_directory_call_jsons: str,
         command_create_release_package: str,
+        update_pip: bool,
     ):
+        self.__update_pip = update_pip
         self.__command_create_release_package = command_create_release_package
         self.__root_directory_call_jsons = root_directory_call_jsons
         self.__path_to_samples_db_on_jenkins = path_to_samples_db_on_jenkins
@@ -202,6 +205,10 @@ class ReleaseBuildArguments:
     def command_create_release_package(self):
         return self.__command_create_release_package
 
+    @property
+    def update_pip(self):
+        return self.__update_pip
+
 
 class ReleaseBuildArgumentsFactory:
     @staticmethod
@@ -229,15 +236,14 @@ class ReleaseBuildArgumentsFactory:
 
         root_directory_call_jsons = os.path.join(
             unzip_directory_viriato_nightly_stable,
-            # f"SMA.Viriato.Standard-{target_version_algorithm_platform_research_release}",
             ReleaseBuildConstants.PATH_CALL_FILES_DIRECTORY_FROM_VIRIATO_ROOT,
         )
 
         command_create_release_package = (
             f"{ReleaseBuildConstants.COMMAND_TO_START_CREATE_PACKAGE_EXECUTABLE} {target_version_algorithm_platform_research_release}.post{build_number_jenkins_job} "
-            f"{ReleaseBuildConstants.RELATIVE_PATH_TO_REQUIREMENTS_FILE_WITH_PATH_PY_CLIENT_FOR_CREATE_PACKAGE_EXECUTABLE} "
-            f"{ReleaseBuildConstants.RELATIVE_PATH_TO_PROJECT_ROOT_DIRECTORY_FOR_CREATE_PACKAGE_EXECUTABLE} "
-            f"{ReleaseBuildConstants.RELATIVE_PATH_TO_OUTPUT_DIRECTORY_FOR_CREATE_PACKAGE_EXECUTABLE}"
+            f"{ReleaseBuildConstants.REQUIREMENTS_FILE_WITH_ABSOLUTE_PATH_PY_CLIENT} "
+            f"{ReleaseBuildConstants.ABSOLUTE_PATH_PY_CLIENT_ROOT_DIRECTORY} "
+            f"{ReleaseBuildConstants.ABSOLUTE_PATH_OUTPUT_DIRECTORY}"
         )
         file_path_wheel_py_client = os.path.join(
             ReleaseBuildConstants.OUTPUT_DIRECTORY,
@@ -252,7 +258,12 @@ class ReleaseBuildArgumentsFactory:
             f"{ReleaseBuildConstants.URL_JENKINS_ADDRESS}/job/{unzip_directory_viriato_nightly_stable}/"
             f"{build_number_viriato_standard_nightly_stable}/artifact/stable/dist/{zip_file_name_viriato_standard_nightly_stable_test}"
         )
-        path_to_samples_db_on_jenkins = os.path.join(ReleaseBuildConstants.PATH_REMOTE_DIRECTORY_DATABASES, zip_file_samples_database)
+        path_to_samples_db_on_jenkins = os.path.join(
+            ReleaseBuildConstants.PATH_REMOTE_DIRECTORY_DATABASES,
+            zip_file_samples_database,
+        )
+
+        update_pip = command_line_arguments["UPDATE_PIP"]
 
         return ReleaseBuildArguments(
             job_stage=job_stage,
@@ -272,6 +283,7 @@ class ReleaseBuildArgumentsFactory:
             path_to_samples_db_on_jenkins=path_to_samples_db_on_jenkins,
             root_directory_call_jsons=root_directory_call_jsons,
             command_create_release_package=command_create_release_package,
+            update_pip=update_pip,
         )
 
 
@@ -285,5 +297,6 @@ class ArgumentParserFactory:
         argument_parser.add_argument("--STD-ALGORITHM-RESEARCH-RELEASE-CREATE-PACKAGE-BUILD-NUMBER", type=int, required=True)
         argument_parser.add_argument("--STD-NIGHTLY-STABLE-BUILD-NUMBER", type=int, required=True)
         argument_parser.add_argument("--BUILD-NUMBER", type=int, required=True)
+        argument_parser.add_argument("--UPDATE-PIP", type=bool, required=True)
 
         return argument_parser

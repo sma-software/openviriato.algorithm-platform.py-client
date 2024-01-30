@@ -724,3 +724,9 @@ class AlgorithmInterface:
         url_to_resource = "user-outputs/settings"
         response_dict = self.__communication_layer.do_get_request_without_body(url_to_resource)
         return JsonToAidmConverter().process_json_to_aidm(response_dict, UserOutputSettings)
+
+    def persist_trains(self, scenario_description: str) -> str:
+        url_to_resource = "services/trains:persist"
+        request_body = dict(description=scenario_description)
+        response_dict = self.__communication_layer.do_post_request(url_to_resource, request_body)
+        return JsonToAidmConverter().process_json_to_aidm(response_dict, str)

@@ -33,6 +33,11 @@ def execute_stage_unit_test_py_client(release_build_arguments: ReleaseBuildArgum
     if pip_packages_install_process.returncode != 0:
         raise Exception("stage_unit_test: could not install all packages.")
 
+    printf("Start black formatting tool. The following output is from the black tool:")
+    process_result_black_formatting = subprocess.run(ReleaseBuildConstants.COMMAND_EXECUTE_FORMATTING_VERIFICATION_BLACK)
+    if process_result_black_formatting.returncode != 0:
+        raise Exception("Black formatting tool, threw an error. Diff between formatted and checked-in code can be seen above.")
+
     printf("Start Unit tests. The following output is from the unit test runner:")
     process_result_end_to_end_tests = subprocess.run(
         ReleaseBuildConstants.COMMAND_EXECUTE_UNIT_TESTS,
@@ -197,6 +202,8 @@ def main():
     printf(
         f"Release branch: '{release_build_arguments.release_branch_py_client}' and py_client Wheel-name: '{release_build_arguments.file_path_wheel_py_client}'"
     )
+    printf("Checking python version")
+    subprocess.run("python -V", check=True)
 
     match release_build_arguments.job_stage:
         case JobStage.prepare_artifacts:

@@ -59,6 +59,8 @@ class ReleaseBuildConstants:
     ABSOLUTE_PATH_TO_PIP_EXE_TESTING_PYTHON_ENVIRONMENT = os.path.join(ABSOLUTE_PATH_TO_TESTING_PYTHON_ENVIRONMENT, "Scripts", "pip.exe")
     COMMAND_INSTALL_PACKAGES_FOR_TESTING_PYTHON_ENVIRONMENT = f"{ABSOLUTE_PATH_TO_PIP_EXE_TESTING_PYTHON_ENVIRONMENT} install -r {REQUIREMENTS_FILE_WITH_ABSOLUTE_PATH_PY_CLIENT} -r {REQUIREMENTS_FILE_WITH_ABSOLUTE_PATH_PY_CLIENT_UNIT_TEST} --no-cache-dir"
     COMMAND_EXECUTE_UNIT_TESTS = f"{ABSOLUTE_PATH_TO_PYTHON_EXE_TESTING_PYTHON_ENVIRONMENT} {os.path.join('jenkins', 'run_all_unittests_and_generate_html_report.py')} . {ABSOLUTE_PATH_OUTPUT_DIRECTORY} {FILE_NAME_UNIT_TEST_REPORT}"
+    FORMATTING_LINE_LENGTH = 160
+    COMMAND_EXECUTE_FORMATTING_VERIFICATION_BLACK = f"{ABSOLUTE_PATH_TO_PYTHON_EXE_TESTING_PYTHON_ENVIRONMENT} -m black {os.path.join(ABSOLUTE_PATH_PY_CLIENT_ROOT_DIRECTORY, 'py_client')} --check --diff --line-length {FORMATTING_LINE_LENGTH}"
 
     FILE_NAME_END_TO_END_TEST_TOOL_REPORT = "end_to_end_test_results.txt"
     PATH_CALL_FILES_DIRECTORY_FROM_VIRIATO_ROOT = os.path.join("data", "AlgorithmPlatformService.RestSamples", "calls")
@@ -213,12 +215,12 @@ class ReleaseBuildArguments:
 class ReleaseBuildArgumentsFactory:
     @staticmethod
     def __determine_branch_suffix(branch: str) -> str:
-        if "Product" in branch:
+        if branch and "Product" in branch:
             return f"-{branch}"
         return ""
 
-    def create_instance_from_dictionary(self, command_line_arguments: Dict[str, str | int | JobStage]) -> ReleaseBuildArguments:
-        job_stage: JobStage = command_line_arguments["STAGE"]
+    def create_instance_from_dictionary(self, command_line_arguments: Dict[str, str | int]) -> ReleaseBuildArguments:
+        job_stage: JobStage = JobStage(command_line_arguments["STAGE"])
         release_branch_py_client: str = command_line_arguments["RELEASE_BRANCH"]
         target_version_algorithm_platform_research_release = command_line_arguments["ALGORITHM_PLATFORM_RELEASE_TARGET_VERSION"]
         build_number_algorithm_platform_research_release = command_line_arguments["STD_ALGORITHM_RESEARCH_RELEASE_CREATE_PACKAGE_BUILD_NUMBER"]
@@ -291,12 +293,35 @@ class ArgumentParserFactory:
     @staticmethod
     def create_instance() -> argparse.ArgumentParser:
         argument_parser = argparse.ArgumentParser()
-        argument_parser.add_argument("--STAGE", type=JobStage, choices=list(JobStage), required=True)
-        argument_parser.add_argument("--RELEASE-BRANCH", type=str, required=True)
-        argument_parser.add_argument("--ALGORITHM-PLATFORM-RELEASE-TARGET-VERSION", type=str, required=True)
-        argument_parser.add_argument("--STD-ALGORITHM-RESEARCH-RELEASE-CREATE-PACKAGE-BUILD-NUMBER", type=int, required=True)
-        argument_parser.add_argument("--STD-NIGHTLY-STABLE-BUILD-NUMBER", type=int, required=True)
-        argument_parser.add_argument("--BUILD-NUMBER", type=int, required=True)
-        argument_parser.add_argument("--UPDATE-PIP", type=bool, required=True)
+        # ToDo VPLAT 10906: make this a flag and not a input value: https://stackoverflow.com/questions/15008758/parsing-boolean-values-with-argparse
+        argument_parser.add_argument("--UPDATE-PIP", type=lambda x: (str(x).lower() == "true"), required=True)
+
+        # ToDo VPLAT 10906: maybe add more granular subparsers,
+        #  eg add parentparser for releasebranch: https://stackoverflow.com/questions/7498595/python-argparse-add-argument-to-multiple-subparsers
+        subparsers = argument_parser.add_subparsers(
+            dest="STAGE", title="STAGE", metavar=[e.value for e in JobStage], required=True, help="Help: [STAGE-NAME] -h"
+        )
+        argument_subparser_complex_commands = subparsers.add_parser(
+            "PERFORM-END-TO-END-TEST",
+            aliases=[
+                "PREPARE-ARTIFACTS",
+                "CHECK-OUT-AND-AGGREGATE-DATA-FOR-END-TO-END-TEST",
+                "CREATE-WHL-PACKAGE",
+            ],
+        )
+        argument_subparser_complex_commands.add_argument("--RELEASE-BRANCH", type=str, required=True)
+        argument_subparser_complex_commands.add_argument("--ALGORITHM-PLATFORM-RELEASE-TARGET-VERSION", type=str, required=True)
+        argument_subparser_complex_commands.add_argument("--STD-ALGORITHM-RESEARCH-RELEASE-CREATE-PACKAGE-BUILD-NUMBER", type=int, required=True)
+        argument_subparser_complex_commands.add_argument("--STD-NIGHTLY-STABLE-BUILD-NUMBER", type=int, required=True)
+        argument_subparser_complex_commands.add_argument("--BUILD-NUMBER", type=int, required=True)
+
+        # ToDo VPLAT 10906: Remove the add_argument s
+        #  Needed right now so that build.release.bat does not fail when executing unittests, because it puts these values in as well; Also stores None Values in properties so that nothing breaks
+        argument_subparser_unit_test = subparsers.add_parser("UNIT-TEST-PY-CLIENT")
+        argument_subparser_unit_test.add_argument("--RELEASE-BRANCH", type=str, required=False)
+        argument_subparser_unit_test.add_argument("--ALGORITHM-PLATFORM-RELEASE-TARGET-VERSION", type=str, required=False)
+        argument_subparser_unit_test.add_argument("--STD-ALGORITHM-RESEARCH-RELEASE-CREATE-PACKAGE-BUILD-NUMBER", type=str, required=False)
+        argument_subparser_unit_test.add_argument("--STD-NIGHTLY-STABLE-BUILD-NUMBER", type=str, required=False)
+        argument_subparser_unit_test.add_argument("--BUILD-NUMBER", type=str, required=False)
 
         return argument_parser

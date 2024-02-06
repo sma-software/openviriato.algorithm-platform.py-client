@@ -17,7 +17,10 @@ from release_build_utilty_methods import (
 
 def _parse_arguments_from_command_line_arguments() -> ReleaseBuildArguments:
     argument_parser = ArgumentParserFactory.create_instance()
-    command_line_arguments = vars(argument_parser.parse_args())
+    args, unknown = argument_parser.parse_known_args()
+    if unknown:
+        printf("Warning found unknown args in call, script will not use them. Batch script is providing too many arguments for some stages:  ", unknown)
+    command_line_arguments = vars(args)
 
     return ReleaseBuildArgumentsFactory().create_instance_from_dictionary(command_line_arguments)
 

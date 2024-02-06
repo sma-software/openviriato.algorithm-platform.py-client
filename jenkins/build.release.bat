@@ -8,7 +8,7 @@ if "%2" neq "" goto stages
 
 echo "USAGE: algorithmplatform.pyclient\jenkins\build.release.bat [UPDATE-PIP] [STAGE] {[RELEASE-BRANCH] [ALGORITHM-PLATFORM-RELEASE-TARGET-VERSION] [STD-ALGORITHM-RESEARCH-RELEASE-CREATE-PACKAGE-BUILD-NUMBER] [STD-NIGHTLY-STABLE-BUILD-NUMBER] [BUILD-NUMBER]}
 echo "Arguments in {} are mandatory for some stages only"
-echo "Example call: algorithmplatform.pyclient\jenkins\build.release.bat false CHECK-OUT-AND-AGGREGATE-DATA-FOR-END-TO-END-TEST Product-43 8.43.33 33 29 1"
+echo "Example call: algorithmplatform.pyclient\jenkins\build.release.bat false CHECK-OUT-AND-AGGREGATE-DATA-FOR-END-TO-END-TEST 8.43.33 1 Product-43 33 29"
 exit /b 1
 
 :stages
@@ -31,7 +31,7 @@ echo "Step: activating local environment"
 call %ACTIVATE_VENV_BAT_SCRIPT%
 
 echo "Executing stage."
-%BUILDTOOL% --UPDATE-PIP=%1 %2 --RELEASE-BRANCH=%3 --ALGORITHM-PLATFORM-RELEASE-TARGET-VERSION=%4 --STD-ALGORITHM-RESEARCH-RELEASE-CREATE-PACKAGE-BUILD-NUMBER=%5 --STD-NIGHTLY-STABLE-BUILD-NUMBER=%6 --BUILD-NUMBER=%7
+%BUILDTOOL% --UPDATE-PIP=%1 %2 --ALGORITHM-PLATFORM-RELEASE-TARGET-VERSION=%3 --BUILD-NUMBER=%4 --RELEASE-BRANCH=%5 --STD-ALGORITHM-RESEARCH-RELEASE-CREATE-PACKAGE-BUILD-NUMBER=%6  --STD-NIGHTLY-STABLE-BUILD-NUMBER=%7
 
 if %ERRORLEVEL% neq 0 (
     echo "An error occurred during executing the stage."

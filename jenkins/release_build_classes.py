@@ -219,14 +219,13 @@ class ReleaseBuildArgumentsFactory:
             return f"-{branch}"
         return ""
 
-    def create_instance_from_dictionary(self, command_line_arguments: Dict[str, str | int]) -> ReleaseBuildArguments:
+    def create_instance_from_dictionary(self, command_line_arguments: Dict[str, str | int | bool]) -> ReleaseBuildArguments:
         job_stage: JobStage = JobStage(command_line_arguments["STAGE"])
-        release_branch_py_client: str = command_line_arguments["RELEASE_BRANCH"]
-        target_version_algorithm_platform_research_release = command_line_arguments["ALGORITHM_PLATFORM_RELEASE_TARGET_VERSION"]
-        build_number_algorithm_platform_research_release = command_line_arguments["STD_ALGORITHM_RESEARCH_RELEASE_CREATE_PACKAGE_BUILD_NUMBER"]
-        build_number_viriato_standard_nightly_stable = command_line_arguments["STD_NIGHTLY_STABLE_BUILD_NUMBER"]
-
-        build_number_jenkins_job = command_line_arguments["BUILD_NUMBER"]
+        release_branch_py_client: str | None = command_line_arguments.get("RELEASE_BRANCH")
+        target_version_algorithm_platform_research_release: str | None = command_line_arguments.get("ALGORITHM_PLATFORM_RELEASE_TARGET_VERSION")
+        build_number_algorithm_platform_research_release: int | None = command_line_arguments.get("STD_ALGORITHM_RESEARCH_RELEASE_CREATE_PACKAGE_BUILD_NUMBER")
+        build_number_viriato_standard_nightly_stable: int | None = command_line_arguments.get("STD_NIGHTLY_STABLE_BUILD_NUMBER")
+        build_number_jenkins_job: int | None = command_line_arguments.get("BUILD_NUMBER")
 
         zip_file_name_algorithm_platform_research_release = f"AlgorithmResearch_Package-{target_version_algorithm_platform_research_release}.zip"
         zip_file_name_viriato_standard_nightly_stable_test = f"SMA.Viriato.Standard-{target_version_algorithm_platform_research_release}.test.zip"
@@ -265,7 +264,7 @@ class ReleaseBuildArgumentsFactory:
             zip_file_samples_database,
         )
 
-        update_pip = command_line_arguments["UPDATE_PIP"]
+        update_pip: bool = command_line_arguments["UPDATE_PIP"]
 
         return ReleaseBuildArguments(
             job_stage=job_stage,
@@ -291,37 +290,50 @@ class ReleaseBuildArgumentsFactory:
 
 class ArgumentParserFactory:
     @staticmethod
+    def _strict_parse_str_to_bool(val: str) -> bool:
+        val = val.lower()
+        if val == "true":
+            return True
+        elif val == "false":
+            return False
+        else:
+            raise ValueError("invalid truth value %r" % (val,))
+
+    @staticmethod
+    def _is_string_not_empty_and_not_just_white_spaces(val: str) -> str:
+        if val and val.strip(" ") != "":
+            return val
+        raise ValueError(f"invalid string value: {val}")
+
+    @staticmethod
+    def _add_arguments_algorithm_platform_release_target_version_and_build_number_to_parser(parser):
+        parser.add_argument(
+            "--ALGORITHM-PLATFORM-RELEASE-TARGET-VERSION", type=ArgumentParserFactory._is_string_not_empty_and_not_just_white_spaces, required=True
+        )
+        parser.add_argument("--BUILD-NUMBER", type=int, required=True)
+
+    @staticmethod
     def create_instance() -> argparse.ArgumentParser:
         argument_parser = argparse.ArgumentParser()
         # ToDo VPLAT 10906: make this a flag and not a input value: https://stackoverflow.com/questions/15008758/parsing-boolean-values-with-argparse
-        argument_parser.add_argument("--UPDATE-PIP", type=lambda x: (str(x).lower() == "true"), required=True)
+        argument_parser.add_argument("--UPDATE-PIP", type=ArgumentParserFactory._strict_parse_str_to_bool, required=True)
 
-        # ToDo VPLAT 10906: maybe add more granular subparsers,
-        #  eg add parentparser for releasebranch: https://stackoverflow.com/questions/7498595/python-argparse-add-argument-to-multiple-subparsers
+        # ToDo VPLAT 10906: maybe add more granular subparsers
         subparsers = argument_parser.add_subparsers(
             dest="STAGE", title="STAGE", metavar=[e.value for e in JobStage], required=True, help="Help: [STAGE-NAME] -h"
         )
-        argument_subparser_complex_commands = subparsers.add_parser(
-            "PERFORM-END-TO-END-TEST",
-            aliases=[
-                "PREPARE-ARTIFACTS",
-                "CHECK-OUT-AND-AGGREGATE-DATA-FOR-END-TO-END-TEST",
-                "CREATE-WHL-PACKAGE",
-            ],
-        )
-        argument_subparser_complex_commands.add_argument("--RELEASE-BRANCH", type=str, required=True)
-        argument_subparser_complex_commands.add_argument("--ALGORITHM-PLATFORM-RELEASE-TARGET-VERSION", type=str, required=True)
-        argument_subparser_complex_commands.add_argument("--STD-ALGORITHM-RESEARCH-RELEASE-CREATE-PACKAGE-BUILD-NUMBER", type=int, required=True)
-        argument_subparser_complex_commands.add_argument("--STD-NIGHTLY-STABLE-BUILD-NUMBER", type=int, required=True)
-        argument_subparser_complex_commands.add_argument("--BUILD-NUMBER", type=int, required=True)
+        subparsers.add_parser("UNIT-TEST-PY-CLIENT")
 
-        # ToDo VPLAT 10906: Remove the add_argument s
-        #  Needed right now so that build.release.bat does not fail when executing unittests, because it puts these values in as well; Also stores None Values in properties so that nothing breaks
-        argument_subparser_unit_test = subparsers.add_parser("UNIT-TEST-PY-CLIENT")
-        argument_subparser_unit_test.add_argument("--RELEASE-BRANCH", type=str, required=False)
-        argument_subparser_unit_test.add_argument("--ALGORITHM-PLATFORM-RELEASE-TARGET-VERSION", type=str, required=False)
-        argument_subparser_unit_test.add_argument("--STD-ALGORITHM-RESEARCH-RELEASE-CREATE-PACKAGE-BUILD-NUMBER", type=str, required=False)
-        argument_subparser_unit_test.add_argument("--STD-NIGHTLY-STABLE-BUILD-NUMBER", type=str, required=False)
-        argument_subparser_unit_test.add_argument("--BUILD-NUMBER", type=str, required=False)
+        whl_package_parser = subparsers.add_parser("CREATE-WHL-PACKAGE")
+        ArgumentParserFactory._add_arguments_algorithm_platform_release_target_version_and_build_number_to_parser(whl_package_parser)
+
+        subparser_complex_stages = subparsers.add_parser(
+            "PERFORM-END-TO-END-TEST",
+            aliases=["PREPARE-ARTIFACTS", "CHECK-OUT-AND-AGGREGATE-DATA-FOR-END-TO-END-TEST"],
+        )
+        ArgumentParserFactory._add_arguments_algorithm_platform_release_target_version_and_build_number_to_parser(subparser_complex_stages)
+        subparser_complex_stages.add_argument("--RELEASE-BRANCH", type=ArgumentParserFactory._is_string_not_empty_and_not_just_white_spaces, required=True)
+        subparser_complex_stages.add_argument("--STD-ALGORITHM-RESEARCH-RELEASE-CREATE-PACKAGE-BUILD-NUMBER", type=int, required=True)
+        subparser_complex_stages.add_argument("--STD-NIGHTLY-STABLE-BUILD-NUMBER", type=int, required=True)
 
         return argument_parser

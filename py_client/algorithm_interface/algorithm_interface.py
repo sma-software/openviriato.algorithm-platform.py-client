@@ -730,3 +730,15 @@ class AlgorithmInterface:
         request_body = dict(description=scenario_description)
         response_dict = self.__communication_layer.do_post_request(url_to_resource, request_body)
         return JsonToAidmConverter().process_json_to_aidm(response_dict, str)
+
+    def update_node_track_of_next_event(self, node_track_id: int) -> AlgorithmTrainSimulationRealizationForecast:
+        url_to_resource = "services/trains/simulations/events/next:update-node-track"
+        put_request_body = dict(nodeTrackId=node_track_id)
+        response_dict = self.__communication_layer.do_put_request(url_to_resource, request_body=put_request_body)
+        return JsonToAidmConverter().process_json_to_aidm(response_dict, AlgorithmTrainSimulationRealizationForecast)
+
+    def update_node_track_of_future_event(self, event_id: int, node_track_id: int) -> AlgorithmTrainSimulationRealizationForecast:
+        url_to_resource = "services/trains/simulations/events/{0}:update-node-track".format(event_id)
+        put_request_body = dict(nodeTrackId=node_track_id)
+        response_dict = self.__communication_layer.do_put_request(url_to_resource, request_body=put_request_body)
+        return JsonToAidmConverter().process_json_to_aidm(response_dict, AlgorithmTrainSimulationRealizationForecast)

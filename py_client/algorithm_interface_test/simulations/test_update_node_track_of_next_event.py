@@ -41,7 +41,7 @@ class TestUpdateNodeTrackOfNextEvent(unittest.TestCase):
             return SessionMockFactory.create_response_mock(response_json_string, 200)
 
     @mock.patch("requests.Session", side_effect=UpdateNodeTrackOfNextSimulationEventMockSession)
-    def setUp(self, mocked_get_obj):
+    def setUp(self, mocked_put_obj):
         self.interface_to_viriato = algorithm_interface_factory.create(get_api_url())
 
     @mock.patch("requests.Session", side_effect=UpdateNodeTrackOfNextSimulationEventMockSession)

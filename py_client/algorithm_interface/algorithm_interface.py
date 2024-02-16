@@ -48,6 +48,7 @@ from py_client.aidm import (
     ConflictDetectionArguments,
     AlgorithmTrainSimulationRealizationForecast,
     UserOutputSettings,
+    ResetSummary,
     AlgorithmTrainSimulationCreationArguments,
 )
 from py_client.aidm.aidm_conflict import AlgorithmConflict
@@ -636,6 +637,11 @@ class AlgorithmInterface:
     def create_train_simulation(self, algorithm_train_simulation_creation_arguments: AlgorithmTrainSimulationCreationArguments) -> None:
         url_to_resource = "services/trains/simulations"
         self.__communication_layer.do_put_request(url_to_resource, to_json_converter.convert_any_object(algorithm_train_simulation_creation_arguments))
+
+    def reset_trains(self) -> ResetSummary:
+        url_to_resource = "services/trains:reset"
+        response_dict = self.__communication_layer.do_delete_request(url_to_resource)
+        return JsonToAidmConverter().process_json_to_aidm(response_dict, ResetSummary)
 
     def get_train_simulation_trains(self) -> List[AlgorithmTrainSimulationTrain]:
         url_to_resource = "services/trains/simulations/trains"

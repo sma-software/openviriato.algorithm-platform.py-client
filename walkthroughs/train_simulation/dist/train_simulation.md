@@ -62,10 +62,10 @@ algorithm_interface.create_train_simulation(algorithm_train_simulation_creation_
 Code listing: _Starting a simulation in a given time window_. ([Lines: 20 - 22 from file: _train_simulation_example_runner.py_](../../../walkthroughs/train_simulation/py/train_simulation_example_runner.py#L20-L22)).
 
 We can retrieve the first executable [AlgorithmTrainSimulationEvent](../../../py_client/aidm/aidm_train_simulation_classes.py) from the Algorithm Interface by using the method 
-[get_next_train_simulation_event(...)](../../../py_client/algorithm_interface/algorithm_interface.py#L645-L645). 
+[get_next_train_simulation_event(...)](../../../py_client/algorithm_interface/algorithm_interface.py#L651-L651). 
 
-For each event we retrieve a [dispatcher](#Dispatchers) has to decide if they want to realise it using [realize_next_train_simulation_event(...)](../../../py_client/algorithm_interface/algorithm_interface.py#L650-L650)
-or to postpone it using [postpone_next_train_simulation_event(...)](../../../py_client/algorithm_interface/algorithm_interface.py#L690-L690). After making the decision we will be provided the next executable event, 
+For each event we retrieve a [dispatcher](#Dispatchers) has to decide if they want to realise it using [realize_next_train_simulation_event(...)](../../../py_client/algorithm_interface/algorithm_interface.py#L656-L656)
+or to postpone it using [postpone_next_train_simulation_event(...)](../../../py_client/algorithm_interface/algorithm_interface.py#L696-L696). After making the decision we will be provided the next executable event, 
 which is an instance of the type [AlgorithmTrainSimulationRealizationForecast](../../../py_client/aidm/aidm_train_simulation_classes.py). The objects of this class contain also all events that had to be postponed by the simulator in order to avoid conflicts. Finally, 
 after all events have been realised the simulation terminates.
 
@@ -121,7 +121,7 @@ _Figure 3: Visualisation of the simple dispatcher strategy._
 
 ### Order Changing dispatcher
 Let us now see how the order of two trains in their first common node can be changed. We extend the planned stop of the preceding train using 
-[postpone_next_train_simulation_event(...)](../../../py_client/algorithm_interface/algorithm_interface.py#L690-L690) on the departure event of the first common 
+[postpone_next_train_simulation_event(...)](../../../py_client/algorithm_interface/algorithm_interface.py#L696-L696) on the departure event of the first common 
 node of the two selected trains.
 
 ```python
@@ -183,7 +183,7 @@ Code listing: _Example of a dispatcher changing the order of two trains by postp
 
 ### Dispatcher Adding a Stop to Change the Order of Passing Trains
 If a train doesn't have a planned stop and the dispatching strategy still wants to delay the departure on the first common node, there is the possibility to add an unplanned stop by using the 
-method [replace_next_train_simulation_event_by_stop(...)](../../../py_client/algorithm_interface/algorithm_interface.py#L697-L697). This method will replace a passing 
+method [replace_next_train_simulation_event_by_stop(...)](../../../py_client/algorithm_interface/algorithm_interface.py#L703-L703). This method will replace a passing 
 event by an arrival and a departure event. The latter can then be postponed in the same way as the dispatcher presented just above.
 
 ```python
@@ -236,7 +236,7 @@ _Figure 4: Visualisation of the solution given by the proposed dispatcher changi
 ## Writing Back the Realized Train Runs
 In order to analyse and visualize the simulation, we show a method how to persist the realised train runs. For this, it is necessary to iterate over all the train path nodes and update the 
 arrival time, departure time and the stop status if an unplanned stop has been introduced during the simulation. We write back the updates through method
-[update_train_times(...)](../../../py_client/algorithm_interface/algorithm_interface.py#L292-L292) of the Algorithm Interface. The changed trains can then be saved to a regular Viriato train scenario, persisting the realised train runs. 
+[update_train_times(...)](../../../py_client/algorithm_interface/algorithm_interface.py#L293-L293) of the Algorithm Interface. The changed trains can then be saved to a regular Viriato train scenario, persisting the realised train runs. 
 The user can visualize them in all Viriato views.
 
 ```python

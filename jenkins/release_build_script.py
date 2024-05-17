@@ -130,15 +130,18 @@ def execute_stage_performing_end_to_end_test(release_build_arguments: ReleaseBui
 
     printf("Start end_to_end_tests_tool. The following output is from the end_to_end_tests_tool:")
     # TODO VPLAT-10906: Derive paths correctly for end2end test tool script
-    process_result_end_to_end_tests = subprocess.run(
-        [
+    args = [
             ReleaseBuildConstants.ABSOLUTE_PATH_TO_EXECUTABLE_END_TO_END_TESTS,
             str(release_build_arguments.update_pip).lower(),
             os.path.join("..", release_build_arguments.file_path_wheel_py_client),
             os.path.join("..", release_build_arguments.unzip_directory_viriato_nightly_stable),
-            ReleaseBuildConstants.RELATIVE_PATH_TO_SAMPLES_DATABASE,
+            ReleaseBuildConstants.ABSOLUTE_PATH_TO_SAMPLES_DATABASE,
             ReleaseBuildConstants.PATH_TO_END_TO_END_TEST_REPORT_FILE_FROM_END_TO_END_TEST_TOOL,
-        ],
+        ]
+    print("DEBUG: running end to end tests with arguments:  {}{}{}{}{}{}".format(args[0], args[1], args[2], args[3], args[4], args[5]))
+
+    process_result_end_to_end_tests = subprocess.run(
+        args,
         cwd=ReleaseBuildConstants.ABSOLUTE_PATH_END_TO_END_TESTS_TOOL_ROOT_DIRECTORY,
     )
     if process_result_end_to_end_tests.returncode != 0:

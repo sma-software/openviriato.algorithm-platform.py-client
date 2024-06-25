@@ -1,5 +1,5 @@
-responses~=0.24.0
+black~=24.4.2
 html-testRunner~=1.2.1
 parameterized~=0.9.0
-black~=23.10.1
-setuptools~=69.5.1
+responses~=0.25.3
+setuptools~=70.1.1

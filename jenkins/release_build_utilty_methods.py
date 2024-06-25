@@ -38,7 +38,7 @@ def download_zip_and_return_file_path(url: str, filename: str, target_directory:
 
     request = requests.get(url, stream=True)
     if not request.ok:
-        raise Exception(f"Could not download '{url}. Code {request.status_code}. \nText: \n{request.text}'")
+        raise Exception(f"Could not download {url}. Code {request.status_code}. \nText: \n{request.text}")
 
     with open(zip_file_path, "wb") as fd:
         for chunk in request.iter_content(chunk_size=128):

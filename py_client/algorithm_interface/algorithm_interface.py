@@ -583,13 +583,17 @@ class AlgorithmInterface:
     def get_bool_algorithm_parameter(self, key: str) -> bool:
         return _interface_helpers.do_get_any_parameter(self.__communication_layer, key)
 
-    def get_bool_list_algorithm_parameter(self, key: str) -> bool:
-        response_value: Optional[int] = _interface_helpers.do_get_any_parameter(self.__communication_layer, key)
-        return JsonToAidmConverter().process_json_to_aidm(response_value, List[bool])
+    def get_bool_list_algorithm_parameter(self, key: str) -> List[Optional[bool]]:
+        response_value: dict = _interface_helpers.do_get_any_parameter(self.__communication_layer, key)
+        return JsonToAidmConverter().process_json_to_aidm(response_value, List[Optional[bool]])
 
     def get_int_algorithm_parameter(self, key: str) -> Optional[int]:
         response_value: Optional[int] = _interface_helpers.do_get_any_parameter(self.__communication_layer, key)
         return JsonToAidmConverter().process_json_to_aidm(response_value, Optional[int])
+
+    def get_int_list_algorithm_parameter(self, key: str) -> List[Optional[int]]:
+        response_value: dict = _interface_helpers.do_get_any_parameter(self.__communication_layer, key)
+        return JsonToAidmConverter().process_json_to_aidm(response_value, List[Optional[int]])
 
     def get_enum_algorithm_parameter(self, enum_type: Type[EnumType], key: str) -> Optional[EnumType]:
         response_value = _interface_helpers.do_get_any_parameter(self.__communication_layer, key)
@@ -697,7 +701,8 @@ class AlgorithmInterface:
         response_list = self.__communication_layer.do_get_request_with_body(url_to_resource, body, query_parameters)
         return JsonToAidmConverter().process_json_to_aidm(response_list, List[AlgorithmConflict])
 
-    def __construct_body(self, arguments: ConflictDetectionArguments):
+    @staticmethod
+    def __construct_body(arguments: ConflictDetectionArguments):
         location = dict(nodeIds=arguments.filter_node_ids, sectionTrackIds=arguments.filter_section_track_ids)
         filters = dict(location=location, conflictTypes=to_json_converter.convert_any_object(arguments.filter_conflict_types))
         body = dict(trainIds=arguments.train_ids, filters=filters)

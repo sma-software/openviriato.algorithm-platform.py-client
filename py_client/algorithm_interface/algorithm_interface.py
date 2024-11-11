@@ -603,6 +603,10 @@ class AlgorithmInterface:
         response_dict = _interface_helpers.do_get_any_parameter(self.__communication_layer, key)
         return JsonToAidmConverter().process_json_to_aidm(response_dict, AlgorithmNode)
 
+    def get_algorithm_nodes_parameter(self, key: str) -> List[AlgorithmNode]:
+        response_dict = _interface_helpers.do_get_any_parameter(self.__communication_layer, key)
+        return JsonToAidmConverter().process_json_to_aidm(response_dict, List[AlgorithmNode])
+
     def get_algorithm_train_parameter(self, key: str) -> AlgorithmTrain:
         response_dict = _interface_helpers.do_get_any_parameter(self.__communication_layer, key)
         return JsonToAidmConverter().process_json_to_aidm(response_dict, AlgorithmTrain)

@@ -598,6 +598,10 @@ class AlgorithmInterface:
         response_dict_or_none = _interface_helpers.do_get_any_parameter(self.__communication_layer, key)
         return JsonToAidmConverter().process_json_to_aidm(response_dict_or_none, FloatingPoint)
 
+    def get_floating_point_list_algorithm_parameter(self, key: str) -> List[FloatingPoint]:
+        response_dict_or_none = _interface_helpers.do_get_any_parameter(self.__communication_layer, key)
+        return JsonToAidmConverter().process_json_to_aidm(response_dict_or_none, List[FloatingPoint])
+
     def get_string_algorithm_parameter(self, key: str) -> Optional[str]:
         response_string_or_none = _interface_helpers.do_get_any_parameter(self.__communication_layer, key)
         return JsonToAidmConverter().process_json_to_aidm(response_string_or_none, Optional[str])

@@ -584,7 +584,8 @@ class AlgorithmInterface:
         return _interface_helpers.do_get_any_parameter(self.__communication_layer, key)
 
     def get_bool_list_algorithm_parameter(self, key: str) -> bool:
-        return _interface_helpers.do_get_any_parameter(self.__communication_layer, key)
+        response_value: Optional[int] = _interface_helpers.do_get_any_parameter(self.__communication_layer, key)
+        return JsonToAidmConverter().process_json_to_aidm(response_value, List[bool])
 
     def get_int_algorithm_parameter(self, key: str) -> Optional[int]:
         response_value: Optional[int] = _interface_helpers.do_get_any_parameter(self.__communication_layer, key)

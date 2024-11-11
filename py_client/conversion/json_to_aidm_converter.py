@@ -1,4 +1,4 @@
-from typing import Dict, get_type_hints, Optional, List
+from typing import Dict, get_type_hints, Optional, List, TypeVar
 
 from py_client.communication.response_processing import AlgorithmPlatformConversionError
 from py_client.conversion.converter_helpers import *
@@ -18,6 +18,8 @@ from py_client.aidm.aidm_conflict import (
 from datetime import datetime, timedelta
 import isodate
 
+T = TypeVar("T")
+
 
 class _ABCJsonToAidmProcessor:
     @abstractmethod
@@ -25,7 +27,7 @@ class _ABCJsonToAidmProcessor:
         pass
 
     @abstractmethod
-    def process_attribute_dict(self, json_to_process: Union[dict, Primitive, Optional[Primitive]], targeted_type: Type[object]) -> object:
+    def process_attribute_dict(self, json_to_process: Union[dict, Primitive, Optional[Primitive]], targeted_type: Type[T]) -> T:
         pass
 
 
@@ -271,7 +273,7 @@ class JsonToAidmConverter:
             GeneralAidmObjectProcessor(),
         ]
 
-    def process_json_to_aidm(self, attribute_dict: Union[dict, Primitive, Optional[Primitive]], targeted_type: Type[object]) -> object:
+    def process_json_to_aidm(self, attribute_dict: Union[dict, Primitive, Optional[Primitive]], targeted_type: Type[T]) -> T:
         if attribute_dict is None:
             if self.targeted_type_cannot_have_none_value(targeted_type):
                 raise AlgorithmPlatformConversionError("Got a None value for a non-optional type.", None)

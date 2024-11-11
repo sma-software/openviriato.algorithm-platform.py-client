@@ -11,4 +11,4 @@ responses, https://pypi.org/project/responses/, Apache Software License (Apache 
 requests, https://pypi.org/project/requests/, Apache Software License (Apache 2.0), https://www.apache.org/licenses/LICENSE-2.0
 setuptools, https://pypi.org/project/setuptools/, MIT License (MIT license), https://opensource.org/licenses/MIT
 
-All web-links retrieved on 25.06.2024
+All web-links retrieved on 11.11.2024

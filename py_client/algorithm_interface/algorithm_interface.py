@@ -583,6 +583,9 @@ class AlgorithmInterface:
     def get_bool_algorithm_parameter(self, key: str) -> bool:
         return _interface_helpers.do_get_any_parameter(self.__communication_layer, key)
 
+    def get_bool_list_algorithm_parameter(self, key: str) -> bool:
+        return _interface_helpers.do_get_any_parameter(self.__communication_layer, key)
+
     def get_int_algorithm_parameter(self, key: str) -> Optional[int]:
         response_value: Optional[int] = _interface_helpers.do_get_any_parameter(self.__communication_layer, key)
         return JsonToAidmConverter().process_json_to_aidm(response_value, Optional[int])
@@ -598,6 +601,10 @@ class AlgorithmInterface:
     def get_string_algorithm_parameter(self, key: str) -> Optional[str]:
         response_string_or_none = _interface_helpers.do_get_any_parameter(self.__communication_layer, key)
         return JsonToAidmConverter().process_json_to_aidm(response_string_or_none, Optional[str])
+
+    def get_string_list_algorithm_parameter(self, key: str) -> List[str]:
+        response_string_or_none = _interface_helpers.do_get_any_parameter(self.__communication_layer, key)
+        return JsonToAidmConverter().process_json_to_aidm(response_string_or_none, List[str])
 
     def get_algorithm_node_parameter(self, key: str) -> AlgorithmNode:
         response_dict = _interface_helpers.do_get_any_parameter(self.__communication_layer, key)

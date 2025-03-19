@@ -249,7 +249,7 @@ class ReleaseBuildArgumentsFactory:
         )
         file_path_wheel_py_client = os.path.join(
             ReleaseBuildConstants.OUTPUT_DIRECTORY,
-            f"sma.algorithm_platform.py_client-{target_version_algorithm_platform_research_release}.post{build_number_jenkins_job}-py3-none-any.whl",
+            f"sma_algorithm_platform_py_client-{target_version_algorithm_platform_research_release}.post{build_number_jenkins_job}-py3-none-any.whl",
         )
 
         release_url_algorithm_platform_research = (

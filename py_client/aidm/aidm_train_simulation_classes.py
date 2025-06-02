@@ -166,33 +166,41 @@ class AlgorithmTrainSimulationRealizationForecast:
         return self.__unrealizable_events
 
 
-class AlgorithmTrainSimulationPerimeter:
-    __node_ids: List[int]
-
-    def __init__(self, node_ids: List[int]):
-        self.__node_ids = node_ids
-
-    @property
-    def node_ids(self) -> List[int]:
-        return self.__node_ids
-
-
 class AlgorithmTrainSimulationCreationArguments:
     __ignore_timetable_conflicts: bool
-    __perimeter: AlgorithmTrainSimulationPerimeter
+    __perimeter_restricted_to_node_ids: List[int]
     __time_window: TimeWindow
+    __algorithm_train_ids: List[int]
+    __deactivate_deadlock_prevention: bool
 
-    def __init__(self, time_window: TimeWindow, ignore_timetable_conflicts: bool = None, perimeter: AlgorithmTrainSimulationPerimeter = None):
+    def __init__(
+        self,
+        time_window: TimeWindow,
+        ignore_timetable_conflicts: bool = None,
+        perimeter_restricted_to_node_ids: List[int] = None,
+        algorithm_train_ids: List[int] = None,
+        deactivate_deadlock_prevention: bool = None,
+    ):
         self.__time_window = time_window
-        self.__perimeter = perimeter
+        self.__perimeter_restricted_to_node_ids = perimeter_restricted_to_node_ids
         self.__ignore_timetable_conflicts = ignore_timetable_conflicts
+        self.__algorithm_train_ids = algorithm_train_ids
+        self.__deactivate_deadlock_prevention = deactivate_deadlock_prevention
 
     def with_ignore_timetable_conflicts(self, ignore_timetable_conflicts: bool) -> AlgorithmTrainSimulationCreationArguments:
         self.__ignore_timetable_conflicts = ignore_timetable_conflicts
         return self
 
-    def with_perimeter(self, perimeter: AlgorithmTrainSimulationPerimeter) -> AlgorithmTrainSimulationCreationArguments:
-        self.__perimeter = perimeter
+    def with_perimeter_restricted_to_node_ids(self, perimeter_restricted_to_node_ids: List[int]) -> AlgorithmTrainSimulationCreationArguments:
+        self.__perimeter_restricted_to_node_ids = perimeter_restricted_to_node_ids
+        return self
+
+    def with_algorithm_train_ids(self, algorithm_train_ids: List[int]) -> AlgorithmTrainSimulationCreationArguments:
+        self.__algorithm_train_ids = algorithm_train_ids
+        return self
+
+    def with_deactivate_deadlock_prevention(self, deactivate_deadlock_prevention: bool) -> AlgorithmTrainSimulationCreationArguments:
+        self.__deactivate_deadlock_prevention = deactivate_deadlock_prevention
         return self
 
     @property
@@ -200,9 +208,17 @@ class AlgorithmTrainSimulationCreationArguments:
         return self.__ignore_timetable_conflicts
 
     @property
-    def perimeter(self) -> AlgorithmTrainSimulationPerimeter:
-        return self.__perimeter
+    def perimeter_restricted_to_node_ids(self) -> List[int]:
+        return self.__perimeter_restricted_to_node_ids
 
     @property
     def time_window(self) -> TimeWindow:
         return self.__time_window
+
+    @property
+    def algorithm_train_ids(self) -> List[int]:
+        return self.__algorithm_train_ids
+
+    @property
+    def deactivate_deadlock_prevention(self) -> bool:
+        return self.__deactivate_deadlock_prevention

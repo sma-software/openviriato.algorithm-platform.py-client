@@ -14,17 +14,7 @@ class TestGetNodeAlgorithmParameter(unittest.TestCase):
             self.__last_request = request
             self.__last_body = params
 
-            json__string = (
-                '{"value":{"id":644,"code":"85ZOER","nodeTracks":[{"id":645,"code":"6",'
-                '"debugString":"stationtrack:85ZOER_{StationTrack SID = 206}"},{"id":646,'
-                '"code":"5","debugString":"stationtrack:85ZOER_{StationTrack SID = 205}"},'
-                '{"id":647,"code":"4","debugString":"stationtrack:85ZOER_{StationTrack SID = '
-                '203}"},{"id":648,"code":"3","debugString":"stationtrack:85ZOER_{StationTrack '
-                'SID = 202}"},{"id":649,"code":"2","debugString":"stationtrack:85ZOER_{'
-                'StationTrack SID = 200}"},{"id":650,"code":"1",'
-                '"debugString":"stationtrack:85ZOER_{StationTrack SID = 199}"}],'
-                '"debugString":"station:85ZOER"},"key":"algorithmNode"}'
-            )
+            json__string = '{"value":{"id":644,"code":"85ZOER","description":"Zürich Oerlikon","nodeTracks":[{"id":645,"code":"6","description":"Gleis 6","debugString":"stationtrack:85ZOER_{StationTrack SID = 206}"},{"id":646,"code":"5","description":"Gleis 5","debugString":"stationtrack:85ZOER_{StationTrack SID = 205}"},{"id":647,"code":"4","description":"Gleis 4","debugString":"stationtrack:85ZOER_{StationTrack SID = 203}"},{"id":648,"code":"3","description":"Gleis 3","debugString":"stationtrack:85ZOER_{StationTrack SID = 202}"},{"id":649,"code":"2","description":"Gleis 2","debugString":"stationtrack:85ZOER_{StationTrack SID = 200}"},{"id":650,"code":"1","description":"Gleis 1","debugString":"stationtrack:85ZOER_{StationTrack SID = 199}"}],"debugString":"station:85ZOER"},"key":"algorithmNode"}'
 
             return APISessionMock.create_response_mock(json__string, 200)
 
@@ -51,8 +41,10 @@ class TestGetNodeAlgorithmParameter(unittest.TestCase):
         self.assertIsInstance(node_param, AlgorithmNode)
         self.assertEqual(node_param.id, 644)
         self.assertEqual(node_param.code, "85ZOER")
+        self.assertEqual(node_param.description, "Zürich Oerlikon")
         self.assertEqual(len(node_param.node_tracks), 6)
         self.assertIsInstance(node_param.node_tracks[0], AlgorithmNodeTrack)
+        self.assertEqual(node_param.node_tracks[0].description, "Gleis 6")
 
     @mock.patch("requests.Session", side_effect=GetNodeAlgorithmParameterTestSessionMock)
     def tearDown(self, mocked_get_obj) -> None:

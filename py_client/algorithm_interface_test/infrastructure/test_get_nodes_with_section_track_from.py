@@ -25,20 +25,24 @@ class TestGetNodesWithSectionTrackFrom(unittest.TestCase):
                 "      {\n"
                 '        "id": 349,\n'
                 '        "code": "1",\n'
+                '        "description": "1",\n'
                 '        "debugString": "stationtrack:85NH_1"\n'
                 "      },\n"
                 "      {\n"
                 '        "id": 350,\n'
                 '        "code": "2",\n'
+                '        "description": "2",\n'
                 '        "debugString": "stationtrack:85NH_2"\n'
                 "      }\n"
                 "    ],\n"
+                '    "description": "Neuhausen",\n'
                 '    "debugString": "station:85NH"\n'
                 "  },\n"
                 "  {\n"
                 '    "id": 281,\n'
                 '    "code": "85JE",\n'
                 '    "nodeTracks": [],\n'
+                '    "description": "Jestetten",\n'
                 '    "debugString": "station:85JE"\n'
                 "  }\n"
                 "]"
@@ -71,17 +75,20 @@ class TestGetNodesWithSectionTrackFrom(unittest.TestCase):
         self.assertIsInstance(nodes[0], AlgorithmNode)
         self.assertEqual(nodes[0].id, 348)
         self.assertEqual(nodes[0].code, "85NH")
+        self.assertEqual(nodes[0].description, "Neuhausen")
         self.assertEqual(nodes[0].debug_string, "station:85NH")
         self.assertIsInstance(nodes[0].node_tracks, list)
         self.assertEqual(len(nodes[0].node_tracks), 2)
         self.assertIsInstance(nodes[0].node_tracks[0], AlgorithmNodeTrack)
         self.assertEqual(nodes[0].node_tracks[0].id, 349)
         self.assertEqual(nodes[0].node_tracks[0].code, "1")
+        self.assertEqual(nodes[0].node_tracks[0].description, "1")
         self.assertEqual(nodes[0].node_tracks[0].debug_string, "stationtrack:85NH_1")
 
         self.assertIsInstance(nodes[1], AlgorithmNode)
         self.assertEqual(nodes[1].id, 281)
         self.assertEqual(nodes[1].code, "85JE")
+        self.assertEqual(nodes[1].description, "Jestetten")
         self.assertEqual(nodes[1].debug_string, "station:85JE")
         self.assertIsInstance(nodes[1].node_tracks, list)
         self.assertEqual(nodes[1].node_tracks, [])

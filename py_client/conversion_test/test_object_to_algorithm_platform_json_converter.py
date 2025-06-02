@@ -66,7 +66,7 @@ class TestFromAIDMConverter(unittest.TestCase):
         self.assertListEqual(test_section_list, [])
 
     def test_convert_list(self):
-        algorithm_section_track = AlgorithmSectionTrack(id=12, code="ATest", debug_string="str", distance_units=8, section_code="TestSection")
+        algorithm_section_track = AlgorithmSectionTrack(id=12, code="ATest", debug_string="str", distance_units=8, section_code="TestSection", next_node_id=13)
         test_list_of_algorithm_section_track = [algorithm_section_track, algorithm_section_track]
 
         test_section_list_of_dict = py_client.conversion.object_to_algorithm_platform_json_converter.convert_any_object(test_list_of_algorithm_section_track)

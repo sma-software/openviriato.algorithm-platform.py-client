@@ -20,20 +20,24 @@ class TestGetNeighborNode(TestCase):
                 "      {\n"
                 '        "id": 349,\n'
                 '        "code": "1",\n'
+                '        "description": "1",\n'
                 '        "debugString": "stationtrack:85NH_1"\n'
                 "      },\n"
                 "      {\n"
                 '        "id": 350,\n'
                 '        "code": "2",\n'
+                '        "description": "2",\n'
                 '        "debugString": "stationtrack:85NH_2"\n'
                 "      }\n"
                 "    ],\n"
+                '    "description": "Neuhausen",\n'
                 '    "debugString": "GetNeighborNodeTestSessionMock:85NH"\n'
                 "  },\n"
                 "  {\n"
                 '    "id": 281,\n'
                 '    "code": "85JE",\n'
                 '    "nodeTracks": [],\n'
+                '    "description": "Jestetten",\n'
                 '    "debugString": "station:85JE"\n'
                 "  }\n"
                 "]"
@@ -62,8 +66,10 @@ class TestGetNeighborNode(TestCase):
         mock_return_neighbor_nodes = self.interface_to_viriato.get_neighbor_nodes(node_id)
 
         self.assertIsInstance(mock_return_neighbor_nodes[0], AlgorithmNode)
+        self.assertEqual(mock_return_neighbor_nodes[0].description, "Neuhausen")
         self.assertEqual(mock_return_neighbor_nodes[0].debug_string, "GetNeighborNodeTestSessionMock:85NH")
         self.assertIsInstance(mock_return_neighbor_nodes[0].node_tracks[0], AlgorithmNodeTrack)
+        self.assertEqual(mock_return_neighbor_nodes[0].node_tracks[0].description, "1")
 
     @mock.patch("requests.Session", side_effect=GetNeighborNodeTestSessionMock)
     def tearDown(self, mocked_get_obj) -> None:

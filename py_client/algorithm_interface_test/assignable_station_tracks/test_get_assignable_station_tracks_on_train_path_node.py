@@ -14,7 +14,14 @@ class TestGetAssignableStationTracksOnTrainPathNode(unittest.TestCase):
             self.__last_body = params
 
             json__string = (
-                "[\n" "  {\n" '    "id": 163,\n' '    "code": "2",\n' '    "debugString": "stationtrack:85AR_{StationTrack SID = 34140}"\n' "  }\n" "]"
+                "[\n"
+                "  {\n"
+                '    "id": 163,\n'
+                '    "code": "2",\n'
+                '    "description": "2",\n'
+                '    "debugString": "stationtrack:85AR_{StationTrack SID = 34140}"\n'
+                "  }\n"
+                "]"
             )
 
             return APISessionMock.create_response_mock(json__string, 200)
@@ -43,6 +50,7 @@ class TestGetAssignableStationTracksOnTrainPathNode(unittest.TestCase):
 
         self.assertIsInstance(test_list, list)
         self.assertIsInstance(test_list[0], py_client.aidm.aidm_algorithm_classes.AlgorithmNodeTrack)
+        self.assertEqual(test_list[0].description, "2")
         self.assertEqual(test_list[0].debug_string, "stationtrack:85AR_{StationTrack SID = 34140}")
 
     @mock.patch("requests.Session", side_effect=GetAssignableStationTracksOnTrainPathNodeTestSessionMock)

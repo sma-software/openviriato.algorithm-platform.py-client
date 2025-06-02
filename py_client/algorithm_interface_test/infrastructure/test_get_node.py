@@ -19,14 +19,17 @@ class TestGetNode(TestCase):
                 "    {\n"
                 '      "id": 162,\n'
                 '      "code": "1",\n'
+                '      "description": "1",\n'
                 '      "debugString": "stationtrack:85AR_{StationTrack SID = 34138}"\n'
                 "    },\n"
                 "    {\n"
                 '      "id": 163,\n'
                 '      "code": "2",\n'
+                '      "description": "2",\n'
                 '      "debugString": "stationtrack:85AR_{StationTrack SID = 34140}"\n'
                 "    }\n"
                 "  ],\n"
+                '  "description": "Altenburg-Rheinau",\n'
                 '  "debugString": "station:85AR"\n'
                 "}"
             )
@@ -57,8 +60,10 @@ class TestGetNode(TestCase):
         self.assertIsInstance(node_from_mocked_response.node_tracks[0], py_client.aidm.aidm_algorithm_classes.AlgorithmNodeTrack)
         self.assertEqual(node_from_mocked_response.id, 161)
         self.assertEqual(node_from_mocked_response.code, "85AR")
+        self.assertEqual(node_from_mocked_response.description, "Altenburg-Rheinau")
         self.assertEqual(node_from_mocked_response.debug_string, "station:85AR")
         self.assertEqual(node_from_mocked_response.node_tracks[0].id, 162)
+        self.assertEqual(node_from_mocked_response.node_tracks[0].description, "1")
         self.assertEqual(node_from_mocked_response.node_tracks[0].debug_string, "stationtrack:85AR_{StationTrack SID = 34138}")
 
     @mock.patch("requests.Session", side_effect=GetNodeTestSessionMock)

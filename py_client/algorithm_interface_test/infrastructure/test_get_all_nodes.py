@@ -20,26 +20,31 @@ class TestGetAllNodes(TestCase):
                 "        {\n"
                 '          "id": 162,\n'
                 '          "code": "1",\n'
+                '          "description": "1",\n'
                 '          "debugString": "stationtrack:85AR_{StationTrack SID = 34138}"\n'
                 "        },\n"
                 "        {\n"
                 '          "id": 163,\n'
                 '          "code": "2",\n'
+                '          "description": "2",\n'
                 '          "debugString": "stationtrack:85AR_{StationTrack SID = 34140}"\n'
                 "        }\n"
                 "       ],\n"
+                '    "description": "Adliswil",\n'
                 '    "debugString": "station:45ADW"\n'
                 "  },\n"
                 "  {\n"
                 '    "id": 2,\n'
                 '    "code": "45LNG",\n'
                 '    "nodeTracks": [],\n'
+                '    "description": "Langnau-Gattikon",\n'
                 '    "debugString": "station:45LNG"\n'
                 "  },\n"
                 "  {\n"
                 '    "id": 3,\n'
                 '    "code": "45SIA",\n'
                 '    "nodeTracks": [],\n'
+                '    "description": "Sihlbrugg",\n'
                 '    "debugString": "station:45SIA"\n'
                 "  }\n"
                 "]"
@@ -74,6 +79,7 @@ class TestGetAllNodes(TestCase):
         self.assertEqual(len(nodes[0].node_tracks), 2)
         self.assertEqual(nodes[0].node_tracks[0].id, 162)
         self.assertEqual(nodes[0].node_tracks[0].code, "1")
+        self.assertEqual(nodes[0].node_tracks[0].description, "1")
         self.assertEqual(nodes[0].node_tracks[0].debug_string, "stationtrack:85AR_{StationTrack SID = 34138}")
 
         self.assertIsInstance(nodes[1], AlgorithmNode)

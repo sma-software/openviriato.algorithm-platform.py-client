@@ -20,6 +20,7 @@ class TestGetDirectedSectionTracks(unittest.TestCase):
                 '                    "code": "838",\n'
                 '                    "sectionCode": "61010",\n'
                 '                    "distanceUnits": 37040,\n'
+                '                    "nextNodeId": 168,\n'
                 '                    "debugString": "sectiontrack:s_61010 n_85AR 838"\n'
                 "                },\n"
                 "                {\n"
@@ -27,6 +28,7 @@ class TestGetDirectedSectionTracks(unittest.TestCase):
                 '                    "code": "2",\n'
                 '                    "sectionCode": "61010",\n'
                 '                    "distanceUnits": 37040,\n'
+                '                    "nextNodeId": 168,\n'
                 '                    "debugString": "sectiontrack:s_61010 n_85AR 2"\n'
                 "                }\n"
                 "            ]"

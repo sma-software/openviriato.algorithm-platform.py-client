@@ -1,41 +1,56 @@
 from datetime import timedelta
-from typing import List
+from typing import List, Optional
 
 from py_client.aidm.aidm_base_classes import _HasID, _HasCode, _HasDebugString
 from py_client.aidm.aidm_train_path_node_classes import AlgorithmTrainPathNode
 
 
 class AlgorithmNodeTrack(_HasID, _HasCode, _HasDebugString):
-    def __init__(self, id: int, code: str, debug_string: str):
+    __description: str
+
+    def __init__(self, id: int, code: str, debug_string: str, description: str):
         _HasID.__init__(self, id)
         _HasCode.__init__(self, code)
         _HasDebugString.__init__(self, debug_string)
+        self.__description = description
+
+    @property
+    def description(self) -> str:
+        return self.__description
 
 
 class AlgorithmNode(_HasID, _HasCode, _HasDebugString):
     __node_tracks: List[AlgorithmNodeTrack]
+    __description: str
 
-    def __init__(self, id: int, code: str, debug_string: str, node_tracks: List[AlgorithmNodeTrack]):
+    def __init__(self, id: int, code: str, debug_string: str, node_tracks: List[AlgorithmNodeTrack], description: str):
         _HasID.__init__(self, id)
         _HasCode.__init__(self, code)
         _HasDebugString.__init__(self, debug_string)
         self.__node_tracks = node_tracks
+        self.__description = description
 
     @property
     def node_tracks(self) -> List[AlgorithmNodeTrack]:
         return self.__node_tracks
 
+    @property
+    def description(self) -> str:
+        return self.__description
+
 
 class AlgorithmSectionTrack(_HasID, _HasCode, _HasDebugString):
     __distance_units: int
     __section_code: str
+    __next_node_id: int
 
-    def __init__(self, id: int, code: str, debug_string: str, distance_units: int, section_code: str):
+    def __init__(self, id: int, code: str, debug_string: str, distance_units: int, section_code: str, next_node_id: int):
         _HasID.__init__(self, id)
         _HasCode.__init__(self, code)
         _HasDebugString.__init__(self, debug_string)
         self.__distance_units = distance_units
         self.__section_code = section_code
+        self.__next_node_id = next_node_id
 
     @property
     def distance_units(self) -> int:
@@ -44,6 +59,10 @@ class AlgorithmSectionTrack(_HasID, _HasCode, _HasDebugString):
     @property
     def section_code(self) -> str:
         return self.__section_code
+
+    @property
+    def next_node_id(self) -> int:
+        return self.__next_node_id
 
 
 class AlgorithmTrain(_HasID, _HasCode, _HasDebugString):

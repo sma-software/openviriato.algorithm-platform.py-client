@@ -22,6 +22,7 @@ class TestGetAllSectionTracks(unittest.TestCase):
                 '    "code": "411",\n'
                 '    "section_code": "15115",\n'
                 '    "distanceUnits": 18430,\n'
+                '    "nextNodeId": 360,\n'
                 '    "debugString": "sectiontrack:s_15115 n_85KLW 411"\n'
                 "  },\n"
                 "  {\n"
@@ -29,6 +30,7 @@ class TestGetAllSectionTracks(unittest.TestCase):
                 '    "code": "311",\n'
                 '    "sectionCode": "15115",\n'
                 '    "distanceUnits": 18430,\n'
+                '    "nextNodeId": 360,\n'
                 '    "debugString": "sectiontrack:s_15115 n_85KLW 311"\n'
                 "  },\n"
                 "  {\n"
@@ -36,6 +38,7 @@ class TestGetAllSectionTracks(unittest.TestCase):
                 '    "code": "712",\n'
                 '    "sectionCode": "16010",\n'
                 '    "distanceUnits": 15420,\n'
+                '    "nextNodeId": 291,\n'
                 '    "debugString": "sectiontrack:s_16010 n_85NHOF 712"\n'
                 "  }\n"
                 "]"
@@ -68,6 +71,7 @@ class TestGetAllSectionTracks(unittest.TestCase):
         self.assertEqual(section_tracks[0].code, "411")
         self.assertEqual(section_tracks[0].section_code, "15115")
         self.assertEqual(section_tracks[0].distance_units, 18430)
+        self.assertEqual(section_tracks[0].next_node_id, 360)
         self.assertEqual(section_tracks[0].debug_string, "sectiontrack:s_15115 n_85KLW 411")
 
         self.assertIsInstance(section_tracks[1], AlgorithmSectionTrack)
@@ -75,6 +79,7 @@ class TestGetAllSectionTracks(unittest.TestCase):
         self.assertEqual(section_tracks[1].code, "311")
         self.assertEqual(section_tracks[1].section_code, "15115")
         self.assertEqual(section_tracks[1].distance_units, 18430)
+        self.assertEqual(section_tracks[1].next_node_id, 360)
         self.assertEqual(section_tracks[1].debug_string, "sectiontrack:s_15115 n_85KLW 311")
 
     @mock.patch("requests.Session", side_effect=GetAllSectionTracksSessionTestMock)

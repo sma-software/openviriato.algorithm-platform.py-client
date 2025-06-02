@@ -24,7 +24,7 @@ class TestJsonToAIDMConverter(unittest.TestCase):
         self.__converter = JsonToAidmConverter()
 
     def test_json_to_section_track(self):
-        json_dict = dict(id=1082, code="900", sectionCode="70015", distanceUnits=10000, debugString="sectiontrack:s_70015 n_85ZHDB 900")
+        json_dict = dict(id=1082, code="900", sectionCode="70015", distanceUnits=10000, nextNodeId=625, debugString="sectiontrack:s_70015 n_85ZHDB 900")
 
         test_section_track = self.__converter.process_json_to_aidm(json_dict, AlgorithmSectionTrack)
 
@@ -34,6 +34,7 @@ class TestJsonToAIDMConverter(unittest.TestCase):
         self.assertEqual(test_section_track.section_code, "70015")
         self.assertEqual(test_section_track.code, "900")
         self.assertEqual(test_section_track.distance_units, 10000)
+        self.assertEqual(test_section_track.next_node_id, 625)
 
     def test_json_to_section_track_attribute_missing(self):
         json_dict = dict(id=1082, code="900", sectionCode="70015", debugString="sectiontrack:s_70015 n_85ZHDB 900")
@@ -48,6 +49,7 @@ class TestJsonToAIDMConverter(unittest.TestCase):
             code="900",
             sectionCode="70015",
             distanceUnits=10000,
+            nextNodeId=625,
             debugString="sectiontrack:s_70015 n_85ZHDB 900",
         )
 
@@ -68,10 +70,11 @@ class TestJsonToAIDMConverter(unittest.TestCase):
             id=162,
             code="85AR",
             nodeTracks=[
-                dict(id=163, code="1", debugString="stationtrack:85AR_{StationTrack SID = 34138}"),
-                dict(id=164, code="2", debugString="stationtrack:85AR_{StationTrack SID = 34140}"),
+                dict(id=163, code="1", description="desc1", debugString="stationtrack:85AR_{StationTrack SID = 34138}"),
+                dict(id=164, code="2", description="desc2", debugString="stationtrack:85AR_{StationTrack SID = 34140}"),
             ],
             debugString="station:85AR",
+            description="Test Description",
         )
 
         algorithm_node = self.__converter.process_json_to_aidm(json_dict, AlgorithmNode)
@@ -79,26 +82,31 @@ class TestJsonToAIDMConverter(unittest.TestCase):
         self.assertIsInstance(algorithm_node.node_tracks, List)
         self.assertEqual(len(algorithm_node.node_tracks), 2)
         self.assertIsInstance(algorithm_node.node_tracks[0], AlgorithmNodeTrack)
+        self.assertEqual(algorithm_node.description, "Test Description")
 
     def test_json_to_aidm_containing_empty_list_of_aidm(self):
-        json_dict = dict(id=162, code="85AR", nodeTracks=[], debugString="station:85AR")
+        json_dict = dict(id=162, code="85AR", nodeTracks=[], debugString="station:85AR", description="Test Description")
 
         algorithm_node = self.__converter.process_json_to_aidm(json_dict, AlgorithmNode)
         self.assertIsInstance(algorithm_node, AlgorithmNode)
         self.assertIsInstance(algorithm_node.node_tracks, List)
         self.assertEqual(len(algorithm_node.node_tracks), 0)
+        self.assertEqual(algorithm_node.description, "Test Description")
 
     def test_json_to_list_of_aidm(self):
         json_dict = [
-            dict(id=1, code="45ADW", nodeTracks=[], debugString="station:45ADW"),
-            dict(id=2, code="45LNG", nodeTracks=[], debugString="station:45LNG"),
-            dict(id=3, code="45SIA", nodeTracks=[], debugString="station:45SIA"),
+            dict(id=1, code="45ADW", nodeTracks=[], debugString="station:45ADW", description="Test Description 1"),
+            dict(id=2, code="45LNG", nodeTracks=[], debugString="station:45LNG", description="Test Description 2"),
+            dict(id=3, code="45SIA", nodeTracks=[], debugString="station:45SIA", description="Test Description 3"),
         ]
 
         algorithm_nodes = self.__converter.process_json_to_aidm(json_dict, List[AlgorithmNode])
         self.assertIsInstance(algorithm_nodes, list)
         self.assertEqual(len(algorithm_nodes), 3)
         self.assertIsInstance(algorithm_nodes[0], AlgorithmNode)
+        self.assertEqual(algorithm_nodes[0].description, "Test Description 1")
+        self.assertEqual(algorithm_nodes[1].description, "Test Description 2")
+        self.assertEqual(algorithm_nodes[2].description, "Test Description 3")
 
     def test_json_to_empty_list_of_aidm(self):
         json_dict = []

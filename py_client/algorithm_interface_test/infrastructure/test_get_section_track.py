@@ -22,6 +22,7 @@ class TestGetSectionTrack(unittest.TestCase):
                 ' "code": "900",\n'
                 ' "sectionCode": "70015",\n'
                 ' "distanceUnits": 10000,\n'
+                ' "nextNodeId": 625,\n'
                 ' "debugString": "GetSectionTrackSessionTestMock"\n'
                 "}"
             )
@@ -54,6 +55,7 @@ class TestGetSectionTrack(unittest.TestCase):
         self.assertEqual(test_section_track.debug_string, "GetSectionTrackSessionTestMock")
         self.assertEqual(test_section_track.section_code, "70015")
         self.assertEqual(test_section_track.distance_units, 10000)
+        self.assertEqual(test_section_track.next_node_id, 625)
 
     @mock.patch("requests.Session", side_effect=GetSectionTrackSessionTestMock)
     def tearDown(self, mocked_get_obj) -> None:

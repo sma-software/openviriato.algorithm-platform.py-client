@@ -9,7 +9,7 @@ from py_client.conversion.json_to_aidm_converter import JsonToAidmConverter
 
 class TestToAIDMConverter(unittest.TestCase):
     def test_convert_json_to_aidm_class_from_constructor(self):
-        test_section_as_dict = dict(ID=12, Code="ATest", DebugString="str", DistanceUnits=8, SectionCode="TestSection")
+        test_section_as_dict = dict(ID=12, Code="ATest", DebugString="str", DistanceUnits=8, SectionCode="TestSection", NextNodeId=13)
 
         test_section = JsonToAidmConverter().process_json_to_aidm(test_section_as_dict, AlgorithmSectionTrack)
 
@@ -19,6 +19,7 @@ class TestToAIDMConverter(unittest.TestCase):
         self.assertEqual(test_section.debug_string, "str")
         self.assertEqual(test_section.distance_units, 8)
         self.assertEqual(test_section.section_code, "TestSection")
+        self.assertEqual(test_section.next_node_id, 13)
 
     def test_convert_json_to_aidm_class_populated_from_factory_method(self):
         test_class_inner_object = TestClassInner(id=99)
@@ -34,7 +35,7 @@ class TestToAIDMConverter(unittest.TestCase):
         self.assertEqual(test_class_outer_object.inner.id, result.inner.id)
 
     def test_convert_list_of_dict_to_list_of_aidm(self):
-        test_section_as_dict = dict(ID=12, Code="ATest", DebugString="str", DistanceUnits=8, SectionCode="TestSection")
+        test_section_as_dict = dict(ID=12, Code="ATest", DebugString="str", DistanceUnits=8, SectionCode="TestSection", NextNodeId=13)
         test_section_dict_in_list = [test_section_as_dict, test_section_as_dict, test_section_as_dict]
 
         test_section_list = JsonToAidmConverter().process_json_to_aidm(test_section_dict_in_list, List[AlgorithmSectionTrack])
@@ -42,10 +43,14 @@ class TestToAIDMConverter(unittest.TestCase):
         self.assertIsInstance(test_section_list, list)
         self.assertIsInstance(test_section_list[0], AlgorithmSectionTrack)
         self.assertEqual(test_section_list[0].debug_string, "str")
+        self.assertEqual(test_section_list[0].next_node_id, 13)
 
     def test_convert_json_to_algorithm_node(self):
-        test_node_tracks_as_list = [dict(ID=162, Code="1", DebugString="AString"), dict(ID=123, Code="2", DebugString="AnotherDebugString")]
-        test_node_as_dict = dict(ID=15, Code="A", DebugString="test123", NodeTracks=test_node_tracks_as_list)
+        test_node_tracks_as_list = [
+            dict(ID=162, Code="1", DebugString="AString", Description="Test Description 1"),
+            dict(ID=123, Code="2", DebugString="AnotherDebugString", Description="Test Description 2"),
+        ]
+        test_node_as_dict = dict(ID=15, Code="A", DebugString="test123", NodeTracks=test_node_tracks_as_list, Description="Test Description")
 
         test_node = JsonToAidmConverter().process_json_to_aidm(test_node_as_dict, AlgorithmNode)
 
@@ -53,14 +58,17 @@ class TestToAIDMConverter(unittest.TestCase):
         self.assertEqual(test_node.id, 15)
         self.assertEqual(test_node.code, "A")
         self.assertEqual(test_node.debug_string, "test123")
+        self.assertEqual(test_node.description, "Test Description")
         self.assertIsInstance(test_node.node_tracks, list)
         self.assertEqual(test_node.node_tracks[0].id, 162)
         self.assertEqual(test_node.node_tracks[0].code, "1")
         self.assertEqual(test_node.node_tracks[0].debug_string, "AString")
+        self.assertEqual(test_node.node_tracks[0].description, "Test Description 1")
+        self.assertEqual(test_node.node_tracks[1].description, "Test Description 2")
 
     def test_convert_json_to_algorithm_node_without_node_tracks(self):
         test_node_tracks_as_list = []
-        test_node_as_dict = dict(ID=15, Code="A", DebugString="test123", NodeTracks=test_node_tracks_as_list)
+        test_node_as_dict = dict(ID=15, Code="A", DebugString="test123", NodeTracks=test_node_tracks_as_list, Description="Test Description")
 
         test_node = JsonToAidmConverter().process_json_to_aidm(test_node_as_dict, AlgorithmNode)
 
@@ -68,12 +76,16 @@ class TestToAIDMConverter(unittest.TestCase):
         self.assertEqual(test_node.id, 15)
         self.assertEqual(test_node.code, "A")
         self.assertEqual(test_node.debug_string, "test123")
+        self.assertEqual(test_node.description, "Test Description")
         self.assertIsInstance(test_node.node_tracks, list)
         self.assertListEqual(test_node.node_tracks, [])
 
     def test_convert_list_of_json_to_algorithm_node(self):
-        test_node_tracks_as_list = [dict(ID=162, Code="1", DebugString="AString"), dict(ID=123, Code="2", DebugString="AnotherDebugString")]
-        test_node_as_dict = dict(ID=15, Code="A", DebugString="test123", NodeTracks=test_node_tracks_as_list)
+        test_node_tracks_as_list = [
+            dict(ID=162, Code="1", DebugString="AString", Description="Test Description 1"),
+            dict(ID=123, Code="2", DebugString="AnotherDebugString", Description="Test Description 2"),
+        ]
+        test_node_as_dict = dict(ID=15, Code="A", DebugString="test123", NodeTracks=test_node_tracks_as_list, Description="Test Description")
         test_node_as_list_of_dict = [test_node_as_dict, test_node_as_dict.copy(), test_node_as_dict.copy()]
 
         test_node_list = JsonToAidmConverter().process_json_to_aidm(test_node_as_list_of_dict, List[AlgorithmNode])
@@ -81,9 +93,12 @@ class TestToAIDMConverter(unittest.TestCase):
         self.assertIsInstance(test_node_list, list)
         self.assertIsInstance(test_node_list[0], AlgorithmNode)
         self.assertEqual(test_node_list[0].id, 15)
+        self.assertEqual(test_node_list[0].description, "Test Description")
         self.assertEqual(test_node_list[0].node_tracks[0].id, 162)
         self.assertEqual(test_node_list[0].node_tracks[0].code, "1")
         self.assertEqual(test_node_list[0].node_tracks[0].debug_string, "AString")
+        self.assertEqual(test_node_list[0].node_tracks[0].description, "Test Description 1")
+        self.assertEqual(test_node_list[0].node_tracks[1].description, "Test Description 2")
 
     def test_convert_camel_case_json_to_train_path_node(self):
         test_node_as_dict = dict(

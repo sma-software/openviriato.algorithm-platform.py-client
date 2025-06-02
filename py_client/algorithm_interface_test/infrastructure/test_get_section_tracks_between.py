@@ -23,6 +23,7 @@ class TestGetSectionTracksBetween(unittest.TestCase):
                 '    "code": "838",\n'
                 '    "sectionCode": "61010",\n'
                 '    "distanceUnits": 37040,\n'
+                '    "nextNodeId": 168,\n'
                 '    "debugString": "sectiontrack:s_61010 n_85AR 838"\n'
                 "  },\n"
                 "  {\n"
@@ -30,6 +31,7 @@ class TestGetSectionTracksBetween(unittest.TestCase):
                 '    "code": "2",\n'
                 '    "sectionCode": "61010",\n'
                 '    "distanceUnits": 37040,\n'
+                '    "nextNodeId": 168,\n'
                 '    "debugString": "sectiontrack:s_61010 n_85AR 2"\n'
                 "  }\n"
                 "]"
@@ -67,6 +69,7 @@ class TestGetSectionTracksBetween(unittest.TestCase):
         self.assertEqual(section_tracks[0].debug_string, "sectiontrack:s_61010 n_85AR 838")
         self.assertEqual(section_tracks[0].section_code, "61010")
         self.assertEqual(section_tracks[0].distance_units, 37040)
+        self.assertEqual(section_tracks[0].next_node_id, 168)
 
         self.assertIsInstance(section_tracks[1], AlgorithmSectionTrack)
         self.assertEqual(section_tracks[1].id, 886)
@@ -74,6 +77,7 @@ class TestGetSectionTracksBetween(unittest.TestCase):
         self.assertEqual(section_tracks[1].debug_string, "sectiontrack:s_61010 n_85AR 2")
         self.assertEqual(section_tracks[1].section_code, "61010")
         self.assertEqual(section_tracks[1].distance_units, 37040)
+        self.assertEqual(section_tracks[1].next_node_id, 168)
 
     @mock.patch("requests.Session", side_effect=GetSectionTracksBetweenSessionTestMock)
     def tearDown(self, mocked_get_obj) -> None:

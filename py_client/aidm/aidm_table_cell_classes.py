@@ -91,6 +91,7 @@ class TableAlgorithmTrainCell(_TableCell):
 class TableCellDataType(Enum):
     algorithm_node = "algorithmNode"
     algorithm_train = "algorithmTrain"
+    algorithm_train_number = "algorithmTrainNumber"
     duration = "duration"
     integer = "integer"
     local_date_time = "localDateTime"

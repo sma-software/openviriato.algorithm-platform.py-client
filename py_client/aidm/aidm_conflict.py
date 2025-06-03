@@ -230,7 +230,7 @@ class ConflictDetectionArguments:
     __time_window: TimeWindow
     __train_ids: List[int]
 
-    def __init__(self, train_ids: List[int]):
+    def __init__(self, train_ids: List[int], **kwargs):
         self.__train_ids = train_ids
         self.__filter_conflict_types = None
         self.__filter_node_ids = None

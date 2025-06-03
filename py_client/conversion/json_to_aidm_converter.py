@@ -57,7 +57,7 @@ class DatetimeProcessor(_ABCJsonToAidmValueProcessor):
 
     def process_attribute_dict(self, json_to_process: Union[dict, Primitive, Optional[Primitive]], targeted_type: Type[object]) -> object:
         try:
-            return datetime.fromisoformat(json_to_process)
+            return datetime.fromisoformat(json_to_process.replace("%3A", ":"))
         except Exception as e:
             raise AlgorithmPlatformConversionError("Could not parse datetime, invalid datetime format: {}".format(json_to_process), e)
 

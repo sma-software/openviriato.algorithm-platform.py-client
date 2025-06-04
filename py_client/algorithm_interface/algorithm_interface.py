@@ -61,8 +61,8 @@ from py_client.conversion.json_to_aidm_converter import JsonToAidmConverter
 class AlgorithmInterface:
     __communication_layer: CommunicationLayer
 
-    def __init__(self, base_url: str):
-        self.__communication_layer = CommunicationLayer(base_url)
+    def __init__(self, base_url: str, log_file: str = None):
+        self.__communication_layer = CommunicationLayer(base_url, log_file)
 
     def __enter__(self):
         return self

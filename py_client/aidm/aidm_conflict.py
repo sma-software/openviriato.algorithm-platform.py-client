@@ -227,60 +227,41 @@ class ConflictDetectionArguments:
     __filter_node_ids: List[int]
     __filter_section_track_ids: List[int]
     __filter_train_id: Optional[int]
-    __time_window: TimeWindow
+    __filter_time_window: TimeWindow
     __train_ids: List[int]
 
-    def __init__(self, train_ids: List[int], **kwargs):
-        self.__train_ids = train_ids
-        self.__filter_conflict_types = None
-        self.__filter_node_ids = None
-        self.__filter_section_track_ids = None
-        self.__filter_train_id = None
-        self.__time_window = None
-
-    def _private_init__(
+    def __init__(
         self,
         train_ids: List[int],
-        filter_conflict_types: List[ConflictType],
-        filter_node_ids: List[int],
-        filter_section_track_ids: List[int],
-        filter_train_id: Optional[int],
-        time_window: TimeWindow,
-    ) -> None:
+        filter_time_window: TimeWindow = None,
+        filter_conflict_types: List[ConflictType] = None,
+        filter_node_ids: List[int] = None,
+        filter_section_track_ids: List[int] = None,
+        filter_train_id: int = None,
+    ):
         self.__train_ids = train_ids
+        self.__filter_time_window = filter_time_window
         self.__filter_conflict_types = filter_conflict_types
         self.__filter_node_ids = filter_node_ids
         self.__filter_section_track_ids = filter_section_track_ids
         self.__filter_train_id = filter_train_id
-        self.__time_window = time_window
 
     def with_type_filter(self, filter_conflict_types: List[ConflictType]) -> ConflictDetectionArguments:
-        result = ConflictDetectionArguments(self.__train_ids)
-        result._private_init__(
-            self.__train_ids, filter_conflict_types, self.__filter_node_ids, self.__filter_section_track_ids, self.__filter_train_id, self.__time_window
-        )
-        return result
+        self.__filter_conflict_types = filter_conflict_types
+        return self
 
     def with_location_filter(self, filter_node_ids: List[int], filter_section_track_ids: List[int]) -> ConflictDetectionArguments:
-        result = ConflictDetectionArguments(self.__train_ids)
-        result._private_init__(
-            self.__train_ids, self.__filter_conflict_types, filter_node_ids, filter_section_track_ids, self.__filter_train_id, self.__time_window
-        )
-        return result
+        self.__filter_node_ids = filter_node_ids
+        self.__filter_section_track_ids = filter_section_track_ids
+        return self
 
     def with_train_filter(self, filter_train_id: Optional[int]) -> ConflictDetectionArguments:
-        result = ConflictDetectionArguments(self.__train_ids)
-        result._private_init__(
-            self.__train_ids, self.__filter_conflict_types, self.__filter_node_ids, self.__filter_section_track_ids, filter_train_id, self.__time_window
-        )
-        return result
+        self.__filter_train_id = filter_train_id
+        return self
 
     def with_time_filter(self, time_window: TimeWindow) -> ConflictDetectionArguments:
-        result = ConflictDetectionArguments(self.__train_ids)
-        result._private_init__(
-            self.__train_ids, self.__filter_conflict_types, self.__filter_node_ids, self.__filter_section_track_ids, self.__filter_train_id, time_window
-        )
-        return result
+        self.__filter_time_window = time_window
+        return self
 
     @property
     def filter_conflict_types(self) -> List[ConflictType]:
@@ -299,8 +280,8 @@ class ConflictDetectionArguments:
         return self.__filter_train_id
 
     @property
-    def time_window(self) -> TimeWindow:
-        return self.__time_window
+    def filter_time_window(self) -> TimeWindow:
+        return self.__filter_time_window
 
     @property
     def train_ids(self) -> List[int]:

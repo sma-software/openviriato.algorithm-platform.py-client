@@ -694,8 +694,8 @@ class AlgorithmInterface:
         if arguments.filter_train_id is not None:
             query_parameters["trainId"] = arguments.filter_train_id
 
-        if arguments.time_window is not None:
-            query_parameters = _interface_helpers.merge_query_parameters([query_parameters, to_json_converter.convert_any_object(arguments.time_window)])
+        if arguments.filter_time_window is not None:
+            query_parameters = _interface_helpers.merge_query_parameters([query_parameters, to_json_converter.convert_any_object(arguments.filter_time_window)])
 
         body = self.__construct_body(arguments)
         response_list = self.__communication_layer.do_get_request_with_body(url_to_resource, body, query_parameters)

@@ -21,7 +21,7 @@ class TestConflictDetectionArguments(unittest.TestCase):
 
         self.assertEqual(conflict_detection_arguments.filter_train_id, None)
 
-        self.assertEqual(conflict_detection_arguments.time_window, None)
+        self.assertEqual(conflict_detection_arguments.filter_time_window, None)
 
         self.assertIsInstance(conflict_detection_arguments.train_ids, list)
         self.assertEqual(conflict_detection_arguments.train_ids, train_ids)
@@ -57,9 +57,9 @@ class TestConflictDetectionArguments(unittest.TestCase):
 
         self.assertEqual(conflict_detection_arguments.filter_train_id, 1230)
 
-        self.assertIsInstance(conflict_detection_arguments.time_window, TimeWindow)
-        self.assertEqual(conflict_detection_arguments.time_window.from_time, datetime(year=2022, month=2, day=7, hour=17, minute=10))
-        self.assertEqual(conflict_detection_arguments.time_window.to_time, datetime(year=2022, month=2, day=7, hour=17, minute=15))
+        self.assertIsInstance(conflict_detection_arguments.filter_time_window, TimeWindow)
+        self.assertEqual(conflict_detection_arguments.filter_time_window.from_time, datetime(year=2022, month=2, day=7, hour=17, minute=10))
+        self.assertEqual(conflict_detection_arguments.filter_time_window.to_time, datetime(year=2022, month=2, day=7, hour=17, minute=15))
 
         self.assertIsInstance(conflict_detection_arguments.train_ids, list)
         self.assertEqual(conflict_detection_arguments.train_ids, [1234, 1237])

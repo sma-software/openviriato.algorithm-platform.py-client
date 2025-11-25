@@ -8,7 +8,13 @@ def raise_if_unsuccessful_response_code(api_response: requests.Response) -> None
     except requests.HTTPError:
         if api_response.text != "":
             algorithm_platform_error_information = api_response.json()
-            raise AlgorithmPlatformHTTPError(algorithm_platform_error_information["statusCode"], algorithm_platform_error_information["message"])
+            if "statusCode" in algorithm_platform_error_information:
+                raise AlgorithmPlatformHTTPError(algorithm_platform_error_information["statusCode"], algorithm_platform_error_information["message"])
+            else:
+                # we have to process an ASP.NET standard error in this case
+                reason = algorithm_platform_error_information["errors"]["reason"]
+                status = api_response["status_code"]
+                raise AlgorithmPlatformHTTPError(status, reason)
         else:
             api_response.raise_for_status()
 

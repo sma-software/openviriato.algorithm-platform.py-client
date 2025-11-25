@@ -128,42 +128,15 @@ class AlgorithmTrainSimulationTrain:
         return self.__next_event_id
 
 
-class AlgorithmTrainSimulationUnrealizableEvent:
-    __additional_forecast_delay: timedelta
-    __event: AlgorithmTrainSimulationEvent
-
-    def __init__(self, additional_forecast_delay: timedelta, event: AlgorithmTrainSimulationEvent):
-        self.__additional_forecast_delay = additional_forecast_delay
-        self.__event = event
-
-    @property
-    def additional_forecast_delay(self) -> timedelta:
-        return self.__additional_forecast_delay
-
-    @property
-    def event(self) -> AlgorithmTrainSimulationEvent:
-        return self.__event
-
-
 class AlgorithmTrainSimulationRealizationForecast:
     __next_realizable_event: AlgorithmTrainSimulationEvent
-    __unrealizable_events: List[AlgorithmTrainSimulationUnrealizableEvent]
 
-    def __init__(
-        self,
-        next_realizable_event: AlgorithmTrainSimulationEvent,
-        unrealizable_events: List[AlgorithmTrainSimulationUnrealizableEvent],
-    ):
+    def __init__(self, next_realizable_event: AlgorithmTrainSimulationEvent):
         self.__next_realizable_event = next_realizable_event
-        self.__unrealizable_events = unrealizable_events
 
     @property
     def next_realizable_event(self) -> AlgorithmTrainSimulationEvent:
         return self.__next_realizable_event
-
-    @property
-    def unrealizable_events(self) -> List[AlgorithmTrainSimulationUnrealizableEvent]:
-        return self.__unrealizable_events
 
 
 class AlgorithmTrainSimulationCreationArguments:

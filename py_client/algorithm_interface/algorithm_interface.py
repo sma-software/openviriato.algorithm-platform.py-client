@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta
+from datetime import timedelta
 from typing import Type, List, Optional, Union
 
 from py_client.aidm.aidm_enum_classes import EnumType
@@ -56,6 +56,7 @@ from py_client.aidm.aidm_link_classes import _AlgorithmLink
 from py_client.aidm.aidm_routing_edge_classes import _RoutingEdge
 from py_client.communication.communication_layer import CommunicationLayer
 from py_client.conversion.json_to_aidm_converter import JsonToAidmConverter
+from py_client.aidm.aidm_train_simulation_classes import _AlgorithmDispatcherDelayReason
 
 
 class AlgorithmInterface:
@@ -718,10 +719,13 @@ class AlgorithmInterface:
         response = self.__communication_layer.do_get_request_without_body(url_to_resource)
         return JsonToAidmConverter().process_json_to_aidm(response, bool)
 
-    def postpone_next_train_simulation_event(self, additional_delay: timedelta) -> AlgorithmTrainSimulationRealizationForecast:
+    def postpone_next_train_simulation_event(
+        self, additional_delay: timedelta, reason: _AlgorithmDispatcherDelayReason
+    ) -> AlgorithmTrainSimulationRealizationForecast:
         url_to_resource = "services/trains/simulations/events/next:postpone"
         converted_additional_delay = to_json_converter.convert_any_object(additional_delay)
-        post_request_body = dict(additionalDelay=converted_additional_delay)
+        converted_reason = to_json_converter.convert_any_object(reason)
+        post_request_body = dict(additionalDelay=converted_additional_delay, reason=converted_reason)
         response = self.__communication_layer.do_post_request(url_to_resource, post_request_body)
         return JsonToAidmConverter().process_json_to_aidm(response, AlgorithmTrainSimulationRealizationForecast)
 

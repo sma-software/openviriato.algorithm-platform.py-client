@@ -139,6 +139,39 @@ class AlgorithmTrainSimulationRealizationForecast:
         return self.__next_realizable_event
 
 
+class _AlgorithmDispatcherDelayReason:
+    def __init__(self):
+        pass
+
+
+class AlgorithmDispatcherConnectionDelayReason:
+    __causing_train_path_node_id: Optional[int]
+
+    def __init__(self, causing_train_path_node_id: Optional[int]):
+        __causing_train_path_node_id = causing_train_path_node_id
+
+    @property
+    def causing_train_path_node_id(self) -> Optional[int]:
+        return self.__causing_train_path_node_id
+
+
+class AlgorithmDispatcherOtherDelayReason:
+    __causing_train_path_node_id: Optional[int]
+    __reason: str
+
+    def __init__(self, causing_train_path_node_id: Optional[int], reason: str):
+        __causing_train_path_node_id = causing_train_path_node_id
+        __reason = reason
+
+    @property
+    def causing_train_path_node_id(self) -> Optional[int]:
+        return self.__causing_train_path_node_id
+
+    @property
+    def reason(self) -> str:
+        return self.__reason
+
+
 class AlgorithmTrainSimulationCreationArguments:
     __ignore_timetable_conflicts: bool
     __perimeter_restricted_to_node_ids: List[int]

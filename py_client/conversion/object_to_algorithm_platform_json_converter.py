@@ -13,9 +13,15 @@ def get_attribute_name_without_class_prefix(attribute_name_with_prefix):
 
 def convert_any_aidm_object_to_dict(aidm_object) -> dict:
     attribute_dict = dict()
+
     for attribute_name_with_class_prefix, value in aidm_object.__dict__.items():
         attribute_name = get_attribute_name_without_class_prefix(attribute_name_with_class_prefix)
         attribute_dict[_convert_to_camel_case(attribute_name)] = convert_any_object(getattr(aidm_object, attribute_name))
+
+    class_type_dict = dict([("AlgorithmDispatcherOtherDelayReason", "other"), ("AlgorithmDispatcherConnectionDelayReason", "connection")])
+    if type(aidm_object).__name__ in class_type_dict.keys():
+        attribute_dict["type"] = class_type_dict[type(aidm_object).__name__]
+
     return AIDMToJSONPostProcessorChain.post_process_aidm_as_json(attribute_dict, aidm_object)
 
 

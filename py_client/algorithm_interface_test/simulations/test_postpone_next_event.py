@@ -1,11 +1,14 @@
+import json
 from datetime import datetime, timedelta
 import unittest
 from unittest import mock
 
+from py_client.aidm import AlgorithmDispatcherConnectionDelayReason
 from py_client.aidm.aidm_train_simulation_classes import (
     AlgorithmTrainSimulationEvent,
     AlgorithmTrainSimulationEventType,
     AlgorithmTrainSimulationRealizationForecast,
+    AlgorithmDispatcherOtherDelayReason,
 )
 import py_client.algorithm_interface_test.test_helper.SessionMockFactory as SessionMockFactory
 from py_client.algorithm_interface import algorithm_interface_factory
@@ -33,8 +36,7 @@ class TestPostponeNextEvent(unittest.TestCase):
                 '        "algorithmTrainId": 1303, \n'
                 '        "algorithmTrainPathNodeId": 1301, \n'
                 '        "algorithmTrainPathNodeSequenceNumber": 1 \n'
-                "    }, \n"
-                '    "unrealizableEvents": [] \n'
+                "    } \n"
                 "}"
             )
 
@@ -45,19 +47,35 @@ class TestPostponeNextEvent(unittest.TestCase):
         self.interface_to_viriato = algorithm_interface_factory.create(get_api_url())
 
     @mock.patch("requests.Session", side_effect=PostponeNextEventMockSession)
-    def test_postpone_next_event(self, mocked_post_obj):
+    def test_postpone_next_event_other_delay_reason(self, mocked_post_obj):
         additional_delay = timedelta(minutes=3)
+        reason = AlgorithmDispatcherOtherDelayReason(reason="this is my reason", causing_train_path_node_id=17)
 
-        self.interface_to_viriato.postpone_next_train_simulation_event(additional_delay)
+        self.interface_to_viriato.postpone_next_train_simulation_event(additional_delay, reason)
+
+        json_string = '{"type": "other"}'
 
         session_obj = self.interface_to_viriato._AlgorithmInterface__communication_layer.currentSession
         self.assertEqual(session_obj._PostponeNextEventMockSession__last_request, get_api_url() + "/services/trains/simulations/events/next:postpone")
-        self.assertDictEqual(session_obj._PostponeNextEventMockSession__last_body, dict(additionalDelay="PT3M"))
+        self.assertDictEqual(session_obj._PostponeNextEventMockSession__last_body, dict(additionalDelay="PT3M", reason=json.loads(json_string)))
+
+    @mock.patch("requests.Session", side_effect=PostponeNextEventMockSession)
+    def test_postpone_next_event_connection_delay_reason(self, mocked_post_obj):
+        additional_delay = timedelta(minutes=3)
+        reason = AlgorithmDispatcherConnectionDelayReason(causing_train_path_node_id=17)
+
+        self.interface_to_viriato.postpone_next_train_simulation_event(additional_delay, reason)
+        json_string = '{"type": "connection"}'
+
+        session_obj = self.interface_to_viriato._AlgorithmInterface__communication_layer.currentSession
+        self.assertEqual(session_obj._PostponeNextEventMockSession__last_request, get_api_url() + "/services/trains/simulations/events/next:postpone")
+        self.assertDictEqual(session_obj._PostponeNextEventMockSession__last_body, dict(additionalDelay="PT3M", reason=json.loads(json_string)))
 
     @mock.patch("requests.Session", side_effect=PostponeNextEventMockSession)
     def test_postpone_next_event_response(self, mocked_post_obj):
         additional_delay = timedelta(minutes=3)
-        response = self.interface_to_viriato.postpone_next_train_simulation_event(additional_delay)
+        reason = AlgorithmDispatcherConnectionDelayReason(causing_train_path_node_id=17)
+        response = self.interface_to_viriato.postpone_next_train_simulation_event(additional_delay, reason)
 
         self.assertIsInstance(response, AlgorithmTrainSimulationRealizationForecast)
         self.assertIsInstance(response.next_realizable_event, AlgorithmTrainSimulationEvent)
@@ -69,7 +87,6 @@ class TestPostponeNextEvent(unittest.TestCase):
         self.assertEqual(response.next_realizable_event.node_id, 282)
         self.assertEqual(response.next_realizable_event.algorithm_train_id, 1303)
         self.assertEqual(response.next_realizable_event.algorithm_train_path_node_id, 1301)
-        self.assertEqual(response.unrealizable_events, [])
 
     @mock.patch("requests.Session", side_effect=PostponeNextEventMockSession)
     def tearDown(self, mocked_get_obj) -> None:

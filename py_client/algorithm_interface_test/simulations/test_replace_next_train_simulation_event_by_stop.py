@@ -33,8 +33,7 @@ class TestReplaceNextTrainSimulationEventByStop(unittest.TestCase):
                 '       "algorithmTrainId": 1303, \n'
                 '       "algorithmTrainPathNodeId": 1301, \n'
                 '       "algorithmTrainPathNodeSequenceNumber": 0 \n'
-                "    }, \n"
-                '    "unrealizableEvents": [] \n'
+                "    } \n"
                 "}"
             )
 
@@ -73,7 +72,6 @@ class TestReplaceNextTrainSimulationEventByStop(unittest.TestCase):
         self.assertEqual(response.next_realizable_event.node_id, 282)
         self.assertEqual(response.next_realizable_event.algorithm_train_id, 1303)
         self.assertEqual(response.next_realizable_event.algorithm_train_path_node_id, 1301)
-        self.assertEqual(response.unrealizable_events, [])
 
     @mock.patch("requests.Session", side_effect=ReplaceNextTrainSimulationEventByStopMockSession)
     def tearDown(self, mocked_get_obj) -> None:

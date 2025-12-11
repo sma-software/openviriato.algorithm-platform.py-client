@@ -141,27 +141,30 @@ class AlgorithmTrainSimulationRealizationForecast:
 
 class _AlgorithmDispatcherDelayReason:
     def __init__(self):
+        # Base class for dispatcher delay reasons; defined for polymorphic conversion.
         pass
 
 
-class AlgorithmDispatcherConnectionDelayReason:
+class AlgorithmDispatcherConnectionDelayReason(_AlgorithmDispatcherDelayReason):
     __causing_train_path_node_id: Optional[int]
 
     def __init__(self, causing_train_path_node_id: Optional[int]):
-        __causing_train_path_node_id = causing_train_path_node_id
+        super().__init__()
+        self.__causing_train_path_node_id = causing_train_path_node_id
 
     @property
     def causing_train_path_node_id(self) -> Optional[int]:
         return self.__causing_train_path_node_id
 
 
-class AlgorithmDispatcherOtherDelayReason:
+class AlgorithmDispatcherOtherDelayReason(_AlgorithmDispatcherDelayReason):
     __causing_train_path_node_id: Optional[int]
     __reason: str
 
     def __init__(self, causing_train_path_node_id: Optional[int], reason: str):
-        __causing_train_path_node_id = causing_train_path_node_id
-        __reason = reason
+        super().__init__()
+        self.__causing_train_path_node_id = causing_train_path_node_id
+        self.__reason = reason
 
     @property
     def causing_train_path_node_id(self) -> Optional[int]:

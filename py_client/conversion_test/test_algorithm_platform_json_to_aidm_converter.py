@@ -439,7 +439,10 @@ class TestToAIDMConverter(unittest.TestCase):
         with self.assertRaises(AlgorithmPlatformConversionError) as raised_error:
             JsonToAidmConverter().process_json_to_aidm(link_as_dictionary, _AlgorithmLink)
 
-        self.assertEqual(raised_error.exception.message, "unexisting link not_a_valid__link_type can not be converted. Extend converter")
+        self.assertEqual(
+            "Type 'not_a_valid__link_type' for class <class 'py_client.aidm.aidm_link_classes._AlgorithmLink'> is unknown. Extend PolymorphicClassesProcessor in the json_to_aidm_converter",
+            raised_error.exception.message,
+        )
 
     def test_convert_json_to_algorithm_link_non_convertible_durations_defined(self):
         link_as_dictionary = dict(
@@ -460,7 +463,13 @@ class TestToAIDMConverter(unittest.TestCase):
         with self.assertRaises(AlgorithmPlatformConversionError) as raised_error:
             JsonToAidmConverter().process_json_to_aidm(link_as_dictionary, _AlgorithmLink)
 
-        self.assertEqual(raised_error.exception.message, "Could not parse duration, invalid duration format: 123")
+        self.assertEqual("Could not parse duration, invalid duration format: 123", raised_error.exception.wrapped_exception.args[0])
+        self.assertEqual(
+            "Type 'connection' for class {} could not be converted by the json_to_aidm_converter. Details: Could not parse duration, invalid duration format: 123".format(
+                _AlgorithmLink
+            ),
+            raised_error.exception.message,
+        )
 
 
 class TestClassInner:

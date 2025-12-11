@@ -1,5 +1,9 @@
 from typing import Dict, get_type_hints, Optional, List, TypeVar
 
+from pyexpat.errors import messages
+
+from py_client.aidm import AlgorithmDispatcherConnectionDelayReason, AlgorithmDispatcherOtherDelayReason
+from py_client.aidm.aidm_train_simulation_classes import _AlgorithmDispatcherDelayReason
 from py_client.communication.response_processing import AlgorithmPlatformConversionError
 from py_client.conversion.converter_helpers import *
 from py_client.aidm.aidm_link_classes import _AlgorithmLink, AlgorithmAwaitArrivalLink, AlgorithmRosterLink, AlgorithmConnectionLink
@@ -154,8 +158,10 @@ class GeneralAidmObjectProcessor(_ABCJsonToAidmDictProcessor):
 
 
 class PolymorphicClassesProcessor(_ABCJsonToAidmDictProcessor):
-    types_to_process = [_AlgorithmLink, _RoutingEdge]
+    types_to_process = [_AlgorithmLink, _RoutingEdge, _AlgorithmDispatcherDelayReason]
     aidm_types_to_create = [
+        AlgorithmDispatcherConnectionDelayReason,
+        AlgorithmDispatcherOtherDelayReason,
         AlgorithmAwaitArrivalLink,
         AlgorithmConnectionLink,
         AlgorithmRosterLink,
@@ -172,49 +178,52 @@ class PolymorphicClassesProcessor(_ABCJsonToAidmDictProcessor):
             return False
         if True not in [issubclass(targeted_type, x) for x in self.types_to_process]:
             return False
-        if "type" not in json_to_process:
-            # we can come into this branch after popping the type attribute or when we first see a polymorphic type
-            # if we are for the first time here we have to have the type attribute
-            if targeted_type in self.types_to_process:
-                raise AlgorithmPlatformConversionError("Impossible to convert to {}. No attribute 'type' in the dictionary.".format(targeted_type), None)
-            else:
-                # otherwise the AtomicTypeProcessor does the conversion for us
-                return False
         return True
 
-    def process_attribute_dict(self, json_to_process: Union[dict, Primitive, Optional[Primitive]], targeted_type: Type[object]) -> object:
-        # Remove the attribute type from the attribute_dict and convert it to snake case
-        type_name_in_enum = convert_to_snake_case(json_to_process.pop("type"))
-        target_type = self._get_type_from_enum_value(type_name_in_enum)
-        return JsonToAidmConverter().process_json_to_aidm(json_to_process, target_type)
+    def process_attribute_dict(self, json_to_process: Union[dict, Primitive, Optional[Primitive]], targeted_polymorphic_type: Type[object]) -> object:
 
-    def _get_type_from_enum_value(self, type_name_in_enum: str) -> Type:
+        if not json_to_process.__contains__("type"):
+            raise AlgorithmPlatformConversionError("Missing 'type' property in json for class {}".format(targeted_polymorphic_type), None)
+
+        type_name_in_enum = convert_to_snake_case(json_to_process.pop("type"))
+
+        target_types = self._get_possible_types_from_enum_value(type_name_in_enum)
+        if len(target_types) == 0:
+            message = "Type '{}' for class {} is unknown. Extend PolymorphicClassesProcessor in the json_to_aidm_converter".format(
+                type_name_in_enum, str(targeted_polymorphic_type)
+            )
+            raise AlgorithmPlatformConversionError(message, None)
+        aidm_object_to_return = None
+        exception_for_matching_type = None
+        for targeted_type in target_types:
+            try:
+                if aidm_object_to_return != None:
+                    raise AlgorithmPlatformConversionError("Unexpected second conversion possible.", None)
+                if issubclass(targeted_type, targeted_polymorphic_type):
+                    aidm_object_to_return = GeneralAidmObjectProcessor().process_attribute_dict(json_to_process, targeted_type)
+            except AlgorithmPlatformConversionError as e:
+                exception_for_matching_type = e
+                # not every type needs to fit, just ignore then, just find one fitting
+                pass
+
+        if aidm_object_to_return is None:
+            message = "Type '{}' for class {} could not be converted by the json_to_aidm_converter. Details: {}".format(
+                type_name_in_enum,
+                str(targeted_polymorphic_type),
+                str(exception_for_matching_type.args[0]) if exception_for_matching_type is not None else "no details given",
+            )
+            raise AlgorithmPlatformConversionError(message, exception_for_matching_type)
+        return aidm_object_to_return
+
+    def _get_possible_types_from_enum_value(self, type_name_in_enum: str) -> List[Type]:
+        found_types = []
         for type_to_process in self.aidm_types_to_create:
             snake_case_of_type_to_process = convert_to_snake_case(type_to_process.__name__)
-            self._validate_most_specific_name_are_at_start_of_list()
             substring_start_index = snake_case_of_type_to_process.find(type_name_in_enum)
-            is_targeted_type = substring_start_index != -1
-            if is_targeted_type:
-                return type_to_process
-        raise AlgorithmPlatformConversionError("unexisting link {} can not be converted. Extend converter".format(type_name_in_enum), None)
-
-    def _validate_most_specific_name_are_at_start_of_list(self):
-        for aidm_type in self.aidm_types_to_create:
-            for aidm_type_later_in_list in self.aidm_types_to_create[self.aidm_types_to_create.index(aidm_type) + 1 :]:
-                self._validate_first_is_more_specific(aidm_type, aidm_type_later_in_list)
-
-    @staticmethod
-    def _validate_first_is_more_specific(aidm_type: object, aidm_type_later_in_list: object):
-        type_name_parts_aidm_type = convert_to_snake_case(aidm_type.__name__).split("_")
-        type_name_parts_aidm_type_later_in_list = convert_to_snake_case(aidm_type_later_in_list.__name__).split("_")
-        is_first_type_less_specific = set(type_name_parts_aidm_type_later_in_list).issubset(set(type_name_parts_aidm_type))
-        if is_first_type_less_specific:
-            raise AlgorithmPlatformConversionError(
-                "The types {} is less specific than {}. They must be in the reverse order in the types_to_process list to avoid conversion error".format(
-                    aidm_type, aidm_type_later_in_list
-                ),
-                None,
-            )
+            is_possible_targeted_type = substring_start_index != -1
+            if is_possible_targeted_type:
+                found_types.append(type_to_process)
+        return found_types
 
 
 class ConflictTypeMappingLookup:

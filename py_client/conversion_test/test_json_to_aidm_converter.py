@@ -1,8 +1,20 @@
 from __future__ import annotations
+
+import json
 import unittest
 
+from py_client.aidm.aidm_train_simulation_classes import _AlgorithmDispatcherDelayReason
 from py_client.conversion.json_to_aidm_converter import JsonToAidmConverter, PolymorphicClassesProcessor, PrimitiveProcessor
-from py_client.aidm import AlgorithmSectionTrack, AlgorithmFormation, AlgorithmNode, AlgorithmNodeTrack, StopStatus, AlgorithmTrainPathNode
+from py_client.aidm import (
+    AlgorithmSectionTrack,
+    AlgorithmFormation,
+    AlgorithmNode,
+    AlgorithmNodeTrack,
+    StopStatus,
+    AlgorithmTrainPathNode,
+    AlgorithmDispatcherOtherDelayReason,
+    AlgorithmDispatcherConnectionDelayReason,
+)
 from py_client.aidm.aidm_base_classes import _HasID
 from py_client.communication.response_processing import AlgorithmPlatformConversionError
 from py_client.aidm.aidm_link_classes import AlgorithmConnectionLink, AlgorithmAwaitArrivalLink, AlgorithmRosterLink, _AlgorithmLink
@@ -538,7 +550,10 @@ class TestJsonToAIDMConverter(unittest.TestCase):
         ]
         with self.assertRaises(AlgorithmPlatformConversionError) as converter_error:
             self.__converter.process_json_to_aidm(json, List[_AlgorithmLink])
-        self.assertEqual(converter_error.exception.message, "unexisting link roster2 can not be converted. Extend converter")
+        self.assertEqual(
+            "Type 'roster2' for class <class 'py_client.aidm.aidm_link_classes._AlgorithmLink'> is unknown. Extend PolymorphicClassesProcessor in the json_to_aidm_converter",
+            converter_error.exception.message,
+        )
 
     def test_no_type_in_link(self):
         json = [
@@ -558,13 +573,16 @@ class TestJsonToAIDMConverter(unittest.TestCase):
         ]
         with self.assertRaises(AlgorithmPlatformConversionError) as converter_error:
             self.__converter.process_json_to_aidm(json, List[_AlgorithmLink])
-        self.assertEqual(converter_error.exception.message, "Impossible to convert to {}. No attribute 'type' in the dictionary.".format(_AlgorithmLink))
+        self.assertEqual(
+            "Missing 'type' property in json for class {}".format(_AlgorithmLink),
+            converter_error.exception.message,
+        )
 
     def test_unsupported_non_primitive_type(self):
         json_dict = dict(someProperty=dict(someProperty=None))
 
         with self.assertRaises(AlgorithmPlatformConversionError):
-            self.__converter.process_json_to_aidm(json_dict, SomeClass)
+            self.__converter.process_json_to_aidm(json_dict, SomeUnsupportedClass)
 
     def test_optional_non_primitive_none(self):
         class AidmOptionalNonPrimitive:
@@ -600,25 +618,6 @@ class TestJsonToAIDMConverter(unittest.TestCase):
         with self.assertRaises(AttributeError):
             routing_edges[0].type
             routing_edges[0]["type"]
-
-    def test_error_types_wrong_order_polymorphic_processor(self):
-        polymorphic_processor = PolymorphicClassesProcessor()
-        # Overwriting the aidm_types_to_create in the wrong order for testing purposes
-        polymorphic_processor.aidm_types_to_create = [IncomingNodeTrackRoutingEdge, IncomingRoutingEdge]
-
-        with self.assertRaises(AlgorithmPlatformConversionError) as conversion_error:
-            polymorphic_processor._validate_most_specific_name_are_at_start_of_list()
-        self.assertEqual(
-            conversion_error.exception.message,
-            "The types {} is less specific than {}. They must be in the reverse order in the types_to_process list to avoid conversion error".format(
-                IncomingNodeTrackRoutingEdge, IncomingRoutingEdge
-            ),
-        )
-
-    def test_aidm_types_to_create_list_is_in_right_order_polymorphic_processor(self):
-        polymorphic_processor = PolymorphicClassesProcessor()
-
-        self.assertIsNone(polymorphic_processor._validate_most_specific_name_are_at_start_of_list())
 
     def test_primitive_processor(self):
         primitive_int = 3
@@ -657,9 +656,32 @@ class TestJsonToAIDMConverter(unittest.TestCase):
         is_primitive_processor_applicable_for_dictionary = primitive_processor.is_applicable(dictionary, dict)
         self.assertFalse(is_primitive_processor_applicable_for_dictionary)
 
+    def test_algorithm_dispatcher_other_delay_reason(self):
+        delay_reason_json = {"type": "other", "causingTrainPathNodeID": 1451, "reason": "This is my reason."}
 
-class SomeClass:
-    __some_property: SomeClass
+        processor = PolymorphicClassesProcessor()
 
-    def __init__(self, __some_property: SomeClass):
+        self.assertTrue(processor.is_applicable(delay_reason_json, AlgorithmDispatcherOtherDelayReason))
+        result = processor.process_attribute_dict(delay_reason_json, AlgorithmDispatcherOtherDelayReason)
+        self.assertTrue(isinstance(result, AlgorithmDispatcherOtherDelayReason))
+
+        other_delay_reason: AlgorithmDispatcherOtherDelayReason = result
+
+        self.assertEqual(other_delay_reason.causing_train_path_node_id, 1451)
+        self.assertEqual(other_delay_reason.reason, "This is my reason.")
+
+    def test_algorithm_dispatcher_connection_delay_reason(self):
+        delay_reason_json = {"type": "connection", "causingTrainPathNodeID": None}
+
+        processor = PolymorphicClassesProcessor()
+
+        self.assertTrue(processor.is_applicable(delay_reason_json, AlgorithmDispatcherConnectionDelayReason))
+        result = processor.process_attribute_dict(delay_reason_json, AlgorithmDispatcherConnectionDelayReason)
+        self.assertTrue(isinstance(result, AlgorithmDispatcherConnectionDelayReason))
+
+
+class SomeUnsupportedClass:
+    __some_property: SomeUnsupportedClass
+
+    def __init__(self, __some_property: SomeUnsupportedClass):
         self.__some_property = __some_property

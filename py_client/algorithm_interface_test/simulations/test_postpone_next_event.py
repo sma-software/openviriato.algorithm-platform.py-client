@@ -53,7 +53,7 @@ class TestPostponeNextEvent(unittest.TestCase):
 
         self.interface_to_viriato.postpone_next_train_simulation_event(additional_delay, reason)
 
-        json_string = '{"type": "other"}'
+        json_string = '{"causingTrainPathNodeId": 17, "reason": "this is my reason", "type": "other"}'
 
         session_obj = self.interface_to_viriato._AlgorithmInterface__communication_layer.currentSession
         self.assertEqual(session_obj._PostponeNextEventMockSession__last_request, get_api_url() + "/services/trains/simulations/events/next:postpone")
@@ -65,7 +65,7 @@ class TestPostponeNextEvent(unittest.TestCase):
         reason = AlgorithmDispatcherConnectionDelayReason(causing_train_path_node_id=17)
 
         self.interface_to_viriato.postpone_next_train_simulation_event(additional_delay, reason)
-        json_string = '{"type": "connection"}'
+        json_string = '{ "type": "connection", "causingTrainPathNodeId": 17 }'
 
         session_obj = self.interface_to_viriato._AlgorithmInterface__communication_layer.currentSession
         self.assertEqual(session_obj._PostponeNextEventMockSession__last_request, get_api_url() + "/services/trains/simulations/events/next:postpone")

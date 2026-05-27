@@ -777,3 +777,15 @@ class AlgorithmInterface:
         put_request_body = dict(nodeTrackId=node_track_id)
         response_dict = self.__communication_layer.do_put_request(url_to_resource, request_body=put_request_body)
         return JsonToAidmConverter().process_json_to_aidm(response_dict, AlgorithmTrainSimulationRealizationForecast)
+
+    def update_section_track_of_next_event(self, section_track_id: int) -> AlgorithmTrainSimulationRealizationForecast:
+        url_to_resource = "services/trains/simulations/events/next:update-section-track"
+        put_request_body = dict(sectionTrackId=section_track_id)
+        response_dict = self.__communication_layer.do_put_request(url_to_resource, request_body=put_request_body)
+        return JsonToAidmConverter().process_json_to_aidm(response_dict, AlgorithmTrainSimulationRealizationForecast)
+
+    def update_section_track_of_future_event(self, event_id: int, section_track_id: int) -> AlgorithmTrainSimulationRealizationForecast:
+        url_to_resource = "services/trains/simulations/events/{0}:update-section-track".format(event_id)
+        put_request_body = dict(sectionTrackId=section_track_id)
+        response_dict = self.__communication_layer.do_put_request(url_to_resource, request_body=put_request_body)
+        return JsonToAidmConverter().process_json_to_aidm(response_dict, AlgorithmTrainSimulationRealizationForecast)

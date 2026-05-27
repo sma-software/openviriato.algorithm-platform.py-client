@@ -6,10 +6,10 @@ For more detailed information we refer the developer to the C# API Documentation
 
 ## The Method for Rerouting Trains
 
-In order to reroute a train, which is possible with the method [reroute_train(...)](../../../py_client/algorithm_interface/algorithm_interface.py#L282-L282), 
+In order to reroute a train, which is possible with the method [reroute_train(...)](../../../py_client/algorithm_interface/algorithm_interface.py#L283-L283), 
 the developer has to use the class [UpdateTrainRoute](../../../py_client/aidm/aidm_update_classes.py).
 
-For our walkthrough we have encapsulated the call to [reroute_train(...)](../../../py_client/algorithm_interface/algorithm_interface.py#L282-L282) by a method 
+For our walkthrough we have encapsulated the call to [reroute_train(...)](../../../py_client/algorithm_interface/algorithm_interface.py#L283-L283) by a method 
 [persist_rerouted_train(
         self,
         train_to_reroute: AlgorithmTrain,
@@ -18,7 +18,7 @@ For our walkthrough we have encapsulated the call to [reroute_train(...)](../../
         routing_edges_on_diversion: List[_RoutingEdgeRequest],
         restore_node_tracks_at_start_and_end_of_diversion: bool,
     ) -> AlgorithmTrain](../../../walkthroughs/rerouting_a_train/py/RerouteTrainPersistenceService.py#L14-L21)
-which we can simply invoke below. This also demonstrates how an algorithm developer can use [reroute_train(...)](../../../py_client/algorithm_interface/algorithm_interface.py#L282-L282).
+which we can simply invoke below. This also demonstrates how an algorithm developer can use [reroute_train(...)](../../../py_client/algorithm_interface/algorithm_interface.py#L283-L283).
 Here we list the source code with explanations.
 
 ```python
@@ -174,13 +174,13 @@ class RerouteTrainAlgorithm:
 
 
 ```
-Code listing: _RerouteTrainAlgorithm source code. Continuation of the example below._. ([Lines: 11 - 96 from file: _RerouteTrainAlgorithm.py_](../../../walkthroughs/rerouting_a_train/py/RerouteTrainAlgorithm.py#L11-L96)).
+Code listing: _RerouteTrainAlgorithm source code. Continuation of the example below._. ([Lines: 16 - 101 from file: _RerouteTrainAlgorithm.py_](../../../walkthroughs/rerouting_a_train/py/RerouteTrainAlgorithm.py#L16-L101)).
 
 
 In a second step we can calculate a sequence of [RoutingEdge](../../../py_client/aidm/aidm_routing_edge_classes.py). Even though the created routing edges might not exist according to the infrastructure, which is known to 
-the Algorithm Platform, i.e. these will not be provided by any of the methods [get_outgoing_routing_edges(...)](../../../py_client/algorithm_interface/algorithm_interface.py#L482-L482), 
-[get_incoming_routing_edges(...)](../../../py_client/algorithm_interface/algorithm_interface.py#L475-L475) and 
-[get_crossing_routing_edges(...)](../../../py_client/algorithm_interface/algorithm_interface.py#L485-L485), we can use them to reroute the train. 
+the Algorithm Platform, i.e. these will not be provided by any of the methods [get_outgoing_routing_edges(...)](../../../py_client/algorithm_interface/algorithm_interface.py#L483-L483), 
+[get_incoming_routing_edges(...)](../../../py_client/algorithm_interface/algorithm_interface.py#L476-L476) and 
+[get_crossing_routing_edges(...)](../../../py_client/algorithm_interface/algorithm_interface.py#L486-L486), we can use them to reroute the train. 
 
 ```python
 def _construct_mesoscopic_routing_edges_from_train_with_alternative_route(
@@ -200,15 +200,19 @@ def _construct_mesoscopic_routing_edges_from_train_with_alternative_route(
             )
         else:
             resulting_routing_edges.append(
-                CrossingRoutingEdgeRequest(train_path_node_pair[0].node_id, train_path_node_pair[0].section_track_id, train_path_node_pair[1].section_track_id)
+                CrossingRoutingEdgeRequest(
+                    train_path_node_pair[0].node_id, train_path_node_pair[0].section_track_id, train_path_node_pair[1].section_track_id
+                )
             )
         if self._is_station(to_node):
             selected_node_track_id = train_path_node_pair[1].node_track_id if train_path_node_pair[1].node_track_id else to_node.node_tracks[0].id
-            resulting_routing_edges.append(IncomingNodeTrackRoutingEdgeRequest(to_node.id, train_path_node_pair[1].section_track_id, selected_node_track_id))
+            resulting_routing_edges.append(
+                IncomingNodeTrackRoutingEdgeRequest(to_node.id, train_path_node_pair[1].section_track_id, selected_node_track_id)
+            )
     return resulting_routing_edges
 
 ```
-Code listing: _Method used to calculate the sequence of routing edges to reroute a train_. ([Lines: 112 - 138 from file: _RerouteTrainAlgorithm.py_](../../../walkthroughs/rerouting_a_train/py/RerouteTrainAlgorithm.py#L112-L138)).
+Code listing: _Method used to calculate the sequence of routing edges to reroute a train_. ([Lines: 117 - 147 from file: _RerouteTrainAlgorithm.py_](../../../walkthroughs/rerouting_a_train/py/RerouteTrainAlgorithm.py#L117-L147)).
 
 Now we can continue with the code from the method above (see comment in the source code listing). We construct the routing edges and we can invoke [persist_rerouted_train(...)](../../../walkthroughs/rerouting_a_train/py/RerouteTrainPersistenceService.py#L14-L21) with the obtained routing edges.
 
@@ -227,4 +231,4 @@ message = "Train successfully rerouted. Train visits now {0} nodes on its path."
 algorithm_interface.notify_user("Algorithm succeeded", message)
 
 ```
-Code listing: _Continuation of the RerouteTrainAlgorithm source code_. ([Lines: 98 - 110 from file: _RerouteTrainAlgorithm.py_](../../../walkthroughs/rerouting_a_train/py/RerouteTrainAlgorithm.py#L98-L110)).
+Code listing: _Continuation of the RerouteTrainAlgorithm source code_. ([Lines: 103 - 115 from file: _RerouteTrainAlgorithm.py_](../../../walkthroughs/rerouting_a_train/py/RerouteTrainAlgorithm.py#L103-L115)).

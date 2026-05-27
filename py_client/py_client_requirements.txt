@@ -1,4 +1,4 @@
 isodate~=0.7.2
 multipledispatch~=1.0.0
-requests~=2.32.5
-setuptools~=80.9.0
+requests~=2.34.2
+setuptools~=82.0.1

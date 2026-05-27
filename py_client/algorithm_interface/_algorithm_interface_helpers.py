@@ -2,13 +2,13 @@ from typing import List, Union, Optional
 
 from py_client.aidm import RoutingPoint, TimeWindow
 from py_client.aidm.aidm_routing_edge_classes import (
-    _RoutingEdge,
-    IncomingNodeTrackRoutingEdge,
-    OutgoingNodeTrackRoutingEdge,
+    _RoutingEdgeResponse,
+    IncomingNodeTrackRoutingEdgeRequest,
+    OutgoingNodeTrackRoutingEdgeRequest,
     AnyRoutingEdgeIncomingOrOutgoing,
     AnyRoutingEdgeIncomingOrCrossingOrOutgoing,
-    IncomingRoutingEdge,
-    OutgoingRoutingEdge,
+    IncomingRoutingEdgeRequest,
+    OutgoingRoutingEdgeRequest,
 )
 from py_client.aidm.aidm_link_classes import LinkType, AlgorithmRosterLink, AlgorithmAwaitArrivalLink, AlgorithmConnectionLink, _AlgorithmLink
 from py_client.communication.communication_layer import CommunicationLayer
@@ -24,16 +24,16 @@ def merge_query_parameters(query_parameter_dictionaries: List[dict]) -> dict:
 def create_query_parameters_from_preceding_and_succeeding_routing_edge(
     preceding_routing_edge: AnyRoutingEdgeIncomingOrOutgoing, succeeding_routing_edge: AnyRoutingEdgeIncomingOrOutgoing
 ) -> dict:
-    if isinstance(preceding_routing_edge, IncomingRoutingEdge):
+    if isinstance(preceding_routing_edge, IncomingRoutingEdgeRequest):
         preceding_query_parameters = dict(precedingFromSectionTrackId=preceding_routing_edge.start_section_track_id)
-    elif isinstance(preceding_routing_edge, IncomingNodeTrackRoutingEdge):
+    elif isinstance(preceding_routing_edge, IncomingNodeTrackRoutingEdgeRequest):
         preceding_query_parameters = dict(
             precedingFromSectionTrackId=preceding_routing_edge.start_section_track_id,
             precedingToNodeTrackId=preceding_routing_edge.end_node_track_id,
         )
-    elif isinstance(preceding_routing_edge, OutgoingRoutingEdge):
+    elif isinstance(preceding_routing_edge, OutgoingRoutingEdgeRequest):
         preceding_query_parameters = dict(precedingToSectionTrackId=preceding_routing_edge.end_section_track_id)
-    elif isinstance(preceding_routing_edge, OutgoingNodeTrackRoutingEdge):
+    elif isinstance(preceding_routing_edge, OutgoingNodeTrackRoutingEdgeRequest):
         preceding_query_parameters = dict(
             precedingToSectionTrackId=preceding_routing_edge.end_section_track_id,
             precedingFromNodeTrackId=preceding_routing_edge.start_node_track_id,
@@ -41,16 +41,16 @@ def create_query_parameters_from_preceding_and_succeeding_routing_edge(
     else:
         raise TypeError(f"{preceding_routing_edge} is not an {AnyRoutingEdgeIncomingOrOutgoing}")
 
-    if isinstance(succeeding_routing_edge, IncomingRoutingEdge):
+    if isinstance(succeeding_routing_edge, IncomingRoutingEdgeRequest):
         succeeding_query_parameters = dict(succeedingFromSectionTrackId=succeeding_routing_edge.start_section_track_id)
-    elif isinstance(succeeding_routing_edge, IncomingNodeTrackRoutingEdge):
+    elif isinstance(succeeding_routing_edge, IncomingNodeTrackRoutingEdgeRequest):
         succeeding_query_parameters = dict(
             succeedingFromSectionTrackId=succeeding_routing_edge.start_section_track_id,
             succeedingToNodeTrackId=succeeding_routing_edge.end_node_track_id,
         )
-    elif isinstance(succeeding_routing_edge, OutgoingRoutingEdge):
+    elif isinstance(succeeding_routing_edge, OutgoingRoutingEdgeRequest):
         succeeding_query_parameters = dict(succeedingToSectionTrackId=succeeding_routing_edge.end_section_track_id)
-    elif isinstance(succeeding_routing_edge, OutgoingNodeTrackRoutingEdge):
+    elif isinstance(succeeding_routing_edge, OutgoingNodeTrackRoutingEdgeRequest):
         succeeding_query_parameters = dict(
             succeedingToSectionTrackId=succeeding_routing_edge.end_section_track_id,
             succeedingFromNodeTrackId=succeeding_routing_edge.start_node_track_id,
@@ -69,7 +69,7 @@ def do_get_routing_edges_request(
         nodeTrackId=routing_point.node_track_id,
     )
     response_list = communication_layer.do_get_request_without_body(url_to_resource, get_request_params)
-    return JsonToAidmConverter().process_json_to_aidm(response_list, List[_RoutingEdge])
+    return JsonToAidmConverter().process_json_to_aidm(response_list, List[_RoutingEdgeResponse])
 
 
 def do_get_any_parameter(communication_layer: CommunicationLayer, key: str) -> Optional[Union[bool, dict, int, list, str]]:

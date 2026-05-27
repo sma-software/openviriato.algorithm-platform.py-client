@@ -3,7 +3,7 @@ import unittest
 from unittest import mock
 
 import py_client.algorithm_interface_test.test_helper.SessionMockFactory as SessionMockFactory
-from py_client.aidm import CrossingRoutingEdge
+from py_client.aidm import CrossingRoutingEdgeRequest
 from py_client.algorithm_interface import algorithm_interface_factory
 from py_client.algorithm_interface_test.test_helper.SessionMockTestBase import get_api_url, SessionMockTestBase
 
@@ -34,8 +34,8 @@ class TestGetSeparationTimeInJunctionForRoutes(unittest.TestCase):
 
     @mock.patch("requests.Session", side_effect=GetSeparationTimeInJunctionForRoutesTestMockSession)
     def test_get_separation_time_in_junction_for_routes_request(self, mocked_get_obj):
-        preceding_edge = CrossingRoutingEdge(node_id=123, start_section_track_id=80, end_section_track_id=324)
-        succeeding_edge = CrossingRoutingEdge(node_id=123, start_section_track_id=178, end_section_track_id=12740)
+        preceding_edge = CrossingRoutingEdgeRequest(node_id=123, start_section_track_id=80, end_section_track_id=324)
+        succeeding_edge = CrossingRoutingEdgeRequest(node_id=123, start_section_track_id=178, end_section_track_id=12740)
 
         self.interface_to_viriato.get_separation_time_in_junction_for_routes(preceding_edge, succeeding_edge)
 
@@ -49,8 +49,8 @@ class TestGetSeparationTimeInJunctionForRoutes(unittest.TestCase):
 
     @mock.patch("requests.Session", side_effect=GetSeparationTimeInJunctionForRoutesTestMockSession)
     def test_get_separation_time_in_junction_for_routes_response_timedelta(self, mocked_get_obj):
-        preceding_edge = CrossingRoutingEdge(node_id=123, start_section_track_id=80, end_section_track_id=324)
-        succeeding_edge = CrossingRoutingEdge(node_id=123, start_section_track_id=178, end_section_track_id=12740)
+        preceding_edge = CrossingRoutingEdgeRequest(node_id=123, start_section_track_id=80, end_section_track_id=324)
+        succeeding_edge = CrossingRoutingEdgeRequest(node_id=123, start_section_track_id=178, end_section_track_id=12740)
 
         separation_time = self.interface_to_viriato.get_separation_time_in_junction_for_routes(preceding_edge, succeeding_edge)
 
@@ -59,8 +59,8 @@ class TestGetSeparationTimeInJunctionForRoutes(unittest.TestCase):
 
     @mock.patch("requests.Session", side_effect=GetSeparationTimeInJunctionForRoutesTestMockSession)
     def test_get_separation_time_in_junction_for_routes_response_None(self, mocked_get_obj):
-        preceding_edge = CrossingRoutingEdge(node_id=123, start_section_track_id=1, end_section_track_id=1)
-        succeeding_edge = CrossingRoutingEdge(node_id=123, start_section_track_id=1, end_section_track_id=1)
+        preceding_edge = CrossingRoutingEdgeRequest(node_id=123, start_section_track_id=1, end_section_track_id=1)
+        succeeding_edge = CrossingRoutingEdgeRequest(node_id=123, start_section_track_id=1, end_section_track_id=1)
 
         separation_time = self.interface_to_viriato.get_separation_time_in_junction_for_routes(preceding_edge, succeeding_edge)
 

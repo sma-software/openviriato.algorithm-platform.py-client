@@ -8,7 +8,7 @@ import py_client.conversion.converter_helpers as converter_helpers
 import py_client.conversion.object_to_algorithm_platform_json_converter as to_json_converter
 from py_client.aidm import (
     AlgorithmNode,
-    RoutingEdgePair,
+    RoutingEdgePairResponse,
     AlgorithmSectionTrack,
     AlgorithmTrain,
     TimeWindow,
@@ -17,9 +17,10 @@ from py_client.aidm import (
     UpdateTimesTrainPathNode,
     StopStatus,
     RoutingPoint,
-    IncomingNodeTrackRoutingEdge,
-    OutgoingNodeTrackRoutingEdge,
-    CrossingRoutingEdge,
+    IncomingNodeTrackRoutingEdgeResponse,
+    OutgoingNodeTrackRoutingEdgeResponse,
+    CrossingRoutingEdgeRequest,
+    CrossingRoutingEdgeResponse,
     AnyRoutingEdgeIncomingOrCrossingOrOutgoing,
     StationEntryOrExit,
     UpdateTrainRoute,
@@ -53,7 +54,7 @@ from py_client.aidm import (
 )
 from py_client.aidm.aidm_conflict import AlgorithmConflict
 from py_client.aidm.aidm_link_classes import _AlgorithmLink
-from py_client.aidm.aidm_routing_edge_classes import _RoutingEdge
+from py_client.aidm.aidm_routing_edge_classes import _RoutingEdgeRequest
 from py_client.communication.communication_layer import CommunicationLayer
 from py_client.conversion.json_to_aidm_converter import JsonToAidmConverter
 from py_client.aidm.aidm_train_simulation_classes import _AlgorithmDispatcherDelayReason
@@ -90,18 +91,18 @@ class AlgorithmInterface:
         node_id: int,
         start_section_track_id: Optional[int],
         end_section_track_id: Optional[int],
-    ) -> List[RoutingEdgePair]:
+    ) -> List[RoutingEdgePairResponse]:
         url_to_resource = "nodes/{0}/preferred-routes".format(node_id)
         query_parameters = dict(startSectionTrackID=start_section_track_id, endSectionTrackID=end_section_track_id)
         response_list = self.__communication_layer.do_get_request_without_body(url_to_resource, query_parameters)
-        return JsonToAidmConverter().process_json_to_aidm(response_list, List[RoutingEdgePair])
+        return JsonToAidmConverter().process_json_to_aidm(response_list, List[RoutingEdgePairResponse])
 
     def get_preferred_routes_through_node(
         self,
         node_id: int,
         start_section_track_id: Optional[int],
         end_section_track_id: Optional[int],
-    ) -> List[RoutingEdgePair]:
+    ) -> List[RoutingEdgePairResponse]:
         url_to_resource = "nodes/{0}/preferred-routes".format(node_id)
         query_parameters = dict(
             startSectionTrackID=start_section_track_id,
@@ -110,19 +111,19 @@ class AlgorithmInterface:
             startInNode=False,
         )
         response_list = self.__communication_layer.do_get_request_without_body(url_to_resource, query_parameters)
-        return JsonToAidmConverter().process_json_to_aidm(response_list, List[RoutingEdgePair])
+        return JsonToAidmConverter().process_json_to_aidm(response_list, List[RoutingEdgePairResponse])
 
-    def get_preferred_starting_routes_for_node(self, node_id: int, end_section_track_id: Optional[int]) -> List[RoutingEdgePair]:
+    def get_preferred_starting_routes_for_node(self, node_id: int, end_section_track_id: Optional[int]) -> List[RoutingEdgePairResponse]:
         url_to_resource = "nodes/{0}/preferred-routes".format(node_id)
         query_parameters = dict(endSectionTrackID=end_section_track_id, endInNode=False, startInNode=True)
         response_list = self.__communication_layer.do_get_request_without_body(url_to_resource, query_parameters)
-        return JsonToAidmConverter().process_json_to_aidm(response_list, List[RoutingEdgePair])
+        return JsonToAidmConverter().process_json_to_aidm(response_list, List[RoutingEdgePairResponse])
 
-    def get_preferred_ending_routes_for_node(self, node_id: int, start_section_track_id: Optional[int]) -> List[RoutingEdgePair]:
+    def get_preferred_ending_routes_for_node(self, node_id: int, start_section_track_id: Optional[int]) -> List[RoutingEdgePairResponse]:
         url_to_resource = "nodes/{0}/preferred-routes".format(node_id)
         query_parameters = dict(startSectionTrackID=start_section_track_id, endInNode=True, startInNode=False)
         response_list = self.__communication_layer.do_get_request_without_body(url_to_resource, query_parameters)
-        return JsonToAidmConverter().process_json_to_aidm(response_list, List[RoutingEdgePair])
+        return JsonToAidmConverter().process_json_to_aidm(response_list, List[RoutingEdgePairResponse])
 
     def get_all_section_tracks(self) -> List[AlgorithmSectionTrack]:
         url_to_resource = "section-tracks"
@@ -329,8 +330,8 @@ class AlgorithmInterface:
 
     def get_separation_time_in_junction_for_routes(
         self,
-        preceding_routing_edge: CrossingRoutingEdge,
-        succeeding_routing_edge: CrossingRoutingEdge,
+        preceding_routing_edge: CrossingRoutingEdgeRequest,
+        succeeding_routing_edge: CrossingRoutingEdgeRequest,
     ) -> Optional[timedelta]:
         url_to_resource = "nodes/{0}/separation-times".format(preceding_routing_edge.node_id)
         query_parameters = dict(
@@ -378,9 +379,9 @@ class AlgorithmInterface:
 
     def get_separation_time_in_station_for_routes(
         self,
-        preceding_train_routing_edge: _RoutingEdge,
+        preceding_train_routing_edge: _RoutingEdgeRequest,
         preceding_train_stop_status: StopStatus,
-        succeeding_train_routing_edge: _RoutingEdge,
+        succeeding_train_routing_edge: _RoutingEdgeRequest,
         succeeding_train_stop_status: StopStatus,
     ) -> Optional[timedelta]:
         url_to_resource = "nodes/{0}/separation-times".format(preceding_train_routing_edge.node_id)
@@ -472,17 +473,17 @@ class AlgorithmInterface:
         response_dict = self.__communication_layer.do_put_request(url_to_resource, put_request_body)
         return JsonToAidmConverter().process_json_to_aidm(response_dict, AlgorithmTrain)
 
-    def get_incoming_routing_edges(self, routing_point: RoutingPoint) -> List[IncomingNodeTrackRoutingEdge]:
+    def get_incoming_routing_edges(self, routing_point: RoutingPoint) -> List[IncomingNodeTrackRoutingEdgeResponse]:
         return _interface_helpers.do_get_routing_edges_request(
             self.__communication_layer,
             routing_point,
             converter_helpers.RoutingEdgeType.incoming_node_track,
         )
 
-    def get_outgoing_routing_edges(self, routing_point: RoutingPoint) -> List[OutgoingNodeTrackRoutingEdge]:
+    def get_outgoing_routing_edges(self, routing_point: RoutingPoint) -> List[OutgoingNodeTrackRoutingEdgeResponse]:
         return _interface_helpers.do_get_routing_edges_request(self.__communication_layer, routing_point, converter_helpers.RoutingEdgeType.outgoing_node_track)
 
-    def get_crossing_routing_edges(self, routing_point: RoutingPoint) -> List[CrossingRoutingEdge]:
+    def get_crossing_routing_edges(self, routing_point: RoutingPoint) -> List[CrossingRoutingEdgeResponse]:
         return _interface_helpers.do_get_routing_edges_request(self.__communication_layer, routing_point, converter_helpers.RoutingEdgeType.crossing)
 
     def get_routing_edges(self, routing_point: RoutingPoint) -> List[AnyRoutingEdgeIncomingOrCrossingOrOutgoing]:

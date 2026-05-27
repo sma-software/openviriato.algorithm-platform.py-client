@@ -2,16 +2,21 @@ from abc import ABC, abstractmethod
 from typing import Type, Tuple
 
 from py_client.aidm import (
-    IncomingRoutingEdge,
-    OutgoingRoutingEdge,
-    IncomingNodeTrackRoutingEdge,
-    CrossingRoutingEdge,
-    OutgoingNodeTrackRoutingEdge,
+    IncomingRoutingEdgeRequest,
+    OutgoingRoutingEdgeRequest,
+    IncomingNodeTrackRoutingEdgeRequest,
+    CrossingRoutingEdgeRequest,
+    OutgoingNodeTrackRoutingEdgeRequest,
     AlgorithmRosterLinkDefinition,
     LinkType,
     AlgorithmAwaitArrivalLink,
     AlgorithmConnectionLink,
     AlgorithmRosterLink,
+)
+from py_client.aidm.aidm_routing_edge_classes import (
+    CrossingRoutingEdgeResponse,
+    IncomingNodeTrackRoutingEdgeResponse,
+    OutgoingNodeTrackRoutingEdgeResponse,
 )
 from py_client.conversion.converter_helpers import RoutingEdgeType
 
@@ -30,15 +35,15 @@ class ABCAIDMToJSONPostProcessor(ABC):
         pass
 
 
-class RoutingEdgeProcessor(ABCAIDMToJSONPostProcessor):
+class RoutingEdgeRequestPostProcessor(ABCAIDMToJSONPostProcessor):
     @staticmethod
     def __get_routing_edge_types():
         return (
-            IncomingRoutingEdge,
-            IncomingNodeTrackRoutingEdge,
-            OutgoingRoutingEdge,
-            OutgoingNodeTrackRoutingEdge,
-            CrossingRoutingEdge,
+            IncomingRoutingEdgeRequest,
+            IncomingNodeTrackRoutingEdgeRequest,
+            OutgoingRoutingEdgeRequest,
+            OutgoingNodeTrackRoutingEdgeRequest,
+            CrossingRoutingEdgeRequest,
         )
 
     @classmethod
@@ -47,18 +52,43 @@ class RoutingEdgeProcessor(ABCAIDMToJSONPostProcessor):
 
     @classmethod
     def process_attribute_dict(cls, aidm_class: Type[object], attribute_dictionary: dict) -> None:
-        if isinstance(aidm_class, IncomingRoutingEdge):
+        if isinstance(aidm_class, IncomingRoutingEdgeRequest):
             attribute_dictionary["type"] = RoutingEdgeType.incoming.value
-        elif isinstance(aidm_class, IncomingNodeTrackRoutingEdge):
+        elif isinstance(aidm_class, IncomingNodeTrackRoutingEdgeRequest):
             attribute_dictionary["type"] = RoutingEdgeType.incoming_node_track.value
-        elif isinstance(aidm_class, OutgoingRoutingEdge):
+        elif isinstance(aidm_class, OutgoingRoutingEdgeRequest):
             attribute_dictionary["type"] = RoutingEdgeType.outgoing.value
-        elif isinstance(aidm_class, OutgoingNodeTrackRoutingEdge):
+        elif isinstance(aidm_class, OutgoingNodeTrackRoutingEdgeRequest):
             attribute_dictionary["type"] = RoutingEdgeType.outgoing_node_track.value
-        elif isinstance(aidm_class, CrossingRoutingEdge):
+        elif isinstance(aidm_class, CrossingRoutingEdgeRequest):
             attribute_dictionary["type"] = RoutingEdgeType.crossing.value
         else:
             raise NotImplementedError(f"RoutingEdge {aidm_class} can not be converted to json")
+
+
+class RoutingEdgeResponseProcessor(ABCAIDMToJSONPostProcessor):
+    @staticmethod
+    def __get_routing_edge_response_types():
+        return (
+            IncomingNodeTrackRoutingEdgeResponse,
+            OutgoingNodeTrackRoutingEdgeResponse,
+            CrossingRoutingEdgeResponse,
+        )
+
+    @classmethod
+    def is_applicable(cls, aidm_class: Type[object]) -> bool:
+        return isinstance(aidm_class, cls.__get_routing_edge_response_types())
+
+    @classmethod
+    def process_attribute_dict(cls, aidm_class: Type[object], attribute_dictionary: dict) -> None:
+        if isinstance(aidm_class, IncomingNodeTrackRoutingEdgeResponse):
+            attribute_dictionary["type"] = RoutingEdgeType.incoming_node_track.value
+        elif isinstance(aidm_class, OutgoingNodeTrackRoutingEdgeResponse):
+            attribute_dictionary["type"] = RoutingEdgeType.outgoing_node_track.value
+        elif isinstance(aidm_class, CrossingRoutingEdgeResponse):
+            attribute_dictionary["type"] = RoutingEdgeType.crossing.value
+        else:
+            raise NotImplementedError(f"RoutingEdgeResponse {aidm_class} can not be converted to json")
 
 
 class AlgorithmRosterLinkDefinitionPostProcessor(ABCAIDMToJSONPostProcessor):
@@ -106,7 +136,8 @@ class AlgorithmRosterLinkPostProcessor(ABCAIDMToJSONPostProcessor):
 
 class AIDMToJSONPostProcessorChain:
     __processors: Tuple[ABCAIDMToJSONPostProcessor, ...] = (
-        RoutingEdgeProcessor,
+        RoutingEdgeRequestPostProcessor,
+        RoutingEdgeResponseProcessor,
         AlgorithmRosterLinkDefinitionPostProcessor,
         AlgorithmAwaitArrivalLinkPostProcessor,
         AlgorithmConnectionLinkPostProcessor,

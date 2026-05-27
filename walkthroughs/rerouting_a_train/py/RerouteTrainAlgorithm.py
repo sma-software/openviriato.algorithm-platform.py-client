@@ -2,7 +2,12 @@ from typing import List
 
 from py_client.algorithm_interface.algorithm_interface import AlgorithmInterface
 from py_client.aidm import AlgorithmNode, AlgorithmTrain
-from py_client.aidm.aidm_routing_edge_classes import _RoutingEdge, CrossingRoutingEdge, IncomingNodeTrackRoutingEdge, OutgoingNodeTrackRoutingEdge
+from py_client.aidm.aidm_routing_edge_classes import (
+    _RoutingEdgeRequest,
+    CrossingRoutingEdgeRequest,
+    IncomingNodeTrackRoutingEdgeRequest,
+    OutgoingNodeTrackRoutingEdgeRequest,
+)
 
 from RerouteTrainPersistenceService import RerouteTrainPersistenceService
 
@@ -111,7 +116,7 @@ class RerouteTrainAlgorithm:
     # @RerouteTrainAlgorithm3[:]
     def _construct_mesoscopic_routing_edges_from_train_with_alternative_route(
         self, algorithm_interface: AlgorithmInterface, train_with_alternative_path: AlgorithmTrain
-    ) -> List[_RoutingEdge]:
+    ) -> List[_RoutingEdgeRequest]:
         resulting_routing_edges = []
         train_path_node_pairs = zip(train_with_alternative_path.train_path_nodes[:-1], train_with_alternative_path.train_path_nodes[1:])
 
@@ -123,16 +128,20 @@ class RerouteTrainAlgorithm:
             if self._is_station(from_node):
                 selected_node_track_id = train_path_node_pair[0].node_track_id if train_path_node_pair[0].node_track_id else from_node.node_tracks[0].id
                 resulting_routing_edges.append(
-                    OutgoingNodeTrackRoutingEdge(train_path_node_pair[0].node_id, selected_node_track_id, train_path_node_pair[1].section_track_id)
+                    OutgoingNodeTrackRoutingEdgeRequest(train_path_node_pair[0].node_id, selected_node_track_id, train_path_node_pair[1].section_track_id)
                 )
             else:
                 resulting_routing_edges.append(
-                    CrossingRoutingEdge(train_path_node_pair[0].node_id, train_path_node_pair[0].section_track_id, train_path_node_pair[1].section_track_id)
+                    CrossingRoutingEdgeRequest(
+                        train_path_node_pair[0].node_id, train_path_node_pair[0].section_track_id, train_path_node_pair[1].section_track_id
+                    )
                 )
 
             if self._is_station(to_node):
                 selected_node_track_id = train_path_node_pair[1].node_track_id if train_path_node_pair[1].node_track_id else to_node.node_tracks[0].id
-                resulting_routing_edges.append(IncomingNodeTrackRoutingEdge(to_node.id, train_path_node_pair[1].section_track_id, selected_node_track_id))
+                resulting_routing_edges.append(
+                    IncomingNodeTrackRoutingEdgeRequest(to_node.id, train_path_node_pair[1].section_track_id, selected_node_track_id)
+                )
 
         return resulting_routing_edges
 

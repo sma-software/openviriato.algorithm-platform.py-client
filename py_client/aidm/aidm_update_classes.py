@@ -3,19 +3,19 @@ from typing import List, Optional
 
 from py_client.aidm import StopStatus
 from py_client.aidm.aidm_base_classes import _UpdateTrain
-from py_client.aidm.aidm_routing_edge_classes import _RoutingEdge
+from py_client.aidm.aidm_routing_edge_classes import _RoutingEdgeRequest
 
 
 class UpdateTrainRoute:
     __start_train_path_node_id: int
     __end_train_path_node_id: int
-    __routing_edges: List[_RoutingEdge]
+    __routing_edges: List[_RoutingEdgeRequest]
 
     def __init__(
         self,
         start_train_path_node_id: int,
         end_train_path_node_id: int,
-        routing_edges: List[_RoutingEdge],
+        routing_edges: List[_RoutingEdgeRequest],
     ):
         self.__start_train_path_node_id = start_train_path_node_id
         self.__end_train_path_node_id = end_train_path_node_id
@@ -30,7 +30,7 @@ class UpdateTrainRoute:
         return self.__end_train_path_node_id
 
     @property
-    def routing_edges(self) -> List[_RoutingEdge]:
+    def routing_edges(self) -> List[_RoutingEdgeRequest]:
         return self.__routing_edges
 
 

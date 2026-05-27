@@ -4,12 +4,12 @@ from unittest import mock
 import py_client.algorithm_interface_test.test_helper.SessionMockFactory as SessionMockFactory
 from py_client.aidm import (
     AlgorithmTrainPathNode,
-    IncomingRoutingEdge,
-    OutgoingRoutingEdge,
+    IncomingRoutingEdgeRequest,
+    OutgoingRoutingEdgeRequest,
     UpdateTrainRoute,
-    CrossingRoutingEdge,
-    IncomingNodeTrackRoutingEdge,
-    OutgoingNodeTrackRoutingEdge,
+    CrossingRoutingEdgeRequest,
+    IncomingNodeTrackRoutingEdgeRequest,
+    OutgoingNodeTrackRoutingEdgeRequest,
 )
 from py_client.algorithm_interface import algorithm_interface_factory
 from py_client.algorithm_interface_test.test_helper.SessionMockTestBase import get_api_url, SessionMockTestBase
@@ -84,11 +84,11 @@ class TestRerouteTrain(unittest.TestCase):
         start_train_path_node_id = 2424
         end_train_path_node_id = 3152
         routing_edges = [
-            OutgoingRoutingEdge(node_id=7, end_section_track_id=1165),
-            IncomingNodeTrackRoutingEdge(node_id=24, start_section_track_id=1165, end_node_track_id=25),
-            OutgoingNodeTrackRoutingEdge(node_id=24, start_node_track_id=25, end_section_track_id=1166),
-            CrossingRoutingEdge(node_id=10, start_section_track_id=1166, end_section_track_id=1212),
-            IncomingRoutingEdge(node_id=24, start_section_track_id=1165),
+            OutgoingRoutingEdgeRequest(node_id=7, end_section_track_id=1165),
+            IncomingNodeTrackRoutingEdgeRequest(node_id=24, start_section_track_id=1165, end_node_track_id=25),
+            OutgoingNodeTrackRoutingEdgeRequest(node_id=24, start_node_track_id=25, end_section_track_id=1166),
+            CrossingRoutingEdgeRequest(node_id=10, start_section_track_id=1166, end_section_track_id=1212),
+            IncomingRoutingEdgeRequest(node_id=24, start_section_track_id=1165),
         ]
 
         test_route = UpdateTrainRoute(
@@ -118,10 +118,10 @@ class TestRerouteTrain(unittest.TestCase):
         start_train_path_node_id = 2424
         end_train_path_node_id = 3152
         routing_edges = [
-            OutgoingRoutingEdge(node_id=7, end_section_track_id=1165),
-            IncomingNodeTrackRoutingEdge(node_id=24, start_section_track_id=1165, end_node_track_id=25),
-            OutgoingNodeTrackRoutingEdge(node_id=24, start_node_track_id=25, end_section_track_id=1166),
-            IncomingRoutingEdge(node_id=10, start_section_track_id=1166),
+            OutgoingRoutingEdgeRequest(node_id=7, end_section_track_id=1165),
+            IncomingNodeTrackRoutingEdgeRequest(node_id=24, start_section_track_id=1165, end_node_track_id=25),
+            OutgoingNodeTrackRoutingEdgeRequest(node_id=24, start_node_track_id=25, end_section_track_id=1166),
+            IncomingRoutingEdgeRequest(node_id=10, start_section_track_id=1166),
         ]
 
         test_route = UpdateTrainRoute(

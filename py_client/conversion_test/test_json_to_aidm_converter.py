@@ -19,11 +19,15 @@ from py_client.aidm.aidm_base_classes import _HasID
 from py_client.communication.response_processing import AlgorithmPlatformConversionError
 from py_client.aidm.aidm_link_classes import AlgorithmConnectionLink, AlgorithmAwaitArrivalLink, AlgorithmRosterLink, _AlgorithmLink
 from py_client.aidm.aidm_routing_edge_classes import (
-    _RoutingEdge,
-    IncomingRoutingEdge,
-    OutgoingRoutingEdge,
-    IncomingNodeTrackRoutingEdge,
-    OutgoingNodeTrackRoutingEdge,
+    _RoutingEdgeRequest,
+    _RoutingEdgeResponse,
+    CrossingRoutingEdgeRequest,
+    IncomingNodeTrackRoutingEdgeRequest,
+    IncomingNodeTrackRoutingEdgeResponse,
+    IncomingRoutingEdgeRequest,
+    OutgoingNodeTrackRoutingEdgeRequest,
+    OutgoingNodeTrackRoutingEdgeResponse,
+    OutgoingRoutingEdgeRequest,
 )
 from typing import Optional, List
 from datetime import datetime, timedelta
@@ -605,19 +609,82 @@ class TestJsonToAIDMConverter(unittest.TestCase):
         json = [
             dict(startSectionTrackId=919, endNodeTrackId=163, type="incomingNodeTrack", nodeId=162),
             dict(startNodeTrackId=21, endSectionTrackId=1207, type="outgoingNodeTrack", nodeId=18),
-            dict(type="incoming", nodeId=25, startSectionTrackId=1199),
-            dict(type="outgoing", nodeId=25, endSectionTrackId=1200),
         ]
 
-        routing_edges = self.__converter.process_json_to_aidm(json, List[_RoutingEdge])
+        routing_edges = self.__converter.process_json_to_aidm(json, List[_RoutingEdgeResponse])
         self.assertIsInstance(routing_edges, list)
-        self.assertIsInstance(routing_edges[0], IncomingNodeTrackRoutingEdge)
-        self.assertIsInstance(routing_edges[1], OutgoingNodeTrackRoutingEdge)
-        self.assertIsInstance(routing_edges[2], IncomingRoutingEdge)
-        self.assertIsInstance(routing_edges[3], OutgoingRoutingEdge)
+        self.assertIsInstance(routing_edges[0], IncomingNodeTrackRoutingEdgeResponse)
+        self.assertIsInstance(routing_edges[1], OutgoingNodeTrackRoutingEdgeResponse)
         with self.assertRaises(AttributeError):
             routing_edges[0].type
             routing_edges[0]["type"]
+
+    def test_routing_edge_request_incoming(self):
+        json = dict(nodeId=162, startSectionTrackId=919, type="incoming")
+
+        routing_edge = self.__converter.process_json_to_aidm(json, _RoutingEdgeRequest)
+
+        self.assertIsInstance(routing_edge, IncomingRoutingEdgeRequest)
+        self.assertEqual(routing_edge.node_id, 162)
+        self.assertEqual(routing_edge.start_section_track_id, 919)
+
+    def test_routing_edge_request_incoming_node_track(self):
+        json = dict(nodeId=162, startSectionTrackId=919, endNodeTrackId=163, type="incomingNodeTrack")
+
+        routing_edge = self.__converter.process_json_to_aidm(json, _RoutingEdgeRequest)
+
+        self.assertIsInstance(routing_edge, IncomingNodeTrackRoutingEdgeRequest)
+        self.assertEqual(routing_edge.node_id, 162)
+        self.assertEqual(routing_edge.start_section_track_id, 919)
+        self.assertEqual(routing_edge.end_node_track_id, 163)
+
+    def test_routing_edge_request_outgoing(self):
+        json = dict(nodeId=18, endSectionTrackId=1207, type="outgoing")
+
+        routing_edge = self.__converter.process_json_to_aidm(json, _RoutingEdgeRequest)
+
+        self.assertIsInstance(routing_edge, OutgoingRoutingEdgeRequest)
+        self.assertEqual(routing_edge.node_id, 18)
+        self.assertEqual(routing_edge.end_section_track_id, 1207)
+
+    def test_routing_edge_request_outgoing_node_track(self):
+        json = dict(nodeId=18, startNodeTrackId=21, endSectionTrackId=1207, type="outgoingNodeTrack")
+
+        routing_edge = self.__converter.process_json_to_aidm(json, _RoutingEdgeRequest)
+
+        self.assertIsInstance(routing_edge, OutgoingNodeTrackRoutingEdgeRequest)
+        self.assertEqual(routing_edge.node_id, 18)
+        self.assertEqual(routing_edge.start_node_track_id, 21)
+        self.assertEqual(routing_edge.end_section_track_id, 1207)
+
+    def test_routing_edge_request_crossing(self):
+        json = dict(nodeId=10, startSectionTrackId=887, endSectionTrackId=888, type="crossing")
+
+        routing_edge = self.__converter.process_json_to_aidm(json, _RoutingEdgeRequest)
+
+        self.assertIsInstance(routing_edge, CrossingRoutingEdgeRequest)
+        self.assertEqual(routing_edge.node_id, 10)
+        self.assertEqual(routing_edge.start_section_track_id, 887)
+        self.assertEqual(routing_edge.end_section_track_id, 888)
+
+    def test_routing_edge_request_mixed_list(self):
+        json = [
+            dict(nodeId=162, startSectionTrackId=919, type="incoming"),
+            dict(nodeId=162, startSectionTrackId=919, endNodeTrackId=163, type="incomingNodeTrack"),
+            dict(nodeId=18, endSectionTrackId=1207, type="outgoing"),
+            dict(nodeId=18, startNodeTrackId=21, endSectionTrackId=1207, type="outgoingNodeTrack"),
+            dict(nodeId=10, startSectionTrackId=887, endSectionTrackId=888, type="crossing"),
+        ]
+
+        routing_edges = self.__converter.process_json_to_aidm(json, List[_RoutingEdgeRequest])
+
+        self.assertIsInstance(routing_edges, list)
+        self.assertEqual(len(routing_edges), 5)
+        self.assertIsInstance(routing_edges[0], IncomingRoutingEdgeRequest)
+        self.assertIsInstance(routing_edges[1], IncomingNodeTrackRoutingEdgeRequest)
+        self.assertIsInstance(routing_edges[2], OutgoingRoutingEdgeRequest)
+        self.assertIsInstance(routing_edges[3], OutgoingNodeTrackRoutingEdgeRequest)
+        self.assertIsInstance(routing_edges[4], CrossingRoutingEdgeRequest)
 
     def test_primitive_processor(self):
         primitive_int = 3

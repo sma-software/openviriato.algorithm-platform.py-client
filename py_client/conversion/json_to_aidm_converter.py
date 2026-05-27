@@ -7,7 +7,7 @@ from py_client.aidm.aidm_train_simulation_classes import _AlgorithmDispatcherDel
 from py_client.communication.response_processing import AlgorithmPlatformConversionError
 from py_client.conversion.converter_helpers import *
 from py_client.aidm.aidm_link_classes import _AlgorithmLink, AlgorithmAwaitArrivalLink, AlgorithmRosterLink, AlgorithmConnectionLink
-from py_client.aidm.aidm_routing_edge_classes import _RoutingEdge
+from py_client.aidm.aidm_routing_edge_classes import _RoutingEdgeRequest, _RoutingEdgeResponse
 from py_client.aidm.aidm_routing_edge_classes import *
 from abc import abstractmethod
 from py_client.aidm.aidm_conflict import (
@@ -158,18 +158,21 @@ class GeneralAidmObjectProcessor(_ABCJsonToAidmDictProcessor):
 
 
 class PolymorphicClassesProcessor(_ABCJsonToAidmDictProcessor):
-    types_to_process = [_AlgorithmLink, _RoutingEdge, _AlgorithmDispatcherDelayReason]
+    types_to_process = [_AlgorithmLink, _RoutingEdgeRequest, _RoutingEdgeResponse, _AlgorithmDispatcherDelayReason]
     aidm_types_to_create = [
         AlgorithmDispatcherConnectionDelayReason,
         AlgorithmDispatcherOtherDelayReason,
         AlgorithmAwaitArrivalLink,
         AlgorithmConnectionLink,
         AlgorithmRosterLink,
-        CrossingRoutingEdge,
-        IncomingRoutingEdge,
-        IncomingNodeTrackRoutingEdge,
-        OutgoingRoutingEdge,
-        OutgoingNodeTrackRoutingEdge,
+        CrossingRoutingEdgeRequest,
+        IncomingRoutingEdgeRequest,
+        IncomingNodeTrackRoutingEdgeRequest,
+        OutgoingRoutingEdgeRequest,
+        OutgoingNodeTrackRoutingEdgeRequest,
+        CrossingRoutingEdgeResponse,
+        IncomingNodeTrackRoutingEdgeResponse,
+        OutgoingNodeTrackRoutingEdgeResponse,
     ]
 
     def is_applicable(self, json_to_process: Union[dict, Primitive, Optional[Primitive]], targeted_type: Type[object]) -> bool:

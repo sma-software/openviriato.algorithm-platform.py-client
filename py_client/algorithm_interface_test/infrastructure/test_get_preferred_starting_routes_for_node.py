@@ -1,6 +1,6 @@
 from unittest import mock, TestCase
 
-from py_client.aidm import OutgoingNodeTrackRoutingEdge
+from py_client.aidm import OutgoingNodeTrackRoutingEdgeResponse
 from py_client.algorithm_interface import algorithm_interface_factory
 from py_client.algorithm_interface_test.test_helper import SessionMockFactory as SessionMockFactory
 from py_client.algorithm_interface_test.test_helper.SessionMockTestBase import get_api_url, SessionMockTestBase
@@ -65,7 +65,7 @@ class TestGetPreferredStartingRoutesForNode(TestCase):
 
         first_routing_edge_pair = test_routes[0]
         self.assertIsNone(first_routing_edge_pair.incoming_routing_edge)
-        self.assertIsInstance(first_routing_edge_pair.outgoing_routing_edge, OutgoingNodeTrackRoutingEdge)
+        self.assertIsInstance(first_routing_edge_pair.outgoing_routing_edge, OutgoingNodeTrackRoutingEdgeResponse)
         self.assertEqual(first_routing_edge_pair.outgoing_routing_edge.node_id, 18)
         self.assertEqual(first_routing_edge_pair.outgoing_routing_edge.start_node_track_id, 21)
         self.assertEqual(first_routing_edge_pair.outgoing_routing_edge.end_section_track_id, 1207)

@@ -15,7 +15,7 @@ For our walkthrough we have encapsulated the call to [reroute_train(...)](../../
         train_to_reroute: AlgorithmTrain,
         first_train_path_node_on_diversion: AlgorithmTrainPathNode,
         last_train_path_node_on_diversion: AlgorithmTrainPathNode,
-        routing_edges_on_diversion: List[_RoutingEdge],
+        routing_edges_on_diversion: List[_RoutingEdgeRequest],
         restore_node_tracks_at_start_and_end_of_diversion: bool,
     ) -> AlgorithmTrain](../../../walkthroughs/rerouting_a_train/py/RerouteTrainPersistenceService.py#L14-L21)
 which we can simply invoke below. This also demonstrates how an algorithm developer can use [reroute_train(...)](../../../py_client/algorithm_interface/algorithm_interface.py#L282-L282).
@@ -25,7 +25,7 @@ Here we list the source code with explanations.
 from typing import List
 from py_client.algorithm_interface.algorithm_interface import AlgorithmInterface
 from py_client.aidm import AlgorithmTrain, AlgorithmTrainPathNode, UpdateTrainRoute
-from py_client.aidm.aidm_routing_edge_classes import _RoutingEdge
+from py_client.aidm.aidm_routing_edge_classes import _RoutingEdgeRequest
 
 
 class RerouteTrainPersistenceService:
@@ -39,7 +39,7 @@ class RerouteTrainPersistenceService:
         train_to_reroute: AlgorithmTrain,
         first_train_path_node_on_diversion: AlgorithmTrainPathNode,
         last_train_path_node_on_diversion: AlgorithmTrainPathNode,
-        routing_edges_on_diversion: List[_RoutingEdge],
+        routing_edges_on_diversion: List[_RoutingEdgeRequest],
         restore_node_tracks_at_start_and_end_of_diversion: bool,
     ) -> AlgorithmTrain:
         first_routing_edge = routing_edges_on_diversion[0]
@@ -185,7 +185,7 @@ the Algorithm Platform, i.e. these will not be provided by any of the methods [g
 ```python
 def _construct_mesoscopic_routing_edges_from_train_with_alternative_route(
     self, algorithm_interface: AlgorithmInterface, train_with_alternative_path: AlgorithmTrain
-) -> List[_RoutingEdge]:
+) -> List[_RoutingEdgeRequest]:
     resulting_routing_edges = []
     train_path_node_pairs = zip(train_with_alternative_path.train_path_nodes[:-1], train_with_alternative_path.train_path_nodes[1:])
     # construct at a time: outgoing (iff first node in pair is station) or crossing mesoscopic routing edge (iff first node is junction)
@@ -196,15 +196,15 @@ def _construct_mesoscopic_routing_edges_from_train_with_alternative_route(
         if self._is_station(from_node):
             selected_node_track_id = train_path_node_pair[0].node_track_id if train_path_node_pair[0].node_track_id else from_node.node_tracks[0].id
             resulting_routing_edges.append(
-                OutgoingNodeTrackRoutingEdge(train_path_node_pair[0].node_id, selected_node_track_id, train_path_node_pair[1].section_track_id)
+                OutgoingNodeTrackRoutingEdgeRequest(train_path_node_pair[0].node_id, selected_node_track_id, train_path_node_pair[1].section_track_id)
             )
         else:
             resulting_routing_edges.append(
-                CrossingRoutingEdge(train_path_node_pair[0].node_id, train_path_node_pair[0].section_track_id, train_path_node_pair[1].section_track_id)
+                CrossingRoutingEdgeRequest(train_path_node_pair[0].node_id, train_path_node_pair[0].section_track_id, train_path_node_pair[1].section_track_id)
             )
         if self._is_station(to_node):
             selected_node_track_id = train_path_node_pair[1].node_track_id if train_path_node_pair[1].node_track_id else to_node.node_tracks[0].id
-            resulting_routing_edges.append(IncomingNodeTrackRoutingEdge(to_node.id, train_path_node_pair[1].section_track_id, selected_node_track_id))
+            resulting_routing_edges.append(IncomingNodeTrackRoutingEdgeRequest(to_node.id, train_path_node_pair[1].section_track_id, selected_node_track_id))
     return resulting_routing_edges
 
 ```

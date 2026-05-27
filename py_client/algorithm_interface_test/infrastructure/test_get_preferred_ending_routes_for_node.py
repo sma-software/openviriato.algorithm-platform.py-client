@@ -1,6 +1,6 @@
 from unittest import mock, TestCase
 
-from py_client.aidm import OutgoingNodeTrackRoutingEdge, IncomingNodeTrackRoutingEdge
+from py_client.aidm import OutgoingNodeTrackRoutingEdgeResponse, IncomingNodeTrackRoutingEdgeResponse
 from py_client.algorithm_interface import algorithm_interface_factory
 from py_client.algorithm_interface_test.test_helper import SessionMockFactory as SessionMockFactory
 from py_client.algorithm_interface_test.test_helper.SessionMockTestBase import get_api_url, SessionMockTestBase
@@ -82,21 +82,21 @@ class TestGetPreferredEndingRoutesForNode(TestCase):
         self.assertEqual(len(test_routes), 3)
 
         first_routing_edge_pair = test_routes[0]
-        self.assertIsInstance(first_routing_edge_pair.incoming_routing_edge, IncomingNodeTrackRoutingEdge)
+        self.assertIsInstance(first_routing_edge_pair.incoming_routing_edge, IncomingNodeTrackRoutingEdgeResponse)
         self.assertEqual(first_routing_edge_pair.incoming_routing_edge.node_id, 18)
         self.assertEqual(first_routing_edge_pair.incoming_routing_edge.end_node_track_id, 19)
         self.assertEqual(first_routing_edge_pair.incoming_routing_edge.start_section_track_id, 1204)
         self.assertIsNone(first_routing_edge_pair.outgoing_routing_edge)
 
         second_routing_edge_pair = test_routes[1]
-        self.assertIsInstance(second_routing_edge_pair.incoming_routing_edge, IncomingNodeTrackRoutingEdge)
+        self.assertIsInstance(second_routing_edge_pair.incoming_routing_edge, IncomingNodeTrackRoutingEdgeResponse)
         self.assertEqual(second_routing_edge_pair.incoming_routing_edge.node_id, 18)
         self.assertEqual(second_routing_edge_pair.incoming_routing_edge.end_node_track_id, 20)
         self.assertEqual(second_routing_edge_pair.incoming_routing_edge.start_section_track_id, 1206)
         self.assertIsNone(second_routing_edge_pair.outgoing_routing_edge)
 
         third_routing_edge_pair = test_routes[2]
-        self.assertIsInstance(third_routing_edge_pair.incoming_routing_edge, IncomingNodeTrackRoutingEdge)
+        self.assertIsInstance(third_routing_edge_pair.incoming_routing_edge, IncomingNodeTrackRoutingEdgeResponse)
         self.assertEqual(third_routing_edge_pair.incoming_routing_edge.node_id, 18)
         self.assertEqual(third_routing_edge_pair.incoming_routing_edge.end_node_track_id, 21)
         self.assertEqual(third_routing_edge_pair.incoming_routing_edge.start_section_track_id, 1207)

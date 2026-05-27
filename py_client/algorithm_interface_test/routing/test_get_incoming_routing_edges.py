@@ -2,7 +2,7 @@ import unittest
 from unittest import mock
 
 import py_client.algorithm_interface_test.test_helper.SessionMockFactory as APISessionMock
-from py_client.aidm import RoutingPoint, IncomingNodeTrackRoutingEdge
+from py_client.aidm import RoutingPoint, IncomingNodeTrackRoutingEdgeResponse
 from py_client.algorithm_interface import algorithm_interface_factory
 from py_client.algorithm_interface_test.test_helper.SessionMockTestBase import get_api_url, SessionMockTestBase
 
@@ -70,17 +70,17 @@ class TestGetIncomingRoutingEdges(unittest.TestCase):
 
         routing_edges = self.interface_to_viriato.get_incoming_routing_edges(routing_point)
         self.assertIsInstance(routing_edges, list)
-        self.assertIsInstance(routing_edges[0], IncomingNodeTrackRoutingEdge)
+        self.assertIsInstance(routing_edges[0], IncomingNodeTrackRoutingEdgeResponse)
         self.assertEqual(routing_edges[0].end_node_track_id, 162)
         self.assertEqual(routing_edges[0].start_section_track_id, 885)
         self.assertEqual(routing_edges[0].node_id, 161)
 
-        self.assertIsInstance(routing_edges[1], IncomingNodeTrackRoutingEdge)
+        self.assertIsInstance(routing_edges[1], IncomingNodeTrackRoutingEdgeResponse)
         self.assertEqual(routing_edges[1].end_node_track_id, 163)
         self.assertEqual(routing_edges[1].start_section_track_id, 885)
         self.assertEqual(routing_edges[1].node_id, 161)
 
-        self.assertIsInstance(routing_edges[2], IncomingNodeTrackRoutingEdge)
+        self.assertIsInstance(routing_edges[2], IncomingNodeTrackRoutingEdgeResponse)
         self.assertEqual(routing_edges[2].end_node_track_id, 162)
         self.assertEqual(routing_edges[2].start_section_track_id, 886)
         self.assertEqual(routing_edges[2].node_id, 161)
@@ -93,7 +93,7 @@ class TestGetIncomingRoutingEdges(unittest.TestCase):
 
         routing_edges = self.interface_to_viriato.get_incoming_routing_edges(routing_point)
         self.assertIsInstance(routing_edges, list)
-        self.assertIsInstance(routing_edges[0], IncomingNodeTrackRoutingEdge)
+        self.assertIsInstance(routing_edges[0], IncomingNodeTrackRoutingEdgeResponse)
         self.assertEqual(routing_edges[0].end_node_track_id, 162)
         self.assertEqual(routing_edges[0].start_section_track_id, 886)
         self.assertEqual(routing_edges[0].node_id, 161)

@@ -2,7 +2,7 @@
 from typing import List
 from py_client.algorithm_interface.algorithm_interface import AlgorithmInterface
 from py_client.aidm import AlgorithmTrain, AlgorithmTrainPathNode, UpdateTrainRoute
-from py_client.aidm.aidm_routing_edge_classes import _RoutingEdge
+from py_client.aidm.aidm_routing_edge_classes import _RoutingEdgeRequest
 
 
 class RerouteTrainPersistenceService:
@@ -16,7 +16,7 @@ class RerouteTrainPersistenceService:
         train_to_reroute: AlgorithmTrain,
         first_train_path_node_on_diversion: AlgorithmTrainPathNode,
         last_train_path_node_on_diversion: AlgorithmTrainPathNode,
-        routing_edges_on_diversion: List[_RoutingEdge],
+        routing_edges_on_diversion: List[_RoutingEdgeRequest],
         restore_node_tracks_at_start_and_end_of_diversion: bool,
     ) -> AlgorithmTrain:
         first_routing_edge = routing_edges_on_diversion[0]

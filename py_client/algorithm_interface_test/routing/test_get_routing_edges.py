@@ -2,7 +2,7 @@ import unittest
 from unittest import mock
 
 import py_client.algorithm_interface_test.test_helper.SessionMockFactory as APISessionMock
-from py_client.aidm import RoutingPoint, CrossingRoutingEdge, IncomingNodeTrackRoutingEdge, OutgoingNodeTrackRoutingEdge
+from py_client.aidm import RoutingPoint, CrossingRoutingEdgeResponse, IncomingNodeTrackRoutingEdgeResponse, OutgoingNodeTrackRoutingEdgeResponse
 from py_client.algorithm_interface import algorithm_interface_factory
 from py_client.algorithm_interface_test.test_helper.SessionMockTestBase import get_api_url, SessionMockTestBase
 
@@ -77,12 +77,12 @@ class TestRoutingEdges(unittest.TestCase):
         routing_edges = self.interface_to_viriato.get_crossing_routing_edges(routing_point)
 
         self.assertIsInstance(routing_edges, list)
-        self.assertIsInstance(routing_edges[0], CrossingRoutingEdge)
-        self.assertIsInstance(routing_edges[1], OutgoingNodeTrackRoutingEdge)
-        self.assertIsInstance(routing_edges[2], CrossingRoutingEdge)
-        self.assertIsInstance(routing_edges[3], IncomingNodeTrackRoutingEdge)
-        self.assertIsInstance(routing_edges[4], IncomingNodeTrackRoutingEdge)
-        self.assertIsInstance(routing_edges[5], IncomingNodeTrackRoutingEdge)
+        self.assertIsInstance(routing_edges[0], CrossingRoutingEdgeResponse)
+        self.assertIsInstance(routing_edges[1], OutgoingNodeTrackRoutingEdgeResponse)
+        self.assertIsInstance(routing_edges[2], CrossingRoutingEdgeResponse)
+        self.assertIsInstance(routing_edges[3], IncomingNodeTrackRoutingEdgeResponse)
+        self.assertIsInstance(routing_edges[4], IncomingNodeTrackRoutingEdgeResponse)
+        self.assertIsInstance(routing_edges[5], IncomingNodeTrackRoutingEdgeResponse)
 
         self.assertEqual(len(routing_edges), 6)
 

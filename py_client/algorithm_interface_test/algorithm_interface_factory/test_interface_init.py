@@ -16,6 +16,18 @@ class TestObjectInitialisation(unittest.TestCase):
         with algorithm_interface_factory.create(url_str) as interface_to_viriato:
             self.assertEqual(interface_to_viriato.base_url, url_str)
 
+    def test_initialisation_strips_trailing_slash(self):
+        url_str = "http://localhost:8080"
+
+        with algorithm_interface.AlgorithmInterface(url_str + "/") as interface_to_viriato:
+            self.assertEqual(interface_to_viriato.base_url, url_str)
+
+    def test_initialisation_strips_multiple_trailing_slashes(self):
+        url_str = "http://localhost:8080"
+
+        with algorithm_interface.AlgorithmInterface(url_str + "///") as interface_to_viriato:
+            self.assertEqual(interface_to_viriato.base_url, url_str)
+
 
 if __name__ == "__main__":
     unittest.main()

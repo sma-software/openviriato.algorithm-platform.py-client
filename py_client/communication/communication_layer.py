@@ -38,7 +38,7 @@ class CommunicationLayer:
 
     def __init__(self, base_url: str, log_file: str = None):
         client.HTTPConnection.debuglevel = 2
-        self.base_url = base_url
+        self.base_url = base_url.rstrip("/")
         self.currentSession = requests.Session()
         if log_file:
             print("http logging is turned on. Will log to {}".format(os.path.abspath(log_file)))

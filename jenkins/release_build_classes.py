@@ -24,7 +24,7 @@ class ReleaseBuildConstants:
     FILE_NAME_LICENSES_PY_CLIENT = "algorithmplatform.pyclient.licenses.txt"
     URL_JENKINS_ADDRESS = "https://jenkins.sma-partner.com"
 
-    PATH_REMOTE_DIRECTORY_DATABASES = r"\\ZHFAS01A\\Entwicklung\Jenkins\JobData\PyClient-End2EndTests-Labs"
+    PATH_REMOTE_DIRECTORY_DATABASES = r"\\SMA-FIL-001\software-jenkins\JobData\PyClient-End2EndTests-Labs"
 
     ABSOLUTE_BASE_PATH_WORK_SPACE = os.getcwd()
     ABSOLUTE_PATH_OUTPUT_DIRECTORY = os.path.join(ABSOLUTE_BASE_PATH_WORK_SPACE, OUTPUT_DIRECTORY)
